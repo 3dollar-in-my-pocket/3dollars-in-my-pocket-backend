@@ -4,15 +4,16 @@ on:
   push:
     branches:
       - develop
+      - feature/TD-45
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout@v2
+      - name: checkout@v2
         uses: actions/checkout@v2
 
-      - name: Get dev version
-        id: dev-version
+      - name: Get Semantic Versioning
+        id: docker-image-version
         run: |
           VERSION=`cat ./version.txt`-${{ github.run_id }}
           echo "::set-output name=version::$VERSION"
@@ -28,7 +29,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build and push muyaho-api
+      - name: Build
         id: build-api
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -41,24 +42,25 @@ jobs:
           docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
           echo "::set-output name=image::$DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG"
 
-      - name: Download muyaho-api task definition
-        id: download-task-definition
+      - name: Zip deploy.zip
+        run: zip -r deploy.zip deploy
+
+      - name: Upload deploy.zip
+        uses: actions/upload-artifact@v2
+        with:
+          name: deploy.zip
+          path: deploy.zip
+  deploy:
+    needs:
+      - build
+    runs-on: 3dollar-api-dev
+    steps:
+      - name: Download deploy.zip
+        uses: actions/download-artifact@v2
+        with:
+          name: deploy.zip
+
+      - name: run server
         run: |
-          aws ecs describe-task-definition --task-definition 3dollar-api-dev --query taskDefinition > task-definition-dev.json
-          echo "::set-output name=task-definition::$GITHUB_WORKSPACE/task-definition-dev.json"
-
-      - name: Update Amazon ECS muyaho-api task definition
-        id: render-api-container
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: ${{ steps.download-task-definition.outputs.task-definition }}
-          container-name: 3dollar-api-dev
-          image: ${{ steps.build-api.outputs.image }}
-
-      - name: Deploy muyaho-api to Amazon ECS service
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ steps.render-api-container.outputs.task-definition }}
-          cluster: three-dollar-backend
-          service: three-dollar-api-dev
-          wait-for-service-stability: true
+          unzip -o ./deploy.zip
+          sh ./deploy/deploy.sh
