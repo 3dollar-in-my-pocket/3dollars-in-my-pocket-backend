@@ -1,0 +1,3 @@
+jwt:
+  secret_key: test
+  issuer: test

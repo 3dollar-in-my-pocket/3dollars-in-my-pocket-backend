@@ -12,6 +12,15 @@ jobs:
       - name: checkout@v2
         uses: actions/checkout@v2
 
+      - name: Create secret properties (application-jwt)
+        env:
+          JWT_SECRET_KEY: ${{secrets.JWT_SECRET_KEY}}
+          JWT_ISSUER: ${{secrets.JWT_ISSUER}}
+
+          RESOURCE_PWD: threedollar-api/src/main/resources
+        run: |
+          echo -e "jwt.secret_key=$JWT_SECRET_KEY\jwt.issuer=$JWT_ISSUER" > $RESOURCE_PWD/application-jwt.properties
+
       - name: Get Semantic Versioning
         id: dev-version
         run: |
@@ -63,4 +72,5 @@ jobs:
       - name: run server
         run: |
           unzip -o ./deploy.zip
-          sh ./deploy/deploy.sh
+          cd deploy
+          sh ./deploy.sh
