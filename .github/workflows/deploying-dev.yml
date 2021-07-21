@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Get Semantic Versioning
-        id: docker-image-version
+        id: dev-version
         run: |
           VERSION=`cat ./version.txt`-${{ github.run_id }}
           echo "::set-output name=version::$VERSION"
