@@ -50,6 +50,7 @@ jobs:
           docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG
           docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
           echo "::set-output name=image::$DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG"
+          echo -e "API_IMAGE=$DOCKER_REGISTRY/$DOCKER_REPOSITORY\nTAG=$IMAGE_TAG" > deploy/.env
 
       - name: Zip deploy.zip
         run: zip -r deploy.zip deploy
