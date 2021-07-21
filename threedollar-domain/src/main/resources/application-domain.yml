@@ -50,3 +50,23 @@ spring:
   flyway:
     enabled: false
 ---
+spring:
+  profiles: dev
+  jpa:
+    hibernate:
+      ddl-auto: none
+---
+
+spring:
+  profiles: beta
+  jpa:
+    hibernate:
+      ddl-auto: none
+---
+
+spring:
+  profiles: prod
+  jpa:
+    hibernate:
+      ddl-auto: none
+---

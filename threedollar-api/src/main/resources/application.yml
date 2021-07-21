@@ -12,6 +12,7 @@ spring:
       - auth
       - cloud
       - credential
+      - rds
   servlet:
     multipart:
       max-file-size: 10MB
