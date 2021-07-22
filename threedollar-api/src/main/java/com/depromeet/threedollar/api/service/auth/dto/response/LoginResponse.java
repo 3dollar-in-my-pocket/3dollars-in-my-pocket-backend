@@ -8,10 +8,10 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class LoginResponse {
 
-    private String token;
+    private String sessionId;
 
-    public static LoginResponse of(String token) {
-        return new LoginResponse(token);
+    public static LoginResponse of(String sessionId) {
+        return new LoginResponse(sessionId);
     }
 
 }
