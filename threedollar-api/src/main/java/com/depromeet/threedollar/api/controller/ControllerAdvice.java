@@ -134,17 +134,6 @@ public class ControllerAdvice {
     }
 
     /**
-     * 지원하지 않는 버전인경우 발생하는 Exception
-     */
-    @ResponseStatus(HttpStatus.HTTP_VERSION_NOT_SUPPORTED)
-    @ExceptionHandler(HttpVersionNotSupportedException.class)
-    protected ApiResponse<Object> handleHttpVersionNotSupportedException(final HttpVersionNotSupportedException exception) {
-        log.error(exception.getMessage(), exception);
-        return ApiResponse.error(exception.getErrorCode());
-    }
-
-
-    /**
      * 서버 내부에서 발생하는 Exception
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -25,6 +25,9 @@ spring:
       path: /h2-console
       settings:
         web-allow-others: true
+  redis:
+    host: localhost
+    port: 6379
   datasource:
     hikari:
       driver-class-name: org.h2.Driver

@@ -2,7 +2,6 @@ package com.depromeet.threedollar.domain.domain.user.repository;
 
 import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
-import com.depromeet.threedollar.domain.domain.user.UserStatusType;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
@@ -35,6 +34,15 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
         return queryFactory.selectFrom(user)
             .where(
                 user.id.eq(userId)
+            ).fetchOne();
+    }
+
+    @Override
+    public User findUserByIdAndSocialType(Long userId, UserSocialType socialType) {
+        return queryFactory.selectFrom(user)
+            .where(
+                user.id.eq(userId),
+                user.socialInfo.socialType.eq(socialType)
             ).fetchOne();
     }
 

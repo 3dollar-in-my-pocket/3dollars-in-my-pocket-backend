@@ -13,6 +13,7 @@ spring:
       - cloud
       - credential
       - rds
+      - redis
   servlet:
     multipart:
       max-file-size: 10MB

@@ -36,9 +36,10 @@ public class AppleAuthService implements AuthService {
         return UserServiceUtils.findUserBySocialIdAndSocialType(userRepository, payload.getSub(), socialType).getId();
     }
 
+    @Transactional
     @Override
     public void signOut(Long userId) {
-        userService.signOut(userId);
+        userService.signOut(userId, socialType);
     }
 
 }

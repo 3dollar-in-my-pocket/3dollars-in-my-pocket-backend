@@ -6,6 +6,7 @@ import com.depromeet.threedollar.api.service.user.dto.request.UpdateUserInfoRequ
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserRepository;
+import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import com.depromeet.threedollar.domain.domain.user.WithdrawalUserRepository;
 import com.depromeet.threedollar.common.exception.ConflictException;
 import lombok.RequiredArgsConstructor;
@@ -53,8 +54,8 @@ public class UserService {
     }
 
     @Transactional
-    public void signOut(Long userId) {
-        User user = UserServiceUtils.findUserById(userRepository, userId);
+    public void signOut(Long userId, UserSocialType socialType) {
+        User user = UserServiceUtils.findUserByIdAndSocialType(userRepository, userId, socialType);
         withdrawalUserRepository.save(user.signOut());
         userRepository.delete(user);
     }

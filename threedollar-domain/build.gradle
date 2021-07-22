@@ -27,6 +27,10 @@ dependencies {
 
     // flyway
     implementation 'org.flywaydb:flyway-core'
+
+    // Redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    api group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
 }
 
 def queryDslDir = 'src/main/generated'

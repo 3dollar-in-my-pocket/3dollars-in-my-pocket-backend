@@ -1,0 +1,20 @@
+### [인증] 카카오 회원탈퇴를 요청합니다
+DELETE {{host_api}}/api/v2/signout?socialType=KAKAO
+Authorization: {{AUTHORIZATION}}
+
+> {%
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 애플 회원탈퇴를 요청합니다
+DELETE {{host_api}}/api/v2/signout?socialType=APPLE
+Authorization: {{AUTHORIZATION}}
+
+> {%
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
