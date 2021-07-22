@@ -194,11 +194,12 @@ class UserServiceTest {
     @Test
     void 회원탈퇴하면_INACTIVE되고_WithdrawlUser_데이터가_하나_생성된다() {
         // given
-        User user = UserCreator.create("social-id", UserSocialType.APPLE, "기존의 닉네임");
+        UserSocialType type = UserSocialType.APPLE;
+        User user = UserCreator.create("social-id", type, "기존의 닉네임");
         userRepository.save(user);
 
         // then
-        userService.signOut(user.getId());
+        userService.signOut(user.getId(), type);
 
         // then
         List<User> users = userRepository.findAll();
@@ -212,12 +213,14 @@ class UserServiceTest {
     @Test
     void 회원탈퇴한_유저만_USER_테이블에서_삭제된다() {
         // given
-        User user1 = UserCreator.create("social-id1", UserSocialType.APPLE, "기존의 닉네임1");
+        UserSocialType type = UserSocialType.APPLE;
+        User user1 = UserCreator.create("social-id1", type, "기존의 닉네임1");
         User user2 = UserCreator.create("social-id2", UserSocialType.APPLE, "기존의 닉네임2");
+
         userRepository.saveAll(Arrays.asList(user1, user2));
 
         // then
-        userService.signOut(user1.getId());
+        userService.signOut(user1.getId(), type);
 
         // then
         List<User> users = userRepository.findAll();

@@ -1,4 +1,10 @@
 spring:
+  profiles: local
+  redis:
+    host: localhost
+    port: 6379
+---
+spring:
   profiles: dev
   redis:
     host: threedollar-redis-session.tqy2kj.ng.0001.apn2.cache.amazonaws.com

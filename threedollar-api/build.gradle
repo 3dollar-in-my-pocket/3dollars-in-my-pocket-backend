@@ -10,9 +10,6 @@ dependencies {
     implementation "io.springfox:springfox-swagger-ui:2.9.2"
     implementation 'io.springfox:springfox-bean-validators:2.9.2'
 
-    // jwt
-    implementation group: 'com.auth0', name: 'java-jwt', version: '3.1.0'
-
     // Spring Session (Redis)
     implementation 'org.springframework.session:spring-session-data-redis'
 }
