@@ -30,7 +30,7 @@ public class FileUtils {
     }
 
     public static void validateImageFile(String contentType) {
-        if (contentType.contains(SEPARATOR) && contentType.split(SEPARATOR)[0].equals(IMAGE_CONTENT_TYPE_TYPE)) {
+        if (contentType != null && contentType.contains(SEPARATOR) && contentType.split(SEPARATOR)[0].equals(IMAGE_CONTENT_TYPE_TYPE)) {
             return;
         }
         throw new ValidationException(String.format("허용되지 않은 파일 형식 (%s) 입니다", contentType), ErrorCode.VALIDATION_FILE_TYPE_EXCEPTION);
