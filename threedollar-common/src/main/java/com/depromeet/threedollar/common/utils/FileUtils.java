@@ -13,7 +13,8 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FileUtils {
 
-    private static final List<String> imageContentTypes = Arrays.asList("image/jpeg", "image/png");
+    private static final String IMAGE_CONTENT_TYPE_TYPE = "image";
+    private static final String SEPARATOR = "/";
 
     public static String createFileUuidNameWithExtension(ImageType type, String originalFileName) {
         String extension = getFileExtension(originalFileName);
@@ -29,9 +30,10 @@ public class FileUtils {
     }
 
     public static void validateImageFile(String contentType) {
-        if (!imageContentTypes.contains(contentType)) {
-            throw new ValidationException(String.format("허용되지 않은 파일 형식 (%s) 입니다", contentType), ErrorCode.VALIDATION_FILE_TYPE_EXCEPTION);
+        if (contentType.contains(SEPARATOR) && contentType.split(SEPARATOR)[0].equals(IMAGE_CONTENT_TYPE_TYPE)) {
+            return;
         }
+        throw new ValidationException(String.format("허용되지 않은 파일 형식 (%s) 입니다", contentType), ErrorCode.VALIDATION_FILE_TYPE_EXCEPTION);
     }
 
 }
