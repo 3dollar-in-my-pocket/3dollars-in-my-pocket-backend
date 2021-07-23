@@ -34,7 +34,7 @@ class FileUtilsTest {
         assertThatThrownBy(() -> FileUtils.createFileUuidNameWithExtension(type, originalFileName)).isInstanceOf(ValidationException.class);
     }
 
-    @Tests
+    @Test
     void ContentType을_확인해서_허용된_파일_형식이_아닌경우_VALIDATION_에러가_발생한다() {
         // given
         String contentType = "video/mp4";
