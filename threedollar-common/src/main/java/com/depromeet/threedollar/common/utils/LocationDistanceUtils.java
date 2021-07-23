@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LocationDistanceUtils {
 
-    public static Integer getDistance(double sourceLatitude, double sourceLongitude, double targetLatitude, double targetLongitude) {
+    public static int getDistance(double sourceLatitude, double sourceLongitude, double targetLatitude, double targetLongitude) {
         double theta = sourceLongitude - targetLongitude;
         double dist = Math.sin(deg2rad(sourceLatitude)) * Math.sin(deg2rad(targetLatitude))
             + Math.cos(deg2rad(sourceLatitude)) * Math.cos(deg2rad(targetLatitude)) * Math.cos(deg2rad(theta));
