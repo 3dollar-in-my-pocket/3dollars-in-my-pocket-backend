@@ -1,0 +1,25 @@
+spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:4000
+        instance:
+          name: threedollar-api
+          metadata:
+            user:
+              name: ${spring.security.user.name}
+              password: ${spring.security.user.password}
+            tags:
+              environment: dev
+  config:
+    activate:
+      on-profile: local,dev
+---
+spring:
+  boot:
+    admin:
+      client:
+        enabled: false
+  config:
+    activate:
+      on-profile: local-will,prod

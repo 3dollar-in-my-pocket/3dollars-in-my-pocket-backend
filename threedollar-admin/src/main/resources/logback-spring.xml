@@ -5,13 +5,13 @@
     <springProfile name="local,local-will">
         <logger name="com.depromeet.threedollar" level="DEBUG"/>
         <logger name="org.springframework" level="INFO"/>
-        <logger name="org.springframework.web" level="TRACE"/>
+        <logger name="org.springframework.web" level="INFO"/>
     </springProfile>
 
     <springProfile name="dev,prod">
         <logger name="com.depromeet.threedollar" level="DEBUG"/>
         <logger name="org.springframework" level="INFO"/>
-        <logger name="org.springframework.web" level="TRACE"/>
+        <logger name="org.springframework.web" level="INFO"/>
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
         </root>

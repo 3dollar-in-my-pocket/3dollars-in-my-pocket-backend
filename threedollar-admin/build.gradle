@@ -18,6 +18,12 @@ dependencies {
     implementation("io.springfox:springfox-swagger-ui:${swaggerVersion}")
     implementation("io.springfox:springfox-bean-validators:${swaggerVersion}")
 
+    // Spring Security
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
     // jwt
     implementation("com.auth0:java-jwt:3.18.1")
+
+    // spring boot admin server
+    implementation("de.codecentric:spring-boot-admin-starter-server:2.4.3")
 }

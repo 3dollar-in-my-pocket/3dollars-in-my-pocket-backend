@@ -15,6 +15,7 @@ spring:
       - redis
       - actuator
       - security
+      - monitoring
   servlet:
     multipart:
       max-file-size: 10MB
