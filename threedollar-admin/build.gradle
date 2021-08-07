@@ -1,9 +1,3 @@
-buildscript {
-    ext {
-        swaggerVersion = '2.9.2'
-    }
-}
-
 dependencies {
     implementation project(':threedollar-application-service')
 
@@ -12,11 +6,6 @@ dependencies {
 
     // kotlin logger
     implementation("io.github.microutils:kotlin-logging:1.12.5")
-
-    // swagger
-    implementation("io.springfox:springfox-swagger2:${swaggerVersion}")
-    implementation("io.springfox:springfox-swagger-ui:${swaggerVersion}")
-    implementation("io.springfox:springfox-bean-validators:${swaggerVersion}")
 
     // Spring Security
     implementation("org.springframework.boot:spring-boot-starter-security")
