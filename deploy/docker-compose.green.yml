@@ -9,6 +9,7 @@ services:
       - "SPRING_PROFILES_ACTIVE=dev"
     links:
       - "redis:redis"
+      - "admin:admin"
     volumes:
       - ~/logs/api:/logs/api
   redis:
@@ -17,3 +18,13 @@ services:
     hostname: redis
     volumes:
       - ~/db/data:/data
+  admin:
+    image: ${ADMIN_IMAGE}:${TAG}
+    hostname: admin
+    ports:
+      - 4002:4000
+    command: java -jar /threedollar-admin.jar
+    environment:
+      - "SPRING_PROFILES_ACTIVE=local"
+    volumes:
+      - ~/logs/admin:/logs/admin

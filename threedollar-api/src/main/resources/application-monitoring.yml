@@ -2,7 +2,7 @@ spring:
   boot:
     admin:
       client:
-        url: http://localhost:4000
+        url: admin
         instance:
           name: threedollar-api
           metadata:
@@ -13,7 +13,7 @@ spring:
               environment: dev
   config:
     activate:
-      on-profile: local,dev
+      on-profile: dev
 ---
 spring:
   boot:
@@ -22,4 +22,4 @@ spring:
         enabled: false
   config:
     activate:
-      on-profile: local-will,prod
+      on-profile: local,local-will,prod
