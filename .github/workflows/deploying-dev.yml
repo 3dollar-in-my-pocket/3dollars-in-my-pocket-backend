@@ -30,7 +30,7 @@ jobs:
           USER_PASSWORD: ${{secrets.SECURITY_USER_PASSWORD}}
 
           RESOURCE_PWD: threedollar-api/src/main/resources
-          ADMIN_RESOURCE_PWD: threedollar-api/src/main/resources
+          ADMIN_RESOURCE_PWD: threedollar-admin/src/main/resources
         run: |
           echo -e "spring.security.user.name=$USER_NAME\nspring.security.user.password=$USER_PASSWORD" > $RESOURCE_PWD/application-security.properties
           echo -e "spring.security.user.name=$USER_NAME\nspring.security.user.password=$USER_PASSWORD" > $ADMIN_RESOURCE_PWD/application-security.properties
@@ -52,7 +52,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build
+      - name: Build API
         id: build-api
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -64,7 +64,7 @@ jobs:
           echo "::set-output name=image::$DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG"
           echo -e "API_IMAGE=$DOCKER_REGISTRY/$DOCKER_REPOSITORY\nTAG=$IMAGE_TAG" > deploy/.env
 
-      - name: Build
+      - name: Build ADMIN
         id: build-admin
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
