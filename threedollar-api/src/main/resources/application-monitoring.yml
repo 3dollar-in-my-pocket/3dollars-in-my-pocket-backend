@@ -2,7 +2,7 @@ spring:
   boot:
     admin:
       client:
-        url: admin
+        url: ${ADMIN_SERVER_URL}
         instance:
           name: threedollar-api
           metadata:

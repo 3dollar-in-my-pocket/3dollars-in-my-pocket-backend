@@ -7,6 +7,7 @@ services:
     command: java -jar /threedollar-api.jar
     environment:
       - "SPRING_PROFILES_ACTIVE=dev"
+      - "ADMIN_SERVER_URL=http://admin:4000"
     links:
       - "redis:redis"
       - "admin:admin"
@@ -20,7 +21,6 @@ services:
       - ~/db/data:/data
   admin:
     image: ${ADMIN_IMAGE}:${TAG}
-    hostname: admin
     ports:
       - 4001:4000
     command: java -jar /threedollar-admin.jar
