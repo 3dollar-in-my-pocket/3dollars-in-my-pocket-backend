@@ -23,7 +23,8 @@ class SecuritySecureConfig(
                 "/ping",
                 "/admin/**",
                 "$contextPath/login",
-                "$contextPath/instances"
+                "$contextPath/instances",
+                "$contextPath/assets/**"
             ).permitAll()
             .anyRequest().authenticated()
             .and()
@@ -33,8 +34,6 @@ class SecuritySecureConfig(
             .csrf()
             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
             .ignoringAntMatchers(
-                "/test-token",
-                "/ping",
                 "/admin/**",
                 "$contextPath/instances"
             )
