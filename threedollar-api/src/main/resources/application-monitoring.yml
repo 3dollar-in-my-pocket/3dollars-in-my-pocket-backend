@@ -1,4 +1,7 @@
 spring:
+  config:
+    activate:
+      on-profile: dev
   boot:
     admin:
       client:
@@ -11,15 +14,33 @@ spring:
               password: ${spring.security.user.password}
             tags:
               environment: dev
-  config:
-    activate:
-      on-profile: dev
+sentry:
+  environment: dev
+  traces-sample-rate: 0.3
+
 ---
 spring:
+  config:
+    activate:
+      on-profile: prod
   boot:
     admin:
       client:
         enabled: false
+sentry:
+  environment: prod
+  traces-sample-rate: 0.3
+
+---
+spring:
   config:
     activate:
-      on-profile: local,local-will,prod
+      on-profile: local,local-will
+  boot:
+    admin:
+      client:
+        enabled: false
+sentry:
+  logging:
+    enabled: false
+---
