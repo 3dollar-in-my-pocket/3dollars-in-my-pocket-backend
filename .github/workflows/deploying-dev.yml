@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - develop
-      - feature/TD-159
 jobs:
   build:
     runs-on: ubuntu-latest
