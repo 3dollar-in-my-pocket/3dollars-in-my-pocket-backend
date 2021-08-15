@@ -29,5 +29,9 @@ dependencies {
 
     // spring boot admin client
     implementation("de.codecentric:spring-boot-admin-starter-client:2.4.3")
+
+    // sentry
+    implementation("io.sentry:sentry-spring-boot-starter:5.0.1")
+    implementation("io.sentry:sentry-logback:5.0.1")
 }
 

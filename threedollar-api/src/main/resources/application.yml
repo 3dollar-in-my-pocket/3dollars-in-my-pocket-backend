@@ -11,12 +11,12 @@ spring:
       - domain
       - auth
       - cloud
-      - credential
       - rds
       - redis
       - actuator
       - security
       - monitoring
+      - sentry
   servlet:
     multipart:
       max-file-size: 10MB

@@ -9,6 +9,7 @@ import com.depromeet.threedollar.common.exception.ServiceUnAvailableException;
 import com.depromeet.threedollar.common.exception.UnAuthorizedException;
 import com.depromeet.threedollar.common.exception.ValidationException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import io.sentry.Sentry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -132,6 +133,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(BadGatewayException.class)
     protected ApiResponse<Object> handleBadGatewayException(final BadGatewayException exception) {
         log.error(exception.getMessage(), exception);
+        Sentry.captureException(exception);
         return ApiResponse.error(exception.getErrorCode());
     }
 
@@ -154,6 +156,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(Exception.class)
     protected ApiResponse<Object> handleException(final Exception exception) {
         log.error(exception.getMessage(), exception);
+        Sentry.captureException(exception);
         return ApiResponse.error(INTERNAL_SERVER_EXCEPTION);
     }
 

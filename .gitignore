@@ -40,6 +40,6 @@ generated/
 
 logs
 
-application-credential.yml
 application-rds.yml
 application-security.yml
+application-sentry.yml
