@@ -7,6 +7,7 @@ server:
 spring:
   profiles:
     active: local
+    default: local
     include:
       - domain
       - auth
@@ -17,6 +18,7 @@ spring:
       - security
       - monitoring
       - sentry
+      - slack
   servlet:
     multipart:
       max-file-size: 10MB

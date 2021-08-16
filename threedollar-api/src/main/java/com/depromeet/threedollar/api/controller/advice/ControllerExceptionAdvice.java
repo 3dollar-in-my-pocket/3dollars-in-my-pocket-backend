@@ -1,16 +1,12 @@
 package com.depromeet.threedollar.api.controller.advice;
 
+import com.depromeet.threedollar.api.event.ServerExceptionOccurredEvent;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.common.exception.ConflictException;
-import com.depromeet.threedollar.common.exception.ForbiddenException;
-import com.depromeet.threedollar.common.exception.NotFoundException;
-import com.depromeet.threedollar.common.exception.BadGatewayException;
-import com.depromeet.threedollar.common.exception.ServiceUnAvailableException;
-import com.depromeet.threedollar.common.exception.UnAuthorizedException;
-import com.depromeet.threedollar.common.exception.ValidationException;
+import com.depromeet.threedollar.common.exception.*;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import io.sentry.Sentry;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
@@ -21,13 +17,18 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Objects;
 
 import static com.depromeet.threedollar.common.exception.ErrorCode.*;
 
 @Slf4j
+@RequiredArgsConstructor
 @RestControllerAdvice
 public class ControllerExceptionAdvice {
+
+    private final ApplicationEventPublisher eventPublisher;
 
     /**
      * 400 BadRequest
@@ -133,7 +134,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(BadGatewayException.class)
     protected ApiResponse<Object> handleBadGatewayException(final BadGatewayException exception) {
         log.error(exception.getMessage(), exception);
-        Sentry.captureException(exception);
+        eventPublisher.publishEvent(createEvent(exception.getErrorCode(), exception));
         return ApiResponse.error(exception.getErrorCode());
     }
 
@@ -156,8 +157,12 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(Exception.class)
     protected ApiResponse<Object> handleException(final Exception exception) {
         log.error(exception.getMessage(), exception);
-        Sentry.captureException(exception);
+        eventPublisher.publishEvent(createEvent(INTERNAL_SERVER_EXCEPTION, exception));
         return ApiResponse.error(INTERNAL_SERVER_EXCEPTION);
+    }
+
+    private ServerExceptionOccurredEvent createEvent(ErrorCode errorCode, Exception exception) {
+        return ServerExceptionOccurredEvent.error(errorCode, exception, LocalDateTime.now(ZoneId.of("Asia/Seoul")));
     }
 
 }

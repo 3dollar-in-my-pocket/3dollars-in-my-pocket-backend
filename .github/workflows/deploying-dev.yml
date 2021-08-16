@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - feature/TD-161
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -50,6 +51,15 @@ jobs:
           RESOURCE_PWD: threedollar-admin/src/main/resources
         run: |
           echo -e "jwt.secret_key=$JWT_SECRET_KEY\njwt.issuer=$JWT_ISSUER" > $RESOURCE_PWD/application-jwt.properties
+
+      - name: Create application-slack.properties
+        env:
+          PROFILES: dev
+          SLACK_URL: ${{secrets.SLACK_URL_DEV}}
+
+          RESOURCE_PWD: threedollar-external/src/main/resources
+        run: |
+          echo -e "spring.config.activate.on-profile=$PROFILES\nslack.url=$SLACK_URL" > $RESOURCE_PWD/application-slack.properties
 
       - name: Get Semantic Versioning
         id: dev-version
