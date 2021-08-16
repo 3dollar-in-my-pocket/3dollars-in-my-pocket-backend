@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ServerExceptionEventListener {
 
-    private static final String ERROR_MESSAGE_FORMAT = "Type: %s\nCode: %s\nMessage: %s\nException: %s\nTimestamps: %s";
+    private static final String ERROR_MESSAGE_FORMAT = "[%s : %s]\nTimestamps: %s\nMessage: %s\nException: %s";
 
     private final SlackApiCaller slackApiCaller;
 
@@ -22,9 +22,9 @@ public class ServerExceptionEventListener {
         slackApiCaller.postMessage(String.format(ERROR_MESSAGE_FORMAT,
             event.getType(),
             event.getErrorCode().getCode(),
+            event.getTimeStamp(),
             event.getErrorCode().getMessage(),
-            event.getException(),
-            event.getTimeStamp()
+            event.getException()
         ));
     }
 

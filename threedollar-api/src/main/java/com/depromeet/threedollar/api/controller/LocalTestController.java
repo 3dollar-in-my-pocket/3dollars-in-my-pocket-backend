@@ -35,10 +35,5 @@ public class LocalTestController {
         httpSession.setAttribute(USER_ID, user.getId());
         return ApiResponse.success(LoginResponse.of(httpSession.getId()));
     }
-
-    @GetMapping("/test-error")
-    public String testError() {
-        throw new IllegalArgumentException("에러 테스트");
-    }
-
+    
 }
