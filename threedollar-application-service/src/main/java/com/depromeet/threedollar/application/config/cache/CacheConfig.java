@@ -21,7 +21,7 @@ import java.util.Map;
 @Configuration
 public class CacheConfig {
 
-    private static final Duration DEFAULT_CACHE_DURATION = Duration.ofHours(1);
+    private static final Duration DEFAULT_CACHE_DURATION = Duration.ofMinutes(30);
 
     private final RedisConnectionFactory redisConnectionFactory;
     private final ObjectMapper objectMapper;
@@ -38,8 +38,11 @@ public class CacheConfig {
     @Bean
     public Map<String, RedisCacheConfiguration> customCacheConfiguration() {
         Map<String, RedisCacheConfiguration> customCachePolicies = new HashMap<>();
-        for (CacheConstants constants : CacheConstants.values()) {
+        for (CacheType constants : CacheType.values()) {
             customCachePolicies.put(constants.getKey(), RedisCacheConfiguration.defaultCacheConfig()
+                .disableCachingNullValues()
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer(objectMapper)))
                 .entryTtl(constants.getDuration()));
         }
         return customCachePolicies;

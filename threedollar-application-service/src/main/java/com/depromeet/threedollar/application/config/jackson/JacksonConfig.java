@@ -46,6 +46,7 @@ public class JacksonConfig {
         public LocalDate deserialize(JsonParser p, DeserializationContext context) throws IOException {
             return LocalDate.parse(p.getValueAsString(), LOCAL_DATE_FORMATTER);
         }
+
     }
 
     private static class LocalDateTimeSerializer extends JsonSerializer<LocalDateTime> {
@@ -63,6 +64,7 @@ public class JacksonConfig {
         public LocalDateTime deserialize(JsonParser p, DeserializationContext context) throws IOException {
             return LocalDateTime.parse(p.getValueAsString(), LOCAL_DATE_TIME_FORMATTER);
         }
+
     }
 
 }

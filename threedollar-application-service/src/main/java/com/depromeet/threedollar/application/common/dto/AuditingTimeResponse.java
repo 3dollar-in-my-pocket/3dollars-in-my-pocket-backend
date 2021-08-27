@@ -6,13 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AuditingTimeResponse implements Serializable {
+public abstract class AuditingTimeResponse {
 
     protected LocalDateTime createdAt;
 
