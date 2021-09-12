@@ -3,6 +3,7 @@ name: 운영환경 API 서버 배포
 on:
   push:
     branches:
+      - main
       - feature/189
 jobs:
   build:
@@ -92,7 +93,7 @@ jobs:
           docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
           echo "::set-output name=image::$DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG"
 
-      - name: Download muyaho-api task definition
+      - name: Download task definition
         id: download-task-definition
         run: |
           aws ecs describe-task-definition --task-definition threedollar-api-prod --query taskDefinition > task-definition-prod.json
