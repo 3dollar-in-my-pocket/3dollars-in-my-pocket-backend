@@ -114,3 +114,15 @@ jobs:
           cluster: threedollar-prod
           service: threedollar-api-prod
           wait-for-service-stability: true
+
+      - name: Create Release
+        id: create-release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          release_name: Release ${{ steps.version.outputs.version }}
+          body: ${{ steps.version.outputs.git-commit-msg }}
+          draft: false
+          prerelease: false
