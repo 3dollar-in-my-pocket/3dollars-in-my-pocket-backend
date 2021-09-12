@@ -16,7 +16,7 @@ spring:
 ---
 spring:
   redis:
-    host: threedollar-redis-session.tqy2kj.ng.0001.apn2.cache.amazonaws.com
+    host: threedollar-api-redis-prod.tqy2kj.0001.apn2.cache.amazonaws.com
     port: 6379
   config:
     activate:
