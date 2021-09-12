@@ -61,8 +61,8 @@ jobs:
         run: |
           echo -e "spring.config.activate.on-profile=$PROFILES\nslack.token=$SLACK_TOKEN" > $RESOURCE_PWD/application-slack.properties
 
-      - name: Get dev version
-        id: prod-version
+      - name: Version
+        id: version
         run: |
           VERSION=`cat ./version.txt`
           GIT_COMMIT_MSG=`git show -s`
@@ -81,11 +81,11 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build API
-        id: build-api
+        id: build
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           DOCKER_REPOSITORY: 3dollar-api
-          IMAGE_TAG: ${{ steps.prod-version.outputs.version }}
+          IMAGE_TAG: ${{ steps.version.outputs.version }}
         run: |
           docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG .
           docker tag $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
