@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feature/189
 jobs:
   build:
     runs-on: ubuntu-latest
