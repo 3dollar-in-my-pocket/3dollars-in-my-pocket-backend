@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feature/TD-198
 jobs:
   build:
     runs-on: ubuntu-latest
