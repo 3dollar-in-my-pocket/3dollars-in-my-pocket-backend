@@ -22,7 +22,7 @@ import static com.depromeet.threedollar.common.utils.ProcessUtils.isRunningPort;
  */
 @Slf4j
 @RequiredArgsConstructor
-@Profile({"local"})
+@Profile({"local", "local-will"})
 @Configuration
 public class EmbeddedRedisConfig {
 

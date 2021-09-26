@@ -16,8 +16,15 @@ spring:
   datasource:
     hikari:
       auto-commit: false
+      driver-class-name: org.mariadb.jdbc.Driver
+      jdbc-url: ${secret.jdbc.uri}
+      username: ${secret.jdbc.username}
+      password: ${secret.jdbc.password}
 ---
 spring:
+  config:
+    activate:
+      on-profile: local
   h2:
     console:
       enabled: true
@@ -34,47 +41,28 @@ spring:
       ddl-auto: create
   flyway:
     enabled: false
-  config:
-    activate:
-      on-profile: local
 ---
 spring:
-  datasource:
-    hikari:
-      jdbc-url: jdbc:mariadb://localhost:3306/threedollar_test
-      username: will
-      password: '0000'
-      driver-class-name: org.mariadb.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: none
   config:
     activate:
       on-profile: local-will
----
-spring:
   jpa:
     hibernate:
       ddl-auto: none
+---
+spring:
   config:
     activate:
       on-profile: dev
----
-
-spring:
   jpa:
     hibernate:
       ddl-auto: none
-  config:
-    activate:
-      on-profile: beta
 ---
-
 spring:
-  jpa:
-    hibernate:
-      ddl-auto: none
   config:
     activate:
       on-profile: prod
+  jpa:
+    hibernate:
+      ddl-auto: none
 ---

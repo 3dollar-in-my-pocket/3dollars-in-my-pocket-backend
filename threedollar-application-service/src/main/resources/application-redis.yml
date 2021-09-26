@@ -1,24 +1,24 @@
 spring:
-  redis:
-    host: localhost
-    port: 6379
   config:
     activate:
       on-profile: local,local-will
+  redis:
+    host: localhost
+    port: 6379
 ---
 spring:
-  redis:
-    host: redis
-    port: 6379
   config:
     activate:
       on-profile: dev
+  redis:
+    host: redis
+    port: 6379
 ---
 spring:
-  redis:
-    host: threedollar-api-redis-prod.tqy2kj.0001.apn2.cache.amazonaws.com
-    port: 6379
   config:
     activate:
       on-profile: prod
+  redis:
+    host: threedollar-api-redis-prod.tqy2kj.0001.apn2.cache.amazonaws.com
+    port: 6379
 ---

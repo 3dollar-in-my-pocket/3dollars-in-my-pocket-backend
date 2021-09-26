@@ -1,0 +1,5 @@
+apple:
+  client_id: ${secret.apple.client_id}
+  issuer: ${secret.apple.issuer}
+slack:
+  token: ${secret.slack.token}

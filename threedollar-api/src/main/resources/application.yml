@@ -12,18 +12,19 @@ spring:
     include:
       - domain
       - cloud
-      - rds
       - redis
       - actuator
-      - security
       - monitoring
-      - sentry
-      - slack
       - thirdparty
+      - secret
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+  security:
+    user:
+      name: ${secret.security.user.name}
+      password: ${secret.security.user.password}
 feign:
   client:
     config:
