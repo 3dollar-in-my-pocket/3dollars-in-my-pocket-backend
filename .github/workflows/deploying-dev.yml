@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - feature/TD-223
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -11,33 +12,6 @@ jobs:
     steps:
       - name: checkout@v2
         uses: actions/checkout@v2
-
-      - name: Create application-secret.properties
-        env:
-          PROFILES: dev
-          PROPERTIES_DIR: threedollar-api/src/main/resources/application-secret.properties
-
-          APPLE_CLIENT_ID: ${{secrets.APPLE_CLIENT_ID}}
-          APPLE_ISSUER: ${{secrets.APPLE_ISSUER}}
-
-          SLACK_TOKEN: ${{secrets.SLACK_TOKEN_DEV}}
-
-          SENTRY_DSN: ${{secrets.SENTRY_DSN}}
-
-          USER_NAME: ${{secrets.SECURITY_USER_NAME}}
-          USER_PASSWORD: ${{secrets.SECURITY_USER_PASSWORD}}
-
-          DB_URI: ${{secrets.JDBC_URI}}
-          DB_USERNAME: ${{secrets.DB_USERNAME}}
-          DB_PASSWORD: ${{secrets.DB_PASSWORD}}
-
-        run: |
-          echo -e "spring.config.activate.on-profile=$PROFILES" > $PROPERTIES_DIR
-          echo -e "apple.client_id=$APPLE_CLIENT_ID\napple.issuer=$APPLE_ISSUER" >> $PROPERTIES_DIR
-          echo -e "slack.token=$SLACK_TOKEN" >> $PROPERTIES_DIR
-          echo -e "sentry.dsn=$SENTRY_DSN" >> $PROPERTIES_DIR
-          echo -e "spring.security.user.name=$USER_NAME\nspring.security.user.password=$USER_PASSWORD" >> $PROPERTIES_DIR
-          echo -e "spring.datasource.hikari.jdbc-url=$DB_URI\nspring.datasource.hikari.username=$DB_USERNAME\nspring.datasource.hikari.password=$DB_PASSWORD" >> $PROPERTIES_DIR
 
       - name: Get Semantic Versioning
         id: dev-version
@@ -62,6 +36,20 @@ jobs:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           DOCKER_REPOSITORY: 3dollar-api-dev
           IMAGE_TAG: ${{ steps.dev-version.outputs.version }}
+
+          APPLE_CLIENT_ID: ${{secrets.APPLE_CLIENT_ID}}
+          APPLE_ISSUER: ${{secrets.APPLE_ISSUER}}
+
+          SLACK_TOKEN: ${{secrets.SLACK_TOKEN_DEV}}
+
+          SENTRY_DSN: ${{secrets.SENTRY_DSN}}
+
+          USER_NAME: ${{secrets.SECURITY_USER_NAME}}
+          USER_PASSWORD: ${{secrets.SECURITY_USER_PASSWORD}}
+
+          DB_URI: ${{secrets.JDBC_URI}}
+          DB_USERNAME: ${{secrets.DB_USERNAME}}
+          DB_PASSWORD: ${{secrets.DB_PASSWORD}}
         run: |
           docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG .
           docker tag $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
@@ -69,18 +57,6 @@ jobs:
           docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
           echo "::set-output name=image::$DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG"
           echo -e "API_IMAGE=$DOCKER_REGISTRY/$DOCKER_REPOSITORY\nTAG=$IMAGE_TAG" > deploy/.env
-
-#      - name: Build ADMIN
-#        id: build-admin
-#        env:
-#          DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-#          DOCKER_REPOSITORY: 3dollar-admin
-#          IMAGE_TAG: ${{ steps.dev-version.outputs.version }}
-#        run: |
-#          docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG -f Dockerfile_admin .
-#          docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG
-#          echo "::set-output name=image::$DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG"
-#          echo -e "ADMIN_IMAGE=$DOCKER_REGISTRY/$DOCKER_REPOSITORY" >> deploy/.env
 
       - name: Zip deploy.zip
         run: zip -r deploy.zip deploy

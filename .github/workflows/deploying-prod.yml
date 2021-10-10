@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - feature/TD-223
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -11,33 +12,6 @@ jobs:
     steps:
       - name: checkout@v2
         uses: actions/checkout@v2
-
-      - name: Create application-secret.properties
-        env:
-          PROFILES: prod
-          PROPERTIES_DIR: threedollar-api/src/main/resources/application-secret.properties
-
-          APPLE_CLIENT_ID: ${{secrets.APPLE_CLIENT_ID}}
-          APPLE_ISSUER: ${{secrets.APPLE_ISSUER}}
-
-          SLACK_TOKEN: ${{secrets.SLACK_TOKEN_PROD}}
-
-          SENTRY_DSN: ${{secrets.SENTRY_DSN}}
-
-          USER_NAME: ${{secrets.SECURITY_USER_NAME}}
-          USER_PASSWORD: ${{secrets.SECURITY_USER_PASSWORD}}
-
-          DB_URI: ${{secrets.JDBC_URI_PROD}}
-          DB_USERNAME: ${{secrets.DB_USERNAME_PROD}}
-          DB_PASSWORD: ${{secrets.DB_PASSWORD_PROD}}
-
-        run: |
-          echo -e "spring.config.activate.on-profile=$PROFILES" > $PROPERTIES_DIR
-          echo -e "apple.client_id=$APPLE_CLIENT_ID\napple.issuer=$APPLE_ISSUER" >> $PROPERTIES_DIR
-          echo -e "slack.token=$SLACK_TOKEN" >> $PROPERTIES_DIR
-          echo -e "sentry.dsn=$SENTRY_DSN" >> $PROPERTIES_DIR
-          echo -e "spring.security.user.name=$USER_NAME\nspring.security.user.password=$USER_PASSWORD" >> $PROPERTIES_DIR
-          echo -e "spring.datasource.hikari.jdbc-url=$DB_URI\nspring.datasource.hikari.username=$DB_USERNAME\nspring.datasource.hikari.password=$DB_PASSWORD" >> $PROPERTIES_DIR
 
       - name: Version
         id: version
