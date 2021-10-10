@@ -1,11 +1,9 @@
-version: "3"
+version: "3.9"
 services:
   api:
     image: ${API_IMAGE}:${TAG}
     ports:
       - 5002:5000
-    deploy:
-      replicas: 2
     environment:
       - "SPRING_PROFILES_ACTIVE=dev"
     links:
