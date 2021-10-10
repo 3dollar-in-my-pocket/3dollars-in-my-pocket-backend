@@ -12,6 +12,9 @@ services:
       - ~/logs:/logs
     env_file:
       - ~/env/dev.env
+    stop_signal: SIGTERM
+    stop_grace_period: 1m
+    restart: unless-stopped
   redis:
     image: redis
     command: redis-server --port 6379

@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - develop
-      - feature/TD-223
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -36,20 +35,6 @@ jobs:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           DOCKER_REPOSITORY: 3dollar-api-dev
           IMAGE_TAG: ${{ steps.dev-version.outputs.version }}
-
-          APPLE_CLIENT_ID: ${{secrets.APPLE_CLIENT_ID}}
-          APPLE_ISSUER: ${{secrets.APPLE_ISSUER}}
-
-          SLACK_TOKEN: ${{secrets.SLACK_TOKEN_DEV}}
-
-          SENTRY_DSN: ${{secrets.SENTRY_DSN}}
-
-          USER_NAME: ${{secrets.SECURITY_USER_NAME}}
-          USER_PASSWORD: ${{secrets.SECURITY_USER_PASSWORD}}
-
-          DB_URI: ${{secrets.JDBC_URI}}
-          DB_USERNAME: ${{secrets.DB_USERNAME}}
-          DB_PASSWORD: ${{secrets.DB_PASSWORD}}
         run: |
           docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG .
           docker tag $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
