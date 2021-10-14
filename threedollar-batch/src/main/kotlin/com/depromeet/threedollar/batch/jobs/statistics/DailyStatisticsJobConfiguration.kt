@@ -73,7 +73,7 @@ class DailyStatisticsJobConfiguration(
                 val message = result.asSequence()
                     .sortedByDescending { it.counts }
                     .joinToString(separator = "\n") {
-                        "- ${it.category.description}: ${it.counts}개가 활성화되어 있습니다"
+                        MENU_DESCRIPTION.format(it.category.description, it.counts)
                     }
 
                 slackApiClient.postMessage(PostSlackMessageRequest.of(ACTIVE_MENU_COUNTS_MESSAGE_FORMAT.format(message)))
@@ -92,6 +92,9 @@ class DailyStatisticsJobConfiguration(
 
         private const val ACTIVE_MENU_COUNTS_MESSAGE_FORMAT = "" +
             "2. 활성화된 메뉴 정보\n%s"
+
+        private const val MENU_DESCRIPTION = "" +
+            "- %s: %s개가 활성화되어 있습니다"
     }
 
 }
