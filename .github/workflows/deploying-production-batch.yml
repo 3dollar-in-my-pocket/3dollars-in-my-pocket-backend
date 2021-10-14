@@ -1,9 +1,10 @@
-name: 개발 환경 배치 잡 배포
+name: 운영 환경 배치 잡 배포
 
 on:
   push:
     branches:
-      - develop
+      - master
+      - feature/batch-cicd
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -11,11 +12,13 @@ jobs:
       - name: checkout@v2
         uses: actions/checkout@v2
 
-      - name: Get Semantic Versioning
-        id: dev-version
+      - name: Version
+        id: version
         run: |
-          VERSION=`cat ./version.txt`-${{ github.run_id }}
+          VERSION=`cat ./version.txt`
+          GIT_COMMIT_MSG=`git show -s`
           echo "::set-output name=version::$VERSION"
+          echo "::set-output name=git-commit-msg::$GIT_COMMIT_MSG"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -32,8 +35,8 @@ jobs:
         id: build
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          DOCKER_REPOSITORY: 3dollar-batch-dev
-          IMAGE_TAG: ${{ steps.dev-version.outputs.version }}
+          DOCKER_REPOSITORY: 3dollar-batch-prod
+          IMAGE_TAG: ${{ steps.version.outputs.version }}
         run: |
           docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG -f Dockerfile_batch .
           docker tag $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
