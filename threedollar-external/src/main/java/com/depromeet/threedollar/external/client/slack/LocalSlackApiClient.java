@@ -12,6 +12,6 @@ public class LocalSlackApiClient implements SlackApiClient {
 
     @Override
     public void postMessage(PostSlackMessageRequest request) {
-
     }
+
 }

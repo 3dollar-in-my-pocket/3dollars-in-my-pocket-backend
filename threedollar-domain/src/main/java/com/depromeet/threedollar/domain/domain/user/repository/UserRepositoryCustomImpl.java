@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.LockModeType;
 
+import java.time.LocalDate;
+
 import static com.depromeet.threedollar.domain.domain.user.QUser.user;
 
 @RequiredArgsConstructor
@@ -49,6 +51,24 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
         return queryFactory.selectFrom(user)
             .where(user.id.eq(userId))
             .fetchOne();
+    }
+
+    @Override
+    public long findUsersCount() {
+        return queryFactory.select(user.id)
+            .from(user)
+            .fetchCount();
+    }
+
+    @Override
+    public long findUsersCountByDate(LocalDate startDate, LocalDate endDate) {
+        return queryFactory.select(user.id)
+            .from(user)
+            .where(
+                user.createdAt.goe(startDate.atStartOfDay()),
+                user.createdAt.lt(endDate.atStartOfDay().plusDays(1))
+            )
+            .fetchCount();
     }
 
 }

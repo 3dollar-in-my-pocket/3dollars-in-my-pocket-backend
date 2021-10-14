@@ -1,0 +1,6 @@
+dependencies {
+    implementation project(':threedollar-domain')
+    implementation project(":threedollar-external")
+
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
+}

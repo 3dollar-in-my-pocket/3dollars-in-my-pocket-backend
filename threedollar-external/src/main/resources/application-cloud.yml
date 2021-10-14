@@ -11,7 +11,9 @@ cloud:
 spring:
   config:
     activate:
-      on-profile: local,local-will
+      on-profile:
+        - local
+        - local-will
 ---
 cloud:
   aws:

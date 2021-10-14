@@ -121,6 +121,18 @@ class StoreRepositoryTest {
             assertThat(counts).isEqualTo(1);
         }
 
+        @Test
+        void 하나도_등록하지_않은경우_count는_0이된다() {
+            // given
+            Long userId = 100L;
+
+            // when
+            long counts = storeRepository.findCountsByUserId(userId);
+
+            // then
+            assertThat(counts).isEqualTo(0);
+        }
+
     }
 
     @Nested
