@@ -2,9 +2,7 @@ package com.depromeet.threedollar.application.service.faq
 
 import com.depromeet.threedollar.application.config.cache.CacheType
 import com.depromeet.threedollar.application.service.faq.dto.request.RetrieveFaqsRequest
-import com.depromeet.threedollar.application.service.faq.dto.response.FaqCategoryResponse
 import com.depromeet.threedollar.application.service.faq.dto.response.FaqResponse
-import com.depromeet.threedollar.domain.domain.faq.FaqCategory
 import com.depromeet.threedollar.domain.domain.faq.FaqRepository
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
@@ -21,13 +19,6 @@ class FaqService(
         return faqRepository.findAllByCategory(request.category).asSequence()
             .sortedBy { it.category.displayOrder }
             .map { FaqResponse.of(it) }
-            .toList()
-    }
-
-    fun retrieveAllFaqCategories(): List<FaqCategoryResponse> {
-        return FaqCategory.values().asSequence()
-            .sortedBy { it.displayOrder }
-            .map { FaqCategoryResponse.of(it) }
             .toList()
     }
 

@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.controller.faq;
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.controller.AbstractControllerTest;
-import com.depromeet.threedollar.application.service.faq.dto.response.FaqCategoryResponse;
+import com.depromeet.threedollar.application.mapper.dto.FaqCategoryResponse;
 import com.depromeet.threedollar.application.service.faq.dto.response.FaqResponse;
 import com.depromeet.threedollar.domain.domain.faq.Faq;
 import com.depromeet.threedollar.domain.domain.faq.FaqCategory;

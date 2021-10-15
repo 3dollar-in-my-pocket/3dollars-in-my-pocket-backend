@@ -73,7 +73,7 @@ class DailyStatisticsJobConfiguration(
                 val message = result.asSequence()
                     .sortedByDescending { it.counts }
                     .joinToString(separator = "\n") {
-                        MENU_DESCRIPTION.format(it.category.description, it.counts)
+                        MENU_DESCRIPTION.format(it.category.name, it.counts)
                     }
 
                 slackApiClient.postMessage(PostSlackMessageRequest.of(ACTIVE_MENU_COUNTS_MESSAGE_FORMAT.format(message)))
