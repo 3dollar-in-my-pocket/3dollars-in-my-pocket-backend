@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.domain.domain.user;
 
 import com.depromeet.threedollar.domain.domain.common.AuditingTimeEntity;
+import com.depromeet.threedollar.domain.domain.medal.UserMedalType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,9 @@ public class User extends AuditingTimeEntity {
     @Column(length = 50, nullable = false)
     private String name;
 
+    @Enumerated(EnumType.STRING)
+    private UserMedalType medalType;
+
     private User(String socialId, UserSocialType socialType, String name) {
         this.socialInfo = SocialInfo.of(socialId, socialType);
         this.name = name;
@@ -39,8 +43,12 @@ public class User extends AuditingTimeEntity {
         return new User(socialId, socialType, name);
     }
 
-    public void update(String name) {
+	public void updateName(String name) {
         this.name = name;
+    }
+
+    public void updateMedal(UserMedalType medalType) {
+        this.medalType = medalType;
     }
 
     public String getSocialId() {

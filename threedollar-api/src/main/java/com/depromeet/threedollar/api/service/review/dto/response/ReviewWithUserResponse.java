@@ -29,7 +29,7 @@ public class ReviewWithUserResponse extends AuditingTimeResponse {
             .reviewId(projection.getReviewId())
             .rating(projection.getRating())
             .contents(projection.getContents())
-            .user(UserInfoResponse.of(projection.getUserId(), projection.getUserName(), projection.getUserSocialType()))
+            .user(UserInfoResponse.of(projection.getUserId(), projection.getUserName(), projection.getUserSocialType(), projection.getUserMedalType()))
             .build();
         response.setBaseTime(projection.getCreatedAt(), projection.getUpdatedAt());
         return response;

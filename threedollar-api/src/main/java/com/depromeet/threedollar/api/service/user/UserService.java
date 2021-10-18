@@ -38,7 +38,7 @@ public class UserService {
     public UserInfoResponse updateUserInfo(UpdateUserInfoRequest request, Long userId) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
         UserServiceUtils.validateNotExistsUserName(userRepository, request.getName());
-        user.update(request.getName());
+        user.updateName(request.getName());
         return UserInfoResponse.of(user);
     }
 
