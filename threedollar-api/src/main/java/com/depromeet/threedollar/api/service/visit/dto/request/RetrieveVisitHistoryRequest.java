@@ -13,13 +13,13 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RetrieveVisitHistoryRequest {
 
-    @NotNull
+    @NotNull(message = "{store.storeId.notNull}")
     private Long storeId;
 
-    @NotNull
+    @NotNull(message = "{visit.startDate.notNull}")
     private LocalDate startDate;
 
-    @NotNull
+    @NotNull(message = "{visit.endDate.notNull}")
     private LocalDate endDate;
 
 }

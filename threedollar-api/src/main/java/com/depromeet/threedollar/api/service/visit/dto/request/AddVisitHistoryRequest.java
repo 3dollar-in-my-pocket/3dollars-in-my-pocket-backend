@@ -13,10 +13,10 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AddVisitHistoryRequest {
 
-    @NotNull
+    @NotNull(message = "{store.storeId.notNull}")
     private Long storeId;
 
-    @NotNull
+    @NotNull(message = "{visit.type.notNull}")
     private VisitType type;
 
     public static AddVisitHistoryRequest testInstance(Long storeId, VisitType type) {
