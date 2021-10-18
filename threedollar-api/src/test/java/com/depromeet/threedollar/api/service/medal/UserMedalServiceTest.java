@@ -3,6 +3,7 @@ package com.depromeet.threedollar.api.service.medal;
 import com.depromeet.threedollar.api.service.UserSetUpTest;
 import com.depromeet.threedollar.api.service.medal.dto.request.ActivateUserMedalRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
+import com.depromeet.threedollar.domain.domain.medal.UserMedal;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalCreator;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalType;
@@ -30,6 +31,44 @@ class UserMedalServiceTest extends UserSetUpTest {
     void cleanUp() {
         super.cleanup();
         userMedalRepository.deleteAll();
+    }
+
+    @DisplayName("유저가 보유한 메달을 추가한다")
+    @Nested
+    class addUserMedal {
+
+        @Test
+        void 유저가_보유한_메달을_추가한다() {
+            // given
+            UserMedalType type = UserMedalType.BUNGEOPPANG_CHALLENGER;
+
+            // when
+            userMedalService.addUserMedal(type, userId);
+
+            // then
+            List<UserMedal> userMedals = userMedalRepository.findAll();
+            assertAll(
+                () -> assertThat(userMedals).hasSize(1),
+                () -> assertUserMedal(userMedals.get(0), userId, type)
+            );
+        }
+
+        @Test
+        void 이미_보유하고_있는_메달일경우_예외가_발생하지는_않지만_중복_저장되지_않는다() {
+            // given
+            UserMedalType type = UserMedalType.BUNGEOPPANG_CHALLENGER;
+            userMedalRepository.save(UserMedalCreator.create(userId, type));
+
+            // when
+            userMedalService.addUserMedal(type, userId);
+
+            // then
+            List<UserMedal> userMedals = userMedalRepository.findAll();
+            assertAll(
+                () -> assertThat(userMedals).hasSize(1),
+                () -> assertUserMedal(userMedals.get(0), userId, type)
+            );
+        }
     }
 
     @DisplayName("유저의 장착중인 메달을 변경한다")
@@ -78,6 +117,11 @@ class UserMedalServiceTest extends UserSetUpTest {
                 () -> assertThat(users.get(0).getMedalType()).isNull()
             );
         }
+    }
+
+    private void assertUserMedal(UserMedal userMedal, Long userId, UserMedalType type) {
+        assertThat(userMedal.getUserId()).isEqualTo(userId);
+        assertThat(userMedal.getMedalType()).isEqualTo(type);
     }
 
 }

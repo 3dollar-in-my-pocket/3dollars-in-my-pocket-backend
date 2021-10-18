@@ -5,6 +5,7 @@ import com.depromeet.threedollar.api.service.medal.dto.response.UserMedalRespons
 import com.depromeet.threedollar.api.service.user.UserServiceUtils;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
+import com.depromeet.threedollar.domain.domain.medal.UserMedal;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalType;
 import com.depromeet.threedollar.domain.domain.user.User;
@@ -24,6 +25,15 @@ public class UserMedalService {
 
     private final UserRepository userRepository;
     private final UserMedalRepository userMedalRepository;
+
+    // TODO 차후 기획이 정해지면 특정 조건에 이벤트 방식으로 메달을 획득할 수 있도록 사용.
+    @Transactional
+    public void addUserMedal(UserMedalType type, Long userId) {
+        if (userMedalRepository.existsMedalByUserId(userId, type)) {
+            return;
+        }
+        userMedalRepository.save(UserMedal.of(userId, type));
+    }
 
     @Transactional(readOnly = true)
     public List<UserMedalResponse> getAvailableUserMedals(Long userId) {
