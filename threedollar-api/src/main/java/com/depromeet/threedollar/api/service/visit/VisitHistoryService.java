@@ -5,7 +5,7 @@ import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRe
 import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoryRequest;
 import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveVisitHistoryRequest;
 import com.depromeet.threedollar.api.service.visit.dto.response.MyVisitHistoriesScrollResponse;
-import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryResponse;
+import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithUserResponse;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
@@ -29,7 +29,7 @@ public class VisitHistoryService {
     private final VisitHistoryRepository visitHistoryRepository;
 
     @Transactional
-    public void addStoreVisitHistory(AddVisitHistoryRequest request, Long userId) {
+    public void addVisitHistory(AddVisitHistoryRequest request, Long userId) {
         Store store = StoreServiceUtils.findStoreById(storeRepository, request.getStoreId());
         final LocalDate today = LocalDate.now();
         VisitHistoryServiceUtils.validateNotVisitedToday(visitHistoryRepository, request.getStoreId(), userId, today);
@@ -37,11 +37,11 @@ public class VisitHistoryService {
     }
 
     @Transactional(readOnly = true)
-    public Map<LocalDate, List<VisitHistoryResponse>> retrieveStoreVisitHistories(RetrieveVisitHistoryRequest request) {
+    public Map<LocalDate, List<VisitHistoryWithUserResponse>> retrieveVisitHistories(RetrieveVisitHistoryRequest request) {
         List<VisitHistoryWithUserProjection> histories = visitHistoryRepository.findAllVisitWithUserByStoreIdBetweenDate(request.getStoreId(), request.getStartDate(), request.getEndDate());
         return histories.stream()
-            .map(VisitHistoryResponse::of)
-            .collect(Collectors.groupingBy(VisitHistoryResponse::getDateOfVisit));
+            .map(VisitHistoryWithUserResponse::of)
+            .collect(Collectors.groupingBy(VisitHistoryWithUserResponse::getDateOfVisit));
     }
 
     @Transactional(readOnly = true)

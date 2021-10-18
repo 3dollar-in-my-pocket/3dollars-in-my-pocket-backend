@@ -7,7 +7,7 @@ import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRe
 import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoryRequest;
 import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveVisitHistoryRequest;
 import com.depromeet.threedollar.api.service.visit.dto.response.MyVisitHistoriesScrollResponse;
-import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryResponse;
+import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithUserResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -32,15 +32,15 @@ public class VisitHistoryController {
     @ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, paramType = "header")
     @Auth
     @PostMapping("/api/v2/store/visit")
-    public ApiResponse<String> addStoreVisitHistory(@Valid @RequestBody AddVisitHistoryRequest request, @UserId Long userId) {
-        visitHistoryService.addStoreVisitHistory(request, userId);
+    public ApiResponse<String> addVisitHistory(@Valid @RequestBody AddVisitHistoryRequest request, @UserId Long userId) {
+        visitHistoryService.addVisitHistory(request, userId);
         return ApiResponse.SUCCESS;
     }
 
     @ApiOperation("해당 가게에 등록된 방문기록들을 조회합니다.")
     @GetMapping("/api/v2/store/visits")
-    public ApiResponse<Map<LocalDate, List<VisitHistoryResponse>>> retrieveStoreVisitHistories(@Valid RetrieveVisitHistoryRequest request) {
-        return ApiResponse.success(visitHistoryService.retrieveStoreVisitHistories(request));
+    public ApiResponse<Map<LocalDate, List<VisitHistoryWithUserResponse>>> retrieveVisitHistories(@Valid RetrieveVisitHistoryRequest request) {
+        return ApiResponse.success(visitHistoryService.retrieveVisitHistories(request));
     }
 
     @ApiOperation("[인증] 내가 방문 기록 인증을 남긴 가게들을 스크롤 페이지네이션으로 조회합니다.")

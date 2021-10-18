@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class VisitHistoryResponse extends AuditingTimeResponse {
+public class VisitHistoryWithUserResponse extends AuditingTimeResponse {
 
     private Long visitHistoryId;
 
@@ -24,7 +24,7 @@ public class VisitHistoryResponse extends AuditingTimeResponse {
     private UserInfoResponse user;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private VisitHistoryResponse(Long visitHistoryId, Long storeId, VisitType type, LocalDate dateOfVisit, UserInfoResponse user) {
+    private VisitHistoryWithUserResponse(Long visitHistoryId, Long storeId, VisitType type, LocalDate dateOfVisit, UserInfoResponse user) {
         this.visitHistoryId = visitHistoryId;
         this.storeId = storeId;
         this.type = type;
@@ -32,8 +32,8 @@ public class VisitHistoryResponse extends AuditingTimeResponse {
         this.user = user;
     }
 
-    public static VisitHistoryResponse of(VisitHistoryWithUserProjection projection) {
-        VisitHistoryResponse response = VisitHistoryResponse.builder()
+    public static VisitHistoryWithUserResponse of(VisitHistoryWithUserProjection projection) {
+        VisitHistoryWithUserResponse response = VisitHistoryWithUserResponse.builder()
             .visitHistoryId(projection.getVisitHistoryId())
             .storeId(projection.getStoreId())
             .type(projection.getType())

@@ -48,7 +48,7 @@ class VisitHistoryServiceTest extends StoreSetupTest {
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(storeId, VisitType.EXISTS);
 
             // when
-            visitHistoryService.addStoreVisitHistory(request, userId);
+            visitHistoryService.addVisitHistory(request, userId);
 
             // then
             List<VisitHistory> histories = visitHistoryRepository.findAll();
@@ -64,7 +64,7 @@ class VisitHistoryServiceTest extends StoreSetupTest {
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(notFoundStoreId, VisitType.EXISTS);
 
             // when & then
-            assertThatThrownBy(() -> visitHistoryService.addStoreVisitHistory(request, userId)).isInstanceOf(NotFoundException.class);
+            assertThatThrownBy(() -> visitHistoryService.addVisitHistory(request, userId)).isInstanceOf(NotFoundException.class);
         }
 
         @Test
@@ -76,7 +76,7 @@ class VisitHistoryServiceTest extends StoreSetupTest {
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(storeId, VisitType.NOT_EXISTS);
 
             // when & then
-            assertThatThrownBy(() -> visitHistoryService.addStoreVisitHistory(request, userId)).isInstanceOf(ConflictException.class);
+            assertThatThrownBy(() -> visitHistoryService.addVisitHistory(request, userId)).isInstanceOf(ConflictException.class);
         }
     }
 
