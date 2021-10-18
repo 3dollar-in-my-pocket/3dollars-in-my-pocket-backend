@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.controller.store;
 
 import com.depromeet.threedollar.api.config.interceptor.Auth;
 import com.depromeet.threedollar.api.config.resolver.UserId;
-import com.depromeet.threedollar.api.service.store.GetDistanceToStoreRequest;
+import com.depromeet.threedollar.api.service.store.dto.request.GetDistanceToStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.service.store.StoreRetrieveService;

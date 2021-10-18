@@ -1,9 +1,6 @@
 package com.depromeet.threedollar.api.service.store;
 
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStoresRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveMyStoresRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreGroupByCategoryRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailInfoRequest;
+import com.depromeet.threedollar.api.service.store.dto.request.*;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
 import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
