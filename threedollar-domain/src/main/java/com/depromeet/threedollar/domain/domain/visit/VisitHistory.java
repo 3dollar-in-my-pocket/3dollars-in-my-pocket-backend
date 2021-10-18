@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.domain.domain.visit;
 
 import com.depromeet.threedollar.domain.domain.common.AuditingTimeEntity;
+import com.depromeet.threedollar.domain.domain.store.Store;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,8 +19,9 @@ public class VisitHistory extends AuditingTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Long storeId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id", nullable = false)
+    private Store store;
 
     @Column(nullable = false)
     private Long userId;
@@ -32,16 +34,16 @@ public class VisitHistory extends AuditingTimeEntity {
     private LocalDate dateOfVisit;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private VisitHistory(Long storeId, Long userId, VisitType type, LocalDate dateOfVisit) {
-        this.storeId = storeId;
+    private VisitHistory(Store store, Long userId, VisitType type, LocalDate dateOfVisit) {
+        this.store = store;
         this.userId = userId;
         this.type = type;
         this.dateOfVisit = dateOfVisit;
     }
 
-    public static VisitHistory of(Long storeId, Long userId, VisitType type, LocalDate dateOfVisit) {
+    public static VisitHistory of(Store store, Long userId, VisitType type, LocalDate dateOfVisit) {
         return VisitHistory.builder()
-            .storeId(storeId)
+            .store(store)
             .userId(userId)
             .type(type)
             .dateOfVisit(dateOfVisit)

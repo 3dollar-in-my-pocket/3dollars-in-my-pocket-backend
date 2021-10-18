@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.service;
 
+import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,9 +13,12 @@ public abstract class StoreSetupTest extends UserSetUpTest {
 
     protected Long storeId;
 
+    protected Store store;
+
     @BeforeEach
     void setUpStore() {
-        storeId = storeRepository.save(StoreCreator.create(userId, "테스트 가게")).getId();
+        store = storeRepository.save(StoreCreator.create(userId, "테스트 가게"));
+        storeId = store.getId();
     }
 
     @Override

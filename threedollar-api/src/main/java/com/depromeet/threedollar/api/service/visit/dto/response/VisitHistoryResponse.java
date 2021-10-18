@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.service.visit.dto.response;
 
+import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
 import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithUserProjection;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class VisitHistoryResponse extends AuditingTimeResponse {
 
-    private Long visitId;
+    private Long visitHistoryId;
 
     private Long storeId;
 
@@ -20,28 +21,24 @@ public class VisitHistoryResponse extends AuditingTimeResponse {
 
     private LocalDate dateOfVisit;
 
-    private Long userId;
-
-    private String userName;
+    private UserInfoResponse user;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private VisitHistoryResponse(Long visitId, Long storeId, VisitType type, LocalDate dateOfVisit, Long userId, String userName) {
-        this.visitId = visitId;
+    private VisitHistoryResponse(Long visitHistoryId, Long storeId, VisitType type, LocalDate dateOfVisit, UserInfoResponse user) {
+        this.visitHistoryId = visitHistoryId;
         this.storeId = storeId;
         this.type = type;
         this.dateOfVisit = dateOfVisit;
-        this.userId = userId;
-        this.userName = userName;
+        this.user = user;
     }
 
     public static VisitHistoryResponse of(VisitHistoryWithUserProjection projection) {
         VisitHistoryResponse response = VisitHistoryResponse.builder()
-            .visitId(projection.getVisitId())
+            .visitHistoryId(projection.getVisitHistoryId())
             .storeId(projection.getStoreId())
             .type(projection.getType())
             .dateOfVisit(projection.getDateOfVisit())
-            .userId(projection.getUserId())
-            .userName(projection.getUserName())
+            .user(UserInfoResponse.of(projection.getUserId(), projection.getUserName(), projection.getSocialType()))
             .build();
         response.setBaseTime(projection.getVisitCreatedAt(), projection.getVisitUpdatedAt());
         return response;

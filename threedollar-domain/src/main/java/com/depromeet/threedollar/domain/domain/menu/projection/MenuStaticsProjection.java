@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.domain.menu.repository.projection;
+package com.depromeet.threedollar.domain.domain.menu.projection;
 
 import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
 import com.querydsl.core.annotations.QueryProjection;

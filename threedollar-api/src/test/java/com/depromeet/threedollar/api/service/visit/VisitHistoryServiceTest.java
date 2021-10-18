@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
-public class VisitHistoryServiceTest extends StoreSetupTest {
+class VisitHistoryServiceTest extends StoreSetupTest {
 
     @Autowired
     private VisitHistoryService visitHistoryService;
@@ -33,8 +33,9 @@ public class VisitHistoryServiceTest extends StoreSetupTest {
 
     @AfterEach
     void cleanUp() {
-        super.cleanup();
-        visitHistoryRepository.deleteAll();
+        userRepository.deleteAll();
+        visitHistoryRepository.deleteAllInBatch();
+        storeRepository.deleteAllInBatch();
     }
 
     @DisplayName("가게 방문 인증 등록")
@@ -44,7 +45,7 @@ public class VisitHistoryServiceTest extends StoreSetupTest {
         @Test
         void 유저가_가게_방문_인증을_등록하면_DB_에_가게_방문_기록이_저장된다() {
             // given
-            AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(storeId, VisitType.EXISTS_STORE);
+            AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(storeId, VisitType.EXISTS);
 
             // when
             visitHistoryService.addStoreVisitHistory(request, userId);
@@ -60,7 +61,7 @@ public class VisitHistoryServiceTest extends StoreSetupTest {
         @Test
         void 가게_방문_인증시_존재하지_않은_가게인경우_NotFoundException_이_발생한다() {
             Long notFoundStoreId = 999L;
-            AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(notFoundStoreId, VisitType.EXISTS_STORE);
+            AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(notFoundStoreId, VisitType.EXISTS);
 
             // when & then
             assertThatThrownBy(() -> visitHistoryService.addStoreVisitHistory(request, userId)).isInstanceOf(NotFoundException.class);
@@ -70,9 +71,9 @@ public class VisitHistoryServiceTest extends StoreSetupTest {
         void 가게_방문_인증시_해당_유저가_오늘_방문한_가게인경우_ConflictException_이_발생한다() {
             // given
             LocalDate dateOfVisit = LocalDate.of(2021, 10, 18);
-            visitHistoryRepository.save(VisitHistoryCreator.create(storeId, userId, VisitType.EXISTS_STORE, dateOfVisit));
+            visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, dateOfVisit));
 
-            AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(storeId, VisitType.EXISTS_STORE);
+            AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(storeId, VisitType.NOT_EXISTS);
 
             // when & then
             assertThatThrownBy(() -> visitHistoryService.addStoreVisitHistory(request, userId)).isInstanceOf(ConflictException.class);
@@ -80,7 +81,7 @@ public class VisitHistoryServiceTest extends StoreSetupTest {
     }
 
     private void assertVisitHistory(VisitHistory visitHistory, Long storeId, Long userId, VisitType type, LocalDate dateOfVisit) {
-        assertThat(visitHistory.getStoreId()).isEqualTo(storeId);
+        assertThat(visitHistory.getStore().getId()).isEqualTo(storeId);
         assertThat(visitHistory.getUserId()).isEqualTo(userId);
         assertThat(visitHistory.getType()).isEqualTo(type);
         assertThat(visitHistory.getDateOfVisit()).isEqualTo(dateOfVisit);

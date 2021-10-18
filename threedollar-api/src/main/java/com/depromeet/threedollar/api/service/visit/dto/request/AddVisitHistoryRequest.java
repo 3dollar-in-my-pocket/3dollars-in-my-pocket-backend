@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.service.visit.dto.request;
 
+import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
 import lombok.*;
@@ -23,8 +24,8 @@ public class AddVisitHistoryRequest {
         return new AddVisitHistoryRequest(storeId, type);
     }
 
-    public VisitHistory toEntity(Long userId, LocalDate dateOfVisit) {
-        return VisitHistory.of(storeId, userId, type, dateOfVisit);
+    public VisitHistory toEntity(Store store, Long userId, LocalDate dateOfVisit) {
+        return VisitHistory.of(store, userId, type, dateOfVisit);
     }
 
 }
