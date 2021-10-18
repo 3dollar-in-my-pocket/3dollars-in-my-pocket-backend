@@ -29,14 +29,14 @@ public class VisitHistoryController {
     @ApiOperation("[인증] 해당 가게에 오늘날짜로 방문 인증을 등록합니다.")
     @ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, paramType = "header")
     @Auth
-    @PostMapping("/api/v1/store/visit")
+    @PostMapping("/api/v2/store/visit")
     public ApiResponse<String> addStoreVisitHistory(@Valid @RequestBody AddVisitHistoryRequest request, @UserId Long userId) {
         visitHistoryService.addStoreVisitHistory(request, userId);
         return ApiResponse.SUCCESS;
     }
 
     @ApiOperation("[인증] 해당 가게에 등록된 방문기록들을 조회합니다.")
-    @GetMapping("/api/v1/store/visits")
+    @GetMapping("/api/v2/store/visits")
     public ApiResponse<Map<LocalDate, List<VisitHistoryResponse>>> retrieveStoreVisitHistories(@Valid RetrieveVisitHistoryRequest request) {
         return ApiResponse.success(visitHistoryService.retrieveStoreVisitHistory(request));
     }
