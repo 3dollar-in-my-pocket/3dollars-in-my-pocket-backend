@@ -1,7 +1,9 @@
 package com.depromeet.threedollar.api.service.visit
 
+import com.depromeet.threedollar.api.controller.visit.dto.request.RetrieveVisitHistoryRequest
 import com.depromeet.threedollar.api.service.store.StoreServiceUtils
 import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRequest
+import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryResponse
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.domain.domain.store.StoreRepository
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory
@@ -17,11 +19,23 @@ class VisitHistoryService(
 ) {
 
     @Transactional
-    fun addVisitHistory(request: AddVisitHistoryRequest, userId: Long) {
+    fun addStoreVisitHistory(request: AddVisitHistoryRequest, userId: Long) {
         StoreServiceUtils.validateExistsStore(storeRepository, request.storeId)
         val today = LocalDate.now()
         validateNotVisitedToday(visitHistoryRepository, request.storeId, userId, today)
         visitHistoryRepository.save<VisitHistory>(request.toEntity(userId, today))
+    }
+
+    @Transactional(readOnly = true)
+    fun retrieveStoreVisitHistory(request: RetrieveVisitHistoryRequest): Map<LocalDate, List<VisitHistoryResponse>> {
+        val today = LocalDate.now()
+        val visitHistories =
+            visitHistoryRepository.findVisitWithUserByStoreIdBetweenDate(request.storeId, today.minusWeeks(1), today)
+
+        return visitHistories.asSequence()
+            .map { VisitHistoryResponse.of(it) }
+            .groupBy { history -> history.dateOfVisit }
+            .toMap()
     }
 
 }

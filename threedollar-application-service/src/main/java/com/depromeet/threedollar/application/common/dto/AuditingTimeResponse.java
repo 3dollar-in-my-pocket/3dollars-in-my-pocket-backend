@@ -22,9 +22,9 @@ public abstract class AuditingTimeResponse {
         this.updatedAt = auditingTimeEntity.getUpdatedAt();
     }
 
-    protected void setBaseTime(LocalDateTime createdAt, LocalDateTime updatedAT) {
+    protected void setBaseTime(LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.createdAt = createdAt;
-        this.updatedAt = updatedAT;
+        this.updatedAt = updatedAt;
     }
 
 }

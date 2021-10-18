@@ -38,7 +38,7 @@ internal class VisitHistoryServiceTest(
             val request = AddVisitHistoryRequest(storeId, VisitType.EXISTS_STORE)
 
             // when
-            visitHistoryService.addVisitHistory(request, userId)
+            visitHistoryService.addStoreVisitHistory(request, userId)
 
             // then
             val histories = visitHistoryRepository.findAll()
@@ -62,7 +62,7 @@ internal class VisitHistoryServiceTest(
 
             // when & then
             assertThatThrownBy {
-                visitHistoryService.addVisitHistory(
+                visitHistoryService.addStoreVisitHistory(
                     request,
                     userId
                 )
@@ -84,7 +84,7 @@ internal class VisitHistoryServiceTest(
 
             // when & then
             assertThatThrownBy {
-                visitHistoryService.addVisitHistory(
+                visitHistoryService.addStoreVisitHistory(
                     AddVisitHistoryRequest(storeId, VisitType.NOT_EXISTS_STORE),
                     userId
                 )
