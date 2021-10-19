@@ -70,7 +70,7 @@ class VisitHistoryServiceTest extends StoreSetupTest {
         @Test
         void 가게_방문_인증시_해당_유저가_오늘_방문한_가게인경우_ConflictException_이_발생한다() {
             // given
-            LocalDate dateOfVisit = LocalDate.of(2021, 10, 18);
+            LocalDate dateOfVisit = LocalDate.now(); // TODO 날짜와 분리시켜서 테스트할 수 있도록 개선해야함
             visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, dateOfVisit));
 
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(storeId, VisitType.NOT_EXISTS);
