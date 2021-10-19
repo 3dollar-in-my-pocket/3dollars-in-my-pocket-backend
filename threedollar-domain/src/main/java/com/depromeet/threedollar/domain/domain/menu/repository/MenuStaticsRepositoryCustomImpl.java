@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.domain.domain.menu.repository;
 
 import com.depromeet.threedollar.domain.config.querydsl.OrderByNull;
-import com.depromeet.threedollar.domain.domain.menu.repository.projection.MenuStaticsProjection;
-import com.depromeet.threedollar.domain.domain.menu.repository.projection.QMenuStaticsProjection;
+import com.depromeet.threedollar.domain.domain.menu.projection.MenuStaticsProjection;
+import com.depromeet.threedollar.domain.domain.menu.projection.QMenuStaticsProjection;
 import com.depromeet.threedollar.domain.domain.store.StoreStatus;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
