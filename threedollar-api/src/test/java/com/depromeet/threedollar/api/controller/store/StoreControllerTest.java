@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Set;
 
 import static com.depromeet.threedollar.common.exception.ErrorCode.NOT_FOUND_STORE_EXCEPTION;
-import static com.depromeet.threedollar.common.exception.ErrorCode.NOT_FOUND_STORE_IMAGE_EXCEPTION;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class StoreControllerTest extends AbstractControllerTest {
@@ -52,9 +51,6 @@ class StoreControllerTest extends AbstractControllerTest {
 
     @Autowired
     private StoreDeleteRequestRepository storeDeleteRequestRepository;
-
-    @Autowired
-    private StoreImageRepository storeImageRepository;
 
     @AfterEach
     void cleanUp() {
@@ -199,37 +195,6 @@ class StoreControllerTest extends AbstractControllerTest {
             // then
             assertThat(response.getResultCode()).isEqualTo(NOT_FOUND_STORE_EXCEPTION.getCode());
             assertThat(response.getMessage()).isEqualTo(NOT_FOUND_STORE_EXCEPTION.getMessage());
-            assertThat(response.getData()).isNull();
-        }
-
-    }
-
-    @DisplayName("DELETE /api/v2/store/image")
-    @Nested
-    class 가게_이미지_삭제 {
-
-        @Test
-        void 성공시_200_OK() throws Exception {
-            // given
-            StoreImage storeImage = storeImageRepository.save(StoreImage.newInstance(100L, testUser.getId(), "https://store.com"));
-
-            // when
-            ApiResponse<String> response = storeMockApiCaller.deleteStoreImage(storeImage.getId(), token, 200);
-
-            // then
-            assertThat(response.getResultCode()).isEmpty();
-            assertThat(response.getMessage()).isEmpty();
-            assertThat(response.getData()).isEqualTo(ApiResponse.SUCCESS.getData());
-        }
-
-        @Test
-        void 해당하는_이미지가_없으면_404_NOTFOUND() throws Exception {
-            // when
-            ApiResponse<String> response = storeMockApiCaller.deleteStoreImage(100L, token, 404);
-
-            // then
-            assertThat(response.getResultCode()).isEqualTo(NOT_FOUND_STORE_IMAGE_EXCEPTION.getCode());
-            assertThat(response.getMessage()).isEqualTo(NOT_FOUND_STORE_IMAGE_EXCEPTION.getMessage());
             assertThat(response.getData()).isNull();
         }
 

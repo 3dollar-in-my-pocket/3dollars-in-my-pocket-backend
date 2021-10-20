@@ -62,21 +62,6 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         );
     }
 
-    public ApiResponse<List<StoreImageResponse>> retrieveStoreImages(Long storeId, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = get("/api/v2/store/" + storeId + "/images")
-            .param("storeId", String.valueOf(storeId));
-
-        return objectMapper.readValue(
-            mockMvc.perform(builder)
-                .andExpect(status().is(expectedStatus))
-                .andDo(print())
-                .andReturn()
-                .getResponse()
-                .getContentAsString(StandardCharsets.UTF_8), new TypeReference<>() {
-            }
-        );
-    }
-
     public ApiResponse<StoresScrollResponse> getMyStores(RetrieveMyStoresRequest request, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/stores/me")
             .header(HttpHeaders.AUTHORIZATION, token)

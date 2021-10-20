@@ -76,19 +76,4 @@ class StoreMockApiCaller extends MockMvcUtils {
         );
     }
 
-    public ApiResponse<String> deleteStoreImage(Long imageId, String token, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = delete("/api/v2/store/image/".concat(String.valueOf(imageId)))
-            .header(HttpHeaders.AUTHORIZATION, token);
-
-        return objectMapper.readValue(
-            mockMvc.perform(builder)
-                .andExpect(status().is(expectedStatus))
-                .andDo(print())
-                .andReturn()
-                .getResponse()
-                .getContentAsString(StandardCharsets.UTF_8), new TypeReference<>() {
-            }
-        );
-    }
-
 }

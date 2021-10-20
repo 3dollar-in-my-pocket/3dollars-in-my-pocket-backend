@@ -32,7 +32,6 @@ import java.util.List;
 
 import static com.depromeet.threedollar.common.exception.ErrorCode.NOT_FOUND_STORE_EXCEPTION;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 class StoreRetrieveControllerTest extends AbstractControllerTest {
 
@@ -60,9 +59,6 @@ class StoreRetrieveControllerTest extends AbstractControllerTest {
     private ReviewRepository reviewRepository;
 
     @Autowired
-    private StoreImageRepository storeImageRepository;
-
-    @Autowired
     private VisitHistoryRepository visitHistoryRepository;
 
     @AfterEach
@@ -74,7 +70,6 @@ class StoreRetrieveControllerTest extends AbstractControllerTest {
         menuRepository.deleteAllInBatch();
         visitHistoryRepository.deleteAllInBatch();
         storeRepository.deleteAllInBatch();
-        storeImageRepository.deleteAll();
     }
 
     @DisplayName("GET /api/v2/stores/near")
@@ -261,39 +256,6 @@ class StoreRetrieveControllerTest extends AbstractControllerTest {
             assertThat(response.getData()).isNull();
         }
 
-    }
-
-    @DisplayName("GET /api/v2/store/storeId/images")
-    @Nested
-    class 특정_가게에_등록된_이미지들을_조회한다 {
-
-        @Test
-        void 가게에_등록된_사진들을_조회한다() throws Exception {
-            // given
-            Store store = StoreCreator.create(testUser.getId(), "storeName", 34, 124);
-            store.addMenus(Collections.singletonList(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
-            storeRepository.save(store);
-
-            StoreImage storeImage1 = StoreImage.newInstance(store.getId(), testUser.getId(), "image1");
-            StoreImage storeImage2 = StoreImage.newInstance(store.getId(), testUser.getId(), "image1");
-
-            storeImageRepository.saveAll(List.of(storeImage1, storeImage2));
-
-            // when
-            ApiResponse<List<StoreImageResponse>> response = storeRetrieveMockApiCaller.retrieveStoreImages(store.getId(), 200);
-
-            // then
-            assertAll(
-                () -> assertThat(response.getData()).hasSize(2),
-                () -> assertStoreImageResponse(response.getData().get(0), storeImage1.getId(), storeImage1.getUrl()),
-                () -> assertStoreImageResponse(response.getData().get(1), storeImage2.getId(), storeImage2.getUrl()));
-        }
-
-    }
-
-    private void assertStoreImageResponse(StoreImageResponse response, Long storeImageId, String url) {
-        assertThat(response.getImageId()).isEqualTo(storeImageId);
-        assertThat(response.getUrl()).isEqualTo(url);
     }
 
     @DisplayName("GET /api/v2/stores/me")

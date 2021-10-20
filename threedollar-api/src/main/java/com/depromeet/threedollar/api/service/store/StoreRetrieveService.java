@@ -48,14 +48,8 @@ public class StoreRetrieveService {
     public StoreDetailResponse getDetailStoreInfo(RetrieveStoreDetailInfoRequest request) {
         Store store = StoreServiceUtils.findStoreByIdFetchJoinMenu(storeRepository, request.getStoreId());
         User creator = userRepository.findUserById(store.getUserId());
-        return StoreDetailResponse.of(store, storeImageService.getStoreImages(request.getStoreId()), request.getLatitude(),
+        return StoreDetailResponse.of(store, storeImageService.retrieveStoreImages(request.getStoreId()), request.getLatitude(),
             request.getLongitude(), creator, reviewRepository.findAllWithCreatorByStoreId(request.getStoreId()));
-    }
-
-    @Transactional(readOnly = true)
-    public List<StoreImageResponse> retrieveStoreImages(Long storeId) {
-        StoreServiceUtils.validateExistsStore(storeRepository, storeId);
-        return storeImageService.getStoreImages(storeId);
     }
 
     /**

@@ -13,7 +13,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -35,12 +34,6 @@ public class StoreRetrieveController {
     @GetMapping("/api/v2/store")
     public ApiResponse<StoreDetailResponse> getDetailStoreInfo(@Valid RetrieveStoreDetailInfoRequest request) {
         return ApiResponse.success(storeRetrieveService.getDetailStoreInfo(request));
-    }
-
-    @ApiOperation("특정 가게에 등록된 이미지들을 조회합니다.")
-    @GetMapping("/api/v2/store/{storeId}/images")
-    public ApiResponse<List<StoreImageResponse>> retriveStoreImages(@PathVariable Long storeId) {
-        return ApiResponse.success(storeRetrieveService.retrieveStoreImages(storeId));
     }
 
     @ApiOperation("[인증] 사용자가 작성한 가게의 정보를 조회합니다. (페이지네이션)")

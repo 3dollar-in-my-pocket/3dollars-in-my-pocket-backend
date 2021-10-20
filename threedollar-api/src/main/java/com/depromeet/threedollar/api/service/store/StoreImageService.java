@@ -55,7 +55,8 @@ public class StoreImageService {
     }
 
     @Transactional(readOnly = true)
-    public List<StoreImageResponse> getStoreImages(Long storeId) {
+    public List<StoreImageResponse> retrieveStoreImages(Long storeId) {
+        StoreServiceUtils.validateExistsStore(storeRepository, storeId);
         List<StoreImage> storeImages = storeImageRepository.findAllByStoreId(storeId);
         return storeImages.stream()
             .map(StoreImageResponse::of)
