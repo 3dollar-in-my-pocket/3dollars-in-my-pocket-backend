@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.service.store.dto.response;
 
+import com.depromeet.threedollar.domain.domain.visit.VisitHistoriesCountCollection;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import lombok.*;
 
@@ -22,22 +23,22 @@ public class StoresScrollResponse {
         this.nextCursor = nextCursor;
     }
 
-    public static StoresScrollResponse newLastScroll(List<Store> stores, long totalElements, Double latitude, Double longitude) {
-        return of(stores, totalElements, -1L, latitude, longitude);
+    public static StoresScrollResponse newLastScroll(List<Store> stores, VisitHistoriesCountCollection collection, long totalElements, Double latitude, Double longitude) {
+        return of(stores, collection, totalElements, -1L, latitude, longitude);
     }
 
-    public static StoresScrollResponse of(List<Store> stores, long totalElements, long nextCursor, Double latitude, Double longitude) {
-        return new StoresScrollResponse(getContents(stores, latitude, longitude), totalElements, nextCursor);
+    public static StoresScrollResponse of(List<Store> stores, VisitHistoriesCountCollection collection, long totalElements, long nextCursor, Double latitude, Double longitude) {
+        return new StoresScrollResponse(getContents(stores, collection, latitude, longitude), totalElements, nextCursor);
     }
 
-    private static List<StoreInfoResponse> getContents(List<Store> stores, Double latitude, Double longitude) {
+    private static List<StoreInfoResponse> getContents(List<Store> stores, VisitHistoriesCountCollection collection, Double latitude, Double longitude) {
         if (latitude == null || longitude == null) {
             return stores.stream()
-                .map(StoreInfoResponse::of)
+                .map(store -> StoreInfoResponse.of(store, collection.getStoreExistsVisitsCount(store.getId()), collection.getStoreNotExistsVisitsCount(store.getId())))
                 .collect(Collectors.toList());
         }
         return stores.stream()
-            .map(store -> StoreInfoResponse.of(store, latitude, longitude))
+            .map(store -> StoreInfoResponse.of(store, latitude, longitude, collection.getStoreExistsVisitsCount(store.getId()), collection.getStoreNotExistsVisitsCount(store.getId())))
             .collect(Collectors.toList());
     }
 

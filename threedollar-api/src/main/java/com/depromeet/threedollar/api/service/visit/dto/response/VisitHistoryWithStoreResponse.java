@@ -35,7 +35,7 @@ public class VisitHistoryWithStoreResponse extends AuditingTimeResponse {
             .visitHistoryId(visitHistory.getId())
             .type(visitHistory.getType())
             .dateOfVisit(visitHistory.getDateOfVisit())
-            .store(StoreInfoResponse.of(store))
+            .store(StoreInfoResponse.ofWithOutVisitsCount(store))
             .build();
         response.setBaseTime(visitHistory.getCreatedAt(), visitHistory.getUpdatedAt());
         return response;

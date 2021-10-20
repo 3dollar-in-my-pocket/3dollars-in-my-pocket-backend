@@ -30,7 +30,7 @@ public class StoreService {
     @Transactional
     public StoreInfoResponse addStore(AddStoreRequest request, Long userId) {
         Store store = storeRepository.save(request.toStore(userId));
-        return StoreInfoResponse.of(store);
+        return StoreInfoResponse.ofWithOutVisitsCount(store);
     }
 
     @Transactional
@@ -41,7 +41,7 @@ public class StoreService {
         store.updatePaymentMethods(request.getPaymentMethods());
         store.updateAppearanceDays(request.getAppearanceDays());
         store.updateMenu(request.toMenus(store));
-        return StoreInfoResponse.of(store);
+        return StoreInfoResponse.ofWithOutVisitsCount(store);
     }
 
     @Transactional

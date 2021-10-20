@@ -19,9 +19,13 @@ import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
+import com.depromeet.threedollar.domain.domain.visit.VisitHistoryCreator;
+import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
+import com.depromeet.threedollar.domain.domain.visit.VisitType;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -58,6 +62,9 @@ class StoreRetrieveControllerTest extends AbstractControllerTest {
     @Autowired
     private StoreImageRepository storeImageRepository;
 
+    @Autowired
+    private VisitHistoryRepository visitHistoryRepository;
+
     @AfterEach
     void cleanUp() {
         super.cleanup();
@@ -65,6 +72,7 @@ class StoreRetrieveControllerTest extends AbstractControllerTest {
         appearanceDayRepository.deleteAllInBatch();
         paymentMethodRepository.deleteAllInBatch();
         menuRepository.deleteAllInBatch();
+        visitHistoryRepository.deleteAllInBatch();
         storeRepository.deleteAllInBatch();
         storeImageRepository.deleteAll();
     }
@@ -119,6 +127,34 @@ class StoreRetrieveControllerTest extends AbstractControllerTest {
 
             // then
             assertThat(response.getData()).isEmpty();
+        }
+
+        @Test
+        void 사용자_주위의_가게를_조회할때_방문_인증_횟수가_함께_조회된다() throws Exception {
+            // given
+            Store store1 = StoreCreator.create(testUser.getId(), "storeName", 34, 124);
+            store1.addMenus(List.of(MenuCreator.create(store1, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG)));
+
+            Store store2 = StoreCreator.create(testUser.getId(), "storeName", 34, 124);
+            store2.addMenus(List.of(MenuCreator.create(store2, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            storeRepository.saveAll(Arrays.asList(store1, store2));
+
+            visitHistoryRepository.saveAll(List.of(
+                VisitHistoryCreator.create(store1, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 18)),
+                VisitHistoryCreator.create(store2, 100L, VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 18))
+            ));
+
+            RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testInstance(34, 124, 34, 124, 1000);
+
+            // when
+            ApiResponse<List<StoreInfoResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+
+            // then
+            assertThat(response.getData()).hasSize(2);
+            assertThat(response.getData().get(0).getVisitHistory().getExistsVisitsCount()).isEqualTo(1);
+            assertThat(response.getData().get(0).getVisitHistory().getNotExistsVisitsCount()).isEqualTo(0);
+            assertThat(response.getData().get(1).getVisitHistory().getExistsVisitsCount()).isEqualTo(0);
+            assertThat(response.getData().get(1).getVisitHistory().getNotExistsVisitsCount()).isEqualTo(1);
         }
 
     }
@@ -432,6 +468,28 @@ class StoreRetrieveControllerTest extends AbstractControllerTest {
             assertThat(response.getData().getContents()).isEmpty();
         }
 
+        @Test
+        void 사용자가_제보한_가게들_조회시_방문_횟수도_함께_조회된다() throws Exception {
+            // given
+            Store store = StoreCreator.create(testUser.getId(), "storeName", 34, 124);
+            Menu menu = MenuCreator.create(store, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG);
+            store.addMenus(List.of(menu));
+            storeRepository.save(store);
+
+            visitHistoryRepository.save(VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 18)));
+
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, null, null, 34, 124);
+
+            // when
+            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
+
+            // then
+            assertThat(response.getData().getTotalElements()).isEqualTo(1);
+            assertThat(response.getData().getNextCursor()).isEqualTo(-1);
+            assertThat(response.getData().getContents().get(0).getVisitHistory().getExistsVisitsCount()).isEqualTo(0);
+            assertThat(response.getData().getContents().get(0).getVisitHistory().getNotExistsVisitsCount()).isEqualTo(1);
+        }
+
     }
 
     @DisplayName("GET /api/v2/stores/distance")
@@ -555,6 +613,31 @@ class StoreRetrieveControllerTest extends AbstractControllerTest {
             assertThat(response.getData().getStoreList500()).isEmpty();
             assertThat(response.getData().getStoreList1000()).isEmpty();
             assertThat(response.getData().getStoreListOver1000()).isEmpty();
+        }
+
+        @Test
+        void 거리순으로_내_주변의_특정_카테고리_가게_조회시_방문_정보도_함께_조회된다() throws Exception {
+            // given
+            Store store = StoreCreator.create(testUser.getId(), "가게 1.1", 34, 124, 1.1);
+            Menu menu = MenuCreator.create(store, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG);
+            store.addMenus(List.of(menu));
+            storeRepository.save(store);
+            visitHistoryRepository.save(VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 18)));
+
+            RetrieveStoreGroupByCategoryRequest request = RetrieveStoreGroupByCategoryRequest.testBuilder()
+                .category(MenuCategoryType.BUNGEOPPANG)
+                .latitude(34.0)
+                .longitude(124.0)
+                .mapLatitude(34.0)
+                .mapLongitude(124.0)
+                .build();
+
+            // when
+            ApiResponse<StoresGroupByDistanceResponse> response = storeRetrieveMockApiCaller.getStoresByDistance(request, 200);
+
+            assertThat(response.getData().getStoreList50()).hasSize(1);
+            assertThat(response.getData().getStoreList50().get(0).getVisitHistory().getExistsVisitsCount()).isEqualTo(1);
+            assertThat(response.getData().getStoreList50().get(0).getVisitHistory().getNotExistsVisitsCount()).isEqualTo(0);
         }
 
     }
@@ -697,6 +780,31 @@ class StoreRetrieveControllerTest extends AbstractControllerTest {
             assertThat(response.getData().getStoreList4()).isEmpty();
         }
 
+        @Test
+        void 리뷰순으로_내_주변의_특정_카테고리_가게_조회시_방문_정보도_함께_조회된다() throws Exception {
+            // given
+            Store store = StoreCreator.create(testUser.getId(), "가게 1.1", 34, 124, 1.1);
+            Menu menu = MenuCreator.create(store, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG);
+            store.addMenus(List.of(menu));
+            storeRepository.save(store);
+            visitHistoryRepository.save(VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 18)));
+
+            RetrieveStoreGroupByCategoryRequest request = RetrieveStoreGroupByCategoryRequest.testBuilder()
+                .category(MenuCategoryType.BUNGEOPPANG)
+                .latitude(34.0)
+                .longitude(124.0)
+                .mapLatitude(34.0)
+                .mapLongitude(124.0)
+                .build();
+
+            // when
+            ApiResponse<StoresGroupByReviewResponse> response = storeRetrieveMockApiCaller.getStoresByReview(request, 200);
+
+            // then
+            assertThat(response.getData().getStoreList1()).hasSize(1);
+            assertThat(response.getData().getStoreList1().get(0).getVisitHistory().getExistsVisitsCount()).isEqualTo(0);
+            assertThat(response.getData().getStoreList1().get(0).getVisitHistory().getNotExistsVisitsCount()).isEqualTo(1);
+        }
     }
 
     private void assertReviewWithWriterResponse(ReviewWithWriterResponse response, Review review) {
