@@ -3,6 +3,7 @@ package com.depromeet.threedollar.api.controller.store;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewWithWriterResponse;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreGroupByCategoryRequest;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
+import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryInfoResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.controller.AbstractControllerTest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStoresRequest;
@@ -146,10 +147,8 @@ class StoreRetrieveControllerTest extends AbstractControllerTest {
 
             // then
             assertThat(response.getData()).hasSize(2);
-            assertThat(response.getData().get(0).getVisitHistory().getExistsVisitsCount()).isEqualTo(1);
-            assertThat(response.getData().get(0).getVisitHistory().getNotExistsVisitsCount()).isEqualTo(0);
-            assertThat(response.getData().get(1).getVisitHistory().getExistsVisitsCount()).isEqualTo(0);
-            assertThat(response.getData().get(1).getVisitHistory().getNotExistsVisitsCount()).isEqualTo(1);
+            assertVisitHistoryInfoResponse(response.getData().get(0).getVisitHistory(), 1, 0, true);
+            assertVisitHistoryInfoResponse(response.getData().get(1).getVisitHistory(), 0, 1, false);
         }
 
     }
@@ -448,8 +447,8 @@ class StoreRetrieveControllerTest extends AbstractControllerTest {
             // then
             assertThat(response.getData().getTotalElements()).isEqualTo(1);
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
-            assertThat(response.getData().getContents().get(0).getVisitHistory().getExistsVisitsCount()).isEqualTo(0);
-            assertThat(response.getData().getContents().get(0).getVisitHistory().getNotExistsVisitsCount()).isEqualTo(1);
+            assertThat(response.getData().getContents()).hasSize(1);
+            assertVisitHistoryInfoResponse(response.getData().getContents().get(0).getVisitHistory(), 0, 1, false);
         }
 
     }
@@ -598,8 +597,7 @@ class StoreRetrieveControllerTest extends AbstractControllerTest {
             ApiResponse<StoresGroupByDistanceResponse> response = storeRetrieveMockApiCaller.getStoresByDistance(request, 200);
 
             assertThat(response.getData().getStoreList50()).hasSize(1);
-            assertThat(response.getData().getStoreList50().get(0).getVisitHistory().getExistsVisitsCount()).isEqualTo(1);
-            assertThat(response.getData().getStoreList50().get(0).getVisitHistory().getNotExistsVisitsCount()).isEqualTo(0);
+            assertVisitHistoryInfoResponse(response.getData().getStoreList50().get(0).getVisitHistory(), 1, 0, true);
         }
 
     }
@@ -764,8 +762,7 @@ class StoreRetrieveControllerTest extends AbstractControllerTest {
 
             // then
             assertThat(response.getData().getStoreList1()).hasSize(1);
-            assertThat(response.getData().getStoreList1().get(0).getVisitHistory().getExistsVisitsCount()).isEqualTo(0);
-            assertThat(response.getData().getStoreList1().get(0).getVisitHistory().getNotExistsVisitsCount()).isEqualTo(1);
+            assertVisitHistoryInfoResponse(response.getData().getStoreList1().get(0).getVisitHistory(), 0, 1, false);
         }
     }
 
@@ -811,6 +808,12 @@ class StoreRetrieveControllerTest extends AbstractControllerTest {
         assertThat(response.getLongitude()).isEqualTo(longitude);
         assertThat(response.getStoreName()).isEqualTo(name);
         assertThat(response.getRating()).isEqualTo(rating);
+    }
+
+    private void assertVisitHistoryInfoResponse(VisitHistoryInfoResponse visitHistory, int existsCount, int notExistsCount, boolean isCertified) {
+        assertThat(visitHistory.getExistsCounts()).isEqualTo(existsCount);
+        assertThat(visitHistory.getNotExistsCounts()).isEqualTo(notExistsCount);
+        assertThat(visitHistory.getIsCertified()).isEqualTo(isCertified);
     }
 
 }

@@ -10,13 +10,16 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class VisitHistoryInfoResponse {
 
-    private long existsVisitsCount;
+    private long existsCounts;
 
-    private long notExistsVisitsCount;
+    private long notExistsCounts;
 
-    private VisitHistoryInfoResponse(long existsVisitsCount, long notExistsVisitsCount) {
-        this.existsVisitsCount = existsVisitsCount;
-        this.notExistsVisitsCount = notExistsVisitsCount;
+    private Boolean isCertified;
+
+    private VisitHistoryInfoResponse(long existsCounts, long notExistsCounts) {
+        this.existsCounts = existsCounts;
+        this.notExistsCounts = notExistsCounts;
+        this.isCertified = existsCounts > notExistsCounts;
     }
 
     public static VisitHistoryInfoResponse of(long existsVisitsCount, long notExistsVisitsCount) {
