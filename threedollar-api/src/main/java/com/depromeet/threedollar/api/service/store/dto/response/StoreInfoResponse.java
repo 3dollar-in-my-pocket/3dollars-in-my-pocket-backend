@@ -32,7 +32,7 @@ public class StoreInfoResponse extends AuditingTimeResponse {
         this.storeName = storeName;
         this.rating = rating;
         this.distance = distance;
-        this.visitHistory =VisitHistoryInfoResponse.of(existsVisitsCount, notExistsVisitsCount);
+        this.visitHistory = VisitHistoryInfoResponse.of(existsVisitsCount, notExistsVisitsCount);
     }
 
     public static StoreInfoResponse of(Store store, double latitude, double longitude, long existsVisitsCount, long notExistsVisitsCount) {
