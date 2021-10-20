@@ -2,7 +2,6 @@ package com.depromeet.threedollar.api.service.store;
 
 import com.depromeet.threedollar.api.service.store.dto.request.*;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
-import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
@@ -124,13 +123,6 @@ public class StoreRetrieveService {
 
     private List<Store> findNearByStores(double latitude, double longitude) {
         return storeRepository.findStoresByLocationLessThanDistance(latitude, longitude, 2.0);
-    }
-
-    @Transactional(readOnly = true)
-    public StoreDistanceResponse getDistanceToStore(Long storeId, GetDistanceToStoreRequest request) {
-        Store store = StoreServiceUtils.findStoreById(storeRepository, storeId);
-        int distance = LocationDistanceUtils.getDistance(store.getLatitude(), store.getLongitude(), request.getMapLatitude(), request.getMapLongitude());
-        return StoreDistanceResponse.of(distance);
     }
 
 }

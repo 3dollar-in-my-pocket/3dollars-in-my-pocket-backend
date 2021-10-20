@@ -162,13 +162,3 @@ client.test("200 OK", function() {
 });
 %}
 
-
-### 사용자와 가게와의 거리를 계산합니다.
-GET {{host_api}}/api/v2/store/distance/{{STORE_ID}}?mapLatitude=33.1&mapLongitude=124.2
-
-> {%
-client.test("200 OK", function() {
-    client.assert(response.status === 200, "응답 실패");
-});
-%}
-

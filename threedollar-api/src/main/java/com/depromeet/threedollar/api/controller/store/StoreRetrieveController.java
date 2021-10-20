@@ -2,7 +2,6 @@ package com.depromeet.threedollar.api.controller.store;
 
 import com.depromeet.threedollar.api.config.interceptor.Auth;
 import com.depromeet.threedollar.api.config.resolver.UserId;
-import com.depromeet.threedollar.api.service.store.dto.request.GetDistanceToStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.service.store.StoreRetrieveService;
@@ -62,12 +61,6 @@ public class StoreRetrieveController {
     @GetMapping("/api/v2/stores/review")
     public ApiResponse<StoresGroupByReviewResponse> getStoresGroupByReview(@Valid RetrieveStoreGroupByCategoryRequest request) {
         return ApiResponse.success(storeRetrieveService.retrieveStoresGroupByRating(request));
-    }
-
-    @ApiOperation("가게와의 거리를 계산합니다.")
-    @GetMapping("/api/v2/store/distance/{storeId}")
-    public ApiResponse<StoreDistanceResponse> getDistanceToStore(@PathVariable Long storeId, @Valid GetDistanceToStoreRequest request) {
-        return ApiResponse.success(storeRetrieveService.getDistanceToStore(storeId, request));
     }
 
 }
