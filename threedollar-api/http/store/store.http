@@ -150,15 +150,3 @@ client.test("200 OK", function() {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
-
-
-### [인증] 가게의 이미지를 삭제합니다.
-DELETE {{host_api}}/api/v2/store/image/1
-Authorization: {{AUTHORIZATION}}
-
-> {%
-client.test("200 OK", function() {
-    client.assert(response.status === 200, "응답 실패");
-});
-%}
-

@@ -13,6 +13,13 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Table(
+    indexes = {
+        @Index(name = "idx_visit_history_1", columnList = "store_id,dateOfVisit,userId"),
+        @Index(name = "idx_visit_history_2", columnList = "userId"),
+        @Index(name = "idx_visit_history_3", columnList = "store_id,type"),
+    }
+)
 public class VisitHistory extends AuditingTimeEntity {
 
     @Id
@@ -26,7 +33,7 @@ public class VisitHistory extends AuditingTimeEntity {
     @Column(nullable = false)
     private Long userId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     @Enumerated(EnumType.STRING)
     private VisitType type;
 

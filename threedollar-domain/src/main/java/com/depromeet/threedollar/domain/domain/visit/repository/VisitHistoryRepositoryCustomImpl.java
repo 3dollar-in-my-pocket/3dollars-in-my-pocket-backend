@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.depromeet.threedollar.domain.domain.menu.QMenu.menu;
 import static com.depromeet.threedollar.domain.domain.visit.QVisitHistory.visitHistory;
 import static com.depromeet.threedollar.domain.domain.user.QUser.user;
 import static com.depromeet.threedollar.domain.domain.store.QStore.store;
@@ -36,16 +37,16 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
     @Override
     public List<VisitHistoryWithUserProjection> findAllVisitWithUserByStoreIdBetweenDate(Long storeId, LocalDate startDate, LocalDate endDate) {
         return queryFactory.select(new QVisitHistoryWithUserProjection(
-            visitHistory.id,
-            visitHistory.store.id,
-            visitHistory.type,
-            visitHistory.dateOfVisit,
-            visitHistory.createdAt,
-            visitHistory.updatedAt,
-            visitHistory.userId,
-            user.name,
-            user.socialInfo.socialType
-        ))
+                visitHistory.id,
+                visitHistory.store.id,
+                visitHistory.type,
+                visitHistory.dateOfVisit,
+                visitHistory.createdAt,
+                visitHistory.updatedAt,
+                visitHistory.userId,
+                user.name,
+                user.socialInfo.socialType
+            ))
             .from(visitHistory)
             .leftJoin(user).on(visitHistory.userId.eq(user.id))
             .where(
@@ -59,6 +60,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
     public List<VisitHistory> findAllByUserIdWithScroll(Long userId, Long lastHistoryId, int size) {
         return queryFactory.selectFrom(visitHistory)
             .innerJoin(visitHistory.store, store).fetchJoin()
+            .innerJoin(store.menus, menu).fetchJoin()
             .where(
                 visitHistory.userId.eq(userId),
                 lessThanId(lastHistoryId),
@@ -80,6 +82,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
     public long findCountsByUserId(Long userId) {
         return queryFactory.selectFrom(visitHistory)
             .innerJoin(visitHistory.store, store)
+            .innerJoin(store.menus, menu)
             .where(
                 visitHistory.userId.eq(userId),
                 store.status.eq(StoreStatus.ACTIVE)
