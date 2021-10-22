@@ -521,8 +521,8 @@ class StoreServiceTest extends UserSetUpTest {
             storeRepository.save(store);
 
             storeDeleteRequestRepository.saveAll(Arrays.asList(
-                StoreDeleteRequestCreator.create(store.getId(), 90L, DeleteReasonType.NOSTORE),
-                StoreDeleteRequestCreator.create(store.getId(), 91L, DeleteReasonType.NOSTORE))
+                StoreDeleteRequestCreator.create(store.getId(), 1000L, DeleteReasonType.NOSTORE),
+                StoreDeleteRequestCreator.create(store.getId(), 1001L, DeleteReasonType.NOSTORE))
             );
 
             // when

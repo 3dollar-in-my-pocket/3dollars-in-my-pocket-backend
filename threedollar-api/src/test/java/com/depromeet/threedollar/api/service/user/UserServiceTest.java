@@ -110,7 +110,7 @@ class UserServiceTest {
         @Test
         void 존재하지_않는_유저면_NOT_FOUND_USER_EXCEPTION() {
             // given
-            Long userId = 999L;
+            Long userId = 100000L;
 
             // when & then
             assertThatThrownBy(() -> userService.getUserInfo(userId)).isInstanceOf(NotFoundException.class);
@@ -173,7 +173,7 @@ class UserServiceTest {
         @Test
         void 존재하지_않는_유저면_NOT_FOUND_USER_EXCEPTION() {
             // given
-            Long userId = 999L;
+            Long userId = 10000000L;
             UpdateUserInfoRequest request = UpdateUserInfoRequest.testInstance("name");
 
             // when & then
@@ -225,7 +225,7 @@ class UserServiceTest {
         @Test
         void 해당하는_유저가_없으면_NOT_FOUND_USER_EXCEPTION() {
             // when & then
-            assertThatThrownBy(() -> userService.signOut(999L)).isInstanceOf(NotFoundException.class);
+            assertThatThrownBy(() -> userService.signOut(1000000L)).isInstanceOf(NotFoundException.class);
         }
 
     }

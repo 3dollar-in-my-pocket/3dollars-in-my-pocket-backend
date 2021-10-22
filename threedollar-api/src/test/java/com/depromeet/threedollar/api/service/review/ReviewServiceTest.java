@@ -73,7 +73,7 @@ class ReviewServiceTest extends UserSetUpTest {
         @Test
         void 해당하는_가게가_없는경우_NOT_FOUND_STORE_EXCEPTION() {
             // given
-            Long storeId = 999L;
+            Long storeId = 99999L;
             AddReviewRequest request = AddReviewRequest.testInstance(storeId, "리뷰", 3);
 
             // when & then

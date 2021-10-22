@@ -60,7 +60,7 @@ class VisitHistoryServiceTest extends StoreSetupTest {
 
         @Test
         void 가게_방문_인증시_존재하지_않은_가게인경우_NotFoundException_이_발생한다() {
-            Long notFoundStoreId = 999L;
+            Long notFoundStoreId = 100000000L;
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(notFoundStoreId, VisitType.EXISTS);
 
             // when & then

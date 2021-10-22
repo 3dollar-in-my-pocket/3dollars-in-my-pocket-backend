@@ -22,4 +22,8 @@ public class RetrieveVisitHistoryRequest {
     @NotNull(message = "{visit.endDate.notNull}")
     private LocalDate endDate;
 
+    public static RetrieveVisitHistoryRequest testInstance(Long storeId, LocalDate startDate, LocalDate endDate) {
+        return new RetrieveVisitHistoryRequest(storeId, startDate, endDate);
+    }
+
 }
