@@ -15,7 +15,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import static com.depromeet.threedollar.common.exception.ErrorCode.VALIDATION_EXCEPTION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -41,7 +40,7 @@ class AuthControllerTest extends AbstractControllerTest {
 
     @DisplayName("POST /api/v2/signup")
     @Nested
-    class 회원가입 {
+    class SignUp {
 
         @Test
         void 카카오_회원가입_요청이_성공하면_토큰이_반환된다() throws Exception {
@@ -89,32 +88,6 @@ class AuthControllerTest extends AbstractControllerTest {
             assertThat(response.getResultCode()).isEmpty();
             assertThat(response.getMessage()).isEmpty();
             assertThat(response.getData().getToken()).isNotNull();
-        }
-
-        @Test
-        void 토큰을_넘기지_않으면_400에러가_발생한다() throws Exception {
-            // given
-            SignUpRequest request = SignUpRequest.testInstance(null, "will", UserSocialType.APPLE);
-
-            // when
-            ApiResponse<LoginResponse> response = authMockApiCaller.signUp(request, 400);
-
-            // then
-            assertThat(response.getResultCode()).isEqualTo(VALIDATION_EXCEPTION.getCode());
-            assertThat(response.getData()).isNull();
-        }
-
-        @Test
-        void 소셜_프로바이더를_넘기지_않으면_400에러가_발생한다() throws Exception {
-            // given
-            SignUpRequest request = SignUpRequest.testInstance("token", "will", null);
-
-            // when
-            ApiResponse<LoginResponse> response = authMockApiCaller.signUp(request, 400);
-
-            // then
-            assertThat(response.getResultCode()).isEqualTo(VALIDATION_EXCEPTION.getCode());
-            assertThat(response.getData()).isNull();
         }
 
     }
@@ -169,32 +142,6 @@ class AuthControllerTest extends AbstractControllerTest {
             assertThat(response.getResultCode()).isEmpty();
             assertThat(response.getMessage()).isEmpty();
             assertThat(response.getData().getToken()).isNotNull();
-        }
-
-        @Test
-        void 토큰을_넘기지_않으면_400에러가_발생한다() throws Exception {
-            // given
-            LoginRequest request = LoginRequest.testInstance(null, UserSocialType.APPLE);
-
-            // when
-            ApiResponse<LoginResponse> response = authMockApiCaller.login(request, 400);
-
-            // then
-            assertThat(response.getResultCode()).isEqualTo(VALIDATION_EXCEPTION.getCode());
-            assertThat(response.getData()).isNull();
-        }
-
-        @Test
-        void 소셜_프로바이더를_넘기지_않으면_400에러가_발생한다() throws Exception {
-            // given
-            LoginRequest request = LoginRequest.testInstance("token", null);
-
-            // when
-            ApiResponse<LoginResponse> response = authMockApiCaller.login(request, 400);
-
-            // then
-            assertThat(response.getResultCode()).isEqualTo(VALIDATION_EXCEPTION.getCode());
-            assertThat(response.getData()).isNull();
         }
 
     }

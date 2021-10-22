@@ -51,7 +51,7 @@ class AppleAuthServiceTest {
     class 애플_로그인 {
 
         @Test
-        void 성공시_멤버의_PK_가_반환된다() {
+        void 애플_로그인_성공시_멤버의_PK_가_반환된다() {
             // given
             User user = UserCreator.create(socialId, socialType, "닉네임");
             userRepository.save(user);
@@ -80,7 +80,7 @@ class AppleAuthServiceTest {
     class 애플_회원가입 {
 
         @Test
-        void 성공시_새로운_유저정보가_저장된다() {
+        void 애플_회원가입_성공시_새로운_유저정보가_저장된다() {
             // given
             SignUpRequest request = SignUpRequest.testInstance("token", "가슴속 삼천원", socialType);
 
@@ -93,7 +93,7 @@ class AppleAuthServiceTest {
         }
 
         @Test
-        void 이미_회원인경우_Conflict_Exception() {
+        void 애플_회원가입_요청시_이미_회원인경우_Conflict_Exception() {
             // given
             userRepository.save(UserCreator.create(socialId, socialType, "헬로우"));
 

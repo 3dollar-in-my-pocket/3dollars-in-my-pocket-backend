@@ -89,7 +89,7 @@ class StoreImageControllerTest extends AbstractControllerTest {
     class 가게_이미지_삭제 {
 
         @Test
-        void 성공시_200_OK() throws Exception {
+        void 가게_이미지_삭제요청_성공시_200_OK() throws Exception {
             // given
             StoreImage storeImage = storeImageRepository.save(StoreImage.newInstance(100L, testUser.getId(), "https://store.com"));
 
@@ -103,7 +103,7 @@ class StoreImageControllerTest extends AbstractControllerTest {
         }
 
         @Test
-        void 해당하는_이미지가_없으면_404_NOTFOUND() throws Exception {
+        void 가게_이미지_삭제요청시_해당하는_이미지가_없으면_404_NOTFOUND() throws Exception {
             // when
             ApiResponse<String> response = storeImageMockApiCaller.deleteStoreImage(100L, token, 404);
 

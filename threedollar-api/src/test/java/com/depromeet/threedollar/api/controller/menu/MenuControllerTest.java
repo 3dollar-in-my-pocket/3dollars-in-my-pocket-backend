@@ -6,6 +6,7 @@ import com.depromeet.threedollar.application.mapper.menu.dto.response.MenuCatego
 import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
@@ -26,6 +27,7 @@ public class MenuControllerTest extends AbstractControllerTest {
         super.cleanup();
     }
 
+    @DisplayName("GET /api/v2/store/menu/categories")
     @Test
     void 활성화된_메뉴_카테고리의_정보들을_조회한다() throws Exception {
         // given
@@ -44,7 +46,7 @@ public class MenuControllerTest extends AbstractControllerTest {
 
         // then
         assertAll(
-            () -> assertThat(response.getData()).hasSize(15),
+            () -> assertThat(response.getData()).hasSize(values().length),
             () -> assertMenuCategoryResponse(response.getData().get(0), DALGONA),
             () -> assertMenuCategoryResponse(response.getData().get(1), BUNGEOPPANG),
             () -> assertMenuCategoryResponse(response.getData().get(2), HOTTEOK),

@@ -67,7 +67,7 @@ class StoreControllerTest extends AbstractControllerTest {
     class 가게_정보_등록 {
 
         @Test
-        void 성공시_가게_정보를_반환한다() throws Exception {
+        void 가게_등록_성공시_가게_정보를_반환한다() throws Exception {
             // given
             double latitude = 34.0;
             double longitude = 130.0;
@@ -106,7 +106,7 @@ class StoreControllerTest extends AbstractControllerTest {
     class 가게_정보_수정 {
 
         @Test
-        void 성공시_수정된_가게_정보를_반환한다() throws Exception {
+        void 가게_수정_성공시_수정된_가게_정보를_반환한다() throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "storeName");
             store.addMenus(Collections.singletonList(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
@@ -149,7 +149,7 @@ class StoreControllerTest extends AbstractControllerTest {
     class 가게_정보_삭제 {
 
         @Test
-        void 실제로_삭제되지_않으면_False를_반환한다() throws Exception {
+        void 가게_삭제_요청시_실제로_삭제되지_않으면_False를_반환한다() throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "storeName");
             storeRepository.save(store);
@@ -164,7 +164,7 @@ class StoreControllerTest extends AbstractControllerTest {
         }
 
         @Test
-        void 실제로_삭제되면_True를_반환한다() throws Exception {
+        void 가게_삭제_요청시_실제로_삭제되면_True를_반환한다() throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "storeName");
             storeRepository.save(store);
@@ -184,7 +184,7 @@ class StoreControllerTest extends AbstractControllerTest {
         }
 
         @Test
-        void 존재하지_않는_가게인경우_404_NOT_FOUND() throws Exception {
+        void 가게_삭제_요청시_존재하지_않는_가게인경우_404_NOT_FOUND() throws Exception {
             // given
             DeleteStoreRequest request = DeleteStoreRequest.testInstance(DeleteReasonType.NOSTORE);
 

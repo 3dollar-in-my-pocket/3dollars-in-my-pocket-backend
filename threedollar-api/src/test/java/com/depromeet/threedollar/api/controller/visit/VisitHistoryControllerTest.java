@@ -69,7 +69,7 @@ class VisitHistoryControllerTest extends AbstractControllerTest {
     class AddVisitHistory {
 
         @Test
-        void 정상적으로_가게_방문인증이_등록된다() throws Exception {
+        void 가게_방문_인증_등록시_성공시_200_OK() throws Exception {
             // given
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(store.getId(), VisitType.EXISTS);
 
@@ -83,7 +83,7 @@ class VisitHistoryControllerTest extends AbstractControllerTest {
         }
 
         @Test
-        void 이미_오늘_해당_가게에_방문_인증을_한경우_409에러_발생() throws Exception {
+        void 가게_방문_인증_등록시_이미_오늘_해당_가게에_방문_인증을_한경우_409에러_발생() throws Exception {
             // given
             visitHistoryRepository.save(VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.now()));
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(store.getId(), VisitType.EXISTS);

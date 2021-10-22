@@ -9,6 +9,7 @@ import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequ
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewDetailResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
+import com.depromeet.threedollar.common.exception.ErrorCode;
 import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
 import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
 import com.depromeet.threedollar.domain.domain.menu.MenuRepository;
@@ -26,6 +27,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ReviewControllerTest extends AbstractControllerTest {
 
@@ -61,10 +63,10 @@ class ReviewControllerTest extends AbstractControllerTest {
 
     @DisplayName("POST /api/v2/store/review")
     @Nested
-    class 가게_리뷰_등록 {
+    class 신규_가게_리뷰_등록 {
 
         @Test
-        void 성공시_리뷰_정보가_반환된다() throws Exception {
+        void 리뷰_등록_성공시_리뷰_정보가_반환된다() throws Exception {
             // given
             AddReviewRequest request = AddReviewRequest.testInstance(store.getId(), "content", 5);
 
@@ -73,6 +75,21 @@ class ReviewControllerTest extends AbstractControllerTest {
 
             // then
             assertReviewInfoResponse(response.getData(), store.getId(), request.getContents(), request.getRating());
+        }
+
+        @Test
+        void 리뷰_등록시_가게가_없으면_404에러_발생() throws Exception {
+            // given
+            AddReviewRequest request = AddReviewRequest.testInstance(100000000L, "content", 5);
+
+            // when
+            ApiResponse<ReviewInfoResponse> response = reviewMockApiCaller.addStoreReview(request, token, 404);
+
+            // then
+            assertAll(
+                () -> assertThat(response.getResultCode()).isEqualTo(ErrorCode.NOT_FOUND_STORE_EXCEPTION.getCode()),
+                () -> assertThat(response.getMessage()).isEqualTo(ErrorCode.NOT_FOUND_STORE_EXCEPTION.getMessage())
+            );
         }
 
     }
@@ -96,6 +113,21 @@ class ReviewControllerTest extends AbstractControllerTest {
             assertReviewInfoResponse(response.getData(), store.getId(), request.getContents(), request.getRating());
         }
 
+        @Test
+        void 리뷰_수정시_해당하는_리뷰가_없으면_404에러_발생() throws Exception {
+            // given
+            UpdateReviewRequest request = UpdateReviewRequest.testInstance("맛이 없어졌어요", 1);
+
+            // when
+            ApiResponse<ReviewInfoResponse> response = reviewMockApiCaller.updateStoreReview(999999L, request, token, 404);
+
+            // then
+            assertAll(
+                () -> assertThat(response.getResultCode()).isEqualTo(ErrorCode.NOT_FOUND_REVIEW_EXCEPTION.getCode()),
+                () -> assertThat(response.getMessage()).isEqualTo(ErrorCode.NOT_FOUND_REVIEW_EXCEPTION.getMessage())
+            );
+        }
+
     }
 
     @DisplayName("DELETE /api/v2/store/review")
@@ -103,7 +135,7 @@ class ReviewControllerTest extends AbstractControllerTest {
     class 가게_리뷰_삭제 {
 
         @Test
-        void 사용자가_작성한_리뷰를_삭제한다() throws Exception {
+        void 자신이_작성한_리뷰를_삭제요청시_성공하면_200OK() throws Exception {
             // given
             Review review = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요", 5);
             reviewRepository.save(review);
@@ -115,6 +147,18 @@ class ReviewControllerTest extends AbstractControllerTest {
             assertThat(response.getData()).isEqualTo("OK");
         }
 
+        @Test
+        void 자신이_작성한_리뷰를_삭제요청시_해당하는_리뷰가_없으면_404에러_발생() throws Exception {
+            // when
+            ApiResponse<String> response = reviewMockApiCaller.deleteStoreReview(999999L, token, 404);
+
+            // then
+            assertAll(
+                () -> assertThat(response.getResultCode()).isEqualTo(ErrorCode.NOT_FOUND_REVIEW_EXCEPTION.getCode()),
+                () -> assertThat(response.getMessage()).isEqualTo(ErrorCode.NOT_FOUND_REVIEW_EXCEPTION.getMessage())
+            );
+        }
+
     }
 
     @DisplayName("GET /api/v2/store/reviews/me")
@@ -122,7 +166,7 @@ class ReviewControllerTest extends AbstractControllerTest {
     class 사용자가_작성한_가게_리뷰_조회 {
 
         @Test
-        void 첫번째_스크롤_조회시() throws Exception {
+        void 사용자가_작성한_가게_첫_스크롤을_조회한다() throws Exception {
             // given
             Review review1 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요1", 5);
             Review review2 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요2", 4);
@@ -148,7 +192,7 @@ class ReviewControllerTest extends AbstractControllerTest {
         }
 
         @Test
-        void 중간_스크롤_조회시() throws Exception {
+        void 사용자가_작성한_가게_중간_스크롤_조회시() throws Exception {
             // given
             Review review1 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요1", 5);
             Review review2 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요2", 4);
@@ -174,7 +218,7 @@ class ReviewControllerTest extends AbstractControllerTest {
         }
 
         @Test
-        void 조회시_전체_리뷰수가_반환된다() throws Exception {
+        void 사용자가_작성한_가게_조회시_전체_리뷰수가_반환된다() throws Exception {
             // given
             Review review1 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요1", 5);
             Review review2 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요2", 4);

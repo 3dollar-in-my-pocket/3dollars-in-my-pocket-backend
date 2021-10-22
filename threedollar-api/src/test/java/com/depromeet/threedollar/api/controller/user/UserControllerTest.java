@@ -26,7 +26,7 @@ class UserControllerTest extends AbstractControllerTest {
     class 회원_정보_조회 {
 
         @Test
-        void 정상적으로_회원정보가_조회된다() throws Exception {
+        void 나의_회원정보_조회시_정상적으로_회원정보가_조회된다() throws Exception {
             // when
             ApiResponse<UserInfoResponse> response = userMockApiCaller.getMyUserInfo(token, 200);
 
@@ -52,7 +52,7 @@ class UserControllerTest extends AbstractControllerTest {
     class 회원_정보_수정 {
 
         @Test
-        void 회원정보가_정상적으로_수정된다() throws Exception {
+        void 나의_회원정보_수정_요청시_회원정보가_정상적으로_수정된다() throws Exception {
             // given
             String name = "디프만";
 
@@ -66,7 +66,7 @@ class UserControllerTest extends AbstractControllerTest {
         }
 
         @Test
-        void 닉네임이_중복되는경우_409_에러() throws Exception {
+        void 나의_회원정보_수정_요청시_닉네임이_중복되는경우_409_에러() throws Exception {
             // given
             String name = "디프만";
             userRepository.save(UserCreator.create("social-social-id", UserSocialType.APPLE, name));
@@ -83,7 +83,7 @@ class UserControllerTest extends AbstractControllerTest {
         }
 
         @Test
-        void 잘못된_세션일경우_401_에러() throws Exception {
+        void 나의_회원정보_수정_요청시_잘못된_세션일경우_401_에러() throws Exception {
             // given
             UpdateUserInfoRequest request = UpdateUserInfoRequest.testInstance("디프만");
 
@@ -104,7 +104,7 @@ class UserControllerTest extends AbstractControllerTest {
 
         @ParameterizedTest
         @ValueSource(strings = {"디프만", "강승호", "승호-강", "will"})
-        void 사용가능한_닉네임이면_200_OK(String name) throws Exception {
+        void 사용가능한_닉네임_확인_요청시_사용가능한_닉네임이면_200_OK(String name) throws Exception {
             // given
             CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
 
@@ -116,7 +116,7 @@ class UserControllerTest extends AbstractControllerTest {
         }
 
         @Test
-        void 중복된_이름인경우_409_에러() throws Exception {
+        void 사용가능한_닉네임_확인_요청시_중복된_이름인경우_409_에러() throws Exception {
             // given
             String name = "디프만";
             userRepository.save(UserCreator.create("social-social-id", UserSocialType.APPLE, name));
@@ -133,7 +133,7 @@ class UserControllerTest extends AbstractControllerTest {
 
         @ParameterizedTest
         @ValueSource(strings = {"-a-", "a--", "디", "디#프만", "디+프만"})
-        void 허용되지_않은_닉네임인경우_400_에러(String name) throws Exception {
+        void 사용가능한_닉네임_확인_요청시_허용되지_않은_닉네임인경우_400_에러(String name) throws Exception {
             // given
             userRepository.save(UserCreator.create("social-social-id", UserSocialType.APPLE, name));
             CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);

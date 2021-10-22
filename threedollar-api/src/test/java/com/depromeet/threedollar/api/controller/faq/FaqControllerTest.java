@@ -36,10 +36,10 @@ class FaqControllerTest extends AbstractControllerTest {
 
     @DisplayName("GET /api/v2/faqs")
     @Nested
-    class FAQ_조회 {
+    class FAQ_전체_조회 {
 
         @Test
-        void FAQ_리스트를_조회한다() throws Exception {
+        void FAQ_전체_리스트를_조회한다() throws Exception {
             // given
             Faq faq1 = FaqCreator.create("question1", "answer1", FaqCategory.CATEGORY);
             Faq faq2 = FaqCreator.create("question2", "answer2", FaqCategory.BOARD);

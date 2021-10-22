@@ -71,7 +71,7 @@ class StoreServiceTest extends UserSetUpTest {
     class 가게_정보_등록 {
 
         @Test
-        void 성공시_새로운_가게_데이터가_DB에_추가된다() {
+        void 가게_정보_등록_성공시_새로운_가게_데이터가_DB에_추가된다() {
             // given
             double latitude = 34.0;
             double longitude = 130.0;
@@ -106,7 +106,7 @@ class StoreServiceTest extends UserSetUpTest {
         }
 
         @Test
-        void 성공시_게시일_테이블에_새로운_게시일_정보도_추가된다() {
+        void 가게_정보_등록_성공시_게시일_테이블에_새로운_게시일_정보도_추가된다() {
             // given
             Set<DayOfTheWeek> appearanceDays = Set.of(DayOfTheWeek.TUESDAY, DayOfTheWeek.WEDNESDAY);
 
@@ -130,7 +130,7 @@ class StoreServiceTest extends UserSetUpTest {
         }
 
         @Test
-        void 성공시_결제방법_테이블에_결제_방법도_추가된다() {
+        void 가게_정보_등록_성공시_결제방법_테이블에_결제_방법도_추가된다() {
             // given
             Set<PaymentMethodType> paymentMethods = Set.of(PaymentMethodType.CARD, PaymentMethodType.CASH);
 
@@ -154,7 +154,7 @@ class StoreServiceTest extends UserSetUpTest {
         }
 
         @Test
-        void 성공시_메뉴_테이블에_메뉴들도_함께_추가된다() {
+        void 가게_정보_등록_성공시_메뉴_테이블에_메뉴들도_함께_추가된다() {
             // given
             String menuName = "메뉴 이름";
             String price = "10000";
@@ -217,7 +217,7 @@ class StoreServiceTest extends UserSetUpTest {
     class 가게_정보_수정 {
 
         @Test
-        void 성공시_기존_가게정보_데이터들이_수정된다() {
+        void 가게_정보_수정_성공시_기존_가게정보_데이터들이_수정된다() {
             // given
             Store store = StoreCreator.create(userId, "storeName");
             store.addMenus(Collections.singletonList(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));

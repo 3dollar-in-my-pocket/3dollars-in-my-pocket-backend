@@ -46,7 +46,7 @@ class StoreImageServiceTest extends StoreSetupTest {
     class 가게_이미지_등록 {
 
         @Test
-        void 성공시_이미지_정보가_추가된다() {
+        void 가게_이미지_등록_성공시_이미지_정보가_추가된다() {
             // given
             AddStoreImageRequest request = AddStoreImageRequest.testInstance(store.getId());
 
@@ -60,7 +60,7 @@ class StoreImageServiceTest extends StoreSetupTest {
         }
 
         @Test
-        void 해당하는_가게가_없는경우_NOT_FOUND_STORE_EXCEPTION() {
+        void 가게_이미지_등록_요청시_해당하는_가게가_없는경우_NOT_FOUND_STORE_EXCEPTION() {
             // given
             AddStoreImageRequest request = AddStoreImageRequest.testInstance(999L);
 
@@ -74,7 +74,7 @@ class StoreImageServiceTest extends StoreSetupTest {
     class 가게_이미지_삭제 {
 
         @Test
-        void 성공시_해당_이미지가_INACTIVE로_변경된다() {
+        void 가게_이미지_삭제_성공시_해당_이미지가_INACTIVE로_변경된다() {
             // given
             StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, IMAGE_URL);
             storeImageRepository.save(storeImage);
@@ -89,13 +89,13 @@ class StoreImageServiceTest extends StoreSetupTest {
         }
 
         @Test
-        void 해당하는_가게_이미지가_존재하지_않을경우_NOT_FOUND_STORE_EXCEPTION() {
+        void 가게_이미지_삭제_요청시_해당하는_가게_이미지가_존재하지_않을경우_NOT_FOUND_STORE_EXCEPTION() {
             // when & then
             assertThatThrownBy(() -> storeImageService.deleteStoreImage(999L)).isInstanceOf(NotFoundException.class);
         }
 
         @Test
-        void 해당하는_가게_이미지가_INACTIVE_삭제일경우_NOT_FOUND_STORE_EXCEPTION() {
+        void 가게_이미지_삭제_요청시_해당하는_가게_이미지가_INACTIVE_삭제일경우_NOT_FOUND_STORE_EXCEPTION() {
             // given
             StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, IMAGE_URL);
             storeImage.delete();
@@ -111,7 +111,7 @@ class StoreImageServiceTest extends StoreSetupTest {
     class 가게_이미지_조회 {
 
         @Test
-        void 성공시_해당_이미지_정보가_반환된다() {
+        void 가게_이미지_조회_성공시_해당_이미지_정보가_반환된다() {
             // given
             StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, IMAGE_URL);
             storeImageRepository.save(storeImage);
@@ -125,7 +125,7 @@ class StoreImageServiceTest extends StoreSetupTest {
         }
 
         @Test
-        void 삭제된_이미지는_조회되지_않는다() {
+        void  가게_이미지_조회시_삭제된_이미지는_조회되지_않는다() {
             // given
             StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, IMAGE_URL);
             storeImage.delete();

@@ -39,10 +39,10 @@ class UserServiceTest {
     }
 
     @Nested
-    class 회원가입 {
+    class 신규_유저_생성 {
 
         @Test
-        void 성공시_새로운_유저정보가_추가된다() {
+        void 신규_유저_생성_성공시_새로운_유저정보가_추가된다() {
             // given
             String socialId = "social-id";
             UserSocialType type = UserSocialType.KAKAO;
@@ -60,7 +60,7 @@ class UserServiceTest {
         }
 
         @Test
-        void 중복된_닉네임이면_CONFLICT_EXCEPTION() {
+        void 신규_유저_생성시_중복된_닉네임이면_CONFLICT_EXCEPTION() {
             // given
             String name = "가슴속 삼천원";
             userRepository.save(UserCreator.create("social-id", UserSocialType.KAKAO, name));
@@ -72,7 +72,7 @@ class UserServiceTest {
         }
 
         @Test
-        void 중복된_소셜정보면_CONFLICT_EXCEPTION() {
+        void 신규_유저_생성시_중복된_소셜정보면_CONFLICT_EXCEPTION() {
             // given
             String socialId = "social-id";
             UserSocialType type = UserSocialType.KAKAO;
@@ -85,7 +85,7 @@ class UserServiceTest {
         }
 
         @Test
-        void 소셜_아이디가_같더라도_제공하는_소셜이_다른경우_회원가입이_정상적으로_처리된다() {
+        void 신규_유저_생성시_소셜_아이디가_같더라도_제공하는_소셜이_다른경우_회원가입이_정상적으로_처리된다() {
             // given
             String socialId = "social-id";
             userRepository.save(UserCreator.create(socialId, UserSocialType.APPLE, "기존의 닉네임"));
@@ -108,7 +108,7 @@ class UserServiceTest {
     class 회원_정보_조회 {
 
         @Test
-        void 존재하지_않는_유저면_NOT_FOUND_USER_EXCEPTION() {
+        void 회원_정보_조회시_존재하지_않는_유저면_NOT_FOUND_USER_EXCEPTION() {
             // given
             Long userId = 100000L;
 
@@ -122,7 +122,7 @@ class UserServiceTest {
     class 사용가능한_닉네임_체크 {
 
         @Test
-        void 중복된_닉네임이면_CONFLICT_EXCEPTION() {
+        void 사용가능한_닉네임_체크시_중복된_닉네임이면_CONFLICT_EXCEPTION() {
             // given
             String name = "가슴속 삼천원";
             User user = UserCreator.create("social-id", UserSocialType.KAKAO, name);
@@ -135,7 +135,7 @@ class UserServiceTest {
         }
 
         @Test
-        void 중복된_닉네임이_아니면_사용가능하다() {
+        void 사용가능한_닉네임_체크시_중복된_닉네임이_아니면_사용가능하다() {
             // given
             String name = "가슴속 삼천원";
 
@@ -151,7 +151,7 @@ class UserServiceTest {
     class 회원정보_수정 {
 
         @Test
-        void 성공시_해당하는_유저_정보가_변경된다() {
+        void 회원정보_수정_성공시_해당하는_유저_정보가_변경된다() {
             // given
             String socialId = "social-id";
             UserSocialType type = UserSocialType.KAKAO;
@@ -171,7 +171,7 @@ class UserServiceTest {
         }
 
         @Test
-        void 존재하지_않는_유저면_NOT_FOUND_USER_EXCEPTION() {
+        void 회원정보_수정_요청시_존재하지_않는_유저면_NOT_FOUND_USER_EXCEPTION() {
             // given
             Long userId = 10000000L;
             UpdateUserInfoRequest request = UpdateUserInfoRequest.testInstance("name");
@@ -186,7 +186,7 @@ class UserServiceTest {
     class 회원탈퇴 {
 
         @Test
-        void 성공시_백업을_위한_데이터가_생성된다() {
+        void 회원탈퇴_성공시_백업을_위한_데이터가_생성된다() {
             // given
             User user = UserCreator.create("social-id", UserSocialType.APPLE, "기존의 닉네임");
             userRepository.save(user);
@@ -223,7 +223,7 @@ class UserServiceTest {
         }
 
         @Test
-        void 해당하는_유저가_없으면_NOT_FOUND_USER_EXCEPTION() {
+        void 회원탈퇴_요청시_해당하는_유저가_없으면_NOT_FOUND_USER_EXCEPTION() {
             // when & then
             assertThatThrownBy(() -> userService.signOut(1000000L)).isInstanceOf(NotFoundException.class);
         }
