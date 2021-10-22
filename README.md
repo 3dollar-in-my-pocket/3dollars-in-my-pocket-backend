@@ -15,7 +15,8 @@
 - [PlayStore](https://play.google.com/store/apps/details?id=com.zion830.threedollars)
 
 <p align="center">
-    <img src="https://user-images.githubusercontent.com/7058293/110067262-b179c700-7db6-11eb-8451-223956dca69d.jpg" width ="40%" alt="IOS 인증샷"/>
+    <img src="https://user-images.githubusercontent.com/7058293/110067262-b179c700-7db6-11eb-8451-223956dca69d.jpg" width="40%" alt="IOS 인증샷"/>
+    <img src="./images/appstore.png" width="40%" alt="IOS 인증샷">
 </p>
 
 ## Tech Stacks
