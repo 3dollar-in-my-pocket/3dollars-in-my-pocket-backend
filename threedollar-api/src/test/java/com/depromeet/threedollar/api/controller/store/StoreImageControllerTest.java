@@ -22,8 +22,7 @@ class StoreImageControllerTest extends AbstractControllerTest {
     private StoreImageMockApiCaller storeImageMockApiCaller;
 
     @BeforeEach
-    void setUp() throws Exception {
-        super.setup();
+    void setUp() {
         storeImageMockApiCaller = new StoreImageMockApiCaller(mockMvc, objectMapper);
     }
 

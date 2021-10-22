@@ -24,8 +24,7 @@ class FaqControllerTest extends AbstractControllerTest {
     private FaqRepository faqRepository;
 
     @BeforeEach
-    void setUp() throws Exception {
-        super.setup();
+    void setUp() {
         faqMockApiCaller = new FaqMockApiCaller(mockMvc, objectMapper);
     }
 

@@ -110,7 +110,7 @@ class DailyStatisticsJobConfiguration(
     fun countsNewReviewsStep(): Step {
         return stepBuilderFactory["countsNewReviewsStep"]
             .tasklet { _, _ ->
-                val totalCounts = reviewRepository.findReviewsCount()
+                val totalCounts = reviewRepository.findActiveReviewsCounts()
 
                 val yesterday = LocalDate.now().minusDays(1)
                 val todayCounts = reviewRepository.findReviewsCountBetweenDate(yesterday, yesterday)

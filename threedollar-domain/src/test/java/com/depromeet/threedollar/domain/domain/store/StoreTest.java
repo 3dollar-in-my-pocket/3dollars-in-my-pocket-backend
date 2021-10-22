@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class StoreTest {
 
     @Nested
-    class getMenuCategories {
+    class GetMenuCategories {
 
         @Test
         void 가게의_카테고리_조회시_가게_메뉴_카테고리의_수로_정렬해서_반환한다() {

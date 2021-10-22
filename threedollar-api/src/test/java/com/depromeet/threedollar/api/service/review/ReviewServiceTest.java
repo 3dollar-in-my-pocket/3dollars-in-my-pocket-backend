@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.review;
 
-import com.depromeet.threedollar.api.service.UserSetUpTest;
+import com.depromeet.threedollar.api.service.StoreSetupTest;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
@@ -9,10 +9,7 @@ import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.review.ReviewStatus;
 import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.domain.store.StoreCreator;
-import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,30 +22,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
-class ReviewServiceTest extends UserSetUpTest {
+class ReviewServiceTest extends StoreSetupTest {
 
     @Autowired
     private ReviewService reviewService;
 
     @Autowired
-    private StoreRepository storeRepository;
-
-    @Autowired
     private ReviewRepository reviewRepository;
-
-    private Store store;
 
     @AfterEach
     void cleanUp() {
         super.cleanup();
-        storeRepository.deleteAll();
         reviewRepository.deleteAll();
-    }
-
-    @BeforeEach
-    void setUpStore() {
-        store = StoreCreator.create(userId, "디프만 붕어빵");
-        storeRepository.save(store);
     }
 
     @Nested

@@ -34,8 +34,7 @@ class ReviewControllerTest extends AbstractControllerTest {
     private Store store;
 
     @BeforeEach
-    void setUp() throws Exception {
-        super.setup();
+    void setUp() {
         reviewMockApiCaller = new ReviewMockApiCaller(mockMvc, objectMapper);
 
         store = StoreCreator.create(testUser.getId(), "디프만 붕어빵");

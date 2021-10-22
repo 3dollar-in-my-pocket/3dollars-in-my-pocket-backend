@@ -35,8 +35,7 @@ class AuthControllerTest extends AbstractControllerTest {
     private AuthService googleAuthService;
 
     @BeforeEach
-    void setUp() throws Exception {
-        super.setup();
+    void setUp() {
         authMockApiCaller = new AuthMockApiCaller(mockMvc, objectMapper);
     }
 

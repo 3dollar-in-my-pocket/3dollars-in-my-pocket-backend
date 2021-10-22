@@ -6,7 +6,6 @@ import com.depromeet.threedollar.application.mapper.menu.dto.response.MenuCatego
 import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
@@ -21,11 +20,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class MenuControllerTest extends AbstractControllerTest {
-
-    @BeforeEach
-    void setUp() throws Exception {
-        super.setup();
-    }
 
     @AfterEach
     void cleanUp() {

@@ -40,8 +40,7 @@ class VisitHistoryControllerTest extends AbstractControllerTest {
     private Store store;
 
     @BeforeEach
-    void setUp() throws Exception {
-        super.setup();
+    void setUp() {
         visitHistoryApiCaller = new VisitHistoryApiCaller(mockMvc, objectMapper);
         store = StoreCreator.create(testUser.getId(), "디프만 붕어빵");
         store.addMenus(Collections.singletonList(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));

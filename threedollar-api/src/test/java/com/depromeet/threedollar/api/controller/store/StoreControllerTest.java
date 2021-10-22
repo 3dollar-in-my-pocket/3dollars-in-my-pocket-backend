@@ -32,8 +32,7 @@ class StoreControllerTest extends AbstractControllerTest {
     private StoreMockApiCaller storeMockApiCaller;
 
     @BeforeEach
-    void setUp() throws Exception {
-        super.setup();
+    void setUp() {
         storeMockApiCaller = new StoreMockApiCaller(mockMvc, objectMapper);
     }
 

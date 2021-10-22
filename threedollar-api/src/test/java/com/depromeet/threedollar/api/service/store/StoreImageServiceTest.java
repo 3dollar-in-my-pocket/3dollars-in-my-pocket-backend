@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.store;
 
-import com.depromeet.threedollar.api.service.UserSetUpTest;
+import com.depromeet.threedollar.api.service.StoreSetupTest;
 import com.depromeet.threedollar.api.service.store.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.api.service.store.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.api.service.upload.UploadService;
@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
-class StoreImageServiceTest extends UserSetUpTest {
+class StoreImageServiceTest extends StoreSetupTest {
 
     private static final String IMAGE_URL = "https://image.url";
 
@@ -31,24 +31,15 @@ class StoreImageServiceTest extends UserSetUpTest {
     @Autowired
     private StoreImageRepository storeImageRepository;
 
-    @Autowired
-    private StoreRepository storeRepository;
-
-    private Store store;
-
     @AfterEach
     void cleanUp() {
         super.cleanup();
-        storeRepository.deleteAll();
         storeImageRepository.deleteAll();
     }
 
     @BeforeEach
     void setUpStoreImageService() {
-        storeImageService = new StoreImageService(storeRepository, storeImageRepository, new StubUploadService());
-
-        store = StoreCreator.create(userId, "가게이름");
-        storeRepository.save(store);
+        storeImageService = new StoreImageService(storeRepository, storeImageRepository, (request, file) -> IMAGE_URL);
     }
 
     @Nested
@@ -159,13 +150,6 @@ class StoreImageServiceTest extends UserSetUpTest {
         assertThat(storeImage.getUserId()).isEqualTo(userId);
         assertThat(storeImage.getUrl()).isEqualTo(imageUrl);
         assertThat(storeImage.getStatus()).isEqualTo(status);
-    }
-
-    private static class StubUploadService implements UploadService {
-        @Override
-        public String uploadFile(UploadRequest request, MultipartFile file) {
-            return IMAGE_URL;
-        }
     }
 
 }

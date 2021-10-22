@@ -16,11 +16,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class UserControllerTest extends AbstractControllerTest {
 
-    @BeforeEach
-    void setUp() throws Exception {
-        super.setup();
-    }
-
     @AfterEach
     void cleanUp() {
         super.cleanup();

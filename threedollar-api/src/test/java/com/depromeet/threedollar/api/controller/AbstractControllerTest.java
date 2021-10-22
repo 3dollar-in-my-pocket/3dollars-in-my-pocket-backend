@@ -5,6 +5,7 @@ import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserRepository;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,7 +30,8 @@ public abstract class AbstractControllerTest {
 
     protected String token;
 
-    protected void setup() throws Exception {
+    @BeforeEach
+    void setupUser() throws Exception {
         userMockApiCaller = new UserMockApiCaller(mockMvc, objectMapper);
         token = userMockApiCaller.getTestToken().getData().getToken();
         testUser = userRepository.findUserBySocialIdAndSocialType("test-uid", UserSocialType.KAKAO);

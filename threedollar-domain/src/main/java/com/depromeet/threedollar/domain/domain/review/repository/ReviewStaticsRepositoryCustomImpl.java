@@ -14,7 +14,7 @@ public class ReviewStaticsRepositoryCustomImpl implements ReviewStaticsRepositor
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public long findReviewsCount() {
+    public long findActiveReviewsCounts() {
         return queryFactory.select(review.id)
             .from(review)
             .where(
