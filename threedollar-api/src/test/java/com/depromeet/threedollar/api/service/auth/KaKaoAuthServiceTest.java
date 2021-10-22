@@ -3,6 +3,7 @@ package com.depromeet.threedollar.api.service.auth;
 import com.depromeet.threedollar.api.service.auth.dto.request.LoginRequest;
 import com.depromeet.threedollar.api.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.service.user.UserService;
+import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.user.*;
 import com.depromeet.threedollar.external.client.kakao.KaKaoApiClient;
@@ -23,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class KaKaoAuthServiceTest {
 
     private static final String socialId = "social-id";
+    private static final UserSocialType socialType = UserSocialType.KAKAO;
 
     private AuthService authService;
 
@@ -52,10 +54,10 @@ class KaKaoAuthServiceTest {
         @Test
         void 성공시_멤버의_식별키가_반환된다() {
             // given
-            User user = UserCreator.create(socialId, UserSocialType.KAKAO, "닉네임");
+            User user = UserCreator.create(socialId, socialType, "닉네임");
             userRepository.save(user);
 
-            LoginRequest request = LoginRequest.testInstance("token", UserSocialType.KAKAO);
+            LoginRequest request = LoginRequest.testInstance("token", socialType);
 
             // when
             Long userId = authService.login(request);
@@ -67,7 +69,7 @@ class KaKaoAuthServiceTest {
         @Test
         void 가입한_유저가_아니면_NOT_FOUND_USER_EXCEPTION() {
             // given
-            LoginRequest request = LoginRequest.testInstance("token", UserSocialType.KAKAO);
+            LoginRequest request = LoginRequest.testInstance("token", socialType);
 
             // when & then
             assertThatThrownBy(() -> authService.login(request)).isInstanceOf(NotFoundException.class);
@@ -81,7 +83,7 @@ class KaKaoAuthServiceTest {
         @Test
         void 성공시_새로운_유저정보가_저장된다() {
             // given
-            SignUpRequest request = SignUpRequest.testInstance("token", "가슴속 삼천원", UserSocialType.KAKAO);
+            SignUpRequest request = SignUpRequest.testInstance("token", "가슴속 삼천원", socialType);
 
             // when
             authService.signUp(request);
@@ -90,6 +92,17 @@ class KaKaoAuthServiceTest {
             List<User> users = userRepository.findAll();
             assertThat(users).hasSize(1);
             assertUser(users.get(0), socialId, request.getName(), request.getSocialType());
+        }
+
+        @Test
+        void 이미_회원인경우_Conflict_Exception() {
+            // given
+            userRepository.save(UserCreator.create(socialId, socialType, "헬로우"));
+
+            SignUpRequest request = SignUpRequest.testInstance("token", "가슴속 삼천원", socialType);
+
+            // when & then
+            assertThatThrownBy(() -> authService.signUp(request)).isInstanceOf(ConflictException.class);
         }
 
     }
