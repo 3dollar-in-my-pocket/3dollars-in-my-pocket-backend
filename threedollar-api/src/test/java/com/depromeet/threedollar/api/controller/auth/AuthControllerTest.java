@@ -31,6 +31,9 @@ class AuthControllerTest extends AbstractControllerTest {
     @MockBean(name = "appleAuthService")
     private AuthService appleAuthService;
 
+    @MockBean(name = "googleAuthService")
+    private AuthService googleAuthService;
+
     @BeforeEach
     void setUp() throws Exception {
         super.setup();
@@ -63,6 +66,22 @@ class AuthControllerTest extends AbstractControllerTest {
             SignUpRequest request = SignUpRequest.testInstance("token", "will", UserSocialType.APPLE);
 
             when(appleAuthService.signUp(request)).thenReturn(testUser.getId());
+
+            // when
+            ApiResponse<LoginResponse> response = authMockApiCaller.signUp(request, 200);
+
+            // then
+            assertThat(response.getResultCode()).isEmpty();
+            assertThat(response.getMessage()).isEmpty();
+            assertThat(response.getData().getToken()).isNotNull();
+        }
+
+        @Test
+        void 구글_회원가입_요청이_성공하면_토큰이_반환된다() throws Exception {
+            // given
+            SignUpRequest request = SignUpRequest.testInstance("token", "will", UserSocialType.GOOGLE);
+
+            when(googleAuthService.signUp(request)).thenReturn(testUser.getId());
 
             // when
             ApiResponse<LoginResponse> response = authMockApiCaller.signUp(request, 200);
@@ -127,6 +146,22 @@ class AuthControllerTest extends AbstractControllerTest {
             LoginRequest request = LoginRequest.testInstance("token", UserSocialType.APPLE);
 
             when(appleAuthService.login(request)).thenReturn(testUser.getId());
+
+            // when
+            ApiResponse<LoginResponse> response = authMockApiCaller.login(request, 200);
+
+            // then
+            assertThat(response.getResultCode()).isEmpty();
+            assertThat(response.getMessage()).isEmpty();
+            assertThat(response.getData().getToken()).isNotNull();
+        }
+
+        @Test
+        void 구글_로그인_요청이_성공하면_토큰이_반환된다() throws Exception {
+            // given
+            LoginRequest request = LoginRequest.testInstance("token", UserSocialType.GOOGLE);
+
+            when(googleAuthService.login(request)).thenReturn(testUser.getId());
 
             // when
             ApiResponse<LoginResponse> response = authMockApiCaller.login(request, 200);
