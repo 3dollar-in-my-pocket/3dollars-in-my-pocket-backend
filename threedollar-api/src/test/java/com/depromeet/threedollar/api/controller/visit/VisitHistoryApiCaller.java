@@ -2,6 +2,8 @@ package com.depromeet.threedollar.api.controller.visit;
 
 import com.depromeet.threedollar.api.controller.MockMvcUtils;
 import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRequest;
+import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoryRequest;
+import com.depromeet.threedollar.api.service.visit.dto.response.MyVisitHistoriesScrollResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,6 +29,24 @@ public class VisitHistoryApiCaller extends MockMvcUtils {
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(request));
+
+        return objectMapper.readValue(
+            mockMvc.perform(builder)
+                .andExpect(status().is(expectedStatus))
+                .andDo(print())
+                .andReturn()
+                .getResponse()
+                .getContentAsString(StandardCharsets.UTF_8), new TypeReference<>() {
+            }
+        );
+    }
+
+    public ApiResponse<MyVisitHistoriesScrollResponse> retrieveMyVisitHistories(RetrieveMyVisitHistoryRequest request, String token, int expectedStatus) throws Exception {
+        MockHttpServletRequestBuilder builder = get("/api/v2/store/visits/me")
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .param("size", String.valueOf(request.getSize()))
+            .param("cursor", request.getCursor() == null ? null : String.valueOf(request.getCursor()))
+            .param("cachingTotalElements", request.getCachingTotalElements() == null ? null : String.valueOf(request.getCachingTotalElements()));
 
         return objectMapper.readValue(
             mockMvc.perform(builder)

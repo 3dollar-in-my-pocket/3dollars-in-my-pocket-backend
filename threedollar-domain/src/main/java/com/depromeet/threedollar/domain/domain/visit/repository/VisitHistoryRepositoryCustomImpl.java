@@ -75,7 +75,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
         if (lastHistoryId == null) {
             return null;
         }
-        return store.id.lt(lastHistoryId);
+        return visitHistory.id.lt(lastHistoryId);
     }
 
     @Override

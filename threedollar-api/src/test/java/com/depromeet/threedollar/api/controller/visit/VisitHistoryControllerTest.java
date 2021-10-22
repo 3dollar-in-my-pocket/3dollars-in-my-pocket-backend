@@ -1,7 +1,11 @@
 package com.depromeet.threedollar.api.controller.visit;
 
 import com.depromeet.threedollar.api.controller.AbstractControllerTest;
+import com.depromeet.threedollar.api.service.store.dto.response.StoreInfoResponse;
 import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRequest;
+import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoryRequest;
+import com.depromeet.threedollar.api.service.visit.dto.response.MyVisitHistoriesScrollResponse;
+import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithStoreResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.common.exception.ErrorCode;
 import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
@@ -10,6 +14,7 @@ import com.depromeet.threedollar.domain.domain.menu.MenuRepository;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
@@ -18,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -104,6 +110,138 @@ class VisitHistoryControllerTest extends AbstractControllerTest {
             );
         }
 
+    }
+
+    @DisplayName("내가 방문 기록 등록한 기록들 조회")
+    @Nested
+    class RetrieveMyVisitHistories {
+
+        @Test
+        void 내가_방문_인증한_가게들의_정보와_방문_기록을_조회한다() throws Exception {
+            // given
+            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
+            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 22));
+
+            visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
+
+            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(2, null, null);
+
+            // when
+            ApiResponse<MyVisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+
+            // then
+            assertAll(
+                () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
+                () -> assertThat(response.getData().getTotalElements()).isEqualTo(2),
+                () -> assertThat(response.getData().getContents()).hasSize(2),
+
+                () -> assertStoreInfoResponse(response.getData().getContents().get(0).getStore(), store),
+                () -> assertVisitHistoryWithResponse(response.getData().getContents().get(0), visitHistory2),
+
+                () -> assertStoreInfoResponse(response.getData().getContents().get(1).getStore(), store),
+                () -> assertVisitHistoryWithResponse(response.getData().getContents().get(1), visitHistory1)
+            );
+        }
+
+        @Test
+        void cachingTotalElement가_넘어오면_별도의_카운트를_세지않고_캐싱된_정보를_반환한다() throws Exception {
+            // given
+            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
+            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 22));
+
+            visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
+
+            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(2, null, 100L);
+
+            // when
+            ApiResponse<MyVisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+
+            // then
+            assertAll(
+                () -> assertThat(response.getData().getTotalElements()).isEqualTo(100)
+            );
+        }
+
+        @Test
+        void SIZE만큼의_방문_기록을_조회힌다_더_존재하면_마지막_방문기록의_ID가_nextCursor_로_넘어간다() throws Exception {
+            // given
+            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
+            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 22));
+
+            visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
+
+            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(1, null, null);
+
+            // when
+            ApiResponse<MyVisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+
+            // then
+            assertAll(
+                () -> assertThat(response.getData().getNextCursor()).isEqualTo(visitHistory2.getId()),
+                () -> assertThat(response.getData().getTotalElements()).isEqualTo(2),
+                () -> assertThat(response.getData().getContents()).hasSize(1),
+
+                () -> assertStoreInfoResponse(response.getData().getContents().get(0).getStore(), store),
+                () -> assertVisitHistoryWithResponse(response.getData().getContents().get(0), visitHistory2)
+            );
+        }
+
+        @Test
+        void 커서로_넘어온_방문기록_이전의_방문_기록들을_SIZE_만큼_조회한다() throws Exception {
+            // given
+            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
+            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 22));
+
+            visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
+
+            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(2, visitHistory2.getId(), null);
+
+            // when
+            ApiResponse<MyVisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+
+            // then
+            assertAll(
+                () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
+                () -> assertThat(response.getData().getTotalElements()).isEqualTo(2),
+                () -> assertThat(response.getData().getContents()).hasSize(1),
+
+                () -> assertStoreInfoResponse(response.getData().getContents().get(0).getStore(), store),
+                () -> assertVisitHistoryWithResponse(response.getData().getContents().get(0), visitHistory1)
+            );
+        }
+
+        @Test
+        void 아무런_방문_기록을_남기지_않았을경우() throws Exception {
+            // given
+            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(2, null, null);
+
+            // when
+            ApiResponse<MyVisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+
+            // then
+            assertAll(
+                () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
+                () -> assertThat(response.getData().getTotalElements()).isEqualTo(0),
+                () -> assertThat(response.getData().getContents()).hasSize(0)
+            );
+        }
+
+    }
+
+    private void assertVisitHistoryWithResponse(VisitHistoryWithStoreResponse response, VisitHistory visitHistory) {
+        assertAll(
+            () -> assertThat(response.getVisitHistoryId()).isEqualTo(visitHistory.getId()),
+            () -> assertThat(response.getDateOfVisit()).isEqualTo(visitHistory.getDateOfVisit()),
+            () -> assertThat(response.getType()).isEqualTo(visitHistory.getType())
+        );
+    }
+
+    private void assertStoreInfoResponse(StoreInfoResponse response, Store store) {
+        assertAll(
+            () -> assertThat(response.getStoreId()).isEqualTo(store.getId()),
+            () -> assertThat(response.getStoreName()).isEqualTo(store.getName()),
+            () -> assertThat(response.getCategories()).isEqualTo(store.getMenuCategories())
+        );
     }
 
 }

@@ -17,4 +17,8 @@ public class RetrieveMyVisitHistoryRequest {
 
     private Long cachingTotalElements;
 
+    public static RetrieveMyVisitHistoryRequest testInstance(int size, Long cursor, Long cachingTotalElements) {
+        return new RetrieveMyVisitHistoryRequest(size, cursor, cachingTotalElements);
+    }
+
 }
