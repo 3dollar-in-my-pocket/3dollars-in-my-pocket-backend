@@ -11,16 +11,13 @@ import lombok.*;
 public class StoreImageResponse extends AuditingTimeResponse {
 
     private Long imageId;
+
     private String url;
 
     public static StoreImageResponse of(StoreImage storeImage) {
         StoreImageResponse response = new StoreImageResponse(storeImage.getId(), storeImage.getUrl());
         response.setBaseTime(storeImage);
         return response;
-    }
-
-    public static StoreImageResponse testInstance(Long imageId, String url) {
-        return new StoreImageResponse(imageId, url);
     }
 
 }

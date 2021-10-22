@@ -21,7 +21,7 @@ public class RetrieveMyStoresRequest {
 
     private Double longitude;
 
-    public static RetrieveMyStoresRequest testInstance(int size, Long cursor, Long cachingTotalElements, double latitude, double longitude) {
+    public static RetrieveMyStoresRequest testInstance(int size, Long cursor, Long cachingTotalElements, Double latitude, Double longitude) {
         return new RetrieveMyStoresRequest(size, cursor, cachingTotalElements, latitude, longitude);
     }
 
