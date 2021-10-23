@@ -47,4 +47,8 @@ public class StoreImage extends AuditingTimeEntity {
         this.status = StoreImageStatus.INACTIVE;
     }
 
+    public void updateUrl(String url) {
+        this.url = url;
+    }
+
 }
