@@ -1,18 +1,27 @@
 package com.depromeet.threedollar.api.controller.user;
 
-import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.controller.AbstractControllerTest;
 import com.depromeet.threedollar.api.service.user.dto.request.CheckAvailableNameRequest;
 import com.depromeet.threedollar.api.service.user.dto.request.UpdateUserInfoRequest;
-import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
+import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.domain.user.UserCreator;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.ResultActions;
 
 import static com.depromeet.threedollar.common.exception.ErrorCode.*;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class UserControllerTest extends AbstractControllerTest {
 
@@ -27,22 +36,32 @@ class UserControllerTest extends AbstractControllerTest {
 
         @Test
         void 나의_회원정보_조회시_정상적으로_회원정보가_조회된다() throws Exception {
-            // when
-            ApiResponse<UserInfoResponse> response = userMockApiCaller.getMyUserInfo(token, 200);
-
-            // then
-            assertUserInfoResponse(response.getData(), testUser.getId(), testUser.getName(), testUser.getSocialType());
+            // when & then
+            getUserInfoApi(token)
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.userId").value(testUser.getId()))
+                .andExpect(jsonPath("$.data.name").value(testUser.getName()))
+                .andExpect(jsonPath("$.data.socialType").value(testUser.getSocialType().name()));
         }
 
         @Test
         void 잘못된_세션이면_401_에러() throws Exception {
-            // when
-            ApiResponse<UserInfoResponse> response = userMockApiCaller.getMyUserInfo("wrong token", 401);
+            // given
+            String token = "Wrong Token";
 
-            // then
-            assertThat(response.getResultCode()).isEqualTo(UNAUTHORIZED_EXCEPTION.getCode());
-            assertThat(response.getMessage()).isEqualTo(UNAUTHORIZED_EXCEPTION.getMessage());
-            assertThat(response.getData()).isNull();
+            // when & then
+            getUserInfoApi(token)
+                .andDo(print())
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.resultCode").value(UNAUTHORIZED_EXCEPTION.getCode()))
+                .andExpect(jsonPath("$.message").value(UNAUTHORIZED_EXCEPTION.getMessage()))
+                .andExpect(jsonPath("$.data").isEmpty());
+        }
+
+        private ResultActions getUserInfoApi(String token) throws Exception {
+            return mockMvc.perform(get("/api/v2/user/me")
+                .header(HttpHeaders.AUTHORIZATION, token));
         }
 
     }
@@ -55,14 +74,15 @@ class UserControllerTest extends AbstractControllerTest {
         void 나의_회원정보_수정_요청시_회원정보가_정상적으로_수정된다() throws Exception {
             // given
             String name = "디프만";
-
             UpdateUserInfoRequest request = UpdateUserInfoRequest.testInstance(name);
 
-            // when
-            ApiResponse<UserInfoResponse> response = userMockApiCaller.updateMyUserInfo(request, token, 200);
-
-            // then
-            assertUserInfoResponse(response.getData(), testUser.getId(), name, testUser.getSocialType());
+            // when & then
+            updateUserInfoApi(token, request)
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.userId").value(testUser.getId()))
+                .andExpect(jsonPath("$.data.name").value(name))
+                .andExpect(jsonPath("$.data.socialType").value(testUser.getSocialType().name()));
         }
 
         @Test
@@ -73,27 +93,35 @@ class UserControllerTest extends AbstractControllerTest {
 
             UpdateUserInfoRequest request = UpdateUserInfoRequest.testInstance(name);
 
-            // when
-            ApiResponse<UserInfoResponse> response = userMockApiCaller.updateMyUserInfo(request, token, 409);
-
-            // then
-            assertThat(response.getResultCode()).isEqualTo(CONFLICT_EXCEPTION.getCode());
-            assertThat(response.getMessage()).isEqualTo(CONFLICT_EXCEPTION.getMessage());
-            assertThat(response.getData()).isNull();
+            // when & then
+            updateUserInfoApi(token, request)
+                .andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.resultCode").value(CONFLICT_EXCEPTION.getCode()))
+                .andExpect(jsonPath("$.message").value(CONFLICT_EXCEPTION.getMessage()))
+                .andExpect(jsonPath("$.data").isEmpty());
         }
 
         @Test
         void 나의_회원정보_수정_요청시_잘못된_세션일경우_401_에러() throws Exception {
             // given
+            String token = "Wrong Token";
             UpdateUserInfoRequest request = UpdateUserInfoRequest.testInstance("디프만");
 
-            // when
-            ApiResponse<UserInfoResponse> response = userMockApiCaller.updateMyUserInfo(request, "wrong token", 401);
+            // when & then
+            updateUserInfoApi(token, request)
+                .andDo(print())
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.resultCode").value(UNAUTHORIZED_EXCEPTION.getCode()))
+                .andExpect(jsonPath("$.message").value(UNAUTHORIZED_EXCEPTION.getMessage()))
+                .andExpect(jsonPath("$.data").isEmpty());
+        }
 
-            // then
-            assertThat(response.getResultCode()).isEqualTo(UNAUTHORIZED_EXCEPTION.getCode());
-            assertThat(response.getMessage()).isEqualTo(UNAUTHORIZED_EXCEPTION.getMessage());
-            assertThat(response.getData()).isNull();
+        private ResultActions updateUserInfoApi(String token, UpdateUserInfoRequest request) throws Exception {
+            return mockMvc.perform(put("/api/v2/user/me")
+                .header(HttpHeaders.AUTHORIZATION, token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)));
         }
 
     }
@@ -108,11 +136,11 @@ class UserControllerTest extends AbstractControllerTest {
             // given
             CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
 
-            // when
-            ApiResponse<String> response = userMockApiCaller.checkAvailableName(request, 200);
-
-            // then
-            assertThat(response.getData()).isEqualTo("OK");
+            // when & then
+            checkAvailableNickNameApi(request)
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data").value(ApiResponse.SUCCESS.getData()));
         }
 
         @Test
@@ -122,13 +150,13 @@ class UserControllerTest extends AbstractControllerTest {
             userRepository.save(UserCreator.create("social-social-id", UserSocialType.APPLE, name));
             CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
 
-            // when
-            ApiResponse<String> response = userMockApiCaller.checkAvailableName(request, 409);
-
-            // then
-            assertThat(response.getResultCode()).isEqualTo(CONFLICT_EXCEPTION.getCode());
-            assertThat(response.getMessage()).isEqualTo(CONFLICT_EXCEPTION.getMessage());
-            assertThat(response.getData()).isNull();
+            // when & then
+            checkAvailableNickNameApi(request)
+                .andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.resultCode").value(CONFLICT_EXCEPTION.getCode()))
+                .andExpect(jsonPath("$.message").value(CONFLICT_EXCEPTION.getMessage()))
+                .andExpect(jsonPath("$.data").isEmpty());
         }
 
         @ParameterizedTest
@@ -138,20 +166,19 @@ class UserControllerTest extends AbstractControllerTest {
             userRepository.save(UserCreator.create("social-social-id", UserSocialType.APPLE, name));
             CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
 
-            // when
-            ApiResponse<String> response = userMockApiCaller.checkAvailableName(request, 400);
-
-            // then
-            assertThat(response.getResultCode()).isEqualTo(VALIDATION_EXCEPTION.getCode());
-            assertThat(response.getData()).isNull();
+            // when & then
+            checkAvailableNickNameApi(request)
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.resultCode").value(VALIDATION_EXCEPTION.getCode()))
+                .andExpect(jsonPath("$.data").isEmpty());
         }
 
-    }
+        private ResultActions checkAvailableNickNameApi(CheckAvailableNameRequest request) throws Exception {
+            return mockMvc.perform(get("/api/v2/user/name/check")
+                .param("name", request.getName()));
+        }
 
-    private void assertUserInfoResponse(UserInfoResponse response, Long userId, String name, UserSocialType socialType) {
-        assertThat(response.getUserId()).isEqualTo(userId);
-        assertThat(response.getName()).isEqualTo(name);
-        assertThat(response.getSocialType()).isEqualTo(socialType);
     }
 
 }
