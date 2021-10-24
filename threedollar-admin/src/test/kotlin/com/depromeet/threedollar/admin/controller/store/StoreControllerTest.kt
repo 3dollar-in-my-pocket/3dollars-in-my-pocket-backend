@@ -24,11 +24,6 @@ internal class StoreControllerTest(
     private val storeDeleteRequestRepository: StoreDeleteRequestRepository
 ) : ControllerTestUtils() {
 
-    @BeforeEach
-    fun setUp() {
-        super.setup()
-    }
-
     @AfterEach
     fun cleanUp() {
         super.cleanup()

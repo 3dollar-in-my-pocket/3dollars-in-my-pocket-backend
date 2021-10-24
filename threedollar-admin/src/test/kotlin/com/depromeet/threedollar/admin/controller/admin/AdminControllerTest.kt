@@ -15,11 +15,6 @@ internal class AdminControllerTest(
     private val adminRepository: AdminRepository
 ) : ControllerTestUtils() {
 
-    @BeforeEach
-    fun setUp() {
-        super.setup()
-    }
-
     @AfterEach
     fun cleanUp() {
         super.cleanup()
