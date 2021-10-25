@@ -2,8 +2,6 @@ cloud:
   aws:
     s3:
       bucket: 3dollar-local-embedded-bucket
-      mock:
-        port: 5050
     region:
       static: ap-northeast-2
     stack:
