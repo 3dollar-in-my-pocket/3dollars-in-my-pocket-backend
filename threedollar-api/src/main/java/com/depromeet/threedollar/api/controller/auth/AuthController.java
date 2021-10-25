@@ -30,6 +30,7 @@ public class AuthController {
 
     private final AuthService appleAuthService;
     private final AuthService kaKaoAuthService;
+    private final AuthService googleAuthService;
     private final HttpSession httpSession;
     private final UserService userService;
 
@@ -48,6 +49,9 @@ public class AuthController {
         if (request.getSocialType().equals(UserSocialType.APPLE)) {
             return appleAuthService.signUp(request);
         }
+        if (request.getSocialType().equals(UserSocialType.GOOGLE)) {
+            return googleAuthService.signUp(request);
+        }
         throw new ValidationException(String.format("허용하지 않는 소셜 타입 (%s) 입니다.", request.getSocialType()), VALIDATION_SOCIAL_TYPE_EXCEPTION);
     }
 
@@ -65,6 +69,9 @@ public class AuthController {
         }
         if (request.getSocialType().equals(UserSocialType.APPLE)) {
             return appleAuthService.login(request);
+        }
+        if (request.getSocialType().equals(UserSocialType.GOOGLE)) {
+            return googleAuthService.login(request);
         }
         throw new ValidationException(String.format("허용하지 않는 소셜 타입 (%s) 입니다.", request.getSocialType()), VALIDATION_SOCIAL_TYPE_EXCEPTION);
     }
