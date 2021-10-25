@@ -11,9 +11,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static com.depromeet.threedollar.domain.domain.menu.MenuCategoryType.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -46,30 +48,11 @@ public class MenuControllerTest extends AbstractControllerTest {
 
         // then
         assertAll(
-            () -> assertThat(response.getData()).hasSize(values().length),
-            () -> assertMenuCategoryResponse(response.getData().get(0), DALGONA),
-            () -> assertMenuCategoryResponse(response.getData().get(1), BUNGEOPPANG),
-            () -> assertMenuCategoryResponse(response.getData().get(2), HOTTEOK),
-            () -> assertMenuCategoryResponse(response.getData().get(3), TAKOYAKI),
-            () -> assertMenuCategoryResponse(response.getData().get(4), GYERANPPANG),
-            () -> assertMenuCategoryResponse(response.getData().get(5), SUNDAE),
-            () -> assertMenuCategoryResponse(response.getData().get(6), EOMUK),
-            () -> assertMenuCategoryResponse(response.getData().get(7), TTEOKBOKKI),
-            () -> assertMenuCategoryResponse(response.getData().get(8), TTANGKONGPPANG),
-            () -> assertMenuCategoryResponse(response.getData().get(9), KKOCHI),
-            () -> assertMenuCategoryResponse(response.getData().get(10), WAFFLE),
-            () -> assertMenuCategoryResponse(response.getData().get(11), GUKWAPPANG),
-            () -> assertMenuCategoryResponse(response.getData().get(12), TOAST),
-            () -> assertMenuCategoryResponse(response.getData().get(13), GUNGOGUMA),
-            () -> assertMenuCategoryResponse(response.getData().get(14), GUNOKSUSU)
-        );
-    }
-
-    private void assertMenuCategoryResponse(MenuCategoryResponse response, MenuCategoryType type) {
-        assertAll(
-            () -> assertThat(response.getName()).isEqualTo(type.getCategoryName()),
-            () -> assertThat(response.getCategory()).isEqualTo(type),
-            () -> assertThat(response.getDescription()).isEqualTo(type.getDescription())
+            () -> assertThat(response.getData()).hasSize(MenuCategoryType.values().length),
+            () -> assertThat(response.getData()).containsExactlyElementsOf(Arrays.stream(MenuCategoryType.values())
+                .sorted(Comparator.comparing(MenuCategoryType::getDisplayOrder))
+                .map(MenuCategoryResponse::of)
+                .collect(Collectors.toList()))
         );
     }
 
