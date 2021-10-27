@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.service.auth.dto.request;
+package com.depromeet.threedollar.api.service.user.request;
 
 import com.depromeet.threedollar.api.service.user.dto.request.CreateUserRequest;
 import com.depromeet.threedollar.application.config.validator.NickName;

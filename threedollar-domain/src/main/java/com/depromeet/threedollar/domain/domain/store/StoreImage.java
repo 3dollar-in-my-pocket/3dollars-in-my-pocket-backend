@@ -2,6 +2,7 @@ package com.depromeet.threedollar.domain.domain.store;
 
 import com.depromeet.threedollar.domain.domain.common.AuditingTimeEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -32,6 +33,7 @@ public class StoreImage extends AuditingTimeEntity {
     @Enumerated(EnumType.STRING)
     private StoreImageStatus status;
 
+    @Builder(access = AccessLevel.PACKAGE)
     private StoreImage(Long storeId, Long userId, String url) {
         this.storeId = storeId;
         this.userId = userId;

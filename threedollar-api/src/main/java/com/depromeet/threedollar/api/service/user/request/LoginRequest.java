@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.service.auth.dto.request;
+package com.depromeet.threedollar.api.service.user.request;
 
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import lombok.*;
