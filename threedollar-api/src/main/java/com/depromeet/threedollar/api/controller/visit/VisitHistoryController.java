@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -39,7 +37,7 @@ public class VisitHistoryController {
 
     @ApiOperation("해당 가게에 등록된 방문기록들을 조회합니다.")
     @GetMapping("/api/v2/store/visits")
-    public ApiResponse<Map<LocalDate, List<VisitHistoryWithUserResponse>>> retrieveVisitHistories(@Valid RetrieveVisitHistoryRequest request) {
+    public ApiResponse<List<VisitHistoryWithUserResponse>> retrieveVisitHistories(@Valid RetrieveVisitHistoryRequest request) {
         return ApiResponse.success(visitHistoryService.retrieveVisitHistories(request));
     }
 

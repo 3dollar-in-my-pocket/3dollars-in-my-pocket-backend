@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -36,11 +35,11 @@ public class VisitHistoryService {
     }
 
     @Transactional(readOnly = true)
-    public Map<LocalDate, List<VisitHistoryWithUserResponse>> retrieveVisitHistories(RetrieveVisitHistoryRequest request) {
+    public List<VisitHistoryWithUserResponse> retrieveVisitHistories(RetrieveVisitHistoryRequest request) {
         List<VisitHistoryWithUserProjection> histories = visitHistoryRepository.findAllVisitWithUserByStoreIdBetweenDate(request.getStoreId(), request.getStartDate(), request.getEndDate());
         return histories.stream()
             .map(VisitHistoryWithUserResponse::of)
-            .collect(Collectors.groupingBy(VisitHistoryWithUserResponse::getDateOfVisit));
+            .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)

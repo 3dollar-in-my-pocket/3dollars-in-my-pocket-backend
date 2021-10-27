@@ -15,11 +15,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -46,7 +45,7 @@ public class VisitHistoryApiCaller extends MockMvcUtils {
         );
     }
 
-    public ApiResponse<Map<LocalDate, List<VisitHistoryWithUserResponse>>> retrieveVisitHistories(RetrieveVisitHistoryRequest request, int expectedStatus) throws Exception {
+    public ApiResponse<List<VisitHistoryWithUserResponse>> retrieveVisitHistories(RetrieveVisitHistoryRequest request, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/store/visits")
             .param("storeId", String.valueOf(request.getStoreId()))
             .param("startDate", String.valueOf(request.getStartDate()))

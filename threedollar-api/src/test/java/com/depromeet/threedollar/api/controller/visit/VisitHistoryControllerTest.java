@@ -28,7 +28,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -131,18 +130,13 @@ class VisitHistoryControllerTest extends AbstractControllerTest {
             RetrieveVisitHistoryRequest request = RetrieveVisitHistoryRequest.testInstance(store.getId(), LocalDate.of(2021, 10, 21), LocalDate.of(2021, 10, 22));
 
             // when
-            ApiResponse<Map<LocalDate, List<VisitHistoryWithUserResponse>>> response = visitHistoryApiCaller.retrieveVisitHistories(request, 200);
+            ApiResponse<List<VisitHistoryWithUserResponse>> response = visitHistoryApiCaller.retrieveVisitHistories(request, 200);
 
             // then
             assertAll(
                 () -> assertThat(response.getData()).hasSize(2),
-                () -> assertThat(response.getData().get(visitHistory1.getDateOfVisit())).hasSize(1),
-
-                () -> assertThat(response.getData().get(LocalDate.of(2021, 10, 21))).hasSize(1),
-                () -> assertVisitHistoryWithUserResponse(response.getData().get(LocalDate.of(2021, 10, 21)).get(0), visitHistory1, store, testUser),
-
-                () -> assertThat(response.getData().get(LocalDate.of(2021, 10, 22))).hasSize(1),
-                () -> assertVisitHistoryWithUserResponse(response.getData().get(LocalDate.of(2021, 10, 22)).get(0), visitHistory2, store, testUser)
+                () -> assertVisitHistoryWithUserResponse(response.getData().get(0), visitHistory1, store, testUser),
+                () -> assertVisitHistoryWithUserResponse(response.getData().get(1), visitHistory2, store, testUser)
             );
         }
 
@@ -157,23 +151,19 @@ class VisitHistoryControllerTest extends AbstractControllerTest {
             RetrieveVisitHistoryRequest request = RetrieveVisitHistoryRequest.testInstance(store.getId(), LocalDate.of(2021, 10, 21), LocalDate.of(2021, 10, 22));
 
             // when
-            ApiResponse<Map<LocalDate, List<VisitHistoryWithUserResponse>>> response = visitHistoryApiCaller.retrieveVisitHistories(request, 200);
+            ApiResponse<List<VisitHistoryWithUserResponse>> response = visitHistoryApiCaller.retrieveVisitHistories(request, 200);
 
             // then
             assertAll(
-                () -> assertThat(response.getData()).hasSize(1),
-                () -> assertThat(response.getData().get(LocalDate.of(2021, 10, 21))).hasSize(2),
-
-                () -> assertThat(response.getData().get(LocalDate.of(2021, 10, 21))).hasSize(2),
-                () -> assertVisitHistoryWithUserResponse(response.getData().get(LocalDate.of(2021, 10, 21)).get(0), visitHistory1, store, testUser),
-                () -> assertVisitHistoryWithUserResponse(response.getData().get(LocalDate.of(2021, 10, 21)).get(1), visitHistory2, store, testUser)
+                () -> assertThat(response.getData()).hasSize(2),
+                () -> assertVisitHistoryWithUserResponse(response.getData().get(0), visitHistory1, store, testUser),
+                () -> assertVisitHistoryWithUserResponse(response.getData().get(1), visitHistory2, store, testUser)
             );
         }
 
         private void assertVisitHistoryWithUserResponse(VisitHistoryWithUserResponse response, VisitHistory visitHistory, Store store, User user) {
             assertAll(
                 () -> assertThat(response.getVisitHistoryId()).isEqualTo(visitHistory.getId()),
-                () -> assertThat(response.getDateOfVisit()).isEqualTo(visitHistory.getDateOfVisit()),
                 () -> assertThat(response.getType()).isEqualTo(visitHistory.getType()),
                 () -> assertThat(response.getStoreId()).isEqualTo(store.getId()),
                 () -> assertUserInfoResponse(response.getUser(), user)
