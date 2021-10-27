@@ -32,6 +32,7 @@ public enum ErrorCode {
     VALIDATION_APPLE_TOKEN_EXCEPTION(BAD_REQUEST, OFF, "V005", "잘못된 애플 토큰입니다"),
     VALIDATION_APPLE_TOKEN_EXPIRED_EXCEPTION(BAD_REQUEST, OFF, "V006", "만료된 애플 토큰입니다"),
     VALIDATION_SOCIAL_TYPE_EXCEPTION(BAD_REQUEST, OFF, "V007", "잘못된 소셜 타입 입니다."),
+    VALIDATION_FILE_UPLOAD_EXCEPTION(BAD_REQUEST, OFF, "V008", "파일 업로드 중 에러가 발생하였습니다"),
 
     // 404 Not Found
     NOT_FOUND_USER_EXCEPTION(NOT_FOUND, OFF, "N001", "존재하지 않는 유저입니다"),
