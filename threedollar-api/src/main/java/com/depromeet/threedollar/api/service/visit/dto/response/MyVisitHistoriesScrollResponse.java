@@ -17,24 +17,21 @@ public class MyVisitHistoriesScrollResponse {
 
     private List<VisitHistoryWithStoreResponse> contents = new ArrayList<>();
 
-    private long totalElements;
-
     private long nextCursor;
 
-    private MyVisitHistoriesScrollResponse(List<VisitHistoryWithStoreResponse> contents, long totalElements, long nextCursor) {
+    private MyVisitHistoriesScrollResponse(List<VisitHistoryWithStoreResponse> contents, long nextCursor) {
         this.contents = contents;
-        this.totalElements = totalElements;
         this.nextCursor = nextCursor;
     }
 
-    public static MyVisitHistoriesScrollResponse newLastScroll(List<VisitHistory> visitHistories, long totalElements) {
-        return of(visitHistories, totalElements, -1L);
+    public static MyVisitHistoriesScrollResponse newLastScroll(List<VisitHistory> visitHistories) {
+        return of(visitHistories, -1L);
     }
 
-    public static MyVisitHistoriesScrollResponse of(List<VisitHistory> visitHistories, long totalElements, long nextCursor) {
+    public static MyVisitHistoriesScrollResponse of(List<VisitHistory> visitHistories, long nextCursor) {
         return new MyVisitHistoriesScrollResponse(visitHistories.stream()
             .map(history -> VisitHistoryWithStoreResponse.of(history, history.getStore()))
-            .collect(Collectors.toList()), totalElements, nextCursor);
+            .collect(Collectors.toList()), nextCursor);
     }
 
 }

@@ -15,8 +15,6 @@ public interface VisitHistoryRepositoryCustom {
 
     List<VisitHistory> findAllByUserIdWithScroll(Long userId, Long lastHistoryId, int size);
 
-    long findCountsByUserId(Long userId);
-
     List<VisitHistoryWithCounts> findCountsByStoreIdWithGroup(List<Long> storeIds);
 
 }

@@ -29,8 +29,8 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
             .from(visitHistory)
             .where(
                 visitHistory.store.id.eq(storeId),
-                visitHistory.userId.eq(userId),
-                visitHistory.dateOfVisit.eq(dateOfVisit)
+                visitHistory.dateOfVisit.eq(dateOfVisit),
+                visitHistory.userId.eq(userId)
             ).fetchFirst() != null;
     }
 
@@ -76,17 +76,6 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
             return null;
         }
         return visitHistory.id.lt(lastHistoryId);
-    }
-
-    @Override
-    public long findCountsByUserId(Long userId) {
-        return queryFactory.selectFrom(visitHistory)
-            .innerJoin(visitHistory.store, store)
-            .innerJoin(store.menus, menu)
-            .where(
-                visitHistory.userId.eq(userId),
-                store.status.eq(StoreStatus.ACTIVE)
-            ).fetchCount();
     }
 
     @Override

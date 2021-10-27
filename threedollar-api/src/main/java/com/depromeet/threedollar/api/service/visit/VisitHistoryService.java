@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -48,18 +47,11 @@ public class VisitHistoryService {
     public MyVisitHistoriesScrollResponse retrieveMyVisitHistories(RetrieveMyVisitHistoryRequest request, Long userId) {
         List<VisitHistory> currentAndNextHistories = visitHistoryRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
         if (currentAndNextHistories.size() <= request.getSize()) {
-            return MyVisitHistoriesScrollResponse.newLastScroll(
-                currentAndNextHistories,
-                Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> visitHistoryRepository.findCountsByUserId(userId))
-            );
+            return MyVisitHistoriesScrollResponse.newLastScroll(currentAndNextHistories);
         }
 
         List<VisitHistory> currentHistories = currentAndNextHistories.subList(0, request.getSize());
-        return MyVisitHistoriesScrollResponse.of(
-            currentHistories,
-            Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> visitHistoryRepository.findCountsByUserId(userId)),
-            currentHistories.get(request.getSize() - 1).getId()
-        );
+        return MyVisitHistoriesScrollResponse.of(currentHistories, currentHistories.get(request.getSize() - 1).getId());
     }
 
 }

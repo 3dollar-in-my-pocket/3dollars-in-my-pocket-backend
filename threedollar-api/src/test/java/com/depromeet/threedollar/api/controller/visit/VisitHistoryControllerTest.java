@@ -202,7 +202,7 @@ class VisitHistoryControllerTest extends AbstractControllerTest {
 
             visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
 
-            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(2, null, null);
+            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(2, null);
 
             // when
             ApiResponse<MyVisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
@@ -210,7 +210,6 @@ class VisitHistoryControllerTest extends AbstractControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
-                () -> assertThat(response.getData().getTotalElements()).isEqualTo(2),
                 () -> assertThat(response.getData().getContents()).hasSize(2),
 
                 () -> assertStoreInfoResponse(response.getData().getContents().get(0).getStore(), store),
@@ -222,23 +221,6 @@ class VisitHistoryControllerTest extends AbstractControllerTest {
         }
 
         @Test
-        void cachingTotalElement가_넘어오면_별도의_카운트를_세지않고_캐싱된_정보를_반환한다() throws Exception {
-            // given
-            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
-            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 22));
-
-            visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
-
-            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(2, null, 100L);
-
-            // when
-            ApiResponse<MyVisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
-
-            // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(100);
-        }
-
-        @Test
         void SIZE만큼의_방문_기록을_조회힌다_더_존재하면_마지막_방문기록의_ID가_nextCursor_로_넘어간다() throws Exception {
             // given
             VisitHistory visitHistory1 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
@@ -246,7 +228,7 @@ class VisitHistoryControllerTest extends AbstractControllerTest {
 
             visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
 
-            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(1, null, null);
+            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(1, null);
 
             // when
             ApiResponse<MyVisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
@@ -254,7 +236,6 @@ class VisitHistoryControllerTest extends AbstractControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(visitHistory2.getId()),
-                () -> assertThat(response.getData().getTotalElements()).isEqualTo(2),
                 () -> assertThat(response.getData().getContents()).hasSize(1),
 
                 () -> assertStoreInfoResponse(response.getData().getContents().get(0).getStore(), store),
@@ -270,7 +251,7 @@ class VisitHistoryControllerTest extends AbstractControllerTest {
 
             visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
 
-            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(2, visitHistory2.getId(), null);
+            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(2, visitHistory2.getId());
 
             // when
             ApiResponse<MyVisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
@@ -278,7 +259,6 @@ class VisitHistoryControllerTest extends AbstractControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
-                () -> assertThat(response.getData().getTotalElements()).isEqualTo(2),
                 () -> assertThat(response.getData().getContents()).hasSize(1),
 
                 () -> assertStoreInfoResponse(response.getData().getContents().get(0).getStore(), store),
@@ -289,7 +269,7 @@ class VisitHistoryControllerTest extends AbstractControllerTest {
         @Test
         void 아무런_방문_기록을_남기지_않았을경우() throws Exception {
             // given
-            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(2, null, null);
+            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(2, null);
 
             // when
             ApiResponse<MyVisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
@@ -297,7 +277,6 @@ class VisitHistoryControllerTest extends AbstractControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
-                () -> assertThat(response.getData().getTotalElements()).isEqualTo(0),
                 () -> assertThat(response.getData().getContents()).hasSize(0)
             );
         }

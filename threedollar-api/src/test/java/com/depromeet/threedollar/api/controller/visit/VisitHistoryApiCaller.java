@@ -67,8 +67,7 @@ public class VisitHistoryApiCaller extends MockMvcUtils {
         MockHttpServletRequestBuilder builder = get("/api/v2/store/visits/me")
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))
-            .param("cursor", request.getCursor() == null ? null : String.valueOf(request.getCursor()))
-            .param("cachingTotalElements", request.getCachingTotalElements() == null ? null : String.valueOf(request.getCachingTotalElements()));
+            .param("cursor", request.getCursor() == null ? null : String.valueOf(request.getCursor()));
 
         return objectMapper.readValue(
             mockMvc.perform(builder)
