@@ -18,8 +18,8 @@ public class UserService {
 
     @Transactional
     public Long createUser(CreateUserRequest request) {
-        UserServiceUtils.validateNotExistsUserName(userRepository, request.getName());
         UserServiceUtils.validateNotExistsUser(userRepository, request.getSocialId(), request.getSocialType());
+        UserServiceUtils.validateNotExistsUserName(userRepository, request.getName());
         return userRepository.save(request.toEntity()).getId();
     }
 
