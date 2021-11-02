@@ -43,12 +43,12 @@ class FaqAdminController(
 
     @GetMapping("/admin/v1/faqs")
     fun retrieveFaqs(
-        request: RetrieveFaqsRequest
+        @Valid request: RetrieveFaqsRequest
     ): ApiResponse<List<FaqResponse>> {
         return ApiResponse.success(faqService.retrieveAllFaqs(request))
     }
 
-    @GetMapping("/admin/v1/faq-categories")
+    @GetMapping("/admin/v1/faq/categories")
     fun retrieveFaqCategories(): ApiResponse<List<FaqCategoryResponse>> {
         return ApiResponse.success(FaqCategoryMapper.retrieveAllFaqCategories())
     }

@@ -43,7 +43,7 @@ internal class FaqAdminControllerTest(
         @Test
         fun 새로운_FAQ를_추가한다() {
             // given
-            val request = AddFaqRequest(FaqCategory.CATEGORY, "카테고리 질문", "카테고리 답변")
+            val request = AddFaqRequest("카테고리 질문", "카테고리 답변", FaqCategory.CATEGORY)
 
             // when & then
             mockMvc.post("/admin/v1/faq") {
@@ -60,7 +60,7 @@ internal class FaqAdminControllerTest(
                         jsonPath("$.data.faqId") { isNotEmpty() }
                         jsonPath("$.data.question") { value(request.question) }
                         jsonPath("$.data.answer") { value(request.answer) }
-                        jsonPath("$.data.category") { value(request.category.name) }
+                        jsonPath("$.data.category") { value(request.category?.name) }
                     }
                 }
         }
@@ -68,7 +68,7 @@ internal class FaqAdminControllerTest(
         @Test
         fun 잘못된_토큰인경우_401에러() {
             // given
-            val request = AddFaqRequest(FaqCategory.CATEGORY, "카테고리 질문", "카테고리 답변")
+            val request = AddFaqRequest("카테고리 질문", "카테고리 답변", FaqCategory.CATEGORY)
 
             // when & then
             mockMvc.post("/admin/v1/faq") {
@@ -115,7 +115,7 @@ internal class FaqAdminControllerTest(
                         jsonPath("$.data.faqId") { value(faq.id) }
                         jsonPath("$.data.question") { value(request.question) }
                         jsonPath("$.data.answer") { value(request.answer) }
-                        jsonPath("$.data.category") { value(request.category.name) }
+                        jsonPath("$.data.category") { value(request.category?.name) }
                     }
                 }
         }
@@ -266,7 +266,7 @@ internal class FaqAdminControllerTest(
         @Test
         fun FAQ_카테고리_리스트를_조회한다() {
             // when & then
-            mockMvc.get("/admin/v1/faq-categories") {
+            mockMvc.get("/admin/v1/faq/categories") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             }
                 .andDo {

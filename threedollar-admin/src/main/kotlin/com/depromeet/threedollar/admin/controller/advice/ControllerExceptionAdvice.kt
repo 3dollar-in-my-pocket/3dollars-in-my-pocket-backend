@@ -2,15 +2,16 @@ package com.depromeet.threedollar.admin.controller.advice
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.common.exception.ErrorCode.*
-import com.depromeet.threedollar.common.exception.model.*
+import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseException
 import com.depromeet.threedollar.common.utils.logger
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
+import org.slf4j.Logger
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.validation.BindException
 import org.springframework.web.HttpMediaTypeException
 import org.springframework.web.HttpRequestMethodNotSupportedException
-import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.MissingRequestValueException
 import org.springframework.web.bind.ServletRequestBindingException
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -28,12 +29,12 @@ class ControllerExceptionAdvice {
     @ExceptionHandler(BindException::class)
     private fun handleBadRequest(e: BindException): ApiResponse<Nothing> {
         log.error(e.message)
-        return ApiResponse.error(VALIDATION_EXCEPTION, e.bindingResult.allErrors[0].defaultMessage)
+        return ApiResponse.error(VALIDATION_EXCEPTION, e.bindingResult.fieldError?.defaultMessage)
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(
-        MethodArgumentNotValidException::class,
+        HttpMessageNotReadableException::class,
         InvalidFormatException::class,
         MissingRequestValueException::class,
         ServletRequestBindingException::class
@@ -83,7 +84,7 @@ class ControllerExceptionAdvice {
     }
 
     companion object {
-        private val log = logger()
+        private val log: Logger = logger()
     }
 
 }

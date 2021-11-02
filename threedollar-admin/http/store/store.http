@@ -1,5 +1,5 @@
 ### 신고가 기준치 이상 요청된 가게들을 조회한다.
-GET {{host_admin}}/admin/v1/stores/reported?minCount=0&page=1&size=3
+GET {{host_admin}}/admin/v1/stores/reported?minCount=2&page=1&size=3
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%

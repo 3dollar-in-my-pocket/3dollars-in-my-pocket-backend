@@ -16,7 +16,11 @@ class SecuritySecureConfig(
     override fun configure(web: WebSecurity) {
         web.ignoring()
             .antMatchers(
-                "/h2-console/**"
+                "/h2-console/**",
+                "/swagger-resources/**",
+                "swagger-ui/**",
+                "/v2/api-docs",
+                "/webjars/**"
             )
     }
 

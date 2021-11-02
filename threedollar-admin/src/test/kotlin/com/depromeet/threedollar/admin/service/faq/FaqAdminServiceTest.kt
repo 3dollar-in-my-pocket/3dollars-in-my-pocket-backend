@@ -34,7 +34,7 @@ internal class FaqAdminServiceTest(
         val answer = "가슴속 삼천원"
         val category = FaqCategory.CATEGORY
 
-        val request = AddFaqRequest(category, question, answer)
+        val request = AddFaqRequest(question, answer, category)
 
         // when
         faqAdminService.addFaq(request)
