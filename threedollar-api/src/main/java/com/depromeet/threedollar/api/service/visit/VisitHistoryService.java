@@ -28,8 +28,8 @@ public class VisitHistoryService {
 
     @Transactional
     public void addVisitHistory(AddVisitHistoryRequest request, Long userId) {
-        Store store = StoreServiceUtils.findStoreById(storeRepository, request.getStoreId());
         final LocalDate today = LocalDate.now();
+        Store store = StoreServiceUtils.findStoreById(storeRepository, request.getStoreId());
         VisitHistoryServiceUtils.validateNotVisitedToday(visitHistoryRepository, request.getStoreId(), userId, today);
         visitHistoryRepository.save(request.toEntity(store, userId, today));
     }

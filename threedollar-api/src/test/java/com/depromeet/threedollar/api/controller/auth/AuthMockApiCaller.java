@@ -2,8 +2,8 @@ package com.depromeet.threedollar.api.controller.auth;
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.controller.MockMvcUtils;
-import com.depromeet.threedollar.api.service.user.request.LoginRequest;
-import com.depromeet.threedollar.api.service.user.request.SignUpRequest;
+import com.depromeet.threedollar.api.service.auth.dto.request.LoginRequest;
+import com.depromeet.threedollar.api.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.service.auth.dto.response.LoginResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
