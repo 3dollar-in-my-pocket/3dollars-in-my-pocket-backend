@@ -3,8 +3,8 @@ package com.depromeet.threedollar.admin.controller.advice
 import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.common.exception.ErrorCode.*
 import com.depromeet.threedollar.common.exception.model.*
+import com.depromeet.threedollar.common.utils.logger
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
-import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindException
@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
 class ControllerExceptionAdvice {
-
-    private val log = LoggerFactory.getLogger(ControllerExceptionAdvice::class.java)
 
     /**
      * 400 BAD Request
@@ -82,6 +80,10 @@ class ControllerExceptionAdvice {
     private fun handleInternalServerException(e: Exception): ApiResponse<Nothing> {
         log.error(e.message, e)
         return ApiResponse.error(INTERNAL_SERVER_EXCEPTION)
+    }
+
+    companion object {
+        private val log = logger()
     }
 
 }
