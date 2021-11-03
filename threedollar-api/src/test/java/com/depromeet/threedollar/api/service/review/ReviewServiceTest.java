@@ -183,7 +183,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
         @Test
         void 가게_리뷰_수정_요청시_해당하는_리뷰가_사용자가_작성하지_않았을경우_NOT_FOUND_REVIEW_EXCEPTION() {
             // given
-            Long creatorId = 100L;
+            Long creatorId = 10000L;
             Review review = ReviewCreator.create(store.getId(), creatorId, "너무 맛있어요", 3);
             reviewRepository.save(review);
 
