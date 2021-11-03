@@ -5,10 +5,12 @@ import com.depromeet.threedollar.api.service.store.dto.request.AddStoreImageRequ
 import com.depromeet.threedollar.api.service.store.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.store.*;
+import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
@@ -56,10 +58,10 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
             assertStoreImage(storeImageList.get(0), store.getId(), userId, IMAGE_URL, StoreImageStatus.ACTIVE);
         }
 
-        @Test
-        void 가게_이미지_등록_요청시_해당하는_가게가_없는경우_NOT_FOUND_STORE_EXCEPTION() {
+        @AutoSource
+        @ParameterizedTest
+        void 가게_이미지_등록_요청시_해당하는_가게가_없는경우_NOT_FOUND_STORE_EXCEPTION(Long notFoundStoreId) {
             // given
-            Long notFoundStoreId = 9999L;
             AddStoreImageRequest request = AddStoreImageRequest.testInstance(notFoundStoreId);
 
             // when & then
@@ -86,11 +88,9 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
             assertStoreImage(storeImageList.get(0), store.getId(), userId, IMAGE_URL, StoreImageStatus.INACTIVE);
         }
 
-        @Test
-        void 가게_이미지_삭제_요청시_해당하는_가게_이미지가_존재하지_않을경우_NOT_FOUND_STORE_EXCEPTION() {
-            // given
-            Long notFoundImageId = 9999L;
-
+        @AutoSource
+        @ParameterizedTest
+        void 가게_이미지_삭제_요청시_해당하는_가게_이미지가_존재하지_않을경우_NOT_FOUND_STORE_EXCEPTION(Long notFoundImageId) {
             // when & then
             assertThatThrownBy(() -> storeImageService.deleteStoreImage(notFoundImageId)).isInstanceOf(NotFoundException.class);
         }

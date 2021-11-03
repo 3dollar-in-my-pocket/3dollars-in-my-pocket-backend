@@ -12,7 +12,9 @@ import com.depromeet.threedollar.domain.domain.faq.FaqCategory
 import com.depromeet.threedollar.domain.domain.faq.FaqCreator
 import com.depromeet.threedollar.domain.domain.faq.FaqRepository
 import org.hamcrest.collection.IsCollectionWithSize.hasSize
+import org.javaunit.autoparams.AutoSource
 import org.junit.jupiter.api.*
+import org.junit.jupiter.params.ParameterizedTest
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpHeaders
@@ -120,14 +122,14 @@ internal class FaqAdminControllerTest(
                 }
         }
 
-        @Test
-        fun FAQ_수정시_존재하지_않는_FAQ인경우_404_NotFound() {
+        @AutoSource
+        @ParameterizedTest
+        fun FAQ_수정시_존재하지_않는_FAQ인경우_404_NotFound(notFoundFaqId: Long) {
             // given
-            val faqId = 99999L
             val request = UpdateFaqRequest("카테고리 질문", "카테고리 답변", FaqCategory.CATEGORY)
 
             // when & then
-            mockMvc.put("/admin/v1/faq/${faqId}") {
+            mockMvc.put("/admin/v1/faq/${notFoundFaqId}") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
@@ -170,13 +172,12 @@ internal class FaqAdminControllerTest(
                 }
         }
 
-        @Test
-        fun FAQ_삭제시_존재하지_않는_FAQ인경우_404_NotFound() {
+        @AutoSource
+        @ParameterizedTest
+        fun FAQ_삭제시_존재하지_않는_FAQ인경우_404_NotFound(notFoundFaqId: Long) {
             // given
-            val faqId = 99999L
-
             // when & then
-            mockMvc.delete("/admin/v1/faq/${faqId}") {
+            mockMvc.delete("/admin/v1/faq/${notFoundFaqId}") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             }
                 .andDo {

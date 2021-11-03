@@ -36,6 +36,7 @@ public class VisitHistoryService {
 
     @Transactional(readOnly = true)
     public List<VisitHistoryWithUserResponse> retrieveVisitHistories(RetrieveVisitHistoryRequest request) {
+        StoreServiceUtils.validateExistsStore(storeRepository, request.getStoreId());
         List<VisitHistoryWithUserProjection> histories = visitHistoryRepository.findAllVisitWithUserByStoreIdBetweenDate(request.getStoreId(), request.getStartDate(), request.getEndDate());
         return histories.stream()
             .map(VisitHistoryWithUserResponse::of)

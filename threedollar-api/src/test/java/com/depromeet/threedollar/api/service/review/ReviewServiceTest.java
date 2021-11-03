@@ -9,9 +9,11 @@ import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.review.ReviewStatus;
 import com.depromeet.threedollar.domain.domain.store.Store;
+import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -55,11 +57,11 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             assertReview(reviewList.get(0), store.getId(), contents, rating, userId);
         }
 
-        @Test
-        void 가게_리뷰_등록_요청시_해당하는_가게가_없는경우_NOT_FOUND_STORE_EXCEPTION() {
+        @AutoSource
+        @ParameterizedTest
+        void 가게_리뷰_등록_요청시_해당하는_가게가_없는경우_NOT_FOUND_STORE_EXCEPTION(Long notFoundStoreId) {
             // given
-            Long storeId = 99999L;
-            AddReviewRequest request = AddReviewRequest.testInstance(storeId, "리뷰", 3);
+            AddReviewRequest request = AddReviewRequest.testInstance(notFoundStoreId, "리뷰", 3);
 
             // when & then
             assertThatThrownBy(() -> reviewService.addReview(request, userId)).isInstanceOf(NotFoundException.class);

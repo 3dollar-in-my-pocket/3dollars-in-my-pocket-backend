@@ -115,11 +115,11 @@ class UserServiceTest {
     }
 
     @Nested
-    class 사용가능한_닉네임_체크 {
+    class 중복된_닉네임_체크 {
 
         @AutoSource
         @ParameterizedTest
-        void 사용가능한_닉네임_체크시_중복된_닉네임이면_CONFLICT_EXCEPTION(String name) {
+        void 중복된_닉네임이면_CONFLICT_EXCEPTION(String name) {
             // given
             User user = UserCreator.create("social-id", UserSocialType.KAKAO, name);
             userRepository.save(user);
@@ -132,7 +132,7 @@ class UserServiceTest {
 
         @AutoSource
         @ParameterizedTest
-        void 사용가능한_닉네임_체크시_중복된_닉네임이_아니면_사용가능하다(String name) {
+        void 중복된_닉네임이_아니면_사용가능하다(String name) {
             // given
             CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
 

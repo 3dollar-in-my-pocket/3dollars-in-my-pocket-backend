@@ -2,6 +2,7 @@ package com.depromeet.threedollar.api.service.visit;
 
 import com.depromeet.threedollar.api.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRequest;
+import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveVisitHistoryRequest;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
@@ -80,6 +81,21 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
 
             // when & then
             assertThatThrownBy(() -> visitHistoryService.addVisitHistory(request, userId)).isInstanceOf(ConflictException.class);
+        }
+    }
+
+    @DisplayName("가게 방문 목록 조회")
+    @Nested
+    class RetrieveVisitHistories {
+
+        @AutoSource
+        @ParameterizedTest
+        void 존재하지_않는_가게에_대한_방문_인증_조회시_Not_Found_Exception(Long notFoundStoreId) {
+            // given
+            RetrieveVisitHistoryRequest request = RetrieveVisitHistoryRequest.testInstance(notFoundStoreId, LocalDate.of(2021, 10, 20), LocalDate.of(2021, 10, 23));
+
+            // when & then
+            assertThatThrownBy(() -> visitHistoryService.retrieveVisitHistories(request)).isInstanceOf(NotFoundException.class);
         }
     }
 

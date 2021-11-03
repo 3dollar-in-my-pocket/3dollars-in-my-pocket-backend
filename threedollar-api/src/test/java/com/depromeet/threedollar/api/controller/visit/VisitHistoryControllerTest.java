@@ -151,6 +151,22 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             );
         }
 
+        @AutoSource
+        @ParameterizedTest
+        void 가게_방문_기록_조회시_존재하지_않는_가게면_404_NotFound(Long notFoundStoreId) throws Exception {
+            // given
+            RetrieveVisitHistoryRequest request = RetrieveVisitHistoryRequest.testInstance(notFoundStoreId, LocalDate.of(2021, 10, 21), LocalDate.of(2021, 10, 22));
+
+            // when
+            ApiResponse<List<VisitHistoryWithUserResponse>> response = visitHistoryApiCaller.retrieveVisitHistories(request, 404);
+
+            // then
+            assertAll(
+                () -> assertThat(response.getResultCode()).isEqualTo(ErrorCode.NOT_FOUND_STORE_EXCEPTION.getCode()),
+                () -> assertThat(response.getMessage()).isEqualTo(ErrorCode.NOT_FOUND_STORE_EXCEPTION.getMessage())
+            );
+        }
+
         private void assertVisitHistoryWithUserResponse(VisitHistoryWithUserResponse response, VisitHistory visitHistory, Store store, User user) {
             assertAll(
                 () -> assertThat(response.getVisitHistoryId()).isEqualTo(visitHistory.getId()),
