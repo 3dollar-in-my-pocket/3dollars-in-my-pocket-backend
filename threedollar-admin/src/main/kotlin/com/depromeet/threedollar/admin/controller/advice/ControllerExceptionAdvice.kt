@@ -63,7 +63,7 @@ class ControllerExceptionAdvice {
     @ExceptionHandler(HttpMediaTypeException::class)
     private fun handleHttpMediaTypeException(e: HttpMediaTypeException): ApiResponse<Nothing> {
         log.error(e.message, e)
-        return ApiResponse.error(UNSUPPORTED_MEDIA_TYPE)
+        return ApiResponse.error(UNSUPPORTED_MEDIA_TYPE_EXCEPTION)
     }
 
     /**

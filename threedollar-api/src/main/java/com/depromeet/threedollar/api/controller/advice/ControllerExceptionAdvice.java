@@ -74,7 +74,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(HttpMediaTypeException.class)
     protected ApiResponse<Object> handleHttpMediaTypeException(final HttpMediaTypeException e) {
         log.error(e.getMessage(), e);
-        return ApiResponse.error(UNSUPPORTED_MEDIA_TYPE);
+        return ApiResponse.error(UNSUPPORTED_MEDIA_TYPE_EXCEPTION);
     }
 
     /**
