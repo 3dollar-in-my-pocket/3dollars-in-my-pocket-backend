@@ -4,6 +4,7 @@ buildscript {
         kotlinVersion = "1.5.31"
         springCloudVersion = "2020.0.4"
         springBootAdminVersion = "2.4.3"
+        autoParamVersion = "0.3.0"
     }
     repositories {
         mavenCentral()
@@ -58,7 +59,9 @@ subprojects {
         implementation("org.springframework.boot:spring-boot-starter-validation")
         annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
+        // Test
         testImplementation('org.springframework.boot:spring-boot-starter-test')
+        testImplementation("io.github.javaunit:autoparams:${autoParamVersion}")
 
         // Lombok
         compileOnly("org.projectlombok:lombok")

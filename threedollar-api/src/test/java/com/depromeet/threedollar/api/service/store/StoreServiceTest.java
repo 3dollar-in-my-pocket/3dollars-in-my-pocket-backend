@@ -19,19 +19,17 @@ import com.depromeet.threedollar.domain.domain.storedelete.DeleteReasonType;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequest;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestCreator;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestRepository;
+import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -316,8 +314,8 @@ class StoreServiceTest extends UserSetUpTest {
             assertMenu(menus.get(0), menuName, price, type);
         }
 
-        @MethodSource
         @ParameterizedTest
+        @AutoSource(repeat = 3)
         void 가게의_결제방법을_수정한다(Set<PaymentMethodType> paymentMethodTypes) {
             // given
             Store store = StoreCreator.create(userId, "storeName");
@@ -344,15 +342,7 @@ class StoreServiceTest extends UserSetUpTest {
             assertThat(getPaymentMethodTypes(paymentMethodsList)).containsAll(paymentMethodTypes);
         }
 
-        private Stream<Arguments> 가게의_결제방법을_수정한다() {
-            return Stream.of(
-                Arguments.of(Set.of(PaymentMethodType.CARD, PaymentMethodType.CASH)), // 거래 방식을 추가하는 경우.
-                Arguments.of(Collections.emptySet()), // 거래 방식을 없애는 경우
-                Arguments.of(Set.of(PaymentMethodType.CARD)) // 유지하는 경우
-            );
-        }
-
-        @MethodSource
+        @AutoSource(repeat = 3)
         @ParameterizedTest
         void 가게의_개시일을_수정한다(Set<DayOfTheWeek> appearanceDays) {
             // given
@@ -378,14 +368,6 @@ class StoreServiceTest extends UserSetUpTest {
             List<AppearanceDay> appearanceDayList = appearanceDayRepository.findAll();
             assertThat(appearanceDayList).hasSize(appearanceDays.size());
             assertThat(getDayOfTheWeeks(appearanceDayList)).containsAll(appearanceDays);
-        }
-
-        private Stream<Arguments> 가게의_개시일을_수정한다() {
-            return Stream.of(
-                Arguments.of(Set.of(DayOfTheWeek.MONDAY, DayOfTheWeek.TUESDAY, DayOfTheWeek.WEDNESDAY)), // 거래 방식을 추가하는 경우.
-                Arguments.of(Set.of(DayOfTheWeek.TUESDAY)), // 거래 방식을 없애는 경우
-                Arguments.of(Set.of(DayOfTheWeek.WEDNESDAY, DayOfTheWeek.TUESDAY)) // 유지하는 경우
-            );
         }
 
         @Test
