@@ -28,15 +28,18 @@ public class StoreImageService {
     private final UploadService uploadService;
 
     public List<StoreImageResponse> addStoreImages(AddStoreImageRequest request, List<MultipartFile> images, Long userId) {
-        return images.stream()
+        StoreServiceUtils.validateExistsStore(storeRepository, request.getStoreId());
+        List<StoreImage> storeImages = storeImageRepository.saveAll(images.stream()
             .map(image -> addStoreImage(request, image, userId))
+            .collect(Collectors.toList()));
+        return storeImages.stream()
+            .map(StoreImageResponse::of)
             .collect(Collectors.toList());
     }
 
-    private StoreImageResponse addStoreImage(AddStoreImageRequest request, MultipartFile image, Long userId) {
-        StoreServiceUtils.validateExistsStore(storeRepository, request.getStoreId());
+    private StoreImage addStoreImage(AddStoreImageRequest request, MultipartFile image, Long userId) {
         String imageUrl = uploadService.uploadFile(ImageUploadRequest.of(ImageType.STORE), image);
-        return StoreImageResponse.of(storeImageRepository.save(StoreImage.newInstance(request.getStoreId(), userId, imageUrl)));
+        return StoreImage.newInstance(request.getStoreId(), userId, imageUrl);
     }
 
     @Transactional

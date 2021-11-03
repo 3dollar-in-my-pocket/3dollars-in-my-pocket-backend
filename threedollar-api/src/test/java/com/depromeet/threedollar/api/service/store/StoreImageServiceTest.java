@@ -73,10 +73,11 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
     @Nested
     class 가게_이미지_삭제 {
 
-        @Test
-        void 가게_이미지_삭제_성공시_해당_이미지가_INACTIVE로_변경된다() {
+        @AutoSource
+        @ParameterizedTest
+        void 가게_이미지_삭제_성공시_해당_이미지가_INACTIVE로_변경된다(String imageUrl) {
             // given
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, IMAGE_URL);
+            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, imageUrl);
             storeImageRepository.save(storeImage);
 
             // when
@@ -85,7 +86,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
             // then
             List<StoreImage> storeImageList = storeImageRepository.findAll();
             assertThat(storeImageList).hasSize(1);
-            assertStoreImage(storeImageList.get(0), store.getId(), userId, IMAGE_URL, StoreImageStatus.INACTIVE);
+            assertStoreImage(storeImageList.get(0), store.getId(), userId, imageUrl, StoreImageStatus.INACTIVE);
         }
 
         @AutoSource
@@ -95,10 +96,11 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
             assertThatThrownBy(() -> storeImageService.deleteStoreImage(notFoundImageId)).isInstanceOf(NotFoundException.class);
         }
 
-        @Test
-        void 가게_이미지_삭제_요청시_해당하는_가게_이미지가_INACTIVE_삭제일경우_NOT_FOUND_STORE_EXCEPTION() {
+        @AutoSource
+        @ParameterizedTest
+        void 가게_이미지_삭제_요청시_해당하는_가게_이미지가_INACTIVE_삭제일경우_NOT_FOUND_STORE_EXCEPTION(String imageUrl) {
             // given
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, IMAGE_URL);
+            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, imageUrl);
             storeImage.delete();
             storeImageRepository.save(storeImage);
 
@@ -111,10 +113,11 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
     @Nested
     class 가게_이미지_조회 {
 
-        @Test
-        void 가게_이미지_조회_성공시_해당_이미지_정보가_반환된다() {
+        @AutoSource
+        @ParameterizedTest
+        void 가게_이미지_조회_성공시_해당_이미지_정보가_반환된다(String imageUrl) {
             // given
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, IMAGE_URL);
+            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, imageUrl);
             storeImageRepository.save(storeImage);
 
             // when
@@ -125,10 +128,11 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
             asserStoreImageResponse(responses.get(0), storeImage.getId(), storeImage.getUrl());
         }
 
-        @Test
-        void  가게_이미지_조회시_삭제된_이미지는_조회되지_않는다() {
+        @AutoSource
+        @ParameterizedTest
+        void  가게_이미지_조회시_삭제된_이미지는_조회되지_않는다(String imageUrl) {
             // given
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, IMAGE_URL);
+            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, imageUrl);
             storeImage.delete();
             storeImageRepository.save(storeImage);
 
