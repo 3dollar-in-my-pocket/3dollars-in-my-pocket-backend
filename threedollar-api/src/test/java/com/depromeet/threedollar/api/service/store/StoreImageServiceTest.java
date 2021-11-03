@@ -1,10 +1,8 @@
 package com.depromeet.threedollar.api.service.store;
 
-import com.depromeet.threedollar.api.service.StoreSetupTest;
+import com.depromeet.threedollar.api.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.service.store.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.api.service.store.dto.response.StoreImageResponse;
-import com.depromeet.threedollar.api.service.upload.UploadService;
-import com.depromeet.threedollar.api.service.upload.dto.request.UploadRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.store.*;
 import org.junit.jupiter.api.AfterEach;
@@ -14,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
-class StoreImageServiceTest extends StoreSetupTest {
+class StoreImageServiceTest extends SetupStoreServiceTest {
 
     private static final String IMAGE_URL = "https://image.url";
 
@@ -62,7 +59,8 @@ class StoreImageServiceTest extends StoreSetupTest {
         @Test
         void 가게_이미지_등록_요청시_해당하는_가게가_없는경우_NOT_FOUND_STORE_EXCEPTION() {
             // given
-            AddStoreImageRequest request = AddStoreImageRequest.testInstance(999L);
+            Long notFoundStoreId = 9999L;
+            AddStoreImageRequest request = AddStoreImageRequest.testInstance(notFoundStoreId);
 
             // when & then
             assertThatThrownBy(() -> storeImageService.addStoreImages(request, List.of(new MockMultipartFile("name", new byte[]{})), userId)).isInstanceOf(NotFoundException.class);
@@ -90,8 +88,11 @@ class StoreImageServiceTest extends StoreSetupTest {
 
         @Test
         void 가게_이미지_삭제_요청시_해당하는_가게_이미지가_존재하지_않을경우_NOT_FOUND_STORE_EXCEPTION() {
+            // given
+            Long notFoundImageId = 9999L;
+
             // when & then
-            assertThatThrownBy(() -> storeImageService.deleteStoreImage(999L)).isInstanceOf(NotFoundException.class);
+            assertThatThrownBy(() -> storeImageService.deleteStoreImage(notFoundImageId)).isInstanceOf(NotFoundException.class);
         }
 
         @Test

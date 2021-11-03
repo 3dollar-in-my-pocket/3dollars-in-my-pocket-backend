@@ -5,7 +5,7 @@ import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreGrou
 import com.depromeet.threedollar.api.service.store.dto.response.*;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryInfoResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.api.controller.AbstractControllerTest;
+import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStoresRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveMyStoresRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailInfoRequest;
@@ -34,7 +34,7 @@ import java.util.List;
 import static com.depromeet.threedollar.common.exception.ErrorCode.NOT_FOUND_STORE_EXCEPTION;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class StoreRetrieveControllerTest extends AbstractControllerTest {
+class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
     private StoreRetrieveMockApiCaller storeRetrieveMockApiCaller;
 

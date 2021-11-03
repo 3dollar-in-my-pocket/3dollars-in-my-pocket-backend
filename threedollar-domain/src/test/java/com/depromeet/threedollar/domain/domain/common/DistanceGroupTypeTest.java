@@ -1,10 +1,7 @@
 package com.depromeet.threedollar.domain.domain.common;
 
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,13 +25,6 @@ class DistanceGroupTypeTest {
 
         // then
         assertThat(type).isEqualTo(DistanceGroupType.FIFTY_TO_HUNDRED);
-    }
-
-    private static Stream<Arguments> source_fifty_to_hundred() {
-        return Stream.of(
-            Arguments.of(50),
-            Arguments.of(99)
-        );
     }
 
     @ParameterizedTest

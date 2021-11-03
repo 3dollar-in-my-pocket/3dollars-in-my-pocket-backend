@@ -1,25 +1,23 @@
 package com.depromeet.threedollar.domain.domain.store;
 
-import org.junit.jupiter.api.Test;
+import org.javaunit.autoparams.AutoSource;
+import org.junit.jupiter.params.ParameterizedTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class StoreImageTest {
 
-    @Test
-    void 가게이미지의_URL을_수정한다() {
+    @AutoSource
+    @ParameterizedTest
+    void 가게이미지의_URL을_수정한다(Long storeId, Long userId, String imageUrl) {
         // given
-        String url = "https://after-store-image.png";
-
-        Long storeId = 100000L;
-        Long userId = 200000L;
-        StoreImage storeImage = StoreImageCreator.create(storeId, userId, "https://store-image.png");
+        StoreImage storeImage = StoreImageCreator.create(storeId, userId, "https://after-store-image.png");
 
         // when
-        storeImage.updateUrl(url);
+        storeImage.updateUrl(imageUrl);
 
         // then
-        assertThat(storeImage.getUrl()).isEqualTo(url);
+        assertThat(storeImage.getUrl()).isEqualTo(imageUrl);
     }
 
 }

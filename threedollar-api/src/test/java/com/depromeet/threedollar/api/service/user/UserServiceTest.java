@@ -6,10 +6,12 @@ import com.depromeet.threedollar.api.service.user.dto.request.UpdateUserInfoRequ
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.user.*;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
+import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -41,14 +43,11 @@ class UserServiceTest {
     @Nested
     class 신규_유저_생성 {
 
-        @Test
-        void 신규_유저_생성_성공시_새로운_유저정보가_추가된다() {
+        @AutoSource
+        @ParameterizedTest
+        void 신규_유저_생성_성공시_새로운_유저정보가_추가된다(String socialId, UserSocialType socialType, String name) {
             // given
-            String socialId = "social-id";
-            UserSocialType type = UserSocialType.KAKAO;
-            String name = "가슴속 삼천원";
-
-            CreateUserRequest request = CreateUserRequest.testInstance(socialId, type, name);
+            CreateUserRequest request = CreateUserRequest.testInstance(socialId, socialType, name);
 
             // when
             userService.createUser(request);
@@ -56,13 +55,13 @@ class UserServiceTest {
             // then
             List<User> users = userRepository.findAll();
             assertThat(users).hasSize(1);
-            assertUserInfo(users.get(0), socialId, type, name);
+            assertUserInfo(users.get(0), socialId, socialType, name);
         }
 
-        @Test
-        void 신규_유저_생성시_중복된_닉네임이면_CONFLICT_EXCEPTION() {
+        @AutoSource
+        @ParameterizedTest
+        void 신규_유저_생성시_중복된_닉네임이면_CONFLICT_EXCEPTION(String name) {
             // given
-            String name = "가슴속 삼천원";
             userRepository.save(UserCreator.create("social-id", UserSocialType.KAKAO, name));
 
             CreateUserRequest request = CreateUserRequest.testInstance("another-id", UserSocialType.APPLE, name);
@@ -71,23 +70,22 @@ class UserServiceTest {
             assertThatThrownBy(() -> userService.createUser(request)).isInstanceOf(ConflictException.class);
         }
 
-        @Test
-        void 신규_유저_생성시_중복된_소셜정보면_CONFLICT_EXCEPTION() {
+        @AutoSource
+        @ParameterizedTest
+        void 신규_유저_생성시_중복된_소셜정보면_CONFLICT_EXCEPTION(String socialId, UserSocialType socialType) {
             // given
-            String socialId = "social-id";
-            UserSocialType type = UserSocialType.KAKAO;
-            userRepository.save(UserCreator.create(socialId, type, "기존의 닉네임"));
+            userRepository.save(UserCreator.create(socialId, socialType, "기존의 닉네임"));
 
-            CreateUserRequest request = CreateUserRequest.testInstance(socialId, type, "새로운 닉네임");
+            CreateUserRequest request = CreateUserRequest.testInstance(socialId, socialType, "새로운 닉네임");
 
             // when & then
             assertThatThrownBy(() -> userService.createUser(request)).isInstanceOf(ConflictException.class);
         }
 
-        @Test
-        void 신규_유저_생성시_소셜_아이디가_같더라도_제공하는_소셜이_다른경우_회원가입이_정상적으로_처리된다() {
+        @AutoSource
+        @ParameterizedTest
+        void 신규_유저_생성시_소셜_아이디가_같더라도_제공하는_소셜이_다른경우_회원가입이_정상적으로_처리된다(String socialId) {
             // given
-            String socialId = "social-id";
             userRepository.save(UserCreator.create(socialId, UserSocialType.APPLE, "기존의 닉네임"));
 
             CreateUserRequest request = CreateUserRequest.testInstance(socialId, UserSocialType.KAKAO, "새로운 닉네임");
@@ -107,13 +105,11 @@ class UserServiceTest {
     @Nested
     class 회원_정보_조회 {
 
-        @Test
-        void 회원_정보_조회시_존재하지_않는_유저면_NOT_FOUND_USER_EXCEPTION() {
-            // given
-            Long userId = 100000L;
-
+        @AutoSource
+        @ParameterizedTest
+        void 회원_정보_조회시_존재하지_않는_유저면_NOT_FOUND_USER_EXCEPTION(Long notFoundUserId) {
             // when & then
-            assertThatThrownBy(() -> userService.getUserInfo(userId)).isInstanceOf(NotFoundException.class);
+            assertThatThrownBy(() -> userService.getUserInfo(notFoundUserId)).isInstanceOf(NotFoundException.class);
         }
 
     }
@@ -121,10 +117,10 @@ class UserServiceTest {
     @Nested
     class 사용가능한_닉네임_체크 {
 
-        @Test
-        void 사용가능한_닉네임_체크시_중복된_닉네임이면_CONFLICT_EXCEPTION() {
+        @AutoSource
+        @ParameterizedTest
+        void 사용가능한_닉네임_체크시_중복된_닉네임이면_CONFLICT_EXCEPTION(String name) {
             // given
-            String name = "가슴속 삼천원";
             User user = UserCreator.create("social-id", UserSocialType.KAKAO, name);
             userRepository.save(user);
 
@@ -134,14 +130,13 @@ class UserServiceTest {
             assertThatThrownBy(() -> userService.checkAvailableName(request)).isInstanceOf(ConflictException.class);
         }
 
-        @Test
-        void 사용가능한_닉네임_체크시_중복된_닉네임이_아니면_사용가능하다() {
+        @AutoSource
+        @ParameterizedTest
+        void 사용가능한_닉네임_체크시_중복된_닉네임이_아니면_사용가능하다(String name) {
             // given
-            String name = "가슴속 삼천원";
-
             CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
 
-            // when
+            // when & then
             userService.checkAvailableName(request);
         }
 
@@ -150,13 +145,11 @@ class UserServiceTest {
     @Nested
     class 회원정보_수정 {
 
-        @Test
-        void 회원정보_수정_성공시_해당하는_유저_정보가_변경된다() {
+        @AutoSource
+        @ParameterizedTest
+        void 회원정보_수정_성공시_해당하는_유저_정보가_변경된다(String socialId, UserSocialType socialType, String name) {
             // given
-            String socialId = "social-id";
-            UserSocialType type = UserSocialType.KAKAO;
-            String name = "가슴속 삼천원";
-            User user = UserCreator.create(socialId, type, "기존의 닉네임");
+            User user = UserCreator.create(socialId, socialType, "기존의 닉네임");
             userRepository.save(user);
 
             UpdateUserInfoRequest request = UpdateUserInfoRequest.testInstance(name);
@@ -167,17 +160,17 @@ class UserServiceTest {
             // then
             List<User> users = userRepository.findAll();
             assertThat(users).hasSize(1);
-            assertUserInfo(users.get(0), socialId, type, name);
+            assertUserInfo(users.get(0), socialId, socialType, name);
         }
 
-        @Test
-        void 회원정보_수정_요청시_존재하지_않는_유저면_NOT_FOUND_USER_EXCEPTION() {
+        @AutoSource
+        @ParameterizedTest
+        void 회원정보_수정_요청시_존재하지_않는_유저면_NOT_FOUND_USER_EXCEPTION(Long notFoundUserId) {
             // given
-            Long userId = 10000000L;
             UpdateUserInfoRequest request = UpdateUserInfoRequest.testInstance("name");
 
             // when & then
-            assertThatThrownBy(() -> userService.updateUserInfo(request, userId)).isInstanceOf(NotFoundException.class);
+            assertThatThrownBy(() -> userService.updateUserInfo(request, notFoundUserId)).isInstanceOf(NotFoundException.class);
         }
 
     }
@@ -185,10 +178,11 @@ class UserServiceTest {
     @Nested
     class 회원탈퇴 {
 
-        @Test
-        void 회원탈퇴_성공시_백업을_위한_데이터가_생성된다() {
+        @AutoSource
+        @ParameterizedTest
+        void 회원탈퇴_성공시_백업을_위한_데이터가_생성된다(String socialId, UserSocialType socialType, String name) {
             // given
-            User user = UserCreator.create("social-id", UserSocialType.APPLE, "기존의 닉네임");
+            User user = UserCreator.create(socialId, socialType, name);
             userRepository.save(user);
 
             // then
@@ -200,7 +194,7 @@ class UserServiceTest {
 
             List<WithdrawalUser> withdrawalUsers = withdrawalUserRepository.findAll();
             assertThat(withdrawalUsers).hasSize(1);
-            assertWithdrawalUser(withdrawalUsers.get(0), user.getId(), user.getName(), user.getSocialId(), user.getSocialType(), user.getCreatedAt());
+            assertWithdrawalUser(withdrawalUsers.get(0), user.getId(), name, socialId, socialType, user.getCreatedAt());
         }
 
         @DisplayName("회원탈퇴시 다른 유저에게 영향을 주지 않는다")
@@ -222,10 +216,11 @@ class UserServiceTest {
             assertUserInfo(users.get(0), user2.getSocialId(), user2.getSocialType(), user2.getName());
         }
 
-        @Test
-        void 회원탈퇴_요청시_해당하는_유저가_없으면_NOT_FOUND_USER_EXCEPTION() {
+        @AutoSource
+        @ParameterizedTest
+        void 회원탈퇴_요청시_해당하는_유저가_없으면_NOT_FOUND_USER_EXCEPTION(Long notFoundUserId) {
             // when & then
-            assertThatThrownBy(() -> userService.signOut(1000000L)).isInstanceOf(NotFoundException.class);
+            assertThatThrownBy(() -> userService.signOut(notFoundUserId)).isInstanceOf(NotFoundException.class);
         }
 
     }

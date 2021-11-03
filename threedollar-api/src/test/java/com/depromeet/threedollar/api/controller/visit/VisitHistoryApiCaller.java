@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class VisitHistoryApiCaller extends MockMvcUtils {
+class VisitHistoryApiCaller extends MockMvcUtils {
 
     public VisitHistoryApiCaller(MockMvc mockMvc, ObjectMapper objectMapper) {
         super(mockMvc, objectMapper);

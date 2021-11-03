@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.review;
 
-import com.depromeet.threedollar.api.service.StoreSetupTest;
+import com.depromeet.threedollar.api.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
-class ReviewServiceTest extends StoreSetupTest {
+class ReviewServiceTest extends SetupStoreServiceTest {
 
     @Autowired
     private ReviewService reviewService;
@@ -32,8 +32,8 @@ class ReviewServiceTest extends StoreSetupTest {
 
     @AfterEach
     void cleanUp() {
-        super.cleanup();
         reviewRepository.deleteAll();
+        super.cleanup();
     }
 
     @Nested

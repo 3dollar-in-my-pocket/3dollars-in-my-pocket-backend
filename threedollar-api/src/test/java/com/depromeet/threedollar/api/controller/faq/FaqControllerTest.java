@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.controller.faq;
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.api.controller.AbstractControllerTest;
+import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
 import com.depromeet.threedollar.application.mapper.faq.dto.response.FaqCategoryResponse;
 import com.depromeet.threedollar.application.service.faq.dto.response.FaqResponse;
 import com.depromeet.threedollar.domain.domain.faq.Faq;
@@ -16,17 +16,17 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class FaqControllerTest extends AbstractControllerTest {
+class FaqControllerTest extends SetupUserControllerTest {
 
     private FaqMockApiCaller faqMockApiCaller;
-
-    @Autowired
-    private FaqRepository faqRepository;
 
     @BeforeEach
     void setUp() {
         faqMockApiCaller = new FaqMockApiCaller(mockMvc, objectMapper);
     }
+
+    @Autowired
+    private FaqRepository faqRepository;
 
     @AfterEach
     void cleanUp() {

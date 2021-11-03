@@ -1,47 +1,36 @@
 package com.depromeet.threedollar.api.controller.review;
 
-import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.api.controller.AbstractControllerTest;
+import com.depromeet.threedollar.api.controller.SetupStoreControllerTest;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsRequest;
-import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewDetailResponse;
+import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
+import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.common.exception.ErrorCode;
-import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
 import com.depromeet.threedollar.domain.domain.menu.MenuRepository;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
-import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class ReviewControllerTest extends AbstractControllerTest {
+class ReviewControllerTest extends SetupStoreControllerTest {
 
     private ReviewMockApiCaller reviewMockApiCaller;
-
-    private Store store;
 
     @BeforeEach
     void setUp() {
         reviewMockApiCaller = new ReviewMockApiCaller(mockMvc, objectMapper);
-
-        store = StoreCreator.create(testUser.getId(), "디프만 붕어빵");
-        store.addMenus(Collections.singletonList(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
-        storeRepository.save(store);
     }
 
     @Autowired
@@ -80,7 +69,8 @@ class ReviewControllerTest extends AbstractControllerTest {
         @Test
         void 리뷰_등록시_가게가_없으면_404에러_발생() throws Exception {
             // given
-            AddReviewRequest request = AddReviewRequest.testInstance(100000000L, "content", 5);
+            Long notFoundStoreId = 1000000000L;
+            AddReviewRequest request = AddReviewRequest.testInstance(notFoundStoreId, "content", 5);
 
             // when
             ApiResponse<ReviewInfoResponse> response = reviewMockApiCaller.addStoreReview(request, token, 404);
@@ -116,10 +106,11 @@ class ReviewControllerTest extends AbstractControllerTest {
         @Test
         void 리뷰_수정시_해당하는_리뷰가_없으면_404에러_발생() throws Exception {
             // given
+            Long notFoundReviewId = 10000005L;
             UpdateReviewRequest request = UpdateReviewRequest.testInstance("맛이 없어졌어요", 1);
 
             // when
-            ApiResponse<ReviewInfoResponse> response = reviewMockApiCaller.updateStoreReview(999999L, request, token, 404);
+            ApiResponse<ReviewInfoResponse> response = reviewMockApiCaller.updateStoreReview(notFoundReviewId, request, token, 404);
 
             // then
             assertAll(

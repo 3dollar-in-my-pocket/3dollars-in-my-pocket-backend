@@ -1,13 +1,16 @@
 package com.depromeet.threedollar.api.controller.menu;
 
-import com.depromeet.threedollar.api.controller.AbstractControllerTest;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.application.mapper.menu.dto.response.MenuCategoryResponse;
 import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
 import com.fasterxml.jackson.core.type.TypeReference;
-import org.junit.jupiter.api.AfterEach;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.nio.charset.StandardCharsets;
@@ -22,12 +25,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class MenuControllerTest extends AbstractControllerTest {
+@AutoConfigureMockMvc
+@SpringBootTest
+class MenuControllerTest {
 
-    @AfterEach
-    void cleanUp() {
-        super.cleanup();
-    }
+    @Autowired
+    protected MockMvc mockMvc;
+
+    @Autowired
+    protected ObjectMapper objectMapper;
 
     @DisplayName("GET /api/v2/store/menu/categories")
     @Test

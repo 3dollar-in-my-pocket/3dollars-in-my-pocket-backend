@@ -8,8 +8,9 @@ import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserCreator;
 import com.depromeet.threedollar.domain.domain.user.UserRepository;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
+import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
@@ -32,15 +33,16 @@ class ReviewRepositoryTest {
     @Nested
     class findAllWithCreatorByStoreId {
 
-        @Test
-        void 가게_리뷰와_함께_리뷰_작성자_정보를_함께_조회한다() {
-            User user = UserCreator.create("social-id", UserSocialType.KAKAO, "닉네임");
+        @ParameterizedTest
+        @AutoSource
+        void 가게_리뷰와_함께_리뷰_작성자_정보를_함께_조회한다(String socialId, UserSocialType socialType, String userName, String reviewContents) {
+            User user = UserCreator.create(socialId, socialType, userName);
             userRepository.save(user);
 
             Store store = StoreCreator.create(user.getId(), "가게");
             storeRepository.save(store);
 
-            Review review = ReviewCreator.create(store.getId(), user.getId(), "리뷰 1", 5);
+            Review review = ReviewCreator.create(store.getId(), user.getId(), reviewContents, 5);
             reviewRepository.save(review);
 
             // when
@@ -48,7 +50,7 @@ class ReviewRepositoryTest {
 
             // then
             assertThat(reviews).hasSize(1);
-            assertReviewWithCreatorDto(reviews.get(0), review.getId(), review.getRating(), review.getContents(), user.getId(), user.getName(), user.getSocialType());
+            assertReviewWithCreatorDto(reviews.get(0), review.getId(), review.getRating(), reviewContents, user.getId(), userName, socialType);
         }
 
     }

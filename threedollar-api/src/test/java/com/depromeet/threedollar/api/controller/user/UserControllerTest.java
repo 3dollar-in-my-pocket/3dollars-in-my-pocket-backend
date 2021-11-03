@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.controller.user;
 
-import com.depromeet.threedollar.api.controller.AbstractControllerTest;
+import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
 import com.depromeet.threedollar.api.service.user.dto.request.CheckAvailableNameRequest;
 import com.depromeet.threedollar.api.service.user.dto.request.UpdateUserInfoRequest;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class UserControllerTest extends AbstractControllerTest {
+class UserControllerTest extends SetupUserControllerTest {
 
     @AfterEach
     void cleanUp() {
