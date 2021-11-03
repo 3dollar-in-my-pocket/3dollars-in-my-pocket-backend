@@ -16,7 +16,7 @@ class ReviewStaticsRepositoryTest(
     inner class FindActiveReviewsCounts {
 
         @Test
-        fun 활성화된_전체_리뷰수를_조회한다(userId: Long, storeId: Long) {
+        fun 활성화된_전체_리뷰수를_조회한다() {
             // given
             val review1 = ReviewCreator.create(1L, 100L, "리뷰 1", 5)
             val review2 = ReviewCreator.create(2L, 101L, "리뷰 2", 4)
