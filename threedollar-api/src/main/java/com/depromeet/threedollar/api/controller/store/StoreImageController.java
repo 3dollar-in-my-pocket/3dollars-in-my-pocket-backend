@@ -21,13 +21,13 @@ public class StoreImageController {
 
     private final StoreImageService storeImageService;
 
-    @ApiOperation("특정 가게에 등록된 이미지들을 조회합니다.")
+    @ApiOperation("[인증] 가게 상세 페이지 - 특정 가게에 등록된 이미지 목록을 조회합니다")
     @GetMapping("/api/v2/store/{storeId}/images")
     public ApiResponse<List<StoreImageResponse>> retrieveStoreImages(@PathVariable Long storeId) {
         return ApiResponse.success(storeImageService.retrieveStoreImages(storeId));
     }
 
-    @ApiOperation("[인증] 가게의 이미지들을 등록합니다.")
+    @ApiOperation("[인증] 가게 상세 페이지 - 가게에 신규 이미지들을 등록합니다.")
     @ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, paramType = "header")
     @Auth
     @PostMapping("/api/v2/store/images")
@@ -36,7 +36,7 @@ public class StoreImageController {
         return ApiResponse.success(storeImageService.addStoreImages(request, images, userId));
     }
 
-    @ApiOperation("[인증] 가게의 이미지를 삭제합니다.")
+    @ApiOperation("[인증] 가게 상세 페이지 - 가게에 등록된 특정 이미지를 삭제합니다.")
     @ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, paramType = "header")
     @Auth
     @DeleteMapping("/api/v2/store/image/{imageId}")

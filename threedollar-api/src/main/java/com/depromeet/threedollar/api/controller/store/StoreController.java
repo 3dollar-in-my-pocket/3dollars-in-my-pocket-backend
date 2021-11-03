@@ -22,7 +22,7 @@ public class StoreController {
 
     private final StoreService storeService;
 
-    @ApiOperation("[인증] 새로운 가게 정보를 등록합니다.")
+    @ApiOperation("[인증] 가게 등록 페이지 - 새로운 가게를 제보합니다")
     @ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, paramType = "header")
     @Auth
     @PostMapping("/api/v2/store")
@@ -30,7 +30,7 @@ public class StoreController {
         return ApiResponse.success(storeService.addStore(request, userId));
     }
 
-    @ApiOperation("[인증] 특정 가게의 정보를 수정합니다.")
+    @ApiOperation("[인증] 가게 상세 페이지 - 특정 가게의 정보를 수정합니다")
     @ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, paramType = "header")
     @Auth
     @PutMapping("/api/v2/store/{storeId}")
@@ -38,7 +38,7 @@ public class StoreController {
         return ApiResponse.success(storeService.updateStore(storeId, request, userId));
     }
 
-    @ApiOperation("[인증] 특정 가게의 정보를 삭제 요청합니다.")
+    @ApiOperation("[인증] 가게 상세 페이지 - 특정 가게의 정보를 삭제 요청합니다")
     @ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, paramType = "header")
     @Auth
     @DeleteMapping("/api/v2/store/{storeId}")

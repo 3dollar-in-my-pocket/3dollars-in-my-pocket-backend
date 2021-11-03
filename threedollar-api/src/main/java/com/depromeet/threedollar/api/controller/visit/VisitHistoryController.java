@@ -26,7 +26,7 @@ public class VisitHistoryController {
 
     private final VisitHistoryService visitHistoryService;
 
-    @ApiOperation("[인증] 해당 가게에 오늘날짜로 방문 인증을 등록합니다.")
+    @ApiOperation("[인증] 가게 방문 인증 페이지 - 특정 가게에 대한 방문 인증을 추가합니다.")
     @ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, paramType = "header")
     @Auth
     @PostMapping("/api/v2/store/visit")
@@ -35,13 +35,13 @@ public class VisitHistoryController {
         return ApiResponse.SUCCESS;
     }
 
-    @ApiOperation("해당 가게에 등록된 방문기록들을 조회합니다.")
+    @ApiOperation("특정 가게의 방문 인증 목록을 조회합니다.")
     @GetMapping("/api/v2/store/visits")
     public ApiResponse<List<VisitHistoryWithUserResponse>> retrieveVisitHistories(@Valid RetrieveVisitHistoryRequest request) {
         return ApiResponse.success(visitHistoryService.retrieveVisitHistories(request));
     }
 
-    @ApiOperation("[인증] 내가 방문 기록 인증을 남긴 가게들을 스크롤 페이지네이션으로 조회합니다.")
+    @ApiOperation("[인증] 마이페이지 - 내가 추가한 방문 인증 목록을 스크롤 페이지네이션으로 조회합니다.")
     @ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, paramType = "header")
     @Auth
     @GetMapping("/api/v2/store/visits/me")
