@@ -39,3 +39,6 @@ feign:
         readTimeout: 4000
         loggerLevel: BASIC
 
+logging:
+  level:
+    com.amazonaws.util.EC2MetadataUtils: error
