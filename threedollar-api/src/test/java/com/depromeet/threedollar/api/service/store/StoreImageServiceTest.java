@@ -4,7 +4,9 @@ import com.depromeet.threedollar.api.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.service.store.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.api.service.store.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
-import com.depromeet.threedollar.domain.domain.store.*;
+import com.depromeet.threedollar.domain.domain.store.StoreImage;
+import com.depromeet.threedollar.domain.domain.store.StoreImageRepository;
+import com.depromeet.threedollar.domain.domain.store.StoreImageStatus;
 import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,10 +44,10 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
     }
 
     @Nested
-    class 가게_이미지_등록 {
+    class 가게_이미지_추가 {
 
         @Test
-        void 가게_이미지_등록_성공시_이미지_정보가_추가된다() {
+        void 가게에_새로운_이미지를_추가한다_성공시_DB에_데이터가_추가된다() {
             // given
             AddStoreImageRequest request = AddStoreImageRequest.testInstance(store.getId());
 
@@ -58,10 +60,10 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
             assertStoreImage(storeImageList.get(0), store.getId(), userId, IMAGE_URL, StoreImageStatus.ACTIVE);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_이미지_등록_요청시_해당하는_가게가_없는경우_NOT_FOUND_STORE_EXCEPTION(Long notFoundStoreId) {
+        @Test
+        void 가게_이미지_등록_요청시_해당하는_가게가_없는경우_NOT_FOUND_STORE_EXCEPTION() {
             // given
+            Long notFoundStoreId = -1L;
             AddStoreImageRequest request = AddStoreImageRequest.testInstance(notFoundStoreId);
 
             // when & then
@@ -89,18 +91,19 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
             assertStoreImage(storeImageList.get(0), store.getId(), userId, imageUrl, StoreImageStatus.INACTIVE);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_이미지_삭제_요청시_해당하는_가게_이미지가_존재하지_않을경우_NOT_FOUND_STORE_EXCEPTION(Long notFoundImageId) {
+        @Test
+        void 가게_이미지_삭제_요청시_해당하는_가게_이미지가_존재하지_않을경우_NOT_FOUND_STORE_EXCEPTION() {
+            // given
+            Long notFoundImageId = -1L;
+
             // when & then
             assertThatThrownBy(() -> storeImageService.deleteStoreImage(notFoundImageId)).isInstanceOf(NotFoundException.class);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_이미지_삭제_요청시_해당하는_가게_이미지가_INACTIVE_삭제일경우_NOT_FOUND_STORE_EXCEPTION(String imageUrl) {
+        @Test
+        void 가게_이미지_삭제_요청시_해당하는_가게_이미지가_INACTIVE_삭제일경우_NOT_FOUND_STORE_EXCEPTION() {
             // given
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, imageUrl);
+            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, "https://profile.com");
             storeImage.delete();
             storeImageRepository.save(storeImage);
 
@@ -115,7 +118,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
 
         @AutoSource
         @ParameterizedTest
-        void 가게_이미지_조회_성공시_해당_이미지_정보가_반환된다(String imageUrl) {
+        void 가게에_등록된_이미지_목록을_조회한다(String imageUrl) {
             // given
             StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, imageUrl);
             storeImageRepository.save(storeImage);
@@ -125,14 +128,13 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
 
             // then
             assertThat(responses).hasSize(1);
-            asserStoreImageResponse(responses.get(0), storeImage.getId(), storeImage.getUrl());
+            assertStoreImageResponse(responses.get(0), storeImage.getId(), storeImage.getUrl());
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void  가게_이미지_조회시_삭제된_이미지는_조회되지_않는다(String imageUrl) {
+        @Test
+        void 가게에_등록된_이미지_목록을_조회시_삭제된_이미지는_조회되지_않는다() {
             // given
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, imageUrl);
+            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, "https://store-image.com");
             storeImage.delete();
             storeImageRepository.save(storeImage);
 
@@ -145,7 +147,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
 
     }
 
-    private void asserStoreImageResponse(StoreImageResponse storeImageResponse, Long id, String url) {
+    private void assertStoreImageResponse(StoreImageResponse storeImageResponse, Long id, String url) {
         assertThat(storeImageResponse.getImageId()).isEqualTo(id);
         assertThat(storeImageResponse.getUrl()).isEqualTo(url);
     }

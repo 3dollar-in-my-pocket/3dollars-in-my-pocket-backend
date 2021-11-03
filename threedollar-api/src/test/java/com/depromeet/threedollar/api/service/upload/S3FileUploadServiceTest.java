@@ -7,7 +7,8 @@ import com.depromeet.threedollar.domain.domain.common.ImageType;
 import com.depromeet.threedollar.external.client.s3.S3Service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,13 +31,13 @@ class S3FileUploadServiceTest {
     @Nested
     class 이미지_파일_업로드 {
 
-        @Test
-        void 성공적으로_업로드되면_파일명이_반환된다() {
+        @EnumSource
+        @ParameterizedTest
+        void 성공적으로_이미지가_업로드되면_업로되된_퍼블릭_파일명이_반환된다(ImageType imageType) {
             // given
             MultipartFile multipartFile = new MockMultipartFile("fileName.jpeg", "fileName.jpeg", "image/jpeg", new byte[]{});
 
-            ImageType type = ImageType.STORE;
-            ImageUploadRequest request = ImageUploadRequest.of(type);
+            ImageUploadRequest request = ImageUploadRequest.of(imageType);
 
             // when
             String result = s3FileUploadService.uploadFile(request, multipartFile);
@@ -45,23 +46,25 @@ class S3FileUploadServiceTest {
             assertThat(result.endsWith(".jpeg")).isTrue();
         }
 
-        @Test
-        void 확장명자가_없는_파일명인경우_VALIDATION_FILE_TYPE_EXCEPTION() {
+        @EnumSource
+        @ParameterizedTest
+        void 확장명자가_없는_파일명인경우_VALIDATION_FILE_TYPE_EXCEPTION(ImageType imageType) {
             // given
             MultipartFile multipartFile = new MockMultipartFile("fileName.jpeg", "fileName", "image/jpeg", new byte[]{});
 
-            ImageUploadRequest request = ImageUploadRequest.of(ImageType.STORE);
+            ImageUploadRequest request = ImageUploadRequest.of(imageType);
 
             // when & then
             assertThatThrownBy(() -> s3FileUploadService.uploadFile(request, multipartFile)).isInstanceOf(ValidationException.class);
         }
 
-        @Test
-        void 허용되지않은_ContentType인경우_VALIDATION_FILE_TYPE_EXCEPTION() {
+        @EnumSource
+        @ParameterizedTest
+        void 허용되지않은_ContentType인경우_VALIDATION_FILE_TYPE_EXCEPTION(ImageType imageType) {
             // given
             MultipartFile multipartFile = new MockMultipartFile("fileName.jpeg", "fileName.jpeg", "wrong type", new byte[]{});
 
-            ImageUploadRequest request = ImageUploadRequest.of(ImageType.STORE);
+            ImageUploadRequest request = ImageUploadRequest.of(imageType);
 
             // when & then
             assertThatThrownBy(() -> s3FileUploadService.uploadFile(request, multipartFile)).isInstanceOf(ValidationException.class);

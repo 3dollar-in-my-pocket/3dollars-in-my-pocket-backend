@@ -107,9 +107,11 @@ class StoreImageControllerTest extends SetupUserControllerTest {
             assertThat(response.getData()).isEqualTo(ApiResponse.SUCCESS.getData());
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_이미지_삭제요청시_해당하는_이미지가_없으면_404_NOTFOUND(Long notFoundImageId) throws Exception {
+        @Test
+        void 가게_이미지_삭제요청시_해당하는_이미지가_없으면_404_NOTFOUND() throws Exception {
+            // given
+            Long notFoundImageId = -1L;
+
             // when
             ApiResponse<String> response = storeImageMockApiCaller.deleteStoreImage(notFoundImageId, token, 404);
 

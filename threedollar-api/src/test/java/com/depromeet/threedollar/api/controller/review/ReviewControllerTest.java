@@ -16,9 +16,7 @@ import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
-import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
@@ -68,10 +66,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertReviewInfoResponse(response.getData(), store.getId(), request.getContents(), request.getRating());
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 리뷰_등록시_가게가_없으면_404에러_발생(Long notFoundStoreId) throws Exception {
+        @Test
+        void 리뷰_등록시_가게가_없으면_404에러_발생() throws Exception {
             // given
+            Long notFoundStoreId = -1L;
             AddReviewRequest request = AddReviewRequest.testInstance(notFoundStoreId, "content", 5);
 
             // when
@@ -108,10 +106,11 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 리뷰_수정시_해당하는_리뷰가_없으면_404에러_발생() throws Exception {
             // given
+            Long notFoundReviewId = -1L;
             UpdateReviewRequest request = UpdateReviewRequest.testInstance("맛이 없어졌어요", 1);
 
             // when
-            ApiResponse<ReviewInfoResponse> response = reviewMockApiCaller.updateStoreReview(9999999L, request, token, 404);
+            ApiResponse<ReviewInfoResponse> response = reviewMockApiCaller.updateStoreReview(notFoundReviewId, request, token, 404);
 
             // then
             assertAll(
@@ -141,8 +140,11 @@ class ReviewControllerTest extends SetupStoreControllerTest {
 
         @Test
         void 자신이_작성한_리뷰를_삭제요청시_해당하는_리뷰가_없으면_404에러_발생() throws Exception {
+            // given
+            Long notFoundReviewId = -1L;
+
             // when
-            ApiResponse<String> response = reviewMockApiCaller.deleteStoreReview(999999L, token, 404);
+            ApiResponse<String> response = reviewMockApiCaller.deleteStoreReview(notFoundReviewId, token, 404);
 
             // then
             assertAll(

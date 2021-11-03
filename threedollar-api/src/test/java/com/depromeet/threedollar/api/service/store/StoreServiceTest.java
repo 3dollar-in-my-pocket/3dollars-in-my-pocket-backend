@@ -22,8 +22,10 @@ import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestRep
 import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -166,7 +168,7 @@ class StoreServiceTest extends SetupUserServiceTest {
 
         @AutoSource
         @ParameterizedTest
-        void 가게_추가시_중복된_메뉴는_저장되지_않는다(String menuName, String price, MenuCategoryType type) {
+        void 가게_추가시_중복된_메뉴는_한개만_저장된다(String menuName, String price, MenuCategoryType type) {
             // given
             Set<MenuRequest> menus = new HashSet<>(Arrays.asList(
                 MenuRequest.of(menuName, price, type),
@@ -200,7 +202,7 @@ class StoreServiceTest extends SetupUserServiceTest {
 
         @AutoSource
         @ParameterizedTest
-        void 가게_정보_수정_성공시_기존_가게정보_데이터들이_수정된다(String storeName, StoreType storeType, Set<DayOfTheWeek> appearanceDays, Set<PaymentMethodType> paymentMethods) {
+        void 가게에_대한_정보를_수정한다(String storeName, StoreType storeType, Set<DayOfTheWeek> appearanceDays, Set<PaymentMethodType> paymentMethods) {
             // given
             Store store = StoreCreator.create(userId, "storeName");
             store.addMenus(Collections.singletonList(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
@@ -329,7 +331,7 @@ class StoreServiceTest extends SetupUserServiceTest {
 
         @AutoSource
         @ParameterizedTest
-        void 가게의_메뉴를_수정할때_중복된_메뉴는_저장되지_않는다(String menuName, String price, MenuCategoryType type) {
+        void 가게_메뉴_수정시_중복된_메뉴는_한개만_저장된다(String menuName, String price, MenuCategoryType type) {
             // given
             Store store = StoreCreator.create(userId, "storeName");
             store.addMenus(Collections.singletonList(Menu.of(store, "이름", "가격", MenuCategoryType.BUNGEOPPANG)));
@@ -359,10 +361,11 @@ class StoreServiceTest extends SetupUserServiceTest {
             assertMenu(findMenus.get(0), store.getId(), menuName, price, type);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 해당하는_가게가_존재하지_않으면_NOT_FOUND_STORE_EXCEPTION(Long storeId) {
+        @Test
+        void 가게_수정시_해당하는_가게가_존재하지_않으면_NOT_FOUND_STORE_EXCEPTION() {
             // given
+            Long notFoundStoreId = -1L;
+
             UpdateStoreRequest request = UpdateStoreRequest.testBuilder()
                 .latitude(34.0)
                 .longitude(130.0)
@@ -374,13 +377,14 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .build();
 
             // when & then
-            assertThatThrownBy(() -> storeService.updateStore(storeId, request, userId)).isInstanceOf(NotFoundException.class);
+            assertThatThrownBy(() -> storeService.updateStore(notFoundStoreId, request, userId)).isInstanceOf(NotFoundException.class);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 사용자가_작성하지_않은_가게_정보도_수정할수있다_단_최초제보자가_가게_제보자로_유지된다(Long creatorUserId) {
+        @Test
+        void 사용자가_작성하지_않은_가게_정보도_수정할수있다_단_최초제보자가_가게_제보자로_유지된다() {
             // given
+            Long creatorUserId = 100L;
+
             Store store = StoreCreator.create(creatorUserId, "storeName");
             store.addMenus(Collections.singletonList(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
@@ -414,7 +418,7 @@ class StoreServiceTest extends SetupUserServiceTest {
     @Nested
     class 가게_삭제_요청 {
 
-        @AutoSource
+        @EnumSource
         @ParameterizedTest
         void 삭제_요청이_1개_쌓이면_실제로_가게정보가_삭제되지_않는다(DeleteReasonType deleteReasonType) {
             // given
@@ -436,7 +440,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             assertThat(response.getIsDeleted()).isFalse();
         }
 
-        @AutoSource
+        @EnumSource
         @ParameterizedTest
         void 삭제_요청이_2개_쌓이면_실제로_가게정보가_삭제되지_않는다(DeleteReasonType deleteReasonType) {
             // given
@@ -461,7 +465,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             assertThat(response.getIsDeleted()).isFalse();
         }
 
-        @AutoSource
+        @EnumSource
         @ParameterizedTest
         void 삭제_요청이_3개_쌓이면_실제로_가게정보가_실제로_삭제된다(DeleteReasonType deleteReasonType) {
             // given
@@ -490,7 +494,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             assertThat(response.getIsDeleted()).isTrue();
         }
 
-        @AutoSource
+        @EnumSource
         @ParameterizedTest
         void 해당_사용자가_해당하는_가게에_대해_이미_삭제요청_한경우_CONFLICT_EXCEPTION(DeleteReasonType reasonType) {
             // given

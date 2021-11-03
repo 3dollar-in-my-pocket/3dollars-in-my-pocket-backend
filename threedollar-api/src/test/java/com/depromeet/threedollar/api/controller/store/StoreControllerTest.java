@@ -19,6 +19,7 @@ import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestRep
 import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
@@ -133,7 +134,7 @@ class StoreControllerTest extends SetupUserControllerTest {
     @Nested
     class 가게_정보_삭제 {
 
-        @AutoSource
+        @EnumSource
         @ParameterizedTest
         void 가게_삭제_요청시_실제로_삭제되지_않으면_False를_반환한다(DeleteReasonType deleteReasonType) throws Exception {
             // given
@@ -149,7 +150,7 @@ class StoreControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getIsDeleted()).isFalse();
         }
 
-        @AutoSource
+        @EnumSource
         @ParameterizedTest
         void 가게_삭제_요청시_실제로_삭제되면_True를_반환한다(DeleteReasonType deleteReasonType) throws Exception {
             // given
@@ -170,10 +171,11 @@ class StoreControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getIsDeleted()).isTrue();
         }
 
-        @AutoSource
+        @EnumSource
         @ParameterizedTest
-        void 가게_삭제_요청시_존재하지_않는_가게인경우_404_NOT_FOUND(DeleteReasonType deleteReasonType, Long notFoundStoreId) throws Exception {
+        void 가게_삭제_요청시_존재하지_않는_가게인경우_404_NOT_FOUND(DeleteReasonType deleteReasonType) throws Exception {
             // given
+            Long notFoundStoreId = -1L;
             DeleteStoreRequest request = DeleteStoreRequest.testInstance(deleteReasonType);
 
             // when

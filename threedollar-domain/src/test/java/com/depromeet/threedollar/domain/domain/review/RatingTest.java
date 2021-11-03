@@ -14,8 +14,8 @@ class RatingTest {
     @Nested
     class 평가점수로_인스턴스_생성 {
 
-        @ParameterizedTest
         @ValueSource(ints = {1, 2, 3, 4, 5})
+        @ParameterizedTest
         void 평가_점수_값_객체가_생성된다(int value) {
             // when
             Rating rating = Rating.of(value);
@@ -24,8 +24,8 @@ class RatingTest {
             assertThat(rating.getRating()).isEqualTo(value);
         }
 
-        @ParameterizedTest
         @ValueSource(ints = {0, 6})
+        @ParameterizedTest
         void 점수가_1보다_작거나_5이상이면_VALIDATION_EXEPTION(int value) {
             // when & then
             assertThatThrownBy(() -> Rating.of(value)).isInstanceOf(ValidationException.class);
@@ -36,8 +36,8 @@ class RatingTest {
     @Nested
     class 동등성_테스트 {
 
-        @ParameterizedTest
         @ValueSource(ints = {1, 2, 3, 4, 5})
+        @ParameterizedTest
         void 평가점수가_같은경우_같은_객체로_판단한다(int score) {
             // when
             Rating rating = Rating.of(score);

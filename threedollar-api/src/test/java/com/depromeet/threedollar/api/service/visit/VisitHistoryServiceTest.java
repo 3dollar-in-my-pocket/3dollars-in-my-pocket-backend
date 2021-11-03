@@ -9,11 +9,12 @@ import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
-import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -43,9 +44,9 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
     @Nested
     class AddStoreVisitHistory {
 
-        @AutoSource
+        @EnumSource
         @ParameterizedTest
-        void 유저가_가게_방문_인증을_등록하면_DB_에_가게_방문_기록이_저장된다(VisitType visitType) {
+        void 유저가_가게_방문_인증을_등록한다_성공시_DB에_가게_방문_기록이_저장된다(VisitType visitType) {
             // given
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(storeId, visitType);
 
@@ -60,19 +61,19 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
             );
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_방문_인증시_존재하지_않은_가게인경우_NotFoundException_이_발생한다(Long notFoundStoreId) {
+        @Test
+        void 가게_방문_인증시_존재하지_않은_가게인경우_NotFoundException() {
             // given
+            Long notFoundStoreId = -1L;
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(notFoundStoreId, VisitType.EXISTS);
 
             // when & then
             assertThatThrownBy(() -> visitHistoryService.addVisitHistory(request, userId)).isInstanceOf(NotFoundException.class);
         }
 
-        @AutoSource
+        @EnumSource
         @ParameterizedTest
-        void 가게_방문_인증시_해당_유저가_오늘_방문한_가게인경우_ConflictException_이_발생한다(VisitType visitType) {
+        void 가게_방문_인증시_해당_유저가_오늘_이미_방문한_가게인경우_ConflictException(VisitType visitType) {
             // given
             LocalDate dateOfVisit = LocalDate.now(); // TODO 날짜와 분리시켜서 테스트할 수 있도록 개선해야함
             visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, dateOfVisit));
@@ -82,21 +83,23 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
             // when & then
             assertThatThrownBy(() -> visitHistoryService.addVisitHistory(request, userId)).isInstanceOf(ConflictException.class);
         }
+
     }
 
     @DisplayName("가게 방문 목록 조회")
     @Nested
     class RetrieveVisitHistories {
 
-        @AutoSource
-        @ParameterizedTest
-        void 존재하지_않는_가게에_대한_방문_인증_조회시_Not_Found_Exception(Long notFoundStoreId) {
+        @Test
+        void 존재하지_않는_가게에_대한_방문_인증_조회시_Not_Found_Exception() {
             // given
+            Long notFoundStoreId = -1L;
             RetrieveVisitHistoryRequest request = RetrieveVisitHistoryRequest.testInstance(notFoundStoreId, LocalDate.of(2021, 10, 20), LocalDate.of(2021, 10, 23));
 
             // when & then
             assertThatThrownBy(() -> visitHistoryService.retrieveVisitHistories(request)).isInstanceOf(NotFoundException.class);
         }
+
     }
 
     private void assertVisitHistory(VisitHistory visitHistory, Long storeId, Long userId, VisitType type, LocalDate dateOfVisit) {

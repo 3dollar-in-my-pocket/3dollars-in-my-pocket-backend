@@ -42,8 +42,11 @@ internal class AdminServiceTest(
 
     @Test
     fun 자신의_관리자_정보를_조회시_해당하는_관리자가_없는경우_NOT_FOUND_EXCEPTION() {
+        // given
+        val notFoundAdminId = -1L
+
         // when & then
-        assertThatThrownBy { adminService.getMyAdminInfo(999L) }.isInstanceOf(NotFoundException::class.java)
+        assertThatThrownBy { adminService.getMyAdminInfo(notFoundAdminId) }.isInstanceOf(NotFoundException::class.java)
     }
 
     private fun assertAdminInfoResponse(response: AdminInfoResponse, email: String, name: String) {

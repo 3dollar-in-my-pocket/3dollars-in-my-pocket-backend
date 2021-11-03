@@ -18,9 +18,9 @@ import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
-import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
@@ -55,7 +55,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
     @Nested
     class AddVisitHistory {
 
-        @AutoSource
+        @EnumSource
         @ParameterizedTest
         void 가게_방문_인증_등록시_성공시_200_OK(VisitType visitType) throws Exception {
             // given
@@ -70,7 +70,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             );
         }
 
-        @AutoSource
+        @EnumSource
         @ParameterizedTest
         void 가게_방문_인증_등록시_이미_오늘_해당_가게에_방문_인증을_한경우_409에러_발생(VisitType visitType) throws Exception {
             // given
@@ -87,10 +87,11 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             );
         }
 
-        @AutoSource
+        @EnumSource
         @ParameterizedTest
-        void 가게_방문_인증시_존재하지_않는_가게라면_404_에러가_발생한다(Long notFoundStoreId, VisitType visitType) throws Exception {
+        void 가게_방문_인증시_존재하지_않는_가게라면_404_에러가_발생한다(VisitType visitType) throws Exception {
             // given
+            Long notFoundStoreId = -1L;
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(notFoundStoreId, visitType);
 
             // when
@@ -151,10 +152,10 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             );
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_방문_기록_조회시_존재하지_않는_가게면_404_NotFound(Long notFoundStoreId) throws Exception {
+        @Test
+        void 가게_방문_기록_조회시_존재하지_않는_가게면_404_NotFound() throws Exception {
             // given
+            Long notFoundStoreId = -1L;
             RetrieveVisitHistoryRequest request = RetrieveVisitHistoryRequest.testInstance(notFoundStoreId, LocalDate.of(2021, 10, 21), LocalDate.of(2021, 10, 22));
 
             // when

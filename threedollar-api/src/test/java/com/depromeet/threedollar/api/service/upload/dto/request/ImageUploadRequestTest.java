@@ -4,6 +4,7 @@ import com.depromeet.threedollar.common.exception.model.ValidationException;
 import com.depromeet.threedollar.domain.domain.common.ImageType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,8 +27,8 @@ class ImageUploadRequestTest {
         assertThat(result.endsWith(".png")).isTrue();
     }
 
-    @ParameterizedTest
     @ValueSource(strings = {"image", "video/mp4"})
+    @ParameterizedTest
     void 허용되지_ContentType_경우_VALIDATION_FILE_TYPE_EXCEPTION(String contentType) {
         // given
         ImageUploadRequest request = ImageUploadRequest.of(ImageType.STORE);
@@ -36,17 +37,18 @@ class ImageUploadRequestTest {
         assertThatThrownBy(() -> request.validate(contentType)).isInstanceOf(ValidationException.class);
     }
 
-    @Test
-    void ContentType이_널인경우_VALIDATION_FILE_TYPE_EXCEPTION() {
+    @NullAndEmptySource
+    @ParameterizedTest
+    void ContentType이_널이거나_빈문자열일경우_VALIDATION_FILE_TYPE_EXCEPTION(String contentType) {
         // given
         ImageUploadRequest request = ImageUploadRequest.of(ImageType.STORE);
 
         // when & then
-        assertThatThrownBy(() -> request.validate(null)).isInstanceOf(ValidationException.class);
+        assertThatThrownBy(() -> request.validate(contentType)).isInstanceOf(ValidationException.class);
     }
 
-    @ParameterizedTest
     @ValueSource(strings = {"image/jpeg", "image/png"})
+    @ParameterizedTest
     void 허용된_ContentType_경우_정상적으로_반환된다(String contentType) {
         // given
         ImageUploadRequest request = ImageUploadRequest.of(ImageType.STORE);

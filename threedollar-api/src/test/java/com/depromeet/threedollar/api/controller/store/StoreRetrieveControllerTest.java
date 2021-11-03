@@ -1,15 +1,15 @@
 package com.depromeet.threedollar.api.controller.store;
 
+import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewWithWriterResponse;
+import com.depromeet.threedollar.api.service.store.dto.request.RetrieveMyStoresRequest;
+import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStoresRequest;
+import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailInfoRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreGroupByCategoryRequest;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
+import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryInfoResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStoresRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveMyStoresRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailInfoRequest;
-import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
 import com.depromeet.threedollar.domain.domain.menu.Menu;
 import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
@@ -199,7 +199,9 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 회원탈퇴한_유저의경우_사라진_제보자라고_표기된다() throws Exception {
             // given
-            Store store = StoreCreator.create(999L, "storeName", 34, 124);
+            Long notFoundUserId = -1L;
+
+            Store store = StoreCreator.create(notFoundUserId, "storeName", 34, 124);
             store.addMenus(Collections.singletonList(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
@@ -216,12 +218,14 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 가게에_작성된_리뷰_와_작성자_정보가_최근_생성된_순서로_조회되고_회원탈퇴한_유저는_사라진_제보자로_표기된다() throws Exception {
             // given
+            Long anotherUserId = Long.MAX_VALUE;
+
             Store store = StoreCreator.create(testUser.getId(), "storeName", 34, 124);
             store.addMenus(Collections.singletonList(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             Review review1 = ReviewCreator.create(store.getId(), testUser.getId(), "댓글 1", 5);
-            Review review2 = ReviewCreator.create(store.getId(), 999L, "댓글 2", 3);
+            Review review2 = ReviewCreator.create(store.getId(), anotherUserId, "댓글 2", 3);
 
             reviewRepository.saveAll(Arrays.asList(review1, review2));
 
@@ -242,8 +246,9 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
         @Test
         void 존재하지_않는_가게인경우_NOTFOUND_404_NOT_FOUND() throws Exception {
-            // when
-            RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(999L, 34.0, 124.0);
+            // given
+            Long notFoundStoreId = -1L;
+            RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(notFoundStoreId, 34.0, 124.0);
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 404);

@@ -3,9 +3,9 @@ package com.depromeet.threedollar.api.service.user;
 import com.depromeet.threedollar.api.service.user.dto.request.CheckAvailableNameRequest;
 import com.depromeet.threedollar.api.service.user.dto.request.CreateUserRequest;
 import com.depromeet.threedollar.api.service.user.dto.request.UpdateUserInfoRequest;
+import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.user.*;
-import com.depromeet.threedollar.common.exception.model.ConflictException;
 import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -45,7 +45,7 @@ class UserServiceTest {
 
         @AutoSource
         @ParameterizedTest
-        void 신규_유저_생성_성공시_새로운_유저정보가_추가된다(String socialId, UserSocialType socialType, String name) {
+        void 신규_유저를_생성한다_성공시_데이터_추가된다(String socialId, UserSocialType socialType, String name) {
             // given
             CreateUserRequest request = CreateUserRequest.testInstance(socialId, socialType, name);
 
@@ -105,9 +105,11 @@ class UserServiceTest {
     @Nested
     class 회원_정보_조회 {
 
-        @AutoSource
-        @ParameterizedTest
-        void 회원_정보_조회시_존재하지_않는_유저면_NOT_FOUND_USER_EXCEPTION(Long notFoundUserId) {
+        @Test
+        void 회원_정보_조회시_존재하지_않는_유저면_NOT_FOUND_USER_EXCEPTION() {
+            // given
+            Long notFoundUserId = -1L;
+
             // when & then
             assertThatThrownBy(() -> userService.getUserInfo(notFoundUserId)).isInstanceOf(NotFoundException.class);
         }
@@ -163,10 +165,10 @@ class UserServiceTest {
             assertUserInfo(users.get(0), socialId, socialType, name);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 회원정보_수정_요청시_존재하지_않는_유저면_NOT_FOUND_USER_EXCEPTION(Long notFoundUserId) {
+        @Test
+        void 회원정보_수정_요청시_존재하지_않는_유저면_NOT_FOUND_USER_EXCEPTION() {
             // given
+            Long notFoundUserId = -1L;
             UpdateUserInfoRequest request = UpdateUserInfoRequest.testInstance("name");
 
             // when & then
@@ -185,7 +187,7 @@ class UserServiceTest {
             User user = UserCreator.create(socialId, socialType, name);
             userRepository.save(user);
 
-            // then
+            // when
             userService.signOut(user.getId());
 
             // then
@@ -201,13 +203,12 @@ class UserServiceTest {
         @Test
         void 회원탈퇴한_유저만이_USER_테이블에서_삭제된다() {
             // given
-            UserSocialType type = UserSocialType.APPLE;
-            User user1 = UserCreator.create("social-id1", type, "기존의 닉네임1");
+            User user1 = UserCreator.create("social-id1", UserSocialType.KAKAO, "기존의 닉네임1");
             User user2 = UserCreator.create("social-id2", UserSocialType.APPLE, "기존의 닉네임2");
 
             userRepository.saveAll(Arrays.asList(user1, user2));
 
-            // then
+            // when
             userService.signOut(user1.getId());
 
             // then
@@ -216,9 +217,11 @@ class UserServiceTest {
             assertUserInfo(users.get(0), user2.getSocialId(), user2.getSocialType(), user2.getName());
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 회원탈퇴_요청시_해당하는_유저가_없으면_NOT_FOUND_USER_EXCEPTION(Long notFoundUserId) {
+        @Test
+        void 회원탈퇴_요청시_해당하는_유저가_없으면_NOT_FOUND_USER_EXCEPTION() {
+            // given
+            Long notFoundUserId = -1L;
+
             // when & then
             assertThatThrownBy(() -> userService.signOut(notFoundUserId)).isInstanceOf(NotFoundException.class);
         }

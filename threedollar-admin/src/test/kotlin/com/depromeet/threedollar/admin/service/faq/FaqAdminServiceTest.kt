@@ -11,6 +11,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.javaunit.autoparams.AutoSource
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.springframework.boot.test.context.SpringBootTest
@@ -31,7 +32,7 @@ internal class FaqAdminServiceTest(
     @AutoSource
     @ParameterizedTest
     fun 새로운_FAQ_를_등록하면_FAQ_데이터가_추가된다(question: String, answer: String, category: FaqCategory) {
-        // give
+        // given
         val request = AddFaqRequest(question, answer, category)
 
         // when
@@ -48,8 +49,8 @@ internal class FaqAdminServiceTest(
     @AutoSource
     @ParameterizedTest
     fun 등록된_FAQ를_수정하면_FAQ_데이터가_수정된다(question: String, answer: String, category: FaqCategory) {
-        // give
-        val faq = FaqCreator.create("question", "answer", FaqCategory.CATEGORY)
+        // given
+        val faq = FaqCreator.create("기존의 질문", "기존의 답변", FaqCategory.CATEGORY)
         faqRepository.save(faq)
 
         val request = UpdateFaqRequest(question, answer, category)
@@ -65,21 +66,20 @@ internal class FaqAdminServiceTest(
         })
     }
 
-    @AutoSource
-    @ParameterizedTest
-    fun 등록된_FAQ를_수정할때_해당하는_FAQ가_없으면_NotFOUND_EXCEPTION(notFoundFaqId: Long) {
+    @Test
+    fun 등록된_FAQ를_수정할때_해당하는_FAQ가_없으면_NotFOUND_EXCEPTION() {
         // given
-        val request = UpdateFaqRequest("question", "answer", FaqCategory.CATEGORY)
+        val notFoundFaqId = -1L
+        val request = UpdateFaqRequest("질문", "답변", FaqCategory.CATEGORY)
 
         // when & then
         assertThatThrownBy { faqAdminService.updateFaq(notFoundFaqId, request) }.isInstanceOf(NotFoundException::class.java)
     }
 
-    @AutoSource
-    @ParameterizedTest
-    fun 특정_FAQ_를_삭제하면_해당_데이터가_삭제된다(question: String, answer: String, category: FaqCategory) {
+    @Test
+    fun 특정_FAQ_를_삭제하면_해당_데이터가_삭제된다() {
         // given
-        val faq = faqRepository.save(FaqCreator.create(question, answer, category))
+        val faq = faqRepository.save(FaqCreator.create("질문", "답변", FaqCategory.CATEGORY))
 
         // when
         faqAdminService.deleteFaq(faq.id)
@@ -89,9 +89,11 @@ internal class FaqAdminServiceTest(
         assertThat(faqs).isEmpty()
     }
 
-    @AutoSource
-    @ParameterizedTest
-    fun 특정_FAQ_를_삭제시_해당_FAQ가_없으면_NOTFOUND_EXCEPTION(notFoundFaqId: Long) {
+    @Test
+    fun 특정_FAQ_를_삭제시_해당_FAQ가_없으면_NOTFOUND_EXCEPTION() {
+        // given
+        val notFoundFaqId = -1L
+
         // when & then
         assertThatThrownBy { faqAdminService.deleteFaq(notFoundFaqId) }.isInstanceOf(NotFoundException::class.java)
     }

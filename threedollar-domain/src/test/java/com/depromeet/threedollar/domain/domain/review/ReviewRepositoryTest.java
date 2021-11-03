@@ -33,8 +33,8 @@ class ReviewRepositoryTest {
     @Nested
     class findAllWithCreatorByStoreId {
 
-        @ParameterizedTest
         @AutoSource
+        @ParameterizedTest
         void 가게_리뷰와_함께_리뷰_작성자_정보를_함께_조회한다(String socialId, UserSocialType socialType, String userName, String reviewContents) {
             User user = UserCreator.create(socialId, socialType, userName);
             userRepository.save(user);

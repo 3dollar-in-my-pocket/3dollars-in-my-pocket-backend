@@ -16,11 +16,11 @@ class LocationTest {
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     class 인스턴스_생성 {
 
-        @ParameterizedTest
         @CsvSource({
             "33, 124",
             "43, 132"
         })
+        @ParameterizedTest
         void 위도와_경도로_이루어진_위치_값_객체를_생성한다(double latitude, double longitude) {
             // when
             Location location = Location.of(latitude, longitude);
@@ -30,21 +30,21 @@ class LocationTest {
             assertThat(location.getLongitude()).isEqualTo(longitude);
         }
 
-        @ParameterizedTest
         @CsvSource({
             "32.999, 124",
             "43.1, 124"
         })
+        @ParameterizedTest
         void 허용된_위도_범위_밖인경우_VALIDATION_LATITUDE_EXEPTION(double latitude, double longitude) {
             // when & then
             assertThatThrownBy(() -> Location.of(latitude, longitude)).isInstanceOf(ValidationException.class);
         }
 
-        @ParameterizedTest
         @CsvSource({
             "33, 132.1",
             "33, 123.9"
         })
+        @ParameterizedTest
         void 허용된_경도_범위_밖인경우_VALIDATION_LATITUDE_EXEPTION(double latitude, double longitude) {
             // when & then
             assertThatThrownBy(() -> Location.of(latitude, longitude)).isInstanceOf(ValidationException.class);
