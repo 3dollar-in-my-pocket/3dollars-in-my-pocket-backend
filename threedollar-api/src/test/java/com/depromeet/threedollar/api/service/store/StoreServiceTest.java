@@ -115,7 +115,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             // then
             List<AppearanceDay> appearanceDayList = appearanceDayRepository.findAll();
             assertThat(appearanceDayList).hasSize(appearanceDays.size());
-            assertThat(getDayOfTheWeeks(appearanceDayList)).containsAll(appearanceDays);
+            assertThat(getDayOfTheWeeks(appearanceDayList)).containsExactlyInAnyOrderElementsOf(appearanceDays);
         }
 
         @AutoSource
@@ -138,7 +138,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             // then
             List<PaymentMethod> paymentMethodsList = paymentMethodRepository.findAll();
             assertThat(paymentMethodsList).hasSize(paymentMethods.size());
-            assertThat(getPaymentMethodTypes(paymentMethodsList)).containsAll(paymentMethods);
+            assertThat(getPaymentMethodTypes(paymentMethodsList)).containsExactlyInAnyOrderElementsOf(paymentMethods);
         }
 
         @AutoSource
@@ -231,11 +231,11 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             List<AppearanceDay> appearanceDayList = appearanceDayRepository.findAll();
             assertThat(appearanceDayList).hasSize(appearanceDays.size());
-            assertThat(getDayOfTheWeeks(appearanceDayList)).containsAll(appearanceDays);
+            assertThat(getDayOfTheWeeks(appearanceDayList)).containsExactlyInAnyOrderElementsOf(appearanceDays);
 
             List<PaymentMethod> paymentMethodsList = paymentMethodRepository.findAll();
             assertThat(paymentMethodsList).hasSize(paymentMethods.size());
-            assertThat(getPaymentMethodTypes(paymentMethodsList)).containsAll(paymentMethods);
+            assertThat(getPaymentMethodTypes(paymentMethodsList)).containsExactlyInAnyOrderElementsOf(paymentMethods);
         }
 
         @AutoSource
@@ -298,7 +298,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             // then
             List<PaymentMethod> paymentMethodsList = paymentMethodRepository.findAll();
             assertThat(paymentMethodsList).hasSize(paymentMethodTypes.size());
-            assertThat(getPaymentMethodTypes(paymentMethodsList)).containsAll(paymentMethodTypes);
+            assertThat(getPaymentMethodTypes(paymentMethodsList)).containsExactlyInAnyOrderElementsOf(paymentMethodTypes);
         }
 
         @AutoSource
@@ -326,7 +326,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             // then
             List<AppearanceDay> appearanceDayList = appearanceDayRepository.findAll();
             assertThat(appearanceDayList).hasSize(appearanceDays.size());
-            assertThat(getDayOfTheWeeks(appearanceDayList)).containsAll(appearanceDays);
+            assertThat(getDayOfTheWeeks(appearanceDayList)).containsExactlyInAnyOrderElementsOf(appearanceDays);
         }
 
         @AutoSource
