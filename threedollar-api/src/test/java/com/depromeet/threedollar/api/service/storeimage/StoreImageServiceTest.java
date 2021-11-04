@@ -1,12 +1,12 @@
-package com.depromeet.threedollar.api.service.store;
+package com.depromeet.threedollar.api.service.storeimage;
 
 import com.depromeet.threedollar.api.service.SetupStoreServiceTest;
-import com.depromeet.threedollar.api.service.store.dto.request.AddStoreImageRequest;
-import com.depromeet.threedollar.api.service.store.dto.response.StoreImageResponse;
+import com.depromeet.threedollar.api.service.storeimage.dto.request.AddStoreImageRequest;
+import com.depromeet.threedollar.api.service.storeimage.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
-import com.depromeet.threedollar.domain.domain.store.StoreImage;
-import com.depromeet.threedollar.domain.domain.store.StoreImageRepository;
-import com.depromeet.threedollar.domain.domain.store.StoreImageStatus;
+import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
+import com.depromeet.threedollar.domain.domain.storeimage.StoreImageRepository;
+import com.depromeet.threedollar.domain.domain.storeimage.StoreImageStatus;
 import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

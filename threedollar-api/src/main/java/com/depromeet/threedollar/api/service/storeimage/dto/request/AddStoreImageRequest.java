@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.service.store.dto.request;
+package com.depromeet.threedollar.api.service.storeimage.dto.request;
 
 import lombok.*;
 

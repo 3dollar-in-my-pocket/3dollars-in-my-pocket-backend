@@ -46,12 +46,15 @@ public class VisitHistoryService {
     @Transactional(readOnly = true)
     public MyVisitHistoriesScrollResponse retrieveMyVisitHistories(RetrieveMyVisitHistoryRequest request, Long userId) {
         List<VisitHistory> currentAndNextHistories = visitHistoryRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
-        if (currentAndNextHistories.size() <= request.getSize()) {
+        if (hasNoMoreVisitHistory(currentAndNextHistories, request.getSize())) {
             return MyVisitHistoriesScrollResponse.newLastScroll(currentAndNextHistories);
         }
-
         List<VisitHistory> currentHistories = currentAndNextHistories.subList(0, request.getSize());
         return MyVisitHistoriesScrollResponse.of(currentHistories, currentHistories.get(request.getSize() - 1).getId());
+    }
+
+    private boolean hasNoMoreVisitHistory(List<VisitHistory> visitHistories, int size) {
+        return visitHistories.size() <= size;
     }
 
 }

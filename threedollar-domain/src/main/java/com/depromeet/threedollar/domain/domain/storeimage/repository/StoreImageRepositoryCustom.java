@@ -1,6 +1,6 @@
-package com.depromeet.threedollar.domain.domain.store.repository;
+package com.depromeet.threedollar.domain.domain.storeimage.repository;
 
-import com.depromeet.threedollar.domain.domain.store.StoreImage;
+import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
 
 import java.util.List;
 

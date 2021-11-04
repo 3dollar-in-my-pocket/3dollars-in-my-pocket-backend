@@ -1,7 +1,7 @@
-package com.depromeet.threedollar.api.service.store.dto.response;
+package com.depromeet.threedollar.api.service.storeimage.dto.response;
 
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
-import com.depromeet.threedollar.domain.domain.store.StoreImage;
+import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
 import lombok.*;
 
 @ToString

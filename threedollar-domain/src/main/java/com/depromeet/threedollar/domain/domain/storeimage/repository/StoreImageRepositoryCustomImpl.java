@@ -1,13 +1,13 @@
-package com.depromeet.threedollar.domain.domain.store.repository;
+package com.depromeet.threedollar.domain.domain.storeimage.repository;
 
-import com.depromeet.threedollar.domain.domain.store.StoreImage;
-import com.depromeet.threedollar.domain.domain.store.StoreImageStatus;
+import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
+import com.depromeet.threedollar.domain.domain.storeimage.StoreImageStatus;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-import static com.depromeet.threedollar.domain.domain.store.QStoreImage.storeImage;
+import static com.depromeet.threedollar.domain.domain.storeimage.QStoreImage.storeImage;
 
 @RequiredArgsConstructor
 public class StoreImageRepositoryCustomImpl implements StoreImageRepositoryCustom {

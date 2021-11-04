@@ -47,13 +47,13 @@ public class StoreRetrieveController {
     @ApiOperation("가게 카테고리별 조회 페이지 - 거리순으로 특정 메뉴를 판매하는 가게 목록을 조회합니다.")
     @GetMapping("/api/v2/stores/distance")
     public ApiResponse<StoresGroupByDistanceResponse> getStoresGroupByDistance(@Valid RetrieveStoreGroupByCategoryRequest request) {
-        return ApiResponse.success(storeRetrieveService.retrieveStoresGroupByDistance(request));
+        return ApiResponse.success(storeRetrieveService.getNearStoresGroupByDistance(request));
     }
 
     @ApiOperation("가게 카테고리별 조회 페이지 - 리뷰순으로 특정 메뉴를 판매하는 가게 목록을 조회합니다.")
     @GetMapping("/api/v2/stores/review")
     public ApiResponse<StoresGroupByReviewResponse> getStoresGroupByReview(@Valid RetrieveStoreGroupByCategoryRequest request) {
-        return ApiResponse.success(storeRetrieveService.retrieveStoresGroupByRating(request));
+        return ApiResponse.success(storeRetrieveService.getNearStoresGroupByReview(request));
     }
 
 }

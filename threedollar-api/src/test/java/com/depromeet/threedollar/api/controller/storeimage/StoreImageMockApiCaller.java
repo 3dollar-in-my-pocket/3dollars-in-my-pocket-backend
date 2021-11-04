@@ -1,7 +1,7 @@
-package com.depromeet.threedollar.api.controller.store;
+package com.depromeet.threedollar.api.controller.storeimage;
 
 import com.depromeet.threedollar.api.controller.MockMvcUtils;
-import com.depromeet.threedollar.api.service.store.dto.response.StoreImageResponse;
+import com.depromeet.threedollar.api.service.storeimage.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.domain.store;
+package com.depromeet.threedollar.domain.domain.storeimage;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
