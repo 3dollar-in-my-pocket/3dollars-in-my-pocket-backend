@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.batch.jobs.statistics
 
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
+import com.depromeet.threedollar.batch.jobs.statistics.StaticsMessageType.*
 import com.depromeet.threedollar.domain.domain.menu.MenuRepository
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository
 import com.depromeet.threedollar.domain.domain.store.StoreRepository
@@ -50,11 +51,7 @@ class DailyStatisticsJobConfiguration(
 
                 slackApiClient.postMessage(
                     PostSlackMessageRequest.of(
-                        "[가슴속 삼천원 $yesterday 통계 정보를 알려드립니다]\n" +
-                            "1. 회원 가입 수\n" +
-                            "- 총 ${totalCounts}명이 가입하고 있습니다\n" +
-                            "- 금일 ${todayCounts}명이 신규 가입하였습니다\n" +
-                            "- 금주 ${thisWeeksCount}명이 신규 가입하였습니다"
+                        COUNTS_USER.messageFormat.format(yesterday, totalCounts, todayCounts, thisWeeksCount)
                     )
                 )
                 RepeatStatus.FINISHED
@@ -77,11 +74,7 @@ class DailyStatisticsJobConfiguration(
 
                 slackApiClient.postMessage(
                     PostSlackMessageRequest.of(
-                        "2. 활성 가게 수\n" +
-                            "- 총 ${totalCounts}개의 가게가 활성화 되어 있습니다\n" +
-                            "- 금일 ${todayCounts}개의 가게가 신규 등록되었습니다.\n" +
-                            "- 금주 ${thisWeeksCount}개의 가게가 신규 등록되었습니다.\n" +
-                            "- 금일 ${todayDeletedCounts}개의 가게가 삭제되었습니다"
+                        COUNTS_STORE.messageFormat.format(totalCounts, todayCounts, thisWeeksCount, todayDeletedCounts)
                     )
                 )
                 RepeatStatus.FINISHED
@@ -97,10 +90,10 @@ class DailyStatisticsJobConfiguration(
                 val message = result.asSequence()
                     .sortedByDescending { it.counts }
                     .joinToString(separator = "\n") {
-                        "- ${it.category.categoryName}: ${it.counts}개가 활성화 되어 있습니다"
+                        COUNTS_MENU.messageFormat.format(it.category.categoryName, it.counts)
                     }
 
-                slackApiClient.postMessage(PostSlackMessageRequest.of("3. 활성화된 메뉴 정보\n${message}"))
+                slackApiClient.postMessage(PostSlackMessageRequest.of(COUNTS_MENUS.messageFormat.format(message)))
                 RepeatStatus.FINISHED
             }
             .build()
@@ -118,10 +111,7 @@ class DailyStatisticsJobConfiguration(
 
                 slackApiClient.postMessage(
                     PostSlackMessageRequest.of(
-                        "4. 활성 리뷰 수\n" +
-                            "- 총 ${totalCounts}개의 리뷰를 작성해주셨습니다.\n" +
-                            "- 금일 ${todayCounts}개의 리뷰를 신규 작성해주셨습니다.\n" +
-                            "- 금주 ${thisWeeksCount}개의 리뷰를 신규 작성해주셨습니다."
+                        COUNTS_REVIEW.messageFormat.format(totalCounts, todayCounts, thisWeeksCount)
                     )
                 )
                 RepeatStatus.FINISHED

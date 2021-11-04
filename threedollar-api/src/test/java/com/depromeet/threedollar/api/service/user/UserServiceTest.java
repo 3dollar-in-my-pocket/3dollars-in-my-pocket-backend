@@ -19,8 +19,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 class UserServiceTest {
@@ -96,8 +95,9 @@ class UserServiceTest {
             // then
             List<User> users = userRepository.findAll();
             assertThat(users).hasSize(2);
-            assertUserInfo(users.get(0), socialId, UserSocialType.APPLE, "기존의 닉네임");
-            assertUserInfo(users.get(1), socialId, UserSocialType.KAKAO, "새로운 닉네임");
+            assertThat(users).extracting(User::getSocialId).containsOnly(socialId);
+            assertThat(users).extracting(User::getSocialType).containsExactly(UserSocialType.APPLE, UserSocialType.KAKAO);
+            assertThat(users).extracting(User::getName).containsExactly("기존의 닉네임", "새로운 닉네임");
         }
 
     }
