@@ -35,6 +35,13 @@ public class StoreInfoResponse extends AuditingTimeResponse {
         this.visitHistory = VisitHistoryInfoResponse.of(existsVisitsCount, notExistsVisitsCount);
     }
 
+    public static StoreInfoResponse testInstance(int distance, double rating) {
+        return StoreInfoResponse.builder()
+            .distance(distance)
+            .rating(rating)
+            .build();
+    }
+
     public static StoreInfoResponse of(Store store, double latitude, double longitude, long existsVisitsCount, long notExistsVisitsCount) {
         StoreInfoResponse response = StoreInfoResponse.builder()
             .storeId(store.getId())
