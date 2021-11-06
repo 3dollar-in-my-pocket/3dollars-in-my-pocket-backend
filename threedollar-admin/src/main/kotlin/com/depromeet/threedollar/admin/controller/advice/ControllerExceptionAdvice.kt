@@ -6,11 +6,13 @@ import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseExceptio
 import com.depromeet.threedollar.common.utils.logger
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import org.slf4j.Logger
+import org.springframework.beans.TypeMismatchException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.validation.BindException
 import org.springframework.web.HttpMediaTypeException
+import org.springframework.web.HttpMediaTypeNotAcceptableException
 import org.springframework.web.HttpRequestMethodNotSupportedException
 import org.springframework.web.bind.MissingRequestValueException
 import org.springframework.web.bind.ServletRequestBindingException
@@ -22,21 +24,62 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 class ControllerExceptionAdvice {
 
     /**
-     * 400 BAD Request
-     * 잘못된 입력이 들어왔을 경우 발생하는 Exception
+     * 400 BadRequest
+     * Spring Validation
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(BindException::class)
-    private fun handleBadRequest(e: BindException): ApiResponse<Nothing> {
+    @ExceptionHandler(
+        BindException::class
+    )
+    protected fun handleBadRequest(e: BindException): ApiResponse<Nothing> {
         log.error(e.message)
-        return ApiResponse.error(VALIDATION_EXCEPTION, e.bindingResult.fieldError?.defaultMessage)
+        val fieldError = e.fieldError
+        return ApiResponse.error(VALIDATION_EXCEPTION, "${fieldError?.defaultMessage} (${fieldError?.field})")
+    }
+
+    /**
+     * 400 BadRequest
+     * 잘못된 Enum 값이 입된 경우 발생하는 Exception
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(
+        HttpMessageNotReadableException::class
+    )
+    protected fun handleHttpMessageNotReadableException(e: HttpMessageNotReadableException): ApiResponse<Nothing> {
+        log.error(e.message)
+        return ApiResponse.error(VALIDATION_ENUM_VALUE_EXCEPTION)
+    }
+
+    /**
+     * 400 BadRequest
+     * RequestParam, RequestPath, RequestPart 등의 필드가 입력되지 않은 경우 발생하는 Exception
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(
+        MissingRequestValueException::class
+    )
+    protected fun handle(e: MissingRequestValueException): ApiResponse<Nothing> {
+        log.error(e.message)
+        return ApiResponse.error(VALIDATION_REQUEST_MISSING_EXCEPTION)
+    }
+
+    /**
+     * 400 BadRequest
+     * 잘못된 타입이 입력된 경우 발생하는 Exception
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(
+        TypeMismatchException::class
+    )
+    protected fun handleTypeMismatchException(e: TypeMismatchException): ApiResponse<Nothing> {
+        log.error(e.message)
+        val errorCode = VALIDATION_WRONG_TYPE_EXCEPTION
+        return ApiResponse.error(errorCode, "${errorCode.message} (${e.value})")
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(
-        HttpMessageNotReadableException::class,
         InvalidFormatException::class,
-        MissingRequestValueException::class,
         ServletRequestBindingException::class
     )
     private fun handleMethodArgumentNotValidException(e: Exception): ApiResponse<Nothing> {
@@ -53,6 +96,18 @@ class ControllerExceptionAdvice {
     private fun handleHttpRequestMethodNotSupportedException(e: HttpRequestMethodNotSupportedException): ApiResponse<Nothing> {
         log.error(e.message, e)
         return ApiResponse.error(METHOD_NOT_ALLOWED_EXCEPTION)
+    }
+
+    /**
+     * 406 Not Acceptable
+     */
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    @ExceptionHandler(
+        HttpMediaTypeNotAcceptableException::class
+    )
+    protected fun handleHttpMediaTypeNotAcceptableException(e: HttpMediaTypeNotAcceptableException): ApiResponse<Nothing> {
+        log.error(e.message)
+        return ApiResponse.error(NOT_ACCEPTABLE_EXCEPTION)
     }
 
     /**
@@ -76,6 +131,9 @@ class ControllerExceptionAdvice {
             .body(ApiResponse.error(exception.errorCode))
     }
 
+    /**
+     * 500 Internal Server
+     */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception::class)
     private fun handleInternalServerException(e: Exception): ApiResponse<Nothing> {
