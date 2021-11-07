@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.admin.service.store.dto.request
 
+import javax.validation.constraints.Max
 import javax.validation.constraints.Min
 
 data class RetrieveReportedStoresRequest(
@@ -10,5 +11,6 @@ data class RetrieveReportedStoresRequest(
     val page: Long = 0,
 
     @field:Min(value = 1, message = "1이상 size를 입력해주세요")
+    @field:Max(value = 100, message = "size를 100이하 입력해주세요")
     val size: Int = 0
 )

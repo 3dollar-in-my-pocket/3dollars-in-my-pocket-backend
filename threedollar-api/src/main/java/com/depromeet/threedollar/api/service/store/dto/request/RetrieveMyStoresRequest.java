@@ -2,6 +2,7 @@ package com.depromeet.threedollar.api.service.store.dto.request;
 
 import lombok.*;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 @ToString
@@ -11,6 +12,7 @@ import javax.validation.constraints.Min;
 public class RetrieveMyStoresRequest {
 
     @Min(value = 1, message = "{common.size.min}")
+    @Max(value = 100, message = "{common.size.max}")
     private int size;
 
     private Long cursor;
