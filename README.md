@@ -54,9 +54,13 @@
 
 ```bash
 ./gradlew clean bootJar
+```
 
+```bash
+# API Server
 java -jar threedollar-api/build/libs/threedollar-api.jar
 
+# Admin Server
 java -jar threedollar-admin/build/libs/threedollar-admin.jar  
 ```
 
