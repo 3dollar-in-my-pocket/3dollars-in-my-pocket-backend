@@ -7,11 +7,13 @@ import com.depromeet.threedollar.api.service.review.dto.response.ReviewWithWrite
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
+import com.depromeet.threedollar.domain.domain.menu.Menu;
 import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
 import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
 import com.depromeet.threedollar.domain.domain.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreType;
+import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
 import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithUserProjection;
 import lombok.*;
@@ -53,8 +55,8 @@ public class StoreDetailResponse extends AuditingTimeResponse {
         this.user = user;
     }
 
-    public static StoreDetailResponse of(Store store, List<StoreImageResponse> imageResponses, double latitude,
-                                         double longitude, User user, List<ReviewWithWriterProjection> reviews, List<VisitHistoryWithUserProjection> visitHistoryWithUserProjections) {
+    public static StoreDetailResponse of(Store store, List<StoreImage> storeImages, double latitude,
+                                         double longitude, User user, List<ReviewWithWriterProjection> reviews, List<VisitHistoryWithUserProjection> visitHistories) {
         StoreDetailResponse response = StoreDetailResponse.builder()
             .storeId(store.getId())
             .latitude(store.getLatitude())
@@ -68,21 +70,37 @@ public class StoreDetailResponse extends AuditingTimeResponse {
         response.categories.addAll(store.getMenuCategories());
         response.appearanceDays.addAll(store.getAppearanceDaysType());
         response.paymentMethods.addAll(store.getPaymentMethodsType());
-        response.images.addAll(imageResponses);
-        response.menus.addAll(store.getMenus().stream()
-            .map(MenuResponse::of)
-            .collect(Collectors.toList()));
-        response.reviews.addAll(reviews.stream()
-            .map(ReviewWithWriterResponse::of)
-            .sorted(Comparator.comparing(ReviewWithWriterResponse::getReviewId).reversed())
-            .collect(Collectors.toList())
-        );
-        response.visitHistories.addAll(visitHistoryWithUserProjections.stream()
-            .map(VisitHistoryWithUserResponse::of)
-            .collect(Collectors.toList())
-        );
+        response.images.addAll(toImageResponse(storeImages));
+        response.menus.addAll(toMenuResponse(store.getMenus()));
+        response.reviews.addAll(toReviewResponse(reviews));
+        response.visitHistories.addAll(toVisitHistoryResponse(visitHistories));
         response.setBaseTime(store);
         return response;
+    }
+
+    private static Collection<VisitHistoryWithUserResponse> toVisitHistoryResponse(List<VisitHistoryWithUserProjection> visitHistories) {
+        return visitHistories.stream()
+            .map(VisitHistoryWithUserResponse::of)
+            .collect(Collectors.toList());
+    }
+
+    private static List<ReviewWithWriterResponse> toReviewResponse(List<ReviewWithWriterProjection> reviews) {
+        return reviews.stream()
+            .map(ReviewWithWriterResponse::of)
+            .sorted(Comparator.comparing(ReviewWithWriterResponse::getReviewId).reversed())
+            .collect(Collectors.toList());
+    }
+
+    private static List<MenuResponse> toMenuResponse(List<Menu> menus) {
+        return menus.stream()
+            .map(MenuResponse::of)
+            .collect(Collectors.toList());
+    }
+
+    private static List<StoreImageResponse> toImageResponse(List<StoreImage> storeImages) {
+        return storeImages.stream()
+            .map(StoreImageResponse::of)
+            .collect(Collectors.toList());
     }
 
 }

@@ -25,10 +25,10 @@ public class MyVisitHistoriesScrollResponse {
     }
 
     public static MyVisitHistoriesScrollResponse newLastScroll(List<VisitHistory> visitHistories) {
-        return of(visitHistories, -1L);
+        return newScrollHasNext(visitHistories, -1L);
     }
 
-    public static MyVisitHistoriesScrollResponse of(List<VisitHistory> visitHistories, long nextCursor) {
+    public static MyVisitHistoriesScrollResponse newScrollHasNext(List<VisitHistory> visitHistories, long nextCursor) {
         return new MyVisitHistoriesScrollResponse(visitHistories.stream()
             .map(history -> VisitHistoryWithStoreResponse.of(history, history.getStore()))
             .collect(Collectors.toList()), nextCursor);

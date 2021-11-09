@@ -24,17 +24,15 @@ public class ReviewScrollResponse {
         this.nextCursor = nextCursor;
     }
 
-    public static ReviewScrollResponse of(List<ReviewWithWriterProjection> reviews,
-                                          long totalElements, Map<Long, Store> cachedStores, long nextCursor) {
+    public static ReviewScrollResponse newLastScroll(List<ReviewWithWriterProjection> reviews, long totalElements, Map<Long, Store> cachedStores) {
+        return newScrollHasNext(reviews, totalElements, cachedStores, -1L);
+    }
+
+    public static ReviewScrollResponse newScrollHasNext(List<ReviewWithWriterProjection> reviews, long totalElements, Map<Long, Store> cachedStores, long nextCursor) {
         List<ReviewDetailResponse> contents = reviews.stream()
             .map(review -> ReviewDetailResponse.of(review, cachedStores.get(review.getStoreId())))
             .collect(Collectors.toList());
         return new ReviewScrollResponse(contents, totalElements, nextCursor);
-    }
-
-    public static ReviewScrollResponse newLastScroll(List<ReviewWithWriterProjection> reviews,
-                                                     long totalElements, Map<Long, Store> cachedStores) {
-        return of(reviews, totalElements, cachedStores, -1L);
     }
 
 }

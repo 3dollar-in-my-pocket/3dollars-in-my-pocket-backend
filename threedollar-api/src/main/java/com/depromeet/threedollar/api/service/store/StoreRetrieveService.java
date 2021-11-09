@@ -5,10 +5,12 @@ import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStore
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailInfoRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreGroupByCategoryRequest;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
-import com.depromeet.threedollar.api.service.storeimage.StoreImageService;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
+import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
+import com.depromeet.threedollar.domain.domain.storeimage.StoreImageRepository;
 import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserRepository;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoriesCountCollection;
@@ -29,9 +31,8 @@ public class StoreRetrieveService {
 
     private static final double LIMIT_DISTANCE = 2.0;
 
-    private final StoreImageService storeImageService;
-
     private final StoreRepository storeRepository;
+    private final StoreImageRepository storeImageRepository;
     private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
     private final VisitHistoryRepository visitHistoryRepository;
@@ -53,30 +54,26 @@ public class StoreRetrieveService {
     public StoreDetailResponse getDetailStoreInfo(RetrieveStoreDetailInfoRequest request) {
         Store store = StoreServiceUtils.findStoreByIdFetchJoinMenu(storeRepository, request.getStoreId());
         User creator = userRepository.findUserById(store.getUserId());
+        List<StoreImage> images = storeImageRepository.findAllByStoreId(request.getStoreId());
+        List<ReviewWithWriterProjection> reviews = reviewRepository.findAllWithCreatorByStoreId(request.getStoreId());
         List<VisitHistoryWithUserProjection> visitHistories = visitHistoryRepository.findAllVisitWithUserByStoreIdBetweenDate(request.getStoreId(), request.getStartDate(), request.getEndDate());
-        return StoreDetailResponse.of(store, storeImageService.retrieveStoreImages(request.getStoreId()), request.getLatitude(),
-            request.getLongitude(), creator, reviewRepository.findAllWithCreatorByStoreId(request.getStoreId()), visitHistories);
+        return StoreDetailResponse.of(store, images, request.getLatitude(), request.getLongitude(), creator, reviews, visitHistories);
     }
 
-    /**
-     * 스크롤 방식으로 사용자가 작성한 가게 정보를 조회한다. 요청한 가게 갯수 + 1로 조회해서 마지막 1개의 여부에 따라 다음 스크롤 존재 여부를 확인한다.
-     */
     @Transactional(readOnly = true)
     public StoresScrollResponse retrieveMyStores(RetrieveMyStoresRequest request, Long userId) {
         List<Store> currentAndNextScrollStores =
             storeRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
         VisitHistoriesCountCollection collection = findVisitHistoriesCountByStoreIds(currentAndNextScrollStores);
+        long totalElements = Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> storeRepository.findCountsByUserId(userId));
 
         if (hasNoMoreNextStore(currentAndNextScrollStores, request.getSize())) {
-            return StoresScrollResponse.newLastScroll(currentAndNextScrollStores, collection,
-                Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> storeRepository.findCountsByUserId(userId)),
-                request.getLatitude(), request.getLongitude());
+            return StoresScrollResponse.newLastScroll(currentAndNextScrollStores, collection, totalElements, request.getLatitude(), request.getLongitude());
         }
 
         List<Store> currentScrollStores = currentAndNextScrollStores.subList(0, request.getSize());
-        return StoresScrollResponse.of(currentScrollStores, collection,
-            Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> storeRepository.findCountsByUserId(userId)),
-            currentScrollStores.get(request.getSize() - 1).getId(), request.getLatitude(), request.getLongitude());
+        long nextCursor = currentScrollStores.get(request.getSize() - 1).getId();
+        return StoresScrollResponse.newScrollHasNext(currentScrollStores, collection, totalElements, request.getLatitude(), request.getLongitude(), nextCursor);
     }
 
     private boolean hasNoMoreNextStore(List<Store> hasStores, int size) {

@@ -24,10 +24,10 @@ public class StoresScrollResponse {
     }
 
     public static StoresScrollResponse newLastScroll(List<Store> stores, VisitHistoriesCountCollection collection, long totalElements, Double latitude, Double longitude) {
-        return of(stores, collection, totalElements, -1L, latitude, longitude);
+        return newScrollHasNext(stores, collection, totalElements, latitude, longitude, -1L);
     }
 
-    public static StoresScrollResponse of(List<Store> stores, VisitHistoriesCountCollection collection, long totalElements, long nextCursor, Double latitude, Double longitude) {
+    public static StoresScrollResponse newScrollHasNext(List<Store> stores, VisitHistoriesCountCollection collection, long totalElements, Double latitude, Double longitude, long nextCursor) {
         return new StoresScrollResponse(getContents(stores, collection, latitude, longitude), totalElements, nextCursor);
     }
 

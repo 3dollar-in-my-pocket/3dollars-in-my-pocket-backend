@@ -27,22 +27,14 @@ public class ReviewRetrieveService {
         List<ReviewWithWriterProjection> currentAndNextScrollReviews =
             reviewRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
         Map<Long, Store> cachedStores = findStoreMaps(currentAndNextScrollReviews);
+        long totalElements = Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> reviewRepository.findCountsByUserId(userId));
 
         if (currentAndNextScrollReviews.size() <= request.getSize()) {
-            return ReviewScrollResponse.newLastScroll(
-                currentAndNextScrollReviews,
-                Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> reviewRepository.findCountsByUserId(userId)),
-                cachedStores
-            );
+            return ReviewScrollResponse.newLastScroll(currentAndNextScrollReviews, totalElements, cachedStores);
         }
 
         List<ReviewWithWriterProjection> currentScrollReviews = currentAndNextScrollReviews.subList(0, request.getSize());
-        return ReviewScrollResponse.of(
-            currentScrollReviews,
-            Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> reviewRepository.findCountsByUserId(userId)),
-            cachedStores,
-            currentScrollReviews.get(request.getSize() - 1).getReviewId()
-        );
+        return ReviewScrollResponse.newScrollHasNext(currentScrollReviews, totalElements, cachedStores, currentScrollReviews.get(request.getSize() - 1).getReviewId());
     }
 
     private Map<Long, Store> findStoreMaps(List<ReviewWithWriterProjection> reviews) {

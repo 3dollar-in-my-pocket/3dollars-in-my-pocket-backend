@@ -37,7 +37,7 @@ public class VisitHistoryService {
             return MyVisitHistoriesScrollResponse.newLastScroll(currentAndNextHistories);
         }
         List<VisitHistory> currentHistories = currentAndNextHistories.subList(0, request.getSize());
-        return MyVisitHistoriesScrollResponse.of(currentHistories, currentHistories.get(request.getSize() - 1).getId());
+        return MyVisitHistoriesScrollResponse.newScrollHasNext(currentHistories, currentHistories.get(request.getSize() - 1).getId());
     }
 
     private boolean hasNoMoreVisitHistory(List<VisitHistory> visitHistories, int size) {

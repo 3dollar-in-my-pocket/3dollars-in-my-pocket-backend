@@ -7,6 +7,7 @@ import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStore
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailInfoRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreGroupByCategoryRequest;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
+import com.depromeet.threedollar.api.service.storeimage.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryInfoResponse;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithUserResponse;
@@ -20,6 +21,8 @@ import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.store.*;
+import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
+import com.depromeet.threedollar.domain.domain.storeimage.StoreImageRepository;
 import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
@@ -70,9 +73,13 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
     @Autowired
     private VisitHistoryRepository visitHistoryRepository;
 
+    @Autowired
+    private StoreImageRepository storeImageRepository;
+
     @AfterEach
     void cleanUp() {
         super.cleanup();
+        storeImageRepository.deleteAll();
         reviewRepository.deleteAll();
         appearanceDayRepository.deleteAllInBatch();
         paymentMethodRepository.deleteAllInBatch();
@@ -297,6 +304,49 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // then
             StoreDetailResponse data = response.getData();
             assertUserInfoResponse(data.getUser(), null, "사라진 제보자", null);
+        }
+
+        @AutoSource
+        @ParameterizedTest
+        void 가게에_등록된_이미지_목록을_조회한다(String imageUrl) throws Exception {
+            // given
+            Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124);
+            store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
+            storeRepository.save(store);
+
+            StoreImage storeImage = StoreImage.newInstance(store.getId(), testUser.getId(), imageUrl);
+            storeImageRepository.save(storeImage);
+
+            RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0);
+
+            // when
+            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
+
+            // then
+            assertAll(
+                () -> assertThat(response.getData().getImages()).hasSize(1),
+                () -> assertStoreImageResponse(response.getData().getImages().get(0), storeImage.getId(), storeImage.getUrl())
+            );
+        }
+
+        @Test
+        void 가게에_등록된_이미지_목록을_조회시_삭제된_이미지는_조회되지_않는다() throws Exception {
+            // given
+            Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124);
+            store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
+            storeRepository.save(store);
+
+            StoreImage storeImage = StoreImage.newInstance(store.getId(), testUser.getId(), "https://store-image.com");
+            storeImage.delete();
+            storeImageRepository.save(storeImage);
+
+            RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0);
+
+            // when
+            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
+
+            // then
+            assertThat(response.getData().getImages()).isEmpty();
         }
 
         @Test
@@ -968,6 +1018,13 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             () -> assertThat(response.getType()).isEqualTo(visitHistory.getType()),
             () -> assertThat(response.getStoreId()).isEqualTo(store.getId()),
             () -> assertUserInfoResponse(response.getUser(), user.getId(), user.getName(), user.getSocialType())
+        );
+    }
+
+    private void assertStoreImageResponse(StoreImageResponse storeImageResponse, Long imageId, String imageUrl) {
+        assertAll(
+            () -> assertThat(storeImageResponse.getImageId()).isEqualTo(imageId),
+            () -> assertThat(storeImageResponse.getUrl()).isEqualTo(imageUrl)
         );
     }
 
