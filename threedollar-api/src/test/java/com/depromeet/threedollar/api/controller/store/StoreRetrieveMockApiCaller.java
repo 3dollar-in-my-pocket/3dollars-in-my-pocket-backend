@@ -49,7 +49,9 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         MockHttpServletRequestBuilder builder = get("/api/v2/store")
             .param("latitude", String.valueOf(request.getLatitude()))
             .param("longitude", String.valueOf(request.getLongitude()))
-            .param("storeId", String.valueOf(request.getStoreId()));
+            .param("storeId", String.valueOf(request.getStoreId()))
+            .param("startDate", request.getStartDate() == null ? null : String.valueOf(request.getStartDate()))
+            .param("endDate", request.getEndDate() == null ? null : String.valueOf(request.getEndDate()));
 
         return objectMapper.readValue(
             mockMvc.perform(builder)

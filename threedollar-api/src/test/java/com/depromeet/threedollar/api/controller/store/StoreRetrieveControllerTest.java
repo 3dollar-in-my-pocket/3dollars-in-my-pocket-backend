@@ -9,6 +9,7 @@ import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreGrou
 import com.depromeet.threedollar.api.service.store.dto.response.*;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryInfoResponse;
+import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithUserResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
 import com.depromeet.threedollar.domain.domain.menu.Menu;
@@ -19,7 +20,9 @@ import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.store.*;
+import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
+import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
@@ -38,6 +41,7 @@ import java.util.stream.Collectors;
 
 import static com.depromeet.threedollar.common.exception.ErrorCode.NOT_FOUND_STORE_EXCEPTION;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
@@ -176,7 +180,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @ParameterizedTest
         void 특정_가게에_대한_상세_정보를_조회할떄_가게에_대한_정보가_반환된다(String storeName, StoreType storeType) throws Exception {
             // given
-            Store store = StoreCreator.create(testUser.getId(), storeName, storeType,34, 124);
+            Store store = StoreCreator.create(testUser.getId(), storeName, storeType, 34, 124);
             Menu menu = MenuCreator.create(store, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG);
             store.addMenus(List.of(menu));
 
@@ -224,7 +228,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 특정_가게에_대한_상세_정보를_조회할떄_제보자_정보도_함께_반환된다() throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124);
-            store.addMenus(List.of( MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0);
@@ -322,6 +326,63 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             assertReviewWithWriterResponse(data.getReviews().get(1), review1);
             assertUserInfoResponse(data.getReviews().get(1).getUser(), testUser.getId(), testUser.getName(), testUser.getSocialType());
+        }
+
+        @Test
+        void 가게에_등록된_방문_기록들을_startDate부터_endDate까지_방문한_기록들을_조회한다() throws Exception {
+            // given
+            LocalDate startDate = LocalDate.of(2021, 10, 19);
+            LocalDate endDate = LocalDate.of(2021, 10, 20);
+
+            Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124);
+            store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
+            storeRepository.save(store);
+
+            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 18));
+            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 19));
+            VisitHistory visitHistory3 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 20));
+            VisitHistory visitHistory4 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 21));
+            visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2, visitHistory3, visitHistory4));
+
+            RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0, startDate, endDate);
+
+            // when
+            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
+
+            // then
+            assertAll(
+                () -> assertThat(response.getData().getVisitHistories()).hasSize(2),
+                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(0), visitHistory2, store, testUser),
+                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(1), visitHistory3, store, testUser)
+            );
+        }
+
+        @DisplayName("기본적으로 startDate, endDate를 넘기지 않으면 지난 30일간의 방문 기록을 조회한다")
+        @Test
+        void startDate와_endDate를_파라미터로_넘기지_않으면_기본적으로_오늘부터_한달간_방문기록들을_조회한다() throws Exception {
+            // given
+            LocalDate today = LocalDate.now();
+            Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124);
+            store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
+            storeRepository.save(store);
+
+            VisitHistory beforeLastMonthHistory = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, today.minusMonths(1).minusDays(1));
+            VisitHistory lastMonthHistory = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, today.minusMonths(1));
+            VisitHistory todayHistory = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, today);
+            VisitHistory afterTodayHistory = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, today.plusDays(1));
+            visitHistoryRepository.saveAll(List.of(todayHistory, lastMonthHistory, afterTodayHistory, beforeLastMonthHistory));
+
+            RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0);
+
+            // when
+            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
+
+            // then
+            assertAll(
+                () -> assertThat(response.getData().getVisitHistories()).hasSize(2),
+                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(0), lastMonthHistory, store, testUser),
+                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(1), todayHistory, store, testUser)
+            );
         }
 
         @Test
@@ -661,7 +722,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 거리순으로_내_주변의_특정_카테고리_가게_조회시_방문_정보도_함께_조회된다(MenuCategoryType menuCategoryType) throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124, 1.1);
-            store.addMenus(List.of( MenuCreator.create(store, "메뉴", "가격", menuCategoryType)));
+            store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", menuCategoryType)));
             storeRepository.save(store);
             visitHistoryRepository.save(VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 18)));
 
@@ -871,11 +932,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         assertThat(user.getSocialType()).isEqualTo(socialType);
     }
 
-    private void assertMenuResponse(MenuResponse respose, Long menuId, MenuCategoryType category, String name, String price) {
-        assertThat(respose.getMenuId()).isEqualTo(menuId);
-        assertThat(respose.getCategory()).isEqualTo(category);
-        assertThat(respose.getName()).isEqualTo(name);
-        assertThat(respose.getPrice()).isEqualTo(price);
+    private void assertMenuResponse(MenuResponse response, Long menuId, MenuCategoryType category, String name, String price) {
+        assertThat(response.getMenuId()).isEqualTo(menuId);
+        assertThat(response.getCategory()).isEqualTo(category);
+        assertThat(response.getName()).isEqualTo(name);
+        assertThat(response.getPrice()).isEqualTo(price);
     }
 
     private void assertStoreDetailInfoResponse(StoreDetailResponse response, Long storeId, Double latitude, Double longitude, String name, StoreType type, double rating) {
@@ -899,6 +960,15 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         assertThat(visitHistory.getExistsCounts()).isEqualTo(existsCount);
         assertThat(visitHistory.getNotExistsCounts()).isEqualTo(notExistsCount);
         assertThat(visitHistory.getIsCertified()).isEqualTo(isCertified);
+    }
+
+    private void assertVisitHistoryWithUserResponse(VisitHistoryWithUserResponse response, VisitHistory visitHistory, Store store, User user) {
+        assertAll(
+            () -> assertThat(response.getVisitHistoryId()).isEqualTo(visitHistory.getId()),
+            () -> assertThat(response.getType()).isEqualTo(visitHistory.getType()),
+            () -> assertThat(response.getStoreId()).isEqualTo(store.getId()),
+            () -> assertUserInfoResponse(response.getUser(), user.getId(), user.getName(), user.getSocialType())
+        );
     }
 
 }
