@@ -14,17 +14,6 @@ client.test("200 OK", function() {
 });
 %}
 
-
-### 해당 가게에 대한 방문 인증 기록을 조회합니다
-GET {{host_api}}/api/v2/store/visits?storeId={{STORE_ID}}&startDate=2021-10-11&endDate=2022-10-11
-
-> {%
-client.test("200 OK", function() {
-    client.assert(response.status === 200, "응답 실패");
-});
-%}
-
-
 ### [인증] 내가 방문 기록 인증을 남긴 가게들을 스크롤 페이지네이션으로 조회합니다.
 GET {{host_api}}/api/v2/store/visits/me?size=30
 Authorization: {{AUTHORIZATION}}

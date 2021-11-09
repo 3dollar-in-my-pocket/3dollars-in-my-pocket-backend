@@ -13,6 +13,7 @@ import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserRepository;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoriesCountCollection;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
+import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithUserProjection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,8 +53,9 @@ public class StoreRetrieveService {
     public StoreDetailResponse getDetailStoreInfo(RetrieveStoreDetailInfoRequest request) {
         Store store = StoreServiceUtils.findStoreByIdFetchJoinMenu(storeRepository, request.getStoreId());
         User creator = userRepository.findUserById(store.getUserId());
+        List<VisitHistoryWithUserProjection> visitHistories = visitHistoryRepository.findAllVisitWithUserByStoreIdBetweenDate(request.getStoreId(), request.getStartDate(), request.getEndDate());
         return StoreDetailResponse.of(store, storeImageService.retrieveStoreImages(request.getStoreId()), request.getLatitude(),
-            request.getLongitude(), creator, reviewRepository.findAllWithCreatorByStoreId(request.getStoreId()));
+            request.getLongitude(), creator, reviewRepository.findAllWithCreatorByStoreId(request.getStoreId()), visitHistories);
     }
 
     /**

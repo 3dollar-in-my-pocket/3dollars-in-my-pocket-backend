@@ -2,18 +2,14 @@ package com.depromeet.threedollar.api.controller.visit;
 
 import com.depromeet.threedollar.api.controller.SetupStoreControllerTest;
 import com.depromeet.threedollar.api.service.store.dto.response.StoreInfoResponse;
-import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoryRequest;
-import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveVisitHistoryRequest;
 import com.depromeet.threedollar.api.service.visit.dto.response.MyVisitHistoriesScrollResponse;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithStoreResponse;
-import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithUserResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.common.exception.ErrorCode;
 import com.depromeet.threedollar.domain.domain.menu.MenuRepository;
 import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
@@ -101,87 +97,6 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             assertAll(
                 () -> assertThat(response.getResultCode()).isEqualTo(ErrorCode.NOT_FOUND_STORE_EXCEPTION.getCode()),
                 () -> assertThat(response.getMessage()).isEqualTo(ErrorCode.NOT_FOUND_STORE_EXCEPTION.getMessage())
-            );
-        }
-
-    }
-
-    @DisplayName("GET /api/v2/store/visits")
-    @Nested
-    class RetrieveVisitHistories {
-
-        @Test
-        void 가게에_등록된_방문_기록들을_일자별로_조회한다() throws Exception {
-            // given
-            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
-            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 22));
-
-            visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
-
-            RetrieveVisitHistoryRequest request = RetrieveVisitHistoryRequest.testInstance(store.getId(), LocalDate.of(2021, 10, 21), LocalDate.of(2021, 10, 22));
-
-            // when
-            ApiResponse<List<VisitHistoryWithUserResponse>> response = visitHistoryApiCaller.retrieveVisitHistories(request, 200);
-
-            // then
-            assertAll(
-                () -> assertThat(response.getData()).hasSize(2),
-                () -> assertVisitHistoryWithUserResponse(response.getData().get(0), visitHistory1, store, testUser),
-                () -> assertVisitHistoryWithUserResponse(response.getData().get(1), visitHistory2, store, testUser)
-            );
-        }
-
-        @Test
-        void 가게에_등록된_방문_기록들을_같은날_여러_기록이_있는경우() throws Exception {
-            // given
-            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
-            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 21));
-
-            visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
-
-            RetrieveVisitHistoryRequest request = RetrieveVisitHistoryRequest.testInstance(store.getId(), LocalDate.of(2021, 10, 21), LocalDate.of(2021, 10, 22));
-
-            // when
-            ApiResponse<List<VisitHistoryWithUserResponse>> response = visitHistoryApiCaller.retrieveVisitHistories(request, 200);
-
-            // then
-            assertAll(
-                () -> assertThat(response.getData()).hasSize(2),
-                () -> assertVisitHistoryWithUserResponse(response.getData().get(0), visitHistory1, store, testUser),
-                () -> assertVisitHistoryWithUserResponse(response.getData().get(1), visitHistory2, store, testUser)
-            );
-        }
-
-        @Test
-        void 가게_방문_기록_조회시_존재하지_않는_가게면_404_NotFound() throws Exception {
-            // given
-            Long notFoundStoreId = -1L;
-            RetrieveVisitHistoryRequest request = RetrieveVisitHistoryRequest.testInstance(notFoundStoreId, LocalDate.of(2021, 10, 21), LocalDate.of(2021, 10, 22));
-
-            // when
-            ApiResponse<List<VisitHistoryWithUserResponse>> response = visitHistoryApiCaller.retrieveVisitHistories(request, 404);
-
-            // then
-            assertAll(
-                () -> assertThat(response.getResultCode()).isEqualTo(ErrorCode.NOT_FOUND_STORE_EXCEPTION.getCode()),
-                () -> assertThat(response.getMessage()).isEqualTo(ErrorCode.NOT_FOUND_STORE_EXCEPTION.getMessage())
-            );
-        }
-
-        private void assertVisitHistoryWithUserResponse(VisitHistoryWithUserResponse response, VisitHistory visitHistory, Store store, User user) {
-            assertAll(
-                () -> assertThat(response.getVisitHistoryId()).isEqualTo(visitHistory.getId()),
-                () -> assertThat(response.getType()).isEqualTo(visitHistory.getType()),
-                () -> assertThat(response.getStoreId()).isEqualTo(store.getId()),
-                () -> assertUserInfoResponse(response.getUser(), user)
-            );
-        }
-
-        private void assertUserInfoResponse(UserInfoResponse response, User user) {
-            assertAll(
-                () -> assertThat(response.getName()).isEqualTo(user.getName()),
-                () -> assertThat(response.getUserId()).isEqualTo(user.getId()),
-                () -> assertThat(response.getSocialType()).isEqualTo(user.getSocialType())
             );
         }
 

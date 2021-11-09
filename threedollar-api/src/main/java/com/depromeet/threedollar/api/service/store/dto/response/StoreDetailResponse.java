@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.service.store.dto.response;
 
 import com.depromeet.threedollar.api.service.storeimage.dto.response.StoreImageResponse;
+import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithUserResponse;
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewWithWriterResponse;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
@@ -12,6 +13,7 @@ import com.depromeet.threedollar.domain.domain.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreType;
 import com.depromeet.threedollar.domain.domain.user.User;
+import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithUserProjection;
 import lombok.*;
 
 import java.util.*;
@@ -36,10 +38,11 @@ public class StoreDetailResponse extends AuditingTimeResponse {
     private final List<StoreImageResponse> images = new ArrayList<>();
     private final List<MenuResponse> menus = new ArrayList<>();
     private final List<ReviewWithWriterResponse> reviews = new ArrayList<>();
+    private final List<VisitHistoryWithUserResponse> visitHistories = new ArrayList<>();
 
     @Builder(access = AccessLevel.PRIVATE)
     private StoreDetailResponse(Long storeId, double latitude, double longitude, String storeName, StoreType storeType,
-                                double rating, Integer distance, UserInfoResponse user) {
+                                double rating, Integer distance, UserInfoResponse user, List<VisitHistoryWithUserResponse> visitHistories) {
         this.storeId = storeId;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -51,7 +54,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
     }
 
     public static StoreDetailResponse of(Store store, List<StoreImageResponse> imageResponses, double latitude,
-                                         double longitude, User user, List<ReviewWithWriterProjection> reviews) {
+                                         double longitude, User user, List<ReviewWithWriterProjection> reviews, List<VisitHistoryWithUserProjection> visitHistoryWithUserProjections) {
         StoreDetailResponse response = StoreDetailResponse.builder()
             .storeId(store.getId())
             .latitude(store.getLatitude())
@@ -72,6 +75,10 @@ public class StoreDetailResponse extends AuditingTimeResponse {
         response.reviews.addAll(reviews.stream()
             .map(ReviewWithWriterResponse::of)
             .sorted(Comparator.comparing(ReviewWithWriterResponse::getReviewId).reversed())
+            .collect(Collectors.toList())
+        );
+        response.visitHistories.addAll(visitHistoryWithUserProjections.stream()
+            .map(VisitHistoryWithUserResponse::of)
             .collect(Collectors.toList())
         );
         response.setBaseTime(store);

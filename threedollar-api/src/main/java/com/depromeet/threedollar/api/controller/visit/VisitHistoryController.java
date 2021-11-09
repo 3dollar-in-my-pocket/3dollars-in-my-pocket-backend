@@ -5,9 +5,7 @@ import com.depromeet.threedollar.api.config.resolver.UserId;
 import com.depromeet.threedollar.api.service.visit.VisitHistoryService;
 import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoryRequest;
-import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveVisitHistoryRequest;
 import com.depromeet.threedollar.api.service.visit.dto.response.MyVisitHistoriesScrollResponse;
-import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithUserResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -33,12 +30,6 @@ public class VisitHistoryController {
     public ApiResponse<String> addVisitHistory(@Valid @RequestBody AddVisitHistoryRequest request, @UserId Long userId) {
         visitHistoryService.addVisitHistory(request, userId);
         return ApiResponse.SUCCESS;
-    }
-
-    @ApiOperation("특정 가게의 방문 인증 목록을 조회합니다.")
-    @GetMapping("/api/v2/store/visits")
-    public ApiResponse<List<VisitHistoryWithUserResponse>> retrieveVisitHistories(@Valid RetrieveVisitHistoryRequest request) {
-        return ApiResponse.success(visitHistoryService.retrieveVisitHistories(request));
     }
 
     @ApiOperation("[인증] 마이페이지 - 내가 추가한 방문 인증 목록을 스크롤 페이지네이션으로 조회합니다.")
