@@ -30,7 +30,7 @@ public enum ErrorCode {
     UNAUTHORIZED_EXCEPTION(UNAUTHORIZED, OFF, "UA001", "세션이 만료되었습니다. 다시 로그인 해주세요"),
 
     // 403 Forbidden
-    FORBIDDEN_EXCEPTION(FORBIDDEN, OFF, "F001", "허용하지 않는 요청입니다."),
+    FORBIDDEN_EXCEPTION(FORBIDDEN, OFF, "FB001", "허용하지 않는 요청입니다."),
 
     // 404 Not Found
     NOT_FOUND_EXCEPTION(NOT_FOUND, OFF, "NF001", "존재하지 않습니다"),
