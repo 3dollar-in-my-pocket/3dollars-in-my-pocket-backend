@@ -83,7 +83,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
             .title("가슴 속 3천원 API")
-            .description("가슴 속 3천원 API 입니다.")
+            .description("인증 토큰이 필요한 API는 오른쪽에 [Authorize] 자물쇠를 클릭해서 토큰을 넣어두면 쉽게 테스트할 수 있습니다")
             .build();
     }
 
