@@ -31,6 +31,7 @@ public class User extends AuditingTimeEntity {
     @Column(length = 50, nullable = false)
     private String name;
 
+    @Column(length = 30)
     @Enumerated(EnumType.STRING)
     private UserMedalType medalType;
 
@@ -43,7 +44,7 @@ public class User extends AuditingTimeEntity {
         return new User(socialId, socialType, name);
     }
 
-	public void updateName(String name) {
+    public void updateName(String name) {
         this.name = name;
     }
 

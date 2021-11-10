@@ -1,7 +1,9 @@
 package com.depromeet.threedollar.domain.domain.medal;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+@Getter
 @RequiredArgsConstructor
 public enum UserMedalType {
 

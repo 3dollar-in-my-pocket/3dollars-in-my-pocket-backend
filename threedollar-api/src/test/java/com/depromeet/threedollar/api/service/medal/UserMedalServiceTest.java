@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.medal;
 
-import com.depromeet.threedollar.api.service.UserSetUpTest;
+import com.depromeet.threedollar.api.service.SetupUserServiceTest;
 import com.depromeet.threedollar.api.service.medal.dto.request.ActivateUserMedalRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.medal.UserMedal;
@@ -9,6 +9,9 @@ import com.depromeet.threedollar.domain.domain.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalType;
 import com.depromeet.threedollar.domain.domain.user.User;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.NullSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -19,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class UserMedalServiceTest extends UserSetUpTest {
+class UserMedalServiceTest extends SetupUserServiceTest {
 
     @Autowired
     private UserMedalService userMedalService;
@@ -37,36 +40,34 @@ class UserMedalServiceTest extends UserSetUpTest {
     @Nested
     class addUserMedal {
 
-        @Test
-        void 유저가_보유한_메달을_추가한다() {
-            // given
-            UserMedalType type = UserMedalType.BUNGEOPPANG_CHALLENGER;
-
+        @EnumSource
+        @ParameterizedTest
+        void 유저가_보유한_메달을_추가한다(UserMedalType medalType) {
             // when
-            userMedalService.addUserMedal(type, userId);
+            userMedalService.addUserMedal(medalType, userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
             assertAll(
                 () -> assertThat(userMedals).hasSize(1),
-                () -> assertUserMedal(userMedals.get(0), userId, type)
+                () -> assertUserMedal(userMedals.get(0), userId, medalType)
             );
         }
 
-        @Test
-        void 이미_보유하고_있는_메달일경우_예외가_발생하지는_않지만_중복_저장되지_않는다() {
+        @EnumSource
+        @ParameterizedTest
+        void 이미_보유하고_있는_메달일경우_예외가_발생하지는_않지만_중복_저장되지_않는다(UserMedalType medalType) {
             // given
-            UserMedalType type = UserMedalType.BUNGEOPPANG_CHALLENGER;
-            userMedalRepository.save(UserMedalCreator.create(userId, type));
+            userMedalRepository.save(UserMedalCreator.create(userId, medalType));
 
             // when
-            userMedalService.addUserMedal(type, userId);
+            userMedalService.addUserMedal(medalType, userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
             assertAll(
                 () -> assertThat(userMedals).hasSize(1),
-                () -> assertUserMedal(userMedals.get(0), userId, type)
+                () -> assertUserMedal(userMedals.get(0), userId, medalType)
             );
         }
     }
@@ -75,11 +76,12 @@ class UserMedalServiceTest extends UserSetUpTest {
     @Nested
     class ActivateUserMedal {
 
-        @Test
-        void 유저의_장착_메달을_교체하면_DB의_유저_테이블의_장착중인_메달이_변경된다() {
+        @EnumSource
+        @ParameterizedTest
+        void 유저의_장착_메달을_교체하면_DB의_유저_테이블의_장착중인_메달이_변경된다(UserMedalType medalType) {
             // given
-            userMedalRepository.save(UserMedalCreator.create(userId, UserMedalType.BUNGEOPPANG_CHALLENGER));
-            ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(UserMedalType.BUNGEOPPANG_CHALLENGER);
+            userMedalRepository.save(UserMedalCreator.create(userId, medalType));
+            ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(medalType);
 
             // when
             userMedalService.activateUserMedal(request, userId);
@@ -88,23 +90,24 @@ class UserMedalServiceTest extends UserSetUpTest {
             List<User> users = userRepository.findAll();
             assertAll(
                 () -> assertThat(users).hasSize(1),
-                () -> assertThat(users.get(0).getMedalType()).isEqualTo(request.getMedalType())
+                () -> assertThat(users.get(0).getMedalType()).isEqualTo(medalType)
             );
         }
 
-        @Test
-        void 유저가_보유하지_않은_메달을_장착하려하면_NotFoundException이_발생한다() {
+        @EnumSource
+        @ParameterizedTest
+        void 유저가_보유하지_않은_메달을_장착하려하면_NotFoundException이_발생한다(UserMedalType medalType) {
             // given
-            ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(UserMedalType.BUNGEOPPANG_CHALLENGER);
+            ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(medalType);
 
             // when & then
             assertThatThrownBy(() -> userMedalService.activateUserMedal(request, userId)).isInstanceOfAny(NotFoundException.class);
         }
 
-        @Test
-        void 아무_메달도_장착하지_않도록_변경하면_medal_type이_null_이_된다() {
+        @NullSource
+        @ParameterizedTest
+        void 아무_메달도_장착하지_않도록_변경하면_medal_type이_null_이_된다(UserMedalType medalType) {
             // given
-            UserMedalType medalType = null;
             ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(medalType);
 
             // when

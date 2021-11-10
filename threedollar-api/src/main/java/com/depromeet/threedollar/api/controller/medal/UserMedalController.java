@@ -7,7 +7,6 @@ import com.depromeet.threedollar.api.service.medal.dto.request.ActivateUserMedal
 import com.depromeet.threedollar.api.service.medal.dto.response.UserMedalResponse;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +24,6 @@ public class UserMedalController {
     private final UserMedalService userMedalService;
 
     @ApiOperation("[인증] 사용자가 보유중인 메달들을 조회한다")
-    @ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, paramType = "header")
     @Auth
     @GetMapping("/api/v2/user/medals")
     public ApiResponse<List<UserMedalResponse>> getAvailableUserMedals(@UserId Long userId) {
@@ -33,7 +31,6 @@ public class UserMedalController {
     }
 
     @ApiOperation("[인증] 사용자의 장착중인 메달을 수정한다")
-    @ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, paramType = "header")
     @Auth
     @PutMapping("/api/v2/user/medal")
     public ApiResponse<UserInfoResponse> activateUserMedal(@Valid @RequestBody ActivateUserMedalRequest request, @UserId Long userId) {

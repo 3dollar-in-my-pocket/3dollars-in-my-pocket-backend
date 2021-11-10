@@ -11,9 +11,10 @@ import lombok.*;
 public class UserMedalResponse {
 
     private UserMedalType medalType;
+    private String description;
 
     public static UserMedalResponse of(UserMedal userMedal) {
-        return new UserMedalResponse(userMedal.getMedalType());
+        return new UserMedalResponse(userMedal.getMedalType(), userMedal.getMedalType().getDescription());
     }
 
 }

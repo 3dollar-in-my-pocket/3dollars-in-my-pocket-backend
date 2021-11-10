@@ -27,7 +27,7 @@ public enum ErrorCode {
     VALIDATION_UPLOAD_SIZE_EXCEPTION(BAD_REQUEST, ON, "BR013", "업로드 가능한 최대 파일의 크기를 초과했습니다"), // TODO 차후 403에러로 변경
 
     // 401 UnAuthorized
-    UNAUTHORIZED_EXCEPTION(UNAUTHORIZED, OFF, "UA001", "세션이 만료되었습니다.\n다시 로그인 해주세요"),
+    UNAUTHORIZED_EXCEPTION(UNAUTHORIZED, OFF, "UA001", "세션이 만료되었습니다. 다시 로그인 해주세요"),
 
     // 403 Forbidden
     FORBIDDEN_EXCEPTION(FORBIDDEN, OFF, "FB001", "허용하지 않는 요청입니다."),
@@ -39,6 +39,7 @@ public enum ErrorCode {
     NOT_FOUND_REVIEW_EXCEPTION(NOT_FOUND, OFF, "NF004", "삭제되거나 존재하지 않는 리뷰입니다"),
     NOT_FOUND_STORE_IMAGE_EXCEPTION(NOT_FOUND, OFF, "NF005", "삭제되거나 존재하지 않는 가게 이미지입니다"),
     NOT_FOUND_FAQ_EXCEPTION(NOT_FOUND, OFF, "NF006", "삭제되거나 존재하지 않는 FAQ입니다"),
+    NOT_FOUND_MEDAL_EXCEPTION(NOT_FOUND, OFF, "N007", "보유하지 않는 메달입니다"),
 
     // 405 Method Not Allowed
     METHOD_NOT_ALLOWED_EXCEPTION(METHOD_NOT_ALLOWED, OFF, "MN001", "지원하지 않는 메소드 입니다"),

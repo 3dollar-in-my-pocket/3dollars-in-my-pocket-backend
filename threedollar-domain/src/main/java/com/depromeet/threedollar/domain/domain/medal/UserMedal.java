@@ -10,6 +10,11 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Table(
+    uniqueConstraints = {
+        @UniqueConstraint(name = "uni_user_medal_1", columnNames = {"userId", "medalType"})
+    }
+)
 public class UserMedal extends AuditingTimeEntity {
 
     @Id
@@ -19,7 +24,7 @@ public class UserMedal extends AuditingTimeEntity {
     @Column(nullable = false)
     private Long userId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     @Enumerated(EnumType.STRING)
     private UserMedalType medalType;
 
