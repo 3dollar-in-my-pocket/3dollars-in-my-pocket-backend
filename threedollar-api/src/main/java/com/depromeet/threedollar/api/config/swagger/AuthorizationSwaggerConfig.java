@@ -1,12 +1,13 @@
 package com.depromeet.threedollar.api.config.swagger;
 
 import com.depromeet.threedollar.api.config.interceptor.Auth;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import springfox.documentation.builders.ParameterBuilder;
-import springfox.documentation.schema.ModelRef;
+import springfox.documentation.builders.RequestParameterBuilder;
 import springfox.documentation.service.AuthorizationScope;
-import springfox.documentation.service.Parameter;
+import springfox.documentation.service.ParameterType;
+import springfox.documentation.service.RequestParameter;
 import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.OperationBuilderPlugin;
@@ -23,7 +24,7 @@ public class AuthorizationSwaggerConfig implements OperationBuilderPlugin {
     public void apply(OperationContext context) {
         if (context.findAnnotation(Auth.class).isPresent()) {
             context.operationBuilder()
-                .parameters(List.of(authorizationHeader()))
+                .requestParameters(List.of(authorizationHeader()))
                 .authorizations(List.of(SecurityReference.builder()
                     .reference("Authorization")
                     .scopes(authorizationScopes())
@@ -32,12 +33,11 @@ public class AuthorizationSwaggerConfig implements OperationBuilderPlugin {
         }
     }
 
-    private Parameter authorizationHeader() {
-        return new ParameterBuilder()
+    private RequestParameter authorizationHeader() {
+        return new RequestParameterBuilder()
             .name("Authorization")
-            .modelRef(new ModelRef("string"))
-            .parameterType("header")
             .required(false)
+            .in(ParameterType.HEADER)
             .build();
     }
 
@@ -48,7 +48,7 @@ public class AuthorizationSwaggerConfig implements OperationBuilderPlugin {
     }
 
     @Override
-    public boolean supports(DocumentationType delimiter) {
+    public boolean supports(@NotNull DocumentationType delimiter) {
         return true;
     }
 

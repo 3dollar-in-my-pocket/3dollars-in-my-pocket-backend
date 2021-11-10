@@ -5,16 +5,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.ResponseMessageBuilder;
+import springfox.documentation.builders.ResponseBuilder;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
-import springfox.documentation.service.ResponseMessage;
+import springfox.documentation.service.Response;
+import springfox.documentation.service.SecurityScheme;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.DocExpansion;
@@ -52,13 +53,13 @@ public class SwaggerConfig {
             .paths(PathSelectors.ant("/**"))
             .build()
             .useDefaultResponseMessages(false)
-            .globalResponseMessage(RequestMethod.GET, this.createGlobalResponseMessages())
-            .globalResponseMessage(RequestMethod.POST, this.createGlobalResponseMessages())
-            .globalResponseMessage(RequestMethod.PUT, this.createGlobalResponseMessages())
-            .globalResponseMessage(RequestMethod.DELETE, this.createGlobalResponseMessages());
+            .globalResponses(HttpMethod.GET, this.createGlobalResponseMessages())
+            .globalResponses(HttpMethod.POST, this.createGlobalResponseMessages())
+            .globalResponses(HttpMethod.PUT, this.createGlobalResponseMessages())
+            .globalResponses(HttpMethod.DELETE, this.createGlobalResponseMessages());
     }
 
-    private List<ResponseMessage> createGlobalResponseMessages() {
+    private List<Response> createGlobalResponseMessages() {
         return Stream.of(
                 HttpStatus.BAD_REQUEST,
                 HttpStatus.UNAUTHORIZED,
@@ -73,10 +74,10 @@ public class SwaggerConfig {
             .collect(Collectors.toList());
     }
 
-    private ResponseMessage createResponseMessage(HttpStatus httpStatus) {
-        return new ResponseMessageBuilder()
-            .code(httpStatus.value())
-            .message(httpStatus.getReasonPhrase())
+    private Response createResponseMessage(HttpStatus httpStatus) {
+        return new ResponseBuilder()
+            .code(String.valueOf(httpStatus.value()))
+            .description(httpStatus.getReasonPhrase())
             .build();
     }
 
@@ -87,7 +88,7 @@ public class SwaggerConfig {
             .build();
     }
 
-    private List<ApiKey> authorization() {
+    private List<SecurityScheme> authorization() {
         return List.of(new ApiKey("Authorization", "Authorization", "header"));
     }
 
