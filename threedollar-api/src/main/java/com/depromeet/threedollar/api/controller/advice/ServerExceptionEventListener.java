@@ -6,6 +6,7 @@ import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMess
 import io.sentry.Sentry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
@@ -16,6 +17,7 @@ public class ServerExceptionEventListener {
 
     private final SlackApiClient slackApiCaller;
 
+    @Async
     @EventListener
     public void sendErrorNotification(ServerErrorOccuredEvent event) {
         Sentry.captureException(event.getException());
