@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.config.jackson;
+package com.depromeet.threedollar.application.config.jackson;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
