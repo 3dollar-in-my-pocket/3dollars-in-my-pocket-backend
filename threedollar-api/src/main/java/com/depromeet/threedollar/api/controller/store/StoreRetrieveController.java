@@ -23,7 +23,7 @@ public class StoreRetrieveController {
 
     private final StoreRetrieveService storeRetrieveService;
 
-    @ApiOperation("메인 페이지 - 위도, 경도 기준 내 주위의 가게 목록을 조회합니다")
+    @ApiOperation(value = "메인 페이지 - 위도, 경도 기준 내 주위의 가게 목록을 조회합니다", notes = "orderType: 정렬이 필요한 경우 category: 카테고리 필터링이 필요한 경우")
     @GetMapping("/api/v2/stores/near")
     public ApiResponse<List<StoreInfoResponse>> getNearStores(@Valid RetrieveNearStoresRequest request) {
         return ApiResponse.success(storeRetrieveService.getNearStores(request));
@@ -42,13 +42,23 @@ public class StoreRetrieveController {
         return ApiResponse.success(storeRetrieveService.retrieveMyStores(request, userId));
     }
 
-    @ApiOperation("가게 카테고리별 조회 페이지 - 거리순으로 특정 메뉴를 판매하는 가게 목록을 조회합니다")
+    /**
+     * v2.1부터 Deprecated
+     * GET /api/v2/stores/near로 통합 관리
+     */
+    @Deprecated
+    @ApiOperation("[Deprecated] 가게 카테고리별 조회 페이지 - 거리순으로 특정 메뉴를 판매하는 가게 목록을 조회합니다")
     @GetMapping("/api/v2/stores/distance")
     public ApiResponse<StoresGroupByDistanceResponse> getStoresGroupByDistance(@Valid RetrieveStoreGroupByCategoryRequest request) {
         return ApiResponse.success(storeRetrieveService.getNearStoresGroupByDistance(request));
     }
 
-    @ApiOperation("가게 카테고리별 조회 페이지 - 리뷰순으로 특정 메뉴를 판매하는 가게 목록을 조회합니다")
+    /**
+     * v2.1부터 Deprecated
+     * GET /api/v2/stores/near로 통합 관리
+     */
+    @Deprecated
+    @ApiOperation("[Deprecated] 가게 카테고리별 조회 페이지 - 리뷰순으로 특정 메뉴를 판매하는 가게 목록을 조회합니다")
     @GetMapping("/api/v2/stores/review")
     public ApiResponse<StoresGroupByReviewResponse> getStoresGroupByReview(@Valid RetrieveStoreGroupByCategoryRequest request) {
         return ApiResponse.success(storeRetrieveService.getNearStoresGroupByReview(request));

@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.controller.store;
 
 import com.depromeet.threedollar.api.service.store.dto.response.*;
+import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.controller.MockMvcUtils;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStoresRequest;
@@ -32,7 +33,9 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
             .param("longitude", String.valueOf(request.getLongitude()))
             .param("mapLatitude", String.valueOf(request.getMapLatitude()))
             .param("mapLongitude", String.valueOf(request.getMapLongitude()))
-            .param("distance", String.valueOf(request.getDistance()));
+            .param("distance", String.valueOf(request.getDistance() * 1000))
+            .param("category", request.getCategory() == null ? null : String.valueOf(request.getCategory()))
+            .param("orderType", request.getOrderType() == null ? String.valueOf(StoreOrderType.DISTANCE_ASC) : String.valueOf(request.getOrderType()));
 
         return objectMapper.readValue(
             mockMvc.perform(builder)

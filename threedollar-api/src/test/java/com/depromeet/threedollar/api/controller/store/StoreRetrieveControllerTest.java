@@ -7,6 +7,7 @@ import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStore
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailInfoRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreGroupByCategoryRequest;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
+import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
 import com.depromeet.threedollar.api.service.storeimage.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryInfoResponse;
@@ -103,7 +104,13 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.saveAll(Arrays.asList(store1, store2));
 
-            RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testInstance(34, 124, 34, 124, 1000);
+            RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
+                .latitude(34.0)
+                .longitude(124.0)
+                .mapLatitude(34.0)
+                .mapLongitude(124.0)
+                .distance(1000)
+                .build();
 
             // when
             ApiResponse<List<StoreInfoResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
@@ -125,7 +132,13 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             store.addMenus(menus);
             storeRepository.save(store);
 
-            RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testInstance(34, 124, 34, 124, 1000);
+            RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
+                .latitude(34.0)
+                .longitude(124.0)
+                .mapLatitude(34.0)
+                .mapLongitude(124.0)
+                .distance(1000)
+                .build();
 
             // when
             ApiResponse<List<StoreInfoResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
@@ -145,7 +158,13 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             store.delete();
             storeRepository.save(store);
 
-            RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testInstance(34, 124, 34, 124, 1000);
+            RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
+                .latitude(34.0)
+                .longitude(124.0)
+                .mapLatitude(34.0)
+                .mapLongitude(124.0)
+                .distance(1000)
+                .build();
 
             // when
             ApiResponse<List<StoreInfoResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
@@ -167,7 +186,13 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 19))
             ));
 
-            RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testInstance(34, 124, 34, 124, 1000);
+            RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
+                .latitude(34.0)
+                .longitude(124.0)
+                .mapLatitude(34.0)
+                .mapLongitude(124.0)
+                .distance(1000)
+                .build();
 
             // when
             ApiResponse<List<StoreInfoResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
@@ -175,6 +200,90 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // then
             assertThat(response.getData()).hasSize(1);
             assertVisitHistoryInfoResponse(response.getData().get(0).getVisitHistory(), 2, 1, true);
+        }
+
+        @Test
+        void 카테고리_파라미터를_넘기면_특정_카테고리의_가게들만_필터링되서_조회된다() throws Exception {
+            // given
+            Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34, 124, 1);
+            store1.addMenus(Collections.singletonList(MenuCreator.create(store1, "메뉴2", "가격2", MenuCategoryType.DALGONA)));
+
+            Store store2 = StoreCreator.create(testUser.getId(), "가게1", 34,124, 1);
+            store2.addMenus(Collections.singletonList(MenuCreator.create(store2, "메뉴2", "가격2", MenuCategoryType.BUNGEOPPANG)));
+
+            storeRepository.saveAll(List.of(store1, store2));
+
+            RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
+                .latitude(34.0)
+                .longitude(124.0)
+                .mapLatitude(34.0)
+                .mapLongitude(124.0)
+                .distance(1000)
+                .category(MenuCategoryType.DALGONA)
+                .build();
+
+            // when
+            ApiResponse<List<StoreInfoResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+
+            // then
+            assertThat(response.getData()).hasSize(1);
+            assertThat(response.getData().get(0).getStoreId()).isEqualTo(store1.getId());
+        }
+
+        @Test
+        void DISTANCE_ASC_정렬_파라미터를_넘기면_거리순으로_정렬되서_조회된다() throws Exception {
+            // given
+            Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34.00015, 124, 1);
+            store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", MenuCategoryType.BUNGEOPPANG)));
+
+            Store store2 = StoreCreator.create(testUser.getId(), "가게2", 34.0001, 124, 1);
+            store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", MenuCategoryType.DALGONA)));
+            storeRepository.saveAll(List.of(store1, store2));
+
+            RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
+                .latitude(34.0)
+                .longitude(124.0)
+                .mapLatitude(34.0)
+                .mapLongitude(124.0)
+                .distance(2000)
+                .orderType(StoreOrderType.DISTANCE_ASC)
+                .build();
+
+            // when
+            ApiResponse<List<StoreInfoResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+
+            // then
+            assertThat(response.getData()).hasSize(2);
+            assertThat(response.getData().get(0).getStoreId()).isEqualTo(store2.getId());
+            assertThat(response.getData().get(1).getStoreId()).isEqualTo(store1.getId());
+        }
+
+        @Test
+        void REVIEW_DESC_정렬_파라미터를_넘기면_리뷰순으로_정렬되서_조회된다() throws Exception {
+            // given
+            Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34.00015, 124, 5);
+            store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", MenuCategoryType.BUNGEOPPANG)));
+
+            Store store2 = StoreCreator.create(testUser.getId(), "가게2", 34.0001, 124, 1);
+            store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", MenuCategoryType.DALGONA)));
+            storeRepository.saveAll(List.of(store1, store2));
+
+            RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
+                .latitude(34.0)
+                .longitude(124.0)
+                .mapLatitude(34.0)
+                .mapLongitude(124.0)
+                .distance(2000)
+                .orderType(StoreOrderType.REVIEW_DESC)
+                .build();
+
+            // when
+            ApiResponse<List<StoreInfoResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+
+            // then
+            assertThat(response.getData()).hasSize(2);
+            assertThat(response.getData().get(0).getStoreId()).isEqualTo(store1.getId());
+            assertThat(response.getData().get(1).getStoreId()).isEqualTo(store2.getId());
         }
 
     }
