@@ -3,18 +3,16 @@ package com.depromeet.threedollar.domain.domain.store;
 import com.depromeet.threedollar.domain.domain.menu.Menu;
 import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
 import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
+import com.depromeet.threedollar.domain.domain.store.projection.StoreWithReportedCountProjection;
 import com.depromeet.threedollar.domain.domain.storedelete.DeleteReasonType;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestCreator;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestRepository;
-import com.depromeet.threedollar.domain.domain.store.projection.StoreWithReportedCountProjection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -147,10 +145,10 @@ class StoreRepositoryTest {
             store1.addMenus(List.of(MenuCreator.create(store1, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
 
             Store store2 = StoreCreator.create(userId, "2번 가게");
-            store2.addMenus((List.of(MenuCreator.create(store2, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store2.addMenus(List.of(MenuCreator.create(store2, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
 
             Store store3 = StoreCreator.create(userId, "3번 가게");
-            store3.addMenus((List.of(MenuCreator.create(store3, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store3.addMenus(List.of(MenuCreator.create(store3, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
 
             storeRepository.saveAll(List.of(store1, store2, store3));
 
