@@ -222,7 +222,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .build();
 
             // when
-            storeService.updateStore(store.getId(), request, userId);
+            storeService.updateStore(store.getId(), request);
 
             // then
             List<Store> stores = storeRepository.findAll();
@@ -262,7 +262,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .build();
 
             // when
-            storeService.updateStore(store.getId(), request, userId);
+            storeService.updateStore(store.getId(), request);
 
             // then
             List<Store> stores = storeRepository.findAll();
@@ -293,7 +293,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .build();
 
             // when
-            storeService.updateStore(store.getId(), request, userId);
+            storeService.updateStore(store.getId(), request);
 
             // then
             List<PaymentMethod> paymentMethodsList = paymentMethodRepository.findAll();
@@ -321,7 +321,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .build();
 
             // when
-            storeService.updateStore(store.getId(), request, userId);
+            storeService.updateStore(store.getId(), request);
 
             // then
             List<AppearanceDay> appearanceDayList = appearanceDayRepository.findAll();
@@ -353,7 +353,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .build();
 
             // when
-            storeService.updateStore(store.getId(), request, userId);
+            storeService.updateStore(store.getId(), request);
 
             // then
             List<Menu> findMenus = menuRepository.findAll();
@@ -377,7 +377,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .build();
 
             // when & then
-            assertThatThrownBy(() -> storeService.updateStore(notFoundStoreId, request, userId)).isInstanceOf(NotFoundException.class);
+            assertThatThrownBy(() -> storeService.updateStore(notFoundStoreId, request)).isInstanceOf(NotFoundException.class);
         }
 
         @Test
@@ -405,7 +405,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .build();
 
             // when
-            storeService.updateStore(store.getId(), request, userId);
+            storeService.updateStore(store.getId(), request);
 
             // then
             List<Store> stores = storeRepository.findAll();

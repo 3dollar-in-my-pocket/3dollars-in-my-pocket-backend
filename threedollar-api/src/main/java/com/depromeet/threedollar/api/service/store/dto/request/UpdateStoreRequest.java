@@ -6,6 +6,7 @@ import com.depromeet.threedollar.domain.domain.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreType;
 import lombok.*;
+import org.jetbrains.annotations.Nullable;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -29,6 +30,7 @@ public class UpdateStoreRequest {
     @NotBlank(message = "{store.name.notBlank}")
     private String storeName;
 
+    @Nullable
     private StoreType storeType;
 
     @NotNull(message = "{store.appearanceDays.notNull}")
@@ -42,7 +44,7 @@ public class UpdateStoreRequest {
     private Set<MenuRequest> menus;
 
     @Builder(builderClassName = "TestBuilder", builderMethodName = "testBuilder")
-    public UpdateStoreRequest(Double latitude, Double longitude, String storeName, StoreType storeType,
+    public UpdateStoreRequest(Double latitude, Double longitude, String storeName, @Nullable StoreType storeType,
                               Set<DayOfTheWeek> appearanceDays, Set<PaymentMethodType> paymentMethods, Set<MenuRequest> menus) {
         this.latitude = latitude;
         this.longitude = longitude;

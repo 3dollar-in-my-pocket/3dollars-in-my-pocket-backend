@@ -34,7 +34,7 @@ public class StoreService {
     }
 
     @Transactional
-    public StoreInfoResponse updateStore(Long storeId, UpdateStoreRequest request, Long userId) {
+    public StoreInfoResponse updateStore(Long storeId, UpdateStoreRequest request) {
         Store store = StoreServiceUtils.findStoreByIdFetchJoinMenu(storeRepository, storeId);
         store.updateLocation(request.getLatitude(), request.getLongitude());
         store.updateInfo(request.getStoreName(), request.getStoreType());

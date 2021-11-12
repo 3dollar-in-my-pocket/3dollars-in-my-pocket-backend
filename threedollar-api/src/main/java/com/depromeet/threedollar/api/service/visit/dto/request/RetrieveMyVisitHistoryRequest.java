@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.service.visit.dto.request;
 
 import lombok.*;
+import org.jetbrains.annotations.Nullable;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -15,6 +16,7 @@ public class RetrieveMyVisitHistoryRequest {
     @Max(value = 100, message = "{common.size.max}")
     private int size;
 
+    @Nullable
     private Long cursor;
 
     public static RetrieveMyVisitHistoryRequest testInstance(int size, Long cursor) {

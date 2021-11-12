@@ -31,8 +31,8 @@ public class StoreController {
     @ApiOperation("[인증] 가게 상세 페이지 - 특정 가게의 정보를 수정합니다")
     @Auth
     @PutMapping("/api/v2/store/{storeId}")
-    public ApiResponse<StoreInfoResponse> updateStore(@PathVariable Long storeId, @Valid @RequestBody UpdateStoreRequest request, @UserId Long userId) {
-        return ApiResponse.success(storeService.updateStore(storeId, request, userId));
+    public ApiResponse<StoreInfoResponse> updateStore(@PathVariable Long storeId, @Valid @RequestBody UpdateStoreRequest request) {
+        return ApiResponse.success(storeService.updateStore(storeId, request));
     }
 
     @ApiOperation("[인증] 가게 상세 페이지 - 특정 가게의 정보를 삭제 요청합니다")

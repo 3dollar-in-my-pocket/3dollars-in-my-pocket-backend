@@ -39,7 +39,7 @@ public class Store extends AuditingTimeEntity {
     @Column(nullable = false, length = 300)
     private String name;
 
-    @Column(nullable = false, length = 30)
+    @Column(length = 30)
     @Enumerated(EnumType.STRING)
     private StoreType type;
 
