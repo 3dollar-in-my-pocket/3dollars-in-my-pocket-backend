@@ -407,20 +407,20 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             );
         }
 
-        @DisplayName("기본적으로 startDate, endDate를 넘기지 않으면 지난 30일간의 방문 기록을 조회한다")
+        @DisplayName("기본적으로 startDate, endDate를 넘기지 않으면 지난 7일간의 방문 기록을 조회한다")
         @Test
-        void startDate와_endDate를_파라미터로_넘기지_않으면_기본적으로_오늘부터_한달간_방문기록들을_조회한다() throws Exception {
+        void startDate와_endDate를_파라미터로_넘기지_않으면_기본적으로_오늘부터_일주일간_방문기록들을_조회한다() throws Exception {
             // given
             LocalDate today = LocalDate.now();
             Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
-            VisitHistory beforeLastMonthHistory = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, today.minusMonths(1).minusDays(1));
-            VisitHistory lastMonthHistory = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, today.minusMonths(1));
+            VisitHistory beforeLastWeekHistory = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, today.minusWeeks(1).minusDays(1));
+            VisitHistory lasteWeekHistory = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, today.minusWeeks(1));
             VisitHistory todayHistory = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, today);
             VisitHistory afterTodayHistory = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, today.plusDays(1));
-            visitHistoryRepository.saveAll(List.of(todayHistory, lastMonthHistory, afterTodayHistory, beforeLastMonthHistory));
+            visitHistoryRepository.saveAll(List.of(todayHistory, lasteWeekHistory, afterTodayHistory, beforeLastWeekHistory));
 
             RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0);
 
@@ -430,7 +430,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getVisitHistories()).hasSize(2),
-                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(0), lastMonthHistory, store, testUser),
+                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(0), lasteWeekHistory, store, testUser),
                 () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(1), todayHistory, store, testUser)
             );
         }

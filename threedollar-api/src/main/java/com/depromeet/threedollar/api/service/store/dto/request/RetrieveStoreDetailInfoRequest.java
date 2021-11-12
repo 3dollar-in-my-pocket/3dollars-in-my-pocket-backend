@@ -21,7 +21,7 @@ public class RetrieveStoreDetailInfoRequest {
     private Double longitude;
 
     @NotNull(message = "{visit.startDate.notNull}")
-    private LocalDate startDate = LocalDate.now().minusMonths(1);
+    private LocalDate startDate = LocalDate.now().minusWeeks(1);
 
     @NotNull(message = "{visit.endDate.notNull}")
     private LocalDate endDate = LocalDate.now();
@@ -31,7 +31,7 @@ public class RetrieveStoreDetailInfoRequest {
     }
 
     public static RetrieveStoreDetailInfoRequest testInstance(Long storeId, Double latitude, Double longitude) {
-        return new RetrieveStoreDetailInfoRequest(storeId, latitude, longitude, LocalDate.now().minusMonths(1), LocalDate.now());
+        return new RetrieveStoreDetailInfoRequest(storeId, latitude, longitude, LocalDate.now().minusWeeks(1), LocalDate.now());
     }
 
 }
