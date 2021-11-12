@@ -12,3 +12,7 @@ CREATE TABLE `user_medal`
 
 ALTER TABLE `user`
     ADD COLUMN `medal_type` VARCHAR(30) DEFAULT NULL;
+
+
+ALTER TABLE dollar_api_dev.`store_delete_request`
+    ADD INDEX `idx_store_delete_request_2` (`user_id`);

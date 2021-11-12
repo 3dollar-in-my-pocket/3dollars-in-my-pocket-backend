@@ -37,7 +37,7 @@ public class UserMedalService {
 
     @Transactional(readOnly = true)
     public List<UserMedalResponse> getAvailableUserMedals(Long userId) {
-        return userMedalRepository.findAllByUserId(userId).stream()
+        return userMedalRepository.findAllUserMedalTypeByUserId(userId).stream()
             .map(UserMedalResponse::of)
             .collect(Collectors.toList());
     }

@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.domain.domain.medal.repository;
 
-import com.depromeet.threedollar.domain.domain.medal.UserMedal;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalType;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +24,9 @@ public class UserMedalRepositoryCustomImpl implements UserMedalRepositoryCustom 
     }
 
     @Override
-    public List<UserMedal> findAllByUserId(Long userId) {
-        return queryFactory.selectFrom(userMedal)
+    public List<UserMedalType> findAllUserMedalTypeByUserId(Long userId) {
+        return queryFactory.select(userMedal.medalType)
+            .from(userMedal)
             .where(
                 userMedal.userId.eq(userId)
             ).fetch();

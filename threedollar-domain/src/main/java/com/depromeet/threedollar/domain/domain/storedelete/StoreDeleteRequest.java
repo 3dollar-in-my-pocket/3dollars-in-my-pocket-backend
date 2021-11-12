@@ -12,7 +12,8 @@ import javax.persistence.*;
 @Entity
 @Table(
     indexes = {
-        @Index(name = "idx_store_delete_request_1", columnList = "storeId")
+        @Index(name = "idx_store_delete_request_1", columnList = "storeId"),
+        @Index(name = "idx_store_delete_request_2", columnList = "userId")
     },
     uniqueConstraints = {
         @UniqueConstraint(name = "uni_store_delete_request_1", columnNames = {"storeId", "userId"})

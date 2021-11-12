@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.domain.domain.visit.repository;
 
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
+import com.depromeet.threedollar.domain.domain.visit.VisitType;
 import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithCounts;
 import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithUserProjection;
 
@@ -16,5 +17,9 @@ public interface VisitHistoryRepositoryCustom {
     List<VisitHistory> findAllByUserIdWithScroll(Long userId, Long lastHistoryId, int size);
 
     List<VisitHistoryWithCounts> findCountsByStoreIdWithGroup(List<Long> storeIds);
+
+	long findCountsByUserId(Long userId);
+
+    long findCountsByuserIdAndVisitType(Long userId, VisitType visitType);
 
 }
