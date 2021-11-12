@@ -5,7 +5,6 @@ import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +18,7 @@ class StoreTest {
         void 가게의_카테고리_조회시_가게_메뉴_카테고리의_수로_정렬해서_반환한다() {
             // given
             Store store = StoreCreator.create(100L, "가게");
-            store.addMenus(Arrays.asList(
+            store.addMenus(List.of(
                 MenuCreator.create(store, "name", "price", MenuCategoryType.BUNGEOPPANG),
                 MenuCreator.create(store, "name", "price", MenuCategoryType.BUNGEOPPANG),
                 MenuCreator.create(store, "name", "price", MenuCategoryType.EOMUK)

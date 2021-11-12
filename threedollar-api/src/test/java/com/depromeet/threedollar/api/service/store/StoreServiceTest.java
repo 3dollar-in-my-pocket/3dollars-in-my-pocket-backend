@@ -170,7 +170,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         @ParameterizedTest
         void 가게_추가시_중복된_메뉴는_한개만_저장된다(String menuName, String price, MenuCategoryType type) {
             // given
-            Set<MenuRequest> menus = new HashSet<>(Arrays.asList(
+            Set<MenuRequest> menus = new HashSet<>(List.of(
                 MenuRequest.of(menuName, price, type),
                 MenuRequest.of(menuName, price, type))
             );
@@ -205,7 +205,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         void 가게에_대한_정보를_수정한다(String storeName, StoreType storeType, Set<DayOfTheWeek> appearanceDays, Set<PaymentMethodType> paymentMethods) {
             // given
             Store store = StoreCreator.create(userId, "storeName");
-            store.addMenus(Collections.singletonList(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             double latitude = 34.0;
@@ -243,7 +243,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         void 가게의_메뉴정보를_수정한다(String menuName, String price, MenuCategoryType type) {
             // given
             Store store = StoreCreator.create(userId, "storeName");
-            store.addMenus(Collections.singletonList(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             double latitude = 34.0;
@@ -278,7 +278,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         void 가게의_결제방법을_수정한다(Set<PaymentMethodType> paymentMethodTypes) {
             // given
             Store store = StoreCreator.create(userId, "storeName");
-            store.addMenus(Collections.singletonList(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
             store.addPaymentMethods(Set.of(PaymentMethodType.CARD));
             storeRepository.save(store);
 
@@ -306,7 +306,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         void 가게의_개시일을_수정한다(Set<DayOfTheWeek> appearanceDays) {
             // given
             Store store = StoreCreator.create(userId, "storeName");
-            store.addMenus(Collections.singletonList(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
             store.addAppearanceDays(Set.of(DayOfTheWeek.TUESDAY, DayOfTheWeek.WEDNESDAY));
             storeRepository.save(store);
 
@@ -334,10 +334,10 @@ class StoreServiceTest extends SetupUserServiceTest {
         void 가게_메뉴_수정시_중복된_메뉴는_한개만_저장된다(String menuName, String price, MenuCategoryType type) {
             // given
             Store store = StoreCreator.create(userId, "storeName");
-            store.addMenus(Collections.singletonList(Menu.of(store, "이름", "가격", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(Menu.of(store, "이름", "가격", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
-            Set<MenuRequest> menus = new HashSet<>(Arrays.asList(
+            Set<MenuRequest> menus = new HashSet<>(List.of(
                 MenuRequest.of(menuName, price, type),
                 MenuRequest.of(menuName, price, type))
             );
@@ -386,7 +386,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             Long creatorUserId = 100L;
 
             Store store = StoreCreator.create(creatorUserId, "storeName");
-            store.addMenus(Collections.singletonList(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             double latitude = 34.0;
@@ -472,7 +472,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             Store store = StoreCreator.create(userId, "storeName");
             storeRepository.save(store);
 
-            storeDeleteRequestRepository.saveAll(Arrays.asList(
+            storeDeleteRequestRepository.saveAll(List.of(
                 StoreDeleteRequestCreator.create(store.getId(), 1000L, DeleteReasonType.NOSTORE),
                 StoreDeleteRequestCreator.create(store.getId(), 1001L, DeleteReasonType.NOSTORE))
             );

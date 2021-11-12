@@ -102,7 +102,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             Store store2 = StoreCreator.create(testUser.getId(), storeName2, 34, 124);
             store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", MenuCategoryType.BUNGEOPPANG)));
-            storeRepository.saveAll(Arrays.asList(store1, store2));
+            storeRepository.saveAll(List.of(store1, store2));
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
                 .latitude(34.0)
@@ -206,10 +206,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 카테고리_파라미터를_넘기면_특정_카테고리의_가게들만_필터링되서_조회된다() throws Exception {
             // given
             Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34, 124, 1);
-            store1.addMenus(Collections.singletonList(MenuCreator.create(store1, "메뉴2", "가격2", MenuCategoryType.DALGONA)));
+            store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", MenuCategoryType.DALGONA)));
 
             Store store2 = StoreCreator.create(testUser.getId(), "가게1", 34,124, 1);
-            store2.addMenus(Collections.singletonList(MenuCreator.create(store2, "메뉴2", "가격2", MenuCategoryType.BUNGEOPPANG)));
+            store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", MenuCategoryType.BUNGEOPPANG)));
 
             storeRepository.saveAll(List.of(store1, store2));
 
@@ -301,10 +301,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             store.addMenus(List.of(menu));
 
             DayOfTheWeek day = DayOfTheWeek.FRIDAY;
-            store.addAppearanceDays(Collections.singleton(day));
+            store.addAppearanceDays(Set.of(day));
 
             PaymentMethodType paymentMethodType = PaymentMethodType.CASH;
-            store.addPaymentMethods(Collections.singleton(paymentMethodType));
+            store.addPaymentMethods(Set.of(paymentMethodType));
 
             storeRepository.save(store);
 
@@ -402,7 +402,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Long notFoundUserId = -1L;
 
             Store store = StoreCreator.create(notFoundUserId, "가게 이름", 34, 124);
-            store.addMenus(Collections.singletonList(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0);
@@ -464,13 +464,13 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Long notFoundUserId = Long.MAX_VALUE;
 
             Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124);
-            store.addMenus(Collections.singletonList(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             Review review1 = ReviewCreator.create(store.getId(), testUser.getId(), "댓글 1", 5);
             Review review2 = ReviewCreator.create(store.getId(), notFoundUserId, "댓글 2", 3);
 
-            reviewRepository.saveAll(Arrays.asList(review1, review2));
+            reviewRepository.saveAll(List.of(review1, review2));
 
             RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0);
 
@@ -569,13 +569,13 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 첫_페이지_조회시_다음_커서가_반환된다() throws Exception {
             // given
             Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34, 124);
-            store1.addMenus(Collections.singletonList(MenuCreator.create(store1, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG)));
+            store1.addMenus(List.of(MenuCreator.create(store1, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG)));
 
             Store store2 = StoreCreator.create(testUser.getId(), "가게2", 34, 124);
-            store2.addMenus(Collections.singletonList(MenuCreator.create(store2, "메뉴2", "가격2", MenuCategoryType.BUNGEOPPANG)));
+            store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", MenuCategoryType.BUNGEOPPANG)));
 
             Store store3 = StoreCreator.create(testUser.getId(), "가게3", 34, 124);
-            store3.addMenus(Collections.singletonList(MenuCreator.create(store3, "메뉴3", "가격3", MenuCategoryType.BUNGEOPPANG)));
+            store3.addMenus(List.of(MenuCreator.create(store3, "메뉴3", "가격3", MenuCategoryType.BUNGEOPPANG)));
 
             storeRepository.saveAll(List.of(store1, store2, store3));
 
@@ -597,18 +597,18 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 중간_페이지_조회시_다음_커서가_반환된다() throws Exception {
             // given
             Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34, 124);
-            store1.addMenus(Collections.singletonList(MenuCreator.create(store1, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG)));
+            store1.addMenus(List.of(MenuCreator.create(store1, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG)));
 
             Store store2 = StoreCreator.create(testUser.getId(), "가게2", 34, 124);
-            store2.addMenus(Collections.singletonList(MenuCreator.create(store2, "메뉴2", "가격2", MenuCategoryType.BUNGEOPPANG)));
+            store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", MenuCategoryType.BUNGEOPPANG)));
 
             Store store3 = StoreCreator.create(testUser.getId(), "가게3", 34, 124);
-            store3.addMenus(Collections.singletonList(MenuCreator.create(store3, "메뉴3", "가격3", MenuCategoryType.BUNGEOPPANG)));
+            store3.addMenus(List.of(MenuCreator.create(store3, "메뉴3", "가격3", MenuCategoryType.BUNGEOPPANG)));
 
             Store store4 = StoreCreator.create(testUser.getId(), "가게3", 34, 124);
-            store4.addMenus(Collections.singletonList(MenuCreator.create(store4, "메뉴4", "가격4", MenuCategoryType.BUNGEOPPANG)));
+            store4.addMenus(List.of(MenuCreator.create(store4, "메뉴4", "가격4", MenuCategoryType.BUNGEOPPANG)));
 
-            storeRepository.saveAll(Arrays.asList(store1, store2, store3, store4));
+            storeRepository.saveAll(List.of(store1, store2, store3, store4));
 
             RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, store4.getId(), 4L, null, null);
 
@@ -627,7 +627,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 유저가_작성한_가게_조회시_총개수가_캐싱되지_않으면_계산되서_반환() throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "가게1", 34, 124);
-            store.addMenus(Collections.singletonList(MenuCreator.create(store, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, null, null, 33.0, 123.0);
@@ -643,7 +643,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 유저가_작성한_가게_조회시_총개수가_캐싱되면_따로_계산하지_않고_반환() throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "가게1", 34, 124);
-            store.addMenus(Collections.singletonList(MenuCreator.create(store, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, null, 10L, 33.0, 123.0);
@@ -660,10 +660,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 다음_커서의_가게를_한개_추가_조회시_조회되지_않으면_마지막_커서로_판단한다() throws Exception {
             // given
             Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34, 124);
-            store1.addMenus(Collections.singletonList(MenuCreator.create(store1, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG)));
+            store1.addMenus(List.of(MenuCreator.create(store1, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG)));
 
             Store store2 = StoreCreator.create(testUser.getId(), "가게2", 34, 124);
-            store2.addMenus(Collections.singletonList(MenuCreator.create(store2, "메뉴2", "가격2", MenuCategoryType.BUNGEOPPANG)));
+            store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", MenuCategoryType.BUNGEOPPANG)));
 
             storeRepository.saveAll(List.of(store1, store2));
 
@@ -683,15 +683,15 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 조회한_size_보다_적은_가게가_조회되면_마지막_커서로_판단한다() throws Exception {
             // given
             Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34, 124);
-            store1.addMenus(Collections.singletonList(MenuCreator.create(store1, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG)));
+            store1.addMenus(List.of(MenuCreator.create(store1, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG)));
 
             Store store2 = StoreCreator.create(testUser.getId(), "가게2", 34, 124);
-            store2.addMenus(Collections.singletonList(MenuCreator.create(store2, "메뉴2", "가격2", MenuCategoryType.BUNGEOPPANG)));
+            store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", MenuCategoryType.BUNGEOPPANG)));
 
             Store store3 = StoreCreator.create(testUser.getId(), "가게3", 34, 124);
-            store3.addMenus(Collections.singletonList(MenuCreator.create(store3, "메뉴3", "가격3", MenuCategoryType.BUNGEOPPANG)));
+            store3.addMenus(List.of(MenuCreator.create(store3, "메뉴3", "가격3", MenuCategoryType.BUNGEOPPANG)));
 
-            storeRepository.saveAll(Arrays.asList(store1, store2, store3));
+            storeRepository.saveAll(List.of(store1, store2, store3));
 
             RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, store2.getId(), 3L, null, null);
 
@@ -758,12 +758,12 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 특정_카테고리의_가게_리스트를_거리수를_그룹화해서_보여준다(MenuCategoryType menuCategoryType) throws Exception {
             // given
             Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34.0001, 124, 1);
-            store1.addMenus(Collections.singletonList(MenuCreator.create(store1, "메뉴2", "가격2", menuCategoryType)));
+            store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", menuCategoryType)));
 
             Store store2 = StoreCreator.create(testUser.getId(), "가게1", 34.001, 124, 1);
-            store2.addMenus(Collections.singletonList(MenuCreator.create(store2, "메뉴2", "가격2", menuCategoryType)));
+            store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", menuCategoryType)));
 
-            storeRepository.saveAll(Arrays.asList(store1, store2));
+            storeRepository.saveAll(List.of(store1, store2));
 
             RetrieveStoreGroupByCategoryRequest request = RetrieveStoreGroupByCategoryRequest.testBuilder()
                 .category(menuCategoryType)
@@ -794,12 +794,12 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 같은_그룹내에서_거리가_가까운_순서대로_조회된다(MenuCategoryType menuCategoryType) throws Exception {
             // given
             Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34.00015, 124, 1);
-            store1.addMenus(Collections.singletonList(MenuCreator.create(store1, "메뉴2", "가격2", menuCategoryType)));
+            store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", menuCategoryType)));
 
             Store store2 = StoreCreator.create(testUser.getId(), "가게1", 34.0001, 124, 1);
-            store2.addMenus(Collections.singletonList(MenuCreator.create(store2, "메뉴2", "가격2", menuCategoryType)));
+            store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", menuCategoryType)));
 
-            storeRepository.saveAll(Arrays.asList(store1, store2));
+            storeRepository.saveAll(List.of(store1, store2));
 
             RetrieveStoreGroupByCategoryRequest request = RetrieveStoreGroupByCategoryRequest.testBuilder()
                 .category(menuCategoryType)
@@ -822,7 +822,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 다른_카테고리는_조회되지_않는다() throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "가게1", 34, 124, 1.1);
-            store.addMenus(Arrays.asList(
+            store.addMenus(List.of(
                 MenuCreator.create(store, "메뉴1", "가격1", MenuCategoryType.EOMUK),
                 MenuCreator.create(store, "메뉴2", "가격2", MenuCategoryType.GUKWAPPANG),
                 MenuCreator.create(store, "메뉴3", "가격3", MenuCategoryType.GYERANPPANG)
@@ -912,21 +912,21 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 특정_카테고리의_가게_리스트를_리뷰_평가_점수로_그룹화해서_보여준다(MenuCategoryType menuCategoryType) throws Exception {
             // given
             Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34, 124, 1);
-            store1.addMenus(Collections.singletonList(MenuCreator.create(store1, "메뉴2", "가격2", menuCategoryType)));
+            store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", menuCategoryType)));
 
             Store store2 = StoreCreator.create(testUser.getId(), "가게2", 34, 124, 2);
-            store2.addMenus(Collections.singletonList(MenuCreator.create(store2, "메뉴2", "가격2", menuCategoryType)));
+            store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", menuCategoryType)));
 
             Store store3 = StoreCreator.create(testUser.getId(), "가게3", 34, 124, 3);
-            store3.addMenus(Collections.singletonList(MenuCreator.create(store3, "메뉴2", "가격2", menuCategoryType)));
+            store3.addMenus(List.of(MenuCreator.create(store3, "메뉴2", "가격2", menuCategoryType)));
 
             Store store4 = StoreCreator.create(testUser.getId(), "가게4", 34, 124, 4);
-            store4.addMenus(Collections.singletonList(MenuCreator.create(store4, "메뉴2", "가격2", menuCategoryType)));
+            store4.addMenus(List.of(MenuCreator.create(store4, "메뉴2", "가격2", menuCategoryType)));
 
             Store store5 = StoreCreator.create(testUser.getId(), "가게5", 34, 124, 5);
-            store5.addMenus(Collections.singletonList(MenuCreator.create(store5, "메뉴1", "가격1", menuCategoryType)));
+            store5.addMenus(List.of(MenuCreator.create(store5, "메뉴1", "가격1", menuCategoryType)));
 
-            storeRepository.saveAll(Arrays.asList(store1, store2, store3, store4, store5));
+            storeRepository.saveAll(List.of(store1, store2, store3, store4, store5));
 
             RetrieveStoreGroupByCategoryRequest request = RetrieveStoreGroupByCategoryRequest.testBuilder()
                 .category(menuCategoryType)
@@ -959,15 +959,15 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 같은_그룹내에서_높은_리뷰부터_보여진다(MenuCategoryType menuCategoryType) throws Exception {
             // given
             Store store1 = StoreCreator.create(testUser.getId(), "가게 1.1", 34, 124, 1.1);
-            store1.addMenus(Collections.singletonList(MenuCreator.create(store1, "메뉴2", "가격2", menuCategoryType)));
+            store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", menuCategoryType)));
 
             Store store2 = StoreCreator.create(testUser.getId(), "가게 1.5", 34, 124, 1.5);
-            store2.addMenus(Collections.singletonList(MenuCreator.create(store2, "메뉴2", "가격2", menuCategoryType)));
+            store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", menuCategoryType)));
 
             Store store3 = StoreCreator.create(testUser.getId(), "가게 1.9", 34, 124, 1.9);
-            store3.addMenus(Collections.singletonList(MenuCreator.create(store3, "메뉴2", "가격2", menuCategoryType)));
+            store3.addMenus(List.of(MenuCreator.create(store3, "메뉴2", "가격2", menuCategoryType)));
 
-            storeRepository.saveAll(Arrays.asList(store1, store2, store3));
+            storeRepository.saveAll(List.of(store1, store2, store3));
 
             RetrieveStoreGroupByCategoryRequest request = RetrieveStoreGroupByCategoryRequest.testBuilder()
                 .category(menuCategoryType)
@@ -991,7 +991,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 다른_카테고리는_조회되지_않는다() throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "가게1", 34, 124, 1.1);
-            store.addMenus(Arrays.asList(
+            store.addMenus(List.of(
                 MenuCreator.create(store, "메뉴1", "가격1", MenuCategoryType.EOMUK),
                 MenuCreator.create(store, "메뉴2", "가격2", MenuCategoryType.GUKWAPPANG),
                 MenuCreator.create(store, "메뉴3", "가격3", MenuCategoryType.GYERANPPANG)

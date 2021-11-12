@@ -110,7 +110,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
 
             Review review1 = ReviewCreator.create(store.getId(), userId, "맛 없어요", 1);
             Review review2 = ReviewCreator.create(store.getId(), userId, "맛 없어요", 4);
-            reviewRepository.saveAll(Arrays.asList(review1, review2));
+            reviewRepository.saveAll(List.of(review1, review2));
 
             // when
             AddReviewRequest request = AddReviewRequest.testInstance(store.getId(), contents, rating);
@@ -156,7 +156,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             int rating = 4;
 
             Review review = ReviewCreator.create(store.getId(), userId, "맛 없어요", 1);
-            reviewRepository.saveAll(Arrays.asList(ReviewCreator.create(store.getId(), userId, "맛 없어요", 2), review));
+            reviewRepository.saveAll(List.of(ReviewCreator.create(store.getId(), userId, "맛 없어요", 2), review));
 
             // when
             UpdateReviewRequest request = UpdateReviewRequest.testInstance(contents, rating);
@@ -218,7 +218,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             // given
             Review remainReview = ReviewCreator.create(store.getId(), userId, "너무 맛있어요", 3);
             Review deletedReview = ReviewCreator.create(store.getId(), userId, "너무 맛있어요", 5);
-            reviewRepository.saveAll(Arrays.asList(remainReview, deletedReview));
+            reviewRepository.saveAll(List.of(remainReview, deletedReview));
 
             // when
             reviewService.deleteReview(deletedReview.getId(), userId);

@@ -206,7 +206,7 @@ class UserServiceTest {
             User user1 = UserCreator.create("social-id1", UserSocialType.KAKAO, "기존의 닉네임1");
             User user2 = UserCreator.create("social-id2", UserSocialType.APPLE, "기존의 닉네임2");
 
-            userRepository.saveAll(Arrays.asList(user1, user2));
+            userRepository.saveAll(List.of(user1, user2));
 
             // when
             userService.signOut(user1.getId());

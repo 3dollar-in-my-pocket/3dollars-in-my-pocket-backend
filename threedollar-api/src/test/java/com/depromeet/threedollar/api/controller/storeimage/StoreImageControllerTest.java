@@ -64,7 +64,7 @@ class StoreImageControllerTest extends SetupUserControllerTest {
         void 가게에_등록된_사진들을_조회한다(String imageUrl1, String imageUrl2) throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "storeName", 34, 124);
-            store.addMenus(Collections.singletonList(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             StoreImage storeImage1 = StoreImage.newInstance(store.getId(), testUser.getId(), imageUrl1);

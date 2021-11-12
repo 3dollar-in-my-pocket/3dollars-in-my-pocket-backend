@@ -20,6 +20,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -166,7 +167,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review2 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요2", 4);
             Review review3 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요3", 3);
             Review review4 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요4", 2);
-            reviewRepository.saveAll(Arrays.asList(review1, review2, review3, review4));
+            reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null, null);
 
@@ -192,7 +193,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review2 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요2", 4);
             Review review3 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요3", 3);
             Review review4 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요4", 2);
-            reviewRepository.saveAll(Arrays.asList(review1, review2, review3, review4));
+            reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review4.getId(), 4L);
 
@@ -218,7 +219,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review2 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요2", 4);
             Review review3 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요3", 3);
             Review review4 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요4", 2);
-            reviewRepository.saveAll(Arrays.asList(review1, review2, review3, review4));
+            reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review4.getId(), null);
 
@@ -245,7 +246,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review2 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요2", 4);
             Review review3 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요3", 3);
             Review review4 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요4", 2);
-            reviewRepository.saveAll(Arrays.asList(review1, review2, review3, review4));
+            reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review3.getId(), null);
 
@@ -272,7 +273,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review2 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요2", 4);
             Review review3 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요3", 3);
             Review review4 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요4", 2);
-            reviewRepository.saveAll(Arrays.asList(review1, review2, review3, review4));
+            reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review2.getId(), null);
 

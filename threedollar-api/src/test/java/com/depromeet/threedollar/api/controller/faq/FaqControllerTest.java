@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.controller.faq;
 
-import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
+import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.application.mapper.faq.dto.response.FaqCategoryResponse;
 import com.depromeet.threedollar.application.service.faq.dto.response.FaqResponse;
 import com.depromeet.threedollar.domain.domain.faq.Faq;
@@ -11,7 +11,6 @@ import com.depromeet.threedollar.domain.domain.faq.FaqRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,7 +42,7 @@ class FaqControllerTest extends SetupUserControllerTest {
             // given
             Faq faq1 = FaqCreator.create("question1", "answer1", FaqCategory.CATEGORY);
             Faq faq2 = FaqCreator.create("question2", "answer2", FaqCategory.BOARD);
-            faqRepository.saveAll(Arrays.asList(faq1, faq2));
+            faqRepository.saveAll(List.of(faq1, faq2));
 
             // when
             ApiResponse<List<FaqResponse>> response = faqMockApiCaller.retrieveAllFaqs(200);
@@ -65,7 +64,7 @@ class FaqControllerTest extends SetupUserControllerTest {
             // given
             Faq faq1 = FaqCreator.create("question1", "answer1", FaqCategory.CATEGORY);
             Faq faq2 = FaqCreator.create("question2", "answer2", FaqCategory.BOARD);
-            faqRepository.saveAll(Arrays.asList(faq1, faq2));
+            faqRepository.saveAll(List.of(faq1, faq2));
 
             // when
             ApiResponse<List<FaqResponse>> response = faqMockApiCaller.retrieveAllFaqs(FaqCategory.CATEGORY, 200);

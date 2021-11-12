@@ -9,7 +9,7 @@ import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Collections;
+import java.util.List;
 
 public class SetupStoreControllerTest extends SetupUserControllerTest {
 
@@ -26,7 +26,7 @@ public class SetupStoreControllerTest extends SetupUserControllerTest {
     @BeforeEach
     void setUpStore() {
         store = StoreCreator.create(testUser.getId(), "디프만 붕어빵");
-        store.addMenus(Collections.singletonList(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
+        store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
         storeRepository.save(store);
         storeId = store.getId();
     }

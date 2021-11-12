@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.api.controller.store;
 
-import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
 import com.depromeet.threedollar.api.service.store.dto.request.AddStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.DeleteStoreRequest;
@@ -8,6 +7,7 @@ import com.depromeet.threedollar.api.service.store.dto.request.MenuRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.UpdateStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.response.StoreDeleteResponse;
 import com.depromeet.threedollar.api.service.store.dto.response.StoreInfoResponse;
+import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
 import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
 import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
@@ -17,13 +17,15 @@ import com.depromeet.threedollar.domain.domain.storedelete.DeleteReasonType;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestCreator;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestRepository;
 import org.javaunit.autoparams.AutoSource;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -90,7 +92,7 @@ class StoreControllerTest extends SetupUserControllerTest {
             ApiResponse<StoreInfoResponse> response = storeMockApiCaller.addStore(request, token, 200);
 
             // then
-            assertStoreInfoResponse(response.getData(), latitude, longitude, storeName, Collections.singletonList(MenuCategoryType.BUNGEOPPANG));
+            assertStoreInfoResponse(response.getData(), latitude, longitude, storeName, List.of(MenuCategoryType.BUNGEOPPANG));
         }
 
     }
@@ -104,7 +106,7 @@ class StoreControllerTest extends SetupUserControllerTest {
         void 가게_수정_성공시_수정된_가게_정보를_반환한다(String storeName, StoreType storeType, Set<DayOfTheWeek> appearanceDays, Set<PaymentMethodType> paymentMethods) throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "storeName");
-            store.addMenus(Collections.singletonList(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             double latitude = 34.0;
@@ -125,7 +127,7 @@ class StoreControllerTest extends SetupUserControllerTest {
 
             // then
             assertThat(response.getData().getStoreId()).isEqualTo(store.getId());
-            assertStoreInfoResponse(response.getData(), latitude, longitude, storeName, Collections.singletonList(MenuCategoryType.BUNGEOPPANG));
+            assertStoreInfoResponse(response.getData(), latitude, longitude, storeName, List.of(MenuCategoryType.BUNGEOPPANG));
         }
 
     }
@@ -157,7 +159,7 @@ class StoreControllerTest extends SetupUserControllerTest {
             Store store = StoreCreator.create(testUser.getId(), "storeName");
             storeRepository.save(store);
 
-            storeDeleteRequestRepository.saveAll(Arrays.asList(
+            storeDeleteRequestRepository.saveAll(List.of(
                 StoreDeleteRequestCreator.create(store.getId(), 10L, DeleteReasonType.NOSTORE),
                 StoreDeleteRequestCreator.create(store.getId(), 11L, DeleteReasonType.NOSTORE)
             ));
