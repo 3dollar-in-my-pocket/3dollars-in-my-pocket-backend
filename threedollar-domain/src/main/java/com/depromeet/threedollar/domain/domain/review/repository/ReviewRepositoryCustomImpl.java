@@ -47,7 +47,6 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
     public long findCountsByUserId(Long userId) {
         return queryFactory.select(review.id)
             .from(review)
-            .innerJoin(user).on(review.userId.eq(user.id))
             .innerJoin(store).on(review.storeId.eq(store.id))
             .where(
                 review.userId.eq(userId),

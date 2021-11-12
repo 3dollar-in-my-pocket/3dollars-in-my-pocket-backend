@@ -9,11 +9,14 @@ import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.depromeet.threedollar.domain.domain.medal.UserMedalType.MedalAcquisitionCondition.*;
 
 @RequiredArgsConstructor
 @Service
@@ -27,43 +30,50 @@ public class UserMedalEventService {
     private final StoreDeleteRequestRepository storeDeleteRequestRepository;
     private final VisitHistoryRepository visitHistoryRepository;
 
-    /**
-     * 매번 가게, 리뷰, 가게 삭제, 인증을 할 때마다 해당 카운트들을 모두 조회하는 것은 너무 비효율적이지 않나?
-     * <p>
-     * 1. 오늘 변경된 유저ID 정보들만 Redis에 저장해두었다가 배치 작업을 통해 해당 유저들에게 메달을 부여하는 방법.
-     * <p>
-     * 2. 좀 더 커스텀하게 관리 (가게 등록시에는 가게에 관련된 메달들만 체크하는 방법) -> 이러면 코드 규모가 커지는 트레이드 오프가 존재함.
-     * -> 일단 비동기적으로 처리하긴 하고 + 해당 요청이 조회 만큼 많이 발생하지는 않으니 코드가 간단한게 효율적이지 않나라는 생각중이지만 차후 개선방법 고려해야봐 함.
-     */
-    @Transactional
-    public void checkAvailableGetMedal(Long userId) {
-        List<UserMedalType> medalTypes = getNotHasUserMedalTypes(userId);
-        if (hasAllMedal(medalTypes)) {
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void addAvailableMedalByAddStore(Long userId) {
+        addAvailableMedalByCondition(userId, ADD_STORE, storeRepository.findCountsByUserId(userId));
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void addAvailableMedalByAddReview(Long userId) {
+        addAvailableMedalByCondition(userId, ADD_REVIEW, reviewRepository.findCountsByUserId(userId));
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void addAvailableMedalByDeleteStore(Long userId) {
+        addAvailableMedalByCondition(userId, DELETE_STORE, storeDeleteRequestRepository.findCountsByUserId(userId));
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void addAvailableMedalByVisitHistory(Long userId) {
+        addAvailableMedalByCondition(userId, VISIT_STORE, visitHistoryRepository.findCountsByUserId(userId));
+        addAvailableMedalByCondition(userId, VISIT_NOT_EXISTS_STORE, visitHistoryRepository.findCountsByuserIdAndVisitType(userId, VisitType.NOT_EXISTS));
+    }
+
+    private void addAvailableMedalByCondition(Long userId, UserMedalType.MedalAcquisitionCondition condition, long countsByUserId) {
+        List<UserMedalType> medals = getNotHasMedalsByCondition(userId, condition);
+        if (achieveAllMedals(medals)) {
             return;
         }
 
-        for (UserMedalType medalType : medalTypes) {
-            if (medalType.isMatched(
-                visitHistoryRepository.findCountsByUserId(userId),
-                visitHistoryRepository.findCountsByuserIdAndVisitType(userId, VisitType.NOT_EXISTS),
-                reviewRepository.findCountsByUserId(userId),
-                storeRepository.findCountsByUserId(userId),
-                storeDeleteRequestRepository.findCountsByUserId(userId))
-            ) {
-                userMedalService.addUserMedal(medalType, userId);
+        for (UserMedalType medal : medals) {
+            if (medal.canGetMedal(countsByUserId)) {
+                userMedalService.addUserMedal(medal, userId);
             }
         }
     }
 
-    private List<UserMedalType> getNotHasUserMedalTypes(Long userId) {
+    private List<UserMedalType> getNotHasMedalsByCondition(Long userId, UserMedalType.MedalAcquisitionCondition conditions) {
         List<UserMedalType> userMedalTypes = userMedalRepository.findAllUserMedalTypeByUserId(userId);
         return Arrays.stream(UserMedalType.values())
+            .filter(userMedalType -> userMedalType.isMatchCondition(conditions))
             .filter(userMedalType -> !userMedalTypes.contains(userMedalType))
             .collect(Collectors.toList());
     }
 
-    private boolean hasAllMedal(List<UserMedalType> medalTypes) {
-        return medalTypes.isEmpty();
+    private boolean achieveAllMedals(List<UserMedalType> medals) {
+        return medals.isEmpty();
     }
 
 }

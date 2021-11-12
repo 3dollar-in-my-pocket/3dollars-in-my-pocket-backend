@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.service;
 
+import com.depromeet.threedollar.domain.domain.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserCreator;
 import com.depromeet.threedollar.domain.domain.user.UserRepository;
@@ -14,6 +15,9 @@ public class SetupUserServiceTest {
     @Autowired
     protected UserRepository userRepository;
 
+    @Autowired
+    protected UserMedalRepository userMedalRepository;
+
     protected Long userId;
 
     @BeforeEach
@@ -23,6 +27,7 @@ public class SetupUserServiceTest {
     }
 
     protected void cleanup() {
+        userMedalRepository.deleteAll();
         userRepository.deleteAll();
     }
 

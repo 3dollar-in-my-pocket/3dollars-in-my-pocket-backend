@@ -1,7 +1,9 @@
 package com.depromeet.threedollar.api.service.review;
 
+import com.depromeet.threedollar.api.controller.medal.UserMedalEventListener;
 import com.depromeet.threedollar.api.controller.store.StoreEventListener;
-import com.depromeet.threedollar.api.event.ReviewChangedEvent;
+import com.depromeet.threedollar.api.event.review.ReviewChangedEvent;
+import com.depromeet.threedollar.api.event.review.ReviewCreatedEvent;
 import com.depromeet.threedollar.api.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
@@ -37,6 +39,9 @@ class ReviewServiceTest extends SetupStoreServiceTest {
 
     @MockBean
     private StoreEventListener storeEventListener;
+
+    @MockBean
+    private UserMedalEventListener userMedalEventListener;
 
     @AfterEach
     void cleanUp() {
@@ -83,6 +88,18 @@ class ReviewServiceTest extends SetupStoreServiceTest {
 
             // then
             verify(storeEventListener, times(1)).renewStoreRating(any(ReviewChangedEvent.class));
+        }
+
+        @Test
+        void 리뷰_등록시_메달을_획득하는_작업이_수행된다() {
+            // given
+            AddReviewRequest request = AddReviewRequest.testInstance(store.getId(), "우와", 4);
+
+            // when
+            reviewService.addReview(request, userId);
+
+            // then
+            verify(userMedalEventListener, times(1)).addAvailableMedalByAddReview(any(ReviewCreatedEvent.class));
         }
 
     }

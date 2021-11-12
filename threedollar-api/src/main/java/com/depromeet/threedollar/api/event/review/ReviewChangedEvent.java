@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.event;
+package com.depromeet.threedollar.api.event.review;
 
 import com.depromeet.threedollar.domain.domain.store.Store;
 import lombok.AccessLevel;

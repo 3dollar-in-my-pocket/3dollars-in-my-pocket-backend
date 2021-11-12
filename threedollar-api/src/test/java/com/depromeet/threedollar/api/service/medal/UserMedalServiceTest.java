@@ -5,10 +5,11 @@ import com.depromeet.threedollar.api.service.medal.dto.request.ActivateUserMedal
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.medal.UserMedal;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalCreator;
-import com.depromeet.threedollar.domain.domain.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalType;
 import com.depromeet.threedollar.domain.domain.user.User;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.NullSource;
@@ -19,7 +20,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
 class UserMedalServiceTest extends SetupUserServiceTest {
@@ -27,13 +28,9 @@ class UserMedalServiceTest extends SetupUserServiceTest {
     @Autowired
     private UserMedalService userMedalService;
 
-    @Autowired
-    private UserMedalRepository userMedalRepository;
-
     @AfterEach
     void cleanUp() {
         super.cleanup();
-        userMedalRepository.deleteAll();
     }
 
     @DisplayName("유저가 보유한 메달을 추가한다")

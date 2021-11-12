@@ -6,13 +6,11 @@ import com.depromeet.threedollar.api.service.medal.dto.response.UserMedalRespons
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalCreator;
-import com.depromeet.threedollar.domain.domain.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalType;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.NullSource;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -29,13 +27,9 @@ class UserMedalControllerTest extends SetupUserControllerTest {
         userMedalMockApiCaller = new UserMedalMockApiCaller(mockMvc, objectMapper);
     }
 
-    @Autowired
-    private UserMedalRepository userMedalRepository;
-
     @AfterEach
     void cleanUp() {
         super.cleanup();
-        userMedalRepository.deleteAll();
     }
 
     @DisplayName("사용자가 보유중인 메달들을 조회한다")

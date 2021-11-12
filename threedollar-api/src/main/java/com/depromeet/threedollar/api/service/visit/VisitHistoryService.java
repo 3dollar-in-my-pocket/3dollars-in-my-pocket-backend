@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.service.visit;
 
+import com.depromeet.threedollar.api.event.visit.VisitHistoryAddedEvent;
 import com.depromeet.threedollar.api.service.store.StoreServiceUtils;
 import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
@@ -10,6 +11,7 @@ import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,7 @@ import java.util.List;
 @Service
 public class VisitHistoryService {
 
+    private final ApplicationEventPublisher eventPublisher;
     private final StoreRepository storeRepository;
     private final VisitHistoryRepository visitHistoryRepository;
 
@@ -27,7 +30,8 @@ public class VisitHistoryService {
     public void addVisitHistory(AddVisitHistoryRequest request, Long userId, LocalDate dateOfVisit) {
         Store store = StoreServiceUtils.findStoreById(storeRepository, request.getStoreId());
         VisitHistoryServiceUtils.validateNotVisitedToday(visitHistoryRepository, request.getStoreId(), userId, dateOfVisit);
-        visitHistoryRepository.save(request.toEntity(store, userId, dateOfVisit));
+        VisitHistory visitHistory = visitHistoryRepository.save(request.toEntity(store, userId, dateOfVisit));
+        eventPublisher.publishEvent(VisitHistoryAddedEvent.of(visitHistory.getId(), userId));
     }
 
     @Transactional(readOnly = true)

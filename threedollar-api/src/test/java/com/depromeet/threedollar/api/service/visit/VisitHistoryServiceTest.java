@@ -1,5 +1,7 @@
 package com.depromeet.threedollar.api.service.visit;
 
+import com.depromeet.threedollar.api.controller.medal.UserMedalEventListener;
+import com.depromeet.threedollar.api.event.visit.VisitHistoryAddedEvent;
 import com.depromeet.threedollar.api.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
@@ -16,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,6 +27,9 @@ import static com.depromeet.threedollar.api.assertutils.assertVisitHistoryUtils.
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 class VisitHistoryServiceTest extends SetupStoreServiceTest {
@@ -33,6 +39,9 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
 
     @Autowired
     private VisitHistoryRepository visitHistoryRepository;
+
+    @MockBean
+    private UserMedalEventListener userMedalEventListener;
 
     @AfterEach
     void cleanUp() {
@@ -81,6 +90,19 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
 
             // when & then
             assertThatThrownBy(() -> visitHistoryService.addVisitHistory(request, userId, dateOfVisit)).isInstanceOf(ConflictException.class);
+        }
+
+        @AutoSource
+        @ParameterizedTest
+        void 가게_방문시_메달을_획득하는_작업이_수행된다(LocalDate dateOfVisit, VisitType visitType) {
+            // given
+            AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(storeId, visitType);
+
+            // when
+            visitHistoryService.addVisitHistory(request, userId, dateOfVisit);
+
+            // then
+            verify(userMedalEventListener, times(1)).addAvailableMedalByAddVisitHistory(any(VisitHistoryAddedEvent.class));
         }
 
     }
