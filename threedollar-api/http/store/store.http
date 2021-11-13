@@ -8,7 +8,7 @@ Authorization: {{AUTHORIZATION}}
         "MONDAY",
         "TUESDAY"
     ],
-    "latitude": 33.000-1,
+    "latitude": 33.0001,
     "longitude": 124,
     "menus": [
         {

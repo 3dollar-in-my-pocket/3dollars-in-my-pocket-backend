@@ -21,7 +21,6 @@ import java.util.Base64;
 import java.util.Map;
 
 import static com.depromeet.threedollar.common.exception.ErrorCode.*;
-import static com.depromeet.threedollar.common.exception.ErrorCode.VALIDATION_APPLE_TOKEN_EXCEPTION;
 
 /**
  * https://developer.apple.com/documentation/sign_in_with_apple/sign_in_with_apple_rest_api/verifying_a_user

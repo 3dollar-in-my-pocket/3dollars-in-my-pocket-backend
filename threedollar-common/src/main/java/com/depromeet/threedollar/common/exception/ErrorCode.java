@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 
 import static com.depromeet.threedollar.common.exception.ErrorAlarmOptions.*;
 import static com.depromeet.threedollar.common.exception.ErrorStatusCode.*;
-import static com.depromeet.threedollar.common.exception.ErrorStatusCode.BAD_REQUEST;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)

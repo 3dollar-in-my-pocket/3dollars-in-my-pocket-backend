@@ -33,7 +33,7 @@ class S3FileUploadServiceTest {
 
         @EnumSource
         @ParameterizedTest
-        void 성공적으로_이미지가_업로드되면_업로되된_퍼블릭_파일명이_반환된다(ImageType imageType) {
+        void 성공적으로_이미지가_업로드되면_업로되면_파일의_확장자는_유지된다(ImageType imageType) {
             // given
             MultipartFile multipartFile = new MockMultipartFile("fileName.jpeg", "fileName.jpeg", "image/jpeg", new byte[]{});
 
@@ -48,7 +48,7 @@ class S3FileUploadServiceTest {
 
         @EnumSource
         @ParameterizedTest
-        void 확장명자가_없는_파일명인경우_VALIDATION_FILE_TYPE_EXCEPTION(ImageType imageType) {
+        void 확장자가_없는_파일명인경우_VALIDATION_FILE_TYPE_EXCEPTION(ImageType imageType) {
             // given
             MultipartFile multipartFile = new MockMultipartFile("fileName.jpeg", "fileName", "image/jpeg", new byte[]{});
 

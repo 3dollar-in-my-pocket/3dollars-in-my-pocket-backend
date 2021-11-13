@@ -19,7 +19,6 @@ import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
