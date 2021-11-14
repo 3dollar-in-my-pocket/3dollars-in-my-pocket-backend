@@ -6,6 +6,7 @@ services:
       - "5002:5000"
     environment:
       - "SPRING_PROFILES_ACTIVE=dev"
+      - "NEW_RELIC_APP_NAME=3dollars-api-dev"
     links:
       - "redis:redis"
     volumes:
