@@ -38,7 +38,6 @@
 - S3
 - Application LoadBalancer
 - GitHub Actions CI/CD
-- Sentry, CloudWatch, Locust
 
 ### 인프라 - 개발 환경 (Development)
 - EC2, Nginx, Docker compose
@@ -46,6 +45,12 @@
 - Redis
 - S3
 - GitHub Actions CI/CD
+
+### 운영 툴
+- 로그 관리: AWS CloudWatch
+- 오류 수집 & 알림: Sentry, Slack
+- APM 도구: NewRelic
+- 부하 테스트: locust
 
 ## 실행 방법
 ### with gradlew
@@ -70,4 +75,4 @@ docker-compose up --build
 
 
 ## Contacts
-- [강승호](https://github.com/seungh0) - will.seungho@gmail.com
+- [seungh0](https://github.com/seungh0) - will.seungho@gmail.com
