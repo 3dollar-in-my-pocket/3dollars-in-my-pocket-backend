@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -32,8 +33,8 @@ public class VisitHistoryService {
 
     @Transactional(readOnly = true)
     public MyVisitHistoriesScrollResponse retrieveMyVisitHistories(RetrieveMyVisitHistoryRequest request, Long userId) {
-        ScrollPaginationCollection<VisitHistory> scrollCollection = ScrollPaginationCollection.of(
-            visitHistoryRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1), request.getSize());
+        List<VisitHistory> visitHistoriesWithNextCursor = visitHistoryRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
+        ScrollPaginationCollection<VisitHistory> scrollCollection = ScrollPaginationCollection.of(visitHistoriesWithNextCursor, request.getSize());
         return MyVisitHistoriesScrollResponse.of(scrollCollection);
     }
 

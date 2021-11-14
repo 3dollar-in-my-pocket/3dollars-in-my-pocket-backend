@@ -63,8 +63,8 @@ public class StoreRetrieveService {
 
     @Transactional(readOnly = true)
     public StoresScrollResponse retrieveMyStores(RetrieveMyStoresRequest request, Long userId) {
-        ScrollPaginationCollection<Store> scrollCollection = ScrollPaginationCollection.of(
-            storeRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1), request.getSize());
+        List<Store> storesWithNextCursor = storeRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
+        ScrollPaginationCollection<Store> scrollCollection = ScrollPaginationCollection.of(storesWithNextCursor, request.getSize());
         VisitHistoriesCountCollection visitHistoryCountsCollection = findVisitHistoriesCountByStoreIds(scrollCollection.getItemsInCurrentScroll());
         long totalElements = Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> storeRepository.findCountsByUserId(userId));
         return StoresScrollResponse.of(scrollCollection, visitHistoryCountsCollection, totalElements, request.getLatitude(), request.getLongitude());

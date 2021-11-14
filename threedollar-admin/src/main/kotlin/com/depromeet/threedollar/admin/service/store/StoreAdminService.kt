@@ -27,9 +27,8 @@ class StoreAdminService(
 
     @Transactional(readOnly = true)
     fun retrieveLatestStores(request: RetrieveLatestStoresRequest): StoreScrollResponse {
-        val scrollCollection = ScrollPaginationCollection.of(
-            storeRepository.findAllWithScroll(request.cursor, request.size + 1), request.size
-        )
+        val storesWithNextCursor =  storeRepository.findAllWithScroll(request.cursor, request.size + 1)
+        val scrollCollection = ScrollPaginationCollection.of(storesWithNextCursor, request.size)
         return StoreScrollResponse.of(scrollCollection)
     }
 
