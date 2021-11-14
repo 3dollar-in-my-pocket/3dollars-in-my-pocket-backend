@@ -6,6 +6,7 @@ import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDeta
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreGroupByCategoryRequest;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
 import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
+import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
 import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
@@ -62,22 +63,11 @@ public class StoreRetrieveService {
 
     @Transactional(readOnly = true)
     public StoresScrollResponse retrieveMyStores(RetrieveMyStoresRequest request, Long userId) {
-        List<Store> currentAndNextScrollStores =
-            storeRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
-        VisitHistoriesCountCollection collection = findVisitHistoriesCountByStoreIds(currentAndNextScrollStores);
+        ScrollPaginationCollection<Store> scrollCollection = ScrollPaginationCollection.of(
+            storeRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1), request.getSize());
+        VisitHistoriesCountCollection visitHistoryCountsCollection = findVisitHistoriesCountByStoreIds(scrollCollection.getItemsInCurrentScroll());
         long totalElements = Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> storeRepository.findCountsByUserId(userId));
-
-        if (hasNoMoreNextStore(currentAndNextScrollStores, request.getSize())) {
-            return StoresScrollResponse.newLastScroll(currentAndNextScrollStores, collection, totalElements, request.getLatitude(), request.getLongitude());
-        }
-
-        List<Store> currentScrollStores = currentAndNextScrollStores.subList(0, request.getSize());
-        long nextCursor = currentScrollStores.get(request.getSize() - 1).getId();
-        return StoresScrollResponse.newScrollHasNext(currentScrollStores, collection, totalElements, request.getLatitude(), request.getLongitude(), nextCursor);
-    }
-
-    private boolean hasNoMoreNextStore(List<Store> hasStores, int size) {
-        return hasStores.size() <= size;
+        return StoresScrollResponse.of(scrollCollection, visitHistoryCountsCollection, totalElements, request.getLatitude(), request.getLongitude());
     }
 
     @Deprecated

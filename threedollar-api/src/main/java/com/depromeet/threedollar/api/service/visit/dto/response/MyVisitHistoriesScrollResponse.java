@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.service.visit.dto.response;
 
+import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,6 +16,8 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MyVisitHistoriesScrollResponse {
 
+    private static final long LAST_CURSOR = -1L;
+
     private List<VisitHistoryWithStoreResponse> contents = new ArrayList<>();
 
     private long nextCursor;
@@ -24,11 +27,18 @@ public class MyVisitHistoriesScrollResponse {
         this.nextCursor = nextCursor;
     }
 
-    public static MyVisitHistoriesScrollResponse newLastScroll(List<VisitHistory> visitHistories) {
-        return newScrollHasNext(visitHistories, -1L);
+    public static MyVisitHistoriesScrollResponse of(ScrollPaginationCollection<VisitHistory> scrollPaginationCollection) {
+        if (scrollPaginationCollection.isLastScroll()) {
+            return newLastScroll(scrollPaginationCollection.getItemsInCurrentScroll());
+        }
+        return newScrollHasNext(scrollPaginationCollection.getItemsInCurrentScroll(), scrollPaginationCollection.getNextCursor().getId());
     }
 
-    public static MyVisitHistoriesScrollResponse newScrollHasNext(List<VisitHistory> visitHistories, long nextCursor) {
+    private static MyVisitHistoriesScrollResponse newLastScroll(List<VisitHistory> visitHistories) {
+        return newScrollHasNext(visitHistories, LAST_CURSOR);
+    }
+
+    private static MyVisitHistoriesScrollResponse newScrollHasNext(List<VisitHistory> visitHistories, long nextCursor) {
         return new MyVisitHistoriesScrollResponse(visitHistories.stream()
             .map(history -> VisitHistoryWithStoreResponse.of(history, history.getStore()))
             .collect(Collectors.toList()), nextCursor);

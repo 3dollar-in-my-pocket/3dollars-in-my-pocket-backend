@@ -4,6 +4,7 @@ import com.depromeet.threedollar.api.service.store.StoreServiceUtils;
 import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoryRequest;
 import com.depromeet.threedollar.api.service.visit.dto.response.MyVisitHistoriesScrollResponse;
+import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -32,16 +32,9 @@ public class VisitHistoryService {
 
     @Transactional(readOnly = true)
     public MyVisitHistoriesScrollResponse retrieveMyVisitHistories(RetrieveMyVisitHistoryRequest request, Long userId) {
-        List<VisitHistory> currentAndNextHistories = visitHistoryRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
-        if (hasNoMoreVisitHistory(currentAndNextHistories, request.getSize())) {
-            return MyVisitHistoriesScrollResponse.newLastScroll(currentAndNextHistories);
-        }
-        List<VisitHistory> currentHistories = currentAndNextHistories.subList(0, request.getSize());
-        return MyVisitHistoriesScrollResponse.newScrollHasNext(currentHistories, currentHistories.get(request.getSize() - 1).getId());
-    }
-
-    private boolean hasNoMoreVisitHistory(List<VisitHistory> visitHistories, int size) {
-        return visitHistories.size() <= size;
+        ScrollPaginationCollection<VisitHistory> scrollCollection = ScrollPaginationCollection.of(
+            visitHistoryRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1), request.getSize());
+        return MyVisitHistoriesScrollResponse.of(scrollCollection);
     }
 
 }
