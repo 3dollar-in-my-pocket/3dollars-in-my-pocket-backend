@@ -1,8 +1,9 @@
 package com.depromeet.threedollar.domain.domain.store;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum PaymentMethodType {
 
     CASH("현금"),

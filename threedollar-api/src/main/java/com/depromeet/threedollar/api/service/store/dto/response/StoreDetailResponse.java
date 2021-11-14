@@ -67,9 +67,9 @@ public class StoreDetailResponse extends AuditingTimeResponse {
             .distance(LocationDistanceUtils.getDistance(store.getLatitude(), store.getLongitude(), latitude, longitude))
             .user(UserInfoResponse.of(user))
             .build();
-        response.categories.addAll(store.getMenuCategories());
-        response.appearanceDays.addAll(store.getAppearanceDaysType());
-        response.paymentMethods.addAll(store.getPaymentMethodsType());
+        response.categories.addAll(store.getMenuCategoriesSortedByCounts());
+        response.appearanceDays.addAll(store.getAppearanceDayTypes());
+        response.paymentMethods.addAll(store.getPaymentMethodTypes());
         response.images.addAll(toImageResponse(storeImages));
         response.menus.addAll(toMenuResponse(store.getMenus()));
         response.reviews.addAll(toReviewResponse(reviews));

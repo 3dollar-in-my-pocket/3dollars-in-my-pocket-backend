@@ -114,7 +114,7 @@ public class StoreRetrieveService {
             return nearStores;
         }
         return nearStores.stream()
-            .filter(store -> store.hasCategory(categoryType))
+            .filter(store -> store.hasMenuCategory(categoryType))
             .collect(Collectors.toList());
     }
 

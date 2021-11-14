@@ -25,7 +25,7 @@ class StoreTest {
             ));
 
             // when
-            List<MenuCategoryType> categories = store.getMenuCategories();
+            List<MenuCategoryType> categories = store.getMenuCategoriesSortedByCounts();
 
             // then
             assertThat(categories.get(0)).isEqualTo(MenuCategoryType.BUNGEOPPANG);
@@ -38,7 +38,7 @@ class StoreTest {
             Store store = StoreCreator.create(100L, "가게");
 
             // when
-            List<MenuCategoryType> categories = store.getMenuCategories();
+            List<MenuCategoryType> categories = store.getMenuCategoriesSortedByCounts();
 
             // then
             assertThat(categories).isEmpty();

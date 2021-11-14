@@ -21,7 +21,7 @@ data class StoreInfoResponse(
                 store.longitude,
                 store.name,
                 store.rating,
-                store.menuCategories
+                store.menuCategoriesSortedByCounts
             )
             response.setBaseTime(store)
             return response

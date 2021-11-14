@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class VisitHistoriesCountCollection {
+public final class VisitHistoriesCountCollection {
 
     private final Map<Long, Long> existsVisitsCount = new HashMap<>();
     private final Map<Long, Long> notExistsVisitsCount = new HashMap<>();

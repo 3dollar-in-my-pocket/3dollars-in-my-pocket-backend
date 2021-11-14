@@ -100,7 +100,7 @@ public class Store extends AuditingTimeEntity {
             .collect(Collectors.toSet()));
     }
 
-    private Set<PaymentMethodType> getPaymentMethodTypes() {
+    public Set<PaymentMethodType> getPaymentMethodTypes() {
         return this.paymentMethods.stream()
             .map(PaymentMethod::getMethod)
             .collect(Collectors.toSet());
@@ -113,20 +113,19 @@ public class Store extends AuditingTimeEntity {
     }
 
     private void addAppearanceDay(DayOfTheWeek dayOfTheWeek) {
-        AppearanceDay appearanceDay = AppearanceDay.of(this, dayOfTheWeek);
-        this.appearanceDays.add(appearanceDay);
+        this.appearanceDays.add(AppearanceDay.of(this, dayOfTheWeek));
     }
 
     public void updateAppearanceDays(Set<DayOfTheWeek> dayOfTheWeeks) {
         this.appearanceDays.removeIf(appearanceDay -> !dayOfTheWeeks.contains(appearanceDay.getDay()));
 
-        Set<DayOfTheWeek> hasDayOfTheWeek = getDayOfTheWeek();
+        Set<DayOfTheWeek> hasDayOfTheWeek = getAppearanceDayTypes();
         addAppearanceDays(dayOfTheWeeks.stream()
             .filter(day -> !hasDayOfTheWeek.contains(day))
             .collect(Collectors.toSet()));
     }
 
-    private Set<DayOfTheWeek> getDayOfTheWeek() {
+    public Set<DayOfTheWeek> getAppearanceDayTypes() {
         return this.appearanceDays.stream()
             .map(AppearanceDay::getDay)
             .collect(Collectors.toSet());
@@ -172,34 +171,24 @@ public class Store extends AuditingTimeEntity {
         return this.location.getLongitude();
     }
 
-    public List<MenuCategoryType> getMenuCategories() {
+    public List<MenuCategoryType> getMenuCategoriesSortedByCounts() {
         if (this.menus.isEmpty()) {
             return Collections.emptyList();
         }
-
-        Map<MenuCategoryType, Long> menusCounts = this.menus.stream()
-            .collect(Collectors.groupingBy(Menu::getCategory, Collectors.counting()));
-
-        return menusCounts.entrySet().stream()
+        Map<MenuCategoryType, Long> counts = getMenuCountsMap();
+        return counts.entrySet().stream()
             .sorted(Map.Entry.<MenuCategoryType, Long>comparingByValue().reversed())
             .map(Map.Entry::getKey)
             .collect(Collectors.toList());
     }
 
-    public Set<DayOfTheWeek> getAppearanceDaysType() {
-        return this.appearanceDays.stream()
-            .map(AppearanceDay::getDay)
-            .collect(Collectors.toSet());
+    private Map<MenuCategoryType, Long> getMenuCountsMap() {
+        return this.menus.stream()
+            .collect(Collectors.groupingBy(Menu::getCategory, Collectors.counting()));
     }
 
-    public Set<PaymentMethodType> getPaymentMethodsType() {
-        return this.paymentMethods.stream()
-            .map(PaymentMethod::getMethod)
-            .collect(Collectors.toSet());
-    }
-
-    public boolean hasCategory(MenuCategoryType category) {
-        return this.getMenuCategories().contains(category);
+    public boolean hasMenuCategory(MenuCategoryType category) {
+        return this.getMenuCategoriesSortedByCounts().contains(category);
     }
 
     public double getRating() {

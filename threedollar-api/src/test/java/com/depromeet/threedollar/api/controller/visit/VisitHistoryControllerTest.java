@@ -205,7 +205,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             assertAll(
                 () -> assertThat(response.getStoreId()).isEqualTo(store.getId()),
                 () -> assertThat(response.getStoreName()).isEqualTo(store.getName()),
-                () -> assertThat(response.getCategories()).isEqualTo(store.getMenuCategories())
+                () -> assertThat(response.getCategories()).isEqualTo(store.getMenuCategoriesSortedByCounts())
             );
         }
 

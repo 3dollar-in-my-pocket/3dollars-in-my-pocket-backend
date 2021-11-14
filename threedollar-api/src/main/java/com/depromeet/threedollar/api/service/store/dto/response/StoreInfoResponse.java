@@ -53,7 +53,7 @@ public class StoreInfoResponse extends AuditingTimeResponse {
             .existsVisitsCount(existsVisitsCount)
             .notExistsVisitsCount(notExistsVisitsCount)
             .build();
-        response.categories.addAll(store.getMenuCategories());
+        response.categories.addAll(store.getMenuCategoriesSortedByCounts());
         response.setBaseTime(store);
         return response;
     }
@@ -69,7 +69,7 @@ public class StoreInfoResponse extends AuditingTimeResponse {
             .existsVisitsCount(existsVisitsCount)
             .notExistsVisitsCount(notExistsVisitsCount)
             .build();
-        response.categories.addAll(store.getMenuCategories());
+        response.categories.addAll(store.getMenuCategoriesSortedByCounts());
         response.setBaseTime(store);
         return response;
     }
@@ -85,7 +85,7 @@ public class StoreInfoResponse extends AuditingTimeResponse {
             .existsVisitsCount(0)
             .notExistsVisitsCount(0)
             .build();
-        response.categories.addAll(store.getMenuCategories());
+        response.categories.addAll(store.getMenuCategoriesSortedByCounts());
         response.setBaseTime(store);
         return response;
     }

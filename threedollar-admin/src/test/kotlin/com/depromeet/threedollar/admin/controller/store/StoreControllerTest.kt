@@ -272,7 +272,7 @@ internal class StoreControllerTest(
     private fun assertStoreInfoResponse(storeInfoResponse: StoreInfoResponse, store: Store) {
         assertThat(storeInfoResponse.storeId).isEqualTo(store.id)
         assertThat(storeInfoResponse.storeName).isEqualTo(store.name)
-        assertThat(storeInfoResponse.categories).isEqualTo(store.menuCategories)
+        assertThat(storeInfoResponse.categories).isEqualTo(store.menuCategoriesSortedByCounts)
         assertThat(storeInfoResponse.latitude).isEqualTo(store.latitude)
         assertThat(storeInfoResponse.longitude).isEqualTo(store.longitude)
         assertThat(storeInfoResponse.rating).isEqualTo(store.rating)
