@@ -8,7 +8,6 @@ import com.depromeet.threedollar.api.service.visit.dto.response.MyVisitHistories
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithStoreResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.common.exception.ErrorCode;
-import com.depromeet.threedollar.domain.domain.menu.MenuRepository;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryCreator;
@@ -35,15 +34,11 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
     }
 
     @Autowired
-    private MenuRepository menuRepository;
-
-    @Autowired
     private VisitHistoryRepository visitHistoryRepository;
 
     @AfterEach
     void cleanUp() {
         visitHistoryRepository.deleteAllInBatch();
-        menuRepository.deleteAllInBatch();
         super.cleanup();
     }
 

@@ -7,10 +7,7 @@ import com.depromeet.threedollar.api.service.auth.dto.request.LoginRequest;
 import com.depromeet.threedollar.api.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.service.auth.dto.response.LoginResponse;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,6 +29,11 @@ class AuthControllerTest extends SetupUserControllerTest {
     @BeforeEach
     void setUp() {
         authMockApiCaller = new AuthMockApiCaller(mockMvc, objectMapper);
+    }
+
+    @AfterEach
+    void cleanUp() {
+        super.cleanup();
     }
 
     @DisplayName("POST /api/v2/signup")

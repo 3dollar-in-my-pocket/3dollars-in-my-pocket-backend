@@ -3,22 +3,26 @@ package com.depromeet.threedollar.api.service.review;
 import com.depromeet.threedollar.api.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
+import com.depromeet.threedollar.api.service.store.StoreRatingService;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.review.ReviewStatus;
-import com.depromeet.threedollar.domain.domain.store.Store;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 class ReviewServiceTest extends SetupStoreServiceTest {
@@ -28,6 +32,9 @@ class ReviewServiceTest extends SetupStoreServiceTest {
 
     @Autowired
     private ReviewRepository reviewRepository;
+
+    @MockBean
+    private StoreRatingService storeRatingService;
 
     @AfterEach
     void cleanUp() {
@@ -65,62 +72,15 @@ class ReviewServiceTest extends SetupStoreServiceTest {
         }
 
         @Test
-        void 가게_리뷰_등록_요청시_가게의_평균_리뷰_점수가_갱신된다1() {
+        void 리뷰_등록시_가게_평균_리뷰_점수_갱신_작업이_실행된다() {
             // given
-            String contents = "우와 맛있어요";
-            int rating = 4;
-
-            AddReviewRequest request = AddReviewRequest.testInstance(store.getId(), contents, rating);
+            AddReviewRequest request = AddReviewRequest.testInstance(store.getId(), "우와", 4);
 
             // when
             reviewService.addReview(request, userId);
 
             // then
-            List<Store> stores = storeRepository.findAll();
-            assertThat(stores).hasSize(1);
-            assertThat(stores.get(0).getRating()).isEqualTo(4.0);
-        }
-
-        @Test
-        void 가게_리뷰_등록_요청시_가게의_평균_리뷰_점수가_갱신된다2() {
-            // given
-            String contents = "우와 맛있어요";
-            int rating = 4;
-
-            reviewRepository.save(ReviewCreator.create(store.getId(), userId, "맛 없어요", 1));
-
-            // when
-            AddReviewRequest request = AddReviewRequest.testInstance(store.getId(), contents, rating);
-
-            // when
-            reviewService.addReview(request, userId);
-
-            // then
-            List<Store> stores = storeRepository.findAll();
-            assertThat(stores).hasSize(1);
-            assertThat(stores.get(0).getRating()).isEqualTo(2.5); // (4 + 1) / 2 = 2.5
-        }
-
-        @Test
-        void 가게_리뷰_등록_요청시_가게의_평균_리뷰_점수가_소수점_둘째자리에서_반올림되서_갱신된다() {
-            // given
-            String contents = "우와 맛있어요";
-            int rating = 3;
-
-            Review review1 = ReviewCreator.create(store.getId(), userId, "맛 없어요", 1);
-            Review review2 = ReviewCreator.create(store.getId(), userId, "맛 없어요", 4);
-            reviewRepository.saveAll(List.of(review1, review2));
-
-            // when
-            AddReviewRequest request = AddReviewRequest.testInstance(store.getId(), contents, rating);
-
-            // when
-            reviewService.addReview(request, userId);
-
-            // then
-            List<Store> stores = storeRepository.findAll();
-            assertThat(stores).hasSize(1);
-            assertThat(stores.get(0).getRating()).isEqualTo(2.7); // (1 + 3 + 4) / 3 = 2.66666 = 2.7
+            verify(storeRatingService, times(1)).renewStoreRating(any());
         }
 
     }
@@ -149,27 +109,6 @@ class ReviewServiceTest extends SetupStoreServiceTest {
         }
 
         @Test
-        void 가게_리뷰_수정_성공시_가게의_평균_리뷰_점수가_갱신된다() {
-            // given
-            String contents = "우와 맛있어요";
-            int rating = 4;
-
-            Review review = ReviewCreator.create(store.getId(), userId, "맛 없어요", 1);
-            reviewRepository.saveAll(List.of(ReviewCreator.create(store.getId(), userId, "맛 없어요", 2), review));
-
-            // when
-            UpdateReviewRequest request = UpdateReviewRequest.testInstance(contents, rating);
-
-            // when
-            reviewService.updateReview(review.getId(), request, userId);
-
-            // then
-            List<Store> stores = storeRepository.findAll();
-            assertThat(stores).hasSize(1);
-            assertThat(stores.get(0).getRating()).isEqualTo(3); // (2 + 4 / 2 = 3)
-        }
-
-        @Test
         void 가게_리뷰_수정_요청시_해당하는_리뷰가_존재하지_않으면_NOT_FOUND_REVIEW_EXCEPTION() {
             // given
             Long notFoundReviewId = -1L;
@@ -190,6 +129,22 @@ class ReviewServiceTest extends SetupStoreServiceTest {
 
             // when & then
             assertThatThrownBy(() -> reviewService.updateReview(review.getId(), request, userId)).isInstanceOf(NotFoundException.class);
+        }
+
+        @Test
+        void 리뷰_수정시_가게_평균_리뷰_점수_갱신_작업이_실행된다() {
+            // given
+            Review review = ReviewCreator.create(store.getId(), userId, "맛 없어요", 2);
+            reviewRepository.save(review);
+
+            // when
+            UpdateReviewRequest request = UpdateReviewRequest.testInstance("우와", 4);
+
+            // when
+            reviewService.updateReview(review.getId(), request, userId);
+
+            // then
+            verify(storeRatingService, times(1)).renewStoreRating(any());
         }
 
     }
@@ -213,37 +168,6 @@ class ReviewServiceTest extends SetupStoreServiceTest {
         }
 
         @Test
-        void 리뷰가_삭제되면_남은_리뷰들로_평균_리뷰점수가_계산된다() {
-            // given
-            Review remainReview = ReviewCreator.create(store.getId(), userId, "너무 맛있어요", 3);
-            Review deletedReview = ReviewCreator.create(store.getId(), userId, "너무 맛있어요", 5);
-            reviewRepository.saveAll(List.of(remainReview, deletedReview));
-
-            // when
-            reviewService.deleteReview(deletedReview.getId(), userId);
-
-            // then
-            List<Store> stores = storeRepository.findAll();
-            assertThat(stores).hasSize(1);
-            assertThat(stores.get(0).getRating()).isEqualTo(3);
-        }
-
-        @Test
-        void 가게_리뷰_삭제_성공시_가게_평균_리뷰_점수가_갱신되며_아무_리뷰가_없는경우_0점이_된다() {
-            // given
-            Review review = ReviewCreator.create(store.getId(), userId, "너무 맛있어요", 3);
-            reviewRepository.save(review);
-
-            // when
-            reviewService.deleteReview(review.getId(), userId);
-
-            // then
-            List<Store> stores = storeRepository.findAll();
-            assertThat(stores).hasSize(1);
-            assertThat(stores.get(0).getRating()).isEqualTo(0);
-        }
-
-        @Test
         void 가게_리뷰_삭제_요청시_해당하는_리뷰가_없을경우_NOT_FOUND_EXCEPTION() {
             // given
             Long notFoundReviewId = -1L;
@@ -261,6 +185,19 @@ class ReviewServiceTest extends SetupStoreServiceTest {
 
             // when & then
             assertThatThrownBy(() -> reviewService.deleteReview(review.getId(), notFoundUserId)).isInstanceOf(NotFoundException.class);
+        }
+
+        @Test
+        void 리뷰_수정시_ReviewChangeEvent_이벤트가_발생한다() {
+            // given
+            Review review = ReviewCreator.create(store.getId(), userId, "너무 맛있어요", 5);
+            reviewRepository.save(review);
+
+            // when
+            reviewService.deleteReview(review.getId(), userId);
+
+            // then
+            verify(storeRatingService, times(1)).renewStoreRating(any());
         }
 
     }
