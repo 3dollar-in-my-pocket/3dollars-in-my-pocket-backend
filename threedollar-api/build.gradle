@@ -23,9 +23,6 @@ dependencies {
     implementation("io.springfox:springfox-boot-starter:${swaggerVersion}")
     implementation("io.springfox:springfox-swagger-ui:${swaggerVersion}")
 
-    // spring boot admin client
-    implementation("de.codecentric:spring-boot-admin-starter-client:${springBootAdminVersion}")
-
     // sentry
     implementation("io.sentry:sentry-spring-boot-starter:${sentryVersion}")
     implementation("io.sentry:sentry-logback:${sentryVersion}")

@@ -1,0 +1,7 @@
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 4000
+        readTimeout: 4000
+        loggerLevel: BASIC
