@@ -85,5 +85,5 @@ spring:
       ddl-auto: none
   datasource:
     hikari:
-      maximum-pool-size: 20
+      maximum-pool-size: 25
 ---
