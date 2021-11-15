@@ -608,7 +608,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             storeRepository.saveAll(List.of(store1, store2, store3, store4));
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, store4.getId(), 4L, null, null);
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, store4.getId(), 4L, 34.0, null);
 
             // when
             ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
