@@ -71,7 +71,7 @@ class StoreServiceTest extends SetupUserServiceTest {
 
         @AutoSource
         @ParameterizedTest
-        void 가게_정보_등록_성공시_새로운_가게_데이터가_DB에_추가된다(String storeName, StoreType storeType) {
+        void 새로운_가게를_등록하면_새로운_가게_데이터가_추가된다(String storeName, StoreType storeType) {
             // given
             double latitude = 34.0;
             double longitude = 130.0;
@@ -97,7 +97,7 @@ class StoreServiceTest extends SetupUserServiceTest {
 
         @AutoSource
         @ParameterizedTest
-        void 가게_정보_등록_성공시_게시일_테이블에_새로운_게시일_정보도_추가된다(Set<DayOfTheWeek> appearanceDays) {
+        void 가게_등록시_개시일_데이터도_추가된다(Set<DayOfTheWeek> appearanceDays) {
             // given
             AddStoreRequest request = AddStoreRequest.testBuilder()
                 .latitude(34.0)
@@ -120,7 +120,7 @@ class StoreServiceTest extends SetupUserServiceTest {
 
         @AutoSource
         @ParameterizedTest
-        void 가게_정보_등록_성공시_결제방법_테이블에_결제_방법도_추가된다(Set<PaymentMethodType> paymentMethods) {
+        void 가게_등록시_결제방법_데이터도_추가된다(Set<PaymentMethodType> paymentMethods) {
             // given
             AddStoreRequest request = AddStoreRequest.testBuilder()
                 .latitude(34.0)
@@ -143,7 +143,7 @@ class StoreServiceTest extends SetupUserServiceTest {
 
         @AutoSource
         @ParameterizedTest
-        void 가게_정보_등록_성공시_메뉴_테이블에_메뉴들도_함께_추가된다(String menuName, String price, MenuCategoryType type) {
+        void 가게_등록시_메뉴_데이터도_추가된다(String menuName, String price, MenuCategoryType type) {
             // given
             Set<MenuRequest> menus = Set.of(MenuRequest.of(menuName, price, type));
 
@@ -168,7 +168,7 @@ class StoreServiceTest extends SetupUserServiceTest {
 
         @AutoSource
         @ParameterizedTest
-        void 가게_추가시_중복된_메뉴는_한개만_저장된다(String menuName, String price, MenuCategoryType type) {
+        void 가게_등록시_중복된_메뉴는_한개만_저장된다(String menuName, String price, MenuCategoryType type) {
             // given
             Set<MenuRequest> menus = new HashSet<>(List.of(
                 MenuRequest.of(menuName, price, type),
@@ -202,7 +202,7 @@ class StoreServiceTest extends SetupUserServiceTest {
 
         @AutoSource
         @ParameterizedTest
-        void 가게에_대한_정보를_수정한다(String storeName, StoreType storeType, Set<DayOfTheWeek> appearanceDays, Set<PaymentMethodType> paymentMethods) {
+        void 가게_정보를_수정하면_해당_가게_데이터가_수정된다(String storeName, StoreType storeType, Set<DayOfTheWeek> appearanceDays, Set<PaymentMethodType> paymentMethods) {
             // given
             Store store = StoreCreator.create(userId, "storeName");
             store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
@@ -240,7 +240,7 @@ class StoreServiceTest extends SetupUserServiceTest {
 
         @AutoSource
         @ParameterizedTest
-        void 가게의_메뉴정보를_수정한다(String menuName, String price, MenuCategoryType type) {
+        void 가게의_기본_정보를_수정한다(String menuName, String price, MenuCategoryType type) {
             // given
             Store store = StoreCreator.create(userId, "storeName");
             store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
@@ -362,7 +362,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         }
 
         @Test
-        void 가게_수정시_해당하는_가게가_존재하지_않으면_NOT_FOUND_STORE_EXCEPTION() {
+        void 존재하지_않는_가게를_수정시_NOT_FOUND_STORE_EXCEPTION() {
             // given
             Long notFoundStoreId = -1L;
 
@@ -381,7 +381,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         }
 
         @Test
-        void 사용자가_작성하지_않은_가게_정보도_수정할수있다_단_최초제보자가_가게_제보자로_유지된다() {
+        void 내가_등록하지_않은_가게도_수정할수있다_단_제보자는_최초_제보자로_유지된다() {
             // given
             Long creatorUserId = 100L;
 
@@ -496,7 +496,7 @@ class StoreServiceTest extends SetupUserServiceTest {
 
         @EnumSource
         @ParameterizedTest
-        void 해당_사용자가_해당하는_가게에_대해_이미_삭제요청_한경우_CONFLICT_EXCEPTION(DeleteReasonType reasonType) {
+        void 가게_삭제요청시_내가_이미_삭제요청한_가게인경우_CONFLICT_EXCEPTION(DeleteReasonType reasonType) {
             // given
             Store store = StoreCreator.create(userId, "storeName");
             storeRepository.save(store);

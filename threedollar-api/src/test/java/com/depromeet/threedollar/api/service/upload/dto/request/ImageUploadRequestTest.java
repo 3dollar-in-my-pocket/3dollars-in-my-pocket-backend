@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class ImageUploadRequestTest {
 
     @Test
-    void 이미지_타입에_해당하는_디렉터리에_UUID_파일명이_생성된다() {
+    void 이미지_타입에_해당하는_디렉터리에_유니크한_파일명이_생성된다() {
         // given
         String originalFileName = "image.png";
         ImageType type = ImageType.STORE;
