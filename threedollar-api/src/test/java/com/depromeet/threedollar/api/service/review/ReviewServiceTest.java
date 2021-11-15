@@ -1,9 +1,10 @@
 package com.depromeet.threedollar.api.service.review;
 
+import com.depromeet.threedollar.api.controller.store.StoreEventListener;
+import com.depromeet.threedollar.api.event.ReviewChangedEvent;
 import com.depromeet.threedollar.api.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
-import com.depromeet.threedollar.api.service.store.StoreRatingService;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
@@ -34,7 +35,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
     private ReviewRepository reviewRepository;
 
     @MockBean
-    private StoreRatingService storeRatingService;
+    private StoreEventListener storeEventListener;
 
     @AfterEach
     void cleanUp() {
@@ -80,7 +81,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             reviewService.addReview(request, userId);
 
             // then
-            verify(storeRatingService, times(1)).renewStoreRating(any());
+            verify(storeEventListener, times(1)).renewStoreRating(any(ReviewChangedEvent.class));
         }
 
     }
@@ -144,7 +145,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             reviewService.updateReview(review.getId(), request, userId);
 
             // then
-            verify(storeRatingService, times(1)).renewStoreRating(any());
+            verify(storeEventListener, times(1)).renewStoreRating(any(ReviewChangedEvent.class));
         }
 
     }
@@ -197,7 +198,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             reviewService.deleteReview(review.getId(), userId);
 
             // then
-            verify(storeRatingService, times(1)).renewStoreRating(any());
+            verify(storeEventListener, times(1)).renewStoreRating(any(ReviewChangedEvent.class));
         }
 
     }
