@@ -29,7 +29,7 @@ class StoreRatingServiceTest extends SetupStoreServiceTest {
     }
 
     @Test
-    void 가게의_평균점수를_갱신한다() {
+    void 가게에_작성된_리뷰로_가게의_평균점수를_갱신한다() {
         // given
         reviewRepository.saveAll(List.of(
             ReviewCreator.create(storeId, userId, "1점", 1),

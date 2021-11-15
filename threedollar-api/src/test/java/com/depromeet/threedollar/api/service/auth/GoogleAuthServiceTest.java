@@ -67,7 +67,7 @@ class GoogleAuthServiceTest {
         }
 
         @Test
-        void 구글_로그인_요청시_가입한_유저가_아니면_NOT_FOUND_USER_EXCEPTION() {
+        void 구글_로그인시_가입한_유저가_아니면_NotFound_에러가_발생한다() {
             // given
             LoginRequest request = LoginRequest.testInstance("token", socialType);
 
@@ -95,7 +95,7 @@ class GoogleAuthServiceTest {
         }
 
         @Test
-        void 구글_회원가입_요청시_이미_회원인경우_Conflict_Exception() {
+        void 구글_회원가입시_이미_가입한_유저면_Conflict_에러_발생() {
             // given
             userRepository.save(UserCreator.create(socialId, socialType, "헬로우"));
 

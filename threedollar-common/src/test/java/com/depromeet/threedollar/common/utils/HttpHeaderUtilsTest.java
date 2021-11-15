@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class HttpHeaderUtilsTest {
 
     @Test
-    void 토큰을_BEARER_토큰으로_변환() {
+    void 토큰을_BEARER_타입으로_변환한다() {
         // given
         String token = "token";
 

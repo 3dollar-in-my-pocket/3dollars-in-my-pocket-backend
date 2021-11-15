@@ -47,7 +47,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
     class 가게_리뷰_등록 {
 
         @Test
-        void 가게_리뷰_등록_시_새로운_리뷰_데이터가_추가된다() {
+        void 가게에_새로운_리뷰를_작성한다() {
             // given
             String contents = "우와 맛있어요";
             int rating = 4;
@@ -63,7 +63,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
         }
 
         @Test
-        void 가게_리뷰_등록_요청시_해당하는_가게가_없는경우_NOT_FOUND_STORE_EXCEPTION() {
+        void 없는_가게에_리뷰를_작성하면_NOT_FOUND_STORE_EXCEPTION() {
             // given
             Long notFoundStoreId = -1L;
             AddReviewRequest request = AddReviewRequest.testInstance(notFoundStoreId, "리뷰", 3);
@@ -73,7 +73,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
         }
 
         @Test
-        void 리뷰_등록시_가게_평균_리뷰_점수_갱신_작업이_실행된다() {
+        void 리뷰_등록시_가게의_평균_리뷰점수가_갱신된다() {
             // given
             AddReviewRequest request = AddReviewRequest.testInstance(store.getId(), "우와", 4);
 
@@ -90,7 +90,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
     class 가게_리뷰_수정 {
 
         @Test
-        void 가게_리뷰_수정_성공시_해당_리뷰_정보가_수정된다() {
+        void 가게에_사용자가_작성한_리뷰를_수정한다() {
             // given
             String contents = "우와 맛있어요";
             int rating = 4;
@@ -110,7 +110,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
         }
 
         @Test
-        void 가게_리뷰_수정_요청시_해당하는_리뷰가_존재하지_않으면_NOT_FOUND_REVIEW_EXCEPTION() {
+        void 없는_리뷰에_수정하려하면_NOT_FOUND_REVIEW_EXCEPTION() {
             // given
             Long notFoundReviewId = -1L;
             UpdateReviewRequest request = UpdateReviewRequest.testInstance("content", 5);
@@ -120,7 +120,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
         }
 
         @Test
-        void 가게_리뷰_수정_요청시_해당하는_리뷰가_사용자가_작성하지_않았을경우_NOT_FOUND_REVIEW_EXCEPTION() {
+        void 내가_작성하지_않은_리뷰를_수정하려하면_NOT_FOUND_REVIEW_EXCEPTION() {
             // given
             Long creatorId = 10000L;
             Review review = ReviewCreator.create(store.getId(), creatorId, "너무 맛있어요", 3);
@@ -133,7 +133,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
         }
 
         @Test
-        void 리뷰_수정시_가게_평균_리뷰_점수_갱신_작업이_실행된다() {
+        void 리뷰를_수정하면_가게의_평균_리뷰점수가_갱신된다() {
             // given
             Review review = ReviewCreator.create(store.getId(), userId, "맛 없어요", 2);
             reviewRepository.save(review);
@@ -154,7 +154,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
     class 가게_리뷰_삭제 {
 
         @Test
-        void 가게_리뷰_삭제_성공시_상태_필드가_DELETED로_수정된다() {
+        void 사용자가_작성한_가게_삭제시_DELETED로_변경된다() {
             // given
             Review review = ReviewCreator.create(store.getId(), userId, "너무 맛있어요", 3);
             reviewRepository.save(review);
@@ -169,7 +169,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
         }
 
         @Test
-        void 가게_리뷰_삭제_요청시_해당하는_리뷰가_없을경우_NOT_FOUND_EXCEPTION() {
+        void 없는_리뷰에_삭제요청시_NOT_FOUND_EXCEPTION() {
             // given
             Long notFoundReviewId = -1L;
 
@@ -178,7 +178,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
         }
 
         @Test
-        void 가게_리뷰_삭제_요청시_해당하는_리뷰가_사용자가_작성하지_않았을경우_NOT_FOUND_EXCEPTION() {
+        void 내가_작성하지_않은_리뷰에_삭제요청시_NOT_FOUND_EXCEPTION() {
             // given
             Long notFoundUserId = -1L;
             Review review = ReviewCreator.create(store.getId(), userId, "너무 맛있어요", 3);
@@ -189,7 +189,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
         }
 
         @Test
-        void 리뷰_수정시_ReviewChangeEvent_이벤트가_발생한다() {
+        void 리뷰를_삭제하면_가게의_평균_리뷰점수가_갱신된다() {
             // given
             Review review = ReviewCreator.create(store.getId(), userId, "너무 맛있어요", 5);
             reviewRepository.save(review);

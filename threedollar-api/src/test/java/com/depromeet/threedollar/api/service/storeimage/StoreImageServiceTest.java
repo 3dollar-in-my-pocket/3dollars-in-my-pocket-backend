@@ -47,7 +47,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
     class 가게_이미지_추가 {
 
         @Test
-        void 가게에_새로운_이미지를_추가한다_성공시_DB에_데이터가_추가된다() {
+        void 가게에_새로운_이미지를_등록한다() {
             // given
             AddStoreImageRequest request = AddStoreImageRequest.testInstance(store.getId());
 
@@ -61,7 +61,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
         }
 
         @Test
-        void 가게_이미지_등록_요청시_해당하는_가게가_없는경우_NOT_FOUND_STORE_EXCEPTION() {
+        void 존재하지_않는_가게에_이미지를_등록하면_NotFound_에러가_발생한다() {
             // given
             Long notFoundStoreId = -1L;
             AddStoreImageRequest request = AddStoreImageRequest.testInstance(notFoundStoreId);

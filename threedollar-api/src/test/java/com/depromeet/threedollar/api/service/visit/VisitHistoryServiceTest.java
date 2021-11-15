@@ -45,7 +45,7 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
 
         @EnumSource
         @ParameterizedTest
-        void 유저가_가게_방문_인증을_등록한다_성공시_DB에_가게_방문_기록이_저장된다(VisitType visitType) {
+        void 유저가_가게_방문_인증_정보를_추가한다(VisitType visitType) {
             // given
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(storeId, visitType);
 
@@ -61,7 +61,7 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
         }
 
         @Test
-        void 가게_방문_인증시_존재하지_않은_가게인경우_NotFoundException() {
+        void 존재하지_않는_가게에_방문_인증시_NotFound_에러가_발생한다() {
             // given
             Long notFoundStoreId = -1L;
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(notFoundStoreId, VisitType.EXISTS);
@@ -72,7 +72,7 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
 
         @EnumSource
         @ParameterizedTest
-        void 가게_방문_인증시_해당_유저가_오늘_이미_방문한_가게인경우_ConflictException(VisitType visitType) {
+        void 가게_방문_인증시_오늘_이미_방문인증한_가게면_Conflict_에러가_발생한다(VisitType visitType) {
             // given
             LocalDate dateOfVisit = LocalDate.now(); // TODO 날짜와 분리시켜서 테스트할 수 있도록 개선해야함
             visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, dateOfVisit));
