@@ -19,7 +19,7 @@ public class VisitHistoryInfoResponse {
     private VisitHistoryInfoResponse(long existsCounts, long notExistsCounts) {
         this.existsCounts = existsCounts;
         this.notExistsCounts = notExistsCounts;
-        this.isCertified = existsCounts > notExistsCounts;
+        this.isCertified = existsCounts > 0;
     }
 
     public static VisitHistoryInfoResponse of(long existsVisitsCount, long notExistsVisitsCount) {

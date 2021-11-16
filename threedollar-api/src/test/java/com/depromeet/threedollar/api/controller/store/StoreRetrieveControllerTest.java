@@ -742,7 +742,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             // then
             assertThat(response.getData().getContents()).hasSize(1);
-            assertVisitHistoryInfoResponse(response.getData().getContents().get(0).getVisitHistory(), 1, 2, false);
+            assertVisitHistoryInfoResponse(response.getData().getContents().get(0).getVisitHistory(), 1, 2, true);
         }
 
     }
