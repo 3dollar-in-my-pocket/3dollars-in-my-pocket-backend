@@ -97,8 +97,8 @@ class UserControllerTest extends SetupUserControllerTest {
             updateUserInfoApi(token, request)
                 .andDo(print())
                 .andExpect(status().isConflict())
-                .andExpect(jsonPath("$.resultCode").value(CONFLICT_EXCEPTION.getCode()))
-                .andExpect(jsonPath("$.message").value(CONFLICT_EXCEPTION.getMessage()))
+                .andExpect(jsonPath("$.resultCode").value(CONFLICT_NICKNAME_EXCEPTION.getCode()))
+                .andExpect(jsonPath("$.message").value(CONFLICT_NICKNAME_EXCEPTION.getMessage()))
                 .andExpect(jsonPath("$.data").isEmpty());
         }
 
@@ -154,8 +154,8 @@ class UserControllerTest extends SetupUserControllerTest {
             checkAvailableNickNameApi(request)
                 .andDo(print())
                 .andExpect(status().isConflict())
-                .andExpect(jsonPath("$.resultCode").value(CONFLICT_EXCEPTION.getCode()))
-                .andExpect(jsonPath("$.message").value(CONFLICT_EXCEPTION.getMessage()))
+                .andExpect(jsonPath("$.resultCode").value(CONFLICT_NICKNAME_EXCEPTION.getCode()))
+                .andExpect(jsonPath("$.message").value(CONFLICT_NICKNAME_EXCEPTION.getMessage()))
                 .andExpect(jsonPath("$.data").isEmpty());
         }
 

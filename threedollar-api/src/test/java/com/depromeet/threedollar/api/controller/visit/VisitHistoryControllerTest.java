@@ -73,8 +73,8 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
 
             // then
             assertAll(
-                () -> assertThat(response.getResultCode()).isEqualTo(ErrorCode.CONFLICT_EXCEPTION.getCode()),
-                () -> assertThat(response.getMessage()).isEqualTo(ErrorCode.CONFLICT_EXCEPTION.getMessage())
+                () -> assertThat(response.getResultCode()).isEqualTo(ErrorCode.CONFLICT_VISIT_HISTORY_EXCEPTION.getCode()),
+                () -> assertThat(response.getMessage()).isEqualTo(ErrorCode.CONFLICT_VISIT_HISTORY_EXCEPTION.getMessage())
             );
         }
 

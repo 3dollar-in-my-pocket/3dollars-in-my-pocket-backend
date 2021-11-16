@@ -48,9 +48,9 @@ public enum ErrorCode {
     // 409 Conflict
     CONFLICT_EXCEPTION(CONFLICT, OFF, "CF001", "이미 존재합니다"),
     CONFLICT_NICKNAME_EXCEPTION(CONFLICT, OFF, "CF002", "이미 사용중인 닉네임입니다.\n다른 닉네임을 이용해주세요"),
-    CONFLICT_USER_EXCEPTION(CONFLICT, OFF, "CF002", "이미 해당 계정으로 회원가입하셨습니다"),
+    CONFLICT_USER_EXCEPTION(CONFLICT, OFF, "CF003", "이미 해당 계정으로 회원가입하셨습니다"),
     CONFLICT_DELETE_REQUEST_STORE_EXCEPTION(CONFLICT, OFF, "CF004", "이미 삭제 요청을 한 가게입니다"),
-    CONFLICT_VISIT_HISTORY_EXCEPTION(CONFLICT, OFF, "CF002", "오늘 이미 방문 인증한 가게입니다.\n다음에 다시 인증해주세요"),
+    CONFLICT_VISIT_HISTORY_EXCEPTION(CONFLICT, OFF, "CF005", "오늘 이미 방문 인증한 가게입니다.\n다음에 다시 인증해주세요"),
 
     // 415 Unsupported Media Type
     UNSUPPORTED_MEDIA_TYPE_EXCEPTION(UNSUPPORTED_MEDIA_TYPE, OFF, "UM001", "해당하는 미디어 타입을 지원하지 않습니다"),
