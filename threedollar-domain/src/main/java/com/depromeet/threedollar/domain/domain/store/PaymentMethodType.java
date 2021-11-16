@@ -10,6 +10,6 @@ public enum PaymentMethodType {
     ACCOUNT_TRANSFER("계좌이체"),
     CARD("카드");
 
-    private final String paymentMethodType;
+    private final String description;
 
 }

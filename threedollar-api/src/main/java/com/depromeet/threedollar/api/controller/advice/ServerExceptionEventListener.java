@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.controller.advice;
 
-import com.depromeet.threedollar.api.event.ServerErrorOccuredEvent;
+import com.depromeet.threedollar.api.event.UnExpectedErrorOccurredEvent;
 import com.depromeet.threedollar.external.client.slack.SlackApiClient;
 import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest;
 import io.sentry.Sentry;
@@ -19,7 +19,7 @@ public class ServerExceptionEventListener {
 
     @Async
     @EventListener
-    public void sendErrorNotification(ServerErrorOccuredEvent event) {
+    public void sendErrorNotification(UnExpectedErrorOccurredEvent event) {
         Sentry.captureException(event.getException());
 
         slackApiCaller.postMessage(PostSlackMessageRequest.of(String.format(ERROR_MESSAGE_FORMAT,

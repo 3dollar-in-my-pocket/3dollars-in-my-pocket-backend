@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.controller.advice;
 
-import com.depromeet.threedollar.api.event.ServerErrorOccuredEvent;
+import com.depromeet.threedollar.api.event.UnExpectedErrorOccurredEvent;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.common.exception.ErrorCode;
 import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseException;
@@ -132,7 +132,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(ThreeDollarsBaseException.class)
     protected ResponseEntity<ApiResponse<Object>> handleBaseException(ThreeDollarsBaseException exception) {
         if (exception.isSetAlarm()) {
-            eventPublisher.publishEvent(createEvent(exception.getErrorCode(), exception));
+            eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(exception.getErrorCode(), exception));
         }
         log.error(exception.getMessage(), exception);
         return ResponseEntity.status(exception.getStatus())
@@ -146,12 +146,12 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(Exception.class)
     protected ApiResponse<Object> handleException(final Exception exception) {
         log.error(exception.getMessage(), exception);
-        eventPublisher.publishEvent(createEvent(INTERNAL_SERVER_EXCEPTION, exception));
+        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(INTERNAL_SERVER_EXCEPTION, exception));
         return ApiResponse.error(INTERNAL_SERVER_EXCEPTION);
     }
 
-    private ServerErrorOccuredEvent createEvent(ErrorCode errorCode, Exception exception) {
-        return ServerErrorOccuredEvent.error(errorCode, exception, LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+    private UnExpectedErrorOccurredEvent createUnExpectedErrorOccurredEvent(ErrorCode errorCode, Exception exception) {
+        return UnExpectedErrorOccurredEvent.error(errorCode, exception, LocalDateTime.now(ZoneId.of("Asia/Seoul")));
     }
 
 }

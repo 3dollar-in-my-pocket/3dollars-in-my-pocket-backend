@@ -12,7 +12,8 @@ import java.util.Comparator;
 public enum StoreOrderType {
 
     DISTANCE_ASC(Comparator.comparing(StoreInfoResponse::getDistance)),
-    REVIEW_DESC(Comparator.comparing(StoreInfoResponse::getRating).reversed());
+    REVIEW_DESC(Comparator.comparing(StoreInfoResponse::getRating).reversed()),
+    ;
 
     private final Comparator<StoreInfoResponse> sorted;
 

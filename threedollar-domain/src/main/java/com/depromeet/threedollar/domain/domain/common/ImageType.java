@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum ImageType {
 
-    STORE("store/v2/");
+    STORE("store/v2/"),
+    ;
 
     private final String directory;
 

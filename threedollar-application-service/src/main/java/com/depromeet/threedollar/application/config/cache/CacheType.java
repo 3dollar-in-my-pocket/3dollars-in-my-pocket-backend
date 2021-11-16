@@ -11,7 +11,6 @@ import java.time.Duration;
 public enum CacheType {
 
     FAQS(CacheKey.FAQS, Duration.ofHours(1)),
-    USER_STORES(CacheKey.USER_STORES, Duration.ofMinutes(5)),
     ;
 
     private final String key;
@@ -20,7 +19,6 @@ public enum CacheType {
     public static class CacheKey {
 
         public static final String FAQS = "FAQS";
-        public static final String USER_STORES = "USER_STORES";
 
     }
 

@@ -7,7 +7,7 @@ object MenuCategoryMapper {
 
     fun retrieveMenuCategories(): List<MenuCategoryResponse> {
         return MenuCategoryType.values().asSequence()
-            .filter { it.isViewed }
+            .filter { it.isVisible }
             .sortedBy { it.displayOrder }
             .map { MenuCategoryResponse.of(it) }
             .toList()

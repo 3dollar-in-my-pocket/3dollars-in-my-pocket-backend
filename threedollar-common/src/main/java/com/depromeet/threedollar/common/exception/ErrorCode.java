@@ -55,7 +55,7 @@ public enum ErrorCode {
     // 415 Unsupported Media Type
     UNSUPPORTED_MEDIA_TYPE_EXCEPTION(UNSUPPORTED_MEDIA_TYPE, OFF, "UM001", "해당하는 미디어 타입을 지원하지 않습니다"),
 
-    // 400 Internal Server Exception
+    // 500 Internal Server Exception
     INTERNAL_SERVER_EXCEPTION(INTERNAL_SERVER, ON, "IS001", "예상치 못한 서버 에러가 발생하였습니다.\n잠시 후 다시 시도해주세요!"),
 
     // 502 Bad Gateway

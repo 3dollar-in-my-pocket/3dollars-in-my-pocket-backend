@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class ServerErrorOccuredEvent {
+public class UnExpectedErrorOccurredEvent {
 
     private final ServerEventType type;
 
@@ -20,8 +20,8 @@ public class ServerErrorOccuredEvent {
 
     private final LocalDateTime timeStamp;
 
-    public static ServerErrorOccuredEvent error(ErrorCode errorCode, Exception exception, LocalDateTime timeStamp) {
-        return new ServerErrorOccuredEvent(ServerEventType.ERROR, errorCode, exception, timeStamp);
+    public static UnExpectedErrorOccurredEvent error(ErrorCode errorCode, Exception exception, LocalDateTime timeStamp) {
+        return new UnExpectedErrorOccurredEvent(ServerEventType.ERROR, errorCode, exception, timeStamp);
     }
 
 }
