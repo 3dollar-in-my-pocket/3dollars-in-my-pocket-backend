@@ -7,15 +7,14 @@ import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHi
 import com.depromeet.threedollar.api.service.visit.dto.response.MyVisitHistoriesScrollResponse;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithStoreResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.common.exception.ErrorCode;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
+import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
@@ -46,7 +45,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
     @Nested
     class AddVisitHistory {
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
         void 가게_방문_인증_등록시_성공시_200_OK(VisitType visitType) throws Exception {
             // given
@@ -58,40 +57,6 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData()).isEqualTo(ApiResponse.SUCCESS.getData())
-            );
-        }
-
-        @EnumSource
-        @ParameterizedTest
-        void 가게_방문_인증_등록시_이미_오늘_해당_가게에_방문_인증을_한경우_409에러_발생(VisitType visitType) throws Exception {
-            // given
-            visitHistoryRepository.save(VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.now()));
-            AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(store.getId(), visitType);
-
-            // when
-            ApiResponse<String> response = visitHistoryApiCaller.addVisitHistory(request, token, 409);
-
-            // then
-            assertAll(
-                () -> assertThat(response.getResultCode()).isEqualTo(ErrorCode.CONFLICT_VISIT_HISTORY_EXCEPTION.getCode()),
-                () -> assertThat(response.getMessage()).isEqualTo(ErrorCode.CONFLICT_VISIT_HISTORY_EXCEPTION.getMessage())
-            );
-        }
-
-        @EnumSource
-        @ParameterizedTest
-        void 가게_방문_인증시_존재하지_않는_가게라면_404_에러가_발생한다(VisitType visitType) throws Exception {
-            // given
-            Long notFoundStoreId = -1L;
-            AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(notFoundStoreId, visitType);
-
-            // when
-            ApiResponse<String> response = visitHistoryApiCaller.addVisitHistory(request, token, 404);
-
-            // then
-            assertAll(
-                () -> assertThat(response.getResultCode()).isEqualTo(ErrorCode.NOT_FOUND_STORE_EXCEPTION.getCode()),
-                () -> assertThat(response.getMessage()).isEqualTo(ErrorCode.NOT_FOUND_STORE_EXCEPTION.getMessage())
             );
         }
 

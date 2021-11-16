@@ -33,7 +33,6 @@ import com.depromeet.threedollar.domain.domain.visit.VisitType;
 import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
@@ -41,7 +40,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.depromeet.threedollar.common.exception.ErrorCode.NOT_FOUND_STORE_EXCEPTION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -206,7 +204,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34, 124, 1);
             store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", MenuCategoryType.DALGONA)));
 
-            Store store2 = StoreCreator.create(testUser.getId(), "가게1", 34,124, 1);
+            Store store2 = StoreCreator.create(testUser.getId(), "가게1", 34, 124, 1);
             store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", MenuCategoryType.BUNGEOPPANG)));
 
             storeRepository.saveAll(List.of(store1, store2));
@@ -542,21 +540,6 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             );
         }
 
-        @Test
-        void 가게_상세_조회시_존재하지_않는_가게인경우_404_NOT_FOUND() throws Exception {
-            // given
-            Long notFoundStoreId = -1L;
-            RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(notFoundStoreId, 34.0, 124.0);
-
-            // when
-            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 404);
-
-            // then
-            assertThat(response.getResultCode()).isEqualTo(NOT_FOUND_STORE_EXCEPTION.getCode());
-            assertThat(response.getMessage()).isEqualTo(NOT_FOUND_STORE_EXCEPTION.getMessage());
-            assertThat(response.getData()).isNull();
-        }
-
     }
 
     @DisplayName("GET /api/v2/stores/me")
@@ -751,7 +734,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
     @Nested
     class 가게_리스트_거리수_그룹화_조회 {
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
         void 특정_카테고리의_가게_리스트를_거리수를_그룹화해서_보여준다(MenuCategoryType menuCategoryType) throws Exception {
             // given
@@ -787,7 +770,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getStoreListOver1000()).isEmpty();
         }
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
         void 같은_그룹내에서_거리가_가까운_순서대로_조회된다(MenuCategoryType menuCategoryType) throws Exception {
             // given
@@ -846,7 +829,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getStoreListOver1000()).isEmpty();
         }
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
         void 삭제된_가게는_조회되지_않는다(MenuCategoryType menuCategoryType) throws Exception {
             // given
@@ -874,7 +857,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getStoreListOver1000()).isEmpty();
         }
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
         void 거리순으로_내_주변의_특정_카테고리_가게_조회시_방문_정보도_함께_조회된다(MenuCategoryType menuCategoryType) throws Exception {
             // given
@@ -905,7 +888,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
     @Nested
     class 가게_리스트_리뷰_평가_점수_그룹화_조회 {
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
         void 특정_카테고리의_가게_리스트를_리뷰_평가_점수로_그룹화해서_보여준다(MenuCategoryType menuCategoryType) throws Exception {
             // given
@@ -952,7 +935,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getStoreList4().get(1).getStoreId()).isEqualTo(store4.getId());
         }
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
         void 같은_그룹내에서_높은_리뷰부터_보여진다(MenuCategoryType menuCategoryType) throws Exception {
             // given
@@ -1014,7 +997,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getStoreList4()).isEmpty();
         }
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
         void 삭제된_가게는_조회되지_않는다(MenuCategoryType menuCategoryType) throws Exception {
             // given
@@ -1042,7 +1025,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getStoreList4()).isEmpty();
         }
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
         void 리뷰순으로_내_주변의_특정_카테고리_가게_조회시_방문_정보도_함께_조회된다(MenuCategoryType menuCategoryType) throws Exception {
             // given

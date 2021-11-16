@@ -9,7 +9,6 @@ import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoRespo
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.common.exception.ErrorCode;
 import com.depromeet.threedollar.domain.domain.menu.MenuRepository;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
@@ -22,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ReviewControllerTest extends SetupStoreControllerTest {
 
@@ -66,22 +64,6 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertReviewInfoResponse(response.getData(), store.getId(), request.getContents(), request.getRating());
         }
 
-        @Test
-        void 리뷰_등록시_가게가_없으면_404에러_발생() throws Exception {
-            // given
-            Long notFoundStoreId = -1L;
-            AddReviewRequest request = AddReviewRequest.testInstance(notFoundStoreId, "content", 5);
-
-            // when
-            ApiResponse<ReviewInfoResponse> response = reviewMockApiCaller.addStoreReview(request, token, 404);
-
-            // then
-            assertAll(
-                () -> assertThat(response.getResultCode()).isEqualTo(ErrorCode.NOT_FOUND_STORE_EXCEPTION.getCode()),
-                () -> assertThat(response.getMessage()).isEqualTo(ErrorCode.NOT_FOUND_STORE_EXCEPTION.getMessage())
-            );
-        }
-
     }
 
     @DisplayName("PUT /api/v2/store/review")
@@ -103,22 +85,6 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertReviewInfoResponse(response.getData(), store.getId(), request.getContents(), request.getRating());
         }
 
-        @Test
-        void 리뷰_수정시_해당하는_리뷰가_없으면_404에러_발생() throws Exception {
-            // given
-            Long notFoundReviewId = -1L;
-            UpdateReviewRequest request = UpdateReviewRequest.testInstance("맛이 없어졌어요", 1);
-
-            // when
-            ApiResponse<ReviewInfoResponse> response = reviewMockApiCaller.updateStoreReview(notFoundReviewId, request, token, 404);
-
-            // then
-            assertAll(
-                () -> assertThat(response.getResultCode()).isEqualTo(ErrorCode.NOT_FOUND_REVIEW_EXCEPTION.getCode()),
-                () -> assertThat(response.getMessage()).isEqualTo(ErrorCode.NOT_FOUND_REVIEW_EXCEPTION.getMessage())
-            );
-        }
-
     }
 
     @DisplayName("DELETE /api/v2/store/review")
@@ -136,21 +102,6 @@ class ReviewControllerTest extends SetupStoreControllerTest {
 
             // then
             assertThat(response.getData()).isEqualTo("OK");
-        }
-
-        @Test
-        void 자신이_작성한_리뷰를_삭제요청시_해당하는_리뷰가_없으면_404에러_발생() throws Exception {
-            // given
-            Long notFoundReviewId = -1L;
-
-            // when
-            ApiResponse<String> response = reviewMockApiCaller.deleteStoreReview(notFoundReviewId, token, 404);
-
-            // then
-            assertAll(
-                () -> assertThat(response.getResultCode()).isEqualTo(ErrorCode.NOT_FOUND_REVIEW_EXCEPTION.getCode()),
-                () -> assertThat(response.getMessage()).isEqualTo(ErrorCode.NOT_FOUND_REVIEW_EXCEPTION.getMessage())
-            );
         }
 
     }

@@ -168,7 +168,7 @@ class AuthControllerTest extends SetupUserControllerTest {
     class 로그아웃 {
 
         @Test
-        void 성공하면_200_OK() throws Exception {
+        void 로그아웃_성공시_200_OK() throws Exception {
             // when
             ApiResponse<String> response = authMockApiCaller.logout(token, 200);
 

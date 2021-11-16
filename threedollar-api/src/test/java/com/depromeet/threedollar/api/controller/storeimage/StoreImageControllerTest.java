@@ -10,13 +10,15 @@ import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImageRepository;
 import org.javaunit.autoparams.AutoSource;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-import static com.depromeet.threedollar.common.exception.ErrorCode.NOT_FOUND_STORE_IMAGE_EXCEPTION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -106,20 +108,6 @@ class StoreImageControllerTest extends SetupUserControllerTest {
             assertThat(response.getResultCode()).isEmpty();
             assertThat(response.getMessage()).isEmpty();
             assertThat(response.getData()).isEqualTo(ApiResponse.SUCCESS.getData());
-        }
-
-        @Test
-        void 가게_이미지_삭제요청시_해당하는_이미지가_없으면_404_NOTFOUND() throws Exception {
-            // given
-            Long notFoundImageId = -1L;
-
-            // when
-            ApiResponse<String> response = storeImageMockApiCaller.deleteStoreImage(notFoundImageId, token, 404);
-
-            // then
-            assertThat(response.getResultCode()).isEqualTo(NOT_FOUND_STORE_IMAGE_EXCEPTION.getCode());
-            assertThat(response.getMessage()).isEqualTo(NOT_FOUND_STORE_IMAGE_EXCEPTION.getMessage());
-            assertThat(response.getData()).isNull();
         }
 
     }

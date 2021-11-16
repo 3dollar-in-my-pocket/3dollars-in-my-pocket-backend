@@ -10,8 +10,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -85,38 +83,6 @@ class UserControllerTest extends SetupUserControllerTest {
                 .andExpect(jsonPath("$.data.socialType").value(testUser.getSocialType().name()));
         }
 
-        @Test
-        void 나의_회원정보_수정_요청시_닉네임이_중복되는경우_409_에러() throws Exception {
-            // given
-            String name = "디프만";
-            userRepository.save(UserCreator.create("social-social-id", UserSocialType.APPLE, name));
-
-            UpdateUserInfoRequest request = UpdateUserInfoRequest.testInstance(name);
-
-            // when & then
-            updateUserInfoApi(token, request)
-                .andDo(print())
-                .andExpect(status().isConflict())
-                .andExpect(jsonPath("$.resultCode").value(CONFLICT_NICKNAME_EXCEPTION.getCode()))
-                .andExpect(jsonPath("$.message").value(CONFLICT_NICKNAME_EXCEPTION.getMessage()))
-                .andExpect(jsonPath("$.data").isEmpty());
-        }
-
-        @Test
-        void 나의_회원정보_수정_요청시_잘못된_세션일경우_401_에러() throws Exception {
-            // given
-            String token = "Wrong Token";
-            UpdateUserInfoRequest request = UpdateUserInfoRequest.testInstance("디프만");
-
-            // when & then
-            updateUserInfoApi(token, request)
-                .andDo(print())
-                .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.resultCode").value(UNAUTHORIZED_EXCEPTION.getCode()))
-                .andExpect(jsonPath("$.message").value(UNAUTHORIZED_EXCEPTION.getMessage()))
-                .andExpect(jsonPath("$.data").isEmpty());
-        }
-
         private ResultActions updateUserInfoApi(String token, UpdateUserInfoRequest request) throws Exception {
             return mockMvc.perform(put("/api/v2/user/me")
                 .header(HttpHeaders.AUTHORIZATION, token)
@@ -130,9 +96,10 @@ class UserControllerTest extends SetupUserControllerTest {
     @Nested
     class 사용가능한_닉네임_체크 {
 
-        @ParameterizedTest
-        @ValueSource(strings = {"디프만", "강승호", "승호-강", "will"})
-        void 사용가능한_닉네임_확인_요청시_사용가능한_닉네임이면_200_OK(String name) throws Exception {
+        @Test
+        void 사용가능한_닉네임_확인_요청시_사용가능한_닉네임이면_200_OK() throws Exception {
+            String name = "붕어빵";
+
             // given
             CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
 
@@ -159,10 +126,10 @@ class UserControllerTest extends SetupUserControllerTest {
                 .andExpect(jsonPath("$.data").isEmpty());
         }
 
-        @ParameterizedTest
-        @ValueSource(strings = {"-a-", "a--", "디", "디#프만", "디+프만"})
-        void 사용가능한_닉네임_확인_요청시_허용되지_않은_닉네임인경우_400_에러(String name) throws Exception {
+        @Test
+        void 사용가능한_닉네임_확인_요청시_허용되지_않은_닉네임인경우_400_에러() throws Exception {
             // given
+            String name = "-a-";
             userRepository.save(UserCreator.create("social-social-id", UserSocialType.APPLE, name));
             CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
 

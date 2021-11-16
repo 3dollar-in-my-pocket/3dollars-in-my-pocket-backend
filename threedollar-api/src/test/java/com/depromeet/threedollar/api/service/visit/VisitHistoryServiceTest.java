@@ -8,12 +8,12 @@ import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
+import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -43,7 +43,7 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
     @Nested
     class AddStoreVisitHistory {
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
         void 유저가_가게_방문_인증_정보를_추가한다(VisitType visitType) {
             // given
@@ -70,7 +70,7 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
             assertThatThrownBy(() -> visitHistoryService.addVisitHistory(request, userId)).isInstanceOf(NotFoundException.class);
         }
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
         void 가게_방문_인증시_오늘_이미_방문인증한_가게면_Conflict_에러가_발생한다(VisitType visitType) {
             // given

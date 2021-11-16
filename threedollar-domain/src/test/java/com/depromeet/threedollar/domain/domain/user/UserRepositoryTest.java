@@ -33,8 +33,8 @@ class UserRepositoryTest {
         assertThat(result).isEqualTo(2);
     }
 
-    @ParameterizedTest
     @MethodSource("source_date")
+    @ParameterizedTest
     void 특정_날짜에_회원가입한_유저의_카운트를_조회한다(LocalDate startDate, LocalDate endDate, long expectedCount) {
         // given
         User user1 = UserCreator.create("social-id1", UserSocialType.APPLE, "유저 1");

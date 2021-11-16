@@ -7,7 +7,6 @@ import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.application.mapper.faq.dto.response.FaqCategoryResponse
 import com.depromeet.threedollar.application.service.faq.dto.request.RetrieveFaqsRequest
 import com.depromeet.threedollar.application.service.faq.dto.response.FaqResponse
-import com.depromeet.threedollar.common.exception.ErrorCode.*
 import com.depromeet.threedollar.domain.domain.faq.FaqCategory
 import com.depromeet.threedollar.domain.domain.faq.FaqCreator
 import com.depromeet.threedollar.domain.domain.faq.FaqRepository
@@ -65,28 +64,6 @@ internal class FaqAdminControllerTest(
                 }
         }
 
-        @Test
-        fun 잘못된_토큰인경우_401에러() {
-            // given
-            val request = AddFaqRequest("카테고리 질문", "카테고리 답변", FaqCategory.CATEGORY)
-
-            // when & then
-            mockMvc.post("/admin/v1/faq") {
-                contentType = MediaType.APPLICATION_JSON
-                content = objectMapper.writeValueAsString(request)
-            }
-                .andDo {
-                    print()
-                }
-                .andExpect {
-                    status { isUnauthorized() }
-                    content {
-                        jsonPath("$.resultCode") { value(UNAUTHORIZED_EXCEPTION.code) }
-                        jsonPath("$.message") { value(UNAUTHORIZED_EXCEPTION.message) }
-                    }
-                }
-        }
-
     }
 
     @DisplayName("PUT /admin/v1/faq")
@@ -120,30 +97,6 @@ internal class FaqAdminControllerTest(
                 }
         }
 
-        @Test
-        fun FAQ_수정시_존재하지_않는_FAQ인경우_404_NotFound() {
-            // given
-            val notFoundFaqId = -1L;
-            val request = UpdateFaqRequest("카테고리 질문", "카테고리 답변", FaqCategory.CATEGORY)
-
-            // when & then
-            mockMvc.put("/admin/v1/faq/${notFoundFaqId}") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
-                contentType = MediaType.APPLICATION_JSON
-                content = objectMapper.writeValueAsString(request)
-            }
-                .andDo {
-                    print()
-                }
-                .andExpect {
-                    status { isNotFound() }
-                    content {
-                        jsonPath("$.resultCode") { value(NOT_FOUND_FAQ_EXCEPTION.code) }
-                        jsonPath("$.message") { value(NOT_FOUND_FAQ_EXCEPTION.message) }
-                    }
-                }
-        }
-
     }
 
     @DisplayName("DELETE /admin/v1/faq")
@@ -166,27 +119,6 @@ internal class FaqAdminControllerTest(
                     status { isOk() }
                     content {
                         jsonPath("$.data") { value(ApiResponse.SUCCESS.data) }
-                    }
-                }
-        }
-
-        @Test
-        fun FAQ_삭제시_존재하지_않는_FAQ인경우_404_NotFound() {
-            // given
-            val notFoundFaqId = -1L
-
-            // when & then
-            mockMvc.delete("/admin/v1/faq/${notFoundFaqId}") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
-            }
-                .andDo {
-                    print()
-                }
-                .andExpect {
-                    status { isNotFound() }
-                    content {
-                        jsonPath("$.resultCode") { value(NOT_FOUND_FAQ_EXCEPTION.code) }
-                        jsonPath("$.message") { value(NOT_FOUND_FAQ_EXCEPTION.message) }
                     }
                 }
         }

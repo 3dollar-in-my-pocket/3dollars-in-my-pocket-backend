@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -97,7 +96,7 @@ class StoreServiceTest extends SetupUserServiceTest {
 
         @AutoSource
         @ParameterizedTest
-        void 가게_등록시_개시일_데이터도_추가된다(Set<DayOfTheWeek> appearanceDays) {
+        void 가게_등록시_개장일_데이터도_추가된다(Set<DayOfTheWeek> appearanceDays) {
             // given
             AddStoreRequest request = AddStoreRequest.testBuilder()
                 .latitude(34.0)
@@ -418,7 +417,7 @@ class StoreServiceTest extends SetupUserServiceTest {
     @Nested
     class 가게_삭제_요청 {
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
         void 삭제_요청이_1개_쌓이면_실제로_가게정보가_삭제되지_않는다(DeleteReasonType deleteReasonType) {
             // given
@@ -440,7 +439,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             assertThat(response.getIsDeleted()).isFalse();
         }
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
         void 삭제_요청이_2개_쌓이면_실제로_가게정보가_삭제되지_않는다(DeleteReasonType deleteReasonType) {
             // given
@@ -465,7 +464,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             assertThat(response.getIsDeleted()).isFalse();
         }
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
         void 삭제_요청이_3개_쌓이면_실제로_가게정보가_실제로_삭제된다(DeleteReasonType deleteReasonType) {
             // given
@@ -494,7 +493,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             assertThat(response.getIsDeleted()).isTrue();
         }
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
         void 가게_삭제요청시_내가_이미_삭제요청한_가게인경우_CONFLICT_EXCEPTION(DeleteReasonType reasonType) {
             // given

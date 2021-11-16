@@ -22,13 +22,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Set;
 
-import static com.depromeet.threedollar.common.exception.ErrorCode.NOT_FOUND_STORE_EXCEPTION;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class StoreControllerTest extends SetupUserControllerTest {
@@ -135,7 +133,7 @@ class StoreControllerTest extends SetupUserControllerTest {
     @Nested
     class 가게_정보_삭제 {
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
         void 가게_삭제_요청시_실제로_삭제되지_않으면_False를_반환한다(DeleteReasonType deleteReasonType) throws Exception {
             // given
@@ -151,7 +149,7 @@ class StoreControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getIsDeleted()).isFalse();
         }
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
         void 가게_삭제_요청시_실제로_삭제되면_True를_반환한다(DeleteReasonType deleteReasonType) throws Exception {
             // given
@@ -170,22 +168,6 @@ class StoreControllerTest extends SetupUserControllerTest {
 
             // then
             assertThat(response.getData().getIsDeleted()).isTrue();
-        }
-
-        @EnumSource
-        @ParameterizedTest
-        void 가게_삭제_요청시_존재하지_않는_가게인경우_404_NOT_FOUND(DeleteReasonType deleteReasonType) throws Exception {
-            // given
-            Long notFoundStoreId = -1L;
-            DeleteStoreRequest request = DeleteStoreRequest.testInstance(deleteReasonType);
-
-            // when
-            ApiResponse<StoreDeleteResponse> response = storeMockApiCaller.deleteStore(notFoundStoreId, request, token, 404);
-
-            // then
-            assertThat(response.getResultCode()).isEqualTo(NOT_FOUND_STORE_EXCEPTION.getCode());
-            assertThat(response.getMessage()).isEqualTo(NOT_FOUND_STORE_EXCEPTION.getMessage());
-            assertThat(response.getData()).isNull();
         }
 
     }

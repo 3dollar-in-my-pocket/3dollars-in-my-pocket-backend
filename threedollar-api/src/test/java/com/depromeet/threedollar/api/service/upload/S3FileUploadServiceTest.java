@@ -27,7 +27,7 @@ class S3FileUploadServiceTest {
     private AmazonS3Service amazonS3Service;
 
     @Test
-    void 이미지_업로드시_S3로_업로드된다() {
+    void 이미지_업로드시_S3로_업로드되고_해당_URL을_가져온다() {
         // given
         String fileName = "fileName.jpeg";
         MultipartFile multipartFile = new MockMultipartFile(fileName, fileName, "image/jpeg", new byte[]{});
