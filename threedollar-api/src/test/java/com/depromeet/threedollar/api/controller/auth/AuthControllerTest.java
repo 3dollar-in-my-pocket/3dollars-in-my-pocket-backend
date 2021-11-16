@@ -1,11 +1,13 @@
 package com.depromeet.threedollar.api.controller.auth;
 
-import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
-import com.depromeet.threedollar.api.service.auth.AuthService;
+import com.depromeet.threedollar.api.service.auth.AppleAuthService;
+import com.depromeet.threedollar.api.service.auth.GoogleAuthService;
+import com.depromeet.threedollar.api.service.auth.KaKaoAuthService;
 import com.depromeet.threedollar.api.service.auth.dto.request.LoginRequest;
 import com.depromeet.threedollar.api.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.service.auth.dto.response.LoginResponse;
+import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -17,14 +19,14 @@ class AuthControllerTest extends SetupUserControllerTest {
 
     private AuthMockApiCaller authMockApiCaller;
 
-    @MockBean(name = "kaKaoAuthService")
-    private AuthService kaKaoAuthService;
+    @MockBean
+    private KaKaoAuthService kaKaoAuthService;
 
-    @MockBean(name = "appleAuthService")
-    private AuthService appleAuthService;
+    @MockBean
+    private AppleAuthService appleAuthService;
 
-    @MockBean(name = "googleAuthService")
-    private AuthService googleAuthService;
+    @MockBean
+    private GoogleAuthService googleAuthService;
 
     @BeforeEach
     void setUp() {
