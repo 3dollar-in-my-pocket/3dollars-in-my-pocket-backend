@@ -46,24 +46,6 @@ class StoreRatingServiceTest extends SetupStoreServiceTest {
     }
 
     @Test
-    void 가게의_평균점수를_갱신시_소수점_둘째자리에서_반올림된다() {
-        // given
-        reviewRepository.saveAll(List.of(
-            ReviewCreator.create(storeId, userId, "1점", 1),
-            ReviewCreator.create(storeId, userId, "3점", 3),
-            ReviewCreator.create(storeId, userId, "4점", 4)
-        ));
-
-        // when
-        storeRatingService.renewStoreRating(store);
-
-        // then
-        List<Store> stores = storeRepository.findAll();
-        assertThat(stores).hasSize(1);
-        assertThat(stores.get(0).getRating()).isEqualTo(2.7); // (1 + 3 + 4) / 3 = 2.677
-    }
-
-    @Test
     void 아무런_리뷰가_없는경우_평균점수는_0점이_된다() {
         // when
         storeRatingService.renewStoreRating(store);

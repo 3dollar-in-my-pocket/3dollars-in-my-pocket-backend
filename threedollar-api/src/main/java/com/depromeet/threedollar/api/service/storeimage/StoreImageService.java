@@ -25,19 +25,20 @@ public class StoreImageService {
     private final StoreImageRepository storeImageRepository;
     private final UploadService uploadService;
 
-    public List<StoreImageResponse> addStoreImages(AddStoreImageRequest request, List<MultipartFile> images, Long userId) {
+    public List<StoreImageResponse> addStoreImages(AddStoreImageRequest request, List<MultipartFile> imageFiles, Long userId) {
         StoreServiceUtils.validateExistsStore(storeRepository, request.getStoreId());
-        List<StoreImage> storeImages = storeImageRepository.saveAll(images.stream()
-            .map(image -> addStoreImage(request, image, userId))
-            .collect(Collectors.toList()));
-        return storeImages.stream()
+        List<StoreImage> storeImages = imageFiles.stream()
+            .map(this::uploadImage)
+            .map(imageUrl -> request.toEntity(userId, imageUrl))
+            .collect(Collectors.toList());
+
+        return storeImageRepository.saveAll(storeImages).stream()
             .map(StoreImageResponse::of)
             .collect(Collectors.toList());
     }
 
-    private StoreImage addStoreImage(AddStoreImageRequest request, MultipartFile image, Long userId) {
-        String imageUrl = uploadService.uploadFile(ImageUploadRequest.of(ImageType.STORE), image);
-        return StoreImage.newInstance(request.getStoreId(), userId, imageUrl);
+    private String uploadImage(MultipartFile imageFile) {
+        return uploadService.uploadFile(ImageUploadRequest.of(ImageType.STORE), imageFile);
     }
 
     @Transactional
@@ -50,8 +51,7 @@ public class StoreImageService {
     @Transactional(readOnly = true)
     public List<StoreImageResponse> retrieveStoreImages(Long storeId) {
         StoreServiceUtils.validateExistsStore(storeRepository, storeId);
-        List<StoreImage> storeImages = storeImageRepository.findAllByStoreId(storeId);
-        return storeImages.stream()
+        return storeImageRepository.findAllByStoreId(storeId).stream()
             .map(StoreImageResponse::of)
             .collect(Collectors.toList());
     }

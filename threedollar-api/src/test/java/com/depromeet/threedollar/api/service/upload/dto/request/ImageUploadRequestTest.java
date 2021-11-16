@@ -34,7 +34,7 @@ class ImageUploadRequestTest {
         ImageUploadRequest request = ImageUploadRequest.of(ImageType.STORE);
 
         // when & then
-        assertThatThrownBy(() -> request.validate(contentType)).isInstanceOf(ValidationException.class);
+        assertThatThrownBy(() -> request.validateAvailableFileType(contentType)).isInstanceOf(ValidationException.class);
     }
 
     @NullAndEmptySource
@@ -44,7 +44,7 @@ class ImageUploadRequestTest {
         ImageUploadRequest request = ImageUploadRequest.of(ImageType.STORE);
 
         // when & then
-        assertThatThrownBy(() -> request.validate(contentType)).isInstanceOf(ValidationException.class);
+        assertThatThrownBy(() -> request.validateAvailableFileType(contentType)).isInstanceOf(ValidationException.class);
     }
 
     @ValueSource(strings = {"image/jpeg", "image/png"})
@@ -54,7 +54,7 @@ class ImageUploadRequestTest {
         ImageUploadRequest request = ImageUploadRequest.of(ImageType.STORE);
 
         // when & then
-        request.validate(contentType);
+        request.validateAvailableFileType(contentType);
     }
 
 }

@@ -15,10 +15,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 class UserServiceTest {
@@ -176,7 +176,7 @@ class UserServiceTest {
 
             List<WithdrawalUser> withdrawalUsers = withdrawalUserRepository.findAll();
             assertThat(withdrawalUsers).hasSize(1);
-            assertWithdrawalUser(withdrawalUsers.get(0), user.getId(), name, socialId, socialType, user.getCreatedAt());
+            assertWithdrawalUser(withdrawalUsers.get(0), user);
         }
 
         @DisplayName("회원탈퇴시 다른 유저에게 영향을 주지 않는다")
@@ -208,12 +208,11 @@ class UserServiceTest {
 
     }
 
-    private void assertWithdrawalUser(WithdrawalUser withdrawalUser, Long userId, String name, String socialId, UserSocialType socialType, LocalDateTime userCreatedAt) {
-        assertThat(withdrawalUser.getUserId()).isEqualTo(userId);
-        assertThat(withdrawalUser.getName()).isEqualTo(name);
-        assertThat(withdrawalUser.getSocialInfo().getSocialId()).isEqualTo(socialId);
-        assertThat(withdrawalUser.getSocialInfo().getSocialType()).isEqualTo(socialType);
-        assertThat(withdrawalUser.getUserCreatedAt()).isEqualTo(userCreatedAt);
+    private void assertWithdrawalUser(WithdrawalUser withdrawalUser, User user) {
+        assertThat(withdrawalUser.getUserId()).isEqualTo(user.getId());
+        assertThat(withdrawalUser.getName()).isEqualTo(user.getName());
+        assertThat(withdrawalUser.getSocialInfo()).isEqualTo(user.getSocialInfo());
+        assertThat(withdrawalUser.getUserCreatedAt()).isEqualTo(user.getCreatedAt());
     }
 
     private void assertUserInfo(User user, String socialId, UserSocialType type, String name) {

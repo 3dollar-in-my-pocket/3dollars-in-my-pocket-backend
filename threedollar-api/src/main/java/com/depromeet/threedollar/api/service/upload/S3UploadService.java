@@ -21,9 +21,9 @@ public class S3UploadService implements UploadService {
 
     @Override
     public String uploadFile(UploadRequest request, MultipartFile file) {
-        request.validate(file.getContentType());
-        final String fileName = request.createFileName(file.getOriginalFilename());
+        request.validateAvailableFileType(file.getContentType());
 
+        String fileName = request.createFileName(file.getOriginalFilename());
         try (InputStream inputStream = file.getInputStream()) {
             s3Service.uploadFile(inputStream, createObjectMetadata(file), fileName);
         } catch (IOException e) {

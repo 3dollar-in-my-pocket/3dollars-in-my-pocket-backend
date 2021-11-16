@@ -153,7 +153,7 @@ public class Store extends AuditingTimeEntity {
     }
 
     public void updateAverageRating(double average) {
-        this.rating = average;
+        this.rating = MathUtils.round(average, 1);
     }
 
     public void delete() {
@@ -185,7 +185,13 @@ public class Store extends AuditingTimeEntity {
     }
 
     public boolean hasMenuCategory(MenuCategoryType category) {
-        return this.getMenuCategoriesSortedByCounts().contains(category);
+        return this.getMenuCategoryTypes().contains(category);
+    }
+
+    private List<MenuCategoryType> getMenuCategoryTypes() {
+        return this.menus.stream()
+            .map(Menu::getCategory)
+            .collect(Collectors.toList());
     }
 
     public double getRating() {
