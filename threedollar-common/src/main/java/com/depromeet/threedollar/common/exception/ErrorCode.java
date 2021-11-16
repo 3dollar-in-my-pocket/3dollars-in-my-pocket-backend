@@ -19,7 +19,7 @@ public enum ErrorCode {
     VALIDATION_FILE_TYPE_EXCEPTION(BAD_REQUEST, OFF, "BR005", "허용되지 않은 파일 형식입니다"),
     VALIDATION_APPLE_TOKEN_EXCEPTION(BAD_REQUEST, OFF, "BR006", "잘못된 애플 토큰입니다"),
     VALIDATION_APPLE_TOKEN_EXPIRED_EXCEPTION(BAD_REQUEST, OFF, "BR007", "만료된 애플 토큰입니다"),
-    VALIDATION_SOCIAL_TYPE_EXCEPTION(BAD_REQUEST, OFF, "BR008", "잘못된 소셜 타입 입니다."),
+    VALIDATION_SOCIAL_TYPE_EXCEPTION(BAD_REQUEST, OFF, "BR008", "잘못된 소셜 프로바이더 입니다."),
     VALIDATION_FILE_UPLOAD_EXCEPTION(BAD_REQUEST, OFF, "BR009", "파일 업로드 중 에러가 발생하였습니다"),
     VALIDATION_ENUM_VALUE_EXCEPTION(BAD_REQUEST, OFF, "BR010", "잘못된 Enum 값 입니다"),
     VALIDATION_REQUEST_MISSING_EXCEPTION(BAD_REQUEST, OFF, "BR011", "필수적인 요청 값이 입력되지 않았습니다"),
@@ -47,18 +47,22 @@ public enum ErrorCode {
 
     // 409 Conflict
     CONFLICT_EXCEPTION(CONFLICT, OFF, "CF001", "이미 존재합니다"),
+    CONFLICT_NICKNAME_EXCEPTION(CONFLICT, OFF, "CF002", "이미 사용중인 닉네임입니다.\n다른 닉네임을 이용해주세요"),
+    CONFLICT_USER_EXCEPTION(CONFLICT, OFF, "CF002", "이미 해당 계정으로 회원가입하셨습니다"),
+    CONFLICT_DELETE_REQUEST_STORE_EXCEPTION(CONFLICT, OFF, "CF004", "이미 삭제 요청을 한 가게입니다"),
+    CONFLICT_VISIT_HISTORY_EXCEPTION(CONFLICT, OFF, "CF002", "오늘 이미 방문 인증한 가게입니다.\n다음에 다시 인증해주세요"),
 
     // 415 Unsupported Media Type
     UNSUPPORTED_MEDIA_TYPE_EXCEPTION(UNSUPPORTED_MEDIA_TYPE, OFF, "UM001", "해당하는 미디어 타입을 지원하지 않습니다"),
 
     // 400 Internal Server Exception
-    INTERNAL_SERVER_EXCEPTION(INTERNAL_SERVER, ON, "IS001", "서버 내부에서 에러가 발생하였습니다"),
+    INTERNAL_SERVER_EXCEPTION(INTERNAL_SERVER, ON, "IS001", "예상치 못한 서버 에러가 발생하였습니다.\n잠시 후 다시 시도해주세요!"),
 
     // 502 Bad Gateway
-    BAD_GATEWAY_EXCEPTION(BAD_GATEWAY, ON, "BG001", "외부 연동 중 에러가 발생하였습니다"),
+    BAD_GATEWAY_EXCEPTION(BAD_GATEWAY, ON, "BG001", "외부 연동 중 일시적인 에러가 발생하였습니다.\n잠시 후 다시 시도해주세요!"),
 
     // 503 Service UnAvailable
-    SERVICE_UNAVAILABLE_EXCEPTION(SERVICE_UNAVAILABLE, OFF, "SU001", "서비스를 이용하실 수 없습니다"),
+    SERVICE_UNAVAILABLE_EXCEPTION(SERVICE_UNAVAILABLE, OFF, "SU001", "현재 서버 점검 중입니다.\n잠시 후 다시 시도해주세요!"),
     ;
 
     private final ErrorStatusCode statusCode;

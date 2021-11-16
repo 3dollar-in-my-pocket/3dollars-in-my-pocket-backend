@@ -286,6 +286,23 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertUserInfoResponse(response.getData().getContents().get(0).getUser(), testUser.getId(), testUser.getName(), testUser.getSocialType());
         }
 
+        @Test
+        void 삭제된_리뷰는_조회되지_않는다() throws Exception {
+            // given
+            Review review = ReviewCreator.createDeleted(store.getId(), testUser.getId(), "너무 맛있어요", 5);
+            reviewRepository.save(review);
+
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null, null);
+
+            // when
+            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyStoreReviews(request, token, 200);
+
+            // then
+            assertThat(response.getData().getTotalElements()).isEqualTo(0);
+            assertThat(response.getData().getNextCursor()).isEqualTo(-1);
+            assertThat(response.getData().getContents()).isEmpty();
+        }
+
     }
 
     private void assertUserInfoResponse(UserInfoResponse user, Long id, String name, UserSocialType socialType) {

@@ -32,8 +32,7 @@ class ReviewStaticsRepositoryTest(
         @Test
         fun 삭제된_리뷰는_전체_리뷰수에서_제외된다() {
             // given
-            val review = ReviewCreator.create(1L, 100L, "리뷰 1", 5)
-            review.delete()
+            val review = ReviewCreator.createDeleted(1L, 100L, "리뷰 1", 5)
             reviewRepository.save(review)
 
             // when
