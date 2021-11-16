@@ -157,8 +157,8 @@ class StoreControllerTest extends SetupUserControllerTest {
             storeRepository.save(store);
 
             storeDeleteRequestRepository.saveAll(List.of(
-                StoreDeleteRequestCreator.create(store.getId(), 10L, DeleteReasonType.NOSTORE),
-                StoreDeleteRequestCreator.create(store.getId(), 11L, DeleteReasonType.NOSTORE)
+                StoreDeleteRequestCreator.create(store.getId(), 1000L, DeleteReasonType.NOSTORE),
+                StoreDeleteRequestCreator.create(store.getId(), 1001L, DeleteReasonType.NOSTORE)
             ));
 
             DeleteStoreRequest request = DeleteStoreRequest.testInstance(deleteReasonType);
