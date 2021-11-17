@@ -19,7 +19,6 @@ import javax.annotation.PreDestroy;
 import java.io.IOException;
 
 import static com.depromeet.threedollar.common.utils.ProcessUtils.findAvailableRandomPort;
-import static com.depromeet.threedollar.common.utils.ProcessUtils.isRunningPort;
 
 @Slf4j
 @Profile({"local", "local-will"})
@@ -34,12 +33,10 @@ public class EmbeddedS3Config {
 
     public EmbeddedS3Config(
         @Value("${cloud.aws.region.static}") String region,
-        @Value("${cloud.aws.s3.bucket}") String bucket,
-        @Value("${cloud.aws.s3.mock.port}") int port
+        @Value("${cloud.aws.s3.bucket}") String bucket
     ) {
         this.region = region;
         this.bucket = bucket;
-        this.port = port;
     }
 
     @Bean
@@ -52,7 +49,7 @@ public class EmbeddedS3Config {
 
     @PostConstruct
     public void startS3Mock() throws IOException {
-        port = isRunningPort(port) ? findAvailableRandomPort() : port;
+        port = findAvailableRandomPort();
         this.s3Mock().start();
         log.info("인메모리 S3 Mock 서버가 시작됩니다. port: {}", port);
     }

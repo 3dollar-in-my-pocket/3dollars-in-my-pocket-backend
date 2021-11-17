@@ -4,12 +4,6 @@ dependencies {
     // Spring MVC
     implementation("org.springframework.boot:spring-boot-starter-web")
 
-    // Spring Security
-    implementation("org.springframework.boot:spring-boot-starter-security")
-
     // Spring Session Redis
     implementation("org.springframework.session:spring-session-data-redis")
-
-    // spring boot admin server
-    implementation("de.codecentric:spring-boot-admin-starter-server:${springBootAdminVersion}")
 }

@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
@@ -22,7 +21,7 @@ import static com.depromeet.threedollar.common.utils.ProcessUtils.isRunningPort;
  */
 @Slf4j
 @RequiredArgsConstructor
-@Profile({"local", "local-will"})
+@Profile("local")
 @Configuration
 public class EmbeddedRedisConfig {
 
@@ -49,7 +48,6 @@ public class EmbeddedRedisConfig {
     }
 
     @Bean
-    @Primary
     public RedisConnectionFactory embeddedRedisConnectionFactory() {
         return new LettuceConnectionFactory(properties.getHost(), port);
     }

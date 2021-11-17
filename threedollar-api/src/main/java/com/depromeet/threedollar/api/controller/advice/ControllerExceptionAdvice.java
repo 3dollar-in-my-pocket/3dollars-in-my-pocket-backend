@@ -1,20 +1,24 @@
 package com.depromeet.threedollar.api.controller.advice;
 
-import com.depromeet.threedollar.api.event.ServerErrorOccuredEvent;
+import com.depromeet.threedollar.api.event.UnExpectedErrorOccurredEvent;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.common.exception.*;
+import com.depromeet.threedollar.common.exception.ErrorCode;
 import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeException;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
-import org.springframework.web.bind.*;
+import org.springframework.web.bind.MissingRequestValueException;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -34,20 +38,55 @@ public class ControllerExceptionAdvice {
 
     /**
      * 400 BadRequest
-     * 잘못된 입력이 들어왔을 경우 발생하는 Exception
+     * Spring Validation
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException.class)
     protected ApiResponse<Object> handleBadRequest(final BindException e) {
         log.error(e.getMessage());
-        return ApiResponse.error(VALIDATION_EXCEPTION, Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage());
+        FieldError fieldError = Objects.requireNonNull(e.getFieldError());
+        return ApiResponse.error(VALIDATION_EXCEPTION, String.format("%s (%s)", fieldError.getDefaultMessage(), fieldError.getField()));
     }
 
+    /**
+     * 400 BadRequest
+     * 잘못된 Enum 값이 입된 경우 발생하는 Exception
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    protected ApiResponse<Object> handleHttpMessageNotReadableException(final HttpMessageNotReadableException e) {
+        log.error(e.getMessage());
+        return ApiResponse.error(VALIDATION_ENUM_VALUE_EXCEPTION);
+    }
+
+    /**
+     * 400 BadRequest
+     * RequestParam, RequestPath, RequestPart 등의 필드가 입력되지 않은 경우 발생하는 Exception
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MissingRequestValueException.class)
+    protected ApiResponse<Object> handle(final MissingRequestValueException e) {
+        log.error(e.getMessage());
+        return ApiResponse.error(VALIDATION_REQUEST_MISSING_EXCEPTION);
+    }
+
+    /**
+     * 400 BadRequest
+     * 잘못된 타입이 입력된 경우 발생하는 Exception
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(TypeMismatchException.class)
+    protected ApiResponse<Object> handleTypeMismatchException(final TypeMismatchException e) {
+        log.error(e.getMessage());
+        return ApiResponse.error(VALIDATION_WRONG_TYPE_EXCEPTION, String.format("%s (%s)", VALIDATION_WRONG_TYPE_EXCEPTION.getMessage(), e.getValue()));
+    }
+
+    /**
+     * 400 BadRequest
+     */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({
-        HttpMessageNotReadableException.class,
         InvalidFormatException.class,
-        MissingRequestValueException.class,
         ServletRequestBindingException.class
     })
     protected ApiResponse<Object> handleInvalidFormatException(final Exception e) {
@@ -67,6 +106,16 @@ public class ControllerExceptionAdvice {
     }
 
     /**
+     * 406 Not Acceptable
+     */
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
+    protected ApiResponse<Object> handleHttpMediaTypeNotAcceptableException(HttpMediaTypeNotAcceptableException e) {
+        log.error(e.getMessage());
+        return ApiResponse.error(NOT_ACCEPTABLE_EXCEPTION);
+    }
+
+    /**
      * 415 UnSupported Media Type
      * 지원하지 않는 미디어 타입인 경우 발생하는 Exception
      */
@@ -74,7 +123,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(HttpMediaTypeException.class)
     protected ApiResponse<Object> handleHttpMediaTypeException(final HttpMediaTypeException e) {
         log.error(e.getMessage(), e);
-        return ApiResponse.error(UNSUPPORTED_MEDIA_TYPE);
+        return ApiResponse.error(UNSUPPORTED_MEDIA_TYPE_EXCEPTION);
     }
 
     /**
@@ -83,7 +132,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(ThreeDollarsBaseException.class)
     protected ResponseEntity<ApiResponse<Object>> handleBaseException(ThreeDollarsBaseException exception) {
         if (exception.isSetAlarm()) {
-            eventPublisher.publishEvent(createEvent(exception.getErrorCode(), exception));
+            eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(exception.getErrorCode(), exception));
         }
         log.error(exception.getMessage(), exception);
         return ResponseEntity.status(exception.getStatus())
@@ -97,12 +146,12 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(Exception.class)
     protected ApiResponse<Object> handleException(final Exception exception) {
         log.error(exception.getMessage(), exception);
-        eventPublisher.publishEvent(createEvent(INTERNAL_SERVER_EXCEPTION, exception));
+        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(INTERNAL_SERVER_EXCEPTION, exception));
         return ApiResponse.error(INTERNAL_SERVER_EXCEPTION);
     }
 
-    private ServerErrorOccuredEvent createEvent(ErrorCode errorCode, Exception exception) {
-        return ServerErrorOccuredEvent.error(errorCode, exception, LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+    private UnExpectedErrorOccurredEvent createUnExpectedErrorOccurredEvent(ErrorCode errorCode, Exception exception) {
+        return UnExpectedErrorOccurredEvent.error(errorCode, exception, LocalDateTime.now(ZoneId.of("Asia/Seoul")));
     }
 
 }

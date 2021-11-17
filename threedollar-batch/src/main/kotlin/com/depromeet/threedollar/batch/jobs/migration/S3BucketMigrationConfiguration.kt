@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.batch.jobs.migration
 
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
-import com.depromeet.threedollar.domain.domain.store.StoreImageRepository
+import com.depromeet.threedollar.domain.domain.storeimage.StoreImageRepository
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory

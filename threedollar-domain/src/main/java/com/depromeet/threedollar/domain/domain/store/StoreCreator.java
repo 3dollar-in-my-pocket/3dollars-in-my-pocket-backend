@@ -26,6 +26,16 @@ public class StoreCreator {
             .build();
     }
 
+    public static Store create(Long userId, String storeName, StoreType storeType, double latitude, double longitude) {
+        return Store.builder()
+            .userId(userId)
+            .name(storeName)
+            .type(storeType)
+            .latitude(latitude)
+            .longitude(longitude)
+            .build();
+    }
+
     public static Store create(Long userId, String storeName, double latitude, double longitude, double rating) {
         return Store.builder()
             .userId(userId)

@@ -14,8 +14,8 @@ class AddReviewRequestTest {
 
     private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
-    @ParameterizedTest
     @ValueSource(ints = {0, 6})
+    @ParameterizedTest
     void 리뷰_평가가_1점_미만_혹은_5점_초과이면_유효성_검사가_실패한다(int rating) {
         // given
         Long storeId = 100L;
@@ -30,8 +30,8 @@ class AddReviewRequestTest {
         assertThat(constraintViolations).isNotEmpty();
     }
 
-    @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4, 5})
+    @ParameterizedTest
     void 리뷰_평가가_1점_이상_5점_이하이면_유효성_검사를_통과한다(int rating) {
         // given
         Long storeId = 100L;

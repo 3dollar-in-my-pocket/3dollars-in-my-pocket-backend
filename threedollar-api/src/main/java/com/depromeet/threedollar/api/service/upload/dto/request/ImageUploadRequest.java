@@ -27,7 +27,7 @@ public class ImageUploadRequest implements UploadRequest {
     }
 
     @Override
-    public void validate(String contentType) {
+    public void validateAvailableFileType(String contentType) {
         if (contentType != null && contentType.contains(SEPARATOR) && contentType.split(SEPARATOR)[0].equals(IMAGE_CONTENT_TYPE_TYPE)) {
             return;
         }

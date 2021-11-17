@@ -39,7 +39,7 @@ public class Store extends AuditingTimeEntity {
     @Column(nullable = false, length = 300)
     private String name;
 
-    @Column(nullable = false, length = 30)
+    @Column(length = 30)
     @Enumerated(EnumType.STRING)
     private StoreType type;
 
@@ -100,7 +100,7 @@ public class Store extends AuditingTimeEntity {
             .collect(Collectors.toSet()));
     }
 
-    private Set<PaymentMethodType> getPaymentMethodTypes() {
+    public Set<PaymentMethodType> getPaymentMethodTypes() {
         return this.paymentMethods.stream()
             .map(PaymentMethod::getMethod)
             .collect(Collectors.toSet());
@@ -113,20 +113,19 @@ public class Store extends AuditingTimeEntity {
     }
 
     private void addAppearanceDay(DayOfTheWeek dayOfTheWeek) {
-        AppearanceDay appearanceDay = AppearanceDay.of(this, dayOfTheWeek);
-        this.appearanceDays.add(appearanceDay);
+        this.appearanceDays.add(AppearanceDay.of(this, dayOfTheWeek));
     }
 
     public void updateAppearanceDays(Set<DayOfTheWeek> dayOfTheWeeks) {
         this.appearanceDays.removeIf(appearanceDay -> !dayOfTheWeeks.contains(appearanceDay.getDay()));
 
-        Set<DayOfTheWeek> hasDayOfTheWeek = getDayOfTheWeek();
+        Set<DayOfTheWeek> hasDayOfTheWeek = getAppearanceDayTypes();
         addAppearanceDays(dayOfTheWeeks.stream()
             .filter(day -> !hasDayOfTheWeek.contains(day))
             .collect(Collectors.toSet()));
     }
 
-    private Set<DayOfTheWeek> getDayOfTheWeek() {
+    public Set<DayOfTheWeek> getAppearanceDayTypes() {
         return this.appearanceDays.stream()
             .map(AppearanceDay::getDay)
             .collect(Collectors.toSet());
@@ -147,17 +146,14 @@ public class Store extends AuditingTimeEntity {
         addMenus(menus);
     }
 
-    public void updateLocation(double latitude, double longitude) {
+    public void updateInfo(String name, StoreType type, double latitude, double longitude) {
+        this.name = name;
+        this.type = type;
         this.location = Location.of(latitude, longitude);
     }
 
-    public void updateInfo(String name, StoreType type) {
-        this.name = name;
-        this.type = type;
-    }
-
     public void updateAverageRating(double average) {
-        this.rating = average;
+        this.rating = MathUtils.round(average, 1);
     }
 
     public void delete() {
@@ -172,34 +168,30 @@ public class Store extends AuditingTimeEntity {
         return this.location.getLongitude();
     }
 
-    public List<MenuCategoryType> getMenuCategories() {
+    public List<MenuCategoryType> getMenuCategoriesSortedByCounts() {
         if (this.menus.isEmpty()) {
             return Collections.emptyList();
         }
-
-        Map<MenuCategoryType, Long> menusCounts = this.menus.stream()
-            .collect(Collectors.groupingBy(Menu::getCategory, Collectors.counting()));
-
-        return menusCounts.entrySet().stream()
+        Map<MenuCategoryType, Long> counts = getMenuCountsMap();
+        return counts.entrySet().stream()
             .sorted(Map.Entry.<MenuCategoryType, Long>comparingByValue().reversed())
             .map(Map.Entry::getKey)
             .collect(Collectors.toList());
     }
 
-    public Set<DayOfTheWeek> getAppearanceDaysType() {
-        return this.appearanceDays.stream()
-            .map(AppearanceDay::getDay)
-            .collect(Collectors.toSet());
+    private Map<MenuCategoryType, Long> getMenuCountsMap() {
+        return this.menus.stream()
+            .collect(Collectors.groupingBy(Menu::getCategory, Collectors.counting()));
     }
 
-    public Set<PaymentMethodType> getPaymentMethodsType() {
-        return this.paymentMethods.stream()
-            .map(PaymentMethod::getMethod)
-            .collect(Collectors.toSet());
+    public boolean hasMenuCategory(MenuCategoryType category) {
+        return this.getMenuCategoryTypes().contains(category);
     }
 
-    public boolean hasCategory(MenuCategoryType category) {
-        return this.getMenuCategories().contains(category);
+    private List<MenuCategoryType> getMenuCategoryTypes() {
+        return this.menus.stream()
+            .map(Menu::getCategory)
+            .collect(Collectors.toList());
     }
 
     public double getRating() {

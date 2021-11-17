@@ -10,6 +10,7 @@ import com.depromeet.threedollar.application.service.faq.FaqService
 import com.depromeet.threedollar.application.service.faq.dto.request.RetrieveFaqsRequest
 import com.depromeet.threedollar.application.service.faq.dto.response.FaqResponse
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 class FaqAdminController(
@@ -19,7 +20,7 @@ class FaqAdminController(
 
     @PostMapping("/admin/v1/faq")
     fun addFaq(
-        @RequestBody request: AddFaqRequest
+        @Valid @RequestBody request: AddFaqRequest
     ): ApiResponse<FaqResponse> {
         return ApiResponse.success(faqAdminService.addFaq(request))
     }
@@ -27,7 +28,7 @@ class FaqAdminController(
     @PutMapping("/admin/v1/faq/{faqId}")
     fun updateFaq(
         @PathVariable faqId: Long,
-        @RequestBody request: UpdateFaqRequest
+        @Valid @RequestBody request: UpdateFaqRequest
     ): ApiResponse<FaqResponse> {
         return ApiResponse.success(faqAdminService.updateFaq(faqId, request))
     }
@@ -42,12 +43,12 @@ class FaqAdminController(
 
     @GetMapping("/admin/v1/faqs")
     fun retrieveFaqs(
-        request: RetrieveFaqsRequest
+        @Valid request: RetrieveFaqsRequest
     ): ApiResponse<List<FaqResponse>> {
         return ApiResponse.success(faqService.retrieveAllFaqs(request))
     }
 
-    @GetMapping("/admin/v1/faq-categories")
+    @GetMapping("/admin/v1/faq/categories")
     fun retrieveFaqCategories(): ApiResponse<List<FaqCategoryResponse>> {
         return ApiResponse.success(FaqCategoryMapper.retrieveAllFaqCategories())
     }

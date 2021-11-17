@@ -2,6 +2,7 @@ package com.depromeet.threedollar.api.service.review;
 
 import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsRequest;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
+import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
 import com.depromeet.threedollar.domain.domain.store.Store;
@@ -24,28 +25,13 @@ public class ReviewRetrieveService {
 
     @Transactional(readOnly = true)
     public ReviewScrollResponse retrieveMyReviews(RetrieveMyReviewsRequest request, Long userId) {
-        List<ReviewWithWriterProjection> currentAndNextScrollReviews =
-            reviewRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
-        Map<Long, Store> cachedStores = findStoreMaps(currentAndNextScrollReviews);
-
-        if (currentAndNextScrollReviews.size() <= request.getSize()) {
-            return ReviewScrollResponse.newLastScroll(
-                currentAndNextScrollReviews,
-                Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> reviewRepository.findCountsByUserId(userId)),
-                cachedStores
-            );
-        }
-
-        List<ReviewWithWriterProjection> currentScrollReviews = currentAndNextScrollReviews.subList(0, request.getSize());
-        return ReviewScrollResponse.of(
-            currentScrollReviews,
-            Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> reviewRepository.findCountsByUserId(userId)),
-            cachedStores,
-            currentScrollReviews.get(request.getSize() - 1).getReviewId()
-        );
+        List<ReviewWithWriterProjection> reviewsWithNextCursor = reviewRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
+        ScrollPaginationCollection<ReviewWithWriterProjection> scrollCollection = ScrollPaginationCollection.of(reviewsWithNextCursor, request.getSize());
+        return ReviewScrollResponse.of(scrollCollection, findStoresByReviews(scrollCollection.getItemsInCurrentScroll()),
+            Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> reviewRepository.findCountsByUserId(userId)));
     }
 
-    private Map<Long, Store> findStoreMaps(List<ReviewWithWriterProjection> reviews) {
+    private Map<Long, Store> findStoresByReviews(List<ReviewWithWriterProjection> reviews) {
         List<Long> storeIds = reviews.stream()
             .map(ReviewWithWriterProjection::getStoreId)
             .collect(Collectors.toList());

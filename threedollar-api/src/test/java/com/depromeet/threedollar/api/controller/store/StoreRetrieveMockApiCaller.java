@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.controller.store;
 
 import com.depromeet.threedollar.api.service.store.dto.response.*;
+import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.controller.MockMvcUtils;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStoresRequest;
@@ -32,7 +33,9 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
             .param("longitude", String.valueOf(request.getLongitude()))
             .param("mapLatitude", String.valueOf(request.getMapLatitude()))
             .param("mapLongitude", String.valueOf(request.getMapLongitude()))
-            .param("distance", String.valueOf(request.getDistance()));
+            .param("distance", String.valueOf(request.getDistance() * 1000))
+            .param("category", request.getCategory() == null ? null : String.valueOf(request.getCategory()))
+            .param("orderType", request.getOrderType() == null ? String.valueOf(StoreOrderType.DISTANCE_ASC) : String.valueOf(request.getOrderType()));
 
         return objectMapper.readValue(
             mockMvc.perform(builder)
@@ -49,22 +52,9 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         MockHttpServletRequestBuilder builder = get("/api/v2/store")
             .param("latitude", String.valueOf(request.getLatitude()))
             .param("longitude", String.valueOf(request.getLongitude()))
-            .param("storeId", String.valueOf(request.getStoreId()));
-
-        return objectMapper.readValue(
-            mockMvc.perform(builder)
-                .andExpect(status().is(expectedStatus))
-                .andDo(print())
-                .andReturn()
-                .getResponse()
-                .getContentAsString(StandardCharsets.UTF_8), new TypeReference<>() {
-            }
-        );
-    }
-
-    public ApiResponse<List<StoreImageResponse>> retrieveStoreImages(Long storeId, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = get("/api/v2/store/" + storeId + "/images")
-            .param("storeId", String.valueOf(storeId));
+            .param("storeId", String.valueOf(request.getStoreId()))
+            .param("startDate", request.getStartDate() == null ? null : String.valueOf(request.getStartDate()))
+            .param("endDate", request.getEndDate() == null ? null : String.valueOf(request.getEndDate()));
 
         return objectMapper.readValue(
             mockMvc.perform(builder)
@@ -83,8 +73,8 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
             .param("size", String.valueOf(request.getSize()))
             .param("cursor", request.getCursor() == null ? null : String.valueOf(request.getCursor()))
             .param("cachingTotalElements", request.getCachingTotalElements() == null ? null : String.valueOf(request.getCachingTotalElements()))
-            .param("latitude", String.valueOf(request.getLatitude()))
-            .param("longitude", String.valueOf(request.getLongitude()));
+            .param("latitude", request.getLatitude() == null ? null : String.valueOf(request.getLatitude()))
+            .param("longitude", request.getLongitude() == null ? null : String.valueOf(request.getLongitude()));
 
         return objectMapper.readValue(
             mockMvc.perform(builder)

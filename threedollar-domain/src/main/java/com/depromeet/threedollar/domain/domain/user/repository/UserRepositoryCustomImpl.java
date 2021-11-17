@@ -7,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.LockModeType;
 
-import java.time.LocalDate;
-
 import static com.depromeet.threedollar.domain.domain.user.QUser.user;
 
 @RequiredArgsConstructor

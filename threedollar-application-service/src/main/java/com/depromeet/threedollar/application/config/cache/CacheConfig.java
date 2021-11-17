@@ -27,7 +27,14 @@ public class CacheConfig {
     private final ObjectMapper objectMapper;
 
     @Bean
-    public RedisCacheConfiguration defaultCacheConfiguration() {
+    public RedisCacheManager redisCacheManager() {
+        return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory)
+            .cacheDefaults(defaultCacheConfiguration())
+            .withInitialCacheConfigurations(customCacheConfiguration())
+            .build();
+    }
+
+    private RedisCacheConfiguration defaultCacheConfiguration() {
         return RedisCacheConfiguration.defaultCacheConfig()
             .disableCachingNullValues()
             .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
@@ -35,8 +42,7 @@ public class CacheConfig {
             .entryTtl(DEFAULT_CACHE_DURATION);
     }
 
-    @Bean
-    public Map<String, RedisCacheConfiguration> customCacheConfiguration() {
+    private Map<String, RedisCacheConfiguration> customCacheConfiguration() {
         Map<String, RedisCacheConfiguration> customCachePolicies = new HashMap<>();
         for (CacheType constants : CacheType.values()) {
             customCachePolicies.put(constants.getKey(), RedisCacheConfiguration.defaultCacheConfig()
@@ -46,14 +52,6 @@ public class CacheConfig {
                 .entryTtl(constants.getDuration()));
         }
         return customCachePolicies;
-    }
-
-    @Bean
-    public RedisCacheManager redisCacheManager() {
-        return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory)
-            .cacheDefaults(defaultCacheConfiguration())
-            .withInitialCacheConfigurations(customCacheConfiguration())
-            .build();
     }
 
 }

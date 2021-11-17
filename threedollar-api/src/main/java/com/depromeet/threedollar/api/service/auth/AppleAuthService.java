@@ -22,13 +22,13 @@ public class AppleAuthService implements AuthService {
 
     @Override
     public Long signUp(SignUpRequest request) {
-        String socialId = appleTokenDecoder.getUserIdFromToken(request.getToken());
+        String socialId = appleTokenDecoder.getSocialIdFromIdToken(request.getToken());
         return userService.createUser(request.toCreateUserRequest(socialId));
     }
 
     @Override
     public Long login(LoginRequest request) {
-        String socialId = appleTokenDecoder.getUserIdFromToken(request.getToken());
+        String socialId = appleTokenDecoder.getSocialIdFromIdToken(request.getToken());
         return UserServiceUtils.findUserBySocialIdAndSocialType(userRepository, socialId, socialType).getId();
     }
 

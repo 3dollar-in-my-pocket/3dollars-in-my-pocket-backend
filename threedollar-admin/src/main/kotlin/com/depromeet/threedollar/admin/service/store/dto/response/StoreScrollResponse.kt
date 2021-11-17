@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.admin.service.store.dto.response
 
+import com.depromeet.threedollar.common.collection.ScrollPaginationCollection
 import com.depromeet.threedollar.domain.domain.store.Store
 
 data class StoreScrollResponse(
@@ -8,13 +9,23 @@ data class StoreScrollResponse(
 ) {
 
     companion object {
-        fun of(stores: List<Store>, nextCursor: Long): StoreScrollResponse {
+        private const val LAST_CURSOR = -1L
+
+        fun of(scrollCollection: ScrollPaginationCollection<Store>): StoreScrollResponse {
+            if (scrollCollection.isLastScroll) {
+                return newLastScroll(scrollCollection.itemsInCurrentScroll)
+            }
+            return newScrollHasNext(scrollCollection.itemsInCurrentScroll, scrollCollection.nextCursor.id)
+        }
+
+        private fun newLastScroll(stores: List<Store>): StoreScrollResponse {
+            return newScrollHasNext(stores, LAST_CURSOR)
+        }
+
+        private fun newScrollHasNext(stores: List<Store>, nextCursor: Long): StoreScrollResponse {
             return StoreScrollResponse(stores.map { StoreInfoResponse.of(it) }, nextCursor)
         }
 
-        fun lastCursor(stores: List<Store>): StoreScrollResponse {
-            return of(stores, -1L)
-        }
     }
 
 }

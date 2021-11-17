@@ -12,6 +12,7 @@ import com.querydsl.core.types.OrderSpecifier;
  * By default, if a GROUP BY clause is present, the rows in the output will be sorted by the expressions used in the GROUP BY.
  * If you want the rows to be sorted by another field, you can add an explicit ORDER BY. If you don't want the result to be ordered, you can add ORDER BY NULL.
  */
+@SuppressWarnings("unchecked")
 public class OrderByNull extends OrderSpecifier {
 
     public static final OrderByNull DEFAULT = new OrderByNull();

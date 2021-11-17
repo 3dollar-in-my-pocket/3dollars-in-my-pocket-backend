@@ -34,6 +34,7 @@ client.test("200 OK or 409 Conflict", function() {
 });
 %}
 
+
 ### 허용하지 않는 닉네임일경우 400 에러를 처리합니다.
 GET {{host_api}}/api/v2/user/name/check?name=-11-
 

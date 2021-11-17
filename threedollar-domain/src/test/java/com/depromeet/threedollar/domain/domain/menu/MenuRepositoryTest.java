@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.domain.menu;
 
-import com.depromeet.threedollar.domain.domain.menu.repository.projection.MenuStaticsProjection;
+import com.depromeet.threedollar.domain.domain.menu.projection.MenuStaticsProjection;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;

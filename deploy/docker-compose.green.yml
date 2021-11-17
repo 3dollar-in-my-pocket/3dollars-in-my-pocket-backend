@@ -3,7 +3,7 @@ services:
   api:
     image: ${API_IMAGE}:${TAG}
     ports:
-      - 5002:5000
+      - "5002:5000"
     environment:
       - "SPRING_PROFILES_ACTIVE=dev"
       - "NEW_RELIC_APP_NAME=3dollars-api-dev"

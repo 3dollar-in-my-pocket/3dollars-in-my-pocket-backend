@@ -9,3 +9,7 @@ spring:
     enabled: false
   profiles:
     active: local
+logging:
+  level:
+    com.amazonaws.util.EC2MetadataUtils: error
+    com.amazonaws.internal.InstanceMetadataServiceResourceFetcher: error

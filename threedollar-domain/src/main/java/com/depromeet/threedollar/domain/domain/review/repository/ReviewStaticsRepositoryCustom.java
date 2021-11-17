@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public interface ReviewStaticsRepositoryCustom {
 
-    long findReviewsCount();
+    long findActiveReviewsCounts();
 
     long findReviewsCountBetweenDate(LocalDate startDate, LocalDate endDate);
 

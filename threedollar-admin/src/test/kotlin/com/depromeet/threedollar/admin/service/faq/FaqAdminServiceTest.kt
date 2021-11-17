@@ -9,9 +9,9 @@ import com.depromeet.threedollar.domain.domain.faq.FaqCreator
 import com.depromeet.threedollar.domain.domain.faq.FaqRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
+import org.javaunit.autoparams.AutoSource
+import org.junit.jupiter.api.*
+import org.junit.jupiter.params.ParameterizedTest
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
 
@@ -27,76 +27,96 @@ internal class FaqAdminServiceTest(
         faqRepository.deleteAll()
     }
 
-    @Test
-    fun 새로운_FAQ_를_등록하면_FAQ_데이터가_추가된다() {
-        // give
-        val question = "이름이 뭔가요?"
-        val answer = "가슴속 삼천원"
-        val category = FaqCategory.CATEGORY
+    @DisplayName("신규 FAQ 등록")
+    @Nested
+    inner class AddFAQ {
 
-        val request = AddFaqRequest(category, question, answer)
+        @AutoSource
+        @ParameterizedTest
+        fun 새로운_FAQ_를_등록하면_FAQ_데이터가_추가된다(question: String, answer: String, category: FaqCategory) {
+            // given
+            val request = AddFaqRequest(question, answer, category)
 
-        // when
-        faqAdminService.addFaq(request)
+            // when
+            faqAdminService.addFaq(request)
 
-        // then
-        val faqs = faqRepository.findAll()
-        assertAll({
-            assertThat(faqs).hasSize(1)
-            assertFaq(faqs[0], question, answer, category)
-        })
+            // then
+            val faqs = faqRepository.findAll()
+            assertAll({
+                assertThat(faqs).hasSize(1)
+                assertFaq(faqs[0], question, answer, category)
+            })
+        }
+
     }
 
-    @Test
-    fun 등록된_FAQ를_수정하면_FAQ_데이터가_수정된다() {
-        // give
-        val question = "질문"
-        val answer = "답변"
-        val category = FaqCategory.CATEGORY
+    @DisplayName("FAQ 수정")
+    @Nested
+    inner class UpdateFaq {
 
-        val faq = FaqCreator.create("question", "answer", FaqCategory.CATEGORY)
-        faqRepository.save(faq)
+        @AutoSource
+        @ParameterizedTest
+        fun 등록된_FAQ를_수정하면_FAQ_데이터가_수정된다(question: String, answer: String, category: FaqCategory) {
+            // given
+            val faq = FaqCreator.create("기존의 질문", "기존의 답변", FaqCategory.CATEGORY)
+            faqRepository.save(faq)
 
-        val request = UpdateFaqRequest(question, answer, category)
+            val request = UpdateFaqRequest(question, answer, category)
 
-        // when
-        faqAdminService.updateFaq(faq.id, request)
+            // when
+            faqAdminService.updateFaq(faq.id, request)
 
-        // then
-        val faqs = faqRepository.findAll()
-        assertAll({
-            assertThat(faqs).hasSize(1)
-            assertFaq(faqs[0], question, answer, category)
-        })
+            // then
+            val faqs = faqRepository.findAll()
+            assertAll({
+                assertThat(faqs).hasSize(1)
+                assertFaq(faqs[0], question, answer, category)
+            })
+        }
+
+        @Test
+        fun 등록된_FAQ를_수정할때_해당하는_FAQ가_없으면_NotFOUND_EXCEPTION() {
+            // given
+            val notFoundFaqId = -1L
+            val request = UpdateFaqRequest("질문", "답변", FaqCategory.CATEGORY)
+
+            // when & then
+            assertThatThrownBy {
+                faqAdminService.updateFaq(
+                    notFoundFaqId,
+                    request
+                )
+            }.isInstanceOf(NotFoundException::class.java)
+        }
+
     }
 
-    @Test
-    fun 등록된_FAQ를_수정할때_해당하는_FAQ가_없으면_NotFOUND_EXCEPTION() {
-        // given
-        val request = UpdateFaqRequest("question", "answer", FaqCategory.CATEGORY)
+    @DisplayName("FAQ 삭제")
+    @Nested
+    inner class DeleteFaq {
 
-        // when & then
-        assertThatThrownBy { faqAdminService.updateFaq(999L, request) }.isInstanceOf(NotFoundException::class.java)
-    }
+        @Test
+        fun 특정_FAQ_를_삭제하면_해당_데이터가_삭제된다() {
+            // given
+            val faq = faqRepository.save(FaqCreator.create("질문", "답변", FaqCategory.CATEGORY))
 
-    @Test
-    fun 특정_FAQ_를_삭제하면_해당_데이터가_삭제된다() {
-        // given
-        val faq = FaqCreator.create("question", "answer", FaqCategory.CATEGORY)
-        faqRepository.save(faq)
+            // when
+            faqAdminService.deleteFaq(faq.id)
 
-        // when
-        faqAdminService.deleteFaq(faq.id)
+            // then
+            val faqs = faqRepository.findAll()
+            assertThat(faqs).isEmpty()
+        }
 
-        // then
-        val faqs = faqRepository.findAll()
-        assertThat(faqs).isEmpty()
-    }
+        @Test
+        fun 특정_FAQ_를_삭제시_해당_FAQ가_없으면_NOTFOUND_EXCEPTION() {
+            // given
+            val notFoundFaqId = -1L
 
-    @Test
-    fun 특정_FAQ_를_삭제시_해당_FAQ가_없으면_NOTFOUND_EXCEPTION() {
-        // when & then
-        assertThatThrownBy { faqAdminService.deleteFaq(999L) }.isInstanceOf(NotFoundException::class.java)
+            // when & then
+            assertThatThrownBy { faqAdminService.deleteFaq(notFoundFaqId) }.isInstanceOf(NotFoundException::class.java)
+        }
+
     }
 
     private fun assertFaq(faq: Faq, question: String, answer: String, category: FaqCategory) {

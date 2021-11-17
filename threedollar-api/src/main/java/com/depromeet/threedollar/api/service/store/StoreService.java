@@ -15,14 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.depromeet.threedollar.common.exception.ErrorCode.CONFLICT_DELETE_REQUEST_STORE_EXCEPTION;
+
 @RequiredArgsConstructor
 @Service
 public class StoreService {
 
     /**
-     * MAX_DELETE_REQUEST 만큼 가게 신고가 누적되면 실제로 가게가 삭제가 됩니다.
+     * 해당 수 만큼 가게 신고가 누적되면 실제로 가게가 삭제가 됩니다.
      */
-    private static final int MAX_DELETE_REQUEST = 3;
+    private static final int DELETE_REPORTS_COUNT = 3;
 
     private final StoreRepository storeRepository;
     private final StoreDeleteRequestRepository storeDeleteRequestRepository;
@@ -30,34 +32,32 @@ public class StoreService {
     @Transactional
     public StoreInfoResponse addStore(AddStoreRequest request, Long userId) {
         Store store = storeRepository.save(request.toStore(userId));
-        return StoreInfoResponse.of(store);
+        return StoreInfoResponse.ofWithOutVisitsCount(store);
     }
 
     @Transactional
-    public StoreInfoResponse updateStore(Long storeId, UpdateStoreRequest request, Long userId) {
+    public StoreInfoResponse updateStore(Long storeId, UpdateStoreRequest request) {
         Store store = StoreServiceUtils.findStoreByIdFetchJoinMenu(storeRepository, storeId);
-        store.updateLocation(request.getLatitude(), request.getLongitude());
-        store.updateInfo(request.getStoreName(), request.getStoreType());
+        store.updateInfo(request.getStoreName(), request.getStoreType(), request.getLatitude(), request.getLongitude());
         store.updatePaymentMethods(request.getPaymentMethods());
         store.updateAppearanceDays(request.getAppearanceDays());
         store.updateMenu(request.toMenus(store));
-        return StoreInfoResponse.of(store);
+        return StoreInfoResponse.ofWithOutVisitsCount(store);
     }
 
     @Transactional
     public StoreDeleteResponse deleteStore(Long storeId, DeleteStoreRequest request, Long userId) {
         Store store = StoreServiceUtils.findStoreById(storeRepository, storeId);
-
-        List<Long> userIds = storeDeleteRequestRepository.findAllUserIdByStoreIdWithLock(storeId);
-        if (userIds.contains(userId)) {
-            throw new ConflictException(String.format("사용자 (%s)는 가게 (%s)에 대해 이미 삭제 요청을 하였습니다", userId, storeId));
+        List<Long> reporters = storeDeleteRequestRepository.findAllUserIdByStoreIdWithLock(storeId);
+        if (reporters.contains(userId)) {
+            throw new ConflictException(String.format("사용자 (%s)는 가게 (%s)에 대해 이미 삭제 요청을 하였습니다", userId, storeId), CONFLICT_DELETE_REQUEST_STORE_EXCEPTION);
         }
         storeDeleteRequestRepository.save(request.toEntity(storeId, userId));
-        return StoreDeleteResponse.of(deleteStoreIfExceedLimit(store, userIds));
+        return StoreDeleteResponse.of(deleteStoreIfSatisfyCondition(store, reporters));
     }
 
-    private boolean deleteStoreIfExceedLimit(Store store, List<Long> userIds) {
-        if (userIds.size() + 1 >= MAX_DELETE_REQUEST) {
+    private boolean deleteStoreIfSatisfyCondition(Store store, List<Long> reporters) {
+        if (reporters.size() + 1 >= DELETE_REPORTS_COUNT) {
             store.delete();
             return true;
         }

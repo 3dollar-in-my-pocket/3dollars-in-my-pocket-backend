@@ -5,25 +5,11 @@ spring:
     include:
       - domain
       - secret
+      - feign
+      - logging
+      - dummy
   batch:
     job:
       names: ${job.name:NONE}
   main:
     web-application-type: none
-logging:
-  level:
-    org.springframework.batch: DEBUG
-
-apple:
-  client_id: test
-  issuer: test
-cloud:
-  aws:
-    s3:
-      bucket: test
-      mock:
-        port: 9000
-    region:
-      static: ap-northeast-2
-    stack:
-      auto: false

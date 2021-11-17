@@ -4,6 +4,7 @@ import com.depromeet.threedollar.api.event.ReviewChangedEvent;
 import com.depromeet.threedollar.api.service.store.StoreRatingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
@@ -12,7 +13,7 @@ public class StoreEventListener {
 
     private final StoreRatingService storeRatingService;
 
-    // TODO 가게 평균 리뷰 점수를 비동기적으로 처리해도 좋을듯??
+    @Async
     @EventListener
     public void renewStoreRating(ReviewChangedEvent event) {
         storeRatingService.renewStoreRating(event.getStore());

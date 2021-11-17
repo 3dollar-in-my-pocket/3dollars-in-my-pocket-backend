@@ -1,10 +1,11 @@
 package com.depromeet.threedollar.domain.domain.common;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 import java.time.DayOfWeek;
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum DayOfTheWeek {
 
     MONDAY(DayOfWeek.MONDAY),

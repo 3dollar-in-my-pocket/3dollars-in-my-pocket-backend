@@ -1,13 +1,16 @@
 package com.depromeet.threedollar.admin.service.store.dto.request
 
+import javax.validation.constraints.Max
 import javax.validation.constraints.Min
 
 data class RetrieveReportedStoresRequest(
-    val minCount: Int,
+    @field:Min(value = 1, message = "minCount를 1이상 입력해주세요")
+    val minCount: Int = 0,
 
-    @field:Min(1, message = "{common.size.page}")
-    val page: Long,
+    @field:Min(value = 1, message = "page를 1이상 입력해주세요")
+    val page: Long = 0,
 
-    @field:Min(1, message = "{common.size.min}")
-    val size: Int,
+    @field:Min(value = 1, message = "1이상 size를 입력해주세요")
+    @field:Max(value = 100, message = "size를 100이하 입력해주세요")
+    val size: Int = 0
 )

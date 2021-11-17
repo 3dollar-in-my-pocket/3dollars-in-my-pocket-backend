@@ -3,18 +3,16 @@ package com.depromeet.threedollar.domain.domain.store;
 import com.depromeet.threedollar.domain.domain.menu.Menu;
 import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
 import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
+import com.depromeet.threedollar.domain.domain.store.projection.StoreWithReportedCountProjection;
 import com.depromeet.threedollar.domain.domain.storedelete.DeleteReasonType;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestCreator;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestRepository;
-import com.depromeet.threedollar.domain.domain.store.projection.StoreWithReportedCountProjection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,7 +39,7 @@ class StoreRepositoryTest {
                 .name("storeName")
                 .type(StoreType.STORE)
                 .build();
-            store.addMenus(Collections.singletonList(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             // when
@@ -63,7 +61,7 @@ class StoreRepositoryTest {
                 .build();
 
             Menu menu = MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG);
-            store.addMenus(Collections.singletonList(menu));
+            store.addMenus(List.of(menu));
             storeRepository.save(store);
 
             // when
@@ -84,16 +82,16 @@ class StoreRepositoryTest {
             Long userId = 100L;
 
             Store store1 = StoreCreator.create(userId, "1번 가게");
-            store1.addMenus(Collections.singletonList(MenuCreator.create(store1, "붕어빵1", "만원1", MenuCategoryType.BUNGEOPPANG)));
-            store1.addMenus(Collections.singletonList(MenuCreator.create(store1, "붕어빵2", "만원2", MenuCategoryType.BUNGEOPPANG)));
+            store1.addMenus(List.of(MenuCreator.create(store1, "붕어빵1", "만원1", MenuCategoryType.BUNGEOPPANG)));
+            store1.addMenus(List.of(MenuCreator.create(store1, "붕어빵2", "만원2", MenuCategoryType.BUNGEOPPANG)));
 
             Store store2 = StoreCreator.create(userId, "2번 가게");
-            store2.addMenus(Collections.singletonList(MenuCreator.create(store2, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store2.addMenus(List.of(MenuCreator.create(store2, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
 
             Store store3 = StoreCreator.create(userId, "3번 가게");
-            store3.addMenus(Collections.singletonList(MenuCreator.create(store3, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store3.addMenus(List.of(MenuCreator.create(store3, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
 
-            storeRepository.saveAll(Arrays.asList(store1, store2, store3));
+            storeRepository.saveAll(List.of(store1, store2, store3));
 
             // when
             long count = storeRepository.findCountsByUserId(userId);
@@ -108,11 +106,11 @@ class StoreRepositoryTest {
             Long userId = 100L;
 
             Store store1 = StoreCreator.create(userId, "1번 가게");
-            store1.addMenus(Collections.singletonList(MenuCreator.create(store1, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store1.addMenus(List.of(MenuCreator.create(store1, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
 
             Store store2 = StoreCreator.create(userId, "2번 가게");
 
-            storeRepository.saveAll(Arrays.asList(store1, store2));
+            storeRepository.saveAll(List.of(store1, store2));
 
             // when
             long counts = storeRepository.findCountsByUserId(userId);
@@ -144,15 +142,15 @@ class StoreRepositoryTest {
             Long userId = 100L;
 
             Store store1 = StoreCreator.create(userId, "1번 가게");
-            store1.addMenus(Collections.singletonList(MenuCreator.create(store1, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store1.addMenus(List.of(MenuCreator.create(store1, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
 
             Store store2 = StoreCreator.create(userId, "2번 가게");
-            store2.addMenus(Collections.singletonList(MenuCreator.create(store2, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store2.addMenus(List.of(MenuCreator.create(store2, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
 
             Store store3 = StoreCreator.create(userId, "3번 가게");
-            store3.addMenus(Collections.singletonList(MenuCreator.create(store3, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store3.addMenus(List.of(MenuCreator.create(store3, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
 
-            storeRepository.saveAll(Arrays.asList(store1, store2, store3));
+            storeRepository.saveAll(List.of(store1, store2, store3));
 
             // when
             List<Store> stores = storeRepository.findAllByUserIdWithScroll(userId, null, 2);
@@ -169,15 +167,15 @@ class StoreRepositoryTest {
             Long userId = 100L;
 
             Store store1 = StoreCreator.create(userId, "1번 가게");
-            store1.addMenus(Collections.singletonList(MenuCreator.create(store1, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store1.addMenus(List.of(MenuCreator.create(store1, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
 
             Store store2 = StoreCreator.create(userId, "2번 가게");
-            store2.addMenus(Collections.singletonList(MenuCreator.create(store2, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store2.addMenus(List.of(MenuCreator.create(store2, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
 
             Store store3 = StoreCreator.create(userId, "3번 가게");
-            store3.addMenus(Collections.singletonList(MenuCreator.create(store3, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            store3.addMenus(List.of(MenuCreator.create(store3, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
 
-            storeRepository.saveAll(Arrays.asList(store1, store2, store3));
+            storeRepository.saveAll(List.of(store1, store2, store3));
 
             // when
             List<Store> stores = storeRepository.findAllByUserIdWithScroll(userId, store2.getId(), 2);
@@ -200,9 +198,9 @@ class StoreRepositoryTest {
             Store store1 = StoreCreator.create(100L, "1개 삭제 요청된 가게");
             Store store2 = StoreCreator.create(100L, "2개 삭제 요청된 가게");
             Store store3 = StoreCreator.create(100L, "3개 삭제 요청된 가게");
-            storeRepository.saveAll(Arrays.asList(store0, store1, store2, store3));
+            storeRepository.saveAll(List.of(store0, store1, store2, store3));
 
-            storeDeleteRequestRepository.saveAll(Arrays.asList(
+            storeDeleteRequestRepository.saveAll(List.of(
                 StoreDeleteRequestCreator.create(store1.getId(), 100L, DeleteReasonType.NOSTORE),
                 StoreDeleteRequestCreator.create(store2.getId(), 100L, DeleteReasonType.OVERLAPSTORE),
                 StoreDeleteRequestCreator.create(store2.getId(), 101L, DeleteReasonType.NOSTORE),
@@ -227,9 +225,9 @@ class StoreRepositoryTest {
             Store store1 = StoreCreator.create(100L, "1개 삭제 요청된 가게");
             Store store2 = StoreCreator.create(100L, "2개 삭제 요청된 가게");
             Store store3 = StoreCreator.create(100L, "3개 삭제 요청된 가게");
-            storeRepository.saveAll(Arrays.asList(store1, store2, store3));
+            storeRepository.saveAll(List.of(store1, store2, store3));
 
-            storeDeleteRequestRepository.saveAll(Arrays.asList(
+            storeDeleteRequestRepository.saveAll(List.of(
                 StoreDeleteRequestCreator.create(store1.getId(), 100L, DeleteReasonType.NOSTORE),
                 StoreDeleteRequestCreator.create(store2.getId(), 100L, DeleteReasonType.OVERLAPSTORE),
                 StoreDeleteRequestCreator.create(store2.getId(), 101L, DeleteReasonType.NOSTORE),
@@ -254,9 +252,9 @@ class StoreRepositoryTest {
             Store store1 = StoreCreator.create(100L, "1개 삭제 요청된 가게");
             Store store2 = StoreCreator.create(100L, "2개 삭제 요청된 가게");
             Store store3 = StoreCreator.create(100L, "3개 삭제 요청된 가게");
-            storeRepository.saveAll(Arrays.asList(store1, store2, store3));
+            storeRepository.saveAll(List.of(store1, store2, store3));
 
-            storeDeleteRequestRepository.saveAll(Arrays.asList(
+            storeDeleteRequestRepository.saveAll(List.of(
                 StoreDeleteRequestCreator.create(store1.getId(), 100L, DeleteReasonType.NOSTORE),
                 StoreDeleteRequestCreator.create(store2.getId(), 100L, DeleteReasonType.OVERLAPSTORE),
                 StoreDeleteRequestCreator.create(store2.getId(), 101L, DeleteReasonType.NOSTORE),

@@ -21,7 +21,6 @@ import java.util.Base64;
 import java.util.Map;
 
 import static com.depromeet.threedollar.common.exception.ErrorCode.*;
-import static com.depromeet.threedollar.common.exception.ErrorCode.VALIDATION_APPLE_TOKEN_EXCEPTION;
 
 /**
  * https://developer.apple.com/documentation/sign_in_with_apple/sign_in_with_apple_rest_api/verifying_a_user
@@ -35,7 +34,7 @@ public class AppleTokenDecoderImpl implements AppleTokenDecoder {
     private final ObjectMapper objectMapper;
 
     @Override
-    public String getUserIdFromToken(String idToken) {
+    public String getSocialIdFromIdToken(String idToken) {
         String headerIdToken = idToken.split("\\.")[0];
         try {
             Map<String, String> header = objectMapper.readValue(new String(Base64.getDecoder().decode(headerIdToken), StandardCharsets.UTF_8), new TypeReference<>() {

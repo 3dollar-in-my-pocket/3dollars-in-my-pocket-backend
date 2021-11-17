@@ -1,46 +1,34 @@
 package com.depromeet.threedollar.api.controller.review;
 
-import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.api.controller.AbstractControllerTest;
+import com.depromeet.threedollar.api.controller.SetupStoreControllerTest;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsRequest;
-import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewDetailResponse;
+import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
-import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
+import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.domain.menu.MenuRepository;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
-import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ReviewControllerTest extends AbstractControllerTest {
+class ReviewControllerTest extends SetupStoreControllerTest {
 
     private ReviewMockApiCaller reviewMockApiCaller;
 
-    private Store store;
-
     @BeforeEach
-    void setUp() throws Exception {
-        super.setup();
+    void setUp() {
         reviewMockApiCaller = new ReviewMockApiCaller(mockMvc, objectMapper);
-
-        store = StoreCreator.create(testUser.getId(), "디프만 붕어빵");
-        store.addMenus(Collections.singletonList(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
-        storeRepository.save(store);
     }
 
     @Autowired
@@ -62,10 +50,10 @@ class ReviewControllerTest extends AbstractControllerTest {
 
     @DisplayName("POST /api/v2/store/review")
     @Nested
-    class 가게_리뷰_등록 {
+    class 신규_가게_리뷰_등록 {
 
         @Test
-        void 성공시_리뷰_정보가_반환된다() throws Exception {
+        void 리뷰_등록_성공시_리뷰_정보가_반환된다() throws Exception {
             // given
             AddReviewRequest request = AddReviewRequest.testInstance(store.getId(), "content", 5);
 
@@ -104,7 +92,7 @@ class ReviewControllerTest extends AbstractControllerTest {
     class 가게_리뷰_삭제 {
 
         @Test
-        void 사용자가_작성한_리뷰를_삭제한다() throws Exception {
+        void 자신이_작성한_리뷰를_삭제요청시_성공하면_200OK() throws Exception {
             // given
             Review review = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요", 5);
             reviewRepository.save(review);
@@ -123,13 +111,13 @@ class ReviewControllerTest extends AbstractControllerTest {
     class 사용자가_작성한_가게_리뷰_조회 {
 
         @Test
-        void 첫번째_스크롤_조회시() throws Exception {
+        void 사용자가_작성한_가게_첫_스크롤을_조회한다() throws Exception {
             // given
             Review review1 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요1", 5);
             Review review2 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요2", 4);
             Review review3 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요3", 3);
             Review review4 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요4", 2);
-            reviewRepository.saveAll(Arrays.asList(review1, review2, review3, review4));
+            reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null, null);
 
@@ -149,13 +137,13 @@ class ReviewControllerTest extends AbstractControllerTest {
         }
 
         @Test
-        void 중간_스크롤_조회시() throws Exception {
+        void 사용자가_작성한_가게_중간_스크롤_조회시() throws Exception {
             // given
             Review review1 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요1", 5);
             Review review2 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요2", 4);
             Review review3 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요3", 3);
             Review review4 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요4", 2);
-            reviewRepository.saveAll(Arrays.asList(review1, review2, review3, review4));
+            reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review4.getId(), 4L);
 
@@ -175,13 +163,13 @@ class ReviewControllerTest extends AbstractControllerTest {
         }
 
         @Test
-        void 조회시_전체_리뷰수가_반환된다() throws Exception {
+        void 사용자가_작성한_가게_조회시_전체_리뷰수가_반환된다() throws Exception {
             // given
             Review review1 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요1", 5);
             Review review2 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요2", 4);
             Review review3 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요3", 3);
             Review review4 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요4", 2);
-            reviewRepository.saveAll(Arrays.asList(review1, review2, review3, review4));
+            reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review4.getId(), null);
 
@@ -200,7 +188,6 @@ class ReviewControllerTest extends AbstractControllerTest {
             assertUserInfoResponse(response.getData().getContents().get(1).getUser(), testUser.getId(), testUser.getName(), testUser.getSocialType());
         }
 
-        @DisplayName("마지막 커서인 경우 -1을 반환한다")
         @Test
         void 다음_커서의_리뷰를_한개_추가_조회시_조회되지_않으면_마지막_커서로_판단한다() throws Exception {
             // given
@@ -208,7 +195,7 @@ class ReviewControllerTest extends AbstractControllerTest {
             Review review2 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요2", 4);
             Review review3 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요3", 3);
             Review review4 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요4", 2);
-            reviewRepository.saveAll(Arrays.asList(review1, review2, review3, review4));
+            reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review3.getId(), null);
 
@@ -227,7 +214,6 @@ class ReviewControllerTest extends AbstractControllerTest {
             assertUserInfoResponse(response.getData().getContents().get(1).getUser(), testUser.getId(), testUser.getName(), testUser.getSocialType());
         }
 
-        @DisplayName("마지막 커서인 경우 -1을 반환한다")
         @Test
         void 조회한_size_보다_적은_리뷰가_조회되면_마지막_커서로_판단한다() throws Exception {
             // given
@@ -235,7 +221,7 @@ class ReviewControllerTest extends AbstractControllerTest {
             Review review2 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요2", 4);
             Review review3 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요3", 3);
             Review review4 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요4", 2);
-            reviewRepository.saveAll(Arrays.asList(review1, review2, review3, review4));
+            reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review2.getId(), null);
 
@@ -251,12 +237,10 @@ class ReviewControllerTest extends AbstractControllerTest {
             assertUserInfoResponse(response.getData().getContents().get(0).getUser(), testUser.getId(), testUser.getName(), testUser.getSocialType());
         }
 
-        @DisplayName("마지막 커서인 경우 -1을 반환한다")
         @Test
         void 삭제된_리뷰는_조회되지_않는다() throws Exception {
             // given
-            Review review = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요", 5);
-            review.delete();
+            Review review = ReviewCreator.createDeleted(store.getId(), testUser.getId(), "너무 맛있어요", 5);
             reviewRepository.save(review);
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null, null);

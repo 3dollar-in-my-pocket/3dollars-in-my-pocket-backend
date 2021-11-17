@@ -1,0 +1,23 @@
+version: "3"
+services:
+  mariadb:
+    image: mariadb:10.4
+    container_name: threedollars-api-mariadb
+    ports:
+      - "3309:3306"
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=threedollar_test
+      - MYSQL_ROOT_PASSWORD=3dollar
+    volumes:
+      - ./conf.d:/etc/mysql/conf.d
+      - ~/threedollars-api/mariadb/data:/var/lib/mysql
+  redis:
+    image: redis
+    container_name: threedollar-api-redis
+    command: redis-server --port 6379
+    ports:
+      - "6380:6379"
+    restart: unless-stopped
+    volumes:
+      - ~/threedollars-api/redis/data:/data
