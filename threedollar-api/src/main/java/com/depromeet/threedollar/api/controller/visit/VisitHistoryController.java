@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 @RequiredArgsConstructor
 @RestController
@@ -26,7 +27,7 @@ public class VisitHistoryController {
     @Auth
     @PostMapping("/api/v2/store/visit")
     public ApiResponse<String> addVisitHistory(@Valid @RequestBody AddVisitHistoryRequest request, @UserId Long userId) {
-        visitHistoryService.addVisitHistory(request, userId);
+        visitHistoryService.addVisitHistory(request, userId, LocalDate.now());
         return ApiResponse.SUCCESS;
     }
 
