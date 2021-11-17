@@ -108,7 +108,7 @@ class AppleAuthServiceTest {
     private static class StubAppleTokenDecoder implements AppleTokenDecoder {
 
         @Override
-        public String getUserIdFromToken(String idToken) {
+        public String getSocialIdFromIdToken(String idToken) {
             return socialId;
         }
 

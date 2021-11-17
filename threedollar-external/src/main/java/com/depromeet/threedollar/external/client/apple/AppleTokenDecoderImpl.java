@@ -34,7 +34,7 @@ public class AppleTokenDecoderImpl implements AppleTokenDecoder {
     private final ObjectMapper objectMapper;
 
     @Override
-    public String getUserIdFromToken(String idToken) {
+    public String getSocialIdFromIdToken(String idToken) {
         String headerIdToken = idToken.split("\\.")[0];
         try {
             Map<String, String> header = objectMapper.readValue(new String(Base64.getDecoder().decode(headerIdToken), StandardCharsets.UTF_8), new TypeReference<>() {

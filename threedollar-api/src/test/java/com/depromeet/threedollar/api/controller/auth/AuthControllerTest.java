@@ -1,18 +1,23 @@
 package com.depromeet.threedollar.api.controller.auth;
 
 import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
-import com.depromeet.threedollar.api.service.auth.AppleAuthService;
-import com.depromeet.threedollar.api.service.auth.GoogleAuthService;
-import com.depromeet.threedollar.api.service.auth.KaKaoAuthService;
 import com.depromeet.threedollar.api.service.auth.dto.request.LoginRequest;
 import com.depromeet.threedollar.api.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.service.auth.dto.response.LoginResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
+import com.depromeet.threedollar.domain.domain.user.User;
+import com.depromeet.threedollar.domain.domain.user.UserCreator;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
+import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder;
+import com.depromeet.threedollar.external.client.google.GoogleApiClient;
+import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse;
+import com.depromeet.threedollar.external.client.kakao.KaKaoApiClient;
+import com.depromeet.threedollar.external.client.kakao.dto.response.KaKaoProfileResponse;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 class AuthControllerTest extends SetupUserControllerTest {
@@ -20,13 +25,13 @@ class AuthControllerTest extends SetupUserControllerTest {
     private AuthMockApiCaller authMockApiCaller;
 
     @MockBean
-    private KaKaoAuthService kaKaoAuthService;
+    private KaKaoApiClient kaKaoApiClient;
 
     @MockBean
-    private AppleAuthService appleAuthService;
+    private GoogleApiClient googleApiClient;
 
     @MockBean
-    private GoogleAuthService googleAuthService;
+    private AppleTokenDecoder appleTokenDecoder;
 
     @BeforeEach
     void setUp() {
@@ -40,14 +45,14 @@ class AuthControllerTest extends SetupUserControllerTest {
 
     @DisplayName("POST /api/v2/signup")
     @Nested
-    class SignUp {
+    class 회원가입 {
 
         @Test
         void 카카오_회원가입_요청이_성공하면_토큰이_반환된다() throws Exception {
             // given
-            SignUpRequest request = SignUpRequest.testInstance("token", "will", UserSocialType.KAKAO);
+            when(kaKaoApiClient.getProfileInfo(any())).thenReturn(KaKaoProfileResponse.testInstance("social-id"));
 
-            when(kaKaoAuthService.signUp(request)).thenReturn(testUser.getId());
+            SignUpRequest request = SignUpRequest.testInstance("access-token", "will", UserSocialType.KAKAO);
 
             // when
             ApiResponse<LoginResponse> response = authMockApiCaller.signUp(request, 200);
@@ -55,15 +60,15 @@ class AuthControllerTest extends SetupUserControllerTest {
             // then
             assertThat(response.getResultCode()).isEmpty();
             assertThat(response.getMessage()).isEmpty();
-            assertThat(response.getData().getToken()).isNotNull();
+            assertThat(response.getData().getToken()).isNotBlank();
         }
 
         @Test
         void 애플_회원가입_요청이_성공하면_토큰이_반환된다() throws Exception {
             // given
-            SignUpRequest request = SignUpRequest.testInstance("token", "will", UserSocialType.APPLE);
+            when(appleTokenDecoder.getSocialIdFromIdToken(any())).thenReturn("social-id");
 
-            when(appleAuthService.signUp(request)).thenReturn(testUser.getId());
+            SignUpRequest request = SignUpRequest.testInstance("access-token", "will", UserSocialType.APPLE);
 
             // when
             ApiResponse<LoginResponse> response = authMockApiCaller.signUp(request, 200);
@@ -71,15 +76,15 @@ class AuthControllerTest extends SetupUserControllerTest {
             // then
             assertThat(response.getResultCode()).isEmpty();
             assertThat(response.getMessage()).isEmpty();
-            assertThat(response.getData().getToken()).isNotNull();
+            assertThat(response.getData().getToken()).isNotBlank();
         }
 
         @Test
         void 구글_회원가입_요청이_성공하면_토큰이_반환된다() throws Exception {
             // given
-            SignUpRequest request = SignUpRequest.testInstance("token", "will", UserSocialType.GOOGLE);
+            when(googleApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance("social-id"));
 
-            when(googleAuthService.signUp(request)).thenReturn(testUser.getId());
+            SignUpRequest request = SignUpRequest.testInstance("access-token", "will", UserSocialType.GOOGLE);
 
             // when
             ApiResponse<LoginResponse> response = authMockApiCaller.signUp(request, 200);
@@ -87,7 +92,7 @@ class AuthControllerTest extends SetupUserControllerTest {
             // then
             assertThat(response.getResultCode()).isEmpty();
             assertThat(response.getMessage()).isEmpty();
-            assertThat(response.getData().getToken()).isNotNull();
+            assertThat(response.getData().getToken()).isNotBlank();
         }
 
     }
@@ -99,9 +104,12 @@ class AuthControllerTest extends SetupUserControllerTest {
         @Test
         void 카카오_로그인_요청이_성공하면_토큰이_반환된다() throws Exception {
             // given
-            LoginRequest request = LoginRequest.testInstance("token", UserSocialType.KAKAO);
+            User user = UserCreator.create("social-id", UserSocialType.KAKAO, "카카오 계정");
+            userRepository.save(user);
 
-            when(kaKaoAuthService.login(request)).thenReturn(testUser.getId());
+            when(kaKaoApiClient.getProfileInfo(any())).thenReturn(KaKaoProfileResponse.testInstance(user.getSocialId()));
+
+            LoginRequest request = LoginRequest.testInstance("access-token", UserSocialType.KAKAO);
 
             // when
             ApiResponse<LoginResponse> response = authMockApiCaller.login(request, 200);
@@ -109,15 +117,18 @@ class AuthControllerTest extends SetupUserControllerTest {
             // then
             assertThat(response.getResultCode()).isEmpty();
             assertThat(response.getMessage()).isEmpty();
-            assertThat(response.getData().getToken()).isNotNull();
+            assertThat(response.getData().getToken()).isNotBlank();
         }
 
         @Test
         void 애플_로그인_요청이_성공하면_토큰이_반환된다() throws Exception {
             // given
-            LoginRequest request = LoginRequest.testInstance("token", UserSocialType.APPLE);
+            User user = UserCreator.create("social-id", UserSocialType.APPLE, "애플 계정");
+            userRepository.save(user);
 
-            when(appleAuthService.login(request)).thenReturn(testUser.getId());
+            when(appleTokenDecoder.getSocialIdFromIdToken(any())).thenReturn(user.getSocialId());
+
+            LoginRequest request = LoginRequest.testInstance("access-token", UserSocialType.APPLE);
 
             // when
             ApiResponse<LoginResponse> response = authMockApiCaller.login(request, 200);
@@ -125,15 +136,18 @@ class AuthControllerTest extends SetupUserControllerTest {
             // then
             assertThat(response.getResultCode()).isEmpty();
             assertThat(response.getMessage()).isEmpty();
-            assertThat(response.getData().getToken()).isNotNull();
+            assertThat(response.getData().getToken()).isNotBlank();
         }
 
         @Test
         void 구글_로그인_요청이_성공하면_토큰이_반환된다() throws Exception {
             // given
-            LoginRequest request = LoginRequest.testInstance("token", UserSocialType.GOOGLE);
+            User user = UserCreator.create("social-id", UserSocialType.GOOGLE, "구글 계정");
+            userRepository.save(user);
 
-            when(googleAuthService.login(request)).thenReturn(testUser.getId());
+            when(googleApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance(user.getSocialId()));
+
+            LoginRequest request = LoginRequest.testInstance("access-token", UserSocialType.GOOGLE);
 
             // when
             ApiResponse<LoginResponse> response = authMockApiCaller.login(request, 200);
@@ -141,7 +155,7 @@ class AuthControllerTest extends SetupUserControllerTest {
             // then
             assertThat(response.getResultCode()).isEmpty();
             assertThat(response.getMessage()).isEmpty();
-            assertThat(response.getData().getToken()).isNotNull();
+            assertThat(response.getData().getToken()).isNotBlank();
         }
 
     }

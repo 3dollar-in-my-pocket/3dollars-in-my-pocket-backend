@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.service.upload;
 import com.depromeet.threedollar.api.service.upload.dto.request.ImageUploadRequest;
 import com.depromeet.threedollar.common.exception.model.ValidationException;
 import com.depromeet.threedollar.domain.domain.common.ImageType;
-import com.depromeet.threedollar.external.client.s3.AmazonS3Service;
+import com.depromeet.threedollar.external.client.s3.S3Service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +24,7 @@ class S3FileUploadServiceTest {
     private S3UploadService s3UploadService;
 
     @MockBean
-    private AmazonS3Service amazonS3Service;
+    private S3Service s3Service;
 
     @Test
     void 이미지_업로드시_S3로_업로드되고_해당_URL을_가져온다() {
@@ -36,8 +36,8 @@ class S3FileUploadServiceTest {
         s3UploadService.uploadFile(ImageUploadRequest.of(ImageType.STORE), multipartFile);
 
         // then
-        verify(amazonS3Service, times(1)).uploadFile(any(), any(), any(String.class));
-        verify(amazonS3Service, times(1)).getFileUrl(any(String.class));
+        verify(s3Service, times(1)).uploadFile(any(), any(), any(String.class));
+        verify(s3Service, times(1)).getFileUrl(any(String.class));
     }
 
     @Test
