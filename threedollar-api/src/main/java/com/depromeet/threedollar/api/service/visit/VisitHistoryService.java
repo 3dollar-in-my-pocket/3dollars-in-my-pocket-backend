@@ -24,11 +24,10 @@ public class VisitHistoryService {
     private final VisitHistoryRepository visitHistoryRepository;
 
     @Transactional
-    public void addVisitHistory(AddVisitHistoryRequest request, Long userId) {
-        final LocalDate today = LocalDate.now();
+    public void addVisitHistory(AddVisitHistoryRequest request, Long userId, LocalDate dateOfVisit) {
         Store store = StoreServiceUtils.findStoreById(storeRepository, request.getStoreId());
-        VisitHistoryServiceUtils.validateNotVisitedToday(visitHistoryRepository, request.getStoreId(), userId, today);
-        visitHistoryRepository.save(request.toEntity(store, userId, today));
+        VisitHistoryServiceUtils.validateNotVisitedToday(visitHistoryRepository, request.getStoreId(), userId, dateOfVisit);
+        visitHistoryRepository.save(request.toEntity(store, userId, dateOfVisit));
     }
 
     @Transactional(readOnly = true)

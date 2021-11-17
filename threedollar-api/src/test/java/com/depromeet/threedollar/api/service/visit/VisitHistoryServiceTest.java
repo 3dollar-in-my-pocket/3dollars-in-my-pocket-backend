@@ -45,18 +45,18 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
 
         @AutoSource
         @ParameterizedTest
-        void 유저가_가게_방문_인증_정보를_추가한다(VisitType visitType) {
+        void 유저가_가게_방문_인증_정보를_추가한다(LocalDate dateOfVisit, VisitType visitType) {
             // given
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(storeId, visitType);
 
             // when
-            visitHistoryService.addVisitHistory(request, userId);
+            visitHistoryService.addVisitHistory(request, userId, dateOfVisit);
 
             // then
             List<VisitHistory> histories = visitHistoryRepository.findAll();
             assertAll(
                 () -> assertThat(histories).hasSize(1),
-                () -> assertVisitHistory(histories.get(0), storeId, userId, visitType, LocalDate.now())
+                () -> assertVisitHistory(histories.get(0), storeId, userId, visitType, dateOfVisit)
             );
         }
 
@@ -67,20 +67,19 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(notFoundStoreId, VisitType.EXISTS);
 
             // when & then
-            assertThatThrownBy(() -> visitHistoryService.addVisitHistory(request, userId)).isInstanceOf(NotFoundException.class);
+            assertThatThrownBy(() -> visitHistoryService.addVisitHistory(request, userId, LocalDate.of(2021, 11, 18))).isInstanceOf(NotFoundException.class);
         }
 
         @AutoSource
         @ParameterizedTest
-        void 가게_방문_인증시_오늘_이미_방문인증한_가게면_Conflict_에러가_발생한다(VisitType visitType) {
+        void 가게_방문_인증시_오늘_이미_방문인증한_가게면_Conflict_에러가_발생한다(LocalDate dateOfVisit, VisitType visitType) {
             // given
-            LocalDate dateOfVisit = LocalDate.now(); // TODO 날짜와 분리시켜서 테스트할 수 있도록 개선해야함
             visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, dateOfVisit));
 
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(storeId, visitType);
 
             // when & then
-            assertThatThrownBy(() -> visitHistoryService.addVisitHistory(request, userId)).isInstanceOf(ConflictException.class);
+            assertThatThrownBy(() -> visitHistoryService.addVisitHistory(request, userId, dateOfVisit)).isInstanceOf(ConflictException.class);
         }
 
     }
