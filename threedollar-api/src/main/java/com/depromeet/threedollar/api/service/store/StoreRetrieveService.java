@@ -24,6 +24,7 @@ import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -58,7 +59,8 @@ public class StoreRetrieveService {
         List<StoreImage> images = storeImageRepository.findAllByStoreId(request.getStoreId());
         List<ReviewWithWriterProjection> reviews = reviewRepository.findAllWithCreatorByStoreId(request.getStoreId());
         List<VisitHistoryWithUserProjection> visitHistories = visitHistoryRepository.findAllVisitWithUserByStoreIdBetweenDate(request.getStoreId(), request.getStartDate(), request.getEndDate());
-        return StoreDetailResponse.of(store, images, request.getLatitude(), request.getLongitude(), creator, reviews, visitHistories);
+        return StoreDetailResponse.of(store, images, request.getLatitude(), request.getLongitude(), creator, reviews,
+            findVisitHistoriesCountByStoreIds(Collections.singletonList(store)), visitHistories);
     }
 
     @Transactional(readOnly = true)

@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.service.store.dto.response;
 
 import com.depromeet.threedollar.api.service.storeimage.dto.response.StoreImageResponse;
+import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryInfoResponse;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithUserResponse;
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewWithWriterResponse;
@@ -15,6 +16,7 @@ import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreType;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
 import com.depromeet.threedollar.domain.domain.user.User;
+import com.depromeet.threedollar.domain.domain.visit.VisitHistoriesCountCollection;
 import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithUserProjection;
 import lombok.*;
 
@@ -34,6 +36,8 @@ public class StoreDetailResponse extends AuditingTimeResponse {
     private double rating;
     private Integer distance;
     private UserInfoResponse user;
+    private VisitHistoryInfoResponse visitHistory;
+
     private final List<MenuCategoryType> categories = new ArrayList<>();
     private final Set<DayOfTheWeek> appearanceDays = new HashSet<>();
     private final Set<PaymentMethodType> paymentMethods = new HashSet<>();
@@ -44,7 +48,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
 
     @Builder(access = AccessLevel.PRIVATE)
     private StoreDetailResponse(Long storeId, double latitude, double longitude, String storeName, StoreType storeType,
-                                double rating, Integer distance, UserInfoResponse user, List<VisitHistoryWithUserResponse> visitHistories) {
+                                double rating, Integer distance, UserInfoResponse user, VisitHistoryInfoResponse visitHistory) {
         this.storeId = storeId;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -53,10 +57,12 @@ public class StoreDetailResponse extends AuditingTimeResponse {
         this.rating = rating;
         this.distance = distance;
         this.user = user;
+        this.visitHistory = visitHistory;
     }
 
     public static StoreDetailResponse of(Store store, List<StoreImage> storeImages, double latitude,
-                                         double longitude, User user, List<ReviewWithWriterProjection> reviews, List<VisitHistoryWithUserProjection> visitHistories) {
+                                         double longitude, User user, List<ReviewWithWriterProjection> reviews,
+                                         VisitHistoriesCountCollection visitHistoriesCollection, List<VisitHistoryWithUserProjection> visitHistories) {
         StoreDetailResponse response = StoreDetailResponse.builder()
             .storeId(store.getId())
             .latitude(store.getLatitude())
@@ -66,6 +72,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
             .rating(store.getRating())
             .distance(LocationDistanceUtils.getDistance(store.getLatitude(), store.getLongitude(), latitude, longitude))
             .user(UserInfoResponse.of(user))
+            .visitHistory(VisitHistoryInfoResponse.of(visitHistoriesCollection.getStoreExistsVisitsCount(store.getId()), visitHistoriesCollection.getStoreNotExistsVisitsCount(store.getId())))
             .build();
         response.categories.addAll(store.getMenuCategoriesSortedByCounts());
         response.appearanceDays.addAll(store.getAppearanceDayTypes());
