@@ -87,6 +87,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         );
     }
 
+    @Deprecated
     public ApiResponse<StoresGroupByDistanceResponse> getStoresByDistance(RetrieveStoreGroupByCategoryRequest request, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/stores/distance")
             .param("latitude", String.valueOf(request.getLatitude()))
@@ -106,6 +107,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         );
     }
 
+    @Deprecated
     public ApiResponse<StoresGroupByReviewResponse> getStoresByReview(RetrieveStoreGroupByCategoryRequest request, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/stores/review")
             .param("latitude", String.valueOf(request.getLatitude()))

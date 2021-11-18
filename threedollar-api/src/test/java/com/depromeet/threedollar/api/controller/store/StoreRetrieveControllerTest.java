@@ -87,11 +87,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
     @DisplayName("GET /api/v2/stores/near")
     @Nested
-    class 사용자_주변의_가게_조회 {
+    class 주변의_가게_조회 {
 
         @AutoSource
         @ParameterizedTest
-        void 사용자_주변의_가게들을_조회한다(String storeName1, String storeName2) throws Exception {
+        void 나의_지도상_주변_가게들을_조회한다(String storeName1, String storeName2) throws Exception {
             // given
             Store store1 = StoreCreator.create(testUser.getId(), storeName1, 34, 124);
             store1.addMenus(List.of(MenuCreator.create(store1, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG)));
@@ -119,7 +119,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
         @AutoSource
         @ParameterizedTest
-        void 사용자_주변의_가게_조회시_카테고리도_함께_조회한다(Set<MenuCategoryType> menuCategories) throws Exception {
+        void 주변_가게들을_조회할때_메뉴_카테고리_목록도_반환된다(Set<MenuCategoryType> menuCategories) throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124);
             List<Menu> menus = menuCategories.stream()
@@ -147,7 +147,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 사용자_주위의_가게를_조회시_삭제된_가게는_조회되지_않는다() throws Exception {
+        void 주변_가게들을_조회할때_삭제된_가게는_포함되지_않는다() throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
@@ -170,7 +170,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 사용자_주위의_가게를_조회할때_방문_인증_정보가_함께_조회된다() throws Exception {
+        void 주변_가게들을_조회할때_방문_성공_및_실패정보와_인증된_가게여부를_반환한다() throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
@@ -199,7 +199,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 카테고리_파라미터를_넘기면_특정_카테고리의_가게들만_필터링되서_조회된다() throws Exception {
+        void 주변_가게들을_조회할때_카테고리를_넘기면_해당_카테고리_메뉴를_판매하는_가게들_내에서_조회된다() throws Exception {
             // given
             Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34, 124, 1);
             store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", MenuCategoryType.DALGONA)));
@@ -227,7 +227,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void DISTANCE_ASC_정렬_파라미터를_넘기면_거리순으로_정렬되서_조회된다() throws Exception {
+        void 주변_가게들을_거리가_가까운_순으로_정렬해서_조회한다_DISTANCE_ASC() throws Exception {
             // given
             Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34.00015, 124, 1);
             store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", MenuCategoryType.BUNGEOPPANG)));
@@ -255,7 +255,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void REVIEW_DESC_정렬_파라미터를_넘기면_리뷰순으로_정렬되서_조회된다() throws Exception {
+        void 주변_가게들을_리뷰_평점이_높은순으로_정렬해서_조회한다_REVIEW_DESC() throws Exception {
             // given
             Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34.00015, 124, 5);
             store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", MenuCategoryType.BUNGEOPPANG)));
@@ -286,11 +286,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
     @DisplayName("GET /api/v2/store")
     @Nested
-    class 특정_가게_상세_정보_조회 {
+    class 가게_상세_정보_조회 {
 
         @AutoSource
         @ParameterizedTest
-        void 특정_가게에_대한_상세_정보를_조회할떄_가게에_대한_정보가_반환된다(String storeName, StoreType storeType) throws Exception {
+        void 특정_가게에_대한_상세_가게_정보를_조회한다(String storeName, StoreType storeType) throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), storeName, storeType, 34, 124);
             Menu menu = MenuCreator.create(store, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG);
@@ -315,7 +315,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 특정_가게에_대한_상세_정보를_조회할때_메뉴에_대한_정보가_반환된다() throws Exception {
+        void 특정_가게에_대한_상세_정보를_조회할때_메뉴_목록_에_대한_정보가_반환된다() throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124);
             Menu menu1 = MenuCreator.create(store, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG);
@@ -393,7 +393,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 회원탈퇴한_유저의경우_사라진_제보자라고_표기된다() throws Exception {
+        void 제보자가_회원탈퇴했을경우_사라진_제보자라고_표기된다() throws Exception {
             // given
             Long notFoundUserId = -1L;
 
@@ -455,7 +455,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 가게_상세조회시_작성된_리뷰_와_작성자_정보가_함께_최근_생성된_순서로_조회된다() throws Exception {
+        void 가게_상세조회시_작성된_리뷰_와_작성자_정보가_최근_생성순으로_조회된다() throws Exception {
             // given
             Long notFoundUserId = Long.MAX_VALUE;
 
@@ -484,7 +484,30 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 가게에_등록된_방문_기록들을_startDate부터_endDate까지_방문한_기록들을_조회한다() throws Exception {
+        void 가게_상세_조회시_가게에_등록된_방문_성공_및_실패_횟수_및_가게_인증_여부를_반환한다() throws Exception {
+            // given
+            LocalDate startDate = LocalDate.of(2021, 10, 19);
+            LocalDate endDate = LocalDate.of(2021, 10, 20);
+
+            Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124);
+            store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
+            storeRepository.save(store);
+
+            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 19));
+            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 20));
+            visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
+
+            RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0, startDate, endDate);
+
+            // when
+            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
+
+            // then
+            assertVisitHistoryInfoResponse(response.getData().getVisitHistory(), 1, 1, false);
+        }
+
+        @Test
+        void 가게_상세_조회시_기간내에_가게에_방문한_기록과_유저정보를_방문한_기록들을_조회한다() throws Exception {
             // given
             LocalDate startDate = LocalDate.of(2021, 10, 19);
             LocalDate endDate = LocalDate.of(2021, 10, 20);
@@ -514,7 +537,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
         @DisplayName("기본적으로 startDate, endDate를 넘기지 않으면 지난 7일간의 방문 기록을 조회한다")
         @Test
-        void startDate와_endDate를_파라미터로_넘기지_않으면_기본적으로_오늘부터_일주일간_방문기록들을_조회한다() throws Exception {
+        void 가게_상세_조회시_기본적으로_일주일간_방문_인증_기록들을_조회한다() throws Exception {
             // given
             LocalDate today = LocalDate.now();
             Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124);
@@ -544,10 +567,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
     @DisplayName("GET /api/v2/stores/me")
     @Nested
-    class 사용자가_작성한_가게들_조회 {
+    class 내가_제보한_가게_목록_조회 {
 
         @Test
-        void 첫_페이지_조회시_다음_커서가_반환된다() throws Exception {
+        void 내가_작성한_가게_목록_조회시_커서를_넘기지_않으면_가장_최신의_N개의_가게_정보를_반환한다() throws Exception {
             // given
             Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34, 124);
             store1.addMenus(List.of(MenuCreator.create(store1, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG)));
@@ -575,7 +598,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 중간_페이지_조회시_다음_커서가_반환된다() throws Exception {
+        void 내가_작성한_가게_목록_조회시_커서를_넘기면_해당_커서_이전에_생성된_가게_목록들이_N개_반환한다() throws Exception {
             // given
             Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34, 124);
             store1.addMenus(List.of(MenuCreator.create(store1, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG)));
@@ -605,7 +628,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 유저가_작성한_가게_조회시_총개수가_캐싱되지_않으면_계산되서_반환() throws Exception {
+        void 내가_작성한_가게_목록_조회시_cachingTotalElement를_따로_넘기지_않는경우_제보한_가게의_총_개수를_서버에서_계산해서_반환한다() throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "가게1", 34, 124);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG)));
@@ -621,7 +644,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 유저가_작성한_가게_조회시_총개수가_캐싱되면_따로_계산하지_않고_반환() throws Exception {
+        void 내가_작성한_가게_목록_조회시_cachingTotalElements를_함께_넘기면_서버에서_별도로_가게_총_개수_계산없이_해당_캐시_정보를_반환한다() throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "가게1", 34, 124);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG)));
@@ -638,7 +661,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
         @DisplayName("마지막 페이지인경우 nextCursor = -1")
         @Test
-        void 다음_커서의_가게를_한개_추가_조회시_조회되지_않으면_마지막_커서로_판단한다() throws Exception {
+        void 내가_작성한_가게_목록_조회시_이후에_더이상_조회할_가게가_없을경우_커서를_마이너스_1_로_반환환다() throws Exception {
             // given
             Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34, 124);
             store1.addMenus(List.of(MenuCreator.create(store1, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG)));
@@ -661,7 +684,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
         @DisplayName("마지막 페이지인경우 nextCursor = -1")
         @Test
-        void 조회한_size_보다_적은_가게가_조회되면_마지막_커서로_판단한다() throws Exception {
+        void 내가_작성한_가게_목록_조회시_요청한_개수보다_적은_가게를_반환하면_마지막_스크롤이라고_판단하고_마이너스_1을_반환한다() throws Exception {
             // given
             Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34, 124);
             store1.addMenus(List.of(MenuCreator.create(store1, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG)));
@@ -687,7 +710,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 내가_작성한_가게_조회시_삭제된_가게는_조회되지_않는다() throws Exception {
+        void 내가_작성한_가게_목록_조회시_삭제된_가게는_조회되지_않는다() throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
@@ -706,7 +729,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 사용자가_제보한_가게들_조회시_방문_횟수도_함께_조회된다() throws Exception {
+        void 내가_작성한_가게_목록_조회시_방문_성공_및_실패_횟수와_가게_인증_여부를_반환한다() throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
@@ -730,6 +753,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
     }
 
+    @Deprecated
     @DisplayName("GET /api/v2/stores/distance")
     @Nested
     class 가게_리스트_거리수_그룹화_조회 {
@@ -884,6 +908,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
     }
 
+    @Deprecated
     @DisplayName("GET /api/v2/stores/review")
     @Nested
     class 가게_리스트_리뷰_평가_점수_그룹화_조회 {
