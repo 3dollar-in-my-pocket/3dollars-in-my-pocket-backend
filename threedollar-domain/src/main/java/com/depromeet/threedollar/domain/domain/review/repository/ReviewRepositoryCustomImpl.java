@@ -12,9 +12,9 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.LockModeType;
 import java.util.List;
 
+import static com.depromeet.threedollar.domain.domain.review.QReview.review;
 import static com.depromeet.threedollar.domain.domain.store.QStore.store;
 import static com.depromeet.threedollar.domain.domain.user.QUser.user;
-import static com.depromeet.threedollar.domain.domain.review.QReview.review;
 
 @RequiredArgsConstructor
 public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
@@ -45,6 +45,20 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
 
     @Override
     public long findCountsByUserId(Long userId) {
+        return queryFactory.select(review.id)
+            .from(review)
+            .innerJoin(user).on(review.userId.eq(user.id))
+            .innerJoin(store).on(review.storeId.eq(store.id))
+            .where(
+                review.userId.eq(userId),
+                review.status.eq(ReviewStatus.POSTED)
+            )
+            .fetchCount();
+    }
+
+    @Deprecated
+    @Override
+    public long findActiveCountsByUserId(Long userId) {
         return queryFactory.select(review.id)
             .from(review)
             .innerJoin(user).on(review.userId.eq(user.id))
@@ -87,6 +101,25 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
             .where(
                 review.userId.eq(userId),
                 review.status.eq(ReviewStatus.POSTED),
+                lessThanId(lastStoreId)
+            )
+            .orderBy(review.id.desc())
+            .limit(size)
+            .fetch();
+
+        return findReviewWithWriterProjectionsByIds(reviewIds);
+    }
+
+    @Deprecated
+    @Override
+    public List<ReviewWithWriterProjection> findAllActiveByUserIdWithScroll(Long userId, Long lastStoreId, int size) {
+        List<Long> reviewIds = queryFactory.select(review.id)
+            .from(review)
+            .innerJoin(user).on(review.userId.eq(user.id))
+            .innerJoin(store).on(review.storeId.eq(store.id))
+            .where(
+                review.userId.eq(userId),
+                review.status.eq(ReviewStatus.POSTED),
                 store.status.eq(StoreStatus.ACTIVE),
                 lessThanId(lastStoreId)
             )
@@ -94,17 +127,21 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
             .limit(size)
             .fetch();
 
+        return findReviewWithWriterProjectionsByIds(reviewIds);
+    }
+
+    private List<ReviewWithWriterProjection> findReviewWithWriterProjectionsByIds(List<Long> reviewIds) {
         return queryFactory.select(new QReviewWithWriterProjection(
-                review.id,
-                review.rating.rating,
-                review.contents,
-                review.createdAt,
-                review.updatedAt,
-                review.storeId,
-                user.id,
-                user.name,
-                user.socialInfo.socialType
-            ))
+            review.id,
+            review.rating.rating,
+            review.contents,
+            review.createdAt,
+            review.updatedAt,
+            review.storeId,
+            user.id,
+            user.name,
+            user.socialInfo.socialType
+        ))
             .from(review)
             .innerJoin(user).on(review.userId.eq(user.id))
             .where(

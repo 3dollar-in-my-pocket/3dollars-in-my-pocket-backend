@@ -710,10 +710,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 내가_작성한_가게_목록_조회시_삭제된_가게는_조회되지_않는다() throws Exception {
+        void 내가_작성한_가게_목록_조회시_삭제된_가게는_삭제된_가게로_조회된다() throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124);
-            store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
+            Menu menu = MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG);
+            store.addMenus(List.of(menu));
             store.delete();
             storeRepository.save(store);
 
@@ -721,6 +722,31 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             // when
             ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
+
+            // then
+            assertThat(response.getData().getTotalElements()).isEqualTo(1);
+            assertThat(response.getData().getNextCursor()).isEqualTo(-1);
+            assertThat(response.getData().getContents()).hasSize(1);
+            assertStoreInfoResponse(response.getData().getContents().get(0), store.getId(), store.getLatitude(), store.getLongitude(), Store.DELETE_STORE_NAME, store.getRating());
+
+            assertThat(response.getData().getContents().get(0).getCategories()).hasSize(1);
+            assertThat(response.getData().getContents().get(0).getCategories()).containsExactlyInAnyOrder(MenuCategoryType.BUNGEOPPANG);
+        }
+
+        @Deprecated
+        @Test
+        void V2버전에서는_내가_작성한_가게_목록_조회시_삭제된_가게는_조회되지_않는다() throws Exception {
+            // given
+            Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124);
+            Menu menu = MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG);
+            store.addMenus(List.of(menu));
+            store.delete();
+            storeRepository.save(store);
+
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, null, null, null, null);
+
+            // when
+            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStoresV2(request, token, 200);
 
             // then
             assertThat(response.getData().getTotalElements()).isEqualTo(0);
@@ -1113,8 +1139,8 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         assertThat(response.getRating()).isEqualTo(rating);
     }
 
-    private void assertStoreInfoResponse(StoreInfoResponse response, Long id, Double latitude, Double longitude, String name, double rating) {
-        assertThat(response.getStoreId()).isEqualTo(id);
+    private void assertStoreInfoResponse(StoreInfoResponse response, Long storeId, Double latitude, Double longitude, String name, double rating) {
+        assertThat(response.getStoreId()).isEqualTo(storeId);
         assertThat(response.getLatitude()).isEqualTo(latitude);
         assertThat(response.getLongitude()).isEqualTo(longitude);
         assertThat(response.getStoreName()).isEqualTo(name);

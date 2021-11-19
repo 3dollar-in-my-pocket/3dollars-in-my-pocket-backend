@@ -76,6 +76,25 @@ class ReviewMockApiCaller extends MockMvcUtils {
     }
 
     public ApiResponse<ReviewScrollResponse> retrieveMyStoreReviews(RetrieveMyReviewsRequest request, String token, int expectedStatus) throws Exception {
+        MockHttpServletRequestBuilder builder = get("/api/v3/store/reviews/me")
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .param("size", String.valueOf(request.getSize()))
+            .param("cursor", request.getCursor() == null ? null : String.valueOf(request.getCursor()))
+            .param("cachingTotalElements", request.getCachingTotalElements() == null ? null : String.valueOf(request.getCachingTotalElements()));
+
+        return objectMapper.readValue(
+            mockMvc.perform(builder)
+                .andExpect(status().is(expectedStatus))
+                .andDo(print())
+                .andReturn()
+                .getResponse()
+                .getContentAsString(StandardCharsets.UTF_8), new TypeReference<>() {
+            }
+        );
+    }
+
+    @Deprecated
+    public ApiResponse<ReviewScrollResponse> retrieveMyStoreReviewsV2(RetrieveMyReviewsRequest request, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/store/reviews/me")
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))
