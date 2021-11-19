@@ -9,10 +9,14 @@ import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoRespo
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
+import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
+import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
 import com.depromeet.threedollar.domain.domain.menu.MenuRepository;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
+import com.depromeet.threedollar.domain.domain.store.Store;
+import com.depromeet.threedollar.domain.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import org.junit.jupiter.api.*;
@@ -129,10 +133,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertThat(response.getData().getNextCursor()).isEqualTo(review3.getId());
             assertThat(response.getData().getContents()).hasSize(2);
 
-            assertReviewInfoResponse(response.getData().getContents().get(0), review4.getId(), store.getId(), store.getName(), review4.getContents(), review4.getRating());
+            assertReviewDetailInfoResponse(response.getData().getContents().get(0), review4.getId(), store.getId(), store.getName(), review4.getContents(), review4.getRating());
             assertUserInfoResponse(response.getData().getContents().get(0).getUser(), testUser.getId(), testUser.getName(), testUser.getSocialType());
 
-            assertReviewInfoResponse(response.getData().getContents().get(1), review3.getId(), store.getId(), store.getName(), review3.getContents(), review3.getRating());
+            assertReviewDetailInfoResponse(response.getData().getContents().get(1), review3.getId(), store.getId(), store.getName(), review3.getContents(), review3.getRating());
             assertUserInfoResponse(response.getData().getContents().get(1).getUser(), testUser.getId(), testUser.getName(), testUser.getSocialType());
         }
 
@@ -155,10 +159,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertThat(response.getData().getNextCursor()).isEqualTo(review2.getId());
             assertThat(response.getData().getContents()).hasSize(2);
 
-            assertReviewInfoResponse(response.getData().getContents().get(0), review3.getId(), store.getId(), store.getName(), review3.getContents(), review3.getRating());
+            assertReviewDetailInfoResponse(response.getData().getContents().get(0), review3.getId(), store.getId(), store.getName(), review3.getContents(), review3.getRating());
             assertUserInfoResponse(response.getData().getContents().get(0).getUser(), testUser.getId(), testUser.getName(), testUser.getSocialType());
 
-            assertReviewInfoResponse(response.getData().getContents().get(1), review2.getId(), store.getId(), store.getName(), review2.getContents(), review2.getRating());
+            assertReviewDetailInfoResponse(response.getData().getContents().get(1), review2.getId(), store.getId(), store.getName(), review2.getContents(), review2.getRating());
             assertUserInfoResponse(response.getData().getContents().get(1).getUser(), testUser.getId(), testUser.getName(), testUser.getSocialType());
         }
 
@@ -181,10 +185,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertThat(response.getData().getNextCursor()).isEqualTo(review2.getId());
             assertThat(response.getData().getContents()).hasSize(2);
 
-            assertReviewInfoResponse(response.getData().getContents().get(0), review3.getId(), store.getId(), store.getName(), review3.getContents(), review3.getRating());
+            assertReviewDetailInfoResponse(response.getData().getContents().get(0), review3.getId(), store.getId(), store.getName(), review3.getContents(), review3.getRating());
             assertUserInfoResponse(response.getData().getContents().get(0).getUser(), testUser.getId(), testUser.getName(), testUser.getSocialType());
 
-            assertReviewInfoResponse(response.getData().getContents().get(1), review2.getId(), store.getId(), store.getName(), review2.getContents(), review2.getRating());
+            assertReviewDetailInfoResponse(response.getData().getContents().get(1), review2.getId(), store.getId(), store.getName(), review2.getContents(), review2.getRating());
             assertUserInfoResponse(response.getData().getContents().get(1).getUser(), testUser.getId(), testUser.getName(), testUser.getSocialType());
         }
 
@@ -207,10 +211,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
             assertThat(response.getData().getContents()).hasSize(2);
 
-            assertReviewInfoResponse(response.getData().getContents().get(0), review2.getId(), store.getId(), store.getName(), review2.getContents(), review2.getRating());
+            assertReviewDetailInfoResponse(response.getData().getContents().get(0), review2.getId(), store.getId(), store.getName(), review2.getContents(), review2.getRating());
             assertUserInfoResponse(response.getData().getContents().get(0).getUser(), testUser.getId(), testUser.getName(), testUser.getSocialType());
 
-            assertReviewInfoResponse(response.getData().getContents().get(1), review1.getId(), store.getId(), store.getName(), review1.getContents(), review1.getRating());
+            assertReviewDetailInfoResponse(response.getData().getContents().get(1), review1.getId(), store.getId(), store.getName(), review1.getContents(), review1.getRating());
             assertUserInfoResponse(response.getData().getContents().get(1).getUser(), testUser.getId(), testUser.getName(), testUser.getSocialType());
         }
 
@@ -233,7 +237,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
             assertThat(response.getData().getContents()).hasSize(1);
 
-            assertReviewInfoResponse(response.getData().getContents().get(0), review1.getId(), store.getId(), store.getName(), review1.getContents(), review1.getRating());
+            assertReviewDetailInfoResponse(response.getData().getContents().get(0), review1.getId(), store.getId(), store.getName(), review1.getContents(), review1.getRating());
             assertUserInfoResponse(response.getData().getContents().get(0).getUser(), testUser.getId(), testUser.getName(), testUser.getSocialType());
         }
 
@@ -254,6 +258,30 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertThat(response.getData().getContents()).isEmpty();
         }
 
+        @Test
+        void 삭제된_가게인경우_없어진_가게라고_표시된다() throws Exception {
+            // given
+            Store deletedStore = StoreCreator.create(testUser.getId(), "원래 가게 이름");
+            deletedStore.addMenus(List.of(MenuCreator.create(deletedStore, "메뉴 이름", "가격", MenuCategoryType.BUNGEOPPANG)));
+            deletedStore.delete();
+            storeRepository.save(deletedStore);
+
+            Review review = ReviewCreator.create(deletedStore.getId(), testUser.getId(), "너무 맛있어요", 5);
+            reviewRepository.save(review);
+
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null, null);
+
+            // when
+            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyStoreReviews(request, token, 200);
+
+            // then
+            assertThat(response.getData().getTotalElements()).isEqualTo(1);
+            assertThat(response.getData().getNextCursor()).isEqualTo(-1);
+            assertThat(response.getData().getContents()).hasSize(1);
+            assertReviewDetailInfoResponse(response.getData().getContents().get(0), review.getId(), deletedStore.getId(), Store.DELETE_STORE_NAME, review.getContents(), review.getRating());
+            assertUserInfoResponse(response.getData().getContents().get(0).getUser(), testUser.getId(), testUser.getName(), testUser.getSocialType());
+        }
+
     }
 
     private void assertUserInfoResponse(UserInfoResponse user, Long id, String name, UserSocialType socialType) {
@@ -268,7 +296,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         assertThat(response.getRating()).isEqualTo(rating);
     }
 
-    private void assertReviewInfoResponse(ReviewDetailResponse response, Long reviewId, Long storeId, String storeName, String contents, int rating) {
+    private void assertReviewDetailInfoResponse(ReviewDetailResponse response, Long reviewId, Long storeId, String storeName, String contents, int rating) {
         assertThat(response.getStoreId()).isEqualTo(storeId);
         assertThat(response.getStoreName()).isEqualTo(storeName);
         assertThat(response.getContents()).isEqualTo(contents);

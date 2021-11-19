@@ -7,7 +7,10 @@ import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHi
 import com.depromeet.threedollar.api.service.visit.dto.response.MyVisitHistoriesScrollResponse;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithStoreResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
+import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
+import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
 import com.depromeet.threedollar.domain.domain.store.Store;
+import com.depromeet.threedollar.domain.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
@@ -150,6 +153,30 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
                 () -> assertThat(response.getData().getContents()).hasSize(0)
+            );
+        }
+
+        @Test
+        void 방문한_가게가_삭제됬을경우_해당_정보를_반환하돼_가게는_삭제표시된다() throws Exception {
+            // given
+            Store deletedStore = StoreCreator.create(testUser.getId(), "가게 이름");
+            deletedStore.addMenus(List.of(MenuCreator.create(deletedStore, "메뉴 이름", "메뉴 가격", MenuCategoryType.BUNGEOPPANG)));
+            deletedStore.delete();
+            storeRepository.save(deletedStore);
+
+            VisitHistory visitHistory = VisitHistoryCreator.create(deletedStore, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
+            visitHistoryRepository.save(visitHistory);
+
+            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(2, null);
+
+            // when
+            ApiResponse<MyVisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+
+            // then
+            assertAll(
+                () -> assertThat(response.getData().getContents()).hasSize(1),
+                () -> assertStoreInfoResponse(response.getData().getContents().get(0).getStore(), deletedStore),
+                () -> assertThat(response.getData().getContents().get(0).getStore().getIsDeleted()).isTrue()
             );
         }
 

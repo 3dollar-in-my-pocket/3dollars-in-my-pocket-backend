@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.domain.domain.visit.repository;
 
-import com.depromeet.threedollar.domain.domain.store.StoreStatus;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.projection.QVisitHistoryWithCounts;
 import com.depromeet.threedollar.domain.domain.visit.projection.QVisitHistoryWithUserProjection;
@@ -14,9 +13,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static com.depromeet.threedollar.domain.domain.menu.QMenu.menu;
-import static com.depromeet.threedollar.domain.domain.visit.QVisitHistory.visitHistory;
-import static com.depromeet.threedollar.domain.domain.user.QUser.user;
 import static com.depromeet.threedollar.domain.domain.store.QStore.store;
+import static com.depromeet.threedollar.domain.domain.user.QUser.user;
+import static com.depromeet.threedollar.domain.domain.visit.QVisitHistory.visitHistory;
 
 @RequiredArgsConstructor
 public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryCustom {
@@ -63,8 +62,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
             .innerJoin(store.menus, menu).fetchJoin()
             .where(
                 visitHistory.userId.eq(userId),
-                lessThanId(lastHistoryId),
-                store.status.eq(StoreStatus.ACTIVE)
+                lessThanId(lastHistoryId)
             )
             .orderBy(visitHistory.id.desc())
             .limit(size)

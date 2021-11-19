@@ -23,9 +23,10 @@ public class StoreInfoResponse extends AuditingTimeResponse {
     private Integer distance;
     private final List<MenuCategoryType> categories = new ArrayList<>();
     private VisitHistoryInfoResponse visitHistory;
+    private Boolean isDeleted;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private StoreInfoResponse(Long storeId, double latitude, double longitude, String storeName, double rating, Integer distance, long existsVisitsCount, long notExistsVisitsCount) {
+    private StoreInfoResponse(Long storeId, double latitude, double longitude, String storeName, double rating, Integer distance, long existsVisitsCount, long notExistsVisitsCount, boolean isDeleted) {
         this.storeId = storeId;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -33,6 +34,7 @@ public class StoreInfoResponse extends AuditingTimeResponse {
         this.rating = rating;
         this.distance = distance;
         this.visitHistory = VisitHistoryInfoResponse.of(existsVisitsCount, notExistsVisitsCount);
+        this.isDeleted = isDeleted;
     }
 
     public static StoreInfoResponse testInstance(int distance, double rating) {
@@ -42,7 +44,7 @@ public class StoreInfoResponse extends AuditingTimeResponse {
             .build();
     }
 
-    public static StoreInfoResponse of(Store store, double latitude, double longitude, long existsVisitsCount, long notExistsVisitsCount) {
+    public static StoreInfoResponse of(Store store, Double latitude, Double longitude, long existsVisitsCount, long notExistsVisitsCount) {
         StoreInfoResponse response = StoreInfoResponse.builder()
             .storeId(store.getId())
             .latitude(store.getLatitude())
@@ -52,29 +54,14 @@ public class StoreInfoResponse extends AuditingTimeResponse {
             .distance(LocationDistanceUtils.getDistance(latitude, longitude, store.getLatitude(), store.getLongitude()))
             .existsVisitsCount(existsVisitsCount)
             .notExistsVisitsCount(notExistsVisitsCount)
+            .isDeleted(store.isDeleted())
             .build();
         response.categories.addAll(store.getMenuCategoriesSortedByCounts());
         response.setBaseTime(store);
         return response;
     }
 
-    public static StoreInfoResponse of(Store store, long existsVisitsCount, long notExistsVisitsCount) {
-        StoreInfoResponse response = StoreInfoResponse.builder()
-            .storeId(store.getId())
-            .latitude(store.getLatitude())
-            .longitude(store.getLongitude())
-            .storeName(store.getName())
-            .rating(store.getRating())
-            .distance(null)
-            .existsVisitsCount(existsVisitsCount)
-            .notExistsVisitsCount(notExistsVisitsCount)
-            .build();
-        response.categories.addAll(store.getMenuCategoriesSortedByCounts());
-        response.setBaseTime(store);
-        return response;
-    }
-
-    public static StoreInfoResponse ofWithOutVisitsCount(Store store) {
+    public static StoreInfoResponse ofZeroVisitCounts(Store store) {
         StoreInfoResponse response = StoreInfoResponse.builder()
             .storeId(store.getId())
             .latitude(store.getLatitude())
@@ -84,6 +71,7 @@ public class StoreInfoResponse extends AuditingTimeResponse {
             .distance(null)
             .existsVisitsCount(0)
             .notExistsVisitsCount(0)
+            .isDeleted(store.isDeleted())
             .build();
         response.categories.addAll(store.getMenuCategoriesSortedByCounts());
         response.setBaseTime(store);

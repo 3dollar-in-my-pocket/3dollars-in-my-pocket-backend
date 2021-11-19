@@ -20,17 +20,19 @@ public class ReviewDetailResponse extends AuditingTimeResponse {
     private String contents;
     private Long storeId;
     private String storeName;
+    private Boolean isDeletedStore;
     private UserInfoResponse user;
     private final List<MenuCategoryType> categories = new ArrayList<>();
 
     @Builder(access = AccessLevel.PRIVATE)
-    private ReviewDetailResponse(Long reviewId, int rating, String contents, Long storeId, String storeName,
+    private ReviewDetailResponse(Long reviewId, int rating, String contents, Long storeId, String storeName, boolean isDeletedStore,
                                  UserInfoResponse user, List<MenuCategoryType> categories) {
         this.reviewId = reviewId;
         this.rating = rating;
         this.contents = contents;
         this.storeId = storeId;
         this.storeName = storeName;
+        this.isDeletedStore = isDeletedStore;
         this.user = user;
         this.categories.addAll(categories);
     }
@@ -42,6 +44,7 @@ public class ReviewDetailResponse extends AuditingTimeResponse {
             .contents(review.getContents())
             .storeId(review.getStoreId())
             .storeName(store.getName())
+            .isDeletedStore(store.isDeleted())
             .user(UserInfoResponse.of(review.getUserId(), review.getUserName(), review.getUserSocialType()))
             .categories(store.getMenuCategoriesSortedByCounts())
             .build();

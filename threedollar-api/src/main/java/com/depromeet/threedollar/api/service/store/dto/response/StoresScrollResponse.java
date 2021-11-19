@@ -49,11 +49,6 @@ public class StoresScrollResponse {
     }
 
     private static List<StoreInfoResponse> getContents(List<Store> stores, VisitHistoriesCountCollection collection, Double latitude, Double longitude) {
-        if (latitude == null || longitude == null) {
-            return stores.stream()
-                .map(store -> StoreInfoResponse.of(store, collection.getStoreExistsVisitsCount(store.getId()), collection.getStoreNotExistsVisitsCount(store.getId())))
-                .collect(Collectors.toList());
-        }
         return stores.stream()
             .map(store -> StoreInfoResponse.of(store, latitude, longitude,
                 collection.getStoreExistsVisitsCount(store.getId()), collection.getStoreNotExistsVisitsCount(store.getId())))

@@ -4,7 +4,6 @@ import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewStatus;
 import com.depromeet.threedollar.domain.domain.review.projection.QReviewWithWriterProjection;
 import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
-import com.depromeet.threedollar.domain.domain.store.StoreStatus;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -12,9 +11,9 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.LockModeType;
 import java.util.List;
 
+import static com.depromeet.threedollar.domain.domain.review.QReview.review;
 import static com.depromeet.threedollar.domain.domain.store.QStore.store;
 import static com.depromeet.threedollar.domain.domain.user.QUser.user;
-import static com.depromeet.threedollar.domain.domain.review.QReview.review;
 
 @RequiredArgsConstructor
 public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
@@ -51,8 +50,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
             .innerJoin(store).on(review.storeId.eq(store.id))
             .where(
                 review.userId.eq(userId),
-                review.status.eq(ReviewStatus.POSTED),
-                store.status.eq(StoreStatus.ACTIVE)
+                review.status.eq(ReviewStatus.POSTED)
             )
             .fetchCount();
     }
@@ -87,7 +85,6 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
             .where(
                 review.userId.eq(userId),
                 review.status.eq(ReviewStatus.POSTED),
-                store.status.eq(StoreStatus.ACTIVE),
                 lessThanId(lastStoreId)
             )
             .orderBy(review.id.desc())
