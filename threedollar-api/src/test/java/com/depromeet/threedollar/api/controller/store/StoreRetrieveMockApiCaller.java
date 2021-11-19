@@ -27,7 +27,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         super(mockMvc, objectMapper);
     }
 
-    public ApiResponse<List<StoreInfoResponse>> getNearStores(RetrieveNearStoresRequest request, int expectedStatus) throws Exception {
+    public ApiResponse<List<StoreWithDistanceResponse>> getNearStores(RetrieveNearStoresRequest request, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/stores/near")
             .param("latitude", String.valueOf(request.getLatitude()))
             .param("longitude", String.valueOf(request.getLongitude()))

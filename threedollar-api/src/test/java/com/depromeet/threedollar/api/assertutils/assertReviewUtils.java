@@ -1,10 +1,15 @@
 package com.depromeet.threedollar.api.assertutils;
 
+import com.depromeet.threedollar.api.service.review.dto.response.ReviewDetailResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewWithUserResponse;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewStatus;
+import com.depromeet.threedollar.domain.domain.store.Store;
+import com.depromeet.threedollar.domain.domain.user.User;
 
+import static com.depromeet.threedollar.api.assertutils.assertStoreUtils.assertStoreInfoResponse;
+import static com.depromeet.threedollar.api.assertutils.assertUserUtils.assertUserInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -17,6 +22,16 @@ public final class assertReviewUtils {
             () -> assertThat(review.getContents()).isEqualTo(contents),
             () -> assertThat(review.getRating()).isEqualTo(rating),
             () -> assertThat(review.getStatus()).isEqualTo(status)
+        );
+    }
+
+    public static void assertReviewDetailInfoResponse(ReviewDetailResponse response, Review review, Store store, User user) {
+        assertAll(
+            () -> assertThat(response.getReviewId()).isEqualTo(review.getId()),
+            () -> assertThat(response.getRating()).isEqualTo(review.getRating()),
+            () -> assertThat(response.getContents()).isEqualTo(review.getContents()),
+            () -> assertStoreInfoResponse(response.getStore(), store),
+            () -> assertUserInfoResponse(response.getUser(), user)
         );
     }
 

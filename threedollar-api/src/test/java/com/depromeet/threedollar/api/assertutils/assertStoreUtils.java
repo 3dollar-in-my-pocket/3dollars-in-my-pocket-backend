@@ -3,6 +3,7 @@ package com.depromeet.threedollar.api.assertutils;
 import com.depromeet.threedollar.api.service.store.dto.response.MenuResponse;
 import com.depromeet.threedollar.api.service.store.dto.response.StoreDetailResponse;
 import com.depromeet.threedollar.api.service.store.dto.response.StoreInfoResponse;
+import com.depromeet.threedollar.api.service.store.dto.response.StoreWithDistanceResponse;
 import com.depromeet.threedollar.domain.domain.common.Location;
 import com.depromeet.threedollar.domain.domain.menu.Menu;
 import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
@@ -55,7 +56,28 @@ public final class assertStoreUtils {
         );
     }
 
-    public static void assertStoreInfoResponse(StoreInfoResponse response, Long storeId, Double latitude, Double longitude, String name, double rating) {
+    public static void assertStoreWithDistanceResponse(StoreWithDistanceResponse response, Store store) {
+        assertAll(
+            () -> assertThat(response.getStoreId()).isEqualTo(store.getId()),
+            () -> assertThat(response.getStoreName()).isEqualTo(store.getName()),
+            () -> assertThat(response.getLatitude()).isEqualTo(store.getLatitude()),
+            () -> assertThat(response.getLongitude()).isEqualTo(store.getLongitude()),
+            () -> assertThat(response.getRating()).isEqualTo(store.getRating()),
+            () -> assertThat(response.getCategories()).isEqualTo(store.getMenuCategoriesSortedByCounts()),
+            () -> assertThat(response.getIsDeleted()).isEqualTo(store.isDeleted())
+        );
+    }
+
+    public static void assertStoreWithDistanceResponse(StoreWithDistanceResponse response, double latitude, double longitude, String storeName, List<MenuCategoryType> categories) {
+        assertAll(
+            () -> assertThat(response.getLatitude()).isEqualTo(latitude),
+            () -> assertThat(response.getLongitude()).isEqualTo(longitude),
+            () -> assertThat(response.getStoreName()).isEqualTo(storeName),
+            () -> assertThat(response.getCategories()).isEqualTo(categories)
+        );
+    }
+
+    public static void assertStoreWithDistanceResponse(StoreWithDistanceResponse response, Long storeId, Double latitude, Double longitude, String name, double rating) {
         assertAll(
             () -> assertThat(response.getStoreId()).isEqualTo(storeId),
             () -> assertThat(response.getLatitude()).isEqualTo(latitude),

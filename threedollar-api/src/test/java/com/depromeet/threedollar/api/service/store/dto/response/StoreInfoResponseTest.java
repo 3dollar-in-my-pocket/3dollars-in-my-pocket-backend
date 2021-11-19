@@ -24,7 +24,7 @@ class StoreInfoResponseTest {
         store.delete();
 
         // when
-        StoreInfoResponse response = StoreInfoResponse.of(store, null, null, 0, 0);
+        StoreWithDistanceResponse response = StoreWithDistanceResponse.of(store, null, null, 0, 0);
 
         // then
         assertAll(
@@ -44,7 +44,7 @@ class StoreInfoResponseTest {
         store.delete();
 
         // when
-        StoreInfoResponse response = StoreInfoResponse.of(store, null, null, 0, 0);
+        StoreWithDistanceResponse response = StoreWithDistanceResponse.of(store, null, null, 0, 0);
 
         // then
         assertAll(
@@ -66,7 +66,7 @@ class StoreInfoResponseTest {
         ));
 
         // when
-        StoreInfoResponse response = StoreInfoResponse.of(store, null, null, 0, 0);
+        StoreWithDistanceResponse response = StoreWithDistanceResponse.of(store, null, null, 0, 0);
 
         // then
         assertThat(response.getDistance()).isEqualTo(0);

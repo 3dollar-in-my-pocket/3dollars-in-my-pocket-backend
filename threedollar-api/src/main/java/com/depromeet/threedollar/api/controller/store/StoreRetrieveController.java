@@ -25,7 +25,7 @@ public class StoreRetrieveController {
 
     @ApiOperation(value = "메인 페이지 - 위도, 경도 기준 내 주위의 가게 목록을 조회합니다", notes = "orderType: 정렬이 필요한 경우 category: 카테고리 필터링이 필요한 경우")
     @GetMapping("/api/v2/stores/near")
-    public ApiResponse<List<StoreInfoResponse>> getNearStores(@Valid RetrieveNearStoresRequest request) {
+    public ApiResponse<List<StoreWithDistanceResponse>> getNearStores(@Valid RetrieveNearStoresRequest request) {
         return ApiResponse.success(storeRetrieveService.getNearStores(request));
     }
 

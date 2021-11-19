@@ -22,9 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
+import static com.depromeet.threedollar.api.assertutils.assertReviewUtils.assertReviewDetailInfoResponse;
 import static com.depromeet.threedollar.api.assertutils.assertReviewUtils.assertReviewInfoResponse;
-import static com.depromeet.threedollar.api.assertutils.assertStoreUtils.assertStoreInfoResponse;
-import static com.depromeet.threedollar.api.assertutils.assertUserUtils.assertUserInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ReviewControllerTest extends SetupStoreControllerTest {
@@ -134,13 +133,8 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertThat(response.getData().getNextCursor()).isEqualTo(review3.getId());
             assertThat(response.getData().getContents()).hasSize(2);
 
-            assertReviewInfoResponse(response.getData().getContents().get(0).getReview(), review4);
-            assertStoreInfoResponse(response.getData().getContents().get(0).getStore(), store);
-            assertUserInfoResponse(response.getData().getContents().get(0).getUser(), testUser);
-
-            assertReviewInfoResponse(response.getData().getContents().get(1).getReview(), review3);
-            assertStoreInfoResponse(response.getData().getContents().get(1).getStore(), store);
-            assertUserInfoResponse(response.getData().getContents().get(1).getUser(), testUser);
+            assertReviewDetailInfoResponse(response.getData().getContents().get(0), review4, store, testUser);
+            assertReviewDetailInfoResponse(response.getData().getContents().get(1), review3, store, testUser);
         }
 
         @Test
@@ -162,13 +156,8 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertThat(response.getData().getNextCursor()).isEqualTo(review2.getId());
             assertThat(response.getData().getContents()).hasSize(2);
 
-            assertReviewInfoResponse(response.getData().getContents().get(0).getReview(), review3);
-            assertStoreInfoResponse(response.getData().getContents().get(0).getStore(), store);
-            assertUserInfoResponse(response.getData().getContents().get(0).getUser(), testUser);
-
-            assertReviewInfoResponse(response.getData().getContents().get(1).getReview(), review2);
-            assertStoreInfoResponse(response.getData().getContents().get(1).getStore(), store);
-            assertUserInfoResponse(response.getData().getContents().get(1).getUser(), testUser);
+            assertReviewDetailInfoResponse(response.getData().getContents().get(0), review3, store, testUser);
+            assertReviewDetailInfoResponse(response.getData().getContents().get(1), review2, store, testUser);
         }
 
         @Test
@@ -190,13 +179,8 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertThat(response.getData().getNextCursor()).isEqualTo(review2.getId());
             assertThat(response.getData().getContents()).hasSize(2);
 
-            assertReviewInfoResponse(response.getData().getContents().get(0).getReview(), review3);
-            assertStoreInfoResponse(response.getData().getContents().get(0).getStore(), store);
-            assertUserInfoResponse(response.getData().getContents().get(0).getUser(), testUser);
-
-            assertReviewInfoResponse(response.getData().getContents().get(1).getReview(), review2);
-            assertStoreInfoResponse(response.getData().getContents().get(1).getStore(), store);
-            assertUserInfoResponse(response.getData().getContents().get(1).getUser(), testUser);
+            assertReviewDetailInfoResponse(response.getData().getContents().get(0), review3, store, testUser);
+            assertReviewDetailInfoResponse(response.getData().getContents().get(1), review2, store, testUser);
         }
 
         @Test
@@ -218,13 +202,8 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
             assertThat(response.getData().getContents()).hasSize(2);
 
-            assertReviewInfoResponse(response.getData().getContents().get(0).getReview(), review2);
-            assertStoreInfoResponse(response.getData().getContents().get(0).getStore(), store);
-            assertUserInfoResponse(response.getData().getContents().get(0).getUser(), testUser);
-
-            assertReviewInfoResponse(response.getData().getContents().get(1).getReview(), review1);
-            assertStoreInfoResponse(response.getData().getContents().get(1).getStore(), store);
-            assertUserInfoResponse(response.getData().getContents().get(1).getUser(), testUser);
+            assertReviewDetailInfoResponse(response.getData().getContents().get(0), review2, store, testUser);
+            assertReviewDetailInfoResponse(response.getData().getContents().get(1), review1, store, testUser);
         }
 
         @Test
@@ -246,9 +225,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
             assertThat(response.getData().getContents()).hasSize(1);
 
-            assertReviewInfoResponse(response.getData().getContents().get(0).getReview(), review1);
-            assertStoreInfoResponse(response.getData().getContents().get(0).getStore(), store);
-            assertUserInfoResponse(response.getData().getContents().get(0).getUser(), testUser);
+            assertReviewDetailInfoResponse(response.getData().getContents().get(0), review1, store, testUser);
         }
 
         @Test
@@ -289,9 +266,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
             assertThat(response.getData().getContents()).hasSize(1);
 
-            assertReviewInfoResponse(response.getData().getContents().get(0).getReview(), review);
-            assertStoreInfoResponse(response.getData().getContents().get(0).getStore(), deletedStore);
-            assertUserInfoResponse(response.getData().getContents().get(0).getUser(), testUser);
+            assertReviewDetailInfoResponse(response.getData().getContents().get(0), review, deletedStore, testUser);
         }
 
         @Deprecated

@@ -108,12 +108,12 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 .build();
 
             // when
-            ApiResponse<List<StoreInfoResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
 
             // then
             assertThat(response.getData()).hasSize(2);
-            assertStoreInfoResponse(response.getData().get(0), store1.getId(), store1.getLatitude(), store1.getLongitude(), storeName1, store1.getRating());
-            assertStoreInfoResponse(response.getData().get(1), store2.getId(), store2.getLatitude(), store2.getLongitude(), storeName2, store2.getRating());
+            assertStoreWithDistanceResponse(response.getData().get(0), store1.getId(), store1.getLatitude(), store1.getLongitude(), storeName1, store1.getRating());
+            assertStoreWithDistanceResponse(response.getData().get(1), store2.getId(), store2.getLatitude(), store2.getLongitude(), storeName2, store2.getRating());
         }
 
         @AutoSource
@@ -136,7 +136,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 .build();
 
             // when
-            ApiResponse<List<StoreInfoResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
 
             // then
             assertThat(response.getData()).hasSize(1);
@@ -162,7 +162,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 .build();
 
             // when
-            ApiResponse<List<StoreInfoResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
 
             // then
             assertThat(response.getData()).isEmpty();
@@ -190,7 +190,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 .build();
 
             // when
-            ApiResponse<List<StoreInfoResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
 
             // then
             assertThat(response.getData()).hasSize(1);
@@ -218,7 +218,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 .build();
 
             // when
-            ApiResponse<List<StoreInfoResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
 
             // then
             assertThat(response.getData()).hasSize(1);
@@ -245,7 +245,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 .build();
 
             // when
-            ApiResponse<List<StoreInfoResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
 
             // then
             assertThat(response.getData()).hasSize(2);
@@ -273,7 +273,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 .build();
 
             // when
-            ApiResponse<List<StoreInfoResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
 
             // then
             assertThat(response.getData()).hasSize(2);
@@ -592,8 +592,8 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getNextCursor()).isEqualTo(store2.getId());
             assertThat(response.getData().getContents()).hasSize(2);
 
-            assertStoreInfoResponse(response.getData().getContents().get(0), store3);
-            assertStoreInfoResponse(response.getData().getContents().get(1), store2);
+            assertStoreWithDistanceResponse(response.getData().getContents().get(0), store3);
+            assertStoreWithDistanceResponse(response.getData().getContents().get(1), store2);
         }
 
         @Test
@@ -622,8 +622,8 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getTotalElements()).isEqualTo(4);
             assertThat(response.getData().getNextCursor()).isEqualTo(store2.getId());
             assertThat(response.getData().getContents()).hasSize(2);
-            assertStoreInfoResponse(response.getData().getContents().get(0), store3);
-            assertStoreInfoResponse(response.getData().getContents().get(1), store2);
+            assertStoreWithDistanceResponse(response.getData().getContents().get(0), store3);
+            assertStoreWithDistanceResponse(response.getData().getContents().get(1), store2);
         }
 
         @Test
@@ -705,7 +705,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
             assertThat(response.getData().getTotalElements()).isEqualTo(3);
             assertThat(response.getData().getContents()).hasSize(1);
-            assertStoreInfoResponse(response.getData().getContents().get(0), store1);
+            assertStoreWithDistanceResponse(response.getData().getContents().get(0), store1);
         }
 
         @Test
@@ -726,7 +726,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getTotalElements()).isEqualTo(1);
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
             assertThat(response.getData().getContents()).hasSize(1);
-            assertStoreInfoResponse(response.getData().getContents().get(0), store.getId(), store.getLatitude(), store.getLongitude(), store.getName(), store.getRating());
+            assertStoreWithDistanceResponse(response.getData().getContents().get(0), store.getId(), store.getLatitude(), store.getLongitude(), store.getName(), store.getRating());
 
             assertThat(response.getData().getContents().get(0).getCategories()).hasSize(1);
             assertThat(response.getData().getContents().get(0).getCategories()).containsExactlyInAnyOrder(MenuCategoryType.BUNGEOPPANG);

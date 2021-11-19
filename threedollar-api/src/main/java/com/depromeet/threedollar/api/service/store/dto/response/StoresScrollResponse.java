@@ -19,11 +19,11 @@ public class StoresScrollResponse {
 
     private static final long LAST_CURSOR = -1L;
 
-    private List<StoreInfoResponse> contents = new ArrayList<>();
+    private List<StoreWithDistanceResponse> contents = new ArrayList<>();
     private long totalElements;
     private long nextCursor;
 
-    private StoresScrollResponse(List<StoreInfoResponse> contents, long totalElements, long nextCursor) {
+    private StoresScrollResponse(List<StoreWithDistanceResponse> contents, long totalElements, long nextCursor) {
         this.contents = contents;
         this.totalElements = totalElements;
         this.nextCursor = nextCursor;
@@ -48,9 +48,9 @@ public class StoresScrollResponse {
         return new StoresScrollResponse(getContents(stores, collection, latitude, longitude), totalElements, nextCursor);
     }
 
-    private static List<StoreInfoResponse> getContents(List<Store> stores, VisitHistoriesCountCollection collection, Double latitude, Double longitude) {
+    private static List<StoreWithDistanceResponse> getContents(List<Store> stores, VisitHistoriesCountCollection collection, Double latitude, Double longitude) {
         return stores.stream()
-            .map(store -> StoreInfoResponse.of(store, latitude, longitude,
+            .map(store -> StoreWithDistanceResponse.of(store, latitude, longitude,
                 collection.getStoreExistsVisitsCount(store.getId()), collection.getStoreNotExistsVisitsCount(store.getId())))
             .collect(Collectors.toList());
     }
