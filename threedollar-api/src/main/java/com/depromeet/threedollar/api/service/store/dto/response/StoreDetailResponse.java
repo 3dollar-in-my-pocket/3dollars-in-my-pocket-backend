@@ -35,7 +35,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
     private String storeName;
     private StoreType storeType;
     private double rating;
-    private Integer distance;
+    private int distance;
     private final List<MenuCategoryType> categories = new ArrayList<>();
     private final Set<DayOfTheWeek> appearanceDays = new HashSet<>();
     private final Set<PaymentMethodType> paymentMethods = new HashSet<>();
@@ -56,7 +56,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
 
     @Builder(access = AccessLevel.PRIVATE)
     private StoreDetailResponse(Long storeId, double latitude, double longitude, String storeName, StoreType storeType,
-                                double rating, Integer distance, UserInfoResponse user, VisitHistoryCountsResponse visitHistory) {
+                                double rating, int distance, UserInfoResponse user, VisitHistoryCountsResponse visitHistory) {
         this.storeId = storeId;
         this.latitude = latitude;
         this.longitude = longitude;

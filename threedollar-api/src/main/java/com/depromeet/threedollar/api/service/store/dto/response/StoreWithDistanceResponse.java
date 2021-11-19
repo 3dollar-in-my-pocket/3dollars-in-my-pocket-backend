@@ -23,13 +23,13 @@ public class StoreWithDistanceResponse extends AuditingTimeResponse {
     private Boolean isDeleted;
     private final List<MenuCategoryType> categories = new ArrayList<>();
 
-    private Integer distance;
+    private int distance;
 
     private VisitHistoryCountsResponse visitHistory;
 
     @Builder(access = AccessLevel.PRIVATE)
     private StoreWithDistanceResponse(Long storeId, double latitude, double longitude, String storeName, double rating,
-                                      Integer distance, long existsVisitsCount, long notExistsVisitsCount, boolean isDeleted) {
+                                      int distance, long existsVisitsCount, long notExistsVisitsCount, boolean isDeleted) {
         this.storeId = storeId;
         this.latitude = latitude;
         this.longitude = longitude;
