@@ -99,7 +99,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             reviewService.addReview(request, userId);
 
             // then
-            verify(userMedalEventListener, times(1)).addAvailableMedalByAddReview(any(ReviewCreatedEvent.class));
+            verify(userMedalEventListener, times(1)).addObtainableMedalsByAddReview(any(ReviewCreatedEvent.class));
         }
 
     }

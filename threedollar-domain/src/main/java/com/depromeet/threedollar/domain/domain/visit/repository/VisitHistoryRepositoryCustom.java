@@ -20,6 +20,6 @@ public interface VisitHistoryRepositoryCustom {
 
 	long findCountsByUserId(Long userId);
 
-    long findCountsByuserIdAndVisitType(Long userId, VisitType visitType);
+    long findCountsByUserIdAndVisitType(Long userId, VisitType visitType);
 
 }

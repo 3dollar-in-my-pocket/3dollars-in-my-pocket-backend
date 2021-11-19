@@ -26,7 +26,6 @@ public class UserMedalService {
     private final UserRepository userRepository;
     private final UserMedalRepository userMedalRepository;
 
-    // TODO 차후 기획이 정해지면 특정 조건에 이벤트 방식으로 메달을 획득할 수 있도록 사용.
     @Transactional
     public void addUserMedal(UserMedalType type, Long userId) {
         if (userMedalRepository.existsMedalByUserId(userId, type)) {
@@ -45,18 +44,18 @@ public class UserMedalService {
     @Transactional
     public UserInfoResponse activateUserMedal(ActivateUserMedalRequest request, Long userId) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
-        validateHasMedal(userId, request.getMedalType());
-        user.updateMedal(request.getMedalType());
+        validateIsAvailableMedal(userId, request.getMedalType());
+        user.updateActiveMedal(request.getMedalType());
         return UserInfoResponse.of(user);
     }
 
-    private void validateHasMedal(Long userId, UserMedalType medalType) {
-        if (hasNotMedal(userId, medalType)) {
+    private void validateIsAvailableMedal(Long userId, UserMedalType medalType) {
+        if (isNotAvailableMedal(userId, medalType)) {
             throw new NotFoundException(String.format("해당하는 유저 (%s)에게 메달 (%s)은 존재하지 않습니다", userId, medalType), NOT_FOUND_MEDAL_EXCEPTION);
         }
     }
 
-    private boolean hasNotMedal(Long userId, UserMedalType medalType) {
+    private boolean isNotAvailableMedal(Long userId, UserMedalType medalType) {
         if (medalType == null) {
             return false;
         }

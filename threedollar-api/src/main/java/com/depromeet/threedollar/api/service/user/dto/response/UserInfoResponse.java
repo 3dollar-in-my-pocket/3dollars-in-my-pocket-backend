@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserInfoResponse {
 
-    private static final UserInfoResponse SIGN_OUT_USER = new UserInfoResponse(null, "사라진 제보자", null);
+    private static final UserInfoResponse SIGN_OUT_USER = new UserInfoResponse(null, "사라진 제보자", null, null);
 
     private Long userId;
     private String name;

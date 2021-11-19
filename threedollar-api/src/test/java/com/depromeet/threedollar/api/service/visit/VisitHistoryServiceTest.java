@@ -102,7 +102,7 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
             visitHistoryService.addVisitHistory(request, userId, dateOfVisit);
 
             // then
-            verify(userMedalEventListener, times(1)).addAvailableMedalByAddVisitHistory(any(VisitHistoryAddedEvent.class));
+            verify(userMedalEventListener, times(1)).addObtainableMedalsByVisitStore(any(VisitHistoryAddedEvent.class));
         }
 
     }

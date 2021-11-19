@@ -18,26 +18,26 @@ public class UserMedalEventListener {
 
     @Async
     @EventListener
-    public void addAvailableMedalByAddStore(StoreCreatedEvent event) {
-        userMedalEventService.addAvailableMedalByAddStore(event.getUserId());
+    public void addObtainableMedalsByAddStore(StoreCreatedEvent event) {
+        userMedalEventService.addObtainableMedalsByAddStore(event.getUserId());
     }
 
     @Async
     @EventListener
-    public void addAvailableMedalByAddReview(ReviewCreatedEvent event) {
-        userMedalEventService.addAvailableMedalByAddReview(event.getUserId());
+    public void addObtainableMedalsByDeleteStore(StoreDeletedEvent event) {
+        userMedalEventService.addObtainableMedalsByDeleteStore(event.getUserId());
     }
 
     @Async
     @EventListener
-    public void addAvailableMedalByAddVisitHistory(VisitHistoryAddedEvent event) {
-        userMedalEventService.addAvailableMedalByVisitHistory(event.getUserId());
+    public void addObtainableMedalsByAddReview(ReviewCreatedEvent event) {
+        userMedalEventService.addObtainableMedalsByAddReview(event.getUserId());
     }
 
     @Async
     @EventListener
-    public void addAvailableMedalByDeleteStore(StoreDeletedEvent event) {
-        userMedalEventService.addAvailableMedalByDeleteStore(event.getUserId());
+    public void addObtainableMedalsByVisitStore(VisitHistoryAddedEvent event) {
+        userMedalEventService.addObtainableMedalsByVisitStore(event.getUserId());
     }
 
 }

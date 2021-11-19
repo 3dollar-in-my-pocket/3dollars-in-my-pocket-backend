@@ -7,14 +7,13 @@ import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalCreator;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalType;
+import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.NullSource;
 
 import java.util.List;
 
-import static com.depromeet.threedollar.common.exception.ErrorCode.NOT_FOUND_MEDAL_EXCEPTION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -32,13 +31,13 @@ class UserMedalControllerTest extends SetupUserControllerTest {
         super.cleanup();
     }
 
-    @DisplayName("사용자가 보유중인 메달들을 조회한다")
+    @DisplayName("사용자가 보유중인 칭호들을 조회한다")
     @Nested
     class getAvailableUserMedals {
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
-        void 보유중인_메달들을_모두_조회한다(UserMedalType medalType) throws Exception {
+        void 보유중인_칭호들을_모두_조회한다(UserMedalType medalType) throws Exception {
             // given
             userMedalRepository.save(UserMedalCreator.create(testUser.getId(), medalType));
 
@@ -52,30 +51,15 @@ class UserMedalControllerTest extends SetupUserControllerTest {
             );
         }
 
-        @Test
-        void 다른_사람이_보유한_메달들은_조회되지_않는다() throws Exception {
-            // given
-            Long anotherUserId = 99999L;
-            userMedalRepository.save(UserMedalCreator.create(anotherUserId, UserMedalType.BUNGEOPPANG_CHALLENGER));
-
-            // when
-            ApiResponse<List<UserMedalResponse>> response = userMedalMockApiCaller.getAvailableUserMedals(token, 200);
-
-            // then
-            assertAll(
-                () -> assertThat(response.getData()).isEmpty()
-            );
-        }
-
     }
 
-    @DisplayName("사용자의 장착중인 메달을 수정한다")
+    @DisplayName("사용자의 장착중인 대표 메달을 변경한다")
     @Nested
     class activateUserMedal {
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
-        void 유저가_보유중인_메달을_교체한다(UserMedalType medalType) throws Exception {
+        void 유저가_장착중인_대표_칭호을_변경한다(UserMedalType medalType) throws Exception {
             // given
             userMedalRepository.save(UserMedalCreator.create(testUser.getId(), medalType));
             ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(medalType);
@@ -94,7 +78,7 @@ class UserMedalControllerTest extends SetupUserControllerTest {
 
         @NullSource
         @ParameterizedTest
-        void 메달_타입이_NULL인경우_아무런_메달을_장착하지_않는다(UserMedalType medalType) throws Exception {
+        void 대표_칭호를_변경시_메달_타입이_NULL인경우_아무런_메달을_장착하지_않는다(UserMedalType medalType) throws Exception {
             // given
             ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(medalType);
 
@@ -107,22 +91,6 @@ class UserMedalControllerTest extends SetupUserControllerTest {
                 () -> assertThat(response.getData().getName()).isEqualTo(testUser.getName()),
                 () -> assertThat(response.getData().getSocialType()).isEqualTo(testUser.getSocialType()),
                 () -> assertThat(response.getData().getMedalType()).isEqualTo(medalType)
-            );
-        }
-
-        @EnumSource
-        @ParameterizedTest
-        void 보유중이지_않은_메달을_장착_요청시_404_에러가_발생한다(UserMedalType medalType) throws Exception {
-            // given
-            ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(medalType);
-
-            // when
-            ApiResponse<UserInfoResponse> response = userMedalMockApiCaller.activateUserMedal(request, token, 404);
-
-            // then
-            assertAll(
-                () -> assertThat(response.getResultCode()).isEqualTo(NOT_FOUND_MEDAL_EXCEPTION.getCode()),
-                () -> assertThat(response.getMessage()).isEqualTo(NOT_FOUND_MEDAL_EXCEPTION.getMessage())
             );
         }
 

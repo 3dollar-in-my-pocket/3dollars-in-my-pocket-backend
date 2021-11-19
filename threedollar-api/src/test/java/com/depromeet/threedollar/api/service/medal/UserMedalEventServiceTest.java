@@ -62,11 +62,11 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
     }
 
     @Nested
-    class 가게_제보시_훈장 {
+    class 가게_제보시_칭호_획득 {
 
-        @DisplayName("사장님 이분 서비스 주세요 훈장 획득 성공")
+        @DisplayName("사장님 이분 서비스 주세요 칭호 획득 성공")
         @Test
-        void 신규가게를_3번_제보하면_훈장_획득() {
+        void 신규가게를_3번_제보하면_칭호_획득() {
             // given
             for (int i = 0; i < 3; i++) {
                 Store store = StoreCreator.create(userId, "가게 이름", 34, 124);
@@ -74,7 +74,7 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
                 storeRepository.save(store);
             }
 
-            userMedalEventService.addAvailableMedalByAddStore(userId);
+            userMedalEventService.addObtainableMedalsByAddStore(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -85,9 +85,9 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
             );
         }
 
-        @DisplayName("사장님 이분 서비스 주세요 훈장 획득 실패")
+        @DisplayName("사장님 이분 서비스 주세요 칭호 획득 실패")
         @Test
-        void 신규가게를_2번_제보하면_사장님_훈장을_얻지_못한다() {
+        void 신규가게를_2번_제보하면_사장님_칭호을_얻지_못한다() {
             // given
             for (int i = 0; i < 2; i++) {
                 Store store = StoreCreator.create(userId, "가게 이름", 34, 124);
@@ -95,7 +95,7 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
                 storeRepository.save(store);
             }
 
-            userMedalEventService.addAvailableMedalByAddStore(userId);
+            userMedalEventService.addObtainableMedalsByAddStore(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -105,22 +105,22 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
     }
 
     @Nested
-    class 가게_삭제_훈장 {
+    class 가게_삭제시_칭호_획득 {
 
-        @DisplayName("우리 동네 보안관 훈장 획득 성공")
+        @DisplayName("우리 동네 보안관 칭호 획득 성공")
         @Test
-        void 가게_삭제_제보를_3번_제보하면_훈장_획득() {
+        void 가게_삭제_제보를_3번_제보하면_칭호_획득() {
             // given
             Store store = StoreCreator.create(userId, "가게 이름", 34, 124);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
-            for (int i = 0; i < 3; i++) {
-                storeDeleteRequestRepository.save(StoreDeleteRequest.of(store.getId(), userId, DeleteReasonType.NOSTORE));
+            for (long i = 0; i < 3; i++) {
+                storeDeleteRequestRepository.save(StoreDeleteRequest.of(i + 1, userId, DeleteReasonType.NOSTORE));
             }
 
             // when
-            userMedalEventService.addAvailableMedalByDeleteStore(userId);
+            userMedalEventService.addObtainableMedalsByDeleteStore(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -131,20 +131,20 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
             );
         }
 
-        @DisplayName("우리 동네 보안관 훈장 획득 실패")
+        @DisplayName("우리 동네 보안관 칭호 획득 실패")
         @Test
-        void 가게_삭제_제보를_2번_하면_훈장을_얻지_못한다() {
+        void 가게_삭제_제보를_2번_하면_칭호을_얻지_못한다() {
             // given
             Store store = StoreCreator.create(userId, "가게 이름", 34, 124);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
-            for (int i = 0; i < 2; i++) {
-                storeDeleteRequestRepository.save(StoreDeleteRequest.of(store.getId(), userId, DeleteReasonType.NOSTORE));
+            for (long i = 0; i < 2; i++) {
+                storeDeleteRequestRepository.save(StoreDeleteRequest.of(i + 1, userId, DeleteReasonType.NOSTORE));
             }
 
             // when
-            userMedalEventService.addAvailableMedalByDeleteStore(userId);
+            userMedalEventService.addObtainableMedalsByDeleteStore(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -154,11 +154,11 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
     }
 
     @Nested
-    class 리뷰_등록_훈장 {
+    class 리뷰_등록시_칭호_획득 {
 
-        @DisplayName("미슐랭 평가단이 바로 나에요 훈장 획득 성공")
+        @DisplayName("미슐랭 평가단이 바로 나에요 칭호 획득 성공")
         @Test
-        void 리뷰를_5번_작성하면_훈장_획득() {
+        void 리뷰를_5번_작성하면_칭호_획득() {
             // given
             Store store = StoreCreator.create(userId, "가게 이름", 34, 124);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
@@ -169,7 +169,7 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
             }
 
             // when
-            userMedalEventService.addAvailableMedalByAddReview(userId);
+            userMedalEventService.addObtainableMedalsByAddReview(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -180,9 +180,9 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
             );
         }
 
-        @DisplayName("미슐랭 평가단이 바로 나에요 훈장 획득 실패")
+        @DisplayName("미슐랭 평가단이 바로 나에요 칭호 획득 실패")
         @Test
-        void 리뷰_등록을_4번_하면_훈장을_얻지_못한다() {
+        void 리뷰_등록을_4번_하면_칭호을_얻지_못한다() {
             // given
             Store store = StoreCreator.create(userId, "가게 이름", 34, 124);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
@@ -193,7 +193,7 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
             }
 
             // when
-            userMedalEventService.addAvailableMedalByAddReview(userId);
+            userMedalEventService.addObtainableMedalsByAddReview(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -203,22 +203,20 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
     }
 
     @Nested
-    class 가게_방문_인증_훈장 {
+    class 가게_방문_인증시_칭호_획득 {
 
-        @DisplayName("붕어빵 챌린저 훈장 획득 성공")
+        @DisplayName("붕어빵 챌린저 칭호 획득 성공")
         @Test
-        void 가게_방문_1번시_붕어빵_챌린저_훈장_획득_성공() {
+        void 가게_방문_1번시_붕어빵_챌린저_칭호_획득_성공() {
             // given
             Store store = StoreCreator.create(userId, "가게 이름", 34, 124);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
-            for (int i = 0; i < 1; i++) {
-                visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 11, 12)));
-            }
+            visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 11, 12)));
 
             // when
-            userMedalEventService.addAvailableMedalByVisitHistory(userId);
+            userMedalEventService.addObtainableMedalsByVisitStore(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -229,36 +227,36 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
             );
         }
 
-        @DisplayName("붕어빵 챌린저 훈장 획득 실패")
+        @DisplayName("붕어빵 챌린저 칭호 획득 실패")
         @Test
-        void 가게_방문_0번시_붕어빵_챌린저_훈장_획득_실패() {
+        void 가게_방문_0번시_붕어빵_챌린저_칭호_획득_실패() {
             // given
             Store store = StoreCreator.create(userId, "가게 이름", 34, 124);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             // when
-            userMedalEventService.addAvailableMedalByVisitHistory(userId);
+            userMedalEventService.addObtainableMedalsByVisitStore(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
             assertThat(userMedals).isEmpty();
         }
 
-        @DisplayName("붕어빵 전문가 훈장 획득 성공")
+        @DisplayName("붕어빵 전문가 칭호 획득 성공")
         @Test
-        void 가게_방문_3번시_붕어빵_전문가_훈장_획득_성공() {
+        void 가게_방문_3번시_붕어빵_전문가_칭호_획득_성공() {
             // given
             Store store = StoreCreator.create(userId, "가게 이름", 34, 124);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             for (int i = 0; i < 3; i++) {
-                visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 11, 12)));
+                visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 11, i + 1)));
             }
 
             // when
-            userMedalEventService.addAvailableMedalByVisitHistory(userId);
+            userMedalEventService.addObtainableMedalsByVisitStore(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -269,20 +267,20 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
             );
         }
 
-        @DisplayName("붕어빵 전문가 훈장 획득 실패")
+        @DisplayName("붕어빵 전문가 칭호 획득 실패")
         @Test
-        void 가게_방문_2번시_붕어빵_전문가_훈장_획득_실패() {
+        void 가게_방문_2번시_붕어빵_전문가_칭호_획득_실패() {
             // given
             Store store = StoreCreator.create(userId, "가게 이름", 34, 124);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             for (int i = 0; i < 2; i++) {
-                visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 11, 12)));
+                visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 11, i + 1)));
             }
 
             // when
-            userMedalEventService.addAvailableMedalByVisitHistory(userId);
+            userMedalEventService.addObtainableMedalsByVisitStore(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -294,7 +292,7 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
         }
 
 
-        @DisplayName("이 구역 붕친놈은 나야 훈장 획득 성공")
+        @DisplayName("이 구역 붕친놈은 나야 칭호 획득 성공")
         @Test
         void 가게_방문_10번시_이구역_붕친놈은_나야_획득_성공() {
             // given
@@ -303,11 +301,11 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
             storeRepository.save(store);
 
             for (int i = 0; i < 10; i++) {
-                visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 11, 12)));
+                visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 11, i + 1)));
             }
 
             // when
-            userMedalEventService.addAvailableMedalByVisitHistory(userId);
+            userMedalEventService.addObtainableMedalsByVisitStore(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -319,7 +317,7 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
             );
         }
 
-        @DisplayName("이 구역 붕친놈은 나야 훈장 획득 실패")
+        @DisplayName("이 구역 붕친놈은 나야 칭호 획득 실패")
         @Test
         void 가게_방문_9번시_이구역_붕친놈은_나야_획득_실패() {
             // given
@@ -328,11 +326,11 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
             storeRepository.save(store);
 
             for (int i = 0; i < 9; i++) {
-                visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 11, 12)));
+                visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 11, i + 1)));
             }
 
             // when
-            userMedalEventService.addAvailableMedalByVisitHistory(userId);
+            userMedalEventService.addObtainableMedalsByVisitStore(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();

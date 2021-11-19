@@ -31,33 +31,28 @@ public class UserMedalEventService {
     private final VisitHistoryRepository visitHistoryRepository;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void addAvailableMedalByAddStore(Long userId) {
-        addAvailableMedalByCondition(userId, ADD_STORE, storeRepository.findCountsByUserId(userId));
+    public void addObtainableMedalsByAddStore(Long userId) {
+        addMedalsIfMatchCondition(userId, ADD_STORE, storeRepository.findCountsByUserId(userId));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void addAvailableMedalByAddReview(Long userId) {
-        addAvailableMedalByCondition(userId, ADD_REVIEW, reviewRepository.findCountsByUserId(userId));
+    public void addObtainableMedalsByDeleteStore(Long userId) {
+        addMedalsIfMatchCondition(userId, DELETE_STORE, storeDeleteRequestRepository.findCountsByUserId(userId));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void addAvailableMedalByDeleteStore(Long userId) {
-        addAvailableMedalByCondition(userId, DELETE_STORE, storeDeleteRequestRepository.findCountsByUserId(userId));
+    public void addObtainableMedalsByAddReview(Long userId) {
+        addMedalsIfMatchCondition(userId, ADD_REVIEW, reviewRepository.findCountsByUserId(userId));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void addAvailableMedalByVisitHistory(Long userId) {
-        addAvailableMedalByCondition(userId, VISIT_STORE, visitHistoryRepository.findCountsByUserId(userId));
-        addAvailableMedalByCondition(userId, VISIT_NOT_EXISTS_STORE, visitHistoryRepository.findCountsByuserIdAndVisitType(userId, VisitType.NOT_EXISTS));
+    public void addObtainableMedalsByVisitStore(Long userId) {
+        addMedalsIfMatchCondition(userId, VISIT_STORE, visitHistoryRepository.findCountsByUserId(userId));
+        addMedalsIfMatchCondition(userId, VISIT_NOT_EXISTS_STORE, visitHistoryRepository.findCountsByUserIdAndVisitType(userId, VisitType.NOT_EXISTS));
     }
 
-    private void addAvailableMedalByCondition(Long userId, UserMedalType.MedalAcquisitionCondition condition, long countsByUserId) {
-        List<UserMedalType> medals = getNotHasMedalsByCondition(userId, condition);
-        if (achieveAllMedals(medals)) {
-            return;
-        }
-
-        for (UserMedalType medal : medals) {
+    private void addMedalsIfMatchCondition(Long userId, UserMedalType.MedalAcquisitionCondition condition, long countsByUserId) {
+        for (UserMedalType medal : getNotHasMedalsByCondition(userId, condition)) {
             if (medal.canGetMedal(countsByUserId)) {
                 userMedalService.addUserMedal(medal, userId);
             }
@@ -70,10 +65,6 @@ public class UserMedalEventService {
             .filter(userMedalType -> userMedalType.isMatchCondition(conditions))
             .filter(userMedalType -> !userMedalTypes.contains(userMedalType))
             .collect(Collectors.toList());
-    }
-
-    private boolean achieveAllMedals(List<UserMedalType> medals) {
-        return medals.isEmpty();
     }
 
 }

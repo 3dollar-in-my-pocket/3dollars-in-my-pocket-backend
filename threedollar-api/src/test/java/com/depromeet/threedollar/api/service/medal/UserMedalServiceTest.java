@@ -7,11 +7,11 @@ import com.depromeet.threedollar.domain.domain.medal.UserMedal;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalCreator;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalType;
 import com.depromeet.threedollar.domain.domain.user.User;
+import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,13 +33,13 @@ class UserMedalServiceTest extends SetupUserServiceTest {
         super.cleanup();
     }
 
-    @DisplayName("유저가 보유한 메달을 추가한다")
+    @DisplayName("유저가 보유한 칭호를 획득한다")
     @Nested
     class addUserMedal {
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
-        void 유저가_보유한_메달을_추가한다(UserMedalType medalType) {
+        void 유저가_보유한_칭호를_획득한다(UserMedalType medalType) {
             // when
             userMedalService.addUserMedal(medalType, userId);
 
@@ -51,9 +51,10 @@ class UserMedalServiceTest extends SetupUserServiceTest {
             );
         }
 
-        @EnumSource
+
+        @AutoSource
         @ParameterizedTest
-        void 이미_보유하고_있는_메달일경우_예외가_발생하지는_않지만_중복_저장되지_않는다(UserMedalType medalType) {
+        void 이미_보유하고_있는_칭호이면_중복저장_없이_넘어간다(UserMedalType medalType) {
             // given
             userMedalRepository.save(UserMedalCreator.create(userId, medalType));
 
@@ -69,13 +70,13 @@ class UserMedalServiceTest extends SetupUserServiceTest {
         }
     }
 
-    @DisplayName("유저의 장착중인 메달을 변경한다")
+    @DisplayName("유저의 장착중인 대표 칭호를 변경한다")
     @Nested
     class ActivateUserMedal {
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
-        void 유저의_장착_메달을_교체하면_DB의_유저_테이블의_장착중인_메달이_변경된다(UserMedalType medalType) {
+        void 장착중인_대표_칭호를_변경한다(UserMedalType medalType) {
             // given
             userMedalRepository.save(UserMedalCreator.create(userId, medalType));
             ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(medalType);
@@ -91,9 +92,9 @@ class UserMedalServiceTest extends SetupUserServiceTest {
             );
         }
 
-        @EnumSource
+        @AutoSource
         @ParameterizedTest
-        void 유저가_보유하지_않은_메달을_장착하려하면_NotFoundException이_발생한다(UserMedalType medalType) {
+        void 대표_칭호_변경시_보유하지_않은_칭호를_장착하려하면_NotFound_에러가_발생한다(UserMedalType medalType) {
             // given
             ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(medalType);
 
@@ -103,7 +104,7 @@ class UserMedalServiceTest extends SetupUserServiceTest {
 
         @NullSource
         @ParameterizedTest
-        void 아무_메달도_장착하지_않도록_변경하면_medal_type이_null_이_된다(UserMedalType medalType) {
+        void 대표_칭호_변경시_메달_종류를_NULL을_요청하면_대표_칭호가_비활성화된다(UserMedalType medalType) {
             // given
             ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(medalType);
 

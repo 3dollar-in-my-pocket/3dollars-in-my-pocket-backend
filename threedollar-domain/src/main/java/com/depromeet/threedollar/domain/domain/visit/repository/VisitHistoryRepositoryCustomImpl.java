@@ -99,7 +99,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
     }
 
     @Override
-    public long findCountsByuserIdAndVisitType(Long userId, VisitType visitType) {
+    public long findCountsByUserIdAndVisitType(Long userId, VisitType visitType) {
         return queryFactory.select(visitHistory.id)
             .from(visitHistory)
             .where(

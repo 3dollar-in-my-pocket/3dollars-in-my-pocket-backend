@@ -48,7 +48,7 @@ public class User extends AuditingTimeEntity {
         this.name = name;
     }
 
-    public void updateMedal(UserMedalType medalType) {
+    public void updateActiveMedal(UserMedalType medalType) {
         this.medalType = medalType;
     }
 

@@ -222,7 +222,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             // when
             storeService.addStore(request, userId);
 
-            verify(userMedalEventListener, times(1)).addAvailableMedalByAddStore(any(StoreCreatedEvent.class));
+            verify(userMedalEventListener, times(1)).addObtainableMedalsByAddStore(any(StoreCreatedEvent.class));
         }
 
     }
@@ -546,7 +546,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             StoreDeleteResponse response = storeService.deleteStore(store.getId(), DeleteStoreRequest.testInstance(reasonType), userId);
 
             // then
-            verify(userMedalEventListener, times(1)).addAvailableMedalByDeleteStore(any(StoreDeletedEvent.class));
+            verify(userMedalEventListener, times(1)).addObtainableMedalsByDeleteStore(any(StoreDeletedEvent.class));
         }
 
     }
