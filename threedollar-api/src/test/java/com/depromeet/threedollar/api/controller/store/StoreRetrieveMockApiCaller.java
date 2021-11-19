@@ -68,6 +68,26 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
     }
 
     public ApiResponse<StoresScrollResponse> getMyStores(RetrieveMyStoresRequest request, String token, int expectedStatus) throws Exception {
+        MockHttpServletRequestBuilder builder = get("/api/v3/stores/me")
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .param("size", String.valueOf(request.getSize()))
+            .param("cursor", request.getCursor() == null ? null : String.valueOf(request.getCursor()))
+            .param("cachingTotalElements", request.getCachingTotalElements() == null ? null : String.valueOf(request.getCachingTotalElements()))
+            .param("latitude", request.getLatitude() == null ? null : String.valueOf(request.getLatitude()))
+            .param("longitude", request.getLongitude() == null ? null : String.valueOf(request.getLongitude()));
+
+        return objectMapper.readValue(
+            mockMvc.perform(builder)
+                .andExpect(status().is(expectedStatus))
+                .andDo(print())
+                .andReturn()
+                .getResponse()
+                .getContentAsString(StandardCharsets.UTF_8), new TypeReference<>() {
+            }
+        );
+    }
+
+    public ApiResponse<StoresScrollResponse> getMyStoresV2(RetrieveMyStoresRequest request, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/stores/me")
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))

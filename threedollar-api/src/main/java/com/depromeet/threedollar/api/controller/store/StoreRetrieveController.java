@@ -35,11 +35,24 @@ public class StoreRetrieveController {
         return ApiResponse.success(storeRetrieveService.getDetailStoreInfo(request));
     }
 
-    @ApiOperation("[인증] 마이페이지 - 내가 제보한 가게 목록들을 스크롤 페이지네이션으로 조회합니다")
+    @ApiOperation("[인증] 마이페이지 - 내가 제보한 가게 목록들을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 O)")
     @Auth
-    @GetMapping("/api/v2/stores/me")
+    @GetMapping("/api/v3/stores/me")
     public ApiResponse<StoresScrollResponse> getMyStores(@Valid RetrieveMyStoresRequest request, @UserId Long userId) {
         return ApiResponse.success(storeRetrieveService.retrieveMyStores(request, userId));
+    }
+
+    /**
+     * v2.1.1 부터 Deprecated
+     * 내가 제보한 가게 조회시, 삭제된 가게들을 반환하되, 삭제된 가게라고 표기해줘야하는 이슈에 대응하기 위함. (호환성을 유지하기 위한 API)
+     * use GET /api/v3/stores/me
+     */
+    @Deprecated
+    @ApiOperation("[인증] 마이페이지 - 내가 제보한 가게 목록들을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 X)")
+    @Auth
+    @GetMapping("/api/v2/stores/me")
+    public ApiResponse<StoresScrollResponse> getMyStoresV2(@Valid RetrieveMyStoresRequest request, @UserId Long userId) {
+        return ApiResponse.success(storeRetrieveService.retrieveMyStoresV2(request, userId));
     }
 
     /**

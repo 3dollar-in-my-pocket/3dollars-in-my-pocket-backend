@@ -46,11 +46,24 @@ public class ReviewController {
         return ApiResponse.SUCCESS;
     }
 
-    @ApiOperation("[인증] 마이 페이지 - 내가 작성한 리뷰 목록을 스크롤 페이지네이션으로 조회합니다")
+    @ApiOperation("[인증] 마이 페이지 - 내가 작성한 리뷰 목록을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 O)")
     @Auth
-    @GetMapping("/api/v2/store/reviews/me")
+    @GetMapping("/api/v3/store/reviews/me")
     public ApiResponse<ReviewScrollResponse> retrieveMyStoreReviews(@Valid RetrieveMyReviewsRequest request, @UserId Long userId) {
         return ApiResponse.success(reviewRetrieveService.retrieveMyReviews(request, userId));
+    }
+
+    /**
+     * v2.1.1 부터 Depreacted
+     * 내가 작성한 리뷰 조회시, 삭제된 가게들을 반환하되, 삭제된 가게라고 표기해줘야하는 이슈에 대응하기 위함. (호환성을 유지하기 위한 API)
+     * use GET /api/v3/store/reviews/me
+     */
+    @Deprecated
+    @ApiOperation("[인증] 마이 페이지 - 내가 작성한 리뷰 목록을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 X)")
+    @Auth
+    @GetMapping("/api/v2/store/reviews/me")
+    public ApiResponse<ReviewScrollResponse> retrieveMyStoreReviewsV2(@Valid RetrieveMyReviewsRequest request, @UserId Long userId) {
+        return ApiResponse.success(reviewRetrieveService.retrieveMyReviewsV2(request, userId));
     }
 
 }

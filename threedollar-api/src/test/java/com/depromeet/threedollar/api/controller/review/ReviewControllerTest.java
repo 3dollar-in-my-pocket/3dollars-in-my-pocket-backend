@@ -282,6 +282,29 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertUserInfoResponse(response.getData().getContents().get(0).getUser(), testUser.getId(), testUser.getName(), testUser.getSocialType());
         }
 
+        @Deprecated
+        @Test
+        void V2버전에서는_삭제된_가게인경우_해당_리뷰는_조회되지_않는다() throws Exception {
+            // given
+            Store deletedStore = StoreCreator.create(testUser.getId(), "원래 가게 이름");
+            deletedStore.addMenus(List.of(MenuCreator.create(deletedStore, "메뉴 이름", "가격", MenuCategoryType.BUNGEOPPANG)));
+            deletedStore.delete();
+            storeRepository.save(deletedStore);
+
+            Review review = ReviewCreator.create(deletedStore.getId(), testUser.getId(), "너무 맛있어요", 5);
+            reviewRepository.save(review);
+
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null, null);
+
+            // when
+            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyStoreReviewsV2(request, token, 200);
+
+            // then
+            assertThat(response.getData().getTotalElements()).isEqualTo(0);
+            assertThat(response.getData().getNextCursor()).isEqualTo(-1);
+            assertThat(response.getData().getContents()).isEmpty();
+        }
+
     }
 
     private void assertUserInfoResponse(UserInfoResponse user, Long id, String name, UserSocialType socialType) {

@@ -733,6 +733,27 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getContents().get(0).getCategories()).containsExactlyInAnyOrder(MenuCategoryType.BUNGEOPPANG);
         }
 
+        @Deprecated
+        @Test
+        void V2버전에서는_내가_작성한_가게_목록_조회시_삭제된_가게는_조회되지_않는다() throws Exception {
+            // given
+            Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124);
+            Menu menu = MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG);
+            store.addMenus(List.of(menu));
+            store.delete();
+            storeRepository.save(store);
+
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, null, null, null, null);
+
+            // when
+            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStoresV2(request, token, 200);
+
+            // then
+            assertThat(response.getData().getTotalElements()).isEqualTo(0);
+            assertThat(response.getData().getNextCursor()).isEqualTo(-1);
+            assertThat(response.getData().getContents()).isEmpty();
+        }
+
         @Test
         void 내가_작성한_가게_목록_조회시_방문_성공_및_실패_횟수와_가게_인증_여부를_반환한다() throws Exception {
             // given

@@ -61,6 +61,19 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
             .fetchCount();
     }
 
+    @Deprecated
+    @Override
+    public long findActiveCountsByUserId(Long userId) {
+        return queryFactory.select(store.id).distinct()
+            .from(store)
+            .innerJoin(menu).on(menu.store.id.eq(store.id))
+            .where(
+                store.userId.eq(userId),
+                store.status.eq(StoreStatus.ACTIVE)
+            )
+            .fetchCount();
+    }
+
     @Override
     public List<Store> findAllWithScroll(Long lastStoreId, int size) {
         List<Long> storeIds = queryFactory.select(store.id).distinct()
@@ -88,6 +101,24 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
             .innerJoin(menu).on(menu.store.id.eq(store.id))
             .where(
                 store.userId.eq(userId),
+                lessThanId(lastStoreId)
+            )
+            .orderBy(store.id.desc())
+            .limit(size)
+            .fetch();
+
+        return findAllByIds(storeIds);
+    }
+
+    @Deprecated
+    @Override
+    public List<Store> findAllActiveByUserIdWithScroll(Long userId, Long lastStoreId, int size) {
+        List<Long> storeIds = queryFactory.select(store.id).distinct()
+            .from(store)
+            .innerJoin(menu).on(menu.store.id.eq(store.id))
+            .where(
+                store.userId.eq(userId),
+                store.status.eq(StoreStatus.ACTIVE),
                 lessThanId(lastStoreId)
             )
             .orderBy(store.id.desc())

@@ -31,6 +31,15 @@ public class ReviewRetrieveService {
             Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> reviewRepository.findCountsByUserId(userId)));
     }
 
+    @Deprecated
+    @Transactional(readOnly = true)
+    public ReviewScrollResponse retrieveMyReviewsV2(RetrieveMyReviewsRequest request, Long userId) {
+        List<ReviewWithWriterProjection> reviewsWithNextCursor = reviewRepository.findAllActiveByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
+        ScrollPaginationCollection<ReviewWithWriterProjection> scrollCollection = ScrollPaginationCollection.of(reviewsWithNextCursor, request.getSize());
+        return ReviewScrollResponse.of(scrollCollection, findStoresByReviews(scrollCollection.getItemsInCurrentScroll()),
+            Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> reviewRepository.findActiveCountsByUserId(userId)));
+    }
+
     private Map<Long, Store> findStoresByReviews(List<ReviewWithWriterProjection> reviews) {
         List<Long> storeIds = reviews.stream()
             .map(ReviewWithWriterProjection::getStoreId)
