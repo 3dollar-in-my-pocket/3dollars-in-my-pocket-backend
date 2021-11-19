@@ -21,9 +21,9 @@ public class StoreInfoResponse extends AuditingTimeResponse {
     private String storeName;
     private double rating;
     private Integer distance;
+    private Boolean isDeleted;
     private final List<MenuCategoryType> categories = new ArrayList<>();
     private VisitHistoryInfoResponse visitHistory;
-    private Boolean isDeleted;
 
     @Builder(access = AccessLevel.PRIVATE)
     private StoreInfoResponse(Long storeId, double latitude, double longitude, String storeName, double rating, Integer distance, long existsVisitsCount, long notExistsVisitsCount, boolean isDeleted) {

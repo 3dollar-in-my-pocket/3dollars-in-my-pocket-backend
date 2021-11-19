@@ -2,6 +2,7 @@ package com.depromeet.threedollar.api.service.review;
 
 import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsRequest;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
+import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollV2Response;
 import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
@@ -33,10 +34,10 @@ public class ReviewRetrieveService {
 
     @Deprecated
     @Transactional(readOnly = true)
-    public ReviewScrollResponse retrieveMyReviewsV2(RetrieveMyReviewsRequest request, Long userId) {
+    public ReviewScrollV2Response retrieveMyReviewsV2(RetrieveMyReviewsRequest request, Long userId) {
         List<ReviewWithWriterProjection> reviewsWithNextCursor = reviewRepository.findAllActiveByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
         ScrollPaginationCollection<ReviewWithWriterProjection> scrollCollection = ScrollPaginationCollection.of(reviewsWithNextCursor, request.getSize());
-        return ReviewScrollResponse.of(scrollCollection, findStoresByReviews(scrollCollection.getItemsInCurrentScroll()),
+        return ReviewScrollV2Response.of(scrollCollection, findStoresByReviews(scrollCollection.getItemsInCurrentScroll()),
             Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> reviewRepository.findActiveCountsByUserId(userId)));
     }
 

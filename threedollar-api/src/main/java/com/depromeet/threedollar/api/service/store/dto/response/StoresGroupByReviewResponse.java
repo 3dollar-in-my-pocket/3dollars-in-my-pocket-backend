@@ -9,6 +9,7 @@ import lombok.ToString;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

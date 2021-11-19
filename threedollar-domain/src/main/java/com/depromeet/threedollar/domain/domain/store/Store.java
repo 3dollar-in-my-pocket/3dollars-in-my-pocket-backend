@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 )
 public class Store extends AuditingTimeEntity {
 
-    public static final String DELETE_STORE_NAME = "삭제된 가게입니다";
+    private static final String DELETE_STORE_NAME = "삭제된 가게입니다";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -9,6 +9,7 @@ import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReview
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
+import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollV2Response;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -62,7 +63,7 @@ public class ReviewController {
     @ApiOperation("[인증] 마이 페이지 - 내가 작성한 리뷰 목록을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 X)")
     @Auth
     @GetMapping("/api/v2/store/reviews/me")
-    public ApiResponse<ReviewScrollResponse> retrieveMyStoreReviewsV2(@Valid RetrieveMyReviewsRequest request, @UserId Long userId) {
+    public ApiResponse<ReviewScrollV2Response> retrieveMyStoreReviewsV2(@Valid RetrieveMyReviewsRequest request, @UserId Long userId) {
         return ApiResponse.success(reviewRetrieveService.retrieveMyReviewsV2(request, userId));
     }
 

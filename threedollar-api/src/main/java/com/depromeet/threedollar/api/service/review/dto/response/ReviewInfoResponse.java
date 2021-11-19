@@ -2,6 +2,7 @@ package com.depromeet.threedollar.api.service.review.dto.response;
 
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.domain.domain.review.Review;
+import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
 import lombok.*;
 
 @ToString
@@ -30,6 +31,17 @@ public class ReviewInfoResponse extends AuditingTimeResponse {
             .rating(review.getRating())
             .build();
         response.setBaseTime(review);
+        return response;
+    }
+
+    public static ReviewInfoResponse of(ReviewWithWriterProjection review) {
+        ReviewInfoResponse response = ReviewInfoResponse.builder()
+            .reviewId(review.getReviewId())
+            .storeId(review.getStoreId())
+            .contents(review.getContents())
+            .rating(review.getRating())
+            .build();
+        response.setBaseTime(review.getCreatedAt(), review.getUpdatedAt());
         return response;
     }
 
