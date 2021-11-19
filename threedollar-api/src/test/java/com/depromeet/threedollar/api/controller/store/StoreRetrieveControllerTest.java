@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.controller.store;
 import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveMyStoresRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStoresRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailInfoRequest;
+import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreGroupByCategoryRequest;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
 import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
@@ -303,7 +303,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             storeRepository.save(store);
 
-            RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0);
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -322,7 +322,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             store.addMenus(List.of(menu1, menu2));
             storeRepository.save(store);
 
-            RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0);
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -342,7 +342,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
-            RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0);
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -361,7 +361,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             store.addAppearanceDays(dayOfTheWeeks);
             storeRepository.save(store);
 
-            RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0);
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -381,7 +381,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             store.addPaymentMethods(paymentMethodTypes);
             storeRepository.save(store);
 
-            RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0);
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -400,7 +400,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
-            RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0);
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -421,7 +421,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             StoreImage storeImage = StoreImage.newInstance(store.getId(), testUser.getId(), imageUrl);
             storeImageRepository.save(storeImage);
 
-            RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0);
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -444,7 +444,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             storeImage.delete();
             storeImageRepository.save(storeImage);
 
-            RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0);
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -467,7 +467,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             reviewRepository.saveAll(List.of(review1, review2));
 
-            RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0);
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -496,7 +496,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             VisitHistory visitHistory2 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 20));
             visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
 
-            RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0, startDate, endDate);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0, startDate, endDate);
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -521,7 +521,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             VisitHistory visitHistory4 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 21));
             visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2, visitHistory3, visitHistory4));
 
-            RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0, startDate, endDate);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0, startDate, endDate);
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -549,7 +549,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             VisitHistory afterTodayHistory = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, today.plusDays(1));
             visitHistoryRepository.saveAll(List.of(todayHistory, lasteWeekHistory, afterTodayHistory, beforeLastWeekHistory));
 
-            RetrieveStoreDetailInfoRequest request = RetrieveStoreDetailInfoRequest.testInstance(store.getId(), 34.0, 124.0);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0);
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);

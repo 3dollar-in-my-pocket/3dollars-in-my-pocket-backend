@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.assertutils;
 
-import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryInfoResponse;
+import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryCountsResponse;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithStoreResponse;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithUserResponse;
 import com.depromeet.threedollar.domain.domain.store.Store;
@@ -26,7 +26,7 @@ public final class assertVisitHistoryUtils {
         );
     }
 
-    public static void assertVisitHistoryInfoResponse(VisitHistoryInfoResponse visitHistory, int existsCount, int notExistsCount, boolean isCertified) {
+    public static void assertVisitHistoryInfoResponse(VisitHistoryCountsResponse visitHistory, int existsCount, int notExistsCount, boolean isCertified) {
         assertAll(
             () -> assertThat(visitHistory.getExistsCounts()).isEqualTo(existsCount),
             () -> assertThat(visitHistory.getNotExistsCounts()).isEqualTo(notExistsCount),
@@ -38,7 +38,6 @@ public final class assertVisitHistoryUtils {
         assertAll(
             () -> assertThat(response.getVisitHistoryId()).isEqualTo(visitHistory.getId()),
             () -> assertThat(response.getType()).isEqualTo(visitHistory.getType()),
-            () -> assertThat(response.getStoreId()).isEqualTo(store.getId()),
             () -> assertUserInfoResponse(response.getUser(), user.getId(), user.getName(), user.getSocialType())
         );
     }

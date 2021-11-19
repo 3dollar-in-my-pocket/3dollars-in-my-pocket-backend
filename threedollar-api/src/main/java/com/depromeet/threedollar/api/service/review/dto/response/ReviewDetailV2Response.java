@@ -18,11 +18,13 @@ public class ReviewDetailV2Response extends AuditingTimeResponse {
     private Long reviewId;
     private int rating;
     private String contents;
+
     private Long storeId;
     private String storeName;
     private Boolean isDeletedStore;
-    private UserInfoResponse user;
     private final List<MenuCategoryType> categories = new ArrayList<>();
+
+    private UserInfoResponse user;
 
     @Builder(access = AccessLevel.PRIVATE)
     private ReviewDetailV2Response(Long reviewId, int rating, String contents, Long storeId, String storeName, boolean isDeletedStore,

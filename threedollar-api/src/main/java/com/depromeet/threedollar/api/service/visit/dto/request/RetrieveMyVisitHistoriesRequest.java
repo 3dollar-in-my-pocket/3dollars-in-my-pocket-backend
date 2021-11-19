@@ -10,7 +10,7 @@ import javax.validation.constraints.Min;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class RetrieveMyVisitHistoryRequest {
+public class RetrieveMyVisitHistoriesRequest {
 
     @Min(value = 1, message = "{common.size.min}")
     @Max(value = 100, message = "{common.size.max}")
@@ -19,8 +19,8 @@ public class RetrieveMyVisitHistoryRequest {
     @Nullable
     private Long cursor;
 
-    public static RetrieveMyVisitHistoryRequest testInstance(int size, Long cursor) {
-        return new RetrieveMyVisitHistoryRequest(size, cursor);
+    public static RetrieveMyVisitHistoriesRequest testInstance(int size, Long cursor) {
+        return new RetrieveMyVisitHistoriesRequest(size, cursor);
     }
 
 }

@@ -2,8 +2,8 @@ package com.depromeet.threedollar.api.controller.visit;
 
 import com.depromeet.threedollar.api.controller.SetupStoreControllerTest;
 import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRequest;
-import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoryRequest;
-import com.depromeet.threedollar.api.service.visit.dto.response.MyVisitHistoriesScrollResponse;
+import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
+import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoriesScrollResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
 import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
@@ -77,10 +77,10 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
 
             visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
 
-            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(2, null);
+            RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(2, null);
 
             // when
-            ApiResponse<MyVisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+            ApiResponse<VisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
 
             // then
             assertAll(
@@ -99,10 +99,10 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
 
             visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
 
-            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(1, null);
+            RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(1, null);
 
             // when
-            ApiResponse<MyVisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+            ApiResponse<VisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
 
             // then
             assertAll(
@@ -120,10 +120,10 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
 
             visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
 
-            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(2, visitHistory2.getId());
+            RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(2, visitHistory2.getId());
 
             // when
-            ApiResponse<MyVisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+            ApiResponse<VisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
 
             // then
             assertAll(
@@ -136,10 +136,10 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
         @Test
         void 아무런_방문_기록을_남기지_않았을경우() throws Exception {
             // given
-            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(2, null);
+            RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(2, null);
 
             // when
-            ApiResponse<MyVisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+            ApiResponse<VisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
 
             // then
             assertAll(
@@ -159,10 +159,10 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             VisitHistory visitHistory = VisitHistoryCreator.create(deletedStore, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
             visitHistoryRepository.save(visitHistory);
 
-            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(2, null);
+            RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(2, null);
 
             // when
-            ApiResponse<MyVisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+            ApiResponse<VisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
 
             // then
             assertAll(

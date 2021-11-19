@@ -15,9 +15,7 @@ import java.time.LocalDate;
 public class VisitHistoryWithStoreResponse extends AuditingTimeResponse {
 
     private Long visitHistoryId;
-
     private VisitType type;
-
     private LocalDate dateOfVisit;
 
     private StoreInfoResponse store;

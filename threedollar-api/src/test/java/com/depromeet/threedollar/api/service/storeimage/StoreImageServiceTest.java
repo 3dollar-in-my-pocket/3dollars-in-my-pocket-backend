@@ -126,7 +126,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
             storeImageRepository.save(storeImage);
 
             // when
-            List<StoreImageResponse> responses = storeImageService.retrieveStoreImages(store.getId());
+            List<StoreImageResponse> responses = storeImageService.getStoreImages(store.getId());
 
             // then
             assertThat(responses).hasSize(1);
@@ -141,7 +141,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
             storeImageRepository.save(storeImage);
 
             // when
-            List<StoreImageResponse> responses = storeImageService.retrieveStoreImages(store.getId());
+            List<StoreImageResponse> responses = storeImageService.getStoreImages(store.getId());
 
             // then
             assertThat(responses).isEmpty();

@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.service.store;
 
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveMyStoresRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStoresRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailInfoRequest;
+import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreGroupByCategoryRequest;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
 import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
@@ -53,7 +53,7 @@ public class StoreRetrieveService {
     }
 
     @Transactional(readOnly = true)
-    public StoreDetailResponse getDetailStoreInfo(RetrieveStoreDetailInfoRequest request) {
+    public StoreDetailResponse getDetailStoreInfo(RetrieveStoreDetailRequest request) {
         Store store = StoreServiceUtils.findStoreByIdFetchJoinMenu(storeRepository, request.getStoreId());
         User creator = userRepository.findUserById(store.getUserId());
         List<StoreImage> images = storeImageRepository.findAllByStoreId(request.getStoreId());

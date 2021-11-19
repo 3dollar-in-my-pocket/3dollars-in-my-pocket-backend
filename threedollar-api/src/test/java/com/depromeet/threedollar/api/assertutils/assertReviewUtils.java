@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.assertutils;
 
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
-import com.depromeet.threedollar.api.service.review.dto.response.ReviewWithWriterResponse;
+import com.depromeet.threedollar.api.service.review.dto.response.ReviewWithUserResponse;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewStatus;
 
@@ -36,7 +36,7 @@ public final class assertReviewUtils {
         );
     }
 
-    public static void assertReviewWithWriterResponse(ReviewWithWriterResponse response, Review review) {
+    public static void assertReviewWithWriterResponse(ReviewWithUserResponse response, Review review) {
         assertAll(
             () -> assertThat(response.getReviewId()).isEqualTo(review.getId()),
             () -> assertThat(response.getContents()).isEqualTo(review.getContents()),

@@ -5,7 +5,7 @@ import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType
 
 object MenuCategoryMapper {
 
-    fun retrieveMenuCategories(): List<MenuCategoryResponse> {
+    fun retrieveActiveMenuCategories(): List<MenuCategoryResponse> {
         return MenuCategoryType.values().asSequence()
             .filter { it.isVisible }
             .sortedBy { it.displayOrder }

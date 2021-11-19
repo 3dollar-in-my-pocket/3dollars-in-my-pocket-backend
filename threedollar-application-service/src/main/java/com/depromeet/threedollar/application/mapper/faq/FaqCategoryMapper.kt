@@ -5,7 +5,7 @@ import com.depromeet.threedollar.domain.domain.faq.FaqCategory
 
 object FaqCategoryMapper {
 
-    fun retrieveAllFaqCategories(): List<FaqCategoryResponse> {
+    fun retrieveFaqCategories(): List<FaqCategoryResponse> {
         return FaqCategory.values().asSequence()
             .sortedBy { it.displayOrder }
             .map { FaqCategoryResponse.of(it) }

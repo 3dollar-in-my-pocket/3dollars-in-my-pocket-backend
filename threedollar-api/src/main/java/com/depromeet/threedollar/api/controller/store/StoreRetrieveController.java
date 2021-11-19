@@ -5,7 +5,7 @@ import com.depromeet.threedollar.api.config.resolver.UserId;
 import com.depromeet.threedollar.api.service.store.StoreRetrieveService;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveMyStoresRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStoresRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailInfoRequest;
+import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreGroupByCategoryRequest;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
@@ -31,7 +31,7 @@ public class StoreRetrieveController {
 
     @ApiOperation("가게 상세 페이지 - 특정 가게의 정보를 상세 조회합니다")
     @GetMapping("/api/v2/store")
-    public ApiResponse<StoreDetailResponse> getDetailStoreInfo(@Valid RetrieveStoreDetailInfoRequest request) {
+    public ApiResponse<StoreDetailResponse> getDetailStoreInfo(@Valid RetrieveStoreDetailRequest request) {
         return ApiResponse.success(storeRetrieveService.getDetailStoreInfo(request));
     }
 

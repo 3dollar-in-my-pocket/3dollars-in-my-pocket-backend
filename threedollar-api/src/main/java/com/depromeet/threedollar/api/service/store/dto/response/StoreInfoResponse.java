@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.store.dto.response;
 
-import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryInfoResponse;
+import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryCountsResponse;
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
 import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
@@ -23,17 +23,19 @@ public class StoreInfoResponse extends AuditingTimeResponse {
     private Integer distance;
     private Boolean isDeleted;
     private final List<MenuCategoryType> categories = new ArrayList<>();
-    private VisitHistoryInfoResponse visitHistory;
+
+    private VisitHistoryCountsResponse visitHistory;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private StoreInfoResponse(Long storeId, double latitude, double longitude, String storeName, double rating, Integer distance, long existsVisitsCount, long notExistsVisitsCount, boolean isDeleted) {
+    private StoreInfoResponse(Long storeId, double latitude, double longitude, String storeName, double rating,
+                              Integer distance, long existsVisitsCount, long notExistsVisitsCount, boolean isDeleted) {
         this.storeId = storeId;
         this.latitude = latitude;
         this.longitude = longitude;
         this.storeName = storeName;
         this.rating = rating;
         this.distance = distance;
-        this.visitHistory = VisitHistoryInfoResponse.of(existsVisitsCount, notExistsVisitsCount);
+        this.visitHistory = VisitHistoryCountsResponse.of(existsVisitsCount, notExistsVisitsCount);
         this.isDeleted = isDeleted;
     }
 
