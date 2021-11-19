@@ -1,5 +1,4 @@
 # 가슴속 삼천원 백엔드
-> 백엔드에서는 v2.0.0부터 마이그레이션을 통해 새롭게 프로젝트를 진행하고 있습니다.
 
 ![Version](https://img.shields.io/github/v/release/depromeet/3dollars-in-my-pocket-backend?include_prereleases)
 [![codecov](https://codecov.io/gh/depromeet/3dollars-in-my-pocket-backend/branch/develop/graph/badge.svg?token=QZPVF6VGHA)](https://codecov.io/gh/depromeet/3dollars-in-my-pocket-backend)
@@ -8,7 +7,8 @@
 ![img.png](images/logo.png)
 
 ### 프로젝트 설명
-🐟**가슴속 3천원**🐟은 전국 붕어빵 지도로 시작하여 전국 길거리 음식점 정복을 꿈꾸는 프로젝트입니다. **디프만**(디자이너와 프로그래머가 만났을 때) 7기 파이널 프로젝트에서 개발되었으며 이후에 지속적으로 업데이트하고있습니다.
+전국 붕어빵 파는 곳을 알려주는 **가슴속 3천원**   
+**"가슴 속 3천원"** 은 겨울철 우리 가슴속에 지니고 다니는 3천원을 털어가는 붕어빵, 문어빵, 계란빵, 호떡 등을 파는 곳을 포함해 길거리 음식점들을 알려드립니다.
 
 ### 앱 다운로드
 - [AppStore](https://apps.apple.com/kr/app/%EA%B0%80%EC%8A%B4%EC%86%8D3%EC%B2%9C%EC%9B%90-%EB%82%98%EC%99%80-%EA%B0%80%EA%B9%8C%EC%9A%B4-%EB%B6%95%EC%96%B4%EB%B9%B5/id1496099467)
@@ -20,6 +20,7 @@
 </p>
 
 ## 기술 스택
+> 백엔드에서는 v2.0.0부터 마이그레이션을 통해 새롭게 프로젝트를 진행하고 있습니다.
 ### Language & Framework
 - Java 11, Kotlin 1.5
 - Spring Boot (Spring Framework, Spring MVC)
@@ -27,7 +28,7 @@
 - Spring Batch
 - Feign Client
 - Gradle
-- Junit 5
+- Junit5, AssertJ, Mockito
 
 ### 인프라 - 운영 환경 (Production)
 ![img.png](images/3dollars-architecture-20211016.png)
@@ -40,7 +41,9 @@
 - GitHub Actions CI/CD
 
 ### 인프라 - 개발 환경 (Development)
-- EC2, Nginx, Docker compose
+- EC2
+- Docker compose
+- Nginx
 - RDS (MariaDB), flyway
 - Redis
 - S3
@@ -52,27 +55,6 @@
 - APM 도구: NewRelic
 - 부하 테스트: locust
 
-## 실행 방법
-### with gradlew
-
-```bash
-./gradlew clean bootJar
-```
-
-```bash
-# API Server
-java -jar threedollar-api/build/libs/threedollar-api.jar
-
-# Admin Server
-java -jar threedollar-admin/build/libs/threedollar-admin.jar  
-```
-
-### with docker-compose
-
-```bash
-docker-compose up --build
-```
-
-
 ## Contacts
-- [seungh0](https://github.com/seungh0) - will.seungho@gmail.com
+- 3dollarinmypocket@gmail.com (가슴속 삼천원 대표 메일)
+- will.seungho@gmail.com (백엔드 개발자)
