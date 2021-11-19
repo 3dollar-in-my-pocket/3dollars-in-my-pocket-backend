@@ -9,7 +9,6 @@ import com.depromeet.threedollar.api.service.store.dto.response.StoreDeleteRespo
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
-import com.depromeet.threedollar.domain.domain.common.Location;
 import com.depromeet.threedollar.domain.domain.menu.Menu;
 import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
 import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
@@ -28,9 +27,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.depromeet.threedollar.api.assertutils.assertStoreUtils.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -269,7 +272,7 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             List<Menu> menus = menuRepository.findAll();
             assertThat(menus).hasSize(1);
-            assertMenu(menus.get(0), menuName, price, type);
+            assertMenu(menus.get(0), store.getId(), menuName, price, type);
         }
 
         @AutoSource
@@ -509,12 +512,6 @@ class StoreServiceTest extends SetupUserServiceTest {
 
     }
 
-    private void assertStoreDeleteRequest(StoreDeleteRequest storeDeleteRequest, Long storeId, Long userId, DeleteReasonType type) {
-        assertThat(storeDeleteRequest.getStoreId()).isEqualTo(storeId);
-        assertThat(storeDeleteRequest.getUserId()).isEqualTo(userId);
-        assertThat(storeDeleteRequest.getReason()).isEqualTo(type);
-    }
-
     private List<DayOfTheWeek> getDayOfTheWeeks(List<AppearanceDay> appearanceDays) {
         return appearanceDays.stream()
             .map(AppearanceDay::getDay)
@@ -525,28 +522,6 @@ class StoreServiceTest extends SetupUserServiceTest {
         return paymentMethods.stream()
             .map(PaymentMethod::getMethod)
             .collect(Collectors.toList());
-    }
-
-    private void assertMenu(Menu menu, String menuName, String price, MenuCategoryType type) {
-        assertThat(menu.getName()).isEqualTo(menuName);
-        assertThat(menu.getPrice()).isEqualTo(price);
-        assertThat(menu.getCategory()).isEqualTo(type);
-    }
-
-    private void assertMenu(Menu menu, Long storeId, String menuName, String price, MenuCategoryType type) {
-        assertThat(menu.getStore().getId()).isEqualTo(storeId);
-        assertThat(menu.getName()).isEqualTo(menuName);
-        assertThat(menu.getPrice()).isEqualTo(price);
-        assertThat(menu.getCategory()).isEqualTo(type);
-    }
-
-    private void assertStore(Store store, Double latitude, Double longitude, String storeName, StoreType storeType, Long userId) {
-        assertThat(store.getLocation()).isEqualTo(Location.of(latitude, longitude));
-        assertThat(store.getLatitude()).isEqualTo(latitude);
-        assertThat(store.getLongitude()).isEqualTo(longitude);
-        assertThat(store.getName()).isEqualTo(storeName);
-        assertThat(store.getType()).isEqualTo(storeType);
-        assertThat(store.getUserId()).isEqualTo(userId);
     }
 
 }

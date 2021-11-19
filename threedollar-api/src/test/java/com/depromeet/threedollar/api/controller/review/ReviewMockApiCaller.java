@@ -1,12 +1,13 @@
 package com.depromeet.threedollar.api.controller.review;
 
-import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.controller.MockMvcUtils;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsRequest;
-import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
+import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
+import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollV2Response;
+import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpHeaders;
@@ -94,7 +95,7 @@ class ReviewMockApiCaller extends MockMvcUtils {
     }
 
     @Deprecated
-    public ApiResponse<ReviewScrollResponse> retrieveMyStoreReviewsV2(RetrieveMyReviewsRequest request, String token, int expectedStatus) throws Exception {
+    public ApiResponse<ReviewScrollV2Response> retrieveMyStoreReviewsV2(RetrieveMyReviewsRequest request, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/store/reviews/me")
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))

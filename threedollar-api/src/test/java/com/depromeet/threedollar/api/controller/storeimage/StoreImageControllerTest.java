@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
+import static com.depromeet.threedollar.api.assertutils.assertStoreImageUtils.assertStoreImageResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -82,11 +83,6 @@ class StoreImageControllerTest extends SetupUserControllerTest {
                 () -> assertStoreImageResponse(response.getData().get(0), storeImage1.getId(), imageUrl1),
                 () -> assertStoreImageResponse(response.getData().get(1), storeImage2.getId(), imageUrl2)
             );
-        }
-
-        private void assertStoreImageResponse(StoreImageResponse response, Long storeImageId, String url) {
-            assertThat(response.getImageId()).isEqualTo(storeImageId);
-            assertThat(response.getUrl()).isEqualTo(url);
         }
 
     }

@@ -1,17 +1,12 @@
 package com.depromeet.threedollar.api.controller.store;
 
 import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
-import com.depromeet.threedollar.api.service.review.dto.response.ReviewWithWriterResponse;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveMyStoresRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStoresRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailInfoRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreGroupByCategoryRequest;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
 import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
-import com.depromeet.threedollar.api.service.storeimage.dto.response.StoreImageResponse;
-import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
-import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryInfoResponse;
-import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithUserResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
 import com.depromeet.threedollar.domain.domain.menu.Menu;
@@ -24,8 +19,6 @@ import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImageRepository;
-import com.depromeet.threedollar.domain.domain.user.User;
-import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
@@ -40,6 +33,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.depromeet.threedollar.api.assertutils.assertReviewUtils.assertReviewWithWriterResponse;
+import static com.depromeet.threedollar.api.assertutils.assertStoreImageUtils.assertStoreImageResponse;
+import static com.depromeet.threedollar.api.assertutils.assertStoreUtils.*;
+import static com.depromeet.threedollar.api.assertutils.assertUserUtils.assertUserInfoResponse;
+import static com.depromeet.threedollar.api.assertutils.assertVisitHistoryUtils.assertVisitHistoryInfoResponse;
+import static com.depromeet.threedollar.api.assertutils.assertVisitHistoryUtils.assertVisitHistoryWithUserResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -311,7 +310,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             // then
             StoreDetailResponse data = response.getData();
-            assertStoreDetailInfoResponse(data, store.getId(), store.getLatitude(), store.getLongitude(), storeName, storeType, store.getRating());
+            assertStoreDetailInfoResponse(data, store, testUser);
         }
 
         @Test
@@ -332,8 +331,8 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getCategories()).containsExactlyInAnyOrderElementsOf(List.of(MenuCategoryType.BUNGEOPPANG, MenuCategoryType.GUKWAPPANG));
 
             assertThat(response.getData().getMenus()).hasSize(2);
-            assertMenuResponse(response.getData().getMenus().get(0), menu1.getId(), menu1.getCategory(), menu1.getName(), menu1.getPrice());
-            assertMenuResponse(response.getData().getMenus().get(1), menu2.getId(), menu2.getCategory(), menu2.getName(), menu2.getPrice());
+            assertMenuResponse(response.getData().getMenus().get(0), menu1);
+            assertMenuResponse(response.getData().getMenus().get(1), menu2);
         }
 
         @Test
@@ -349,7 +348,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
 
             // then
-            assertUserInfoResponse(response.getData().getUser(), testUser.getId(), testUser.getName(), testUser.getSocialType());
+            assertUserInfoResponse(response.getData().getUser(), testUser);
         }
 
         @AutoSource
@@ -480,7 +479,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertUserInfoResponse(data.getReviews().get(0).getUser(), null, "사라진 제보자", null);
 
             assertReviewWithWriterResponse(data.getReviews().get(1), review1);
-            assertUserInfoResponse(data.getReviews().get(1).getUser(), testUser.getId(), testUser.getName(), testUser.getSocialType());
+            assertUserInfoResponse(data.getReviews().get(1).getUser(), testUser);
         }
 
         @Test
@@ -727,7 +726,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getTotalElements()).isEqualTo(1);
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
             assertThat(response.getData().getContents()).hasSize(1);
-            assertStoreInfoResponse(response.getData().getContents().get(0), store.getId(), store.getLatitude(), store.getLongitude(), Store.DELETE_STORE_NAME, store.getRating());
+            assertStoreInfoResponse(response.getData().getContents().get(0), store.getId(), store.getLatitude(), store.getLongitude(), store.getName(), store.getRating());
 
             assertThat(response.getData().getContents().get(0).getCategories()).hasSize(1);
             assertThat(response.getData().getContents().get(0).getCategories()).containsExactlyInAnyOrder(MenuCategoryType.BUNGEOPPANG);
@@ -1101,72 +1100,6 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertVisitHistoryInfoResponse(response.getData().getStoreList1().get(0).getVisitHistory(), 0, 1, false);
         }
 
-    }
-
-    private void assertReviewWithWriterResponse(ReviewWithWriterResponse response, Review review) {
-        assertThat(response.getReviewId()).isEqualTo(review.getId());
-        assertThat(response.getContents()).isEqualTo(review.getContents());
-        assertThat(response.getRating()).isEqualTo(review.getRating());
-    }
-
-    private void assertStoreInfoResponse(StoreInfoResponse response, Store store) {
-        assertThat(response.getStoreId()).isEqualTo(store.getId());
-        assertThat(response.getStoreName()).isEqualTo(store.getName());
-        assertThat(response.getLatitude()).isEqualTo(store.getLatitude());
-        assertThat(response.getLongitude()).isEqualTo(store.getLongitude());
-        assertThat(response.getRating()).isEqualTo(store.getRating());
-    }
-
-    private void assertUserInfoResponse(UserInfoResponse user, Long userId, String name, UserSocialType socialType) {
-        assertThat(user.getUserId()).isEqualTo(userId);
-        assertThat(user.getName()).isEqualTo(name);
-        assertThat(user.getSocialType()).isEqualTo(socialType);
-    }
-
-    private void assertMenuResponse(MenuResponse response, Long menuId, MenuCategoryType category, String name, String price) {
-        assertThat(response.getMenuId()).isEqualTo(menuId);
-        assertThat(response.getCategory()).isEqualTo(category);
-        assertThat(response.getName()).isEqualTo(name);
-        assertThat(response.getPrice()).isEqualTo(price);
-    }
-
-    private void assertStoreDetailInfoResponse(StoreDetailResponse response, Long storeId, Double latitude, Double longitude, String name, StoreType type, double rating) {
-        assertThat(response.getStoreId()).isEqualTo(storeId);
-        assertThat(response.getLatitude()).isEqualTo(latitude);
-        assertThat(response.getLongitude()).isEqualTo(longitude);
-        assertThat(response.getStoreName()).isEqualTo(name);
-        assertThat(response.getStoreType()).isEqualTo(type);
-        assertThat(response.getRating()).isEqualTo(rating);
-    }
-
-    private void assertStoreInfoResponse(StoreInfoResponse response, Long storeId, Double latitude, Double longitude, String name, double rating) {
-        assertThat(response.getStoreId()).isEqualTo(storeId);
-        assertThat(response.getLatitude()).isEqualTo(latitude);
-        assertThat(response.getLongitude()).isEqualTo(longitude);
-        assertThat(response.getStoreName()).isEqualTo(name);
-        assertThat(response.getRating()).isEqualTo(rating);
-    }
-
-    private void assertVisitHistoryInfoResponse(VisitHistoryInfoResponse visitHistory, int existsCount, int notExistsCount, boolean isCertified) {
-        assertThat(visitHistory.getExistsCounts()).isEqualTo(existsCount);
-        assertThat(visitHistory.getNotExistsCounts()).isEqualTo(notExistsCount);
-        assertThat(visitHistory.getIsCertified()).isEqualTo(isCertified);
-    }
-
-    private void assertVisitHistoryWithUserResponse(VisitHistoryWithUserResponse response, VisitHistory visitHistory, Store store, User user) {
-        assertAll(
-            () -> assertThat(response.getVisitHistoryId()).isEqualTo(visitHistory.getId()),
-            () -> assertThat(response.getType()).isEqualTo(visitHistory.getType()),
-            () -> assertThat(response.getStoreId()).isEqualTo(store.getId()),
-            () -> assertUserInfoResponse(response.getUser(), user.getId(), user.getName(), user.getSocialType())
-        );
-    }
-
-    private void assertStoreImageResponse(StoreImageResponse storeImageResponse, Long imageId, String imageUrl) {
-        assertAll(
-            () -> assertThat(storeImageResponse.getImageId()).isEqualTo(imageId),
-            () -> assertThat(storeImageResponse.getUrl()).isEqualTo(imageUrl)
-        );
     }
 
 }

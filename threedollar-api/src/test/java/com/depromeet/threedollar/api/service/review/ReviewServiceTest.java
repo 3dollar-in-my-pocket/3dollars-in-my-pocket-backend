@@ -19,6 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
 
+import static com.depromeet.threedollar.api.assertutils.assertReviewUtils.assertReview;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -57,9 +58,9 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             reviewService.addReview(request, userId);
 
             // then
-            List<Review> reviewList = reviewRepository.findAll();
-            assertThat(reviewList).hasSize(1);
-            assertReview(reviewList.get(0), store.getId(), contents, rating, userId);
+            List<Review> reviews = reviewRepository.findAll();
+            assertThat(reviews).hasSize(1);
+            assertReview(reviews.get(0), store.getId(), contents, rating, userId, ReviewStatus.POSTED);
         }
 
         @Test
@@ -104,9 +105,9 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             reviewService.updateReview(review.getId(), request, userId);
 
             // then
-            List<Review> reviewList = reviewRepository.findAll();
-            assertThat(reviewList).hasSize(1);
-            assertReview(reviewList.get(0), store.getId(), contents, rating, userId);
+            List<Review> reviews = reviewRepository.findAll();
+            assertThat(reviews).hasSize(1);
+            assertReview(reviews.get(0), store.getId(), contents, rating, userId, ReviewStatus.POSTED);
         }
 
         @Test
@@ -163,9 +164,9 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             reviewService.deleteReview(review.getId(), userId);
 
             // then
-            List<Review> reviewList = reviewRepository.findAll();
-            assertThat(reviewList).hasSize(1);
-            assertThat(reviewList.get(0).getStatus()).isEqualTo(ReviewStatus.DELETED);
+            List<Review> reviews = reviewRepository.findAll();
+            assertThat(reviews).hasSize(1);
+            assertReview(reviews.get(0), store.getId(), review.getContents(), review.getRating(), userId, ReviewStatus.DELETED);
         }
 
         @Test
@@ -201,13 +202,6 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             verify(storeEventListener, times(1)).renewStoreRating(any(ReviewChangedEvent.class));
         }
 
-    }
-
-    private void assertReview(Review review, Long storeId, String contents, int rating, Long userId) {
-        assertThat(review.getStoreId()).isEqualTo(storeId);
-        assertThat(review.getContents()).isEqualTo(contents);
-        assertThat(review.getRating()).isEqualTo(rating);
-        assertThat(review.getUserId()).isEqualTo(userId);
     }
 
 }

@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Set;
 
+import static com.depromeet.threedollar.api.assertutils.assertStoreUtils.assertStoreInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class StoreControllerTest extends SetupUserControllerTest {
@@ -170,13 +171,6 @@ class StoreControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getIsDeleted()).isTrue();
         }
 
-    }
-
-    private void assertStoreInfoResponse(StoreInfoResponse response, double latitude, double longitude, String storeName, List<MenuCategoryType> categories) {
-        assertThat(response.getLatitude()).isEqualTo(latitude);
-        assertThat(response.getLongitude()).isEqualTo(longitude);
-        assertThat(response.getStoreName()).isEqualTo(storeName);
-        assertThat(response.getCategories()).isEqualTo(categories);
     }
 
 }

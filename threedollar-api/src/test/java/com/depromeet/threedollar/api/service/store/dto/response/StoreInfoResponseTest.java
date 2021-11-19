@@ -28,7 +28,7 @@ class StoreInfoResponseTest {
 
         // then
         assertAll(
-            () -> assertThat(response.getStoreName()).isEqualTo(Store.DELETE_STORE_NAME),
+            () -> assertThat(response.getStoreName()).isEqualTo("삭제된 가게입니다"),
             () -> assertThat(response.getIsDeleted()).isTrue()
         );
     }
