@@ -36,11 +36,27 @@ class DailyStatisticsJobConfiguration(
     fun dailyStaticsJob(): Job {
         return jobBuilderFactory.get("dailyStaticsJob")
             .incrementer(UniqueRunIdIncrementer())
-            .start(countsNewUserStep())
+            .start(notificationStatisticsInfo())
+            .next(countsNewUserStep())
             .next(countsNewStoresStep())
+            .next(countsDeletedStoresStep())
             .next(countsActiveMenuStep())
             .next(countsNewReviewsStep())
             .next(countsNewVisitHistoriesStep())
+            .build()
+    }
+
+
+    @Bean
+    fun notificationStatisticsInfo(): Step {
+        return stepBuilderFactory[" notificationStatisticsInf"]
+            .tasklet { _, _ ->
+                val yesterday = LocalDate.now().minusDays(1)
+                slackApiClient.postMessage(
+                    PostSlackMessageRequest.of(DAILY_STATISTICS_INFO.messageFormat.format(yesterday))
+                )
+                RepeatStatus.FINISHED
+            }
             .build()
     }
 
@@ -48,16 +64,12 @@ class DailyStatisticsJobConfiguration(
     fun countsNewUserStep(): Step {
         return stepBuilderFactory["countsNewUserStep"]
             .tasklet { _, _ ->
-                val totalCounts = userRepository.findUsersCount()
-
                 val yesterday = LocalDate.now().minusDays(1)
-                val todayCounts = userRepository.findUsersCountBetweenDate(yesterday, yesterday)
-                val thisWeeksCount = userRepository.findUsersCountBetweenDate(yesterday.minusWeeks(1), yesterday)
-
-                slackApiClient.postMessage(
-                    PostSlackMessageRequest.of(
-                        COUNTS_USER.messageFormat.format(yesterday, totalCounts, todayCounts, thisWeeksCount)
-                    )
+                sendStatisticsNotification(
+                    COUNTS_USER,
+                    userRepository.findUsersCount(),
+                    userRepository.findUsersCountBetweenDate(yesterday, yesterday),
+                    userRepository.findUsersCountBetweenDate(yesterday.minusWeeks(1), yesterday)
                 )
                 RepeatStatus.FINISHED
             }
@@ -68,19 +80,26 @@ class DailyStatisticsJobConfiguration(
     fun countsNewStoresStep(): Step {
         return stepBuilderFactory["countsNewStoresStep"]
             .tasklet { _, _ ->
-                val totalCounts = storeRepository.findActiveStoresCounts()
-
                 val yesterday = LocalDate.now().minusDays(1)
-                val todayCounts = storeRepository.findActiveStoresCountsBetweenDate(yesterday, yesterday)
-                val thisWeeksCount =
+                sendStatisticsNotification(
+                    COUNTS_STORE,
+                    storeRepository.findActiveStoresCounts(),
+                    storeRepository.findActiveStoresCountsBetweenDate(yesterday, yesterday),
                     storeRepository.findActiveStoresCountsBetweenDate(yesterday.minusWeeks(1), yesterday)
+                )
+                RepeatStatus.FINISHED
+            }
+            .build()
+    }
 
+    @Bean
+    fun countsDeletedStoresStep(): Step {
+        return stepBuilderFactory["countsDeletedStoresStep"]
+            .tasklet { _, _ ->
+                val yesterday = LocalDate.now().minusDays(1)
                 val todayDeletedCounts = storeRepository.findDeletedStoresCountsByDate(yesterday, yesterday)
-
                 slackApiClient.postMessage(
-                    PostSlackMessageRequest.of(
-                        COUNTS_STORE.messageFormat.format(totalCounts, todayCounts, thisWeeksCount, todayDeletedCounts)
-                    )
+                    PostSlackMessageRequest.of(COUNTS_DELETED_STORE.messageFormat.format(todayDeletedCounts))
                 )
                 RepeatStatus.FINISHED
             }
@@ -108,16 +127,12 @@ class DailyStatisticsJobConfiguration(
     fun countsNewReviewsStep(): Step {
         return stepBuilderFactory["countsNewReviewsStep"]
             .tasklet { _, _ ->
-                val totalCounts = reviewRepository.findActiveReviewsCounts()
-
                 val yesterday = LocalDate.now().minusDays(1)
-                val todayCounts = reviewRepository.findReviewsCountBetweenDate(yesterday, yesterday)
-                val thisWeeksCount = reviewRepository.findReviewsCountBetweenDate(yesterday.minusWeeks(1), yesterday)
-
-                slackApiClient.postMessage(
-                    PostSlackMessageRequest.of(
-                        COUNTS_REVIEW.messageFormat.format(totalCounts, todayCounts, thisWeeksCount)
-                    )
+                sendStatisticsNotification(
+                    COUNTS_REVIEW,
+                    reviewRepository.findActiveReviewsCounts(),
+                    reviewRepository.findReviewsCountBetweenDate(yesterday, yesterday),
+                    reviewRepository.findReviewsCountBetweenDate(yesterday.minusWeeks(1), yesterday)
                 )
                 RepeatStatus.FINISHED
             }
@@ -128,20 +143,29 @@ class DailyStatisticsJobConfiguration(
     fun countsNewVisitHistoriesStep(): Step {
         return stepBuilderFactory["countsNewVisitHistoriesStep"]
             .tasklet { _, _ ->
-                val totalCounts = visitHistoryRepository.findAllCounts()
-
                 val yesterday = LocalDate.now().minusDays(1)
-                val todayCounts = visitHistoryRepository.findCountsBetweenDate(yesterday, yesterday)
-                val thisWeeksCount = visitHistoryRepository.findCountsBetweenDate(yesterday.minusWeeks(1), yesterday)
-
-                slackApiClient.postMessage(
-                    PostSlackMessageRequest.of(
-                        COUNTS_VISIT_HISTORY.messageFormat.format(totalCounts, todayCounts, thisWeeksCount)
-                    )
+                sendStatisticsNotification(
+                    COUNTS_VISIT_HISTORY,
+                    visitHistoryRepository.findAllCounts(),
+                    visitHistoryRepository.findCountsBetweenDate(yesterday, yesterday),
+                    visitHistoryRepository.findCountsBetweenDate(yesterday.minusWeeks(1), yesterday)
                 )
                 RepeatStatus.FINISHED
             }
             .build()
+    }
+
+    private fun sendStatisticsNotification(
+        messageType: StatisticsMessageFormat,
+        totalCounts: Long,
+        todayCounts: Long,
+        weekendCounts: Long
+    ) {
+        slackApiClient.postMessage(
+            PostSlackMessageRequest.of(
+                messageType.messageFormat.format(totalCounts, todayCounts, weekendCounts)
+            )
+        )
     }
 
 }
