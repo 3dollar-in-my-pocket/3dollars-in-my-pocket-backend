@@ -23,8 +23,7 @@ class StoreTest {
         @Test
         void 개시일을_수정한다() {
             // given
-            Store store = StoreCreator.create(100L, "가게");
-            store.addMenus(List.of(MenuCreator.create(store, "name", "price", MenuCategoryType.BUNGEOPPANG)));
+            Store store = StoreCreator.createWithDefaultMenu(100L, "가게");
             store.addAppearanceDays(Set.of(DayOfTheWeek.MONDAY));
 
             // when
@@ -40,8 +39,7 @@ class StoreTest {
         @Test
         void 개시일을_모두_삭제하는_경우() {
             // given
-            Store store = StoreCreator.create(100L, "가게");
-            store.addMenus(List.of(MenuCreator.create(store, "name", "price", MenuCategoryType.BUNGEOPPANG)));
+            Store store = StoreCreator.createWithDefaultMenu(100L, "가게");
             store.addAppearanceDays(Set.of(DayOfTheWeek.MONDAY));
 
             // when
@@ -61,8 +59,7 @@ class StoreTest {
         @Test
         void 결제방법을_수정한다() {
             // given
-            Store store = StoreCreator.create(100L, "가게");
-            store.addMenus(List.of(MenuCreator.create(store, "name", "price", MenuCategoryType.BUNGEOPPANG)));
+            Store store = StoreCreator.createWithDefaultMenu(100L, "가게");
             store.addPaymentMethods(Set.of(PaymentMethodType.CARD));
 
             // when
@@ -78,8 +75,7 @@ class StoreTest {
         @Test
         void 결제방법을_모두_삭제하는_경우() {
             // given
-            Store store = StoreCreator.create(100L, "가게");
-            store.addMenus(List.of(MenuCreator.create(store, "name", "price", MenuCategoryType.BUNGEOPPANG)));
+            Store store = StoreCreator.createWithDefaultMenu(100L, "가게");
             store.addPaymentMethods(Set.of(PaymentMethodType.CARD));
 
             // when

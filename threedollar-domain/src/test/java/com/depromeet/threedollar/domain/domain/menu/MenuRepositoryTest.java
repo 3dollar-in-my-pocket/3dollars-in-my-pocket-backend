@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DataJpaTest
 class MenuRepositoryTest {
@@ -37,7 +38,18 @@ class MenuRepositoryTest {
         List<MenuStatisticsProjection> result = menuRepository.countsGroupByMenu();
 
         // then
-        assertThat(result).hasSize(2);
+        assertAll(
+            () -> assertThat(result).hasSize(2),
+            () -> assertMenuStatisticsProjection(result.get(0), MenuCategoryType.BUNGEOPPANG, 2),
+            () -> assertMenuStatisticsProjection(result.get(1), MenuCategoryType.DALGONA, 1)
+        );
+    }
+
+    private void assertMenuStatisticsProjection(MenuStatisticsProjection projection, MenuCategoryType categoryType, long counts) {
+        assertAll(
+            () -> assertThat(projection.getCategory()).isEqualTo(categoryType),
+            () -> assertThat(projection.getCounts()).isEqualTo(counts)
+        );
     }
 
 }

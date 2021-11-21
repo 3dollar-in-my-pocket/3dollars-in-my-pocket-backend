@@ -1,8 +1,5 @@
 package com.depromeet.threedollar.domain.domain.store;
 
-import com.depromeet.threedollar.domain.domain.menu.Menu;
-import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
 import com.depromeet.threedollar.domain.domain.store.projection.StoreWithReportedCountProjection;
 import com.depromeet.threedollar.domain.domain.storedelete.DeleteReasonType;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestCreator;
@@ -26,20 +23,14 @@ class StoreRepositoryTest {
     @Autowired
     private StoreDeleteRequestRepository storeDeleteRequestRepository;
 
+    @DisplayName("특정 반경 거리안에 있는 가게들을 조회한다")
     @Nested
     class findStoresByLocationLessThanDistance {
 
         @Test
-        void 반경_3KM의_가게들을_조회한다() {
+        void 반경에_있는_가게들을_조회한다() {
             // given
-            Store store = Store.builder()
-                .userId(100L)
-                .latitude(37.358483)
-                .longitude(126.930947)
-                .name("storeName")
-                .type(StoreType.STORE)
-                .build();
-            store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            Store store = StoreCreator.createWithDefaultMenu(10000L, "storeName",37.358483,126.930947);
             storeRepository.save(store);
 
             // when
@@ -47,21 +38,13 @@ class StoreRepositoryTest {
 
             // then
             assertThat(stores).hasSize(1);
+            assertThat(stores).extracting(Store::getId).containsExactly(store.getId());
         }
 
         @Test
-        void 반경_3KM의_가게들을_조회할떄_아무_가게가_없는경우_빈_리스트를_반환한다() {
+        void 반경에_있는_가게들을_조회할떄_아무_가게가_없는경우_빈_리스트를_반환한다() {
             // given
-            Store store = Store.builder()
-                .userId(100L)
-                .latitude(37.328431)
-                .longitude(126.91674)
-                .name("storeName")
-                .type(StoreType.STORE)
-                .build();
-
-            Menu menu = MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG);
-            store.addMenus(List.of(menu));
+            Store store = StoreCreator.createWithDefaultMenu(10000L, "storeName",37.328431,126.91674);
             storeRepository.save(store);
 
             // when
@@ -73,56 +56,15 @@ class StoreRepositoryTest {
 
     }
 
+    @DisplayName("내가 제보한 가게 수를 카운트한다")
     @Nested
     class findCountsByUserId {
 
         @Test
-        void 사용자가_등록한_가게들의_총_개수를_조회한다() {
+        void 메뉴가_없는_가게는_포함되지_않는다() {
             // given
-            Long userId = 100L;
-
-            Store store1 = StoreCreator.create(userId, "1번 가게");
-            store1.addMenus(List.of(MenuCreator.create(store1, "붕어빵1", "만원1", MenuCategoryType.BUNGEOPPANG)));
-            store1.addMenus(List.of(MenuCreator.create(store1, "붕어빵2", "만원2", MenuCategoryType.BUNGEOPPANG)));
-
-            Store store2 = StoreCreator.create(userId, "2번 가게");
-            store2.addMenus(List.of(MenuCreator.create(store2, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
-
-            Store store3 = StoreCreator.create(userId, "3번 가게");
-            store3.addMenus(List.of(MenuCreator.create(store3, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
-
-            storeRepository.saveAll(List.of(store1, store2, store3));
-
-            // when
-            long count = storeRepository.findCountsByUserId(userId);
-
-            // then
-            assertThat(count).isEqualTo(3);
-        }
-
-        @Test
-        void 메뉴가_없는_가게는_조회되지_않는다() {
-            // given
-            Long userId = 100L;
-
-            Store store1 = StoreCreator.create(userId, "1번 가게");
-            store1.addMenus(List.of(MenuCreator.create(store1, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
-
-            Store store2 = StoreCreator.create(userId, "2번 가게");
-
-            storeRepository.saveAll(List.of(store1, store2));
-
-            // when
-            long counts = storeRepository.findCountsByUserId(userId);
-
-            // then
-            assertThat(counts).isEqualTo(1);
-        }
-
-        @Test
-        void 하나도_등록하지_않은경우_count는_0이된다() {
-            // given
-            Long userId = 100L;
+            Long userId = 10000L;
+            storeRepository.save(StoreCreator.create(userId, "2번 가게"));
 
             // when
             long counts = storeRepository.findCountsByUserId(userId);
@@ -131,25 +73,35 @@ class StoreRepositoryTest {
             assertThat(counts).isEqualTo(0);
         }
 
+        @Test
+        void 삭제된_가게도_포함된다() {
+            // given
+            Long userId = 10000L;
+            Store deletedStore = StoreCreator.createDeletedWithDefaultMenu(userId, "2번 가게");
+            storeRepository.save(deletedStore);
+
+            // when
+            long counts = storeRepository.findCountsByUserId(userId);
+
+            // then
+            assertThat(counts).isEqualTo(1);
+        }
+
     }
 
+    @DisplayName("내가 제보한 가게들을 스크롤 페이지네이션으로 조회한다")
     @Nested
     class findAllByUserIdWithScroll {
 
+        @DisplayName("lastStoreId가 null이면 첫 스크롤 페이지를 조회한다")
         @Test
         void 사용자가_등록한_가게_첫페이지를_조회한다() {
             // given
             Long userId = 100L;
 
-            Store store1 = StoreCreator.create(userId, "1번 가게");
-            store1.addMenus(List.of(MenuCreator.create(store1, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
-
-            Store store2 = StoreCreator.create(userId, "2번 가게");
-            store2.addMenus(List.of(MenuCreator.create(store2, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
-
-            Store store3 = StoreCreator.create(userId, "3번 가게");
-            store3.addMenus(List.of(MenuCreator.create(store3, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
-
+            Store store1 = StoreCreator.createWithDefaultMenu(userId, "1번 가게");
+            Store store2 = StoreCreator.createWithDefaultMenu(userId, "2번 가게");
+            Store store3 = StoreCreator.createWithDefaultMenu(userId, "3번 가게");
             storeRepository.saveAll(List.of(store1, store2, store3));
 
             // when
@@ -161,20 +113,15 @@ class StoreRepositoryTest {
             assertThat(stores.get(1).getName()).isEqualTo("2번 가게");
         }
 
+        @DisplayName("lastStoreId보다 이후에 생성된 가게들을 조회한다")
         @Test
         void 사용자가_등록한_가게_두번째_페이지를_조회한다() {
             // given
             Long userId = 100L;
 
-            Store store1 = StoreCreator.create(userId, "1번 가게");
-            store1.addMenus(List.of(MenuCreator.create(store1, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
-
-            Store store2 = StoreCreator.create(userId, "2번 가게");
-            store2.addMenus(List.of(MenuCreator.create(store2, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
-
-            Store store3 = StoreCreator.create(userId, "3번 가게");
-            store3.addMenus(List.of(MenuCreator.create(store3, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
-
+            Store store1 = StoreCreator.createWithDefaultMenu(userId, "1번 가게");
+            Store store2 = StoreCreator.createWithDefaultMenu(userId, "2번 가게");
+            Store store3 = StoreCreator.createWithDefaultMenu(userId, "3번 가게");
             storeRepository.saveAll(List.of(store1, store2, store3));
 
             // when
@@ -194,10 +141,10 @@ class StoreRepositoryTest {
         @Test
         void N개_이상_삭제_요청된_가게들을_조회한다() {
             // given
-            Store store0 = StoreCreator.create(100L, "0개 삭제 요청된 가게");
-            Store store1 = StoreCreator.create(100L, "1개 삭제 요청된 가게");
-            Store store2 = StoreCreator.create(100L, "2개 삭제 요청된 가게");
-            Store store3 = StoreCreator.create(100L, "3개 삭제 요청된 가게");
+            Store store0 = StoreCreator.createWithDefaultMenu(100L, "0개 삭제 요청된 가게");
+            Store store1 = StoreCreator.createWithDefaultMenu(100L, "1개 삭제 요청된 가게");
+            Store store2 = StoreCreator.createWithDefaultMenu(100L, "2개 삭제 요청된 가게");
+            Store store3 = StoreCreator.createWithDefaultMenu(100L, "3개 삭제 요청된 가게");
             storeRepository.saveAll(List.of(store0, store1, store2, store3));
 
             storeDeleteRequestRepository.saveAll(List.of(
@@ -222,9 +169,9 @@ class StoreRepositoryTest {
         @Test
         void 페이지네이션_1페이지를_조회한다() {
             // given
-            Store store1 = StoreCreator.create(100L, "1개 삭제 요청된 가게");
-            Store store2 = StoreCreator.create(100L, "2개 삭제 요청된 가게");
-            Store store3 = StoreCreator.create(100L, "3개 삭제 요청된 가게");
+            Store store1 = StoreCreator.createWithDefaultMenu(100L, "1개 삭제 요청된 가게");
+            Store store2 = StoreCreator.createWithDefaultMenu(100L, "2개 삭제 요청된 가게");
+            Store store3 = StoreCreator.createWithDefaultMenu(100L, "3개 삭제 요청된 가게");
             storeRepository.saveAll(List.of(store1, store2, store3));
 
             storeDeleteRequestRepository.saveAll(List.of(
@@ -249,9 +196,9 @@ class StoreRepositoryTest {
         @Test
         void 페이지네이션_2페이지를_조회한다() {
             // given
-            Store store1 = StoreCreator.create(100L, "1개 삭제 요청된 가게");
-            Store store2 = StoreCreator.create(100L, "2개 삭제 요청된 가게");
-            Store store3 = StoreCreator.create(100L, "3개 삭제 요청된 가게");
+            Store store1 = StoreCreator.createWithDefaultMenu(100L, "1개 삭제 요청된 가게");
+            Store store2 = StoreCreator.createWithDefaultMenu(100L, "2개 삭제 요청된 가게");
+            Store store3 = StoreCreator.createWithDefaultMenu(100L, "3개 삭제 요청된 가게");
             storeRepository.saveAll(List.of(store1, store2, store3));
 
             storeDeleteRequestRepository.saveAll(List.of(
