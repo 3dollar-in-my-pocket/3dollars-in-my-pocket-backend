@@ -121,8 +121,8 @@ public class StoreRetrieveService {
     }
 
     private VisitHistoriesCountCollection findVisitHistoriesCountByStoreIds(List<Store> stores) {
-        List<Long> storeIds = stores.stream().distinct()
-            .map(Store::getId)
+        List<Long> storeIds = stores.stream()
+            .map(Store::getId).distinct()
             .collect(Collectors.toList());
         return VisitHistoriesCountCollection.of(visitHistoryRepository.findCountsByStoreIdWithGroup(storeIds));
     }
