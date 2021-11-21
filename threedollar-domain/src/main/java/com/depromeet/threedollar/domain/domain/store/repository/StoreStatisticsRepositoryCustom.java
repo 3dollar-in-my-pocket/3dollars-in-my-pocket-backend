@@ -2,7 +2,7 @@ package com.depromeet.threedollar.domain.domain.store.repository;
 
 import java.time.LocalDate;
 
-public interface StoreStaticsRepositoryCustom {
+public interface StoreStatisticsRepositoryCustom {
 
     long findActiveStoresCounts();
 

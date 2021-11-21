@@ -8,7 +8,7 @@ import org.springframework.test.context.TestConstructor
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @DataJpaTest
-class ReviewStaticsRepositoryTest(
+class ReviewStatisticsRepositoryTest(
     private val reviewRepository: ReviewRepository
 ) {
 

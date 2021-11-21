@@ -7,13 +7,13 @@ import lombok.ToString;
 
 @ToString
 @Getter
-public class MenuStaticsProjection {
+public class MenuStatisticsProjection {
 
     private final MenuCategoryType category;
     private final long counts;
 
     @QueryProjection
-    public MenuStaticsProjection(MenuCategoryType category, long counts) {
+    public MenuStatisticsProjection(MenuCategoryType category, long counts) {
         this.category = category;
         this.counts = counts;
     }

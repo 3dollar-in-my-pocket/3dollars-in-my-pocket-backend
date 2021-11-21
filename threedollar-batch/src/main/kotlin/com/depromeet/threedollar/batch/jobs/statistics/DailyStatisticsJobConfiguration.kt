@@ -1,11 +1,12 @@
 package com.depromeet.threedollar.batch.jobs.statistics
 
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
-import com.depromeet.threedollar.batch.jobs.statistics.StaticsMessageType.*
+import com.depromeet.threedollar.batch.jobs.statistics.StatisticsMessageFormat.*
 import com.depromeet.threedollar.domain.domain.menu.MenuRepository
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository
 import com.depromeet.threedollar.domain.domain.store.StoreRepository
 import com.depromeet.threedollar.domain.domain.user.UserRepository
+import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository
 import com.depromeet.threedollar.external.client.slack.SlackApiClient
 import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest
 import org.springframework.batch.core.Job
@@ -21,10 +22,13 @@ import java.time.LocalDate
 class DailyStatisticsJobConfiguration(
     private val jobBuilderFactory: JobBuilderFactory,
     private val stepBuilderFactory: StepBuilderFactory,
+
     private val userRepository: UserRepository,
     private val menuRepository: MenuRepository,
     private val storeRepository: StoreRepository,
     private val reviewRepository: ReviewRepository,
+    private val visitHistoryRepository: VisitHistoryRepository,
+
     private val slackApiClient: SlackApiClient
 ) {
 
@@ -36,6 +40,7 @@ class DailyStatisticsJobConfiguration(
             .next(countsNewStoresStep())
             .next(countsActiveMenuStep())
             .next(countsNewReviewsStep())
+            .next(countsNewVisitHistoriesStep())
             .build()
     }
 
@@ -112,6 +117,26 @@ class DailyStatisticsJobConfiguration(
                 slackApiClient.postMessage(
                     PostSlackMessageRequest.of(
                         COUNTS_REVIEW.messageFormat.format(totalCounts, todayCounts, thisWeeksCount)
+                    )
+                )
+                RepeatStatus.FINISHED
+            }
+            .build()
+    }
+
+    @Bean
+    fun countsNewVisitHistoriesStep(): Step {
+        return stepBuilderFactory["countsNewVisitHistoriesStep"]
+            .tasklet { _, _ ->
+                val totalCounts = visitHistoryRepository.findAllCounts()
+
+                val yesterday = LocalDate.now().minusDays(1)
+                val todayCounts = visitHistoryRepository.findCountsBetweenDate(yesterday, yesterday)
+                val thisWeeksCount = visitHistoryRepository.findCountsBetweenDate(yesterday.minusWeeks(1), yesterday)
+
+                slackApiClient.postMessage(
+                    PostSlackMessageRequest.of(
+                        COUNTS_VISIT_HISTORY.messageFormat.format(totalCounts, todayCounts, thisWeeksCount)
                     )
                 )
                 RepeatStatus.FINISHED

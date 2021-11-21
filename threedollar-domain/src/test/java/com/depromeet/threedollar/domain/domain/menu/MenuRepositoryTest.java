@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.domain.menu;
 
-import com.depromeet.threedollar.domain.domain.menu.projection.MenuStaticsProjection;
+import com.depromeet.threedollar.domain.domain.menu.projection.MenuStatisticsProjection;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
@@ -34,7 +34,7 @@ class MenuRepositoryTest {
         ));
 
         // when
-        List<MenuStaticsProjection> result = menuRepository.countsGroupByMenu();
+        List<MenuStatisticsProjection> result = menuRepository.countsGroupByMenu();
 
         // then
         assertThat(result).hasSize(2);
