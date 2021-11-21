@@ -5,8 +5,6 @@ import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRe
 import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoriesScrollResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
@@ -151,9 +149,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
         @Test
         void 방문한_가게가_삭제됬을경우_해당_정보를_반환하돼_가게는_삭제표시된다() throws Exception {
             // given
-            Store deletedStore = StoreCreator.create(testUser.getId(), "가게 이름");
-            deletedStore.addMenus(List.of(MenuCreator.create(deletedStore, "메뉴 이름", "메뉴 가격", MenuCategoryType.BUNGEOPPANG)));
-            deletedStore.delete();
+            Store deletedStore = StoreCreator.createDeletedWithDefaultMenu(testUser.getId(), "가게 이름");
             storeRepository.save(deletedStore);
 
             VisitHistory visitHistory = VisitHistoryCreator.create(deletedStore, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));

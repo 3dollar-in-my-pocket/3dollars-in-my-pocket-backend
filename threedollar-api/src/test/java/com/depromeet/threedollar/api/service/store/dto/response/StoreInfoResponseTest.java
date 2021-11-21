@@ -16,12 +16,7 @@ class StoreInfoResponseTest {
     @Test
     void 삭제된_가게인경우_삭제된_가게_이름으로_표기된다() {
         // given
-        Store store = StoreCreator.create(10000L, "가게 이름");
-        store.addMenus(List.of(
-            MenuCreator.create(store, "붕어빵", "천원", MenuCategoryType.BUNGEOPPANG),
-            MenuCreator.create(store, "달고나", "2천원", MenuCategoryType.DALGONA)
-        ));
-        store.delete();
+        Store store = StoreCreator.createDeletedWithDefaultMenu(10000L, "가게 이름");
 
         // when
         StoreWithDistanceResponse response = StoreWithDistanceResponse.of(store, null, null, 0, 0);
@@ -36,12 +31,11 @@ class StoreInfoResponseTest {
     @Test
     void 삭제된_가게인경우_이름을_제외한_나머지_정보들을_정상_반환한다() {
         // given
-        Store store = StoreCreator.create(10000L, "가게 이름");
+        Store store = StoreCreator.createDeleted(10000L, "가게 이름");
         store.addMenus(List.of(
             MenuCreator.create(store, "붕어빵", "천원", MenuCategoryType.BUNGEOPPANG),
             MenuCreator.create(store, "달고나", "2천원", MenuCategoryType.DALGONA)
         ));
-        store.delete();
 
         // when
         StoreWithDistanceResponse response = StoreWithDistanceResponse.of(store, null, null, 0, 0);
@@ -59,11 +53,7 @@ class StoreInfoResponseTest {
     @Test
     void 따로_현재_위도와_경도를_넘기지_않는경우_거리는_0으로_표시된다() {
         // given
-        Store store = StoreCreator.create(10000L, "가게 이름");
-        store.addMenus(List.of(
-            MenuCreator.create(store, "붕어빵", "천원", MenuCategoryType.BUNGEOPPANG),
-            MenuCreator.create(store, "달고나", "2천원", MenuCategoryType.DALGONA)
-        ));
+        Store store = StoreCreator.createWithDefaultMenu(10000L, "가게 이름");
 
         // when
         StoreWithDistanceResponse response = StoreWithDistanceResponse.of(store, null, null, 0, 0);

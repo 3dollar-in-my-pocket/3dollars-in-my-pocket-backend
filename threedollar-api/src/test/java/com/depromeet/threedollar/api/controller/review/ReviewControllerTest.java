@@ -8,8 +8,6 @@ import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoRespo
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollV2Response;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
 import com.depromeet.threedollar.domain.domain.menu.MenuRepository;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
@@ -248,9 +246,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 삭제된_가게인경우_없어진_가게라고_표시된다() throws Exception {
             // given
-            Store deletedStore = StoreCreator.create(testUser.getId(), "원래 가게 이름");
-            deletedStore.addMenus(List.of(MenuCreator.create(deletedStore, "메뉴 이름", "가격", MenuCategoryType.BUNGEOPPANG)));
-            deletedStore.delete();
+            Store deletedStore = StoreCreator.createDeletedWithDefaultMenu(testUser.getId(), "원래 가게 이름");
             storeRepository.save(deletedStore);
 
             Review review = ReviewCreator.create(deletedStore.getId(), testUser.getId(), "너무 맛있어요", 5);
@@ -273,9 +269,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void V2버전에서는_삭제된_가게인경우_해당_리뷰는_조회되지_않는다() throws Exception {
             // given
-            Store deletedStore = StoreCreator.create(testUser.getId(), "원래 가게 이름");
-            deletedStore.addMenus(List.of(MenuCreator.create(deletedStore, "메뉴 이름", "가격", MenuCategoryType.BUNGEOPPANG)));
-            deletedStore.delete();
+            Store deletedStore = StoreCreator.createDeletedWithDefaultMenu(testUser.getId(), "원래 가게 이름");
             storeRepository.save(deletedStore);
 
             Review review = ReviewCreator.create(deletedStore.getId(), testUser.getId(), "너무 맛있어요", 5);

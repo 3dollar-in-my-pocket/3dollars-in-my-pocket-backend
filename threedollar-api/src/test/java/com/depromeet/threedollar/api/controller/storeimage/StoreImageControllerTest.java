@@ -3,8 +3,6 @@ package com.depromeet.threedollar.api.controller.storeimage;
 import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
 import com.depromeet.threedollar.api.service.storeimage.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
 import com.depromeet.threedollar.domain.domain.menu.MenuRepository;
 import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
@@ -65,8 +63,7 @@ class StoreImageControllerTest extends SetupUserControllerTest {
         @ParameterizedTest
         void 가게에_등록된_사진들을_조회한다(String imageUrl1, String imageUrl2) throws Exception {
             // given
-            Store store = StoreCreator.create(testUser.getId(), "storeName", 34, 124);
-            store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "storeName", 34, 124);
             storeRepository.save(store);
 
             StoreImage storeImage1 = StoreImage.newInstance(store.getId(), testUser.getId(), imageUrl1);
