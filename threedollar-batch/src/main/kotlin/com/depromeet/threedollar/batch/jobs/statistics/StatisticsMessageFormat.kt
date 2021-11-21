@@ -5,7 +5,9 @@ enum class StatisticsMessageFormat(
 ) {
 
     DAILY_STATISTICS_INFO(
-        "[가슴속 삼천원 %s 통계 정보를 알려드립니다]"
+        """
+            [가슴속 삼천원 %s 통계 정보를 알려드립니다]
+        """.trimIndent()
     ),
     COUNTS_USER(
         """
@@ -17,7 +19,7 @@ enum class StatisticsMessageFormat(
     ),
     COUNTS_STORE(
         """
-            2. 활성화된 가게 통계 정보
+            2. 가게 통계 정보
             - 총 %s개의 가게가 등록되어 있습니다..
             - 오늘 %s개의 가게가 신규 등록되었습니다.
             - 일주일 간 %s개의 가게가 신규 등록되었습니다.
@@ -25,19 +27,24 @@ enum class StatisticsMessageFormat(
     ),
     COUNTS_DELETED_STORE(
         """
-            3.  삭제된 가게 통계 정보
+            3. 가게 삭제 통계 정보
             - 오늘 %s개의 가게가 삭제되었습니다.
         """.trimIndent()
     ),
     COUNTS_MENUS(
-        "4. 활성화 중인 메뉴 정보\n%s"
+        """
+            4. 활성화 중인 메뉴 정보
+            %s
+        """.trimIndent()
     ),
     COUNTS_MENU(
-        "- %s: %s개가 활성화 되어 있습니다."
+        """
+            - %s: %s개가 활성화 되어 있습니다.
+        """.trimIndent()
     ),
     COUNTS_REVIEW(
         """
-            5. 활성화된 리뷰 통계 정보
+            5. 리뷰 통계 정보
             - 총 %s개의 리뷰가 작성되어 있습니다.
             - 오늘 %s개의 리뷰가 신규 작성되었습니다.
             - 일주일 간 %s개의 리뷰가 신규 작성되었습니다.
@@ -45,7 +52,7 @@ enum class StatisticsMessageFormat(
     ),
     COUNTS_VISIT_HISTORY(
         """
-            6. 등록된 방문 인증 기록 통계 정보
+            6. 방문 인증 기록 통계 정보
             - 총 %s번의 방문 인증 기록이 등록되어 있습니다.
             - 오늘 %s번의 방문 인증 기록이 신규 등록되었습니다.
             - 일주일 간 %s번의 방문 인증 기록이 신규 등록되었습니다.
