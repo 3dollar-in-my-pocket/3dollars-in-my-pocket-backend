@@ -10,7 +10,7 @@ import org.springframework.test.context.TestConstructor
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @DataJpaTest
-class StoreStaticsRepositoryTest(
+class StoreStatisticsRepositoryTest(
     private val storeRepository: StoreRepository
 ) {
 

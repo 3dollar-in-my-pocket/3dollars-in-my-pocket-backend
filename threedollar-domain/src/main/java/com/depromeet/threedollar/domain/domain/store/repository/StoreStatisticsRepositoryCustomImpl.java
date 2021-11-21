@@ -10,7 +10,7 @@ import static com.depromeet.threedollar.domain.domain.menu.QMenu.menu;
 import static com.depromeet.threedollar.domain.domain.store.QStore.store;
 
 @RequiredArgsConstructor
-public class StoreStaticsRepositoryCustomImpl implements StoreStaticsRepositoryCustom {
+public class StoreStatisticsRepositoryCustomImpl implements StoreStatisticsRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
