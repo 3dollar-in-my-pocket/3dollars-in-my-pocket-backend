@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import static com.depromeet.threedollar.domain.domain.user.QUser.user;
 
 @RequiredArgsConstructor
-public class UserStaticsRepositoryCustomImpl implements UserStaticsRepositoryCustom {
+public class UserStatisticsRepositoryCustomImpl implements UserStatisticsRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 

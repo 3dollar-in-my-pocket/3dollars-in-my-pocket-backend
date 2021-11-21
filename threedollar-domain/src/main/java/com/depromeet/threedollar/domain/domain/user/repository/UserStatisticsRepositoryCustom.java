@@ -2,7 +2,7 @@ package com.depromeet.threedollar.domain.domain.user.repository;
 
 import java.time.LocalDate;
 
-public interface UserStaticsRepositoryCustom {
+public interface UserStatisticsRepositoryCustom {
 
     long findUsersCount();
 

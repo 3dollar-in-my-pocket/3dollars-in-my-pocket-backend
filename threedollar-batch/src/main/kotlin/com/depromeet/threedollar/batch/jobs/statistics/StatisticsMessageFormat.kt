@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.batch.jobs.statistics
 
-enum class StaticsMessageType(
+enum class StatisticsMessageFormat(
     val messageFormat: String
 ) {
 
@@ -20,9 +20,15 @@ enum class StaticsMessageType(
     ),
     COUNTS_REVIEW(
         "4. 활성 리뷰 수\n" +
-            "- 총 %s개의 리뷰를 작성해주셨습니다.\n" +
-            "- 오늘 %s개의 리뷰를 신규 작성해주셨습니다.\n" +
-            "- 일주일 간 %s개의 리뷰를 신규 작성해주셨습니다."
+            "- 총 %s개의 리뷰가 신규 작성되었습니다.\n" +
+            "- 오늘 %s개의 리뷰가 신규 작성되었습니다.\n" +
+            "- 일주일 간 %s개의 리뷰가 신규 작성되었습니다."
+    ),
+    COUNTS_VISIT_HISTORY(
+        "5. 활성 방문 인증 수\n" +
+            "- 총 %s번 방문 인증하였셨습니다.\n" +
+            "- 오늘 %s번 방문 인증하였습니다.\n" +
+            "- 일주일 간 %s번 방문 인증하였습니다."
     ),
     COUNTS_MENU(
         "- %s: %s개가 활성화 되어 있습니다."

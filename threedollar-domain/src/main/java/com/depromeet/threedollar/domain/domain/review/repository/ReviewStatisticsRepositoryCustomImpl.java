@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import static com.depromeet.threedollar.domain.domain.review.QReview.review;
 
 @RequiredArgsConstructor
-public class ReviewStaticsRepositoryCustomImpl implements ReviewStaticsRepositoryCustom {
+public class ReviewStatisticsRepositoryCustomImpl implements ReviewStatisticsRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 

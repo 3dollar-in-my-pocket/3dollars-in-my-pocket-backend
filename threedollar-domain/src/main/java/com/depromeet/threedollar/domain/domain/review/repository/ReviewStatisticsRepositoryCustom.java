@@ -2,7 +2,7 @@ package com.depromeet.threedollar.domain.domain.review.repository;
 
 import java.time.LocalDate;
 
-public interface ReviewStaticsRepositoryCustom {
+public interface ReviewStatisticsRepositoryCustom {
 
     long findActiveReviewsCounts();
 
