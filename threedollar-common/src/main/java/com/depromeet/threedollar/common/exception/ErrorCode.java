@@ -13,10 +13,10 @@ public enum ErrorCode {
 
     // 400 Bad Request
     VALIDATION_EXCEPTION(BAD_REQUEST, OFF, "BR001", "잘못된 요청입니다"),
-    VALIDATION_RATING_EXCEPTION(BAD_REQUEST, OFF, "BR002", "허용되지 않은 평가 점수입니다. (1 ~ 5)"),
-    VALIDATION_LATITUDE_EXCEPTION(BAD_REQUEST, OFF, "BR003", "허용되지 않은 위도 범위를 입력하였습니다. (33 ~ 43)"),
-    VALIDATION_LONGITUDE_EXCEPTION(BAD_REQUEST, OFF, "BR004", "허용되지 않은 경도 범위를 입력하였습니다. (124 ~ 132)"),
-    VALIDATION_FILE_TYPE_EXCEPTION(BAD_REQUEST, OFF, "BR005", "허용되지 않은 파일 형식입니다"),
+    VALIDATION_RATING_EXCEPTION(BAD_REQUEST, OFF, "BR002", "허용되지 않은 평가 점수입니다. (1 ~ 5)"), // TODO 403에러로 변경
+    VALIDATION_LATITUDE_EXCEPTION(BAD_REQUEST, OFF, "BR003", "허용되지 않은 위도 범위를 입력하였습니다. (33 ~ 43)"), // TODO 차후 403에러로 변경
+    VALIDATION_LONGITUDE_EXCEPTION(BAD_REQUEST, OFF, "BR004", "허용되지 않은 경도 범위를 입력하였습니다. (124 ~ 132)"), // TODO 차후 403에러로 변경
+    VALIDATION_FILE_TYPE_EXCEPTION(BAD_REQUEST, OFF, "BR005", "허용되지 않은 파일 형식입니다"), // TODO 차후 403에러로 변경
     VALIDATION_APPLE_TOKEN_EXCEPTION(BAD_REQUEST, OFF, "BR006", "잘못된 애플 토큰입니다"),
     VALIDATION_APPLE_TOKEN_EXPIRED_EXCEPTION(BAD_REQUEST, OFF, "BR007", "만료된 애플 토큰입니다."),
     VALIDATION_SOCIAL_TYPE_EXCEPTION(BAD_REQUEST, OFF, "BR008", "잘못된 소셜 프로바이더 입니다."),
@@ -24,6 +24,7 @@ public enum ErrorCode {
     VALIDATION_ENUM_VALUE_EXCEPTION(BAD_REQUEST, OFF, "BR010", "잘못된 Enum 값 입니다"),
     VALIDATION_REQUEST_MISSING_EXCEPTION(BAD_REQUEST, OFF, "BR011", "필수적인 요청 값이 입력되지 않았습니다"),
     VALIDATION_WRONG_TYPE_EXCEPTION(BAD_REQUEST, OFF, "BR012", "잘못된 타입이 입력되었습니다."),
+    VALIDATION_UPLOAD_SIZE_EXCEPTION(BAD_REQUEST, ON, "BR013", "업로드 가능한 최대 파일의 크기를 초과했습니다"), // TODO 차후 403에러로 변경
 
     // 401 UnAuthorized
     UNAUTHORIZED_EXCEPTION(UNAUTHORIZED, OFF, "UA001", "세션이 만료되었습니다.\n다시 로그인 해주세요"),
