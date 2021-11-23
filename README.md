@@ -7,6 +7,8 @@
 ![img.png](images/logo.png)
 
 ### 프로젝트 설명
+전국 붕어빵파는 곳을 알려주는 **"가슴속 3천원"**
+
 **"가슴 속 3천원"** 은 겨울철 우리 가슴속에 지니고 다니는 3천원을 털어가는 붕어빵, 문어빵, 계란빵, 호떡 등을 파는 곳을 포함해 길거리 음식점들을 알려드립니다.
 
 ### 앱 다운로드
@@ -20,10 +22,10 @@
 
 ## 기술 스택
 > 백엔드에서는 v2.0.0부터 마이그레이션을 통해 새롭게 프로젝트를 진행하고 있습니다.
-### Language & Framework
+### 애플리케이션 (Language & Framework)
 - Java 11, Kotlin 1.5
-- Spring Boot (Spring Framework, Spring MVC)
-- Spring Data JPA (Hibernate) + QueryDSL
+- Spring Framework (Spring MVC)
+- JPA/Hibernate, QueryDSL
 - Spring Batch
 - Feign Client
 - Gradle
@@ -40,9 +42,7 @@
 - GitHub Actions CI/CD
 
 ### 인프라 - 개발 환경 (Development)
-- EC2
-- Docker compose
-- Nginx
+- EC2, Docker-compose, Nginx
 - RDS (MariaDB), flyway
 - Redis
 - S3
