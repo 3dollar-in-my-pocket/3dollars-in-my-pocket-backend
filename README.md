@@ -31,21 +31,14 @@
 - Gradle
 - Junit5, AssertJ, Mockito
 
-### 인프라 - 운영 환경 (Production)
+### 인프라 (Production)
 ![img.png](images/3dollars-architecture-20211016.png)
 
 - ECS Fargate
 - RDS (MariaDB), flyway
-- ElasticCache (Redis)
+- Elastic Cache (Redis)
 - S3
 - Application LoadBalancer
-- GitHub Actions CI/CD
-
-### 인프라 - 개발 환경 (Development)
-- EC2, Docker-compose, Nginx
-- RDS (MariaDB), flyway
-- Redis
-- S3
 - GitHub Actions CI/CD
 
 ### 운영 툴
