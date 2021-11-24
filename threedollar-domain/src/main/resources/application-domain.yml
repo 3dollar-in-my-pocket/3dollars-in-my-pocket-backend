@@ -5,7 +5,7 @@ spring:
         show_sql: true
         format_sql: true
         use_sql_comments: true
-        dialect: org.hibernate.dialect.MySQL57Dialect
+        dialect: org.hibernate.dialect.MariaDB103Dialect
         dialect.storage_engine: innodb
         default_batch_fetch_size: 1000
         query:in_clause_parameter_padding: true
