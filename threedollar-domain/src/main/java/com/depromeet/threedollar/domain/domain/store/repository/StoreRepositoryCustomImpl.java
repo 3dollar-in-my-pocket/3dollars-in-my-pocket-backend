@@ -151,8 +151,8 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
     public List<Store> findStoresByLocationLessThanDistance(double latitude, double longitude, double distance) {
         List<Long> storeIds = queryFactory.select(store.id)
             .from(store)
+            .where(Expressions.predicate(Ops.LOE, Expressions.asNumber(getDistanceExpression(latitude, longitude)), Expressions.asNumber(distance)))
             .groupBy(store.id, store.location.latitude, store.location.longitude)
-            .having(Expressions.predicate(Ops.LOE, Expressions.asNumber(getDistanceExpression(latitude, longitude)), Expressions.asNumber(distance)))
             .orderBy(OrderByNull.DEFAULT)
             .fetch();
 
