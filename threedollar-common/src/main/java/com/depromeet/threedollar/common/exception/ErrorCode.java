@@ -58,6 +58,7 @@ public enum ErrorCode {
 
     // 500 Internal Server Exception
     INTERNAL_SERVER_EXCEPTION(INTERNAL_SERVER, ON, "IS001", "예상치 못한 에러가 발생하였습니다.\n잠시 후 다시 시도해주세요!"),
+    INTERNAL_SERVER_UPDATE_STORE_OPTIMISTIC_LOCK_FAILED_EXCEPTION(INTERNAL_SERVER, ON, "IS002", "일시적으로 다른 사용자와 동시에 가게 수정 요청을 하였습니다ㅠㅠ\n잠시 후 다시 시도해주세요!"),
 
     // 502 Bad Gateway
     BAD_GATEWAY_EXCEPTION(BAD_GATEWAY, ON, "BG001", "일시적인 에러가 발생하였습니다.\n잠시 후 다시 시도해주세요!"),

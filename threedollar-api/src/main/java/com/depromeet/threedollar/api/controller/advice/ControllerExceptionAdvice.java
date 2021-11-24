@@ -128,6 +128,17 @@ public class ControllerExceptionAdvice {
     }
 
     /**
+     * 최대 허용한 이미지 크기를 넘은 경우 발생하는 Exception
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    protected ApiResponse<Object> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException e) {
+        log.error(e.getMessage(), e);
+        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(VALIDATION_UPLOAD_SIZE_EXCEPTION, e));
+        return ApiResponse.error(VALIDATION_UPLOAD_SIZE_EXCEPTION);
+    }
+
+    /**
      * ThreeDollars Custom Exception
      */
     @ExceptionHandler(ThreeDollarsBaseException.class)
@@ -138,17 +149,6 @@ public class ControllerExceptionAdvice {
         log.error(exception.getMessage(), exception);
         return ResponseEntity.status(exception.getStatus())
             .body(ApiResponse.error(exception.getErrorCode()));
-    }
-
-    /**
-     * 최대 허용한 이미지 크기를 넘은 경우 발생하는 Exception
-     */
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MaxUploadSizeExceededException.class)
-    protected ApiResponse<Object> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException e) {
-        log.error(e.getMessage(), e);
-        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(VALIDATION_UPLOAD_SIZE_EXCEPTION, e));
-        return ApiResponse.error(VALIDATION_UPLOAD_SIZE_EXCEPTION);
     }
 
     /**

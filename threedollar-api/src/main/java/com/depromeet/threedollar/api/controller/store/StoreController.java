@@ -9,11 +9,15 @@ import com.depromeet.threedollar.api.service.store.dto.request.UpdateStoreReques
 import com.depromeet.threedollar.api.service.store.dto.response.StoreDeleteResponse;
 import com.depromeet.threedollar.api.service.store.dto.response.StoreInfoResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
+import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import static com.depromeet.threedollar.common.exception.ErrorCode.INTERNAL_SERVER_UPDATE_STORE_OPTIMISTIC_LOCK_FAILED_EXCEPTION;
 
 @RequiredArgsConstructor
 @RestController
@@ -32,7 +36,12 @@ public class StoreController {
     @Auth
     @PutMapping("/api/v2/store/{storeId}")
     public ApiResponse<StoreInfoResponse> updateStore(@PathVariable Long storeId, @Valid @RequestBody UpdateStoreRequest request) {
-        return ApiResponse.success(storeService.updateStore(storeId, request));
+        try {
+            return ApiResponse.success(storeService.updateStore(storeId, request));
+        } catch (ObjectOptimisticLockingFailureException e) {
+            throw new InternalServerException(String.format("가게 (%s)를 수정하는 도중 잠금 충돌이 발생하였습니다. message: (%s)", storeId, e),
+                INTERNAL_SERVER_UPDATE_STORE_OPTIMISTIC_LOCK_FAILED_EXCEPTION);
+        }
     }
 
     @ApiOperation("[인증] 가게 상세 페이지 - 특정 가게의 정보를 삭제 요청합니다")
