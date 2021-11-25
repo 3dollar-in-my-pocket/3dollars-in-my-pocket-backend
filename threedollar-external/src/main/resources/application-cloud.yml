@@ -7,6 +7,8 @@ cloud:
   aws:
     s3:
       bucket: 3dollar-local-embedded-bucket
+    cloudfront:
+      url: http://localhost:10000/${cloud.aws.s3.bucket}/
     region:
       static: ap-northeast-2
     stack:
@@ -22,6 +24,8 @@ cloud:
   aws:
     s3:
       bucket: 3dollar-api-bucket
+    cloudfront:
+      url: ${secret.aws.cloudfront.url}
     region:
       static: ap-northeast-2
     stack:
@@ -37,6 +41,8 @@ cloud:
   aws:
     s3:
       bucket: 3dollar-api-bucket-prod
+    cloudfront:
+      url: ${secret.aws.cloudfront.url}
     region:
       static: ap-northeast-2
     stack:
