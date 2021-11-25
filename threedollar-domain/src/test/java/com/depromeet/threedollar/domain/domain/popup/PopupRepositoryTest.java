@@ -86,9 +86,8 @@ class PopupRepositoryTest {
 
         // then
         assertAll(
-            () -> assertThat(findPopups).hasSize(2),
-            () -> assertThat(findPopups.get(0).getImageUrl()).isEqualTo(popup2.getImageUrl()),
-            () -> assertThat(findPopups.get(1).getImageUrl()).isEqualTo(popup1.getImageUrl())
+            () -> assertThat(findPopups).hasSize(1),
+            () -> assertThat(findPopups.get(0).getImageUrl()).isEqualTo(popup2.getImageUrl())
         );
     }
 
