@@ -8,23 +8,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PopupCreator {
 
-    public static Popup create(String imageUrl, String linkUrl, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public static Popup create(String imageUrl, String linkUrl, LocalDateTime startDateTime, LocalDateTime endDateTime, PopupPlatformType platformType) {
         return Popup.builder()
             .imageUrl(imageUrl)
             .linkUrl(linkUrl)
             .startDateTime(startDateTime)
             .endDateTime(endDateTime)
-            .status(PopupStatus.ACTIVE)
-            .build();
-    }
-
-    public static Popup createInActive(String imageUrl, String linkUrl, LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        return Popup.builder()
-            .imageUrl(imageUrl)
-            .linkUrl(linkUrl)
-            .startDateTime(startDateTime)
-            .endDateTime(endDateTime)
-            .status(PopupStatus.INACTIVE)
+            .platformType(platformType)
             .build();
     }
 

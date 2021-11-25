@@ -14,13 +14,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(
-    indexes = @Index(name = "idx_popup_1", columnList = "startDateTime,endDateTime,status")
+    indexes = @Index(name = "idx_popup_1", columnList = "platformType,startDateTime,endDateTime")
 )
 public class Popup extends AuditingTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, length = 30)
+    @Enumerated(EnumType.STRING)
+    private PopupPlatformType platformType;
 
     @Column(nullable = false, length = 2048)
     private String imageUrl;
@@ -31,16 +35,12 @@ public class Popup extends AuditingTimeEntity {
     @Embedded
     private DateTimeInterval dateTimeInterval;
 
-    @Column(nullable = false, length = 30)
-    @Enumerated(EnumType.STRING)
-    private PopupStatus status;
-
     @Builder(access = AccessLevel.PACKAGE)
-    private Popup(String imageUrl, String linkUrl, LocalDateTime startDateTime, LocalDateTime endDateTime, PopupStatus status) {
+    private Popup(PopupPlatformType platformType, String imageUrl, String linkUrl, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        this.platformType = platformType;
         this.imageUrl = imageUrl;
         this.linkUrl = linkUrl;
         this.dateTimeInterval = DateTimeInterval.of(startDateTime, endDateTime);
-        this.status = status;
     }
 
     public LocalDateTime getStartDateTime() {

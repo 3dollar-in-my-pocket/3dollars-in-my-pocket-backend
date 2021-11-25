@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.domain.domain.popup.repository;
 
 import com.depromeet.threedollar.domain.domain.popup.Popup;
-import com.depromeet.threedollar.domain.domain.popup.PopupStatus;
+import com.depromeet.threedollar.domain.domain.popup.PopupPlatformType;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
@@ -16,12 +16,12 @@ public class PopupRepositoryCustomImpl implements PopupRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<Popup> findActivatedPopups(LocalDateTime dateTime) {
+    public List<Popup> findActivatedPopupsByPlatform(PopupPlatformType platformType, LocalDateTime dateTime) {
         return queryFactory.selectFrom(popup)
             .where(
+                popup.platformType.eq(platformType),
                 popup.dateTimeInterval.startDateTime.loe(dateTime),
-                popup.dateTimeInterval.endDateTime.goe(dateTime),
-                popup.status.eq(PopupStatus.ACTIVE)
+                popup.dateTimeInterval.endDateTime.goe(dateTime)
             )
             .orderBy(popup.id.desc())
             .limit(1) // 일단 팝업 한개만으로 제한
