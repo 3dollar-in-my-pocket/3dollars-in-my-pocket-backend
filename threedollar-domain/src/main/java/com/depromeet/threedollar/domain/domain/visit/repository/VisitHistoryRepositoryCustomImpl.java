@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.depromeet.threedollar.domain.domain.menu.QMenu.menu;
+import static com.depromeet.threedollar.domain.domain.store.QMenu.menu;
 import static com.depromeet.threedollar.domain.domain.store.QStore.store;
 import static com.depromeet.threedollar.domain.domain.user.QUser.user;
 import static com.depromeet.threedollar.domain.domain.visit.QVisitHistory.visitHistory;

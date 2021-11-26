@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.api.controller;
 
-import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
-import com.depromeet.threedollar.domain.domain.menu.MenuRepository;
+import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.domain.domain.store.MenuCreator;
+import com.depromeet.threedollar.domain.domain.store.MenuRepository;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;

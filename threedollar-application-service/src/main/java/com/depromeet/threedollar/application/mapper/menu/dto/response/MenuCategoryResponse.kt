@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.application.mapper.menu.dto.response
 
-import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType
+import com.depromeet.threedollar.domain.domain.store.MenuCategoryType
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class MenuCategoryResponse(

@@ -4,8 +4,6 @@ import com.depromeet.threedollar.common.utils.MathUtils;
 import com.depromeet.threedollar.domain.domain.common.AuditingTimeEntity;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
 import com.depromeet.threedollar.domain.domain.common.Location;
-import com.depromeet.threedollar.domain.domain.menu.Menu;
-import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

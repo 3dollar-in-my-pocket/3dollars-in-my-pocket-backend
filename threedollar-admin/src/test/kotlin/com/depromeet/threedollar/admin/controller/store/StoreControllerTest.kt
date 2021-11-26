@@ -5,8 +5,6 @@ import com.depromeet.threedollar.admin.service.store.dto.response.ReportedStores
 import com.depromeet.threedollar.admin.service.store.dto.response.StoreInfoResponse
 import com.depromeet.threedollar.admin.service.store.dto.response.StoreScrollResponse
 import com.depromeet.threedollar.application.common.dto.ApiResponse
-import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType
-import com.depromeet.threedollar.domain.domain.menu.MenuCreator
 import com.depromeet.threedollar.domain.domain.store.Store
 import com.depromeet.threedollar.domain.domain.store.StoreCreator
 import com.depromeet.threedollar.domain.domain.store.StoreRepository

@@ -1,7 +1,6 @@
-package com.depromeet.threedollar.domain.domain.menu;
+package com.depromeet.threedollar.domain.domain.store;
 
 import com.depromeet.threedollar.domain.domain.common.AuditingTimeEntity;
-import com.depromeet.threedollar.domain.domain.store.Store;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
