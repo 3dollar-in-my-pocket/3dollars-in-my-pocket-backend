@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReviewService {
 
     private final ApplicationEventPublisher eventPublisher;
+
     private final ReviewRepository reviewRepository;
     private final StoreRepository storeRepository;
 

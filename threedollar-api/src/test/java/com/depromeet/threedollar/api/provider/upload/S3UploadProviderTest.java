@@ -1,9 +1,9 @@
-package com.depromeet.threedollar.api.service.upload;
+package com.depromeet.threedollar.api.provider.upload;
 
-import com.depromeet.threedollar.api.service.upload.dto.request.ImageUploadRequest;
+import com.depromeet.threedollar.api.provider.upload.dto.request.ImageUploadFileRequest;
 import com.depromeet.threedollar.common.exception.model.ValidationException;
 import com.depromeet.threedollar.domain.domain.common.ImageType;
-import com.depromeet.threedollar.external.client.s3.S3Service;
+import com.depromeet.threedollar.external.client.s3.S3Client;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,13 +18,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-class S3FileUploadServiceTest {
+class S3UploadProviderTest {
 
     @Autowired
-    private S3UploadService s3UploadService;
+    private S3UploadProvider s3UploadProvider;
 
     @MockBean
-    private S3Service s3Service;
+    private S3Client s3Provider;
 
     @Test
     void 이미지_업로드시_S3로_업로드되고_해당_URL을_가져온다() {
@@ -33,11 +33,11 @@ class S3FileUploadServiceTest {
         MultipartFile multipartFile = new MockMultipartFile(fileName, fileName, "image/jpeg", new byte[]{});
 
         // when
-        s3UploadService.uploadFile(ImageUploadRequest.of(ImageType.STORE), multipartFile);
+        s3UploadProvider.uploadFile(ImageUploadFileRequest.of(ImageType.STORE), multipartFile);
 
         // then
-        verify(s3Service, times(1)).uploadFile(any(), any(), any(String.class));
-        verify(s3Service, times(1)).getFileUrl(any(String.class));
+        verify(s3Provider, times(1)).uploadFile(any(), any(), any(String.class));
+        verify(s3Provider, times(1)).getFileUrl(any(String.class));
     }
 
     @Test
@@ -47,7 +47,7 @@ class S3FileUploadServiceTest {
         when(multipartFile.getInputStream()).thenThrow(IOException.class);
 
         // when & then
-        assertThatThrownBy(() -> s3UploadService.uploadFile(ImageUploadRequest.of(ImageType.STORE), multipartFile)).isInstanceOf(ValidationException.class);
+        assertThatThrownBy(() -> s3UploadProvider.uploadFile(ImageUploadFileRequest.of(ImageType.STORE), multipartFile)).isInstanceOf(ValidationException.class);
     }
 
 }

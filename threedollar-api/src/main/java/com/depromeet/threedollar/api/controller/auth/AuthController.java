@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.controller.auth;
 
 import com.depromeet.threedollar.api.config.interceptor.Auth;
 import com.depromeet.threedollar.api.config.resolver.UserId;
-import com.depromeet.threedollar.api.service.auth.AuthAssembleService;
+import com.depromeet.threedollar.api.service.auth.AuthFacadeService;
 import com.depromeet.threedollar.api.service.auth.dto.request.LoginRequest;
 import com.depromeet.threedollar.api.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.service.auth.dto.response.LoginResponse;
@@ -25,13 +25,14 @@ import static com.depromeet.threedollar.api.config.session.SessionConstants.USER
 public class AuthController {
 
     private final HttpSession httpSession;
+
     private final UserService userService;
-    private final AuthAssembleService authAssembleService;
+    private final AuthFacadeService authFacadeService;
 
     @ApiOperation("회원가입 페이지 - 회원가입을 요청합니다")
     @PostMapping("/api/v2/signup")
     public ApiResponse<LoginResponse> signUp(@Valid @RequestBody SignUpRequest request) {
-        Long userId = authAssembleService.signUp(request);
+        Long userId = authFacadeService.signUp(request);
         httpSession.setAttribute(USER_ID, userId);
         return ApiResponse.success(LoginResponse.of(httpSession.getId(), userId));
     }
@@ -39,7 +40,7 @@ public class AuthController {
     @ApiOperation("로그인 페이지 - 로그인을 요청합니다")
     @PostMapping("/api/v2/login")
     public ApiResponse<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
-        Long userId = authAssembleService.login(request);
+        Long userId = authFacadeService.login(request);
         httpSession.setAttribute(USER_ID, userId);
         return ApiResponse.success(LoginResponse.of(httpSession.getId(), userId));
     }

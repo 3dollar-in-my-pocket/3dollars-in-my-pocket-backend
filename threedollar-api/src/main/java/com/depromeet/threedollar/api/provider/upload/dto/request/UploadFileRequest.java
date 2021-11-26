@@ -1,6 +1,6 @@
-package com.depromeet.threedollar.api.service.upload.dto.request;
+package com.depromeet.threedollar.api.provider.upload.dto.request;
 
-public interface UploadRequest {
+public interface UploadFileRequest {
 
     void validateAvailableFileType(String contentType);
 

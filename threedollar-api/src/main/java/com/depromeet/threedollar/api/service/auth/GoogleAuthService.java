@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.api.service.auth;
 
-import com.depromeet.threedollar.api.service.auth.AuthService;
 import com.depromeet.threedollar.api.service.auth.dto.request.LoginRequest;
 import com.depromeet.threedollar.api.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.service.user.UserService;
@@ -20,6 +19,7 @@ public class GoogleAuthService implements AuthService {
     private final UserSocialType socialType = UserSocialType.GOOGLE;
 
     private final GoogleApiClient googleApiClient;
+
     private final UserService userService;
     private final UserRepository userRepository;
 
