@@ -21,8 +21,8 @@ spring:
       - secret
   servlet:
     multipart:
-      max-file-size: 20MB
-      max-request-size: 20MB
+      max-file-size: 10MB
+      max-request-size: 15MB
   mvc:
     format:
       date: yyyy-MM-dd
