@@ -3,8 +3,8 @@ package com.depromeet.threedollar.api.service.storeimage;
 import com.depromeet.threedollar.api.service.store.StoreServiceUtils;
 import com.depromeet.threedollar.api.service.storeimage.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.api.service.storeimage.dto.response.StoreImageResponse;
-import com.depromeet.threedollar.api.service.upload.UploadService;
-import com.depromeet.threedollar.api.service.upload.dto.request.ImageUploadRequest;
+import com.depromeet.threedollar.api.provider.upload.UploadProvider;
+import com.depromeet.threedollar.api.provider.upload.dto.request.ImageUploadFileRequest;
 import com.depromeet.threedollar.domain.domain.common.ImageType;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
@@ -23,7 +23,8 @@ public class StoreImageService {
 
     private final StoreRepository storeRepository;
     private final StoreImageRepository storeImageRepository;
-    private final UploadService uploadService;
+
+    private final UploadProvider uploadProvider;
 
     public List<StoreImageResponse> addStoreImages(AddStoreImageRequest request, List<MultipartFile> imageFiles, Long userId) {
         StoreServiceUtils.validateExistsStore(storeRepository, request.getStoreId());
@@ -38,7 +39,7 @@ public class StoreImageService {
     }
 
     private String uploadImage(MultipartFile imageFile) {
-        return uploadService.uploadFile(ImageUploadRequest.of(ImageType.STORE), imageFile);
+        return uploadProvider.uploadFile(ImageUploadFileRequest.of(ImageType.STORE), imageFile);
     }
 
     @Transactional

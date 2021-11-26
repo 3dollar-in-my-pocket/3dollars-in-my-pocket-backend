@@ -1,6 +1,6 @@
-package com.depromeet.threedollar.domain.domain.menu.projection;
+package com.depromeet.threedollar.domain.domain.store.projection;
 
-import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
+import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 import lombok.ToString;

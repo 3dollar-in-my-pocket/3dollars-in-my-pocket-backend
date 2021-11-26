@@ -5,13 +5,13 @@ import com.depromeet.threedollar.api.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.common.exception.model.ValidationException;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import static com.depromeet.threedollar.common.exception.ErrorCode.VALIDATION_SOCIAL_TYPE_EXCEPTION;
 
 @RequiredArgsConstructor
-@Service
-public class AuthAssembleService {
+@Component
+public class AuthFacadeService {
 
     private final AuthService appleAuthService;
     private final AuthService kaKaoAuthService;

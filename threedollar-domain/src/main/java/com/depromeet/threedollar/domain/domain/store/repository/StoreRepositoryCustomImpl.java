@@ -14,8 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-import static com.depromeet.threedollar.domain.domain.menu.QMenu.menu;
-
+import static com.depromeet.threedollar.domain.domain.store.QMenu.menu;
 import static com.depromeet.threedollar.domain.domain.store.QStore.store;
 import static com.depromeet.threedollar.domain.domain.storedelete.QStoreDeleteRequest.storeDeleteRequest;
 import static com.querydsl.core.types.dsl.MathExpressions.*;

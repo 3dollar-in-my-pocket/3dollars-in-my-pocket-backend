@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.controller.menu;
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.application.mapper.menu.dto.response.MenuCategoryResponse;
-import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
+import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;

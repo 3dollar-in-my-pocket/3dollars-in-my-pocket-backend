@@ -1,10 +1,10 @@
-package com.depromeet.threedollar.domain.domain.menu;
+package com.depromeet.threedollar.domain.domain.store;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import static com.depromeet.threedollar.domain.domain.menu.MenuCategoryType.MenuCategoryTypeStatus.ACTIVE;
+import static com.depromeet.threedollar.domain.domain.store.MenuCategoryType.MenuCategoryTypeStatus.ACTIVE;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)

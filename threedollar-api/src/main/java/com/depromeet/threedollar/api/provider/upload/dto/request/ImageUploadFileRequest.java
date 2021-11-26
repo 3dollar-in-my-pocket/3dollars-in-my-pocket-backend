@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.service.upload.dto.request;
+package com.depromeet.threedollar.api.provider.upload.dto.request;
 
 import com.depromeet.threedollar.common.exception.model.ValidationException;
 import com.depromeet.threedollar.domain.domain.common.ImageType;
@@ -14,7 +14,7 @@ import static com.depromeet.threedollar.common.exception.ErrorCode.VALIDATION_FI
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ImageUploadRequest implements UploadRequest {
+public class ImageUploadFileRequest implements UploadFileRequest {
 
     private static final String SEPARATOR = "/";
     private static final String IMAGE_CONTENT_TYPE_TYPE = "image";
@@ -22,8 +22,8 @@ public class ImageUploadRequest implements UploadRequest {
     @NotNull(message = "{image.type.notNull}")
     private ImageType type;
 
-    public static ImageUploadRequest of(ImageType type) {
-        return new ImageUploadRequest(type);
+    public static ImageUploadFileRequest of(ImageType type) {
+        return new ImageUploadFileRequest(type);
     }
 
     @Override

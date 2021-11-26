@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.service.upload.dto.request;
+package com.depromeet.threedollar.api.provider.upload.dto.request;
 
 import com.depromeet.threedollar.common.exception.model.ValidationException;
 import com.depromeet.threedollar.domain.domain.common.ImageType;
@@ -17,7 +17,7 @@ class ImageUploadRequestTest {
         // given
         String originalFileName = "image.png";
         ImageType type = ImageType.STORE;
-        ImageUploadRequest request = ImageUploadRequest.of(type);
+        ImageUploadFileRequest request = ImageUploadFileRequest.of(type);
 
         // when
         String result = request.createFileName(originalFileName);
@@ -31,7 +31,7 @@ class ImageUploadRequestTest {
     @ParameterizedTest
     void 허용되지_ContentType_경우_VALIDATION_FILE_TYPE_EXCEPTION(String contentType) {
         // given
-        ImageUploadRequest request = ImageUploadRequest.of(ImageType.STORE);
+        ImageUploadFileRequest request = ImageUploadFileRequest.of(ImageType.STORE);
 
         // when & then
         assertThatThrownBy(() -> request.validateAvailableFileType(contentType)).isInstanceOf(ValidationException.class);
@@ -41,7 +41,7 @@ class ImageUploadRequestTest {
     @ParameterizedTest
     void ContentType이_널이거나_빈문자열일경우_VALIDATION_FILE_TYPE_EXCEPTION(String contentType) {
         // given
-        ImageUploadRequest request = ImageUploadRequest.of(ImageType.STORE);
+        ImageUploadFileRequest request = ImageUploadFileRequest.of(ImageType.STORE);
 
         // when & then
         assertThatThrownBy(() -> request.validateAvailableFileType(contentType)).isInstanceOf(ValidationException.class);
@@ -51,7 +51,7 @@ class ImageUploadRequestTest {
     @ParameterizedTest
     void 허용된_ContentType_경우_정상적으로_반환된다(String contentType) {
         // given
-        ImageUploadRequest request = ImageUploadRequest.of(ImageType.STORE);
+        ImageUploadFileRequest request = ImageUploadFileRequest.of(ImageType.STORE);
 
         // when & then
         request.validateAvailableFileType(contentType);

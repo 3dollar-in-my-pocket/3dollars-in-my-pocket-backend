@@ -1,6 +1,5 @@
-package com.depromeet.threedollar.domain.domain.menu;
+package com.depromeet.threedollar.domain.domain.store;
 
-import com.depromeet.threedollar.domain.domain.store.Store;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

@@ -5,8 +5,8 @@ import com.depromeet.threedollar.api.service.store.dto.response.StoreDetailRespo
 import com.depromeet.threedollar.api.service.store.dto.response.StoreInfoResponse;
 import com.depromeet.threedollar.api.service.store.dto.response.StoreWithDistanceResponse;
 import com.depromeet.threedollar.domain.domain.common.Location;
-import com.depromeet.threedollar.domain.domain.menu.Menu;
-import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
+import com.depromeet.threedollar.domain.domain.store.Menu;
+import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreType;
 import com.depromeet.threedollar.domain.domain.storedelete.DeleteReasonType;

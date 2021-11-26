@@ -1,9 +1,6 @@
-package com.depromeet.threedollar.domain.domain.menu;
+package com.depromeet.threedollar.domain.domain.store;
 
-import com.depromeet.threedollar.domain.domain.menu.projection.MenuStatisticsProjection;
-import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.domain.store.StoreCreator;
-import com.depromeet.threedollar.domain.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.domain.store.projection.MenuStatisticsProjection;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

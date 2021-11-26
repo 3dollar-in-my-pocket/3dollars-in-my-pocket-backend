@@ -4,7 +4,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 
 import java.io.InputStream;
 
-public interface S3Service {
+public interface S3Client {
 
     void uploadFile(InputStream inputStream, ObjectMetadata objectMetadata, String fileName);
 

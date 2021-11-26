@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.external.client.apple;
 
-public interface AppleTokenDecoder {
+public interface AppleTokenProvider {
 
     String getSocialIdFromIdToken(String idToken);
 

@@ -4,8 +4,6 @@ import com.depromeet.threedollar.common.utils.MathUtils;
 import com.depromeet.threedollar.domain.domain.common.AuditingTimeEntity;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
 import com.depromeet.threedollar.domain.domain.common.Location;
-import com.depromeet.threedollar.domain.domain.menu.Menu;
-import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -143,9 +141,11 @@ public class Store extends AuditingTimeEntity {
         this.menus.add(menu);
     }
 
-    public void updateMenu(List<Menu> menus) {
-        this.menus.clear();
-        addMenus(menus);
+    public void updateMenu(List<Menu> newMenus) {
+        this.menus.removeIf(menu -> !newMenus.contains(menu));
+        this.menus.addAll(newMenus.stream()
+            .filter(newMenu -> !this.menus.contains(newMenu))
+            .collect(Collectors.toList()));
     }
 
     public void updateInfo(String name, StoreType type, double latitude, double longitude) {

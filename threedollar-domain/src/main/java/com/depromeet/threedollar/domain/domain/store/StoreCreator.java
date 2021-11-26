@@ -1,7 +1,5 @@
 package com.depromeet.threedollar.domain.domain.store;
 
-import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

@@ -8,7 +8,7 @@ import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserCreator;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
-import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder;
+import com.depromeet.threedollar.external.client.apple.AppleTokenProvider;
 import com.depromeet.threedollar.external.client.google.GoogleApiClient;
 import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse;
 import com.depromeet.threedollar.external.client.kakao.KaKaoApiClient;
@@ -31,7 +31,7 @@ class AuthControllerTest extends SetupUserControllerTest {
     private GoogleApiClient googleApiClient;
 
     @MockBean
-    private AppleTokenDecoder appleTokenDecoder;
+    private AppleTokenProvider appleTokenProvider;
 
     @BeforeEach
     void setUp() {
@@ -66,7 +66,7 @@ class AuthControllerTest extends SetupUserControllerTest {
         @Test
         void 애플_회원가입_요청이_성공하면_토큰이_반환된다() throws Exception {
             // given
-            when(appleTokenDecoder.getSocialIdFromIdToken(any())).thenReturn("social-id");
+            when(appleTokenProvider.getSocialIdFromIdToken(any())).thenReturn("social-id");
 
             SignUpRequest request = SignUpRequest.testInstance("access-token", "will", UserSocialType.APPLE);
 
@@ -126,7 +126,7 @@ class AuthControllerTest extends SetupUserControllerTest {
             User user = UserCreator.create("social-id", UserSocialType.APPLE, "애플 계정");
             userRepository.save(user);
 
-            when(appleTokenDecoder.getSocialIdFromIdToken(any())).thenReturn(user.getSocialId());
+            when(appleTokenProvider.getSocialIdFromIdToken(any())).thenReturn(user.getSocialId());
 
             LoginRequest request = LoginRequest.testInstance("access-token", UserSocialType.APPLE);
 

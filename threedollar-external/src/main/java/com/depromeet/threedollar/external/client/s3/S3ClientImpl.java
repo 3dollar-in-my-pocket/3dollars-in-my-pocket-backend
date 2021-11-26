@@ -13,7 +13,7 @@ import java.io.InputStream;
 
 @RequiredArgsConstructor
 @Component
-public class AmazonS3Service implements S3Service {
+public class S3ClientImpl implements S3Client {
 
     private final AmazonS3 amazonS3;
 
