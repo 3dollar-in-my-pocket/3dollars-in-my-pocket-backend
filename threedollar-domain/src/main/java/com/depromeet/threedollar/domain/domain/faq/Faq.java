@@ -11,7 +11,9 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(
-    indexes = @Index(name = "idx_faq_1", columnList = "category")
+    indexes = {
+        @Index(name = "idx_faq_1", columnList = "category")
+    }
 )
 public class Faq extends AuditingTimeEntity {
 

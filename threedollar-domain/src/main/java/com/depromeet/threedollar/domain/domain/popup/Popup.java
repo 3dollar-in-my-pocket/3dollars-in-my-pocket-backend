@@ -14,7 +14,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(
-    indexes = @Index(name = "idx_popup_1", columnList = "platformType,startDateTime,endDateTime")
+    indexes = {
+        @Index(name = "idx_popup_1", columnList = "platformType,startDateTime,endDateTime")
+    }
 )
 public class Popup extends AuditingTimeEntity {
 

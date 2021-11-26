@@ -14,8 +14,10 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(
+    uniqueConstraints = {
+        @UniqueConstraint(name = "uni_visit_history_1", columnNames = {"store_id", "dateOfVisit", "userId"})
+    },
     indexes = {
-        @Index(name = "idx_visit_history_1", columnList = "store_id,dateOfVisit,userId"),
         @Index(name = "idx_visit_history_2", columnList = "userId"),
         @Index(name = "idx_visit_history_3", columnList = "store_id,type"),
     }

@@ -14,7 +14,9 @@ import javax.persistence.*;
     uniqueConstraints = {
         @UniqueConstraint(name = "uni_user_1", columnNames = {"socialId", "socialType"})
     },
-    indexes = @Index(name = "idx_user_1", columnList = "name")
+    indexes = {
+        @Index(name = "idx_user_1", columnList = "name")
+    }
 )
 public class User extends AuditingTimeEntity {
 
@@ -37,7 +39,7 @@ public class User extends AuditingTimeEntity {
         return new User(socialId, socialType, name);
     }
 
-	public void update(String name) {
+    public void update(String name) {
         this.name = name;
     }
 
