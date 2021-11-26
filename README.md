@@ -32,12 +32,12 @@
 - Junit5, AssertJ, Mockito
 
 ### 인프라 (Production)
-![img.png](images/3dollars-architecture-20211016.png)
+![img.png](images/3dollars-architecture-20211126.png)
 
 - ECS Fargate
 - RDS (MariaDB), flyway
 - Elastic Cache (Redis)
-- S3
+- S3, CloudFront
 - Application LoadBalancer
 - GitHub Actions CI/CD
 
