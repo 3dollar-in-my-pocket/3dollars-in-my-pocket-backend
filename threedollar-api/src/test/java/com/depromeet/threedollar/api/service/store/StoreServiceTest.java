@@ -1,5 +1,8 @@
 package com.depromeet.threedollar.api.service.store;
 
+import com.depromeet.threedollar.api.controller.medal.UserMedalEventListener;
+import com.depromeet.threedollar.api.event.store.StoreCreatedEvent;
+import com.depromeet.threedollar.api.event.store.StoreDeletedEvent;
 import com.depromeet.threedollar.api.service.SetupUserServiceTest;
 import com.depromeet.threedollar.api.service.store.dto.request.AddStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.DeleteStoreRequest;
@@ -26,6 +29,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -36,6 +40,9 @@ import java.util.stream.Collectors;
 import static com.depromeet.threedollar.api.assertutils.assertStoreUtils.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 class StoreServiceTest extends SetupUserServiceTest {
@@ -57,6 +64,9 @@ class StoreServiceTest extends SetupUserServiceTest {
 
     @Autowired
     private MenuRepository menuRepository;
+
+    @MockBean
+    private UserMedalEventListener userMedalEventListener;
 
     @AfterEach
     void cleanUp() {
@@ -194,6 +204,25 @@ class StoreServiceTest extends SetupUserServiceTest {
             List<Menu> menuList = menuRepository.findAll();
             assertThat(menuList).hasSize(1);
             assertMenu(menuList.get(0), menuName, price, type);
+        }
+
+        @Test
+        void 가게_등록시_메달을_획득하는_작업이_수행된다() {
+            // given
+            AddStoreRequest request = AddStoreRequest.testBuilder()
+                .latitude(34.0)
+                .longitude(130.0)
+                .storeName("가게 이름")
+                .storeType(StoreType.STORE)
+                .appearanceDays(Set.of(DayOfTheWeek.FRIDAY))
+                .paymentMethods(Set.of(PaymentMethodType.CARD))
+                .menus(Set.of(MenuRequest.of("메뉴 이름", "한 개에 만원", MenuCategoryType.BUNGEOPPANG)))
+                .build();
+
+            // when
+            storeService.addStore(request, userId);
+
+            verify(userMedalEventListener, times(1)).addObtainableMedalsByAddStore(any(StoreCreatedEvent.class));
         }
 
     }
@@ -505,6 +534,19 @@ class StoreServiceTest extends SetupUserServiceTest {
             // when & then
             assertThatThrownBy(() -> storeService.deleteStore(store.getId(), DeleteStoreRequest.testInstance(reasonType), userId))
                 .isInstanceOf(ConflictException.class);
+        }
+
+        @AutoSource
+        @ParameterizedTest
+        void 가게_삭제_요청시_메달을_획득하는_작업이_수행된다(DeleteReasonType reasonType) {
+            Store store = StoreCreator.create(userId, "storeName");
+            storeRepository.save(store);
+
+            // when
+            StoreDeleteResponse response = storeService.deleteStore(store.getId(), DeleteStoreRequest.testInstance(reasonType), userId);
+
+            // then
+            verify(userMedalEventListener, times(1)).addObtainableMedalsByDeleteStore(any(StoreDeletedEvent.class));
         }
 
     }

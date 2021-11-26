@@ -32,7 +32,7 @@ public class VisitHistoryWithUserResponse extends AuditingTimeResponse {
             .visitHistoryId(projection.getVisitHistoryId())
             .type(projection.getType())
             .dateOfVisit(projection.getDateOfVisit())
-            .user(UserInfoResponse.of(projection.getUserId(), projection.getUserName(), projection.getSocialType()))
+            .user(UserInfoResponse.of(projection.getUserId(), projection.getUserName(), projection.getSocialType(), projection.getUserMedalType()))
             .build();
         response.setBaseTime(projection.getVisitCreatedAt(), projection.getVisitUpdatedAt());
         return response;

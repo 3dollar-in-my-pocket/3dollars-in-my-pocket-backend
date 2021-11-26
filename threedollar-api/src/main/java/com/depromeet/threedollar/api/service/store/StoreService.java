@@ -1,5 +1,7 @@
 package com.depromeet.threedollar.api.service.store;
 
+import com.depromeet.threedollar.api.event.store.StoreCreatedEvent;
+import com.depromeet.threedollar.api.event.store.StoreDeletedEvent;
 import com.depromeet.threedollar.api.service.store.dto.request.AddStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.DeleteStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.UpdateStoreRequest;
@@ -10,6 +12,7 @@ import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,12 +29,14 @@ public class StoreService {
      */
     private static final int DELETE_REPORTS_COUNT = 3;
 
+    private final ApplicationEventPublisher eventPublisher;
     private final StoreRepository storeRepository;
     private final StoreDeleteRequestRepository storeDeleteRequestRepository;
 
     @Transactional
     public StoreInfoResponse addStore(AddStoreRequest request, Long userId) {
         Store store = storeRepository.save(request.toStore(userId));
+        eventPublisher.publishEvent(StoreCreatedEvent.of(store.getId(), userId));
         return StoreInfoResponse.of(store);
     }
 
@@ -53,6 +58,7 @@ public class StoreService {
             throw new ConflictException(String.format("사용자 (%s)는 가게 (%s)에 대해 이미 삭제 요청을 하였습니다", userId, storeId), CONFLICT_DELETE_REQUEST_STORE_EXCEPTION);
         }
         storeDeleteRequestRepository.save(request.toEntity(storeId, userId));
+        eventPublisher.publishEvent(StoreDeletedEvent.of(store.getId(), userId));
         return StoreDeleteResponse.of(deleteStoreIfSatisfyCondition(store, reporters));
     }
 

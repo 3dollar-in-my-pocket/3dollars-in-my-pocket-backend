@@ -24,4 +24,13 @@ public class StoreDeleteRequestRepositoryCustomImpl implements StoreDeleteReques
             ).fetch();
     }
 
+    @Override
+    public long findCountsByUserId(Long userId) {
+        return queryFactory.select(storeDeleteRequest.id)
+            .from(storeDeleteRequest)
+            .where(
+                storeDeleteRequest.userId.eq(userId)
+            ).fetchCount();
+    }
+
 }

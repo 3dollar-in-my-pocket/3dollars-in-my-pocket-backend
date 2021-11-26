@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.domain.domain.visit.repository;
 
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
+import com.depromeet.threedollar.domain.domain.visit.VisitType;
 import com.depromeet.threedollar.domain.domain.visit.projection.QVisitHistoryWithCounts;
 import com.depromeet.threedollar.domain.domain.visit.projection.QVisitHistoryWithUserProjection;
 import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithCounts;
@@ -44,7 +45,8 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
                 visitHistory.updatedAt,
                 visitHistory.userId,
                 user.name,
-                user.socialInfo.socialType
+                user.socialInfo.socialType,
+                user.medalType
             ))
             .from(visitHistory)
             .leftJoin(user).on(visitHistory.userId.eq(user.id))
@@ -85,6 +87,25 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
             )
             .groupBy(visitHistory.store.id, visitHistory.type)
             .fetch();
+    }
+
+    @Override
+    public long findCountsByUserId(Long userId) {
+        return queryFactory.select(visitHistory.id)
+            .from(visitHistory)
+            .where(
+                visitHistory.userId.eq(userId)
+            ).fetchCount();
+    }
+
+    @Override
+    public long findCountsByUserIdAndVisitType(Long userId, VisitType visitType) {
+        return queryFactory.select(visitHistory.id)
+            .from(visitHistory)
+            .where(
+                visitHistory.userId.eq(userId),
+                visitHistory.type.eq(visitType)
+            ).fetchCount();
     }
 
 }

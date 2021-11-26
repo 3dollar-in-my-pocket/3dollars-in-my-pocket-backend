@@ -34,7 +34,7 @@ public class ReviewDetailResponse extends AuditingTimeResponse {
             .reviewId(review.getReviewId())
             .rating(review.getRating())
             .contents(review.getContents())
-            .user(UserInfoResponse.of(review.getUserId(), review.getUserName(), review.getUserSocialType()))
+            .user(UserInfoResponse.of(review.getUserId(), review.getUserName(), review.getUserSocialType(), review.getUserMedalType()))
             .store(StoreInfoResponse.of(store))
             .build();
         response.setBaseTime(review.getCreatedAt(), review.getUpdatedAt());

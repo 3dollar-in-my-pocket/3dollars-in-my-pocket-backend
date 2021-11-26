@@ -1,9 +1,10 @@
 package com.depromeet.threedollar.api.service.review;
 
+import com.depromeet.threedollar.api.event.review.ReviewCreatedEvent;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
-import com.depromeet.threedollar.api.event.ReviewChangedEvent;
+import com.depromeet.threedollar.api.event.review.ReviewChangedEvent;
 import com.depromeet.threedollar.api.service.store.StoreServiceUtils;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
@@ -28,6 +29,7 @@ public class ReviewService {
         Store store = StoreServiceUtils.findStoreById(storeRepository, request.getStoreId());
         Review review = reviewRepository.save(request.toEntity(userId));
         eventPublisher.publishEvent(ReviewChangedEvent.of(store));
+        eventPublisher.publishEvent(ReviewCreatedEvent.of(review.getId(), userId));
         return ReviewInfoResponse.of(review);
     }
 

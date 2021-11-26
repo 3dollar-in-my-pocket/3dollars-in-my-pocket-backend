@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.domain.domain.visit.projection;
 
+import com.depromeet.threedollar.domain.domain.medal.UserMedalType;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
 import com.querydsl.core.annotations.QueryProjection;
@@ -23,11 +24,12 @@ public class VisitHistoryWithUserProjection {
     private final Long userId;
     private final String userName;
     private final UserSocialType socialType;
+    private final UserMedalType userMedalType;
 
     @QueryProjection
     public VisitHistoryWithUserProjection(Long visitHistoryId, Long storeId, VisitType type, LocalDate dateOfVisit,
                                           LocalDateTime visitCreatedAt, LocalDateTime visitUpdatedAt,
-                                          Long userId, String userName, UserSocialType socialType) {
+                                          Long userId, String userName, UserSocialType socialType, UserMedalType userMedalType) {
         this.visitHistoryId = visitHistoryId;
         this.storeId = storeId;
         this.type = type;
@@ -37,6 +39,7 @@ public class VisitHistoryWithUserProjection {
         this.userId = userId;
         this.userName = userName;
         this.socialType = socialType;
+        this.userMedalType = userMedalType;
     }
 
 }
