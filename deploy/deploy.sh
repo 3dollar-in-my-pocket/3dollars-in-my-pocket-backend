@@ -12,7 +12,7 @@ if [ -z "$EXIST_BLUE" ]; then
     echo "[Blue] 서버를 가동합니다"
     docker-compose -p ${DOCKER_APP_NAME}-blue -f docker-compose.blue.yml up -d --build
 
-    sleep 90
+    sleep 120
 
     echo "[Green] 서버를 중지합니다"
     docker-compose -p ${DOCKER_APP_NAME}-green -f docker-compose.green.yml down
@@ -20,7 +20,7 @@ else
     echo "[Green] 서버를 가동합니다"
     docker-compose -p ${DOCKER_APP_NAME}-green -f docker-compose.green.yml up -d --build
 
-    sleep 90
+    sleep 120
 
     echo "[Blue] 서버를 중지합니다"
     docker-compose -p ${DOCKER_APP_NAME}-blue -f docker-compose.blue.yml down
