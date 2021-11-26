@@ -2,14 +2,9 @@ package com.depromeet.threedollar.api.service.medal;
 
 import com.depromeet.threedollar.api.service.SetupUserServiceTest;
 import com.depromeet.threedollar.domain.domain.medal.UserMedal;
-import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
-import com.depromeet.threedollar.domain.domain.menu.MenuRepository;
 import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
-import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.domain.store.StoreCreator;
-import com.depromeet.threedollar.domain.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.storedelete.DeleteReasonType;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequest;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestRepository;
