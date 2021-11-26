@@ -19,6 +19,8 @@ import org.springframework.mock.web.MockMultipartFile;
 
 import java.util.List;
 
+import static com.depromeet.threedollar.api.assertutils.assertStoreImageUtils.assertStoreImage;
+import static com.depromeet.threedollar.api.assertutils.assertStoreImageUtils.assertStoreImageResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -124,7 +126,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
             storeImageRepository.save(storeImage);
 
             // when
-            List<StoreImageResponse> responses = storeImageService.retrieveStoreImages(store.getId());
+            List<StoreImageResponse> responses = storeImageService.getStoreImages(store.getId());
 
             // then
             assertThat(responses).hasSize(1);
@@ -139,24 +141,12 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
             storeImageRepository.save(storeImage);
 
             // when
-            List<StoreImageResponse> responses = storeImageService.retrieveStoreImages(store.getId());
+            List<StoreImageResponse> responses = storeImageService.getStoreImages(store.getId());
 
             // then
             assertThat(responses).isEmpty();
         }
 
-    }
-
-    private void assertStoreImageResponse(StoreImageResponse storeImageResponse, Long id, String url) {
-        assertThat(storeImageResponse.getImageId()).isEqualTo(id);
-        assertThat(storeImageResponse.getUrl()).isEqualTo(url);
-    }
-
-    private void assertStoreImage(StoreImage storeImage, Long storeId, Long userId, String imageUrl, StoreImageStatus status) {
-        assertThat(storeImage.getStoreId()).isEqualTo(storeId);
-        assertThat(storeImage.getUserId()).isEqualTo(userId);
-        assertThat(storeImage.getUrl()).isEqualTo(imageUrl);
-        assertThat(storeImage.getStatus()).isEqualTo(status);
     }
 
 }

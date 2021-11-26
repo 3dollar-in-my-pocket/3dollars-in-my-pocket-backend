@@ -5,7 +5,7 @@ import com.depromeet.threedollar.api.config.resolver.UserId;
 import com.depromeet.threedollar.api.service.store.StoreRetrieveService;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveMyStoresRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStoresRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailInfoRequest;
+import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreGroupByCategoryRequest;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
@@ -25,21 +25,34 @@ public class StoreRetrieveController {
 
     @ApiOperation(value = "메인 페이지 - 위도, 경도 기준 내 주위의 가게 목록을 조회합니다", notes = "orderType: 정렬이 필요한 경우 category: 카테고리 필터링이 필요한 경우")
     @GetMapping("/api/v2/stores/near")
-    public ApiResponse<List<StoreInfoResponse>> getNearStores(@Valid RetrieveNearStoresRequest request) {
+    public ApiResponse<List<StoreWithDistanceResponse>> getNearStores(@Valid RetrieveNearStoresRequest request) {
         return ApiResponse.success(storeRetrieveService.getNearStores(request));
     }
 
     @ApiOperation("가게 상세 페이지 - 특정 가게의 정보를 상세 조회합니다")
     @GetMapping("/api/v2/store")
-    public ApiResponse<StoreDetailResponse> getDetailStoreInfo(@Valid RetrieveStoreDetailInfoRequest request) {
+    public ApiResponse<StoreDetailResponse> getDetailStoreInfo(@Valid RetrieveStoreDetailRequest request) {
         return ApiResponse.success(storeRetrieveService.getDetailStoreInfo(request));
     }
 
-    @ApiOperation("[인증] 마이페이지 - 내가 제보한 가게 목록들을 스크롤 페이지네이션으로 조회합니다")
+    @ApiOperation("[인증] 마이페이지 - 내가 제보한 가게 목록들을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 O)")
     @Auth
-    @GetMapping("/api/v2/stores/me")
+    @GetMapping("/api/v3/stores/me")
     public ApiResponse<StoresScrollResponse> getMyStores(@Valid RetrieveMyStoresRequest request, @UserId Long userId) {
         return ApiResponse.success(storeRetrieveService.retrieveMyStores(request, userId));
+    }
+
+    /**
+     * v2.1.1 부터 Deprecated
+     * 내가 제보한 가게 조회시, 삭제된 가게들을 반환하되, 삭제된 가게라고 표기해줘야하는 이슈에 대응하기 위함. (호환성을 유지하기 위한 API)
+     * use GET /api/v3/stores/me
+     */
+    @Deprecated
+    @ApiOperation("[인증] 마이페이지 - 내가 제보한 가게 목록들을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 X)")
+    @Auth
+    @GetMapping("/api/v2/stores/me")
+    public ApiResponse<StoresScrollResponse> getMyStoresV2(@Valid RetrieveMyStoresRequest request, @UserId Long userId) {
+        return ApiResponse.success(storeRetrieveService.retrieveMyStoresV2(request, userId));
     }
 
     /**

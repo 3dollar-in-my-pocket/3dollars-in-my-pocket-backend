@@ -15,9 +15,7 @@ import java.time.LocalDate;
 public class VisitHistoryWithStoreResponse extends AuditingTimeResponse {
 
     private Long visitHistoryId;
-
     private VisitType type;
-
     private LocalDate dateOfVisit;
 
     private StoreInfoResponse store;
@@ -35,7 +33,7 @@ public class VisitHistoryWithStoreResponse extends AuditingTimeResponse {
             .visitHistoryId(visitHistory.getId())
             .type(visitHistory.getType())
             .dateOfVisit(visitHistory.getDateOfVisit())
-            .store(StoreInfoResponse.ofWithOutVisitsCount(store))
+            .store(StoreInfoResponse.of(store))
             .build();
         response.setBaseTime(visitHistory.getCreatedAt(), visitHistory.getUpdatedAt());
         return response;

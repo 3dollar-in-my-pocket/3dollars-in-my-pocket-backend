@@ -13,7 +13,7 @@ class VisitHistoryInfoResponseTest {
         int notExistsVisitsCount = 2;
 
         // when
-        VisitHistoryInfoResponse response = VisitHistoryInfoResponse.of(existsVisitCount, notExistsVisitsCount);
+        VisitHistoryCountsResponse response = VisitHistoryCountsResponse.of(existsVisitCount, notExistsVisitsCount);
 
         // then
         assertThat(response.getIsCertified()).isFalse();
@@ -26,7 +26,7 @@ class VisitHistoryInfoResponseTest {
         int notExistsVisitsCount = 2;
 
         // when
-        VisitHistoryInfoResponse response = VisitHistoryInfoResponse.of(existsVisitCount, notExistsVisitsCount);
+        VisitHistoryCountsResponse response = VisitHistoryCountsResponse.of(existsVisitCount, notExistsVisitsCount);
 
         // then
         assertThat(response.getIsCertified()).isFalse();
@@ -39,7 +39,7 @@ class VisitHistoryInfoResponseTest {
         int notExistsVisitsCount = 0;
 
         // when
-        VisitHistoryInfoResponse response = VisitHistoryInfoResponse.of(existsVisitCount, notExistsVisitsCount);
+        VisitHistoryCountsResponse response = VisitHistoryCountsResponse.of(existsVisitCount, notExistsVisitsCount);
 
         // then
         assertThat(response.getIsCertified()).isFalse();

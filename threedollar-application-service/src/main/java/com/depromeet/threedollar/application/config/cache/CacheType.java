@@ -11,6 +11,7 @@ import java.time.Duration;
 public enum CacheType {
 
     FAQS(CacheKey.FAQS, Duration.ofHours(1)),
+    POPUP(CacheKey.POPUP, Duration.ofHours(1)),
     ;
 
     private final String key;
@@ -19,6 +20,7 @@ public enum CacheType {
     public static class CacheKey {
 
         public static final String FAQS = "FAQS";
+        public static final String POPUP = "POPUP";
 
     }
 

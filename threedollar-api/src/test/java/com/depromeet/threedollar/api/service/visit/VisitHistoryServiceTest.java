@@ -20,6 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.depromeet.threedollar.api.assertutils.assertVisitHistoryUtils.assertVisitHistory;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -82,13 +83,6 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
             assertThatThrownBy(() -> visitHistoryService.addVisitHistory(request, userId, dateOfVisit)).isInstanceOf(ConflictException.class);
         }
 
-    }
-
-    private void assertVisitHistory(VisitHistory visitHistory, Long storeId, Long userId, VisitType type, LocalDate dateOfVisit) {
-        assertThat(visitHistory.getStore().getId()).isEqualTo(storeId);
-        assertThat(visitHistory.getUserId()).isEqualTo(userId);
-        assertThat(visitHistory.getType()).isEqualTo(type);
-        assertThat(visitHistory.getDateOfVisit()).isEqualTo(dateOfVisit);
     }
 
 }

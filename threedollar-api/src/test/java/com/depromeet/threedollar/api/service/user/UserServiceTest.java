@@ -17,6 +17,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static com.depromeet.threedollar.api.assertutils.assertUserUtils.assertUser;
+import static com.depromeet.threedollar.api.assertutils.assertUserUtils.assertWithdrawalUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -53,7 +55,7 @@ class UserServiceTest {
             // then
             List<User> users = userRepository.findAll();
             assertThat(users).hasSize(1);
-            assertUserInfo(users.get(0), socialId, socialType, name);
+            assertUser(users.get(0), socialId, socialType, name);
         }
 
         @AutoSource
@@ -142,7 +144,7 @@ class UserServiceTest {
             // then
             List<User> users = userRepository.findAll();
             assertThat(users).hasSize(1);
-            assertUserInfo(users.get(0), socialId, socialType, name);
+            assertUser(users.get(0), socialId, socialType, name);
         }
 
         @Test
@@ -194,7 +196,7 @@ class UserServiceTest {
             // then
             List<User> users = userRepository.findAll();
             assertThat(users).hasSize(1);
-            assertUserInfo(users.get(0), user2.getSocialId(), user2.getSocialType(), user2.getName());
+            assertUser(users.get(0), user2.getSocialId(), user2.getSocialType(), user2.getName());
         }
 
         @Test
@@ -206,19 +208,6 @@ class UserServiceTest {
             assertThatThrownBy(() -> userService.signOut(notFoundUserId)).isInstanceOf(NotFoundException.class);
         }
 
-    }
-
-    private void assertWithdrawalUser(WithdrawalUser withdrawalUser, User user) {
-        assertThat(withdrawalUser.getUserId()).isEqualTo(user.getId());
-        assertThat(withdrawalUser.getName()).isEqualTo(user.getName());
-        assertThat(withdrawalUser.getSocialInfo()).isEqualTo(user.getSocialInfo());
-        assertThat(withdrawalUser.getUserCreatedAt()).isEqualTo(user.getCreatedAt());
-    }
-
-    private void assertUserInfo(User user, String socialId, UserSocialType type, String name) {
-        assertThat(user.getSocialInfo().getSocialId()).isEqualTo(socialId);
-        assertThat(user.getSocialInfo().getSocialType()).isEqualTo(type);
-        assertThat(user.getName()).isEqualTo(name);
     }
 
 }

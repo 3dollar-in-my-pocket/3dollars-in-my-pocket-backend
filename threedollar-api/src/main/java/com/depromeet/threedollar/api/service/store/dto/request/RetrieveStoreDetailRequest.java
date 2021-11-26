@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class RetrieveStoreDetailInfoRequest {
+public class RetrieveStoreDetailRequest {
 
     @NotNull(message = "{store.storeId.notNull}")
     private Long storeId;
@@ -26,12 +26,12 @@ public class RetrieveStoreDetailInfoRequest {
     @NotNull(message = "{visit.endDate.notNull}")
     private LocalDate endDate = LocalDate.now(); // 호환성을 위해 기본값
 
-    public static RetrieveStoreDetailInfoRequest testInstance(Long storeId, Double latitude, Double longitude, LocalDate startDate, LocalDate endDate) {
-        return new RetrieveStoreDetailInfoRequest(storeId, latitude, longitude, startDate, endDate);
+    public static RetrieveStoreDetailRequest testInstance(Long storeId, Double latitude, Double longitude, LocalDate startDate, LocalDate endDate) {
+        return new RetrieveStoreDetailRequest(storeId, latitude, longitude, startDate, endDate);
     }
 
-    public static RetrieveStoreDetailInfoRequest testInstance(Long storeId, Double latitude, Double longitude) {
-        return new RetrieveStoreDetailInfoRequest(storeId, latitude, longitude, LocalDate.now().minusWeeks(1), LocalDate.now());
+    public static RetrieveStoreDetailRequest testInstance(Long storeId, Double latitude, Double longitude) {
+        return new RetrieveStoreDetailRequest(storeId, latitude, longitude, LocalDate.now().minusWeeks(1), LocalDate.now());
     }
 
 }

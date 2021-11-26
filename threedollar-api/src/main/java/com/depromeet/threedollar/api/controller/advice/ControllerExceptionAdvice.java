@@ -22,6 +22,7 @@ import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -124,6 +125,17 @@ public class ControllerExceptionAdvice {
     protected ApiResponse<Object> handleHttpMediaTypeException(final HttpMediaTypeException e) {
         log.error(e.getMessage(), e);
         return ApiResponse.error(UNSUPPORTED_MEDIA_TYPE_EXCEPTION);
+    }
+
+    /**
+     * 최대 허용한 이미지 크기를 넘은 경우 발생하는 Exception
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    protected ApiResponse<Object> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException e) {
+        log.error(e.getMessage(), e);
+        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(VALIDATION_UPLOAD_SIZE_EXCEPTION, e));
+        return ApiResponse.error(VALIDATION_UPLOAD_SIZE_EXCEPTION);
     }
 
     /**

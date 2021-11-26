@@ -45,7 +45,7 @@ class FaqControllerTest extends SetupUserControllerTest {
             faqRepository.saveAll(List.of(faq1, faq2));
 
             // when
-            ApiResponse<List<FaqResponse>> response = faqMockApiCaller.retrieveAllFaqs(200);
+            ApiResponse<List<FaqResponse>> response = faqMockApiCaller.retrieveFaqsByCategory(200);
 
             // then
             assertThat(response.getData()).hasSize(2);
@@ -67,7 +67,7 @@ class FaqControllerTest extends SetupUserControllerTest {
             faqRepository.saveAll(List.of(faq1, faq2));
 
             // when
-            ApiResponse<List<FaqResponse>> response = faqMockApiCaller.retrieveAllFaqs(FaqCategory.CATEGORY, 200);
+            ApiResponse<List<FaqResponse>> response = faqMockApiCaller.retrieveFaqsByCategory(FaqCategory.CATEGORY, 200);
 
             // then
             assertThat(response.getData()).hasSize(1);
@@ -83,7 +83,7 @@ class FaqControllerTest extends SetupUserControllerTest {
         @Test
         void FAQ_카테고리_리스트를_조회한다K() throws Exception {
             // when
-            ApiResponse<List<FaqCategoryResponse>> response = faqMockApiCaller.retrieveAllFaqCategories(200);
+            ApiResponse<List<FaqCategoryResponse>> response = faqMockApiCaller.retrieveFaqCategories(200);
 
             // then
             assertThat(response.getData()).hasSize(FaqCategory.values().length);

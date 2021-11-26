@@ -9,19 +9,20 @@ import lombok.ToString;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StoresGroupByDistanceResponse {
 
-    private final List<StoreInfoResponse> storeList50 = new ArrayList<>();
-    private final List<StoreInfoResponse> storeList100 = new ArrayList<>();
-    private final List<StoreInfoResponse> storeList500 = new ArrayList<>();
-    private final List<StoreInfoResponse> storeList1000 = new ArrayList<>();
-    private final List<StoreInfoResponse> storeListOver1000 = new ArrayList<>();
+    private final List<StoreWithDistanceResponse> storeList50 = new ArrayList<>();
+    private final List<StoreWithDistanceResponse> storeList100 = new ArrayList<>();
+    private final List<StoreWithDistanceResponse> storeList500 = new ArrayList<>();
+    private final List<StoreWithDistanceResponse> storeList1000 = new ArrayList<>();
+    private final List<StoreWithDistanceResponse> storeListOver1000 = new ArrayList<>();
 
-    private StoresGroupByDistanceResponse(List<StoreInfoResponse> stores) {
-        for (StoreInfoResponse store : stores) {
+    private StoresGroupByDistanceResponse(List<StoreWithDistanceResponse> stores) {
+        for (StoreWithDistanceResponse store : stores) {
             DistanceGroupType group = DistanceGroupType.of(store.getDistance());
             switch (group) {
                 case UNDER_FIFTY:
@@ -43,7 +44,7 @@ public class StoresGroupByDistanceResponse {
         }
     }
 
-    public static StoresGroupByDistanceResponse of(List<StoreInfoResponse> stores) {
+    public static StoresGroupByDistanceResponse of(List<StoreWithDistanceResponse> stores) {
         return new StoresGroupByDistanceResponse(stores);
     }
 

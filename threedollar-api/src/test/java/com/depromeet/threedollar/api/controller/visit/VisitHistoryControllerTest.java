@@ -1,13 +1,12 @@
 package com.depromeet.threedollar.api.controller.visit;
 
 import com.depromeet.threedollar.api.controller.SetupStoreControllerTest;
-import com.depromeet.threedollar.api.service.store.dto.response.StoreInfoResponse;
 import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRequest;
-import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoryRequest;
-import com.depromeet.threedollar.api.service.visit.dto.response.MyVisitHistoriesScrollResponse;
-import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithStoreResponse;
+import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
+import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoriesScrollResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.domain.store.Store;
+import com.depromeet.threedollar.domain.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
@@ -20,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.depromeet.threedollar.api.assertutils.assertStoreUtils.assertStoreInfoResponse;
+import static com.depromeet.threedollar.api.assertutils.assertVisitHistoryUtils.assertVisitHistoryWithStoreResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -74,21 +75,17 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
 
             visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
 
-            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(2, null);
+            RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(2, null);
 
             // when
-            ApiResponse<MyVisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+            ApiResponse<VisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
 
             // then
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
                 () -> assertThat(response.getData().getContents()).hasSize(2),
-
-                () -> assertStoreInfoResponse(response.getData().getContents().get(0).getStore(), store),
-                () -> assertVisitHistoryWithStoreResponse(response.getData().getContents().get(0), visitHistory2),
-
-                () -> assertStoreInfoResponse(response.getData().getContents().get(1).getStore(), store),
-                () -> assertVisitHistoryWithStoreResponse(response.getData().getContents().get(1), visitHistory1)
+                () -> assertVisitHistoryWithStoreResponse(response.getData().getContents().get(0), visitHistory2, store),
+                () -> assertVisitHistoryWithStoreResponse(response.getData().getContents().get(1), visitHistory1, store)
             );
         }
 
@@ -100,18 +97,16 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
 
             visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
 
-            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(1, null);
+            RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(1, null);
 
             // when
-            ApiResponse<MyVisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+            ApiResponse<VisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
 
             // then
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(visitHistory2.getId()),
                 () -> assertThat(response.getData().getContents()).hasSize(1),
-
-                () -> assertStoreInfoResponse(response.getData().getContents().get(0).getStore(), store),
-                () -> assertVisitHistoryWithStoreResponse(response.getData().getContents().get(0), visitHistory2)
+                () -> assertVisitHistoryWithStoreResponse(response.getData().getContents().get(0), visitHistory2, store)
             );
         }
 
@@ -123,28 +118,26 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
 
             visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
 
-            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(2, visitHistory2.getId());
+            RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(2, visitHistory2.getId());
 
             // when
-            ApiResponse<MyVisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+            ApiResponse<VisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
 
             // then
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
                 () -> assertThat(response.getData().getContents()).hasSize(1),
-
-                () -> assertStoreInfoResponse(response.getData().getContents().get(0).getStore(), store),
-                () -> assertVisitHistoryWithStoreResponse(response.getData().getContents().get(0), visitHistory1)
+                () -> assertVisitHistoryWithStoreResponse(response.getData().getContents().get(0), visitHistory1, store)
             );
         }
 
         @Test
         void 아무런_방문_기록을_남기지_않았을경우() throws Exception {
             // given
-            RetrieveMyVisitHistoryRequest request = RetrieveMyVisitHistoryRequest.testInstance(2, null);
+            RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(2, null);
 
             // when
-            ApiResponse<MyVisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+            ApiResponse<VisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
 
             // then
             assertAll(
@@ -153,19 +146,25 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             );
         }
 
-        private void assertVisitHistoryWithStoreResponse(VisitHistoryWithStoreResponse response, VisitHistory visitHistory) {
-            assertAll(
-                () -> assertThat(response.getVisitHistoryId()).isEqualTo(visitHistory.getId()),
-                () -> assertThat(response.getDateOfVisit()).isEqualTo(visitHistory.getDateOfVisit()),
-                () -> assertThat(response.getType()).isEqualTo(visitHistory.getType())
-            );
-        }
+        @Test
+        void 방문한_가게가_삭제됬을경우_해당_정보를_반환하돼_가게는_삭제표시된다() throws Exception {
+            // given
+            Store deletedStore = StoreCreator.createDeletedWithDefaultMenu(testUser.getId(), "가게 이름");
+            storeRepository.save(deletedStore);
 
-        private void assertStoreInfoResponse(StoreInfoResponse response, Store store) {
+            VisitHistory visitHistory = VisitHistoryCreator.create(deletedStore, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
+            visitHistoryRepository.save(visitHistory);
+
+            RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(2, null);
+
+            // when
+            ApiResponse<VisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+
+            // then
             assertAll(
-                () -> assertThat(response.getStoreId()).isEqualTo(store.getId()),
-                () -> assertThat(response.getStoreName()).isEqualTo(store.getName()),
-                () -> assertThat(response.getCategories()).isEqualTo(store.getMenuCategoriesSortedByCounts())
+                () -> assertThat(response.getData().getContents()).hasSize(1),
+                () -> assertStoreInfoResponse(response.getData().getContents().get(0).getStore(), deletedStore),
+                () -> assertThat(response.getData().getContents().get(0).getStore().getIsDeleted()).isTrue()
             );
         }
 

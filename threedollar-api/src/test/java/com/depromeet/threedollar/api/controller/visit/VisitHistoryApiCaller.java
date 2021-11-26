@@ -2,8 +2,8 @@ package com.depromeet.threedollar.api.controller.visit;
 
 import com.depromeet.threedollar.api.controller.MockMvcUtils;
 import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRequest;
-import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoryRequest;
-import com.depromeet.threedollar.api.service.visit.dto.response.MyVisitHistoriesScrollResponse;
+import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
+import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoriesScrollResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,7 +42,7 @@ class VisitHistoryApiCaller extends MockMvcUtils {
         );
     }
 
-    public ApiResponse<MyVisitHistoriesScrollResponse> retrieveMyVisitHistories(RetrieveMyVisitHistoryRequest request, String token, int expectedStatus) throws Exception {
+    public ApiResponse<VisitHistoriesScrollResponse> retrieveMyVisitHistories(RetrieveMyVisitHistoriesRequest request, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/store/visits/me")
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))

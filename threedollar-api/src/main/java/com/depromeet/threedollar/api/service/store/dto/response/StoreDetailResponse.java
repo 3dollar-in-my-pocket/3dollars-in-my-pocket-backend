@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.api.service.store.dto.response;
 
 import com.depromeet.threedollar.api.service.storeimage.dto.response.StoreImageResponse;
-import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryInfoResponse;
+import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryCountsResponse;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithUserResponse;
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
-import com.depromeet.threedollar.api.service.review.dto.response.ReviewWithWriterResponse;
+import com.depromeet.threedollar.api.service.review.dto.response.ReviewWithUserResponse;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
@@ -28,27 +28,35 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StoreDetailResponse extends AuditingTimeResponse {
 
+    // 가게
     private Long storeId;
     private double latitude;
     private double longitude;
     private String storeName;
     private StoreType storeType;
     private double rating;
-    private Integer distance;
-    private UserInfoResponse user;
-    private VisitHistoryInfoResponse visitHistory;
-
+    private int distance;
     private final List<MenuCategoryType> categories = new ArrayList<>();
     private final Set<DayOfTheWeek> appearanceDays = new HashSet<>();
     private final Set<PaymentMethodType> paymentMethods = new HashSet<>();
-    private final List<StoreImageResponse> images = new ArrayList<>();
     private final List<MenuResponse> menus = new ArrayList<>();
-    private final List<ReviewWithWriterResponse> reviews = new ArrayList<>();
+
+    // 작성자
+    private UserInfoResponse user;
+
+    // 가게 이미지
+    private final List<StoreImageResponse> images = new ArrayList<>();
+
+    // 리뷰
+    private final List<ReviewWithUserResponse> reviews = new ArrayList<>();
+
+    // 방문 인증
+    private VisitHistoryCountsResponse visitHistory;
     private final List<VisitHistoryWithUserResponse> visitHistories = new ArrayList<>();
 
     @Builder(access = AccessLevel.PRIVATE)
     private StoreDetailResponse(Long storeId, double latitude, double longitude, String storeName, StoreType storeType,
-                                double rating, Integer distance, UserInfoResponse user, VisitHistoryInfoResponse visitHistory) {
+                                double rating, int distance, UserInfoResponse user, VisitHistoryCountsResponse visitHistory) {
         this.storeId = storeId;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -72,7 +80,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
             .rating(store.getRating())
             .distance(LocationDistanceUtils.getDistance(store.getLatitude(), store.getLongitude(), latitude, longitude))
             .user(UserInfoResponse.of(user))
-            .visitHistory(VisitHistoryInfoResponse.of(visitHistoriesCollection.getStoreExistsVisitsCount(store.getId()), visitHistoriesCollection.getStoreNotExistsVisitsCount(store.getId())))
+            .visitHistory(VisitHistoryCountsResponse.of(visitHistoriesCollection.getStoreExistsVisitsCount(store.getId()), visitHistoriesCollection.getStoreNotExistsVisitsCount(store.getId())))
             .build();
         response.categories.addAll(store.getMenuCategoriesSortedByCounts());
         response.appearanceDays.addAll(store.getAppearanceDayTypes());
@@ -91,10 +99,10 @@ public class StoreDetailResponse extends AuditingTimeResponse {
             .collect(Collectors.toList());
     }
 
-    private static List<ReviewWithWriterResponse> toReviewResponse(List<ReviewWithWriterProjection> reviews) {
+    private static List<ReviewWithUserResponse> toReviewResponse(List<ReviewWithWriterProjection> reviews) {
         return reviews.stream()
-            .map(ReviewWithWriterResponse::of)
-            .sorted(Comparator.comparing(ReviewWithWriterResponse::getReviewId).reversed())
+            .map(ReviewWithUserResponse::of)
+            .sorted(Comparator.comparing(ReviewWithUserResponse::getReviewId).reversed())
             .collect(Collectors.toList());
     }
 

@@ -15,7 +15,7 @@ class FaqService(
 
     @Cacheable(key = "#request.category?:'ALL'", value = [CacheType.CacheKey.FAQS])
     @Transactional(readOnly = true)
-    fun retrieveAllFaqs(request: RetrieveFaqsRequest): List<FaqResponse> {
+    fun retrieveFaqsByCategory(request: RetrieveFaqsRequest): List<FaqResponse> {
         return faqRepository.findAllByCategory(request.category).asSequence()
             .sortedBy { it.category.displayOrder }
             .map { FaqResponse.of(it) }

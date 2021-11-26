@@ -11,7 +11,6 @@ import lombok.*;
 public class StoreImageResponse extends AuditingTimeResponse {
 
     private Long imageId;
-
     private String url;
 
     public static StoreImageResponse of(StoreImage storeImage) {

@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
+@Deprecated
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

@@ -9,10 +9,8 @@ import com.depromeet.threedollar.api.service.store.dto.response.StoreDeleteRespo
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
-import com.depromeet.threedollar.domain.domain.common.Location;
 import com.depromeet.threedollar.domain.domain.menu.Menu;
 import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
 import com.depromeet.threedollar.domain.domain.menu.MenuRepository;
 import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.storedelete.DeleteReasonType;
@@ -28,9 +26,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.depromeet.threedollar.api.assertutils.assertStoreUtils.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -203,8 +205,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         @ParameterizedTest
         void 가게_정보를_수정하면_해당_가게_데이터가_수정된다(String storeName, StoreType storeType, Set<DayOfTheWeek> appearanceDays, Set<PaymentMethodType> paymentMethods) {
             // given
-            Store store = StoreCreator.create(userId, "storeName");
-            store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 
             double latitude = 34.0;
@@ -241,8 +242,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         @ParameterizedTest
         void 가게의_기본_정보를_수정한다(String menuName, String price, MenuCategoryType type) {
             // given
-            Store store = StoreCreator.create(userId, "storeName");
-            store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 
             double latitude = 34.0;
@@ -269,15 +269,14 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             List<Menu> menus = menuRepository.findAll();
             assertThat(menus).hasSize(1);
-            assertMenu(menus.get(0), menuName, price, type);
+            assertMenu(menus.get(0), store.getId(), menuName, price, type);
         }
 
         @AutoSource
         @ParameterizedTest
         void 가게의_결제방법을_수정한다(Set<PaymentMethodType> paymentMethodTypes) {
             // given
-            Store store = StoreCreator.create(userId, "storeName");
-            store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             store.addPaymentMethods(Set.of(PaymentMethodType.CARD));
             storeRepository.save(store);
 
@@ -304,8 +303,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         @ParameterizedTest
         void 가게의_개시일을_수정한다(Set<DayOfTheWeek> appearanceDays) {
             // given
-            Store store = StoreCreator.create(userId, "storeName");
-            store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             store.addAppearanceDays(Set.of(DayOfTheWeek.TUESDAY, DayOfTheWeek.WEDNESDAY));
             storeRepository.save(store);
 
@@ -332,8 +330,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         @ParameterizedTest
         void 가게_메뉴_수정시_중복된_메뉴는_한개만_저장된다(String menuName, String price, MenuCategoryType type) {
             // given
-            Store store = StoreCreator.create(userId, "storeName");
-            store.addMenus(List.of(Menu.of(store, "이름", "가격", MenuCategoryType.BUNGEOPPANG)));
+            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 
             Set<MenuRequest> menus = new HashSet<>(List.of(
@@ -384,8 +381,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             // given
             Long creatorUserId = 100L;
 
-            Store store = StoreCreator.create(creatorUserId, "storeName");
-            store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            Store store = StoreCreator.createWithDefaultMenu(creatorUserId, "storeName");
             storeRepository.save(store);
 
             double latitude = 34.0;
@@ -421,7 +417,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         @ParameterizedTest
         void 삭제_요청이_1개_쌓이면_실제로_가게정보가_삭제되지_않는다(DeleteReasonType deleteReasonType) {
             // given
-            Store store = StoreCreator.create(userId, "storeName");
+            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 
             // when
@@ -443,7 +439,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         @ParameterizedTest
         void 삭제_요청이_2개_쌓이면_실제로_가게정보가_삭제되지_않는다(DeleteReasonType deleteReasonType) {
             // given
-            Store store = StoreCreator.create(userId, "storeName");
+            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 
             storeDeleteRequestRepository.save(StoreDeleteRequestCreator.create(store.getId(), 90L, DeleteReasonType.WRONG_CONTENT));
@@ -468,7 +464,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         @ParameterizedTest
         void 삭제_요청이_3개_쌓이면_실제로_가게정보가_실제로_삭제된다(DeleteReasonType deleteReasonType) {
             // given
-            Store store = StoreCreator.create(userId, "storeName");
+            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 
             storeDeleteRequestRepository.saveAll(List.of(
@@ -497,7 +493,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         @ParameterizedTest
         void 가게_삭제요청시_내가_이미_삭제요청한_가게인경우_CONFLICT_EXCEPTION(DeleteReasonType reasonType) {
             // given
-            Store store = StoreCreator.create(userId, "storeName");
+            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 
             storeDeleteRequestRepository.save(StoreDeleteRequestCreator.create(store.getId(), userId, DeleteReasonType.NOSTORE));
@@ -507,12 +503,6 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .isInstanceOf(ConflictException.class);
         }
 
-    }
-
-    private void assertStoreDeleteRequest(StoreDeleteRequest storeDeleteRequest, Long storeId, Long userId, DeleteReasonType type) {
-        assertThat(storeDeleteRequest.getStoreId()).isEqualTo(storeId);
-        assertThat(storeDeleteRequest.getUserId()).isEqualTo(userId);
-        assertThat(storeDeleteRequest.getReason()).isEqualTo(type);
     }
 
     private List<DayOfTheWeek> getDayOfTheWeeks(List<AppearanceDay> appearanceDays) {
@@ -525,28 +515,6 @@ class StoreServiceTest extends SetupUserServiceTest {
         return paymentMethods.stream()
             .map(PaymentMethod::getMethod)
             .collect(Collectors.toList());
-    }
-
-    private void assertMenu(Menu menu, String menuName, String price, MenuCategoryType type) {
-        assertThat(menu.getName()).isEqualTo(menuName);
-        assertThat(menu.getPrice()).isEqualTo(price);
-        assertThat(menu.getCategory()).isEqualTo(type);
-    }
-
-    private void assertMenu(Menu menu, Long storeId, String menuName, String price, MenuCategoryType type) {
-        assertThat(menu.getStore().getId()).isEqualTo(storeId);
-        assertThat(menu.getName()).isEqualTo(menuName);
-        assertThat(menu.getPrice()).isEqualTo(price);
-        assertThat(menu.getCategory()).isEqualTo(type);
-    }
-
-    private void assertStore(Store store, Double latitude, Double longitude, String storeName, StoreType storeType, Long userId) {
-        assertThat(store.getLocation()).isEqualTo(Location.of(latitude, longitude));
-        assertThat(store.getLatitude()).isEqualTo(latitude);
-        assertThat(store.getLongitude()).isEqualTo(longitude);
-        assertThat(store.getName()).isEqualTo(storeName);
-        assertThat(store.getType()).isEqualTo(storeType);
-        assertThat(store.getUserId()).isEqualTo(userId);
     }
 
 }

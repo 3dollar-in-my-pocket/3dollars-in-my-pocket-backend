@@ -8,23 +8,24 @@ import lombok.*;
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ReviewWithWriterResponse extends AuditingTimeResponse {
+public class ReviewWithUserResponse extends AuditingTimeResponse {
 
     private Long reviewId;
     private int rating;
     private String contents;
+
     private UserInfoResponse user;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private ReviewWithWriterResponse(Long reviewId, int rating, String contents, UserInfoResponse user) {
+    private ReviewWithUserResponse(Long reviewId, int rating, String contents, UserInfoResponse user) {
         this.reviewId = reviewId;
         this.rating = rating;
         this.contents = contents;
         this.user = user;
     }
 
-    public static ReviewWithWriterResponse of(ReviewWithWriterProjection projection) {
-        ReviewWithWriterResponse response = ReviewWithWriterResponse.builder()
+    public static ReviewWithUserResponse of(ReviewWithWriterProjection projection) {
+        ReviewWithUserResponse response = ReviewWithUserResponse.builder()
             .reviewId(projection.getReviewId())
             .rating(projection.getRating())
             .contents(projection.getContents())

@@ -72,7 +72,19 @@ client.test("200 OK", function() {
 
 
 ### [인증] 사용자가 작성한 가게의 정보를 조회합니다. (첫 스크롤)
-GET {{host_api}}/api/v2/stores/me?size=2
+GET {{host_api}}/api/v3/stores/me?size=10
+Authorization: {{AUTHORIZATION}}
+
+> {%
+client.test("200 OK", function() {
+    client.global.set("CURSOR", response.body["data"]["nextCursor"])
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### (Deprecated) [인증] 사용자가 작성한 가게의 정보를 조회합니다. (첫 스크롤)
+GET {{host_api}}/api/v2/stores/me?size=10
 Authorization: {{AUTHORIZATION}}
 
 > {%
@@ -84,7 +96,7 @@ client.test("200 OK", function() {
 
 
 ### [인증] 사용자가 작성한 가게의 정보를 조회합니다. (두번째 스크롤)
-GET {{host_api}}/api/v2/stores/me?size=2&latitude=33.1&longitude=124.2&cursor={{CURSOR}}
+GET {{host_api}}/api/v3/stores/me?size=10&latitude=33.1&longitude=124.2&cursor={{CURSOR}}
 Authorization: {{AUTHORIZATION}}
 
 > {%

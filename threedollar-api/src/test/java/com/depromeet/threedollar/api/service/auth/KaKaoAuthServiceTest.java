@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static com.depromeet.threedollar.api.assertutils.assertUserUtils.assertUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -91,7 +92,7 @@ class KaKaoAuthServiceTest {
             // then
             List<User> users = userRepository.findAll();
             assertThat(users).hasSize(1);
-            assertUser(users.get(0), socialId, request.getName(), request.getSocialType());
+            assertUser(users.get(0), socialId, request.getSocialType(), request.getName());
         }
 
         @Test
@@ -114,12 +115,6 @@ class KaKaoAuthServiceTest {
             return KaKaoProfileResponse.testInstance(socialId);
         }
 
-    }
-
-    private void assertUser(User user, String socialId, String name, UserSocialType socialType) {
-        assertThat(user.getSocialId()).isEqualTo(socialId);
-        assertThat(user.getName()).isEqualTo(name);
-        assertThat(user.getSocialType()).isEqualTo(socialType);
     }
 
 }

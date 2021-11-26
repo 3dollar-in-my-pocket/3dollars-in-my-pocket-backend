@@ -23,7 +23,7 @@ class StoreImageMockApiCaller extends MockMvcUtils {
         super(mockMvc, objectMapper);
     }
 
-    public ApiResponse<List<StoreImageResponse>> retrieveStoreImages(Long storeId, int expectedStatus) throws Exception {
+    public ApiResponse<List<StoreImageResponse>> getStoreImages(Long storeId, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/store/" + storeId + "/images")
             .param("storeId", String.valueOf(storeId));
 

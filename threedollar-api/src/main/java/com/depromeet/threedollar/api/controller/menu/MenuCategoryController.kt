@@ -12,8 +12,8 @@ class MenuCategoryController {
 
     @ApiOperation("현재 활성화중인 메뉴 카테고리 목록들을 조회합니다.")
     @GetMapping("/api/v2/store/menu/categories")
-    fun retrieveStoreMenuCategories(): ApiResponse<List<MenuCategoryResponse>> {
-        return ApiResponse.success(MenuCategoryMapper.retrieveMenuCategories())
+    fun retrieveActiveMenuCategories(): ApiResponse<List<MenuCategoryResponse>> {
+        return ApiResponse.success(MenuCategoryMapper.retrieveActiveMenuCategories())
     }
 
 }

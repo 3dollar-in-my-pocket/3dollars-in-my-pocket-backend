@@ -13,9 +13,15 @@ public interface StoreRepositoryCustom {
 
     long findCountsByUserId(Long userId);
 
+    @Deprecated
+    long findActiveCountsByUserId(Long userId);
+
     List<Store> findAllWithScroll(Long lastStoreId, int size);
 
     List<Store> findAllByUserIdWithScroll(Long userId, Long lastStoreId, int size);
+
+    @Deprecated
+    List<Store> findAllActiveByUserIdWithScroll(Long userId, Long lastStoreId, int size);
 
     List<Store> findAllByIds(List<Long> storeIds);
 

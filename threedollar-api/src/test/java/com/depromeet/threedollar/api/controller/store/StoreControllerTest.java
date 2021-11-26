@@ -10,7 +10,6 @@ import com.depromeet.threedollar.api.service.store.dto.response.StoreInfoRespons
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
 import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
 import com.depromeet.threedollar.domain.domain.menu.MenuRepository;
 import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.storedelete.DeleteReasonType;
@@ -27,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Set;
 
+import static com.depromeet.threedollar.api.assertutils.assertStoreUtils.assertStoreInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class StoreControllerTest extends SetupUserControllerTest {
@@ -102,8 +102,7 @@ class StoreControllerTest extends SetupUserControllerTest {
         @ParameterizedTest
         void 가게_수정_성공시_수정된_가게_정보를_반환한다(String storeName, StoreType storeType, Set<DayOfTheWeek> appearanceDays, Set<PaymentMethodType> paymentMethods) throws Exception {
             // given
-            Store store = StoreCreator.create(testUser.getId(), "storeName");
-            store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "storeName");
             storeRepository.save(store);
 
             double latitude = 34.0;
@@ -170,13 +169,6 @@ class StoreControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getIsDeleted()).isTrue();
         }
 
-    }
-
-    private void assertStoreInfoResponse(StoreInfoResponse response, double latitude, double longitude, String storeName, List<MenuCategoryType> categories) {
-        assertThat(response.getLatitude()).isEqualTo(latitude);
-        assertThat(response.getLongitude()).isEqualTo(longitude);
-        assertThat(response.getStoreName()).isEqualTo(storeName);
-        assertThat(response.getCategories()).isEqualTo(categories);
     }
 
 }

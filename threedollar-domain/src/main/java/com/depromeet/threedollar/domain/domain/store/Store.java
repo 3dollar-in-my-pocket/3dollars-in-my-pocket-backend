@@ -26,6 +26,8 @@ import java.util.stream.Collectors;
 )
 public class Store extends AuditingTimeEntity {
 
+    private static final String DELETE_STORE_NAME = "삭제된 가게입니다";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -196,6 +198,17 @@ public class Store extends AuditingTimeEntity {
 
     public double getRating() {
         return MathUtils.round(rating, 1);
+    }
+
+    public String getName() {
+        if (isDeleted()) {
+            return DELETE_STORE_NAME;
+        }
+        return this.name;
+    }
+
+    public boolean isDeleted() {
+        return this.status.equals(StoreStatus.DELETED);
     }
 
 }

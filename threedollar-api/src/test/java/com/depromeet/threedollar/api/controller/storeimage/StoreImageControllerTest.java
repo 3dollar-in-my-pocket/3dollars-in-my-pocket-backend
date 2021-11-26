@@ -3,8 +3,6 @@ package com.depromeet.threedollar.api.controller.storeimage;
 import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
 import com.depromeet.threedollar.api.service.storeimage.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
 import com.depromeet.threedollar.domain.domain.menu.MenuRepository;
 import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
@@ -19,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
+import static com.depromeet.threedollar.api.assertutils.assertStoreImageUtils.assertStoreImageResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -64,8 +63,7 @@ class StoreImageControllerTest extends SetupUserControllerTest {
         @ParameterizedTest
         void 가게에_등록된_사진들을_조회한다(String imageUrl1, String imageUrl2) throws Exception {
             // given
-            Store store = StoreCreator.create(testUser.getId(), "storeName", 34, 124);
-            store.addMenus(List.of(MenuCreator.create(store, "붕어빵", "만원", MenuCategoryType.BUNGEOPPANG)));
+            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "storeName", 34, 124);
             storeRepository.save(store);
 
             StoreImage storeImage1 = StoreImage.newInstance(store.getId(), testUser.getId(), imageUrl1);
@@ -74,7 +72,7 @@ class StoreImageControllerTest extends SetupUserControllerTest {
             storeImageRepository.saveAll(List.of(storeImage1, storeImage2));
 
             // when
-            ApiResponse<List<StoreImageResponse>> response = storeImageMockApiCaller.retrieveStoreImages(store.getId(), 200);
+            ApiResponse<List<StoreImageResponse>> response = storeImageMockApiCaller.getStoreImages(store.getId(), 200);
 
             // then
             assertAll(
@@ -82,11 +80,6 @@ class StoreImageControllerTest extends SetupUserControllerTest {
                 () -> assertStoreImageResponse(response.getData().get(0), storeImage1.getId(), imageUrl1),
                 () -> assertStoreImageResponse(response.getData().get(1), storeImage2.getId(), imageUrl2)
             );
-        }
-
-        private void assertStoreImageResponse(StoreImageResponse response, Long storeImageId, String url) {
-            assertThat(response.getImageId()).isEqualTo(storeImageId);
-            assertThat(response.getUrl()).isEqualTo(url);
         }
 
     }

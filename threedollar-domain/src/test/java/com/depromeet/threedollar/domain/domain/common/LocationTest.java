@@ -20,7 +20,7 @@ class LocationTest {
             "43, 132"
         })
         @ParameterizedTest
-        void 위도와_경도로_이루어진_위치_값_객체를_생성한다(double latitude, double longitude) {
+        void 위도와_경도로_위치_객체를_생성한다(double latitude, double longitude) {
             // when
             Location location = Location.of(latitude, longitude);
 
