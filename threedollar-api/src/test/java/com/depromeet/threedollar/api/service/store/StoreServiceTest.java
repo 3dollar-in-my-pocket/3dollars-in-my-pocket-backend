@@ -11,6 +11,7 @@ import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
 import com.depromeet.threedollar.domain.domain.menu.Menu;
 import com.depromeet.threedollar.domain.domain.menu.MenuCategoryType;
+import com.depromeet.threedollar.domain.domain.menu.MenuCreator;
 import com.depromeet.threedollar.domain.domain.menu.MenuRepository;
 import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.storedelete.DeleteReasonType;
@@ -203,43 +204,6 @@ class StoreServiceTest extends SetupUserServiceTest {
 
         @AutoSource
         @ParameterizedTest
-        void 가게_정보를_수정하면_해당_가게_데이터가_수정된다(String storeName, StoreType storeType, Set<DayOfTheWeek> appearanceDays, Set<PaymentMethodType> paymentMethods) {
-            // given
-            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
-            storeRepository.save(store);
-
-            double latitude = 34.0;
-            double longitude = 130.0;
-
-            UpdateStoreRequest request = UpdateStoreRequest.testBuilder()
-                .latitude(latitude)
-                .longitude(longitude)
-                .storeName(storeName)
-                .storeType(storeType)
-                .appearanceDays(appearanceDays)
-                .paymentMethods(paymentMethods)
-                .menus(Set.of(MenuRequest.of("메뉴 이름", "가격", MenuCategoryType.BUNGEOPPANG)))
-                .build();
-
-            // when
-            storeService.updateStore(store.getId(), request);
-
-            // then
-            List<Store> stores = storeRepository.findAll();
-            assertThat(stores).hasSize(1);
-            assertStore(stores.get(0), latitude, longitude, storeName, storeType, userId);
-
-            List<AppearanceDay> appearanceDayList = appearanceDayRepository.findAll();
-            assertThat(appearanceDayList).hasSize(appearanceDays.size());
-            assertThat(getDayOfTheWeeks(appearanceDayList)).containsExactlyInAnyOrderElementsOf(appearanceDays);
-
-            List<PaymentMethod> paymentMethodsList = paymentMethodRepository.findAll();
-            assertThat(paymentMethodsList).hasSize(paymentMethods.size());
-            assertThat(getPaymentMethodTypes(paymentMethodsList)).containsExactlyInAnyOrderElementsOf(paymentMethods);
-        }
-
-        @AutoSource
-        @ParameterizedTest
         void 가게의_기본_정보를_수정한다(String menuName, String price, MenuCategoryType type) {
             // given
             Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
@@ -324,6 +288,46 @@ class StoreServiceTest extends SetupUserServiceTest {
             List<AppearanceDay> appearanceDayList = appearanceDayRepository.findAll();
             assertThat(appearanceDayList).hasSize(appearanceDays.size());
             assertThat(getDayOfTheWeeks(appearanceDayList)).containsExactlyInAnyOrderElementsOf(appearanceDays);
+        }
+
+        @AutoSource
+        @ParameterizedTest
+        void 가게의_메뉴정보를_수정한다(String menuName, String price, MenuCategoryType type) {
+            // given
+            Store store = StoreCreator.create(userId, "storeName");
+            store.addMenus(List.of(
+                MenuCreator.create(store, "메뉴 1", "1000원", MenuCategoryType.DALGONA),
+                MenuCreator.create(store, menuName, price, type))
+            );
+            storeRepository.save(store);
+
+            String newMenuName = "신규 추가된 메뉴";
+            String newMenuPrice = "2000원";
+            MenuCategoryType newMenuCategory = MenuCategoryType.DALGONA;
+
+            Set<MenuRequest> menuRequests = Set.of(
+                MenuRequest.of(menuName, price, type),
+                MenuRequest.of(newMenuName, newMenuPrice, newMenuCategory)
+            );
+
+            UpdateStoreRequest request = UpdateStoreRequest.testBuilder()
+                .latitude(34.0)
+                .longitude(130.0)
+                .storeName("붕어빵")
+                .storeType(StoreType.STORE)
+                .appearanceDays(Collections.emptySet())
+                .paymentMethods(Collections.emptySet())
+                .menus(menuRequests)
+                .build();
+
+            // when
+            storeService.updateStore(store.getId(), request);
+
+            // then
+            List<Menu> findMenus = menuRepository.findAll();
+            assertThat(findMenus).hasSize(2);
+            assertMenu(findMenus.get(0), store.getId(), menuName, price, type);
+            assertMenu(findMenus.get(1), store.getId(), newMenuName, newMenuPrice, newMenuCategory);
         }
 
         @AutoSource

@@ -21,10 +21,10 @@ public class RetrieveStoreDetailRequest {
     private Double longitude;
 
     @NotNull(message = "{visit.startDate.notNull}")
-    private LocalDate startDate = LocalDate.now().minusWeeks(1); // 호환성을 위해 기본값
+    private LocalDate startDate = LocalDate.now().minusWeeks(1); //TODO: 호환성을 위해 기본값으로 차후 제거
 
     @NotNull(message = "{visit.endDate.notNull}")
-    private LocalDate endDate = LocalDate.now(); // 호환성을 위해 기본값
+    private LocalDate endDate = LocalDate.now(); // TODO: 호환성을 위해 기본값으로 차후 제거
 
     public static RetrieveStoreDetailRequest testInstance(Long storeId, Double latitude, Double longitude, LocalDate startDate, LocalDate endDate) {
         return new RetrieveStoreDetailRequest(storeId, latitude, longitude, startDate, endDate);

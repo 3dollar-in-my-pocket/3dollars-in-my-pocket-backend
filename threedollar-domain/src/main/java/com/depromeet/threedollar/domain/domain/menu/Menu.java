@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -40,6 +41,21 @@ public class Menu extends AuditingTimeEntity {
 
     public static Menu of(Store store, String name, String price, MenuCategoryType category) {
         return new Menu(store, name, price, category);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Menu menu = (Menu) o;
+        return Objects.equals(store.getId(), menu.store.getId())
+            && Objects.equals(name, menu.name)
+            && Objects.equals(price, menu.price) && category == menu.category;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(store.getId(), name, price, category);
     }
 
 }
