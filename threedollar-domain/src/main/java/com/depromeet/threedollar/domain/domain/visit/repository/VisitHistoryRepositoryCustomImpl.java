@@ -9,6 +9,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.LockModeType;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,8 +24,10 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public boolean existsByStoreIdAndUserIdAndDateOfVisit(Long storeId, Long userId, LocalDate dateOfVisit) {
+    public boolean existsByStoreIdAndUserIdAndDateOfVisitWithLock(Long storeId, Long userId, LocalDate dateOfVisit) {
         return queryFactory.selectOne()
+            .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+            .setHint("javax.persistence.lock.timeout", 2000)
             .from(visitHistory)
             .where(
                 visitHistory.store.id.eq(storeId),

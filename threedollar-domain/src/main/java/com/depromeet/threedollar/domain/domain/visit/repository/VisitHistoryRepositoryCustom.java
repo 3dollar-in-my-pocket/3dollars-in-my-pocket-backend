@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface VisitHistoryRepositoryCustom {
 
-    boolean existsByStoreIdAndUserIdAndDateOfVisit(Long storeId, Long userId, LocalDate dateOfVisit);
+    boolean existsByStoreIdAndUserIdAndDateOfVisitWithLock(Long storeId, Long userId, LocalDate dateOfVisit);
 
     List<VisitHistoryWithUserProjection> findAllVisitWithUserByStoreIdBetweenDate(Long storeId, LocalDate startDate, LocalDate endDate);
 
