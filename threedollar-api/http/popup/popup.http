@@ -1,0 +1,18 @@
+### 활성화 중인 팝업 목록을 조회한다 (AOS)
+GET {{host_api}}/api/v1/popups?platform=AOS
+
+> {%
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 활성화 중인 팝업 목록을 조회한다 (IOS)
+GET {{host_api}}/api/v1/popups?platform=IOS
+
+> {%
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
