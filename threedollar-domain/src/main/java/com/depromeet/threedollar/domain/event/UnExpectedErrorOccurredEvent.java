@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.event;
+package com.depromeet.threedollar.domain.event;
 
 import com.depromeet.threedollar.common.exception.ErrorCode;
 import com.depromeet.threedollar.domain.domain.common.ServerEventType;

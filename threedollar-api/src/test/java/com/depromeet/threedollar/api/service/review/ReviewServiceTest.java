@@ -2,8 +2,8 @@ package com.depromeet.threedollar.api.service.review;
 
 import com.depromeet.threedollar.api.controller.medal.UserMedalEventListener;
 import com.depromeet.threedollar.api.controller.store.StoreEventListener;
-import com.depromeet.threedollar.api.event.review.ReviewChangedEvent;
-import com.depromeet.threedollar.api.event.review.ReviewCreatedEvent;
+import com.depromeet.threedollar.domain.event.review.ReviewChangedEvent;
+import com.depromeet.threedollar.domain.event.review.ReviewCreatedEvent;
 import com.depromeet.threedollar.api.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;

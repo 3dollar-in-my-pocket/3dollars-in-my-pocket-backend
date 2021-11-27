@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.controller.medal;
 
-import com.depromeet.threedollar.api.event.review.ReviewCreatedEvent;
-import com.depromeet.threedollar.api.event.store.StoreCreatedEvent;
-import com.depromeet.threedollar.api.event.store.StoreDeletedEvent;
-import com.depromeet.threedollar.api.event.visit.VisitHistoryAddedEvent;
+import com.depromeet.threedollar.domain.event.review.ReviewCreatedEvent;
+import com.depromeet.threedollar.domain.event.store.StoreCreatedEvent;
+import com.depromeet.threedollar.domain.event.store.StoreDeletedEvent;
+import com.depromeet.threedollar.domain.event.visit.VisitHistoryAddedEvent;
 import com.depromeet.threedollar.api.service.medal.UserMedalEventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;

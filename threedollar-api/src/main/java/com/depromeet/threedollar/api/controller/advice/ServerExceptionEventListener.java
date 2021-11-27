@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.controller.advice;
 
-import com.depromeet.threedollar.api.event.UnExpectedErrorOccurredEvent;
+import com.depromeet.threedollar.domain.event.UnExpectedErrorOccurredEvent;
 import com.depromeet.threedollar.external.client.slack.SlackApiClient;
 import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest;
 import io.sentry.Sentry;

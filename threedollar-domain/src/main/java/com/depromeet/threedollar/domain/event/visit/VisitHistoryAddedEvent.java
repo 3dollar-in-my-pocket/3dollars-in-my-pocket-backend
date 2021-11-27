@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.event.visit;
+package com.depromeet.threedollar.domain.event.visit;
 
 import lombok.AccessLevel;
 import lombok.Getter;

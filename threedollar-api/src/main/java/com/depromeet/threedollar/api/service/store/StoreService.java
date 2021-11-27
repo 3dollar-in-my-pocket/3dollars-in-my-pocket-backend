@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.service.store;
 
-import com.depromeet.threedollar.api.event.store.StoreCreatedEvent;
-import com.depromeet.threedollar.api.event.store.StoreDeletedEvent;
+import com.depromeet.threedollar.domain.event.store.StoreCreatedEvent;
+import com.depromeet.threedollar.domain.event.store.StoreDeletedEvent;
 import com.depromeet.threedollar.api.service.store.dto.request.AddStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.DeleteStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.UpdateStoreRequest;

@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.service.visit;
 
 import com.depromeet.threedollar.api.controller.medal.UserMedalEventListener;
-import com.depromeet.threedollar.api.event.visit.VisitHistoryAddedEvent;
+import com.depromeet.threedollar.domain.event.visit.VisitHistoryAddedEvent;
 import com.depromeet.threedollar.api.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
