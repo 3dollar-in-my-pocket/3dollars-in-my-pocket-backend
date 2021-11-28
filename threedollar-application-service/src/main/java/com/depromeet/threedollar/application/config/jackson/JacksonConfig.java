@@ -3,6 +3,7 @@ package com.depromeet.threedollar.application.config.jackson;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.kotlin.KotlinModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
@@ -25,6 +26,14 @@ public class JacksonConfig {
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(javaTimeModule())
+            .registerModule(new ParameterNamesModule())
+            .registerModule(new Jdk8Module()) // Java8 Optional
+            .registerModule(new KotlinModule());
+        return objectMapper;
+    }
+
+    private JavaTimeModule javaTimeModule() {
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
         javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
@@ -32,8 +41,7 @@ public class JacksonConfig {
         javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer());
         javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer());
         javaTimeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer());
-        objectMapper.registerModules(javaTimeModule, new ParameterNamesModule(), new KotlinModule());
-        return objectMapper;
+        return javaTimeModule;
     }
 
     private static class LocalDateSerializer extends JsonSerializer<LocalDate> {
