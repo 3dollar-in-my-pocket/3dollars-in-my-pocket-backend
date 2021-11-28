@@ -1,13 +1,10 @@
 package com.depromeet.threedollar.api.controller.store;
 
+import com.depromeet.threedollar.api.controller.MockMvcUtils;
+import com.depromeet.threedollar.api.service.store.dto.request.*;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
 import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.api.controller.MockMvcUtils;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStoresRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveMyStoresRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreGroupByCategoryRequest;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpHeaders;
@@ -72,7 +69,6 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))
             .param("cursor", request.getCursor() == null ? null : String.valueOf(request.getCursor()))
-            .param("cachingTotalElements", request.getCachingTotalElements() == null ? null : String.valueOf(request.getCachingTotalElements()))
             .param("latitude", request.getLatitude() == null ? null : String.valueOf(request.getLatitude()))
             .param("longitude", request.getLongitude() == null ? null : String.valueOf(request.getLongitude()));
 
@@ -87,7 +83,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         );
     }
 
-    public ApiResponse<StoresScrollResponse> getMyStoresV2(RetrieveMyStoresRequest request, String token, int expectedStatus) throws Exception {
+    public ApiResponse<StoresScrollResponse> getMyStoresV2(RetrieveMyStoresV2Request request, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/stores/me")
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))

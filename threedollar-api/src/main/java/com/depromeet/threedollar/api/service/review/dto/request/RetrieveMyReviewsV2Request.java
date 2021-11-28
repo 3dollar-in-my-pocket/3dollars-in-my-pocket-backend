@@ -6,11 +6,12 @@ import org.jetbrains.annotations.Nullable;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
+@Deprecated
 @ToString
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class RetrieveMyReviewsRequest {
+public class RetrieveMyReviewsV2Request {
 
     @Min(value = 1, message = "{common.size.min}")
     @Max(value = 100, message = "{common.size.max}")
@@ -19,8 +20,11 @@ public class RetrieveMyReviewsRequest {
     @Nullable
     private Long cursor;
 
-    public static RetrieveMyReviewsRequest testInstance(int size, Long cursor) {
-        return new RetrieveMyReviewsRequest(size, cursor);
+    @Nullable
+    private Long cachingTotalElements; // 총 리뷰 수를 매번 서버에서 조회하지 않고, 캐싱하기 위한 필드. (Optional)
+
+    public static RetrieveMyReviewsV2Request testInstance(int size, Long cursor, Long cachingTotalElements) {
+        return new RetrieveMyReviewsV2Request(size, cursor, cachingTotalElements);
     }
 
 }

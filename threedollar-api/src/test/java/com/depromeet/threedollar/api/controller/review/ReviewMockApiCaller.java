@@ -3,6 +3,7 @@ package com.depromeet.threedollar.api.controller.review;
 import com.depromeet.threedollar.api.controller.MockMvcUtils;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsRequest;
+import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsV2Request;
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
@@ -80,8 +81,7 @@ class ReviewMockApiCaller extends MockMvcUtils {
         MockHttpServletRequestBuilder builder = get("/api/v3/store/reviews/me")
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))
-            .param("cursor", request.getCursor() == null ? null : String.valueOf(request.getCursor()))
-            .param("cachingTotalElements", request.getCachingTotalElements() == null ? null : String.valueOf(request.getCachingTotalElements()));
+            .param("cursor", request.getCursor() == null ? null : String.valueOf(request.getCursor()));
 
         return objectMapper.readValue(
             mockMvc.perform(builder)
@@ -95,7 +95,7 @@ class ReviewMockApiCaller extends MockMvcUtils {
     }
 
     @Deprecated
-    public ApiResponse<ReviewScrollV2Response> retrieveMyReviewsV2(RetrieveMyReviewsRequest request, String token, int expectedStatus) throws Exception {
+    public ApiResponse<ReviewScrollV2Response> retrieveMyReviewsV2(RetrieveMyReviewsV2Request request, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/store/reviews/me")
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))

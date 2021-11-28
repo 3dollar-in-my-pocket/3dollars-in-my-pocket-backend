@@ -3,10 +3,7 @@ package com.depromeet.threedollar.api.controller.store;
 import com.depromeet.threedollar.api.config.interceptor.Auth;
 import com.depromeet.threedollar.api.config.resolver.UserId;
 import com.depromeet.threedollar.api.service.store.StoreRetrieveService;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveMyStoresRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStoresRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreGroupByCategoryRequest;
+import com.depromeet.threedollar.api.service.store.dto.request.*;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import io.swagger.annotations.ApiOperation;
@@ -51,7 +48,7 @@ public class StoreRetrieveController {
     @ApiOperation("[인증] 마이페이지 - 내가 제보한 가게 목록들을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 X)")
     @Auth
     @GetMapping("/api/v2/stores/me")
-    public ApiResponse<StoresScrollResponse> getMyStoresV2(@Valid RetrieveMyStoresRequest request, @UserId Long userId) {
+    public ApiResponse<StoresScrollResponse> getMyStoresV2(@Valid RetrieveMyStoresV2Request request, @UserId Long userId) {
         return ApiResponse.success(storeRetrieveService.retrieveMyStoresV2(request, userId));
     }
 
