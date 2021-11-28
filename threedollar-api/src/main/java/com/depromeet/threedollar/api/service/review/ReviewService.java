@@ -11,9 +11,12 @@ import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static com.depromeet.threedollar.domain.config.cache.CacheType.CacheKey.USER_REVIEWS_COUNTS;
 
 @RequiredArgsConstructor
 @Service
@@ -24,6 +27,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final StoreRepository storeRepository;
 
+    @CacheEvict(key = "#userId", value = USER_REVIEWS_COUNTS)
     @Transactional
     public ReviewInfoResponse addReview(AddReviewRequest request, Long userId) {
         Store store = StoreServiceUtils.findStoreById(storeRepository, request.getStoreId());
@@ -42,6 +46,7 @@ public class ReviewService {
         return ReviewInfoResponse.of(review);
     }
 
+    @CacheEvict(key = "#userId", value = USER_REVIEWS_COUNTS)
     @Transactional
     public void deleteReview(Long reviewId, Long userId) {
         Review review = ReviewServiceUtils.findReviewByIdAndUserId(reviewRepository, reviewId, userId);

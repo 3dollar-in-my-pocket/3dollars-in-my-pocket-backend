@@ -12,6 +12,7 @@ import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static com.depromeet.threedollar.common.exception.ErrorCode.CONFLICT_DELETE_REQUEST_STORE_EXCEPTION;
+import static com.depromeet.threedollar.domain.config.cache.CacheType.CacheKey.USER_STORES_COUNTS;
 
 @RequiredArgsConstructor
 @Service
@@ -33,6 +35,7 @@ public class StoreService {
     private final StoreRepository storeRepository;
     private final StoreDeleteRequestRepository storeDeleteRequestRepository;
 
+    @CacheEvict(key = "#userId", value = USER_STORES_COUNTS)
     @Transactional
     public StoreInfoResponse addStore(AddStoreRequest request, Long userId) {
         Store store = storeRepository.save(request.toStore(userId));

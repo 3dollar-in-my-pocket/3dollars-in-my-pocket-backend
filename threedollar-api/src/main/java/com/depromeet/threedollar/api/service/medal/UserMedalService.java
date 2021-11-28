@@ -11,6 +11,7 @@ import com.depromeet.threedollar.domain.domain.medal.UserMedalType;
 import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.depromeet.threedollar.common.exception.ErrorCode.NOT_FOUND_MEDAL_EXCEPTION;
+import static com.depromeet.threedollar.domain.config.cache.CacheType.CacheKey.USER_MEDALS_COUNTS;
 
 @RequiredArgsConstructor
 @Service
@@ -26,6 +28,7 @@ public class UserMedalService {
     private final UserRepository userRepository;
     private final UserMedalRepository userMedalRepository;
 
+    @CacheEvict(key = "#userId", value = USER_MEDALS_COUNTS)
     @Transactional
     public void addUserMedal(UserMedalType type, Long userId) {
         if (userMedalRepository.existsMedalByUserId(userId, type)) {

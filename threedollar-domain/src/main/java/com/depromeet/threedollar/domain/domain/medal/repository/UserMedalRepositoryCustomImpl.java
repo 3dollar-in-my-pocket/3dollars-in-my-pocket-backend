@@ -3,9 +3,11 @@ package com.depromeet.threedollar.domain.domain.medal.repository;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalType;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 
+import static com.depromeet.threedollar.domain.config.cache.CacheType.CacheKey.USER_MEDALS_COUNTS;
 import static com.depromeet.threedollar.domain.domain.medal.QUserMedal.userMedal;
 
 @RequiredArgsConstructor
@@ -32,6 +34,7 @@ public class UserMedalRepositoryCustomImpl implements UserMedalRepositoryCustom 
             ).fetch();
     }
 
+    @Cacheable(key = "#userId", value = USER_MEDALS_COUNTS)
     @Override
     public long findCountsByUserId(Long userId) {
         return queryFactory.selectOne()

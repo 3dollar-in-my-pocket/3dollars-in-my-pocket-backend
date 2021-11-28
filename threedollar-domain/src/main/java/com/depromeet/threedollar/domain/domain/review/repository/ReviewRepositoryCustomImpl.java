@@ -8,10 +8,12 @@ import com.depromeet.threedollar.domain.domain.store.StoreStatus;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.LockModeType;
 import java.util.List;
 
+import static com.depromeet.threedollar.domain.config.cache.CacheType.CacheKey.USER_REVIEWS_COUNTS;
 import static com.depromeet.threedollar.domain.domain.store.QStore.store;
 import static com.depromeet.threedollar.domain.domain.user.QUser.user;
 import static com.depromeet.threedollar.domain.domain.review.QReview.review;
@@ -43,6 +45,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
             .fetch();
     }
 
+    @Cacheable(key = "#userId", value = USER_REVIEWS_COUNTS)
     @Override
     public long findCountsByUserId(Long userId) {
         return queryFactory.select(review.id)
