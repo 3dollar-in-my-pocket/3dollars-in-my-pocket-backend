@@ -10,4 +10,6 @@ public interface UserMedalRepositoryCustom {
 
     List<UserMedalType> findAllUserMedalTypeByUserId(Long userId);
 
+    long findCountsByUserId(Long userId);
+
 }
