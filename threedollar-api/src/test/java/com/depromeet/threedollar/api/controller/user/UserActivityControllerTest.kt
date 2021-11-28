@@ -26,14 +26,13 @@ internal class UserActivityControllerTest(
     @AfterEach
     fun cleanUp() {
         super.cleanup()
+        storeRepository.deleteAll()
         reviewRepository.deleteAll()
     }
 
     @Test
     fun `유저의 회원 정보를 조회한다`() {
         // given
-        userMedalRepository.save(UserMedalCreator.create(testUser.id, UserMedalType.BUNGEOPPANG_CHALLENGER))
-
         testUser.updateActiveMedal(UserMedalType.BUNGEOPPANG_CHALLENGER)
         userRepository.save(testUser)
 
