@@ -4,7 +4,7 @@ import com.depromeet.threedollar.domain.domain.medal.UserMedalType
 import com.depromeet.threedollar.domain.domain.user.User
 import com.depromeet.threedollar.domain.domain.user.UserSocialType
 
-data class UserActivityResponse(
+data class UserWithActivityResponse(
     val userId: Long,
     val name: String,
     val socialType: UserSocialType,
@@ -18,8 +18,8 @@ data class UserActivityResponse(
             reportedStoresCount: Long,
             writtenReviewsCount: Long,
             ownedMedalsCounts: Long
-        ): UserActivityResponse {
-            return UserActivityResponse(
+        ): UserWithActivityResponse {
+            return UserWithActivityResponse(
                 user.id, user.name, user.socialType, user.medalType,
                 ActivityResponse(reportedStoresCount, writtenReviewsCount, ownedMedalsCounts)
             )

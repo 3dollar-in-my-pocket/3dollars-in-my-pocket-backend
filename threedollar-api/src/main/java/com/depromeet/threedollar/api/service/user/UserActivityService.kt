@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.user
 
-import com.depromeet.threedollar.api.service.user.dto.response.UserActivityResponse
+import com.depromeet.threedollar.api.service.user.dto.response.UserWithActivityResponse
 import com.depromeet.threedollar.domain.domain.medal.UserMedalRepository
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository
 import com.depromeet.threedollar.domain.domain.store.StoreRepository
@@ -17,8 +17,8 @@ class UserActivityService(
 ) {
 
     @Transactional(readOnly = true)
-    fun getUserActivity(userId: Long?): UserActivityResponse {
-        return UserActivityResponse.of(
+    fun getUserActivity(userId: Long?): UserWithActivityResponse {
+        return UserWithActivityResponse.of(
             UserServiceUtils.findUserById(userRepository, userId),
             storeRepository.findCountsByUserId(userId),
             reviewRepository.findCountsByUserId(userId),

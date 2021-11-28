@@ -45,10 +45,10 @@ internal class UserActivityControllerTest(
             .andExpect {
                 status { isOk() }
                 content {
-                    jsonPath("$.data.user.userId") { value(testUser.id) }
-                    jsonPath("$.data.user.name") { value(testUser.name) }
-                    jsonPath("$.data.user.socialType") { value(testUser.socialType.toString()) }
-                    jsonPath("$.data.user.medalType") { value(UserMedalType.BUNGEOPPANG_CHALLENGER.toString()) }
+                    jsonPath("$.data.userId") { value(testUser.id) }
+                    jsonPath("$.data.name") { value(testUser.name) }
+                    jsonPath("$.data.socialType") { value(testUser.socialType.toString()) }
+                    jsonPath("$.data.medalType") { value(UserMedalType.BUNGEOPPANG_CHALLENGER.toString()) }
                 }
             }
     }
