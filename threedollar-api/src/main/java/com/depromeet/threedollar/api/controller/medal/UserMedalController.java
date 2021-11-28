@@ -25,14 +25,14 @@ public class UserMedalController {
 
     @ApiOperation("[인증] 마이페이지 -사용자가 보유중인 메달들을 조회한다")
     @Auth
-    @GetMapping("/api/v2/user/medals")
+    @GetMapping("/api/v1/user/medals")
     public ApiResponse<List<UserMedalResponse>> getAvailableUserMedals(@UserId Long userId) {
         return ApiResponse.success(userMedalService.getAvailableUserMedals(userId));
     }
 
     @ApiOperation("[인증] 마이페이지 - 사용자의 장착중인 메달을 수정한다")
     @Auth
-    @PutMapping("/api/v2/user/medal")
+    @PutMapping("/api/v1/user/medal")
     public ApiResponse<UserInfoResponse> activateUserMedal(@Valid @RequestBody ActivateUserMedalRequest request, @UserId Long userId) {
         return ApiResponse.success(userMedalService.activateUserMedal(request, userId));
     }

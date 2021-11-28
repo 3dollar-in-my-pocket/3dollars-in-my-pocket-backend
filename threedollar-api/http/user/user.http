@@ -46,7 +46,7 @@ client.test("200 OK or 409 Conflict", function() {
 
 
 ### [인증] 사용자가 보유중인 메달들을 조회한다
-GET {{host_api}}/api/v2/user/medals
+GET {{host_api}}/api/v1/user/medals
 Authorization: {{AUTHORIZATION}}
 
 > {%
@@ -57,7 +57,7 @@ client.test("200 OK", function() {
 
 
 ### [인증] 사용자의 장착중인 메달을 수정한다
-PUT {{host_api}}/api/v2/user/medal
+PUT {{host_api}}/api/v1/user/medal
 Content-Type: application/json
 Authorization: {{AUTHORIZATION}}
 

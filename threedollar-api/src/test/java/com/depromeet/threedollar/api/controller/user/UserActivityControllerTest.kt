@@ -70,7 +70,7 @@ internal class UserActivityControllerTest(
             .andExpect {
                 status { isOk() }
                 content {
-                    jsonPath("$.data.activity.reportedStoresCount") { value(2) }
+                    jsonPath("$.data.activity.storesCount") { value(2) }
                 }
             }
     }
@@ -97,7 +97,7 @@ internal class UserActivityControllerTest(
             .andExpect {
                 status { isOk() }
                 content {
-                    jsonPath("$.data.activity.writtenReviewsCount") { value(3) }
+                    jsonPath("$.data.activity.reviewsCount") { value(3) }
                 }
             }
     }
@@ -115,7 +115,7 @@ internal class UserActivityControllerTest(
             .andExpect {
                 status { isOk() }
                 content {
-                    jsonPath("$.data.activity.ownedMedalsCounts") { value(1) }
+                    jsonPath("$.data.activity.medalsCounts") { value(1) }
                 }
             }
     }

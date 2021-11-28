@@ -27,7 +27,7 @@ public class UserMedalMockApiCaller extends MockMvcUtils {
     }
 
     public ApiResponse<List<UserMedalResponse>> getAvailableUserMedals(String token, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = get("/api/v2/user/medals")
+        MockHttpServletRequestBuilder builder = get("/api/v1/user/medals")
             .header(HttpHeaders.AUTHORIZATION, token);
 
         return objectMapper.readValue(
@@ -42,7 +42,7 @@ public class UserMedalMockApiCaller extends MockMvcUtils {
     }
 
     public ApiResponse<UserInfoResponse> activateUserMedal(ActivateUserMedalRequest request, String token, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = put("/api/v2/user/medal")
+        MockHttpServletRequestBuilder builder = put("/api/v1/user/medal")
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(request));

@@ -15,13 +15,13 @@ data class UserWithActivityResponse(
     companion object {
         fun of(
             user: User,
-            reportedStoresCount: Long,
-            writtenReviewsCount: Long,
-            ownedMedalsCounts: Long
+            storesCount: Long,
+            reviewsCount: Long,
+            medalsCounts: Long
         ): UserWithActivityResponse {
             return UserWithActivityResponse(
                 user.id, user.name, user.socialType, user.medalType,
-                ActivityResponse(reportedStoresCount, writtenReviewsCount, ownedMedalsCounts)
+                ActivityResponse(storesCount, reviewsCount, medalsCounts)
             )
         }
     }
@@ -30,7 +30,7 @@ data class UserWithActivityResponse(
 
 
 data class ActivityResponse(
-    val reportedStoresCount: Long,
-    val writtenReviewsCount: Long,
-    val ownedMedalsCounts: Long
+    val storesCount: Long,
+    val reviewsCount: Long,
+    val medalsCounts: Long
 )
