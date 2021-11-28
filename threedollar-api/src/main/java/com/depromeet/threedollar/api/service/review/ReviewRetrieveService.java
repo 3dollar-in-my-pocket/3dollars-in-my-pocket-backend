@@ -29,8 +29,7 @@ public class ReviewRetrieveService {
     public ReviewScrollResponse retrieveMyReviews(RetrieveMyReviewsRequest request, Long userId) {
         List<ReviewWithWriterProjection> reviewsWithNextCursor = reviewRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
         ScrollPaginationCollection<ReviewWithWriterProjection> scrollCollection = ScrollPaginationCollection.of(reviewsWithNextCursor, request.getSize());
-        return ReviewScrollResponse.of(scrollCollection, findStoresByReviews(scrollCollection.getItemsInCurrentScroll()),
-            reviewRepository.findCountsByUserId(userId));
+        return ReviewScrollResponse.of(scrollCollection, findStoresByReviews(scrollCollection.getItemsInCurrentScroll()));
     }
 
     @Deprecated

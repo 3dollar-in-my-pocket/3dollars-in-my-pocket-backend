@@ -128,7 +128,6 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
 
             // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(4);
             assertThat(response.getData().getNextCursor()).isEqualTo(review3.getId());
             assertThat(response.getData().getContents()).hasSize(2);
 
@@ -151,7 +150,6 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
 
             // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(4);
             assertThat(response.getData().getNextCursor()).isEqualTo(review2.getId());
             assertThat(response.getData().getContents()).hasSize(2);
 
@@ -174,7 +172,6 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
 
             // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(4);
             assertThat(response.getData().getNextCursor()).isEqualTo(review2.getId());
             assertThat(response.getData().getContents()).hasSize(2);
 
@@ -197,7 +194,6 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
 
             // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(4);
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
             assertThat(response.getData().getContents()).hasSize(2);
 
@@ -220,7 +216,6 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
 
             // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(4);
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
             assertThat(response.getData().getContents()).hasSize(1);
 
@@ -239,7 +234,6 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
 
             // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(0);
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
             assertThat(response.getData().getContents()).isEmpty();
         }
@@ -259,7 +253,6 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
 
             // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(1);
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
             assertThat(response.getData().getContents()).hasSize(1);
 

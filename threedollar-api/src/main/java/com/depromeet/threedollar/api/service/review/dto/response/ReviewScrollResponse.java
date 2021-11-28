@@ -21,31 +21,29 @@ public class ReviewScrollResponse {
     private static final long LAST_CURSOR = -1L;
 
     private List<ReviewDetailResponse> contents = new ArrayList<>();
-    private long totalElements;
     private long nextCursor;
 
-    private ReviewScrollResponse(List<ReviewDetailResponse> contents, long totalElements, long nextCursor) {
+    private ReviewScrollResponse(List<ReviewDetailResponse> contents, long nextCursor) {
         this.contents = contents;
-        this.totalElements = totalElements;
         this.nextCursor = nextCursor;
     }
 
-    public static ReviewScrollResponse of(ScrollPaginationCollection<ReviewWithWriterProjection> scrollCollection, Map<Long, Store> cachedStores, long totalElements) {
+    public static ReviewScrollResponse of(ScrollPaginationCollection<ReviewWithWriterProjection> scrollCollection, Map<Long, Store> cachedStores) {
         if (scrollCollection.isLastScroll()) {
-            return newLastScroll(scrollCollection.getItemsInCurrentScroll(), cachedStores, totalElements);
+            return newLastScroll(scrollCollection.getItemsInCurrentScroll(), cachedStores);
         }
-        return newScrollHasNext(scrollCollection.getItemsInCurrentScroll(), cachedStores, totalElements, scrollCollection.getNextCursor().getReviewId());
+        return newScrollHasNext(scrollCollection.getItemsInCurrentScroll(), cachedStores, scrollCollection.getNextCursor().getReviewId());
     }
 
-    private static ReviewScrollResponse newLastScroll(List<ReviewWithWriterProjection> reviews, Map<Long, Store> cachedStores, long totalElements) {
-        return newScrollHasNext(reviews, cachedStores, totalElements, LAST_CURSOR);
+    private static ReviewScrollResponse newLastScroll(List<ReviewWithWriterProjection> reviews, Map<Long, Store> cachedStores) {
+        return newScrollHasNext(reviews, cachedStores, LAST_CURSOR);
     }
 
-    private static ReviewScrollResponse newScrollHasNext(List<ReviewWithWriterProjection> reviews, Map<Long, Store> cachedStores, long totalElements, long nextCursor) {
+    private static ReviewScrollResponse newScrollHasNext(List<ReviewWithWriterProjection> reviews, Map<Long, Store> cachedStores, long nextCursor) {
         List<ReviewDetailResponse> contents = reviews.stream()
             .map(review -> ReviewDetailResponse.of(review, cachedStores.get(review.getStoreId())))
             .collect(Collectors.toList());
-        return new ReviewScrollResponse(contents, totalElements, nextCursor);
+        return new ReviewScrollResponse(contents, nextCursor);
     }
 
 }
