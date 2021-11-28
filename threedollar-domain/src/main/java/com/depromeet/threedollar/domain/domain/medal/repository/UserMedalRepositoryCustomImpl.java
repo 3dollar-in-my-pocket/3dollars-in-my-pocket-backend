@@ -32,4 +32,13 @@ public class UserMedalRepositoryCustomImpl implements UserMedalRepositoryCustom 
             ).fetch();
     }
 
+    @Override
+    public long findCountsByUserId(Long userId) {
+        return queryFactory.selectOne()
+            .from(userMedal)
+            .where(
+                userMedal.userId.eq(userId)
+            ).fetchCount();
+    }
+
 }
