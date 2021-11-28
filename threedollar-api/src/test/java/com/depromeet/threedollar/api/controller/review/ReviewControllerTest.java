@@ -3,15 +3,16 @@ package com.depromeet.threedollar.api.controller.review;
 import com.depromeet.threedollar.api.controller.SetupStoreControllerTest;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsRequest;
+import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsV2Request;
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollV2Response;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.domain.domain.store.MenuRepository;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
+import com.depromeet.threedollar.domain.domain.store.MenuRepository;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
@@ -121,7 +122,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review4 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요4", 2);
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null, null);
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null);
 
             // when
             ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
@@ -144,7 +145,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review4 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요4", 2);
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review4.getId(), 4L);
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review4.getId());
 
             // when
             ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
@@ -167,7 +168,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review4 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요4", 2);
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review4.getId(), null);
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review4.getId());
 
             // when
             ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
@@ -190,7 +191,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review4 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요4", 2);
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review3.getId(), null);
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review3.getId());
 
             // when
             ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
@@ -213,7 +214,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review4 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요4", 2);
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review2.getId(), null);
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review2.getId());
 
             // when
             ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
@@ -232,7 +233,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review = ReviewCreator.createDeleted(store.getId(), testUser.getId(), "너무 맛있어요", 5);
             reviewRepository.save(review);
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null, null);
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null);
 
             // when
             ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
@@ -252,7 +253,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review = ReviewCreator.create(deletedStore.getId(), testUser.getId(), "너무 맛있어요", 5);
             reviewRepository.save(review);
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null, null);
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null);
 
             // when
             ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
@@ -275,7 +276,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review = ReviewCreator.create(deletedStore.getId(), testUser.getId(), "너무 맛있어요", 5);
             reviewRepository.save(review);
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null, null);
+            RetrieveMyReviewsV2Request request = RetrieveMyReviewsV2Request.testInstance(2, null, null);
 
             // when
             ApiResponse<ReviewScrollV2Response> response = reviewMockApiCaller.retrieveMyReviewsV2(request, token, 200);

@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.service.review;
 
 import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsRequest;
+import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsV2Request;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollV2Response;
 import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
@@ -29,12 +30,12 @@ public class ReviewRetrieveService {
         List<ReviewWithWriterProjection> reviewsWithNextCursor = reviewRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
         ScrollPaginationCollection<ReviewWithWriterProjection> scrollCollection = ScrollPaginationCollection.of(reviewsWithNextCursor, request.getSize());
         return ReviewScrollResponse.of(scrollCollection, findStoresByReviews(scrollCollection.getItemsInCurrentScroll()),
-            Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> reviewRepository.findCountsByUserId(userId)));
+            reviewRepository.findCountsByUserId(userId));
     }
 
     @Deprecated
     @Transactional(readOnly = true)
-    public ReviewScrollV2Response retrieveMyReviewsV2(RetrieveMyReviewsRequest request, Long userId) {
+    public ReviewScrollV2Response retrieveMyReviewsV2(RetrieveMyReviewsV2Request request, Long userId) {
         List<ReviewWithWriterProjection> reviewsWithNextCursor = reviewRepository.findAllActiveByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
         ScrollPaginationCollection<ReviewWithWriterProjection> scrollCollection = ScrollPaginationCollection.of(reviewsWithNextCursor, request.getSize());
         return ReviewScrollV2Response.of(scrollCollection, findStoresByReviews(scrollCollection.getItemsInCurrentScroll()),

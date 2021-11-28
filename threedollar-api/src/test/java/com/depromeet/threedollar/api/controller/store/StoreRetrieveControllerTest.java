@@ -1,18 +1,11 @@
 package com.depromeet.threedollar.api.controller.store;
 
 import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveMyStoresRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStoresRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreGroupByCategoryRequest;
+import com.depromeet.threedollar.api.service.store.dto.request.*;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
 import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
-import com.depromeet.threedollar.domain.domain.store.Menu;
-import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.store.MenuCreator;
-import com.depromeet.threedollar.domain.domain.store.MenuRepository;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
@@ -550,7 +543,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             storeRepository.saveAll(List.of(store1, store2, store3));
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, null, null, null, null);
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, null, null, null);
 
             // when
             ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
@@ -573,7 +566,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Store store4 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게3", 34, 124);
             storeRepository.saveAll(List.of(store1, store2, store3, store4));
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, store4.getId(), 4L, 34.0, null);
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, store4.getId(),  34.0, null);
 
             // when
             ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
@@ -592,28 +585,13 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게1", 34, 124);
             storeRepository.save(store);
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, null, null, 33.0, 123.0);
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, null,  33.0, 123.0);
 
             // when
             ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
 
             // then
             assertThat(response.getData().getTotalElements()).isEqualTo(1);
-        }
-
-        @Test
-        void 내가_작성한_가게_목록_조회시_cachingTotalElements를_함께_넘기면_서버에서_별도로_가게_총_개수_계산없이_해당_캐시_정보를_반환한다() throws Exception {
-            // given
-            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게1", 34, 124);
-            storeRepository.save(store);
-
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, null, 10L, 33.0, 123.0);
-
-            // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
-
-            // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(10);
         }
 
         @DisplayName("마지막 페이지인경우 nextCursor = -1")
@@ -624,7 +602,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Store store2 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게2", 34, 124);
             storeRepository.saveAll(List.of(store1, store2));
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, store2.getId(), null, null, null);
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, store2.getId(), null, null);
 
             // when
             ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
@@ -644,7 +622,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Store store3 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게3", 34, 124);
             storeRepository.saveAll(List.of(store1, store2, store3));
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, store2.getId(), 3L, null, null);
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, store2.getId(), null, null);
 
             // when
             ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
@@ -662,7 +640,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Store store = StoreCreator.createDeletedWithDefaultMenu(testUser.getId(), "가게 이름", 34, 124);
             storeRepository.save(store);
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, null, null, null, null);
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, null,  null, null);
 
             // when
             ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
@@ -684,7 +662,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Store store = StoreCreator.createDeletedWithDefaultMenu(testUser.getId(), "가게 이름", 34, 124);
             storeRepository.save(store);
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, null, null, null, null);
+            RetrieveMyStoresV2Request request = RetrieveMyStoresV2Request.testInstance(2, null, null, null, null);
 
             // when
             ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStoresV2(request, token, 200);
@@ -707,7 +685,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 17)))
             );
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, null, null, null, null);
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, null, null, null);
 
             // when
             ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);

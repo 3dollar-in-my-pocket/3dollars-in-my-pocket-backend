@@ -11,9 +11,11 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 
+import static com.depromeet.threedollar.domain.config.cache.CacheType.CacheKey.USER_STORES_COUNTS;
 import static com.depromeet.threedollar.domain.domain.store.QMenu.menu;
 import static com.depromeet.threedollar.domain.domain.store.QStore.store;
 import static com.depromeet.threedollar.domain.domain.storedelete.QStoreDeleteRequest.storeDeleteRequest;
@@ -49,6 +51,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
             ).fetchOne();
     }
 
+    @Cacheable(key = "#userId", value = USER_STORES_COUNTS)
     @Override
     public long findCountsByUserId(Long userId) {
         return queryFactory.select(store.id).distinct()
