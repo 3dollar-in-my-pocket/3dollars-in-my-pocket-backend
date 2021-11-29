@@ -29,17 +29,12 @@ public class StoreImageService {
     public List<StoreImageResponse> addStoreImages(AddStoreImageRequest request, List<MultipartFile> imageFiles, Long userId) {
         StoreServiceUtils.validateExistsStore(storeRepository, request.getStoreId());
         List<StoreImage> storeImages = imageFiles.stream()
-            .map(this::uploadImage)
+            .map(imageFile -> uploadProvider.uploadFile(ImageUploadFileRequest.of(ImageType.STORE), imageFile))
             .map(imageUrl -> request.toEntity(userId, imageUrl))
             .collect(Collectors.toList());
-
         return storeImageRepository.saveAll(storeImages).stream()
             .map(StoreImageResponse::of)
             .collect(Collectors.toList());
-    }
-
-    private String uploadImage(MultipartFile imageFile) {
-        return uploadProvider.uploadFile(ImageUploadFileRequest.of(ImageType.STORE), imageFile);
     }
 
     @Transactional
