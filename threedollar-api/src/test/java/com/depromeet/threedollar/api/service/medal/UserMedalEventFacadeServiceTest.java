@@ -26,10 +26,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
-class UserMedalEventServiceTest extends SetupUserServiceTest {
+class UserMedalEventFacadeServiceTest extends SetupUserServiceTest {
 
     @Autowired
-    private UserMedalEventService userMedalEventService;
+    private UserMedalEventFacadeService userMedalFacadeService;
 
     @Autowired
     private StoreRepository storeRepository;
@@ -69,7 +69,7 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
                 storeRepository.save(store);
             }
 
-            userMedalEventService.addObtainableMedalsByAddStore(userId);
+            userMedalFacadeService.addObtainableMedalsByAddStore(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -90,7 +90,7 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
                 storeRepository.save(store);
             }
 
-            userMedalEventService.addObtainableMedalsByAddStore(userId);
+            userMedalFacadeService.addObtainableMedalsByAddStore(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -115,7 +115,7 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
             }
 
             // when
-            userMedalEventService.addObtainableMedalsByDeleteStore(userId);
+            userMedalFacadeService.addObtainableMedalsByDeleteStore(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -139,7 +139,7 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
             }
 
             // when
-            userMedalEventService.addObtainableMedalsByDeleteStore(userId);
+            userMedalFacadeService.addObtainableMedalsByDeleteStore(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -164,7 +164,7 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
             }
 
             // when
-            userMedalEventService.addObtainableMedalsByAddReview(userId);
+            userMedalFacadeService.addObtainableMedalsByAddReview(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -188,7 +188,7 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
             }
 
             // when
-            userMedalEventService.addObtainableMedalsByAddReview(userId);
+            userMedalFacadeService.addObtainableMedalsByAddReview(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -211,7 +211,7 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
             visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 11, 12)));
 
             // when
-            userMedalEventService.addObtainableMedalsByVisitStore(userId);
+            userMedalFacadeService.addObtainableMedalsByVisitStore(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -231,7 +231,7 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
             storeRepository.save(store);
 
             // when
-            userMedalEventService.addObtainableMedalsByVisitStore(userId);
+            userMedalFacadeService.addObtainableMedalsByVisitStore(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -251,7 +251,7 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
             }
 
             // when
-            userMedalEventService.addObtainableMedalsByVisitStore(userId);
+            userMedalFacadeService.addObtainableMedalsByVisitStore(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -275,7 +275,7 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
             }
 
             // when
-            userMedalEventService.addObtainableMedalsByVisitStore(userId);
+            userMedalFacadeService.addObtainableMedalsByVisitStore(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -300,7 +300,7 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
             }
 
             // when
-            userMedalEventService.addObtainableMedalsByVisitStore(userId);
+            userMedalFacadeService.addObtainableMedalsByVisitStore(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -325,7 +325,7 @@ class UserMedalEventServiceTest extends SetupUserServiceTest {
             }
 
             // when
-            userMedalEventService.addObtainableMedalsByVisitStore(userId);
+            userMedalFacadeService.addObtainableMedalsByVisitStore(userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
