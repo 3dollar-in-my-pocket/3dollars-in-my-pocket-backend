@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static com.depromeet.threedollar.domain.domain.medal.UserMedalType.MedalAcquisitionCondition.*;
@@ -32,28 +33,32 @@ public class UserMedalEventService {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void addObtainableMedalsByAddStore(Long userId) {
-        addMedalsIfMatchCondition(userId, ADD_STORE, storeRepository.findCountsByUserId(userId));
+        addMedalsIfMatchCondition(userId, ADD_STORE, () -> storeRepository.findCountsByUserId(userId));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void addObtainableMedalsByDeleteStore(Long userId) {
-        addMedalsIfMatchCondition(userId, DELETE_STORE, storeDeleteRequestRepository.findCountsByUserId(userId));
+        addMedalsIfMatchCondition(userId, DELETE_STORE, () -> storeDeleteRequestRepository.findCountsByUserId(userId));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void addObtainableMedalsByAddReview(Long userId) {
-        addMedalsIfMatchCondition(userId, ADD_REVIEW, reviewRepository.findCountsByUserId(userId));
+        addMedalsIfMatchCondition(userId, ADD_REVIEW, () -> reviewRepository.findCountsByUserId(userId));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void addObtainableMedalsByVisitStore(Long userId) {
-        addMedalsIfMatchCondition(userId, VISIT_STORE, visitHistoryRepository.findCountsByUserId(userId));
-        addMedalsIfMatchCondition(userId, VISIT_NOT_EXISTS_STORE, visitHistoryRepository.findCountsByUserIdAndVisitType(userId, VisitType.NOT_EXISTS));
+        addMedalsIfMatchCondition(userId, VISIT_STORE, () -> visitHistoryRepository.findCountsByUserId(userId));
+        addMedalsIfMatchCondition(userId, VISIT_NOT_EXISTS_STORE, () -> visitHistoryRepository.findCountsByUserIdAndVisitType(userId, VisitType.NOT_EXISTS));
     }
 
-    private void addMedalsIfMatchCondition(Long userId, UserMedalType.MedalAcquisitionCondition condition, long countsByUserId) {
-        for (UserMedalType medal : getNotHasMedalsByCondition(userId, condition)) {
-            if (medal.canGetMedal(countsByUserId)) {
+    private void addMedalsIfMatchCondition(Long userId, UserMedalType.MedalAcquisitionCondition condition, Supplier<Long> findCountsByUser) {
+        List<UserMedalType> medalsCanBeOcantained = getNotHasMedalsByCondition(userId, condition);
+        if (medalsCanBeOcantained.isEmpty()) {
+            return;
+        }
+        for (UserMedalType medal : medalsCanBeOcantained) {
+            if (medal.canGetMedal(findCountsByUser.get())) {
                 userMedalService.addUserMedal(medal, userId);
             }
         }
