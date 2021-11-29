@@ -15,7 +15,7 @@ class StoresGroupByDistanceResponseTest {
     @ParameterizedTest
     void UNDER_FIFTY(int distance) {
         // given
-        StoreWithDistanceResponse store = StoreWithDistanceResponse.testInstance(distance, RATING);
+        StoreWithVisitsAndDistanceResponse store = StoreWithVisitsAndDistanceResponse.testInstance(distance, RATING);
 
         // when
         StoresGroupByDistanceResponse response = StoresGroupByDistanceResponse.of(List.of(store));
@@ -28,7 +28,7 @@ class StoresGroupByDistanceResponseTest {
     @ParameterizedTest
     void FIFTY_TO_HUNDRED(int distance) {
         // given
-        StoreWithDistanceResponse store = StoreWithDistanceResponse.testInstance(distance, RATING);
+        StoreWithVisitsAndDistanceResponse store = StoreWithVisitsAndDistanceResponse.testInstance(distance, RATING);
 
         // when
         StoresGroupByDistanceResponse response = StoresGroupByDistanceResponse.of(List.of(store));
@@ -41,7 +41,7 @@ class StoresGroupByDistanceResponseTest {
     @ParameterizedTest
     void HUNDRED_TO_FIVE_HUNDRED(int distance) {
         // given
-        StoreWithDistanceResponse store = StoreWithDistanceResponse.testInstance(distance, RATING);
+        StoreWithVisitsAndDistanceResponse store = StoreWithVisitsAndDistanceResponse.testInstance(distance, RATING);
 
         // when
         StoresGroupByDistanceResponse response = StoresGroupByDistanceResponse.of(List.of(store));
@@ -54,7 +54,7 @@ class StoresGroupByDistanceResponseTest {
     @ParameterizedTest
     void FIVE_HUNDRED_TO_THOUSAND(int distance) {
         // given
-        StoreWithDistanceResponse store = StoreWithDistanceResponse.testInstance(distance, RATING);
+        StoreWithVisitsAndDistanceResponse store = StoreWithVisitsAndDistanceResponse.testInstance(distance, RATING);
 
         // when
         StoresGroupByDistanceResponse response = StoresGroupByDistanceResponse.of(List.of(store));
@@ -67,7 +67,7 @@ class StoresGroupByDistanceResponseTest {
     @ParameterizedTest
     void OVER_THOUSAND(int distance) {
         // given
-        StoreWithDistanceResponse store = StoreWithDistanceResponse.testInstance(distance, RATING);
+        StoreWithVisitsAndDistanceResponse store = StoreWithVisitsAndDistanceResponse.testInstance(distance, RATING);
 
         // when
         StoresGroupByDistanceResponse response = StoresGroupByDistanceResponse.of(List.of(store));

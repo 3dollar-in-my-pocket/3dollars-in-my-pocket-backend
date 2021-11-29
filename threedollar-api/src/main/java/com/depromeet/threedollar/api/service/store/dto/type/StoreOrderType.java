@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.store.dto.type;
 
-import com.depromeet.threedollar.api.service.store.dto.response.StoreWithDistanceResponse;
+import com.depromeet.threedollar.api.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -11,10 +11,10 @@ import java.util.Comparator;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum StoreOrderType {
 
-    DISTANCE_ASC(Comparator.comparing(StoreWithDistanceResponse::getDistance)),
-    REVIEW_DESC(Comparator.comparing(StoreWithDistanceResponse::getRating).reversed()),
+    DISTANCE_ASC(Comparator.comparing(StoreWithVisitsAndDistanceResponse::getDistance)),
+    REVIEW_DESC(Comparator.comparing(StoreWithVisitsAndDistanceResponse::getRating).reversed()),
     ;
 
-    private final Comparator<StoreWithDistanceResponse> sorted;
+    private final Comparator<StoreWithVisitsAndDistanceResponse> sorted;
 
 }

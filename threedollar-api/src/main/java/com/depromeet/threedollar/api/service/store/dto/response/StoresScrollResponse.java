@@ -19,39 +19,35 @@ public class StoresScrollResponse {
 
     private static final long LAST_CURSOR = -1L;
 
-    private List<StoreWithDistanceResponse> contents = new ArrayList<>();
+    private List<StoreWithVisitsResponse> contents = new ArrayList<>();
     private long totalElements;
     private long nextCursor;
 
-    private StoresScrollResponse(List<StoreWithDistanceResponse> contents, long totalElements, long nextCursor) {
+    private StoresScrollResponse(List<StoreWithVisitsResponse> contents, long totalElements, long nextCursor) {
         this.contents = contents;
         this.totalElements = totalElements;
         this.nextCursor = nextCursor;
     }
 
-    public static StoresScrollResponse of(ScrollPaginationCollection<Store> scrollCollection, VisitHistoriesCountCollection visitHistoriesCounts,
-                                          long totalElements, Double latitude, Double longitude) {
+    public static StoresScrollResponse of(ScrollPaginationCollection<Store> scrollCollection, VisitHistoriesCountCollection visitHistoriesCounts, long totalElements) {
         if (scrollCollection.isLastScroll()) {
-            return StoresScrollResponse.newLastScroll(scrollCollection.getItemsInCurrentScroll(), visitHistoriesCounts, latitude, longitude, totalElements);
+            return StoresScrollResponse.newLastScroll(scrollCollection.getItemsInCurrentScroll(), visitHistoriesCounts, totalElements);
         }
         return StoresScrollResponse.newScrollHasNext(scrollCollection.getItemsInCurrentScroll(),
-            visitHistoriesCounts, latitude, longitude, totalElements, scrollCollection.getNextCursor().getId());
+            visitHistoriesCounts, totalElements, scrollCollection.getNextCursor().getId());
     }
 
-    private static StoresScrollResponse newLastScroll(List<Store> stores, VisitHistoriesCountCollection collection,
-                                                      Double latitude, Double longitude, long totalElements) {
-        return newScrollHasNext(stores, collection, latitude, longitude, totalElements, LAST_CURSOR);
+    private static StoresScrollResponse newLastScroll(List<Store> stores, VisitHistoriesCountCollection collection, long totalElements) {
+        return newScrollHasNext(stores, collection, totalElements, LAST_CURSOR);
     }
 
-    private static StoresScrollResponse newScrollHasNext(List<Store> stores, VisitHistoriesCountCollection collection,
-                                                         Double latitude, Double longitude, long totalElements, long nextCursor) {
-        return new StoresScrollResponse(getContents(stores, collection, latitude, longitude), totalElements, nextCursor);
+    private static StoresScrollResponse newScrollHasNext(List<Store> stores, VisitHistoriesCountCollection collection, long totalElements, long nextCursor) {
+        return new StoresScrollResponse(getContents(stores, collection), totalElements, nextCursor);
     }
 
-    private static List<StoreWithDistanceResponse> getContents(List<Store> stores, VisitHistoriesCountCollection collection, Double latitude, Double longitude) {
+    private static List<StoreWithVisitsResponse> getContents(List<Store> stores, VisitHistoriesCountCollection collection) {
         return stores.stream()
-            .map(store -> StoreWithDistanceResponse.of(store, latitude, longitude,
-                collection.getStoreExistsVisitsCount(store.getId()), collection.getStoreNotExistsVisitsCount(store.getId())))
+            .map(store -> StoreWithVisitsResponse.of(store, collection.getStoreExistsVisitsCount(store.getId()), collection.getStoreNotExistsVisitsCount(store.getId())))
             .collect(Collectors.toList());
     }
 

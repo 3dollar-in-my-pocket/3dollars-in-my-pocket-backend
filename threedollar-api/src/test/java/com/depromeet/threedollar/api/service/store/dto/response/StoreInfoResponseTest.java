@@ -19,7 +19,7 @@ class StoreInfoResponseTest {
         Store store = StoreCreator.createDeletedWithDefaultMenu(10000L, "가게 이름");
 
         // when
-        StoreWithDistanceResponse response = StoreWithDistanceResponse.of(store, null, null, 0, 0);
+        StoreWithVisitsAndDistanceResponse response = StoreWithVisitsAndDistanceResponse.of(store, null, null, 0, 0);
 
         // then
         assertAll(
@@ -38,7 +38,7 @@ class StoreInfoResponseTest {
         ));
 
         // when
-        StoreWithDistanceResponse response = StoreWithDistanceResponse.of(store, null, null, 0, 0);
+        StoreWithVisitsAndDistanceResponse response = StoreWithVisitsAndDistanceResponse.of(store, null, null, 0, 0);
 
         // then
         assertAll(
@@ -56,7 +56,7 @@ class StoreInfoResponseTest {
         Store store = StoreCreator.createWithDefaultMenu(10000L, "가게 이름");
 
         // when
-        StoreWithDistanceResponse response = StoreWithDistanceResponse.of(store, null, null, 0, 0);
+        StoreWithVisitsAndDistanceResponse response = StoreWithVisitsAndDistanceResponse.of(store, null, null, 0, 0);
 
         // then
         assertThat(response.getDistance()).isEqualTo(0);

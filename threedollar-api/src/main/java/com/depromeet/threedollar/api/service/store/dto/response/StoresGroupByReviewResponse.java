@@ -15,14 +15,14 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StoresGroupByReviewResponse {
 
-    private final List<StoreWithDistanceResponse> storeList0 = new ArrayList<>();
-    private final List<StoreWithDistanceResponse> storeList1 = new ArrayList<>();
-    private final List<StoreWithDistanceResponse> storeList2 = new ArrayList<>();
-    private final List<StoreWithDistanceResponse> storeList3 = new ArrayList<>();
-    private final List<StoreWithDistanceResponse> storeList4 = new ArrayList<>();
+    private final List<StoreWithVisitsAndDistanceResponse> storeList0 = new ArrayList<>();
+    private final List<StoreWithVisitsAndDistanceResponse> storeList1 = new ArrayList<>();
+    private final List<StoreWithVisitsAndDistanceResponse> storeList2 = new ArrayList<>();
+    private final List<StoreWithVisitsAndDistanceResponse> storeList3 = new ArrayList<>();
+    private final List<StoreWithVisitsAndDistanceResponse> storeList4 = new ArrayList<>();
 
-    private StoresGroupByReviewResponse(List<StoreWithDistanceResponse> stores) {
-        for (StoreWithDistanceResponse store : stores) {
+    private StoresGroupByReviewResponse(List<StoreWithVisitsAndDistanceResponse> stores) {
+        for (StoreWithVisitsAndDistanceResponse store : stores) {
             RatingGroupType group = RatingGroupType.of(store.getRating());
             switch (group) {
                 case ZERO_TO_ONE:
@@ -44,7 +44,7 @@ public class StoresGroupByReviewResponse {
         }
     }
 
-    public static StoresGroupByReviewResponse of(List<StoreWithDistanceResponse> stores) {
+    public static StoresGroupByReviewResponse of(List<StoreWithVisitsAndDistanceResponse> stores) {
         return new StoresGroupByReviewResponse(stores);
     }
 

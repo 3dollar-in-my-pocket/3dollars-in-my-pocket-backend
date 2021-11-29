@@ -15,14 +15,14 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StoresGroupByDistanceResponse {
 
-    private final List<StoreWithDistanceResponse> storeList50 = new ArrayList<>();
-    private final List<StoreWithDistanceResponse> storeList100 = new ArrayList<>();
-    private final List<StoreWithDistanceResponse> storeList500 = new ArrayList<>();
-    private final List<StoreWithDistanceResponse> storeList1000 = new ArrayList<>();
-    private final List<StoreWithDistanceResponse> storeListOver1000 = new ArrayList<>();
+    private final List<StoreWithVisitsAndDistanceResponse> storeList50 = new ArrayList<>();
+    private final List<StoreWithVisitsAndDistanceResponse> storeList100 = new ArrayList<>();
+    private final List<StoreWithVisitsAndDistanceResponse> storeList500 = new ArrayList<>();
+    private final List<StoreWithVisitsAndDistanceResponse> storeList1000 = new ArrayList<>();
+    private final List<StoreWithVisitsAndDistanceResponse> storeListOver1000 = new ArrayList<>();
 
-    private StoresGroupByDistanceResponse(List<StoreWithDistanceResponse> stores) {
-        for (StoreWithDistanceResponse store : stores) {
+    private StoresGroupByDistanceResponse(List<StoreWithVisitsAndDistanceResponse> stores) {
+        for (StoreWithVisitsAndDistanceResponse store : stores) {
             DistanceGroupType group = DistanceGroupType.of(store.getDistance());
             switch (group) {
                 case UNDER_FIFTY:
@@ -44,7 +44,7 @@ public class StoresGroupByDistanceResponse {
         }
     }
 
-    public static StoresGroupByDistanceResponse of(List<StoreWithDistanceResponse> stores) {
+    public static StoresGroupByDistanceResponse of(List<StoreWithVisitsAndDistanceResponse> stores) {
         return new StoresGroupByDistanceResponse(stores);
     }
 
