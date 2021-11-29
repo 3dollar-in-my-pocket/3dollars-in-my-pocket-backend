@@ -34,7 +34,7 @@ public final class assertVisitHistoryUtils {
         );
     }
 
-    public static void assertVisitHistoryWithUserResponse(VisitHistoryWithUserResponse response, VisitHistory visitHistory, Store store, User user) {
+    public static void assertVisitHistoryWithUserResponse(VisitHistoryWithUserResponse response, VisitHistory visitHistory, User user) {
         assertAll(
             () -> assertThat(response.getVisitHistoryId()).isEqualTo(visitHistory.getId()),
             () -> assertThat(response.getType()).isEqualTo(visitHistory.getType()),

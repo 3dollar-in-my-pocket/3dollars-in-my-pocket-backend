@@ -9,8 +9,6 @@ import com.depromeet.threedollar.api.service.store.dto.response.StoreDeleteRespo
 import com.depromeet.threedollar.api.service.store.dto.response.StoreInfoResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
-import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.store.MenuRepository;
 import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.storedelete.DeleteReasonType;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestCreator;

@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest

@@ -501,8 +501,8 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getVisitHistories()).hasSize(2),
-                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(0), visitHistory2, store, testUser),
-                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(1), visitHistory3, store, testUser)
+                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(0), visitHistory2, testUser),
+                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(1), visitHistory3, testUser)
             );
         }
 
@@ -528,8 +528,8 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getVisitHistories()).hasSize(2),
-                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(0), lastWeekHistory, store, testUser),
-                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(1), todayHistory, store, testUser)
+                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(0), lastWeekHistory, testUser),
+                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(1), todayHistory, testUser)
             );
         }
 

@@ -12,10 +12,6 @@ import com.depromeet.threedollar.api.service.store.dto.response.StoreDeleteRespo
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
-import com.depromeet.threedollar.domain.domain.store.Menu;
-import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.store.MenuCreator;
-import com.depromeet.threedollar.domain.domain.store.MenuRepository;
 import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.storedelete.DeleteReasonType;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequest;
@@ -543,7 +539,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             storeRepository.save(store);
 
             // when
-            StoreDeleteResponse response = storeService.deleteStore(store.getId(), DeleteStoreRequest.testInstance(reasonType), userId);
+            storeService.deleteStore(store.getId(), DeleteStoreRequest.testInstance(reasonType), userId);
 
             // then
             verify(userMedalEventListener, times(1)).addObtainableMedalsByDeleteStore(any(StoreDeletedEvent.class));
