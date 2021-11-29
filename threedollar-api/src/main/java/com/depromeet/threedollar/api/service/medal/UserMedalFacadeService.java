@@ -12,7 +12,7 @@ import static com.depromeet.threedollar.domain.domain.medal.UserMedalType.MedalA
 
 @RequiredArgsConstructor
 @Component
-public class UserMedalEventFacadeService {
+public class UserMedalFacadeService {
 
     private final UserMedalService userMedalService;
 

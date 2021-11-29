@@ -26,10 +26,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
-class UserMedalEventFacadeServiceTest extends SetupUserServiceTest {
+class UserMedalFacadeServiceTest extends SetupUserServiceTest {
 
     @Autowired
-    private UserMedalEventFacadeService userMedalFacadeService;
+    private UserMedalFacadeService userMedalFacadeService;
 
     @Autowired
     private StoreRepository storeRepository;
