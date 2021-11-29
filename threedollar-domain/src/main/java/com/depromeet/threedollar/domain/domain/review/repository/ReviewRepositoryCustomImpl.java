@@ -76,17 +76,17 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
     @Override
     public List<ReviewWithWriterProjection> findAllWithCreatorByStoreId(Long storeId) {
         return queryFactory.select(new QReviewWithWriterProjection(
-                review.id,
-                review.rating.rating,
-                review.contents,
-                review.createdAt,
-                review.updatedAt,
-                review.storeId,
-                user.id,
-                user.name,
-                user.socialInfo.socialType,
-                user.medalType
-            ))
+            review.id,
+            review.rating.rating,
+            review.contents,
+            review.createdAt,
+            review.updatedAt,
+            review.storeId,
+            user.id,
+            user.name,
+            user.socialInfo.socialType,
+            user.medalType
+        ))
             .from(review)
             .leftJoin(user).on(review.userId.eq(user.id))
             .where(
@@ -135,17 +135,17 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
 
     private List<ReviewWithWriterProjection> findReviewWithWriterProjectionsByIds(List<Long> reviewIds) {
         return queryFactory.select(new QReviewWithWriterProjection(
-                review.id,
-                review.rating.rating,
-                review.contents,
-                review.createdAt,
-                review.updatedAt,
-                review.storeId,
-                user.id,
-                user.name,
-                user.socialInfo.socialType,
-                user.medalType
-            ))
+            review.id,
+            review.rating.rating,
+            review.contents,
+            review.createdAt,
+            review.updatedAt,
+            review.storeId,
+            user.id,
+            user.name,
+            user.socialInfo.socialType,
+            user.medalType
+        ))
             .from(review)
             .innerJoin(user).on(review.userId.eq(user.id))
             .where(

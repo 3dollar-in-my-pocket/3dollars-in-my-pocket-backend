@@ -37,24 +37,26 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
     @Override
     public List<VisitHistoryWithUserProjection> findAllVisitWithUserByStoreIdBetweenDate(Long storeId, LocalDate startDate, LocalDate endDate) {
         return queryFactory.select(new QVisitHistoryWithUserProjection(
-                visitHistory.id,
-                visitHistory.store.id,
-                visitHistory.type,
-                visitHistory.dateOfVisit,
-                visitHistory.createdAt,
-                visitHistory.updatedAt,
-                visitHistory.userId,
-                user.name,
-                user.socialInfo.socialType,
-                user.medalType
-            ))
+            visitHistory.id,
+            visitHistory.store.id,
+            visitHistory.type,
+            visitHistory.dateOfVisit,
+            visitHistory.createdAt,
+            visitHistory.updatedAt,
+            visitHistory.userId,
+            user.name,
+            user.socialInfo.socialType,
+            user.medalType
+        ))
             .from(visitHistory)
             .leftJoin(user).on(visitHistory.userId.eq(user.id))
             .where(
                 visitHistory.store.id.eq(storeId),
                 visitHistory.dateOfVisit.goe(startDate),
                 visitHistory.dateOfVisit.loe(endDate)
-            ).fetch();
+            )
+            .orderBy(visitHistory.id.desc())
+            .fetch();
     }
 
     @Override

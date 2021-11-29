@@ -184,16 +184,16 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
     @Override
     public List<StoreWithReportedCountProjection> findStoresByMoreThanReportCntWithPagination(int cnt, long offset, int size) {
         return queryFactory.select(new QStoreWithReportedCountProjection(
-                store.id,
-                store.name,
-                store.location.latitude,
-                store.location.longitude,
-                store.type,
-                store.rating,
-                store.createdAt,
-                store.updatedAt,
-                storeDeleteRequest.id.count()
-            ))
+            store.id,
+            store.name,
+            store.location.latitude,
+            store.location.longitude,
+            store.type,
+            store.rating,
+            store.createdAt,
+            store.updatedAt,
+            storeDeleteRequest.id.count()
+        ))
             .from(store)
             .innerJoin(storeDeleteRequest)
             .on(store.id.eq(storeDeleteRequest.storeId))

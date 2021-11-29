@@ -479,7 +479,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 가게_상세_조회시_기간내에_가게에_방문한_기록과_유저정보를_방문한_기록들을_조회한다() throws Exception {
+        void 가게_상세_조회시_기간내에_가게에_방문한_기록과_유저정보를_방문한_기록들을_최근_생성된것부터_조회한다() throws Exception {
             // given
             LocalDate startDate = LocalDate.of(2021, 10, 19);
             LocalDate endDate = LocalDate.of(2021, 10, 20);
@@ -501,8 +501,8 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getVisitHistories()).hasSize(2),
-                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(0), visitHistory2, testUser),
-                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(1), visitHistory3, testUser)
+                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(0), visitHistory3, testUser),
+                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(1), visitHistory2, testUser)
             );
         }
 
@@ -528,8 +528,8 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getVisitHistories()).hasSize(2),
-                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(0), lastWeekHistory, testUser),
-                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(1), todayHistory, testUser)
+                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(0), todayHistory, testUser),
+            () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(1), lastWeekHistory, testUser)
             );
         }
 
