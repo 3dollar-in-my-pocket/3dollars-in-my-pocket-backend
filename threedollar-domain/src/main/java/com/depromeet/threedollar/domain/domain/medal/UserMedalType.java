@@ -27,7 +27,7 @@ public enum UserMedalType {
         return this.condition.equals(condition);
     }
 
-    public boolean canGetMedal(long counts) {
+    public boolean canObtain(long counts) {
         return this.counts <= counts;
     }
 

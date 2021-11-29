@@ -43,8 +43,8 @@ class PopupControllerTest(
         val popup = PopupCreator.create(
             "https://pop-up-image.png",
             "https://my-link.com",
-            LocalDateTime.of(2021, 11, 26, 0, 0),
-            LocalDateTime.of(2021, 11, 30, 0, 0),
+            LocalDateTime.of(2021, 1, 1, 0, 0),
+            LocalDateTime.now().plusDays(1),
             platform
         )
         popupRepository.save(popup)

@@ -14,7 +14,7 @@ import static com.depromeet.threedollar.domain.domain.medal.UserMedalType.MedalA
 @Component
 public class UserMedalEventFacadeService {
 
-    private final UserMedalEventService userMedalEventService;
+    private final UserMedalService userMedalService;
 
     private final StoreRepository storeRepository;
     private final ReviewRepository reviewRepository;
@@ -22,20 +22,20 @@ public class UserMedalEventFacadeService {
     private final VisitHistoryRepository visitHistoryRepository;
 
     public void addObtainableMedalsByAddStore(Long userId) {
-        userMedalEventService.addMedalsIfMatchCondition(userId, ADD_STORE, () -> storeRepository.findCountsByUserId(userId));
+        userMedalService.addMedalsIfMatchCondition(userId, ADD_STORE, () -> storeRepository.findCountsByUserId(userId));
     }
 
     public void addObtainableMedalsByDeleteStore(Long userId) {
-        userMedalEventService.addMedalsIfMatchCondition(userId, DELETE_STORE, () -> storeDeleteRequestRepository.findCountsByUserId(userId));
+        userMedalService.addMedalsIfMatchCondition(userId, DELETE_STORE, () -> storeDeleteRequestRepository.findCountsByUserId(userId));
     }
 
     public void addObtainableMedalsByAddReview(Long userId) {
-        userMedalEventService.addMedalsIfMatchCondition(userId, ADD_REVIEW, () -> reviewRepository.findCountsByUserId(userId));
+        userMedalService.addMedalsIfMatchCondition(userId, ADD_REVIEW, () -> reviewRepository.findCountsByUserId(userId));
     }
 
     public void addObtainableMedalsByVisitStore(Long userId) {
-        userMedalEventService.addMedalsIfMatchCondition(userId, VISIT_STORE, () -> visitHistoryRepository.findCountsByUserId(userId));
-        userMedalEventService.addMedalsIfMatchCondition(userId, VISIT_NOT_EXISTS_STORE, () -> visitHistoryRepository.findCountsByUserIdAndVisitType(userId, VisitType.NOT_EXISTS));
+        userMedalService.addMedalsIfMatchCondition(userId, VISIT_STORE, () -> visitHistoryRepository.findCountsByUserId(userId));
+        userMedalService.addMedalsIfMatchCondition(userId, VISIT_NOT_EXISTS_STORE, () -> visitHistoryRepository.findCountsByUserIdAndVisitType(userId, VisitType.NOT_EXISTS));
     }
 
 }
