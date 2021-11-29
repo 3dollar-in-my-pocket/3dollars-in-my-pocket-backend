@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.service.store.dto.request;
+package com.depromeet.threedollar.api.service.store.dto.request.deprecated;
 
 import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
 import lombok.*;
@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class RetrieveStoreGroupByCategoryRequest {
+public class RetrieveStoreGroupByCategoryV2Request {
 
     @NotNull(message = "{store.latitude.notNull}")
     private Double latitude;
@@ -27,7 +27,7 @@ public class RetrieveStoreGroupByCategoryRequest {
     private MenuCategoryType category;
 
     @Builder(builderClassName = "TestBuilder", builderMethodName = "testBuilder")
-    public RetrieveStoreGroupByCategoryRequest(Double latitude, Double longitude, Double mapLatitude, Double mapLongitude, MenuCategoryType category) {
+    public RetrieveStoreGroupByCategoryV2Request(Double latitude, Double longitude, Double mapLatitude, Double mapLongitude, MenuCategoryType category) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.mapLatitude = mapLatitude;

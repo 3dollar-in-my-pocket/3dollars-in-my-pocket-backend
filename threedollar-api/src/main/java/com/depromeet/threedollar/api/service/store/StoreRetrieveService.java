@@ -1,7 +1,12 @@
 package com.depromeet.threedollar.api.service.store;
 
 import com.depromeet.threedollar.api.service.store.dto.request.*;
+import com.depromeet.threedollar.api.service.store.dto.request.deprecated.RetrieveMyStoresV2Request;
+import com.depromeet.threedollar.api.service.store.dto.request.deprecated.RetrieveStoreGroupByCategoryV2Request;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
+import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByDistanceV2Response;
+import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByReviewV2Response;
+import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresScrollV2Response;
 import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
 import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
@@ -80,7 +85,7 @@ public class StoreRetrieveService {
 
     @Deprecated
     @Transactional(readOnly = true)
-    public StoresGroupByDistanceResponse getNearStoresGroupByDistance(RetrieveStoreGroupByCategoryRequest request) {
+    public StoresGroupByDistanceV2Response getNearStoresGroupByDistance(RetrieveStoreGroupByCategoryV2Request request) {
         List<Store> nearStores = findNearCategoryStores(request.getMapLatitude(), request.getMapLongitude(), LIMIT_DISTANCE, request.getCategory());
         VisitHistoriesCountCollection visitHistoriesCountCollection = findVisitHistoriesCountByStoreIds(nearStores);
         List<StoreWithVisitsAndDistanceResponse> nearCategoryStores = nearStores.stream()
@@ -89,12 +94,12 @@ public class StoreRetrieveService {
                 visitHistoriesCountCollection.getStoreNotExistsVisitsCount(store.getId())))
             .sorted(StoreOrderType.DISTANCE_ASC.getSorted())
             .collect(Collectors.toList());
-        return StoresGroupByDistanceResponse.of(nearCategoryStores);
+        return StoresGroupByDistanceV2Response.of(nearCategoryStores);
     }
 
     @Deprecated
     @Transactional(readOnly = true)
-    public StoresGroupByReviewResponse getNearStoresGroupByReview(RetrieveStoreGroupByCategoryRequest request) {
+    public StoresGroupByReviewV2Response getNearStoresGroupByReview(RetrieveStoreGroupByCategoryV2Request request) {
         List<Store> nearStores = findNearCategoryStores(request.getMapLatitude(), request.getMapLongitude(), LIMIT_DISTANCE, request.getCategory());
         VisitHistoriesCountCollection visitHistoriesCountCollection = findVisitHistoriesCountByStoreIds(nearStores);
         List<StoreWithVisitsAndDistanceResponse> nearCategoryStores = nearStores.stream()
@@ -103,7 +108,7 @@ public class StoreRetrieveService {
                 visitHistoriesCountCollection.getStoreNotExistsVisitsCount(store.getId())))
             .sorted(StoreOrderType.REVIEW_DESC.getSorted())
             .collect(Collectors.toList());
-        return StoresGroupByReviewResponse.of(nearCategoryStores);
+        return StoresGroupByReviewV2Response.of(nearCategoryStores);
     }
 
     private List<Store> findNearCategoryStores(double mapLatitude, double mapLongitude, double distance, @Nullable MenuCategoryType categoryType) {

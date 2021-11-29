@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.service.store.dto.response;
 
+import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByDistanceV2Response;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -18,7 +19,7 @@ class StoresGroupByDistanceResponseTest {
         StoreWithVisitsAndDistanceResponse store = StoreWithVisitsAndDistanceResponse.testInstance(distance, RATING);
 
         // when
-        StoresGroupByDistanceResponse response = StoresGroupByDistanceResponse.of(List.of(store));
+        StoresGroupByDistanceV2Response response = StoresGroupByDistanceV2Response.of(List.of(store));
 
         // then
         assertThat(response.getStoreList50()).hasSize(1);
@@ -31,7 +32,7 @@ class StoresGroupByDistanceResponseTest {
         StoreWithVisitsAndDistanceResponse store = StoreWithVisitsAndDistanceResponse.testInstance(distance, RATING);
 
         // when
-        StoresGroupByDistanceResponse response = StoresGroupByDistanceResponse.of(List.of(store));
+        StoresGroupByDistanceV2Response response = StoresGroupByDistanceV2Response.of(List.of(store));
 
         // then
         assertThat(response.getStoreList100()).hasSize(1);
@@ -44,7 +45,7 @@ class StoresGroupByDistanceResponseTest {
         StoreWithVisitsAndDistanceResponse store = StoreWithVisitsAndDistanceResponse.testInstance(distance, RATING);
 
         // when
-        StoresGroupByDistanceResponse response = StoresGroupByDistanceResponse.of(List.of(store));
+        StoresGroupByDistanceV2Response response = StoresGroupByDistanceV2Response.of(List.of(store));
 
         // then
         assertThat(response.getStoreList500()).hasSize(1);
@@ -57,7 +58,7 @@ class StoresGroupByDistanceResponseTest {
         StoreWithVisitsAndDistanceResponse store = StoreWithVisitsAndDistanceResponse.testInstance(distance, RATING);
 
         // when
-        StoresGroupByDistanceResponse response = StoresGroupByDistanceResponse.of(List.of(store));
+        StoresGroupByDistanceV2Response response = StoresGroupByDistanceV2Response.of(List.of(store));
 
         // then
         assertThat(response.getStoreList1000()).hasSize(1);
@@ -70,7 +71,7 @@ class StoresGroupByDistanceResponseTest {
         StoreWithVisitsAndDistanceResponse store = StoreWithVisitsAndDistanceResponse.testInstance(distance, RATING);
 
         // when
-        StoresGroupByDistanceResponse response = StoresGroupByDistanceResponse.of(List.of(store));
+        StoresGroupByDistanceV2Response response = StoresGroupByDistanceV2Response.of(List.of(store));
 
         // then
         assertThat(response.getStoreListOver1000()).hasSize(1);

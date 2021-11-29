@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.service.review.dto.response;
+package com.depromeet.threedollar.api.service.review.dto.response.deprecated;
 
 import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
 import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;

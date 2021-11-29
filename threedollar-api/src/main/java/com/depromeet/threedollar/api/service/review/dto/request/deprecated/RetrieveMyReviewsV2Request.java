@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.service.review.dto.request;
+package com.depromeet.threedollar.api.service.review.dto.request.deprecated;
 
 import lombok.*;
 import org.jetbrains.annotations.Nullable;

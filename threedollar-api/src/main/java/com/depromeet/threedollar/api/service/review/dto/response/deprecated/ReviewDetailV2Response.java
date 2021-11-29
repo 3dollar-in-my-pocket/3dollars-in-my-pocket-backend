@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.service.review.dto.response;
+package com.depromeet.threedollar.api.service.review.dto.response.deprecated;
 
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
@@ -10,6 +10,7 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

@@ -1,5 +1,6 @@
-package com.depromeet.threedollar.api.service.store.dto.response;
+package com.depromeet.threedollar.api.service.store.dto.response.deprecated;
 
+import com.depromeet.threedollar.api.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoriesCountCollection;

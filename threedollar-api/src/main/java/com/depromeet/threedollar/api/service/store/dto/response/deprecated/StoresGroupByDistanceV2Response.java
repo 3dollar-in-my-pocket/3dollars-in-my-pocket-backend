@@ -1,5 +1,6 @@
-package com.depromeet.threedollar.api.service.store.dto.response;
+package com.depromeet.threedollar.api.service.store.dto.response.deprecated;
 
+import com.depromeet.threedollar.api.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.domain.domain.common.DistanceGroupType;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import java.util.List;
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class StoresGroupByDistanceResponse {
+public class StoresGroupByDistanceV2Response {
 
     private final List<StoreWithVisitsAndDistanceResponse> storeList50 = new ArrayList<>();
     private final List<StoreWithVisitsAndDistanceResponse> storeList100 = new ArrayList<>();
@@ -21,7 +22,7 @@ public class StoresGroupByDistanceResponse {
     private final List<StoreWithVisitsAndDistanceResponse> storeList1000 = new ArrayList<>();
     private final List<StoreWithVisitsAndDistanceResponse> storeListOver1000 = new ArrayList<>();
 
-    private StoresGroupByDistanceResponse(List<StoreWithVisitsAndDistanceResponse> stores) {
+    private StoresGroupByDistanceV2Response(List<StoreWithVisitsAndDistanceResponse> stores) {
         for (StoreWithVisitsAndDistanceResponse store : stores) {
             DistanceGroupType group = DistanceGroupType.of(store.getDistance());
             switch (group) {
@@ -44,8 +45,8 @@ public class StoresGroupByDistanceResponse {
         }
     }
 
-    public static StoresGroupByDistanceResponse of(List<StoreWithVisitsAndDistanceResponse> stores) {
-        return new StoresGroupByDistanceResponse(stores);
+    public static StoresGroupByDistanceV2Response of(List<StoreWithVisitsAndDistanceResponse> stores) {
+        return new StoresGroupByDistanceV2Response(stores);
     }
 
 }

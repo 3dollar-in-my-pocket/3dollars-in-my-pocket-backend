@@ -1,5 +1,6 @@
-package com.depromeet.threedollar.api.service.store.dto.response;
+package com.depromeet.threedollar.api.service.store.dto.response.deprecated;
 
+import com.depromeet.threedollar.api.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.domain.domain.review.RatingGroupType;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import java.util.List;
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class StoresGroupByReviewResponse {
+public class StoresGroupByReviewV2Response {
 
     private final List<StoreWithVisitsAndDistanceResponse> storeList0 = new ArrayList<>();
     private final List<StoreWithVisitsAndDistanceResponse> storeList1 = new ArrayList<>();
@@ -21,7 +22,7 @@ public class StoresGroupByReviewResponse {
     private final List<StoreWithVisitsAndDistanceResponse> storeList3 = new ArrayList<>();
     private final List<StoreWithVisitsAndDistanceResponse> storeList4 = new ArrayList<>();
 
-    private StoresGroupByReviewResponse(List<StoreWithVisitsAndDistanceResponse> stores) {
+    private StoresGroupByReviewV2Response(List<StoreWithVisitsAndDistanceResponse> stores) {
         for (StoreWithVisitsAndDistanceResponse store : stores) {
             RatingGroupType group = RatingGroupType.of(store.getRating());
             switch (group) {
@@ -44,8 +45,8 @@ public class StoresGroupByReviewResponse {
         }
     }
 
-    public static StoresGroupByReviewResponse of(List<StoreWithVisitsAndDistanceResponse> stores) {
-        return new StoresGroupByReviewResponse(stores);
+    public static StoresGroupByReviewV2Response of(List<StoreWithVisitsAndDistanceResponse> stores) {
+        return new StoresGroupByReviewV2Response(stores);
     }
 
 }
