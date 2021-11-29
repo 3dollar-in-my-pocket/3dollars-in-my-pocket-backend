@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.service.storeimage;
 
+import com.depromeet.threedollar.api.provider.upload.UploadProvider;
 import com.depromeet.threedollar.api.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.service.storeimage.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.api.service.storeimage.dto.response.StoreImageResponse;
@@ -9,12 +10,12 @@ import com.depromeet.threedollar.domain.domain.storeimage.StoreImageRepository;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImageStatus;
 import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.util.List;
@@ -23,26 +24,27 @@ import static com.depromeet.threedollar.api.assertutils.assertStoreImageUtils.as
 import static com.depromeet.threedollar.api.assertutils.assertStoreImageUtils.assertStoreImageResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class StoreImageServiceTest extends SetupStoreServiceTest {
 
-    private static final String IMAGE_URL = "https://image.url";
+    private static final String IMAGE_URL = "image.png";
 
+    @Autowired
     private StoreImageService storeImageService;
 
     @Autowired
     private StoreImageRepository storeImageRepository;
 
+    @MockBean
+    private UploadProvider uploadProvider;
+
     @AfterEach
     void cleanUp() {
         super.cleanup();
         storeImageRepository.deleteAll();
-    }
-
-    @BeforeEach
-    void setUpStoreImageService() {
-        storeImageService = new StoreImageService(storeRepository, storeImageRepository, (request, file) -> IMAGE_URL);
     }
 
     @Nested
@@ -51,6 +53,8 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
         @Test
         void 가게에_새로운_이미지를_등록한다() {
             // given
+            when(uploadProvider.uploadFile(any(), any())).thenReturn(IMAGE_URL);
+
             AddStoreImageRequest request = AddStoreImageRequest.testInstance(store.getId());
 
             // when

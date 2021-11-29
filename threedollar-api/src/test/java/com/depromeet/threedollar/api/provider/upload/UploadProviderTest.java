@@ -17,10 +17,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-class S3UploadProviderTest {
+class UploadProviderTest {
 
     @Autowired
-    private S3UploadProvider s3UploadProvider;
+    private UploadProvider uploadProvider;
 
     @MockBean
     private S3Client s3Provider;
@@ -32,10 +32,10 @@ class S3UploadProviderTest {
         MultipartFile multipartFile = new MockMultipartFile(fileName, fileName, "image/jpeg", new byte[]{});
 
         // when
-        s3UploadProvider.uploadFile(ImageUploadFileRequest.of(ImageType.STORE), multipartFile);
+        uploadProvider.uploadFile(ImageUploadFileRequest.of(ImageType.STORE), multipartFile);
 
         // then
-        verify(s3Provider, times(1)).uploadFile(any(), any(), any(String.class));
+        verify(s3Provider, times(1)).uploadFile(any(), any(String.class));
         verify(s3Provider, times(1)).getFileUrl(any(String.class));
     }
 
@@ -46,7 +46,7 @@ class S3UploadProviderTest {
         when(multipartFile.getInputStream()).thenThrow(IOException.class);
 
         // when & then
-        assertThatThrownBy(() -> s3UploadProvider.uploadFile(ImageUploadFileRequest.of(ImageType.STORE), multipartFile)).isInstanceOf(ValidationException.class);
+        assertThatThrownBy(() -> uploadProvider.uploadFile(ImageUploadFileRequest.of(ImageType.STORE), multipartFile)).isInstanceOf(ValidationException.class);
     }
 
 }
