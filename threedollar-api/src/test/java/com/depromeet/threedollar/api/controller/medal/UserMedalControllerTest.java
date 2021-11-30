@@ -72,7 +72,8 @@ class UserMedalControllerTest extends SetupUserControllerTest {
                 () -> assertThat(response.getData().getUserId()).isEqualTo(testUser.getId()),
                 () -> assertThat(response.getData().getName()).isEqualTo(testUser.getName()),
                 () -> assertThat(response.getData().getSocialType()).isEqualTo(testUser.getSocialType()),
-                () -> assertThat(response.getData().getMedalType()).isEqualTo(medalType)
+                () -> assertThat(response.getData().getMedal().getMedalType()).isEqualTo(medalType),
+                () -> assertThat(response.getData().getMedal().getDescription()).isEqualTo(medalType.getDescription())
             );
         }
 
@@ -90,7 +91,7 @@ class UserMedalControllerTest extends SetupUserControllerTest {
                 () -> assertThat(response.getData().getUserId()).isEqualTo(testUser.getId()),
                 () -> assertThat(response.getData().getName()).isEqualTo(testUser.getName()),
                 () -> assertThat(response.getData().getSocialType()).isEqualTo(testUser.getSocialType()),
-                () -> assertThat(response.getData().getMedalType()).isEqualTo(medalType)
+                () -> assertThat(response.getData().getMedal()).isNull()
             );
         }
 

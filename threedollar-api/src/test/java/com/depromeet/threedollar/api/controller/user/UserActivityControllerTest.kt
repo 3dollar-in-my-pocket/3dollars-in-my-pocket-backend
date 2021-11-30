@@ -47,7 +47,8 @@ internal class UserActivityControllerTest(
                     jsonPath("$.data.userId") { value(testUser.id) }
                     jsonPath("$.data.name") { value(testUser.name) }
                     jsonPath("$.data.socialType") { value(testUser.socialType.toString()) }
-                    jsonPath("$.data.medalType") { value(UserMedalType.BUNGEOPPANG_CHALLENGER.toString()) }
+                    jsonPath("$.data.medal.medalType") { value(UserMedalType.BUNGEOPPANG_CHALLENGER.toString()) }
+                    jsonPath("$.data.medal.description") { value(UserMedalType.BUNGEOPPANG_CHALLENGER.description) }
                 }
             }
     }

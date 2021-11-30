@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.user.dto.response
 
-import com.depromeet.threedollar.domain.domain.medal.UserMedalType
+import com.depromeet.threedollar.api.service.medal.dto.response.UserMedalResponse
 import com.depromeet.threedollar.domain.domain.user.User
 import com.depromeet.threedollar.domain.domain.user.UserSocialType
 
@@ -8,7 +8,7 @@ data class UserWithActivityResponse(
     val userId: Long,
     val name: String,
     val socialType: UserSocialType,
-    val medalType: UserMedalType?,
+    val medal: UserMedalResponse?,
     val activity: ActivityResponse
 ) {
 
@@ -20,7 +20,8 @@ data class UserWithActivityResponse(
             medalsCounts: Long
         ): UserWithActivityResponse {
             return UserWithActivityResponse(
-                user.id, user.name, user.socialType, user.medalType,
+                user.id, user.name, user.socialType,
+                UserMedalResponse.of(user.medalType),
                 ActivityResponse(storesCount, reviewsCount, medalsCounts)
             )
         }
