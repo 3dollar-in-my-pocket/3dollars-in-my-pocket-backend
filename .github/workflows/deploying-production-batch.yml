@@ -43,5 +43,4 @@ jobs:
           docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
 
           echo "::set-output name=image::$DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG"
-          echo "🐇Build Image >> $DOCKER_REGISTRY/$DOCKER_REPOSITORY$IMAGE_TAG"
-
+          echo "🐇 Build Image >> $DOCKER_REPOSITORY$IMAGE_TAG"
