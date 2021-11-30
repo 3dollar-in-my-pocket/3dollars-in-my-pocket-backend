@@ -43,6 +43,8 @@ jobs:
           echo "::set-output name=image::$DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG"
           echo -e "API_IMAGE=$DOCKER_REGISTRY/$DOCKER_REPOSITORY\nTAG=$IMAGE_TAG" > deploy/.env
 
+          echo "🐇Build Image >> $DOCKER_REGISTRY/$DOCKER_REPOSITORY$IMAGE_TAG"
+
       - name: Zip deploy.zip
         run: zip -r deploy.zip deploy
 
