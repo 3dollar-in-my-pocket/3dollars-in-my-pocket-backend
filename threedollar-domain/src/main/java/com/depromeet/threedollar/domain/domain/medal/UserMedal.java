@@ -29,7 +29,7 @@ public class UserMedal extends AuditingTimeEntity {
     @Enumerated(EnumType.STRING)
     private UserMedalStatus status;
 
-    private UserMedal(Medal medal, User user, UserMedalStatus status) {
+    UserMedal(Medal medal, User user, UserMedalStatus status) {
         this.medal = medal;
         this.user = user;
         this.status = status;

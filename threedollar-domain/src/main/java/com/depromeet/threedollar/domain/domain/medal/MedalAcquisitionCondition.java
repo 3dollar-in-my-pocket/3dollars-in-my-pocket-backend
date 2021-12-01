@@ -25,6 +25,16 @@ public class MedalAcquisitionCondition extends AuditingTimeEntity {
     @Column(nullable = false)
     private int count;
 
+    public MedalAcquisitionCondition(Medal medal, MedalAcquisitionConditionType conditionType, int count) {
+        this.medal = medal;
+        this.conditionType = conditionType;
+        this.count = count;
+    }
+
+    public static MedalAcquisitionCondition of(Medal medal, MedalAcquisitionConditionType conditionType, int count) {
+        return new MedalAcquisitionCondition(medal, conditionType, count);
+    }
+
     public boolean canObtain(MedalAcquisitionConditionType conditionType, long counts) {
         return this.conditionType.equals(conditionType) && this.count <= counts;
     }

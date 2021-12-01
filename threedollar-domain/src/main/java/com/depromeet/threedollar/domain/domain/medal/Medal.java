@@ -25,9 +25,10 @@ public class Medal extends AuditingTimeEntity {
     @OneToOne(mappedBy = "medal", cascade = CascadeType.ALL, orphanRemoval = true)
     private MedalAcquisitionCondition acquisitionCondition;
 
-    Medal(String name, String iconUrl) {
+    Medal(String name, String iconUrl, MedalAcquisitionConditionType conditionType, int count) {
         this.name = name;
         this.iconUrl = iconUrl;
+        this.acquisitionCondition = MedalAcquisitionCondition.of(this, conditionType, count);
     }
 
     public boolean canObtain(MedalAcquisitionConditionType conditionType, long counts) {

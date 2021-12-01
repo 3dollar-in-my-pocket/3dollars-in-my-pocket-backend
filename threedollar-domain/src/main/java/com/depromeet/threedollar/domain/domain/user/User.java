@@ -96,7 +96,7 @@ public class User extends AuditingTimeEntity {
     }
 
     public UserMedal getActiveMedal() {
-        return userMedals.stream()
+        return this.userMedals.stream()
             .filter(UserMedal::isActive)
             .findFirst()
             .orElse(null);

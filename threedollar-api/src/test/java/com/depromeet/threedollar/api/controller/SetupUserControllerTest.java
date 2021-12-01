@@ -46,9 +46,7 @@ public abstract class SetupUserControllerTest {
     }
 
     protected void cleanup() {
-        userMedalRepository.deleteAllInBatch();
-        userRepository.deleteAllInBatch();
-        medalRepository.deleteAllInBatch();
+        userRepository.deleteAll();
     }
 
 }

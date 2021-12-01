@@ -44,9 +44,7 @@ class UserServiceTest {
 
     @AfterEach
     void cleanUp() {
-        userMedalRepository.deleteAllInBatch();
-        medalRepository.deleteAllInBatch();
-        userRepository.deleteAllInBatch();
+        userRepository.deleteAll();
         withdrawalUserRepository.deleteAll();
     }
 
@@ -228,12 +226,12 @@ class UserServiceTest {
         @ParameterizedTest
         void 장착중인_대표_칭호를_변경한다(String name, String iconUrl) {
             // given
+            User user = UserCreator.create("social-id", UserSocialType.KAKAO, name);
+            userRepository.save(user);
+
             Medal medal = MedalCreator.create(name, iconUrl);
             medalRepository.save(medal);
-
-            User user = UserCreator.create("social-id", UserSocialType.KAKAO, name);
-            user.addMedals(List.of(medal));
-            userRepository.save(user);
+            userMedalRepository.save(UserMedalCreator.createActive(medal, user));
 
             ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(medal.getId());
 
@@ -265,12 +263,12 @@ class UserServiceTest {
         @ParameterizedTest
         void 대표_칭호_변경시_메달_종류를_NULL을_요청하면_대표_칭호가_비활성화된다(String name, String iconUrl) {
             // given
+            User user = UserCreator.create("social-id", UserSocialType.KAKAO, name);
+            userRepository.save(user);
+
             Medal medal = MedalCreator.create(name, iconUrl);
             medalRepository.save(medal);
-
-            User user = UserCreator.create("social-id", UserSocialType.KAKAO, name);
-            user.addMedals(List.of(medal));
-            userRepository.save(user);
+            userMedalRepository.save(UserMedalCreator.createActive(medal, user));
 
             ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(null);
 
