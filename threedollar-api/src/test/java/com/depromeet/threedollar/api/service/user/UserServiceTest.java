@@ -51,6 +51,7 @@ class UserServiceTest {
         userMedalRepository.deleteAllInBatch();
         medalRepository.deleteAllInBatch();
         userRepository.deleteAllInBatch();
+        withdrawalUserRepository.deleteAll();
     }
 
     @Nested
@@ -235,10 +236,12 @@ class UserServiceTest {
             medalRepository.save(medal);
 
             User user = UserCreator.create("social-id", UserSocialType.KAKAO, name);
-            user.addMedals(List.of(medal));
             userRepository.save(user);
 
-            ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(medal.getId());
+            UserMedal userMedal = UserMedalCreator.createInActive(medal, user);
+            userMedalRepository.save(userMedal);
+
+            ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(userMedal.getId());
 
             // when
             userService.activateUserMedal(request, user.getId());

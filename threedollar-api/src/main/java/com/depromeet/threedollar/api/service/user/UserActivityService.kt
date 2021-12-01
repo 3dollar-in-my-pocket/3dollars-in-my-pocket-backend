@@ -16,12 +16,10 @@ class UserActivityService(
 
     @Transactional(readOnly = true)
     fun getUserActivity(userId: Long?): UserWithActivityResponse {
-        val user = UserServiceUtils.findUserById(userRepository, userId)
         return UserWithActivityResponse.of(
-            user,
+            UserServiceUtils.findUserById(userRepository, userId),
             storeRepository.findCountsByUserId(userId),
-            reviewRepository.findCountsByUserId(userId),
-            user.userMedals.size
+            reviewRepository.findCountsByUserId(userId)
         )
     }
 
