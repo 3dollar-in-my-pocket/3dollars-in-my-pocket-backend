@@ -8,6 +8,11 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Table(
+    indexes = {
+        @Index(name = "idx_medal_acquisition_condition_1", columnList = "medal_id"),
+    }
+)
 public class MedalAcquisitionCondition extends AuditingTimeEntity {
 
     @Id

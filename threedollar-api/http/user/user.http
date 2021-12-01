@@ -62,5 +62,5 @@ Content-Type: application/json
 Authorization: {{AUTHORIZATION}}
 
 {
-    "medalId": null
+    "userMedalId": null
 }
