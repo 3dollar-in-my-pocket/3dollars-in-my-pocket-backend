@@ -45,8 +45,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
             visitHistory.updatedAt,
             visitHistory.userId,
             user.name,
-            user.socialInfo.socialType,
-            user.medalType
+            user.socialInfo.socialType
         ))
             .from(visitHistory)
             .leftJoin(user).on(visitHistory.userId.eq(user.id))
@@ -61,15 +60,21 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
 
     @Override
     public List<VisitHistory> findAllByUserIdWithScroll(Long userId, Long lastHistoryId, int size) {
-        return queryFactory.selectFrom(visitHistory)
-            .innerJoin(visitHistory.store, store).fetchJoin()
-            .innerJoin(store.menus, menu).fetchJoin()
+        List<Long> visitHistoriesIds = queryFactory.select(visitHistory.id)
+            .from(visitHistory)
             .where(
                 visitHistory.userId.eq(userId),
                 lessThanId(lastHistoryId)
+            ).limit(size)
+            .fetch();
+
+        return queryFactory.selectFrom(visitHistory).distinct()
+            .innerJoin(visitHistory.store, store).fetchJoin()
+            .innerJoin(store.menus, menu).fetchJoin()
+            .where(
+                visitHistory.id.in(visitHistoriesIds)
             )
             .orderBy(visitHistory.id.desc())
-            .limit(size)
             .fetch();
     }
 

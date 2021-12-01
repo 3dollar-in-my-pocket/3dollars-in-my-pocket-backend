@@ -16,13 +16,12 @@ data class UserWithActivityResponse(
         fun of(
             user: User,
             storesCount: Long,
-            reviewsCount: Long,
-            medalsCounts: Long
+            reviewsCount: Long
         ): UserWithActivityResponse {
             return UserWithActivityResponse(
                 user.id, user.name, user.socialType,
-                UserMedalResponse.of(user.medalType),
-                ActivityResponse(storesCount, reviewsCount, medalsCounts)
+                UserMedalResponse.of(user.activeMedal),
+                ActivityResponse(storesCount, reviewsCount, user.userMedals.size)
             )
         }
     }
@@ -33,5 +32,5 @@ data class UserWithActivityResponse(
 data class ActivityResponse(
     val storesCount: Long,
     val reviewsCount: Long,
-    val medalsCounts: Long
+    val medalsCounts: Int
 )

@@ -1,14 +1,19 @@
 package com.depromeet.threedollar.api.service.store;
 
-import com.depromeet.threedollar.api.service.store.dto.request.*;
+import com.depromeet.threedollar.api.service.store.dto.request.RetrieveMyStoresRequest;
+import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStoresRequest;
+import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.deprecated.RetrieveMyStoresV2Request;
 import com.depromeet.threedollar.api.service.store.dto.request.deprecated.RetrieveStoreGroupByCategoryV2Request;
-import com.depromeet.threedollar.api.service.store.dto.response.*;
+import com.depromeet.threedollar.api.service.store.dto.response.StoreDetailResponse;
+import com.depromeet.threedollar.api.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
+import com.depromeet.threedollar.api.service.store.dto.response.StoresScrollResponse;
 import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByDistanceV2Response;
 import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByReviewV2Response;
 import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresScrollV2Response;
 import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
 import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
+import com.depromeet.threedollar.domain.domain.medal.UserMedalCollection;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
 import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
@@ -30,6 +35,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
@@ -61,8 +67,9 @@ public class StoreRetrieveService {
         List<StoreImage> images = storeImageRepository.findAllByStoreId(request.getStoreId());
         List<ReviewWithWriterProjection> reviews = reviewRepository.findAllWithCreatorByStoreId(request.getStoreId());
         List<VisitHistoryWithUserProjection> visitHistories = visitHistoryRepository.findAllVisitWithUserByStoreIdBetweenDate(request.getStoreId(), request.getStartDate(), request.getEndDate());
-        return StoreDetailResponse.of(store, images, request.getLatitude(), request.getLongitude(), creator, reviews,
-            findVisitHistoriesCountByStoreIds(Collections.singletonList(store)), visitHistories);
+        VisitHistoriesCountCollection visitHistoriesCountCollection = findVisitHistoriesCountByStoreIds(Collections.singletonList(store));
+        UserMedalCollection userMedalCollection = findActiveMedalByUserIds(reviews, visitHistories);
+        return StoreDetailResponse.of(store, images, request.getLatitude(), request.getLongitude(), creator, reviews, visitHistoriesCountCollection, visitHistories, userMedalCollection);
     }
 
     @Transactional(readOnly = true)
@@ -126,6 +133,22 @@ public class StoreRetrieveService {
             .map(Store::getId).distinct()
             .collect(Collectors.toList());
         return VisitHistoriesCountCollection.of(visitHistoryRepository.findCountsByStoreIdWithGroup(storeIds));
+    }
+
+    private UserMedalCollection findActiveMedalByUserIds(List<ReviewWithWriterProjection> reviews, List<VisitHistoryWithUserProjection> visitHistories) {
+        List<Long> distinctUserIds = getDistinctUserIds(reviews, visitHistories);
+        return UserMedalCollection.of(userRepository.findAllByUserId(distinctUserIds));
+    }
+
+    private List<Long> getDistinctUserIds(List<ReviewWithWriterProjection> reviews, List<VisitHistoryWithUserProjection> visitHistories) {
+        return Stream.concat(reviews.stream()
+                .map(ReviewWithWriterProjection::getUserId)
+                .collect(Collectors.toList()).stream(),
+            visitHistories.stream()
+                .map(VisitHistoryWithUserProjection::getUserId)
+                .collect(Collectors.toList()).stream())
+            .distinct()
+            .collect(Collectors.toList());
     }
 
 }

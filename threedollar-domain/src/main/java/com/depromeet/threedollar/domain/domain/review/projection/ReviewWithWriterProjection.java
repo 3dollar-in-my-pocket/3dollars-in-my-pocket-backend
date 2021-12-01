@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.domain.domain.review.projection;
 
-import com.depromeet.threedollar.domain.domain.medal.UserMedalType;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
@@ -22,11 +21,10 @@ public class ReviewWithWriterProjection {
     private final Long userId;
     private final String userName;
     private final UserSocialType userSocialType;
-    private final UserMedalType userMedalType;
 
     @QueryProjection
     public ReviewWithWriterProjection(Long reviewId, int rating, String contents, LocalDateTime createdAt, LocalDateTime updatedAt,
-                                      Long storeId, Long userId, String userName, UserSocialType userSocialType, UserMedalType userMedalType) {
+                                      Long storeId, Long userId, String userName, UserSocialType userSocialType) {
         this.reviewId = reviewId;
         this.rating = rating;
         this.contents = contents;
@@ -36,7 +34,6 @@ public class ReviewWithWriterProjection {
         this.userId = userId;
         this.userName = userName;
         this.userSocialType = userSocialType;
-        this.userMedalType = userMedalType;
     }
 
 }

@@ -1,6 +1,8 @@
 package com.depromeet.threedollar.api.controller;
 
 import com.depromeet.threedollar.api.controller.user.UserMockApiCaller;
+import com.depromeet.threedollar.domain.domain.medal.MedalAcqusitionConditionRepository;
+import com.depromeet.threedollar.domain.domain.medal.MedalRepository;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserRepository;
@@ -28,6 +30,12 @@ public abstract class SetupUserControllerTest {
     @Autowired
     protected UserMedalRepository userMedalRepository;
 
+    @Autowired
+    protected MedalRepository medalRepository;
+
+    @Autowired
+    protected MedalAcqusitionConditionRepository medalAcqusitionConditionRepository;
+
     protected UserMockApiCaller userMockApiCaller;
 
     protected User testUser;
@@ -42,8 +50,10 @@ public abstract class SetupUserControllerTest {
     }
 
     protected void cleanup() {
-        userMedalRepository.deleteAll();
-        userRepository.deleteAll();
+        medalAcqusitionConditionRepository.deleteAllInBatch();
+        userMedalRepository.deleteAllInBatch();
+        medalRepository.deleteAllInBatch();
+        userRepository.deleteAllInBatch();
     }
 
 }

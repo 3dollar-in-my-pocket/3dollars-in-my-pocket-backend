@@ -8,7 +8,7 @@ import com.depromeet.threedollar.domain.domain.visit.VisitType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import static com.depromeet.threedollar.domain.domain.medal.UserMedalType.MedalAcquisitionCondition.*;
+import static com.depromeet.threedollar.domain.domain.medal.MedalAcquisitionConditionType.*;
 
 @RequiredArgsConstructor
 @Component

@@ -1,6 +1,8 @@
 package com.depromeet.threedollar.api.assertutils;
 
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
+import com.depromeet.threedollar.domain.domain.medal.UserMedal;
+import com.depromeet.threedollar.domain.domain.medal.UserMedalStatus;
 import com.depromeet.threedollar.domain.domain.user.SocialInfo;
 import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
@@ -40,6 +42,14 @@ public final class assertUserUtils {
             () -> assertThat(response.getUserId()).isEqualTo(userId),
             () -> assertThat(response.getName()).isEqualTo(name),
             () -> assertThat(response.getSocialType()).isEqualTo(socialType)
+        );
+    }
+
+    public static void assertUserMedal(UserMedal userMedal, Long userId, Long medalId, UserMedalStatus status) {
+        assertAll(
+            () -> assertThat(userMedal.getUser().getId()).isEqualTo(userId),
+            () -> assertThat(userMedal.getStatus()).isEqualTo(status),
+            () -> assertThat(userMedal.getMedal().getId()).isEqualTo(medalId)
         );
     }
 

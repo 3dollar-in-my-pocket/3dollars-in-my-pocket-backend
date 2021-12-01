@@ -76,7 +76,7 @@ internal class StoreControllerTest(
 
         // then
         assertAll({
-            assertThat(response.data)
+            assertThat(response.data).hasSize(2)
             assertReportedStoresResponse(response.data[0], store1, 4)
             assertReportedStoresResponse(response.data[1], store2, 3)
         })
