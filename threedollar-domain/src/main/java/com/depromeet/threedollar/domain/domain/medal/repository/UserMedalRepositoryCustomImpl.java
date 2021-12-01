@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import static com.depromeet.threedollar.domain.domain.medal.QMedal.medal;
+import static com.depromeet.threedollar.domain.domain.medal.QMedalAcquisitionCondition.medalAcquisitionCondition;
 import static com.depromeet.threedollar.domain.domain.medal.QUserMedal.userMedal;
 
 @RequiredArgsConstructor
@@ -17,6 +19,8 @@ public class UserMedalRepositoryCustomImpl implements UserMedalRepositoryCustom 
     @Override
     public List<UserMedal> findAllActivesByUserIds(List<Long> userIds) {
         return queryFactory.selectFrom(userMedal)
+            .leftJoin(userMedal.medal, medal).fetchJoin()
+            .leftJoin(medal.acquisitionCondition, medalAcquisitionCondition).fetchJoin()
             .where(
                 userMedal.user.id.in(userIds),
                 userMedal.status.eq(UserMedalStatus.ACTIVE)

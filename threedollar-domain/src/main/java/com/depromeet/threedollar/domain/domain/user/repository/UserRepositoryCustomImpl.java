@@ -49,7 +49,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
 
     @Override
     public User findUserById(Long userId) {
-        return queryFactory.selectFrom(user)
+        return queryFactory.selectFrom(user).distinct()
             .leftJoin(user.userMedals, userMedal).fetchJoin()
             .leftJoin(userMedal.medal, medal).fetchJoin()
             .leftJoin(medal.acquisitionCondition, medalAcquisitionCondition).fetchJoin()

@@ -65,12 +65,12 @@ public class User extends AuditingTimeEntity {
         this.userMedals.add(UserMedal.of(medal, this));
     }
 
-    public void updateActiveMedal(@Nullable Long medalId) {
+    public void updateActiveMedal(@Nullable Long userMedalId) {
         inActiveCurrentMedal();
-        if (medalId == null) {
+        if (userMedalId == null) {
             return;
         }
-        activeNewMedal(medalId);
+        activeNewMedal(userMedalId);
     }
 
     private void inActiveCurrentMedal() {
@@ -79,11 +79,11 @@ public class User extends AuditingTimeEntity {
             .forEach(UserMedal::inActive);
     }
 
-    private void activeNewMedal(@NotNull Long medalId) {
+    private void activeNewMedal(@NotNull Long userMedalId) {
         UserMedal findUserMedal = this.userMedals.stream()
-            .filter(userMedal -> userMedal.getMedal().getId().equals(medalId))
+            .filter(userMedal -> userMedal.isSameEntity(userMedalId))
             .findFirst()
-            .orElseThrow(() -> new NotFoundException(String.format("해당 유저(%s)는 해당하는 유저 메달(%s)을 보유하고 있지 않습니다", this.id, medalId), NOT_FOUND_MEDAL_EXCEPTION));
+            .orElseThrow(() -> new NotFoundException(String.format("해당 유저(%s)는 해당하는 유저 메달(%s)을 보유하고 있지 않습니다", this.id, userMedalId), NOT_FOUND_MEDAL_EXCEPTION));
         findUserMedal.active();
     }
 
@@ -95,6 +95,7 @@ public class User extends AuditingTimeEntity {
         return this.socialInfo.getSocialType();
     }
 
+    @Nullable
     public UserMedal getActiveMedal() {
         return this.userMedals.stream()
             .filter(UserMedal::isActive)

@@ -6,6 +6,7 @@ import com.depromeet.threedollar.api.service.user.dto.request.CheckAvailableName
 import com.depromeet.threedollar.api.service.user.dto.request.CreateUserRequest;
 import com.depromeet.threedollar.api.service.user.dto.request.UpdateUserInfoRequest;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
+import com.depromeet.threedollar.domain.domain.medal.UserMedal;
 import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserRepository;
 import com.depromeet.threedollar.domain.domain.user.WithdrawalUser;
@@ -59,8 +60,8 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<UserMedalResponse> getAvailableUserMedals(Long userId) {
-        User user = UserServiceUtils.findUserById(userRepository, userId);
-        return user.getUserMedals().stream()
+        List<UserMedal> userMedals = UserServiceUtils.findUserById(userRepository, userId).getUserMedals();
+        return userMedals.stream()
             .map(UserMedalResponse::of)
             .collect(Collectors.toList());
     }
@@ -68,7 +69,7 @@ public class UserService {
     @Transactional
     public UserInfoResponse activateUserMedal(ActivateUserMedalRequest request, Long userId) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
-        user.updateActiveMedal(request.getMedalId());
+        user.updateActiveMedal(request.getUserMedalId());
         return UserInfoResponse.of(user);
     }
 
