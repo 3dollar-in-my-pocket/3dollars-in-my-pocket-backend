@@ -42,11 +42,15 @@ class UserServiceTest {
     @Autowired
     private UserMedalRepository userMedalRepository;
 
+    @Autowired
+    private MedalAcqusitionConditionRepository medalAcqusitionConditionRepository;
+
     @AfterEach
     void cleanUp() {
+        medalAcqusitionConditionRepository.deleteAllInBatch();
         userMedalRepository.deleteAllInBatch();
+        medalRepository.deleteAllInBatch();
         userRepository.deleteAllInBatch();
-        withdrawalUserRepository.deleteAll();
     }
 
     @Nested
