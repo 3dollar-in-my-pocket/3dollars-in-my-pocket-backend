@@ -55,4 +55,8 @@ public class UserMedal extends AuditingTimeEntity {
         return this.user.getId();
     }
 
+    public Long getMedalId() {
+        return this.medal.getId();
+    }
+
 }

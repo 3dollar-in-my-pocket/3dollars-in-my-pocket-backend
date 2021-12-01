@@ -56,6 +56,7 @@ public class ReviewRetrieveService {
     private UserMedalCollection findActiveMedalByUserIds(List<ReviewWithWriterProjection> reviews) {
         List<Long> userIds = reviews.stream()
             .map(ReviewWithWriterProjection::getUserId)
+            .distinct()
             .collect(Collectors.toList());
         return UserMedalCollection.of(userMedalRepository.findAllActivesByUserIds(userIds));
     }

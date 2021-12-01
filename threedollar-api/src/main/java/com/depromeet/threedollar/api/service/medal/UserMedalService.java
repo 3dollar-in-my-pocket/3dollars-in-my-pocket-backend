@@ -35,11 +35,11 @@ public class UserMedalService {
 
     private List<Medal> getNoOwnedMedalsByCondition(User user, MedalAcquisitionConditionType conditionType) {
         List<Medal> medals = medalRepository.findAllByConditionType(conditionType);
-        List<Medal> hasMedals = user.getUserMedals().stream()
-            .map(UserMedal::getMedal)
+        List<Long> medalsUserObtains = user.getUserMedals().stream()
+            .map(UserMedal::getMedalId)
             .collect(Collectors.toList());
         return medals.stream()
-            .filter(medal -> !hasMedals.contains(medal))
+            .filter(medal -> !medalsUserObtains.contains(medal.getId()))
             .collect(Collectors.toList());
     }
 

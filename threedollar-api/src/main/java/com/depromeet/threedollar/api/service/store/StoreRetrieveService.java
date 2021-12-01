@@ -36,6 +36,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
@@ -137,14 +138,19 @@ public class StoreRetrieveService {
     }
 
     private UserMedalCollection findActiveMedalByUserIds(List<ReviewWithWriterProjection> reviews, List<VisitHistoryWithUserProjection> visitHistories) {
-        List<Long> userIds = reviews.stream()
-            .map(ReviewWithWriterProjection::getUserId)
+        List<Long> distinctUserIds = getDistinctUserIds(reviews, visitHistories);
+        return UserMedalCollection.of(userMedalRepository.findAllActivesByUserIds(distinctUserIds));
+    }
+
+    private List<Long> getDistinctUserIds(List<ReviewWithWriterProjection> reviews, List<VisitHistoryWithUserProjection> visitHistories) {
+        return Stream.concat(reviews.stream()
+                .map(ReviewWithWriterProjection::getUserId)
+                .collect(Collectors.toList()).stream(),
+            visitHistories.stream()
+                .map(VisitHistoryWithUserProjection::getUserId)
+                .collect(Collectors.toList()).stream())
+            .distinct()
             .collect(Collectors.toList());
-        userIds.addAll(visitHistories.stream()
-            .map(VisitHistoryWithUserProjection::getUserId)
-            .collect(Collectors.toList())
-        );
-        return UserMedalCollection.of(userMedalRepository.findAllActivesByUserIds(userIds));
     }
 
 }
