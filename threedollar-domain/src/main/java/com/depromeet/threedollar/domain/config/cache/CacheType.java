@@ -14,7 +14,6 @@ public enum CacheType {
     POPUP(CacheKey.POPUP, Duration.ofHours(1)),
     USER_STORES_COUNTS(CacheKey.USER_STORES_COUNTS, Duration.ofMinutes(30)),
     USER_REVIEWS_COUNTS(CacheKey.USER_REVIEWS_COUNTS, Duration.ofMinutes(30)),
-    USER_MEDALS_COUNTS(CacheKey.USER_MEDALS_COUNTS, Duration.ofMinutes(30)),
     ;
 
     private final String key;
@@ -26,7 +25,6 @@ public enum CacheType {
         public static final String POPUP = "POPUP";
         public static final String USER_STORES_COUNTS = "USER_STORES_COUNTS";
         public static final String USER_REVIEWS_COUNTS = "USER_REVIEWS_COUNTS";
-        public static final String USER_MEDALS_COUNTS = "USER_MEDALS_COUNTS";
 
     }
 

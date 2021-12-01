@@ -1,10 +1,11 @@
 package com.depromeet.threedollar.api.service.user.dto.response;
 
 import com.depromeet.threedollar.api.service.medal.dto.response.UserMedalResponse;
-import com.depromeet.threedollar.domain.domain.medal.UserMedalType;
+import com.depromeet.threedollar.domain.domain.medal.UserMedal;
 import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import lombok.*;
+import org.jetbrains.annotations.Nullable;
 
 @ToString
 @Getter
@@ -23,14 +24,14 @@ public class UserInfoResponse {
         if (user == null) {
             return SIGN_OUT_USER;
         }
-        return new UserInfoResponse(user.getId(), user.getName(), user.getSocialType(), UserMedalResponse.of(user.getMedalType()));
+        return new UserInfoResponse(user.getId(), user.getName(), user.getSocialType(), UserMedalResponse.of(user.getActiveMedal()));
     }
 
-    public static UserInfoResponse of(Long userId, String userName, UserSocialType userSocialType, UserMedalType medalType) {
+    public static UserInfoResponse of(@Nullable Long userId, @Nullable String userName, @Nullable UserSocialType userSocialType, @Nullable UserMedal userMedal) {
         if (userId == null) {
             return SIGN_OUT_USER;
         }
-        return new UserInfoResponse(userId, userName, userSocialType, UserMedalResponse.of(medalType));
+        return new UserInfoResponse(userId, userName, userSocialType, UserMedalResponse.of(userMedal));
     }
 
 }

@@ -1,10 +1,12 @@
 package com.depromeet.threedollar.api.service.user;
 
+import com.depromeet.threedollar.api.service.medal.dto.request.ActivateUserMedalRequest;
 import com.depromeet.threedollar.api.service.user.dto.request.CheckAvailableNameRequest;
 import com.depromeet.threedollar.api.service.user.dto.request.CreateUserRequest;
 import com.depromeet.threedollar.api.service.user.dto.request.UpdateUserInfoRequest;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
+import com.depromeet.threedollar.domain.domain.medal.*;
 import com.depromeet.threedollar.domain.domain.user.*;
 import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
@@ -17,10 +19,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static com.depromeet.threedollar.api.assertutils.assertUserUtils.assertUser;
-import static com.depromeet.threedollar.api.assertutils.assertUserUtils.assertWithdrawalUser;
+import static com.depromeet.threedollar.api.assertutils.assertUserUtils.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
 class UserServiceTest {
@@ -34,9 +36,17 @@ class UserServiceTest {
     @Autowired
     private WithdrawalUserRepository withdrawalUserRepository;
 
+    @Autowired
+    private MedalRepository medalRepository;
+
+    @Autowired
+    private UserMedalRepository userMedalRepository;
+
     @AfterEach
     void cleanUp() {
-        userRepository.deleteAll();
+        userMedalRepository.deleteAllInBatch();
+        medalRepository.deleteAllInBatch();
+        userRepository.deleteAllInBatch();
         withdrawalUserRepository.deleteAll();
     }
 
@@ -208,6 +218,72 @@ class UserServiceTest {
             assertThatThrownBy(() -> userService.signOut(notFoundUserId)).isInstanceOf(NotFoundException.class);
         }
 
+    }
+
+    @DisplayName("유저의 장착중인 대표 칭호를 변경한다")
+    @Nested
+    class ActivateUserMedal {
+
+        @AutoSource
+        @ParameterizedTest
+        void 장착중인_대표_칭호를_변경한다(String name, String iconUrl) {
+            // given
+            Medal medal = MedalCreator.create(name, iconUrl);
+            medalRepository.save(medal);
+
+            User user = UserCreator.create("social-id", UserSocialType.KAKAO, name);
+            user.addMedals(List.of(medal));
+            userRepository.save(user);
+
+            ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(medal.getId());
+
+            // when
+            userService.activateUserMedal(request, user.getId());
+
+            // then
+            List<UserMedal> userMedals = userMedalRepository.findAll();
+            assertAll(
+                () -> assertThat(userMedals).hasSize(1),
+                () -> assertUserMedal(userMedals.get(0), user.getId(), medal.getId(), UserMedalStatus.ACTIVE)
+            );
+        }
+
+        @Test
+        void 대표_칭호_변경시_보유하지_않은_칭호를_장착하려하면_NotFound_에러가_발생한다() {
+            // given
+            Long notFoundMedalId = -1L;
+            ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(notFoundMedalId);
+
+            User user = UserCreator.create("social-id", UserSocialType.KAKAO, "강승호");
+            userRepository.save(user);
+
+            // when & then
+            assertThatThrownBy(() -> userService.activateUserMedal(request, user.getId())).isInstanceOfAny(NotFoundException.class);
+        }
+
+        @AutoSource
+        @ParameterizedTest
+        void 대표_칭호_변경시_메달_종류를_NULL을_요청하면_대표_칭호가_비활성화된다(String name, String iconUrl) {
+            // given
+            Medal medal = MedalCreator.create(name, iconUrl);
+            medalRepository.save(medal);
+
+            User user = UserCreator.create("social-id", UserSocialType.KAKAO, name);
+            user.addMedals(List.of(medal));
+            userRepository.save(user);
+
+            ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(null);
+
+            // when
+            userService.activateUserMedal(request, user.getId());
+
+            // then
+            List<UserMedal> userMedals = userMedalRepository.findAll();
+            assertAll(
+                () -> assertThat(userMedals).hasSize(1),
+                () -> assertUserMedal(userMedals.get(0), user.getId(), medal.getId(), UserMedalStatus.IN_ACTIVE)
+            );
+        }
     }
 
 }

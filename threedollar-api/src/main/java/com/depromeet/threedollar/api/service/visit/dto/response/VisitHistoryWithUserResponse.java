@@ -2,9 +2,11 @@ package com.depromeet.threedollar.api.service.visit.dto.response;
 
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
+import com.depromeet.threedollar.domain.domain.medal.UserMedal;
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
 import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithUserProjection;
 import lombok.*;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
 
@@ -27,12 +29,12 @@ public class VisitHistoryWithUserResponse extends AuditingTimeResponse {
         this.user = user;
     }
 
-    public static VisitHistoryWithUserResponse of(VisitHistoryWithUserProjection projection) {
+    public static VisitHistoryWithUserResponse of(VisitHistoryWithUserProjection projection, @Nullable UserMedal userMedal) {
         VisitHistoryWithUserResponse response = VisitHistoryWithUserResponse.builder()
             .visitHistoryId(projection.getVisitHistoryId())
             .type(projection.getType())
             .dateOfVisit(projection.getDateOfVisit())
-            .user(UserInfoResponse.of(projection.getUserId(), projection.getUserName(), projection.getSocialType(), projection.getUserMedalType()))
+            .user(UserInfoResponse.of(projection.getUserId(), projection.getUserName(), projection.getSocialType(), userMedal))
             .build();
         response.setBaseTime(projection.getVisitCreatedAt(), projection.getVisitUpdatedAt());
         return response;

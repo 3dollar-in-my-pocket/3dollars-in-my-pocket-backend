@@ -45,8 +45,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
             visitHistory.updatedAt,
             visitHistory.userId,
             user.name,
-            user.socialInfo.socialType,
-            user.medalType
+            user.socialInfo.socialType
         ))
             .from(visitHistory)
             .leftJoin(user).on(visitHistory.userId.eq(user.id))

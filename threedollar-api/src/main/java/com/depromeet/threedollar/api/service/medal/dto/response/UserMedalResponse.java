@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.api.service.medal.dto.response;
 
-import com.depromeet.threedollar.domain.domain.medal.UserMedalType;
+import com.depromeet.threedollar.domain.domain.medal.Medal;
+import com.depromeet.threedollar.domain.domain.medal.UserMedal;
 import lombok.*;
-import org.jetbrains.annotations.Nullable;
 
 @ToString
 @Getter
@@ -10,14 +10,21 @@ import org.jetbrains.annotations.Nullable;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserMedalResponse {
 
-    private UserMedalType medalType;
-    private String description;
+    private Long medalId;
 
-    public static UserMedalResponse of(@Nullable UserMedalType userMedalType) {
-        if (userMedalType == null) {
+    private String name;
+
+    private String iconUrl;
+
+    public static UserMedalResponse of(UserMedal userMedal) {
+        if (userMedal == null) {
             return null;
         }
-        return new UserMedalResponse(userMedalType, userMedalType.getDescription());
+        return of(userMedal.getMedal());
+    }
+
+    private static UserMedalResponse of(Medal medal) {
+        return new UserMedalResponse(medal.getId(), medal.getName(), medal.getIconUrl());
     }
 
 }

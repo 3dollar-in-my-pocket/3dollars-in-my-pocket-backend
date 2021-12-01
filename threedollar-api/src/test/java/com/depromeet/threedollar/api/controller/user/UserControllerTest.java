@@ -4,7 +4,6 @@ import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
 import com.depromeet.threedollar.api.service.user.dto.request.CheckAvailableNameRequest;
 import com.depromeet.threedollar.api.service.user.dto.request.UpdateUserInfoRequest;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.domain.domain.medal.UserMedalType;
 import com.depromeet.threedollar.domain.domain.user.UserCreator;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import org.junit.jupiter.api.AfterEach;
@@ -43,24 +42,6 @@ class UserControllerTest extends SetupUserControllerTest {
                 .andExpect(jsonPath("$.data.name").value(testUser.getName()))
                 .andExpect(jsonPath("$.data.socialType").value(testUser.getSocialType().name()))
                 .andExpect(jsonPath("$.data.medal").isEmpty());
-        }
-
-        @Test
-        void 나의_회원정보를_조회할때_장착한_메달이_있는경우_메달에_대한_정보와_함께_반환한다() throws Exception {
-            // given
-            UserMedalType medalType = UserMedalType.BASTARD_IN_THIS_AREA;
-            testUser.updateActiveMedal(medalType);
-            userRepository.save(testUser);
-
-            // when & then
-            getUserInfoApi(token)
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.userId").value(testUser.getId()))
-                .andExpect(jsonPath("$.data.name").value(testUser.getName()))
-                .andExpect(jsonPath("$.data.socialType").value(testUser.getSocialType().name()))
-                .andExpect(jsonPath("$.data.medal.medalType").value(medalType.toString()))
-                .andExpect(jsonPath("$.data.medal.description").value(medalType.getDescription()));
         }
 
         @Test

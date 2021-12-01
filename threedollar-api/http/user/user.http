@@ -62,5 +62,5 @@ Content-Type: application/json
 Authorization: {{AUTHORIZATION}}
 
 {
-    "medalType": "BUNGEOPPANG_CHALLENGER"
+    "medalId": null
 }

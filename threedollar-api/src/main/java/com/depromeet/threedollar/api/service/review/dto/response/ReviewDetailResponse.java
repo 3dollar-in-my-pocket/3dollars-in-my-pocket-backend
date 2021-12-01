@@ -3,6 +3,7 @@ package com.depromeet.threedollar.api.service.review.dto.response;
 import com.depromeet.threedollar.api.service.store.dto.response.StoreInfoResponse;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
+import com.depromeet.threedollar.domain.domain.medal.UserMedal;
 import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import lombok.*;
@@ -29,12 +30,12 @@ public class ReviewDetailResponse extends AuditingTimeResponse {
         this.store = store;
     }
 
-    public static ReviewDetailResponse of(ReviewWithWriterProjection review, Store store) {
+    public static ReviewDetailResponse of(ReviewWithWriterProjection review, Store store, UserMedal userMedal) {
         ReviewDetailResponse response = ReviewDetailResponse.builder()
             .reviewId(review.getReviewId())
             .rating(review.getRating())
             .contents(review.getContents())
-            .user(UserInfoResponse.of(review.getUserId(), review.getUserName(), review.getUserSocialType(), review.getUserMedalType()))
+            .user(UserInfoResponse.of(review.getUserId(), review.getUserName(), review.getUserSocialType(), userMedal))
             .store(StoreInfoResponse.of(store))
             .build();
         response.setBaseTime(review.getCreatedAt(), review.getUpdatedAt());

@@ -84,8 +84,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
             review.storeId,
             user.id,
             user.name,
-            user.socialInfo.socialType,
-            user.medalType
+            user.socialInfo.socialType
         ))
             .from(review)
             .leftJoin(user).on(review.userId.eq(user.id))
@@ -143,8 +142,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
             review.storeId,
             user.id,
             user.name,
-            user.socialInfo.socialType,
-            user.medalType
+            user.socialInfo.socialType
         ))
             .from(review)
             .innerJoin(user).on(review.userId.eq(user.id))

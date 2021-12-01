@@ -4,10 +4,9 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class UserMedalCreator {
+public class MedalCreator {
 
-    public static UserMedal create(Long userId, UserMedalType medalType) {
-    return UserMedal.of(userId, medalType);
+    public static Medal create(String name, String iconUrl) {
+        return new Medal(name, iconUrl);
     }
-
 }
