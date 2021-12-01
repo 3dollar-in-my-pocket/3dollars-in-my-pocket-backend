@@ -59,7 +59,6 @@ class UserControllerTest extends SetupUserControllerTest {
             Medal medal = MedalCreator.create(medalName, iconUrl);
             medalRepository.save(medal);
             userMedalRepository.save(UserMedalCreator.createActive(medal, testUser));
-            userRepository.save(testUser);
 
             // when & then
             getUserInfoApi(token)
@@ -185,20 +184,21 @@ class UserControllerTest extends SetupUserControllerTest {
             Medal medalActive = MedalCreator.create("활성화중인 메달", "메달 아이콘 A");
             Medal medalInActive = MedalCreator.create("비활성화중인 메달", "메달 아이콘 B");
             medalRepository.saveAll(List.of(medalActive, medalInActive));
+
             userMedalRepository.saveAll(List.of(
                 UserMedalCreator.createActive(medalActive, testUser),
                 UserMedalCreator.createActive(medalInActive, testUser)
             ));
 
-            // when
+            // when & then
             getAvailableUserMedal(token)
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data", hasSize(2)))
-                .andExpect(jsonPath("$.data[0].medalId").value(medalActive.getId()))
+                .andExpect(jsonPath("$.data[0].userMedalId").value(medalActive.getId()))
                 .andExpect(jsonPath("$.data[0].name").value(medalActive.getName()))
                 .andExpect(jsonPath("$.data[0].iconUrl").value(medalActive.getIconUrl()))
-                .andExpect(jsonPath("$.data[1].medalId").value(medalInActive.getId()))
+                .andExpect(jsonPath("$.data[1].userMedalId").value(medalInActive.getId()))
                 .andExpect(jsonPath("$.data[1].name").value(medalInActive.getName()))
                 .andExpect(jsonPath("$.data[1].iconUrl").value(medalInActive.getIconUrl()));
         }

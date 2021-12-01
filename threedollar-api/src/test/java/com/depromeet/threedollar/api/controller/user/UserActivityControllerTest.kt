@@ -54,7 +54,6 @@ internal class UserActivityControllerTest(
         val medal = MedalCreator.create("붕어빵 챌린저", "http://medal-image.png")
         medalRepository.save(medal)
         userMedalRepository.save(UserMedalCreator.createActive(medal, testUser))
-        userRepository.save(testUser)
 
         // when & then
         mockMvc.get("/api/v1/user/activity") {
@@ -133,7 +132,6 @@ internal class UserActivityControllerTest(
                 UserMedalCreator.createInActive(medalTwo, testUser)
             )
         )
-        userRepository.save(testUser)
 
         // when & then
         mockMvc.get("/api/v1/user/activity") {

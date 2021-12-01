@@ -27,8 +27,8 @@ public class SetupUserServiceTest {
     }
 
     protected void cleanup() {
-        userMedalRepository.deleteAll();
-        userRepository.deleteAll();
+        userMedalRepository.deleteAllInBatch();
+        userRepository.deleteAllInBatch();
     }
 
 }

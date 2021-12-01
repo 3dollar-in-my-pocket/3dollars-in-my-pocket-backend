@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.LockModeType;
 
+import java.util.List;
+
 import static com.depromeet.threedollar.domain.domain.medal.QMedal.medal;
 import static com.depromeet.threedollar.domain.domain.medal.QMedalAcquisitionCondition.medalAcquisitionCondition;
 import static com.depromeet.threedollar.domain.domain.medal.QUserMedal.userMedal;
@@ -55,6 +57,17 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
             .leftJoin(medal.acquisitionCondition, medalAcquisitionCondition).fetchJoin()
             .where(user.id.eq(userId))
             .fetchOne();
+    }
+
+    @Override
+    public List<User> findAllByUserId(List<Long> userIds) {
+        return queryFactory.selectFrom(user).distinct()
+            .leftJoin(user.userMedals, userMedal).fetchJoin()
+            .leftJoin(userMedal.medal, medal).fetchJoin()
+            .leftJoin(medal.acquisitionCondition, medalAcquisitionCondition).fetchJoin()
+            .where(
+                user.id.in(userIds)
+            ).fetch();
     }
 
 }

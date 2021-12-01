@@ -14,7 +14,6 @@ import com.depromeet.threedollar.api.service.store.dto.response.deprecated.Store
 import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
 import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalCollection;
-import com.depromeet.threedollar.domain.domain.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
 import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
@@ -49,7 +48,6 @@ public class StoreRetrieveService {
     private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
     private final VisitHistoryRepository visitHistoryRepository;
-    private final UserMedalRepository userMedalRepository;
 
     @Transactional(readOnly = true)
     public List<StoreWithVisitsAndDistanceResponse> getNearStores(RetrieveNearStoresRequest request) {
@@ -139,7 +137,7 @@ public class StoreRetrieveService {
 
     private UserMedalCollection findActiveMedalByUserIds(List<ReviewWithWriterProjection> reviews, List<VisitHistoryWithUserProjection> visitHistories) {
         List<Long> distinctUserIds = getDistinctUserIds(reviews, visitHistories);
-        return UserMedalCollection.of(userMedalRepository.findAllActivesByUserIds(distinctUserIds));
+        return UserMedalCollection.of(userRepository.findAllByUserId(distinctUserIds));
     }
 
     private List<Long> getDistinctUserIds(List<ReviewWithWriterProjection> reviews, List<VisitHistoryWithUserProjection> visitHistories) {

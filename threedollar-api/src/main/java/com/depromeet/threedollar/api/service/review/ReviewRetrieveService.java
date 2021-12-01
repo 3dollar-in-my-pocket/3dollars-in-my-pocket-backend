@@ -6,11 +6,11 @@ import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollRes
 import com.depromeet.threedollar.api.service.review.dto.response.deprecated.ReviewScrollV2Response;
 import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalCollection;
-import com.depromeet.threedollar.domain.domain.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,9 +24,9 @@ import java.util.stream.Collectors;
 @Service
 public class ReviewRetrieveService {
 
+    private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
     private final StoreRepository storeRepository;
-    private final UserMedalRepository userMedalRepository;
 
     @Transactional(readOnly = true)
     public ReviewScrollResponse retrieveMyReviews(RetrieveMyReviewsRequest request, Long userId) {
@@ -58,7 +58,7 @@ public class ReviewRetrieveService {
             .map(ReviewWithWriterProjection::getUserId)
             .distinct()
             .collect(Collectors.toList());
-        return UserMedalCollection.of(userMedalRepository.findAllActivesByUserIds(userIds));
+        return UserMedalCollection.of(userRepository.findAllByUserId(userIds));
     }
 
 }
