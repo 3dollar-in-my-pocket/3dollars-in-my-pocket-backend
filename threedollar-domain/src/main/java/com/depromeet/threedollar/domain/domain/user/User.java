@@ -66,20 +66,20 @@ public class User extends AuditingTimeEntity {
     }
 
     public void updateActiveMedal(@Nullable Long userMedalId) {
-        inActiveCurrentMedal();
+        inActiveUserMedals();
         if (userMedalId == null) {
             return;
         }
-        activeNewMedal(userMedalId);
+        activeUserMedal(userMedalId);
     }
 
-    private void inActiveCurrentMedal() {
-        this.userMedals.stream()
-            .filter(UserMedal::isActive)
-            .forEach(UserMedal::inActive);
+    private void inActiveUserMedals() {
+        for (UserMedal userMedal : this.userMedals) {
+            userMedal.inActive();
+        }
     }
 
-    private void activeNewMedal(@NotNull Long userMedalId) {
+    private void activeUserMedal(@NotNull Long userMedalId) {
         UserMedal findUserMedal = this.userMedals.stream()
             .filter(userMedal -> userMedal.isSameEntity(userMedalId))
             .findFirst()

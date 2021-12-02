@@ -43,7 +43,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
      */
     @Override
     public Store findStoreByIdFetchJoinMenu(Long storeId) {
-        return queryFactory.selectFrom(store).distinct()
+        return queryFactory.selectFrom(store)
             .innerJoin(store.menus, menu).fetchJoin()
             .where(
                 store.id.eq(storeId),

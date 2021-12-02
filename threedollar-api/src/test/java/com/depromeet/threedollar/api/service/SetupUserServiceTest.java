@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service;
 
-import com.depromeet.threedollar.domain.domain.medal.MedalAcqusitionConditionRepository;
+import com.depromeet.threedollar.domain.domain.medal.MedalAcquisitionConditionRepository;
 import com.depromeet.threedollar.domain.domain.medal.MedalRepository;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.domain.user.User;
@@ -24,7 +24,7 @@ public class SetupUserServiceTest {
     protected MedalRepository medalRepository;
 
     @Autowired
-    protected MedalAcqusitionConditionRepository medalAcqusitionConditionRepository;
+    protected MedalAcquisitionConditionRepository medalAcqusitionConditionRepository;
 
     protected Long userId;
 

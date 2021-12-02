@@ -43,7 +43,7 @@ class UserServiceTest {
     private UserMedalRepository userMedalRepository;
 
     @Autowired
-    private MedalAcqusitionConditionRepository medalAcqusitionConditionRepository;
+    private MedalAcquisitionConditionRepository medalAcqusitionConditionRepository;
 
     @AfterEach
     void cleanUp() {

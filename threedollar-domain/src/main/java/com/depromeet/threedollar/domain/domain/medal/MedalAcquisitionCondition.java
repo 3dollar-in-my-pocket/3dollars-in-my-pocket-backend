@@ -9,8 +9,8 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(
-    indexes = {
-        @Index(name = "idx_medal_acquisition_condition_1", columnList = "medal_id"),
+    uniqueConstraints = {
+        @UniqueConstraint(name = "uni_medal_acquisition_condition_1", columnNames = {"medal_id", "conditionType"}),
     }
 )
 public class MedalAcquisitionCondition extends AuditingTimeEntity {

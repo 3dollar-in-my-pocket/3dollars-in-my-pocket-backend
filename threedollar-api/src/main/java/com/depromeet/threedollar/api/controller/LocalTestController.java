@@ -43,7 +43,7 @@ public class LocalTestController {
     }
 
     @ApiOperation("[개발 서버용] 가게를 강제 삭제 합니다")
-    @DeleteMapping("/test-delete-store")
+    @DeleteMapping("/test-store")
     public ApiResponse<String> deleteStoreByForce(@RequestParam Long storeId) {
         Store store = StoreServiceUtils.findStoreById(storeRepository, storeId);
         store.delete();

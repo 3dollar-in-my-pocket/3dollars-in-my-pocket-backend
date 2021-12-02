@@ -20,4 +20,4 @@ client.test("200 OK", function() {
 
 
 ### 강제 삭제
-DELETE {{host_api}}/test-delete-store?storeId={{STORE_ID}}
+DELETE {{host_api}}/test-store?storeId={{STORE_ID}}
