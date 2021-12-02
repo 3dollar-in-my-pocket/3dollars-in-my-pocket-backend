@@ -7,6 +7,7 @@ import com.depromeet.threedollar.domain.domain.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserRepository;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
+import com.depromeet.threedollar.domain.domain.user.WithdrawalUserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,16 @@ public abstract class SetupUserControllerTest {
     protected UserRepository userRepository;
 
     @Autowired
+    private WithdrawalUserRepository withdrawalUserRepository;
+
+    @Autowired
     protected UserMedalRepository userMedalRepository;
 
     @Autowired
     protected MedalRepository medalRepository;
 
     @Autowired
-    protected MedalAcquisitionConditionRepository medalAcqusitionConditionRepository;
+    protected MedalAcquisitionConditionRepository medalAcquisitionConditionRepository;
 
     protected UserMockApiCaller userMockApiCaller;
 
@@ -50,10 +54,11 @@ public abstract class SetupUserControllerTest {
     }
 
     protected void cleanup() {
-        medalAcqusitionConditionRepository.deleteAllInBatch();
+        medalAcquisitionConditionRepository.deleteAllInBatch();
         userMedalRepository.deleteAllInBatch();
         medalRepository.deleteAllInBatch();
         userRepository.deleteAllInBatch();
+        withdrawalUserRepository.deleteAll();
     }
 
 }

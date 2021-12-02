@@ -24,7 +24,7 @@ public class SetupUserServiceTest {
     protected MedalRepository medalRepository;
 
     @Autowired
-    protected MedalAcquisitionConditionRepository medalAcqusitionConditionRepository;
+    protected MedalAcquisitionConditionRepository medalAcquisitionConditionRepository;
 
     protected Long userId;
 
@@ -35,7 +35,7 @@ public class SetupUserServiceTest {
     }
 
     protected void cleanup() {
-        medalAcqusitionConditionRepository.deleteAllInBatch();
+        medalAcquisitionConditionRepository.deleteAllInBatch();
         userMedalRepository.deleteAllInBatch();
         medalRepository.deleteAllInBatch();
         userRepository.deleteAllInBatch();
