@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.controller.menu;
+package com.depromeet.threedollar.api.controller.store;
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.application.mapper.menu.dto.response.MenuCategoryResponse;
@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @SpringBootTest
-class MenuControllerTest {
+class StoreMenuControllerTest {
 
     @Autowired
     protected MockMvc mockMvc;

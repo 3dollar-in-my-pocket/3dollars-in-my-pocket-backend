@@ -1,6 +1,6 @@
-package com.depromeet.threedollar.api.controller.medal;
+package com.depromeet.threedollar.api.controller.user;
 
-import com.depromeet.threedollar.api.service.medal.UserMedalFacadeService;
+import com.depromeet.threedollar.api.service.user.UserMedalFacadeService;
 import com.depromeet.threedollar.domain.event.review.ReviewCreatedEvent;
 import com.depromeet.threedollar.domain.event.store.StoreCreatedEvent;
 import com.depromeet.threedollar.domain.event.store.StoreDeletedEvent;

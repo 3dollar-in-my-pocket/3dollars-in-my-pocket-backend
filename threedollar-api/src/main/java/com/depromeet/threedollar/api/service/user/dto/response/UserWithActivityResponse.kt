@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.api.service.user.dto.response
 
-import com.depromeet.threedollar.api.service.medal.dto.response.UserMedalResponse
 import com.depromeet.threedollar.domain.domain.user.User
 import com.depromeet.threedollar.domain.domain.user.UserSocialType
 

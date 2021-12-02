@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.service.medal.dto.request;
+package com.depromeet.threedollar.api.service.user.dto.request;
 
 import lombok.*;
 import org.jetbrains.annotations.Nullable;

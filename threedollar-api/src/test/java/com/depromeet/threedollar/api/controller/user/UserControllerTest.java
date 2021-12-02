@@ -19,10 +19,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.util.List;
-
 import static com.depromeet.threedollar.common.exception.ErrorCode.*;
-import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -170,42 +167,6 @@ class UserControllerTest extends SetupUserControllerTest {
         private ResultActions checkAvailableNickNameApi(CheckAvailableNameRequest request) throws Exception {
             return mockMvc.perform(get("/api/v2/user/name/check")
                 .param("name", request.getName()));
-        }
-
-    }
-
-    @DisplayName("GET /api/v1/user/medals")
-    @Nested
-    class 사용_가능한_훈장을_조회한다 {
-
-        @Test
-        void 보유중인_칭호들을_모두_조회한다() throws Exception {
-            // given
-            Medal medalActive = MedalCreator.create("활성화중인 메달", "메달 아이콘 A");
-            Medal medalInActive = MedalCreator.create("비활성화중인 메달", "메달 아이콘 B");
-            medalRepository.saveAll(List.of(medalActive, medalInActive));
-
-            userMedalRepository.saveAll(List.of(
-                UserMedalCreator.createActive(medalActive, testUser),
-                UserMedalCreator.createActive(medalInActive, testUser)
-            ));
-
-            // when & then
-            getAvailableUserMedal(token)
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data", hasSize(2)))
-                .andExpect(jsonPath("$.data[0].userMedalId").value(medalActive.getId()))
-                .andExpect(jsonPath("$.data[0].name").value(medalActive.getName()))
-                .andExpect(jsonPath("$.data[0].iconUrl").value(medalActive.getIconUrl()))
-                .andExpect(jsonPath("$.data[1].userMedalId").value(medalInActive.getId()))
-                .andExpect(jsonPath("$.data[1].name").value(medalInActive.getName()))
-                .andExpect(jsonPath("$.data[1].iconUrl").value(medalInActive.getIconUrl()));
-        }
-
-        private ResultActions getAvailableUserMedal(String token) throws Exception {
-            return mockMvc.perform(get("/api/v1/user/medals")
-                .header(HttpHeaders.AUTHORIZATION, token));
         }
 
     }

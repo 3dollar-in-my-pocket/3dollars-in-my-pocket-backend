@@ -1,6 +1,7 @@
-package com.depromeet.threedollar.api.service.medal;
+package com.depromeet.threedollar.api.service.user;
 
 import com.depromeet.threedollar.api.service.SetupUserServiceTest;
+import com.depromeet.threedollar.api.service.user.UserMedalFacadeService;
 import com.depromeet.threedollar.domain.domain.medal.*;
 import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;

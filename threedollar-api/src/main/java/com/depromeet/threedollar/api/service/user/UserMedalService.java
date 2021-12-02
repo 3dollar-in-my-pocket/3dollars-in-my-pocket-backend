@@ -1,6 +1,8 @@
-package com.depromeet.threedollar.api.service.medal;
+package com.depromeet.threedollar.api.service.user;
 
-import com.depromeet.threedollar.api.service.user.UserServiceUtils;
+import com.depromeet.threedollar.api.service.user.dto.request.ActivateUserMedalRequest;
+import com.depromeet.threedollar.api.service.user.dto.response.UserMedalResponse;
+import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.domain.domain.medal.Medal;
 import com.depromeet.threedollar.domain.domain.medal.MedalAcquisitionConditionType;
 import com.depromeet.threedollar.domain.domain.medal.MedalRepository;
@@ -51,6 +53,21 @@ public class UserMedalService {
         return medals.stream()
             .filter(medal -> medal.canObtain(conditionType, counts))
             .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserMedalResponse> getAvailableUserMedals(Long userId) {
+        List<UserMedal> userMedals = UserServiceUtils.findUserById(userRepository, userId).getUserMedals();
+        return userMedals.stream()
+            .map(UserMedalResponse::of)
+            .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public UserInfoResponse activateUserMedal(ActivateUserMedalRequest request, Long userId) {
+        User user = UserServiceUtils.findUserById(userRepository, userId);
+        user.updateActiveMedal(request.getUserMedalId());
+        return UserInfoResponse.of(user);
     }
 
 }
