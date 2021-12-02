@@ -51,13 +51,12 @@ public class ControllerExceptionAdvice {
 
     /**
      * 400 BadRequest
-     * 잘못된 Enum 값이 입된 경우 발생하는 Exception
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
     protected ApiResponse<Object> handleHttpMessageNotReadableException(final HttpMessageNotReadableException e) {
         log.error(e.getMessage());
-        return ApiResponse.error(VALIDATION_ENUM_VALUE_EXCEPTION);
+        return ApiResponse.error(VALIDATION_EXCEPTION);
     }
 
     /**

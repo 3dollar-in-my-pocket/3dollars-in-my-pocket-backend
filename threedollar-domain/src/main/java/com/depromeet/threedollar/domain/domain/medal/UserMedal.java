@@ -47,23 +47,23 @@ public class UserMedal extends AuditingTimeEntity {
         return new UserMedal(medal, user, UserMedalStatus.IN_ACTIVE);
     }
 
-    public void active() {
+    public void updateToActive() {
         this.status = UserMedalStatus.ACTIVE;
     }
 
-    public void inActive() {
+    public void updateToInActive() {
         this.status = UserMedalStatus.IN_ACTIVE;
     }
 
-    public boolean isActive() {
+    public boolean isActiveStatus() {
         return this.status == UserMedalStatus.ACTIVE;
     }
 
-    public boolean isSameEntity(Long userMedalId) {
+    public boolean hasSameId(Long userMedalId) {
         return this.id.equals(userMedalId);
     }
 
-    public Long getUserId() {
+    Long getUserId() {
         return this.user.getId();
     }
 

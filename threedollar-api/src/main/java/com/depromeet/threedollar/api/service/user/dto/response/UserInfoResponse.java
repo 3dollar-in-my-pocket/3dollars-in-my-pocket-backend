@@ -23,7 +23,7 @@ public class UserInfoResponse {
         if (user == null) {
             return SIGN_OUT_USER;
         }
-        return new UserInfoResponse(user.getId(), user.getName(), user.getSocialType(), UserMedalResponse.of(user.getActiveMedal()));
+        return new UserInfoResponse(user.getId(), user.getName(), user.getSocialType(), UserMedalResponse.of(user.getActivatedMedal()));
     }
 
     public static UserInfoResponse of(@Nullable Long userId, @Nullable String userName, @Nullable UserSocialType userSocialType, @Nullable UserMedal userMedal) {

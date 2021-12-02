@@ -36,11 +36,11 @@ public class MedalAcquisitionCondition extends AuditingTimeEntity {
         this.count = count;
     }
 
-    public static MedalAcquisitionCondition of(Medal medal, MedalAcquisitionConditionType conditionType, int count) {
+    static MedalAcquisitionCondition of(Medal medal, MedalAcquisitionConditionType conditionType, int count) {
         return new MedalAcquisitionCondition(medal, conditionType, count);
     }
 
-    public boolean canObtain(MedalAcquisitionConditionType conditionType, long counts) {
+    boolean canObtain(MedalAcquisitionConditionType conditionType, long counts) {
         return this.conditionType.equals(conditionType) && this.count <= counts;
     }
 

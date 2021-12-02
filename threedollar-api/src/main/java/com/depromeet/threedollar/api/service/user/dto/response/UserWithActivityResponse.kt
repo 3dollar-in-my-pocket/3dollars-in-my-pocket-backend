@@ -19,7 +19,7 @@ data class UserWithActivityResponse(
         ): UserWithActivityResponse {
             return UserWithActivityResponse(
                 user.id, user.name, user.socialType,
-                UserMedalResponse.of(user.activeMedal),
+                UserMedalResponse.of(user.activatedMedal),
                 ActivityResponse(storesCount, reviewsCount, user.userMedals.size)
             )
         }

@@ -66,7 +66,7 @@ public class UserMedalService {
     @Transactional
     public UserInfoResponse activateUserMedal(ActivateUserMedalRequest request, Long userId) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
-        user.updateActiveMedal(request.getUserMedalId());
+        user.updateActivatedMedal(request.getUserMedalId());
         return UserInfoResponse.of(user);
     }
 

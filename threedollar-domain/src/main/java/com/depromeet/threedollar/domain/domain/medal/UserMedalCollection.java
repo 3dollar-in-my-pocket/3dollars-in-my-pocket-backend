@@ -22,7 +22,7 @@ public class UserMedalCollection {
 
     public static UserMedalCollection of(List<User> users) {
         List<UserMedal> userMedals = users.stream()
-            .map(User::getActiveMedal)
+            .map(User::getActivatedMedal)
             .filter(Objects::nonNull)
             .collect(Collectors.toList());
         return new UserMedalCollection(userMedals.stream()
