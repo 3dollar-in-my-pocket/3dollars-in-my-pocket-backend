@@ -14,12 +14,13 @@ class MedalAcquisitionConditionTest {
         "6, true",
     })
     @ParameterizedTest
-    void 메달에_대한_획득_조건을_만족하는지_확인한다(int count, boolean expectedResult) {
+    void 메달_획득을_위한_활동이_해당_조건을_넘어서야만_메달을_획득할수있다(int count, boolean expectedResult) {
         // given
+        int countCanObtainMedal = 5;
         MedalAcquisitionConditionType conditionType = MedalAcquisitionConditionType.ADD_STORE;
-        MedalAcquisitionCondition medalAcquisitionCondition = MedalAcquisitionCondition.of(MedalCreator.create("메달 A", "iconUrl"), conditionType, 5);
+        MedalAcquisitionCondition medalAcquisitionCondition = MedalAcquisitionCondition.of(MedalCreator.create("메달 A", "iconUrl"), conditionType, countCanObtainMedal);
 
-        // whe
+        // when
         boolean result = medalAcquisitionCondition.canObtain(conditionType, count);
 
         // then
@@ -27,12 +28,13 @@ class MedalAcquisitionConditionTest {
     }
 
     @Test
-    void 메달_획득_조건이_일치하지_않는경우_return_false() {
+    void 메달_획득_정책이_일치하지_않는경우_메달을_획득할_수_없다() {
         // given
-        MedalAcquisitionCondition medalAcquisitionCondition = MedalAcquisitionCondition.of(MedalCreator.create("메달 A", "iconUrl"), MedalAcquisitionConditionType.ADD_STORE, 5);
+        int count = 2;
+        MedalAcquisitionCondition medalAcquisitionCondition = MedalAcquisitionCondition.of(MedalCreator.create("메달 A", "iconUrl"), MedalAcquisitionConditionType.ADD_STORE, count);
 
-        // whe
-        boolean result = medalAcquisitionCondition.canObtain(MedalAcquisitionConditionType.VISIT_STORE, 2);
+        // when
+        boolean result = medalAcquisitionCondition.canObtain(MedalAcquisitionConditionType.VISIT_STORE, count);
 
         // then
         assertThat(result).isFalse();

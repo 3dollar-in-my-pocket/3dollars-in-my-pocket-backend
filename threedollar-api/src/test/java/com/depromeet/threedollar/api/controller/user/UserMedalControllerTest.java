@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class UserMedalControllerTest extends SetupUserControllerTest {
+class UserMedalControllerTest extends SetupUserControllerTest {
 
     @AfterEach
     void cleanUp() {
@@ -28,7 +28,7 @@ public class UserMedalControllerTest extends SetupUserControllerTest {
 
     @DisplayName("GET /api/v1/user/medals")
     @Nested
-    class 사용_가능한_훈장을_조회한다 {
+    class 보유중인_훈장을_조회한다 {
 
         @Test
         void 보유중인_칭호들을_모두_조회한다() throws Exception {

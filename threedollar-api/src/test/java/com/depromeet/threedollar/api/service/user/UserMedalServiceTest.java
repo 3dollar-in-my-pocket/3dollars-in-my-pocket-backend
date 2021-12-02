@@ -1,12 +1,9 @@
 package com.depromeet.threedollar.api.service.user;
 
+import com.depromeet.threedollar.api.service.SetupUserServiceTest;
 import com.depromeet.threedollar.api.service.user.dto.request.ActivateUserMedalRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.medal.*;
-import com.depromeet.threedollar.domain.domain.user.User;
-import com.depromeet.threedollar.domain.domain.user.UserCreator;
-import com.depromeet.threedollar.domain.domain.user.UserRepository;
-import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,29 +21,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
-class UserMedalServiceTest {
+class UserMedalServiceTest extends SetupUserServiceTest {
 
     @Autowired
     private UserMedalService userMedalService;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private MedalRepository medalRepository;
-
-    @Autowired
-    private UserMedalRepository userMedalRepository;
-
-    @Autowired
-    private MedalAcquisitionConditionRepository medalAcquisitionConditionRepository;
-
     @AfterEach
     void cleanUp() {
-        medalAcquisitionConditionRepository.deleteAllInBatch();
-        userMedalRepository.deleteAllInBatch();
-        medalRepository.deleteAllInBatch();
-        userRepository.deleteAllInBatch();
+        super.cleanup();
     }
 
     @DisplayName("유저의 장착중인 대표 칭호를 변경한다")
@@ -60,16 +42,13 @@ class UserMedalServiceTest {
             Medal medal = MedalCreator.create(name, iconUrl);
             medalRepository.save(medal);
 
-            User user = UserCreator.create("social-id", UserSocialType.KAKAO, name);
-            userRepository.save(user);
-
             UserMedal userMedal = UserMedalCreator.createInActive(medal, user);
             userMedalRepository.save(userMedal);
 
             ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(userMedal.getId());
 
             // when
-            userMedalService.activateUserMedal(request, user.getId());
+            userMedalService.activateUserMedal(request, userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -85,11 +64,8 @@ class UserMedalServiceTest {
             Long notFoundMedalId = -1L;
             ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(notFoundMedalId);
 
-            User user = UserCreator.create("social-id", UserSocialType.KAKAO, "강승호");
-            userRepository.save(user);
-
             // when & then
-            assertThatThrownBy(() -> userMedalService.activateUserMedal(request, user.getId())).isInstanceOfAny(NotFoundException.class);
+            assertThatThrownBy(() -> userMedalService.activateUserMedal(request, userId)).isInstanceOfAny(NotFoundException.class);
         }
 
         @AutoSource
@@ -99,20 +75,19 @@ class UserMedalServiceTest {
             Medal medal = MedalCreator.create(name, iconUrl);
             medalRepository.save(medal);
 
-            User user = UserCreator.create("social-id", UserSocialType.KAKAO, name);
-            user.addMedals(List.of(medal));
-            userRepository.save(user);
+            UserMedal userMedal = UserMedalCreator.createActive(medal, user);
+            userMedalRepository.save(userMedal);
 
             ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(null);
 
             // when
-            userMedalService.activateUserMedal(request, user.getId());
+            userMedalService.activateUserMedal(request, userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
             assertAll(
                 () -> assertThat(userMedals).hasSize(1),
-                () -> assertUserMedal(userMedals.get(0), user.getId(), medal.getId(), UserMedalStatus.IN_ACTIVE)
+                () -> assertUserMedal(userMedals.get(0), userId, medal.getId(), UserMedalStatus.IN_ACTIVE)
             );
         }
 
