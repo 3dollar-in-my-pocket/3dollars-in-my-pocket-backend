@@ -12,6 +12,9 @@ import java.io.InputStreamReader;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ProcessUtils {
 
+    private static final int LOWEST_PORT = 10000;
+    private static final int HIGHEST_PORT = 30000;
+
     private static final String OS = System.getProperty("os.name").toLowerCase();
 
     public static boolean isRunningPort(int port) throws IOException {
@@ -19,7 +22,7 @@ public final class ProcessUtils {
     }
 
     public static int findAvailableRandomPort() throws IOException {
-        for (int port = 10000; port <= 65535; port++) {
+        for (int port = LOWEST_PORT; port <= HIGHEST_PORT; port++) {
             Process process = executeGrepProcessCommand(port);
             if (!isRunning(process)) {
                 return port;

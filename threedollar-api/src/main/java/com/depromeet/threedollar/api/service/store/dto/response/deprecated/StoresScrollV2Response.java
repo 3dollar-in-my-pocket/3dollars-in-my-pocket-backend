@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.service.store.dto.response.deprecated;
 import com.depromeet.threedollar.api.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
 import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.domain.visit.VisitHistoriesCountCollection;
+import com.depromeet.threedollar.domain.domain.visit.VisitHistoriesCounterCollection;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,7 +31,7 @@ public class StoresScrollV2Response {
         this.nextCursor = nextCursor;
     }
 
-    public static StoresScrollV2Response of(ScrollPaginationCollection<Store> scrollCollection, VisitHistoriesCountCollection visitHistoriesCounts,
+    public static StoresScrollV2Response of(ScrollPaginationCollection<Store> scrollCollection, VisitHistoriesCounterCollection visitHistoriesCounts,
                                             long totalElements, Double latitude, Double longitude) {
         if (scrollCollection.isLastScroll()) {
             return StoresScrollV2Response.newLastScroll(scrollCollection.getItemsInCurrentScroll(), visitHistoriesCounts, latitude, longitude, totalElements);
@@ -40,17 +40,17 @@ public class StoresScrollV2Response {
             visitHistoriesCounts, latitude, longitude, totalElements, scrollCollection.getNextCursor().getId());
     }
 
-    private static StoresScrollV2Response newLastScroll(List<Store> stores, VisitHistoriesCountCollection collection,
+    private static StoresScrollV2Response newLastScroll(List<Store> stores, VisitHistoriesCounterCollection collection,
                                                         Double latitude, Double longitude, long totalElements) {
         return newScrollHasNext(stores, collection, latitude, longitude, totalElements, LAST_CURSOR);
     }
 
-    private static StoresScrollV2Response newScrollHasNext(List<Store> stores, VisitHistoriesCountCollection collection,
+    private static StoresScrollV2Response newScrollHasNext(List<Store> stores, VisitHistoriesCounterCollection collection,
                                                            Double latitude, Double longitude, long totalElements, long nextCursor) {
         return new StoresScrollV2Response(getContents(stores, collection, latitude, longitude), totalElements, nextCursor);
     }
 
-    private static List<StoreWithVisitsAndDistanceResponse> getContents(List<Store> stores, VisitHistoriesCountCollection collection, Double latitude, Double longitude) {
+    private static List<StoreWithVisitsAndDistanceResponse> getContents(List<Store> stores, VisitHistoriesCounterCollection collection, Double latitude, Double longitude) {
         return stores.stream()
             .map(store -> StoreWithVisitsAndDistanceResponse.of(store, latitude, longitude,
                 collection.getStoreExistsVisitsCount(store.getId()), collection.getStoreNotExistsVisitsCount(store.getId())))

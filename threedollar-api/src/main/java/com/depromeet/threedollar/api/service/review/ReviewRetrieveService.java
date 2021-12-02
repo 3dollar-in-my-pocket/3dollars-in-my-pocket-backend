@@ -5,7 +5,7 @@ import com.depromeet.threedollar.api.service.review.dto.request.deprecated.Retri
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.deprecated.ReviewScrollV2Response;
 import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
-import com.depromeet.threedollar.domain.domain.medal.UserMedalCollection;
+import com.depromeet.threedollar.domain.domain.medal.UserMedalsCollection;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
 import com.depromeet.threedollar.domain.domain.store.Store;
@@ -53,12 +53,12 @@ public class ReviewRetrieveService {
             .collect(Collectors.toMap(Store::getId, store -> store));
     }
 
-    private UserMedalCollection findActiveMedalByUserIds(List<ReviewWithWriterProjection> reviews) {
+    private UserMedalsCollection findActiveMedalByUserIds(List<ReviewWithWriterProjection> reviews) {
         List<Long> userIds = reviews.stream()
             .map(ReviewWithWriterProjection::getUserId)
             .distinct()
             .collect(Collectors.toList());
-        return UserMedalCollection.of(userRepository.findAllByUserId(userIds));
+        return UserMedalsCollection.of(userRepository.findAllByUserId(userIds));
     }
 
 }

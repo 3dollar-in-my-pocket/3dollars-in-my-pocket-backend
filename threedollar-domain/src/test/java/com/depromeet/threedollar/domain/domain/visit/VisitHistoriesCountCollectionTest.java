@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.domain.visit;
 
-import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithCounts;
+import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryCountProjection;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -14,15 +14,15 @@ class VisitHistoriesCountCollectionTest {
     void 가게별로_방문_성공_실패_카운트를_저장하는_컬렉션() {
         // given
         Long storeOneId = 10000L;
-        VisitHistoryWithCounts storeOneExistsCounts = new VisitHistoryWithCounts(storeOneId, VisitType.EXISTS, 3);
-        VisitHistoryWithCounts storeOneNotExistsCounts = new VisitHistoryWithCounts(storeOneId, VisitType.NOT_EXISTS, 1);
+        VisitHistoryCountProjection storeOneExistsCounts = new VisitHistoryCountProjection(storeOneId, VisitType.EXISTS, 3);
+        VisitHistoryCountProjection storeOneNotExistsCounts = new VisitHistoryCountProjection(storeOneId, VisitType.NOT_EXISTS, 1);
 
         Long storeTwoId = 10001L;
-        VisitHistoryWithCounts storeTwoExistsCounts = new VisitHistoryWithCounts(storeTwoId, VisitType.EXISTS, 2);
-        VisitHistoryWithCounts storeTwoNotExistsCounts = new VisitHistoryWithCounts(storeTwoId, VisitType.NOT_EXISTS, 0);
+        VisitHistoryCountProjection storeTwoExistsCounts = new VisitHistoryCountProjection(storeTwoId, VisitType.EXISTS, 2);
+        VisitHistoryCountProjection storeTwoNotExistsCounts = new VisitHistoryCountProjection(storeTwoId, VisitType.NOT_EXISTS, 0);
 
         // when
-        VisitHistoriesCountCollection collection = VisitHistoriesCountCollection.of(
+        VisitHistoriesCounterCollection collection = VisitHistoriesCounterCollection.of(
             List.of(storeOneExistsCounts, storeOneNotExistsCounts, storeTwoExistsCounts, storeTwoNotExistsCounts));
 
         // then

@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.service.store.dto.response;
 
 import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
 import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.domain.visit.VisitHistoriesCountCollection;
+import com.depromeet.threedollar.domain.domain.visit.VisitHistoriesCounterCollection;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +29,7 @@ public class StoresScrollResponse {
         this.nextCursor = nextCursor;
     }
 
-    public static StoresScrollResponse of(ScrollPaginationCollection<Store> scrollCollection, VisitHistoriesCountCollection visitHistoriesCounts, long totalElements) {
+    public static StoresScrollResponse of(ScrollPaginationCollection<Store> scrollCollection, VisitHistoriesCounterCollection visitHistoriesCounts, long totalElements) {
         if (scrollCollection.isLastScroll()) {
             return StoresScrollResponse.newLastScroll(scrollCollection.getItemsInCurrentScroll(), visitHistoriesCounts, totalElements);
         }
@@ -37,15 +37,15 @@ public class StoresScrollResponse {
             visitHistoriesCounts, totalElements, scrollCollection.getNextCursor().getId());
     }
 
-    private static StoresScrollResponse newLastScroll(List<Store> stores, VisitHistoriesCountCollection collection, long totalElements) {
+    private static StoresScrollResponse newLastScroll(List<Store> stores, VisitHistoriesCounterCollection collection, long totalElements) {
         return newScrollHasNext(stores, collection, totalElements, LAST_CURSOR);
     }
 
-    private static StoresScrollResponse newScrollHasNext(List<Store> stores, VisitHistoriesCountCollection collection, long totalElements, long nextCursor) {
+    private static StoresScrollResponse newScrollHasNext(List<Store> stores, VisitHistoriesCounterCollection collection, long totalElements, long nextCursor) {
         return new StoresScrollResponse(getContents(stores, collection), totalElements, nextCursor);
     }
 
-    private static List<StoreWithVisitsResponse> getContents(List<Store> stores, VisitHistoriesCountCollection collection) {
+    private static List<StoreWithVisitsResponse> getContents(List<Store> stores, VisitHistoriesCounterCollection collection) {
         return stores.stream()
             .map(store -> StoreWithVisitsResponse.of(store, collection.getStoreExistsVisitsCount(store.getId()), collection.getStoreNotExistsVisitsCount(store.getId())))
             .collect(Collectors.toList());

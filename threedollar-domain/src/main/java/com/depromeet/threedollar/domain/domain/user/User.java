@@ -70,7 +70,7 @@ public class User extends AuditingTimeEntity {
         if (userMedalId == null) {
             return;
         }
-        activatedUserMedal(userMedalId);
+        findUserMedalById(userMedalId).updateToActive();
     }
 
     private void inactivatedAllUserMedals() {
@@ -79,12 +79,11 @@ public class User extends AuditingTimeEntity {
         }
     }
 
-    private void activatedUserMedal(@NotNull Long userMedalId) {
-        UserMedal findUserMedal = this.userMedals.stream()
+    private UserMedal findUserMedalById(@NotNull Long userMedalId) {
+        return this.userMedals.stream()
             .filter(userMedal -> userMedal.hasSameId(userMedalId))
             .findFirst()
             .orElseThrow(() -> new NotFoundException(String.format("해당 유저(%s)는 해당하는 유저 메달(%s)을 보유하고 있지 않습니다", this.id, userMedalId), NOT_FOUND_MEDAL_EXCEPTION));
-        findUserMedal.updateToActive();
     }
 
     public String getSocialId() {

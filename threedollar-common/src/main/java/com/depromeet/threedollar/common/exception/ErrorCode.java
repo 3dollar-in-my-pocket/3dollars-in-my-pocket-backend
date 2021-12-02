@@ -4,8 +4,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import static com.depromeet.threedollar.common.exception.ErrorAlarmOptions.*;
-import static com.depromeet.threedollar.common.exception.ErrorStatusCode.*;
+import static com.depromeet.threedollar.common.exception.ErrorAlarmOptionType.*;
+import static com.depromeet.threedollar.common.exception.HttpStatusCode.*;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -66,8 +66,8 @@ public enum ErrorCode {
     SERVICE_UNAVAILABLE_EXCEPTION(SERVICE_UNAVAILABLE, OFF, "SU001", "현재 점검 중입니다.\n잠시 후 다시 시도해주세요!"),
     ;
 
-    private final ErrorStatusCode statusCode;
-    private final ErrorAlarmOptions alarmOptions;
+    private final HttpStatusCode statusCode;
+    private final ErrorAlarmOptionType alarmOptions;
     private final String code;
     private final String message;
 

@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.service.review.dto.response;
 
 import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
-import com.depromeet.threedollar.domain.domain.medal.UserMedalCollection;
+import com.depromeet.threedollar.domain.domain.medal.UserMedalsCollection;
 import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import lombok.AccessLevel;
@@ -29,18 +29,18 @@ public class ReviewScrollResponse {
         this.nextCursor = nextCursor;
     }
 
-    public static ReviewScrollResponse of(ScrollPaginationCollection<ReviewWithWriterProjection> scrollCollection, Map<Long, Store> cachedStores, UserMedalCollection userMedalCollection) {
+    public static ReviewScrollResponse of(ScrollPaginationCollection<ReviewWithWriterProjection> scrollCollection, Map<Long, Store> cachedStores, UserMedalsCollection userMedalCollection) {
         if (scrollCollection.isLastScroll()) {
             return newLastScroll(scrollCollection.getItemsInCurrentScroll(), cachedStores, userMedalCollection);
         }
         return newScrollHasNext(scrollCollection.getItemsInCurrentScroll(), cachedStores, userMedalCollection, scrollCollection.getNextCursor().getReviewId());
     }
 
-    private static ReviewScrollResponse newLastScroll(List<ReviewWithWriterProjection> reviews, Map<Long, Store> cachedStores, UserMedalCollection userMedalCollection) {
+    private static ReviewScrollResponse newLastScroll(List<ReviewWithWriterProjection> reviews, Map<Long, Store> cachedStores, UserMedalsCollection userMedalCollection) {
         return newScrollHasNext(reviews, cachedStores, userMedalCollection, LAST_CURSOR);
     }
 
-    private static ReviewScrollResponse newScrollHasNext(List<ReviewWithWriterProjection> reviews, Map<Long, Store> cachedStores, UserMedalCollection userMedalCollection, long nextCursor) {
+    private static ReviewScrollResponse newScrollHasNext(List<ReviewWithWriterProjection> reviews, Map<Long, Store> cachedStores, UserMedalsCollection userMedalCollection, long nextCursor) {
         List<ReviewDetailResponse> contents = reviews.stream()
             .map(review -> ReviewDetailResponse.of(review, cachedStores.get(review.getStoreId()), userMedalCollection.getCachedUserMedals().get(review.getUserId())))
             .collect(Collectors.toList());

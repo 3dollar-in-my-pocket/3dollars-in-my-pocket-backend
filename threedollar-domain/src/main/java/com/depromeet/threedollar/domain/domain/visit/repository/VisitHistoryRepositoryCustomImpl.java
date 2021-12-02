@@ -2,9 +2,9 @@ package com.depromeet.threedollar.domain.domain.visit.repository;
 
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
-import com.depromeet.threedollar.domain.domain.visit.projection.QVisitHistoryWithCounts;
+import com.depromeet.threedollar.domain.domain.visit.projection.QVisitHistoryCountProjection;
 import com.depromeet.threedollar.domain.domain.visit.projection.QVisitHistoryWithUserProjection;
-import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithCounts;
+import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryCountProjection;
 import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithUserProjection;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -86,8 +86,8 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
     }
 
     @Override
-    public List<VisitHistoryWithCounts> findCountsByStoreIdWithGroup(List<Long> storeIds) {
-        return queryFactory.select(new QVisitHistoryWithCounts(visitHistory.store.id, visitHistory.type, visitHistory.id.count()))
+    public List<VisitHistoryCountProjection> findCountsByStoreIdWithGroup(List<Long> storeIds) {
+        return queryFactory.select(new QVisitHistoryCountProjection(visitHistory.store.id, visitHistory.type, visitHistory.id.count()))
             .from(visitHistory)
             .where(
                 visitHistory.store.id.in(storeIds)

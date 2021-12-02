@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public enum ErrorStatusCode {
+public enum HttpStatusCode {
 
     BAD_REQUEST(400),
     UNAUTHORIZED(401),

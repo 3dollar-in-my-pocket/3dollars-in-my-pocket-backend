@@ -12,20 +12,20 @@ import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class UserMedalCollection {
+public class UserMedalsCollection {
 
     private Map<Long, UserMedal> cachedUserMedals;
 
-    private UserMedalCollection(Map<Long, UserMedal> cachedUserMedals) {
+    private UserMedalsCollection(Map<Long, UserMedal> cachedUserMedals) {
         this.cachedUserMedals = cachedUserMedals;
     }
 
-    public static UserMedalCollection of(List<User> users) {
+    public static UserMedalsCollection of(List<User> users) {
         List<UserMedal> userMedals = users.stream()
             .map(User::getActivatedMedal)
             .filter(Objects::nonNull)
             .collect(Collectors.toList());
-        return new UserMedalCollection(userMedals.stream()
+        return new UserMedalsCollection(userMedals.stream()
             .collect(Collectors.toMap(UserMedal::getUserId, userMedal -> userMedal)));
     }
 

@@ -87,16 +87,22 @@ public class Store extends AuditingTimeEntity {
     }
 
     private void addPaymentMethod(PaymentMethodType type) {
-        PaymentMethod paymentMethod = PaymentMethod.of(this, type);
-        this.paymentMethods.add(paymentMethod);
+        this.paymentMethods.add(PaymentMethod.of(this, type));
     }
 
     public void updatePaymentMethods(Set<PaymentMethodType> paymentMethodTypes) {
-        this.paymentMethods.removeIf(paymentMethod -> !paymentMethodTypes.contains(paymentMethod.getMethod()));
+        removePaymentMethodsNotIncludedInChanges(paymentMethodTypes);
+        addNewPaymentMethods(paymentMethodTypes);
+    }
 
-        Set<PaymentMethodType> hasPaymentTypes = getPaymentMethodTypes();
+    private void removePaymentMethodsNotIncludedInChanges(Set<PaymentMethodType> paymentMethodTypes) {
+        this.paymentMethods.removeIf(paymentMethod -> !paymentMethodTypes.contains(paymentMethod.getMethod()));
+    }
+
+    private void addNewPaymentMethods(Set<PaymentMethodType> paymentMethodTypes) {
+        Set<PaymentMethodType> currentPaymentMethodTypes = getPaymentMethodTypes();
         addPaymentMethods(paymentMethodTypes.stream()
-            .filter(type -> !hasPaymentTypes.contains(type))
+            .filter(paymentMethodType -> !currentPaymentMethodTypes.contains(paymentMethodType))
             .collect(Collectors.toSet()));
     }
 
@@ -117,8 +123,15 @@ public class Store extends AuditingTimeEntity {
     }
 
     public void updateAppearanceDays(Set<DayOfTheWeek> dayOfTheWeeks) {
-        this.appearanceDays.removeIf(appearanceDay -> !dayOfTheWeeks.contains(appearanceDay.getDay()));
+        removeAppearanceDaysNotIncludedInChanges(dayOfTheWeeks);
+        addNewAppearanceDays(dayOfTheWeeks);
+    }
 
+    private void removeAppearanceDaysNotIncludedInChanges(Set<DayOfTheWeek> dayOfTheWeeks) {
+        this.appearanceDays.removeIf(appearanceDay -> !dayOfTheWeeks.contains(appearanceDay.getDay()));
+    }
+
+    private void addNewAppearanceDays(Set<DayOfTheWeek> dayOfTheWeeks) {
         Set<DayOfTheWeek> hasDayOfTheWeek = getAppearanceDayTypes();
         addAppearanceDays(dayOfTheWeeks.stream()
             .filter(day -> !hasDayOfTheWeek.contains(day))
@@ -141,9 +154,17 @@ public class Store extends AuditingTimeEntity {
         this.menus.add(menu);
     }
 
-    public void updateMenu(List<Menu> newMenus) {
-        this.menus.removeIf(menu -> !newMenus.contains(menu));
-        this.menus.addAll(newMenus.stream()
+    public void updateMenu(List<Menu> menus) {
+        removeMenusNotIncludedInChanges(menus);
+        addNewMenus(menus);
+    }
+
+    private void removeMenusNotIncludedInChanges(List<Menu> menus) {
+        this.menus.removeIf(menu -> !menus.contains(menu));
+    }
+
+    private void addNewMenus(List<Menu> menus) {
+        this.menus.addAll(menus.stream()
             .filter(newMenu -> !this.menus.contains(newMenu))
             .collect(Collectors.toList()));
     }
@@ -171,29 +192,21 @@ public class Store extends AuditingTimeEntity {
     }
 
     public List<MenuCategoryType> getMenuCategoriesSortedByCounts() {
-        if (this.menus.isEmpty()) {
-            return Collections.emptyList();
-        }
-        Map<MenuCategoryType, Long> counts = getMenuCountsMap();
+        Map<MenuCategoryType, Long> counts = getCurrentMenuCategoryGroupByCounts();
         return counts.entrySet().stream()
             .sorted(Map.Entry.<MenuCategoryType, Long>comparingByValue().reversed())
             .map(Map.Entry::getKey)
             .collect(Collectors.toList());
     }
 
-    private Map<MenuCategoryType, Long> getMenuCountsMap() {
+    private Map<MenuCategoryType, Long> getCurrentMenuCategoryGroupByCounts() {
         return this.menus.stream()
             .collect(Collectors.groupingBy(Menu::getCategory, Collectors.counting()));
     }
 
     public boolean hasMenuCategory(MenuCategoryType category) {
-        return this.getMenuCategoryTypes().contains(category);
-    }
-
-    private List<MenuCategoryType> getMenuCategoryTypes() {
         return this.menus.stream()
-            .map(Menu::getCategory)
-            .collect(Collectors.toList());
+            .anyMatch(menu -> menu.isCategory(category));
     }
 
     public double getRating() {

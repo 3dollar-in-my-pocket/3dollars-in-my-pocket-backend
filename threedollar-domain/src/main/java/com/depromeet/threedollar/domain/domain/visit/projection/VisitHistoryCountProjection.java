@@ -7,19 +7,19 @@ import lombok.ToString;
 
 @ToString
 @Getter
-public class VisitHistoryWithCounts {
+public class VisitHistoryCountProjection {
 
     private final Long storeId;
 
     private final VisitType visitType;
 
-    private final long historiesCount;
+    private final long counts;
 
     @QueryProjection
-    public VisitHistoryWithCounts(Long storeId, VisitType visitType, long historiesCount) {
+    public VisitHistoryCountProjection(Long storeId, VisitType visitType, long counts) {
         this.storeId = storeId;
         this.visitType = visitType;
-        this.historiesCount = historiesCount;
+        this.counts = counts;
     }
 
 }

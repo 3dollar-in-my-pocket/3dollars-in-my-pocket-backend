@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.domain.common;
 
-public enum ServerEventType {
+public enum NotificationType {
 
     INFO,
     ERROR
