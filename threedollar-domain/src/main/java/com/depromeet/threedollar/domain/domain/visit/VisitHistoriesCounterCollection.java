@@ -17,10 +17,10 @@ public final class VisitHistoriesCounterCollection {
 
     private VisitHistoriesCounterCollection(List<VisitHistoryCountProjection> visitHistoryWithCounts) {
         this.existCounter.putAll(visitHistoryWithCounts.stream()
-            .filter(visit -> visit.getVisitType().equals(VisitType.EXISTS))
+            .filter(visit -> VisitType.EXISTS.equals(visit.getVisitType()))
             .collect(Collectors.toMap(VisitHistoryCountProjection::getStoreId, VisitHistoryCountProjection::getCounts)));
         this.notExistCounter.putAll(visitHistoryWithCounts.stream()
-            .filter(visit -> visit.getVisitType().equals(VisitType.NOT_EXISTS))
+            .filter(visit -> VisitType.NOT_EXISTS.equals(visit.getVisitType()))
             .collect(Collectors.toMap(VisitHistoryCountProjection::getStoreId, VisitHistoryCountProjection::getCounts)));
     }
 
