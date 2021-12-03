@@ -1,10 +1,12 @@
 package com.depromeet.threedollar.domain.domain.store;
 
+import com.depromeet.threedollar.common.docs.ObjectMother;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@ObjectMother
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StoreCreator {
 

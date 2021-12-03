@@ -41,7 +41,7 @@ import java.util.stream.Stream;
 @Service
 public class StoreRetrieveService {
 
-    private static final double LIMIT_DISTANCE = 2.0;
+    private static final double MAX_RADIUS_DISTANCE = 2.0;
 
     private final StoreRepository storeRepository;
     private final StoreImageRepository storeImageRepository;
@@ -93,7 +93,7 @@ public class StoreRetrieveService {
     @Deprecated
     @Transactional(readOnly = true)
     public StoresGroupByDistanceV2Response getNearStoresGroupByDistance(RetrieveStoreGroupByCategoryV2Request request) {
-        List<Store> nearStores = findNearCategoryStores(request.getMapLatitude(), request.getMapLongitude(), LIMIT_DISTANCE, request.getCategory());
+        List<Store> nearStores = findNearCategoryStores(request.getMapLatitude(), request.getMapLongitude(), MAX_RADIUS_DISTANCE, request.getCategory());
         VisitHistoriesCounterCollection visitHistoriesCountCollection = findVisitHistoriesCountByStoreIds(nearStores);
         List<StoreWithVisitsAndDistanceResponse> nearCategoryStores = nearStores.stream()
             .map(store -> StoreWithVisitsAndDistanceResponse.of(store, request.getLatitude(), request.getLongitude(),
@@ -107,7 +107,7 @@ public class StoreRetrieveService {
     @Deprecated
     @Transactional(readOnly = true)
     public StoresGroupByReviewV2Response getNearStoresGroupByReview(RetrieveStoreGroupByCategoryV2Request request) {
-        List<Store> nearStores = findNearCategoryStores(request.getMapLatitude(), request.getMapLongitude(), LIMIT_DISTANCE, request.getCategory());
+        List<Store> nearStores = findNearCategoryStores(request.getMapLatitude(), request.getMapLongitude(), MAX_RADIUS_DISTANCE, request.getCategory());
         VisitHistoriesCounterCollection visitHistoriesCountCollection = findVisitHistoriesCountByStoreIds(nearStores);
         List<StoreWithVisitsAndDistanceResponse> nearCategoryStores = nearStores.stream()
             .map(store -> StoreWithVisitsAndDistanceResponse.of(store, request.getLatitude(), request.getLongitude(),
@@ -119,7 +119,7 @@ public class StoreRetrieveService {
     }
 
     private List<Store> findNearCategoryStores(double mapLatitude, double mapLongitude, double distance, @Nullable MenuCategoryType categoryType) {
-        List<Store> nearStores = storeRepository.findStoresByLocationLessThanDistance(mapLatitude, mapLongitude, Math.min(distance, LIMIT_DISTANCE));
+        List<Store> nearStores = storeRepository.findStoresByLocationLessThanDistance(mapLatitude, mapLongitude, Math.min(distance, MAX_RADIUS_DISTANCE));
         if (categoryType == null) {
             return nearStores;
         }

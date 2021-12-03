@@ -1,8 +1,10 @@
 package com.depromeet.threedollar.domain.domain.storeimage;
 
+import com.depromeet.threedollar.common.docs.ObjectMother;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+@ObjectMother
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StoreImageCreator {
 
