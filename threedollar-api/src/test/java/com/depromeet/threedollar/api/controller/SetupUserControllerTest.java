@@ -40,15 +40,13 @@ public abstract class SetupUserControllerTest {
     @Autowired
     protected MedalAcquisitionConditionRepository medalAcquisitionConditionRepository;
 
-    protected UserMockApiCaller userMockApiCaller;
-
     protected User testUser;
 
     protected String token;
 
     @BeforeEach
     void setupUser() throws Exception {
-        userMockApiCaller = new UserMockApiCaller(mockMvc, objectMapper);
+        UserMockApiCaller userMockApiCaller = new UserMockApiCaller(mockMvc, objectMapper);
         token = userMockApiCaller.getTestToken().getData().getToken();
         testUser = userRepository.findUserBySocialIdAndSocialType("test-uid", UserSocialType.KAKAO);
     }

@@ -6,9 +6,9 @@ import lombok.NoArgsConstructor;
 
 @ObjectMother
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class StoreImageCreator {
+class StoreImageCreator {
 
-    public static StoreImage create(Long storeId, Long userId, String url) {
+    static StoreImage create(Long storeId, Long userId, String url) {
         return StoreImage.builder()
             .storeId(storeId)
             .userId(userId)

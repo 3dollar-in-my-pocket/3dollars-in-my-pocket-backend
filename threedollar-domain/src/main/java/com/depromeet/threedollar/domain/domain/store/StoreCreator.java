@@ -42,7 +42,7 @@ public class StoreCreator {
         return store;
     }
 
-    public static Store create(Long userId, String storeName, StoreType storeType, double latitude, double longitude) {
+    private static Store create(Long userId, String storeName, StoreType storeType, double latitude, double longitude) {
         return Store.builder()
             .userId(userId)
             .name(storeName)

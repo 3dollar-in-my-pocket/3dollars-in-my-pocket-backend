@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 @EnableAutoConfiguration
 @SpringBootConfiguration
-public class ThreeDollarApplicationTests {
+class ThreeDollarApplicationTests {
 
     @Test
     void contextsLoads() {
