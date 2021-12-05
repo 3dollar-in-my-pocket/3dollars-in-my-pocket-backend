@@ -12,10 +12,8 @@ import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
-import com.depromeet.threedollar.domain.domain.store.MenuRepository;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreCreator;
-import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -37,18 +35,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
     @Autowired
     private ReviewRepository reviewRepository;
 
-    @Autowired
-    private StoreRepository storeRepository;
-
-    @Autowired
-    private MenuRepository menuRepository;
-
     @AfterEach
     void cleanUp() {
         super.cleanup();
-        reviewRepository.deleteAll();
-        menuRepository.deleteAllInBatch();
-        storeRepository.deleteAllInBatch();
+        reviewRepository.deleteAllInBatch();
     }
 
     @DisplayName("POST /api/v2/store/review")
@@ -125,7 +115,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null);
 
             // when
-            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
+            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getNextCursor()).isEqualTo(review3.getId());
@@ -147,7 +137,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review4.getId());
 
             // when
-            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
+            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getNextCursor()).isEqualTo(review2.getId());
@@ -169,7 +159,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review4.getId());
 
             // when
-            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
+            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getNextCursor()).isEqualTo(review2.getId());
@@ -191,7 +181,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review3.getId());
 
             // when
-            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
+            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
@@ -213,7 +203,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review2.getId());
 
             // when
-            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
+            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
@@ -231,7 +221,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null);
 
             // when
-            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
+            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
@@ -250,7 +240,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null);
 
             // when
-            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
+            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
@@ -272,7 +262,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             RetrieveMyReviewsV2Request request = RetrieveMyReviewsV2Request.testInstance(2, null, null);
 
             // when
-            ApiResponse<ReviewScrollV2Response> response = reviewMockApiCaller.retrieveMyReviewsV2(request, token, 200);
+            ApiResponse<ReviewScrollV2Response> response = reviewMockApiCaller.retrieveMyReviewHistoriesV2(request, token, 200);
 
             // then
             assertThat(response.getData().getTotalElements()).isEqualTo(0);

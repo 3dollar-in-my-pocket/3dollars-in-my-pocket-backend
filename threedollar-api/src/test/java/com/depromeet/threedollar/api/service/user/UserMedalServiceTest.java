@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.service.user;
 
 import com.depromeet.threedollar.api.service.SetupUserServiceTest;
-import com.depromeet.threedollar.api.service.user.dto.request.ActivateUserMedalRequest;
+import com.depromeet.threedollar.api.service.user.dto.request.ActivateRepresentativeMedalRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.medal.*;
 import org.javaunit.autoparams.AutoSource;
@@ -45,10 +45,10 @@ class UserMedalServiceTest extends SetupUserServiceTest {
             UserMedal userMedal = UserMedalCreator.createInActive(medal, user);
             userMedalRepository.save(userMedal);
 
-            ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(userMedal.getId());
+            ActivateRepresentativeMedalRequest request = ActivateRepresentativeMedalRequest.testInstance(userMedal.getId());
 
             // when
-            userMedalService.activateUserMedal(request, userId);
+            userMedalService.updateRepresentativeMedal(request, userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
@@ -62,10 +62,10 @@ class UserMedalServiceTest extends SetupUserServiceTest {
         void 대표_칭호_변경시_보유하지_않은_칭호를_장착하려하면_NotFound_에러가_발생한다() {
             // given
             Long notFoundMedalId = -1L;
-            ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(notFoundMedalId);
+            ActivateRepresentativeMedalRequest request = ActivateRepresentativeMedalRequest.testInstance(notFoundMedalId);
 
             // when & then
-            assertThatThrownBy(() -> userMedalService.activateUserMedal(request, userId)).isInstanceOfAny(NotFoundException.class);
+            assertThatThrownBy(() -> userMedalService.updateRepresentativeMedal(request, userId)).isInstanceOfAny(NotFoundException.class);
         }
 
         @AutoSource
@@ -78,10 +78,10 @@ class UserMedalServiceTest extends SetupUserServiceTest {
             UserMedal userMedal = UserMedalCreator.createActive(medal, user);
             userMedalRepository.save(userMedal);
 
-            ActivateUserMedalRequest request = ActivateUserMedalRequest.testInstance(null);
+            ActivateRepresentativeMedalRequest request = ActivateRepresentativeMedalRequest.testInstance(null);
 
             // when
-            userMedalService.activateUserMedal(request, userId);
+            userMedalService.updateRepresentativeMedal(request, userId);
 
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();

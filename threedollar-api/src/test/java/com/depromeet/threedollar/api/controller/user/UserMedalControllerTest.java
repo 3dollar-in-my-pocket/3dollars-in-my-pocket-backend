@@ -43,7 +43,7 @@ class UserMedalControllerTest extends SetupUserControllerTest {
             ));
 
             // when & then
-            getAvailableUserMedal(token)
+            retrieveMyMedalsObtained(token)
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data", hasSize(2)))
@@ -55,7 +55,7 @@ class UserMedalControllerTest extends SetupUserControllerTest {
                 .andExpect(jsonPath("$.data[1].iconUrl").value(medalInActive.getIconUrl()));
         }
 
-        private ResultActions getAvailableUserMedal(String token) throws Exception {
+        private ResultActions retrieveMyMedalsObtained(String token) throws Exception {
             return mockMvc.perform(get("/api/v1/user/medals")
                 .header(HttpHeaders.AUTHORIZATION, token));
         }

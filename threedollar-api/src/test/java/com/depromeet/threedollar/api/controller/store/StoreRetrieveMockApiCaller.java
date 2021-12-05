@@ -25,11 +25,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class StoreRetrieveMockApiCaller extends MockMvcUtils {
 
-    public StoreRetrieveMockApiCaller(MockMvc mockMvc, ObjectMapper objectMapper) {
+    StoreRetrieveMockApiCaller(MockMvc mockMvc, ObjectMapper objectMapper) {
         super(mockMvc, objectMapper);
     }
 
-    public ApiResponse<List<StoreWithVisitsAndDistanceResponse>> getNearStores(RetrieveNearStoresRequest request, int expectedStatus) throws Exception {
+    ApiResponse<List<StoreWithVisitsAndDistanceResponse>> getNearStores(RetrieveNearStoresRequest request, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/stores/near")
             .param("latitude", String.valueOf(request.getLatitude()))
             .param("longitude", String.valueOf(request.getLongitude()))
@@ -50,7 +50,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         );
     }
 
-    public ApiResponse<StoreDetailResponse> getStoreDetailInfo(RetrieveStoreDetailRequest request, int expectedStatus) throws Exception {
+    ApiResponse<StoreDetailResponse> getStoreDetailInfo(RetrieveStoreDetailRequest request, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/store")
             .param("latitude", String.valueOf(request.getLatitude()))
             .param("longitude", String.valueOf(request.getLongitude()))
@@ -69,7 +69,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         );
     }
 
-    public ApiResponse<StoresScrollResponse> getMyStores(RetrieveMyStoresRequest request, String token, int expectedStatus) throws Exception {
+    public ApiResponse<StoresScrollResponse> retrieveMyReportedStoreHistories(RetrieveMyStoresRequest request, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v3/stores/me")
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))
@@ -86,7 +86,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         );
     }
 
-    public ApiResponse<StoresScrollV2Response> getMyStoresV2(RetrieveMyStoresV2Request request, String token, int expectedStatus) throws Exception {
+    ApiResponse<StoresScrollV2Response> retrieveMyReportedStoreHistoriesV2(RetrieveMyStoresV2Request request, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/stores/me")
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))
@@ -107,7 +107,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
     }
 
     @Deprecated
-    public ApiResponse<StoresGroupByDistanceV2Response> getStoresByDistance(RetrieveStoreGroupByCategoryV2Request request, int expectedStatus) throws Exception {
+    ApiResponse<StoresGroupByDistanceV2Response> getStoresGroupByDistance(RetrieveStoreGroupByCategoryV2Request request, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/stores/distance")
             .param("latitude", String.valueOf(request.getLatitude()))
             .param("longitude", String.valueOf(request.getLongitude()))
@@ -127,7 +127,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
     }
 
     @Deprecated
-    public ApiResponse<StoresGroupByReviewV2Response> getStoresByReview(RetrieveStoreGroupByCategoryV2Request request, int expectedStatus) throws Exception {
+    ApiResponse<StoresGroupByReviewV2Response> getStoresGroupByReview(RetrieveStoreGroupByCategoryV2Request request, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/stores/review")
             .param("latitude", String.valueOf(request.getLatitude()))
             .param("longitude", String.valueOf(request.getLongitude()))

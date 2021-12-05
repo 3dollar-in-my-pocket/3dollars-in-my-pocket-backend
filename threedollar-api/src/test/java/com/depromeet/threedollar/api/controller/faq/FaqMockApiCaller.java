@@ -19,11 +19,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class FaqMockApiCaller extends MockMvcUtils {
 
-    public FaqMockApiCaller(MockMvc mockMvc, ObjectMapper objectMapper) {
+    FaqMockApiCaller(MockMvc mockMvc, ObjectMapper objectMapper) {
         super(mockMvc, objectMapper);
     }
 
-    public ApiResponse<List<FaqResponse>> retrieveFaqsByCategory(int expectedStatus) throws Exception {
+    ApiResponse<List<FaqResponse>> retrieveFaqsByCategory(int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/faqs");
 
         return objectMapper.readValue(
@@ -37,7 +37,7 @@ class FaqMockApiCaller extends MockMvcUtils {
         );
     }
 
-    public ApiResponse<List<FaqResponse>> retrieveFaqsByCategory(FaqCategory category, int expectedStatus) throws Exception {
+    ApiResponse<List<FaqResponse>> retrieveFaqsByCategory(FaqCategory category, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/faqs")
             .param("category", category.toString());
 
@@ -52,7 +52,7 @@ class FaqMockApiCaller extends MockMvcUtils {
         );
     }
 
-    public ApiResponse<List<FaqCategoryResponse>> retrieveFaqCategories(int expectedStatus) throws Exception {
+    ApiResponse<List<FaqCategoryResponse>> retrieveFaqCategories(int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/faq/categories");
 
         return objectMapper.readValue(

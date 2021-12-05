@@ -29,7 +29,7 @@ public class ReviewRetrieveService {
     private final StoreRepository storeRepository;
 
     @Transactional(readOnly = true)
-    public ReviewScrollResponse retrieveMyReviews(RetrieveMyReviewsRequest request, Long userId) {
+    public ReviewScrollResponse retrieveMyReviewHistories(RetrieveMyReviewsRequest request, Long userId) {
         List<ReviewWithWriterProjection> reviewsWithNextCursor = reviewRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
         ScrollPaginationCollection<ReviewWithWriterProjection> scrollCollection = ScrollPaginationCollection.of(reviewsWithNextCursor, request.getSize());
         List<ReviewWithWriterProjection> reviews = scrollCollection.getItemsInCurrentScroll();
@@ -38,7 +38,7 @@ public class ReviewRetrieveService {
 
     @Deprecated
     @Transactional(readOnly = true)
-    public ReviewScrollV2Response retrieveMyReviewsV2(RetrieveMyReviewsV2Request request, Long userId) {
+    public ReviewScrollV2Response retrieveMyReviewHistoriesV2(RetrieveMyReviewsV2Request request, Long userId) {
         List<ReviewWithWriterProjection> reviewsWithNextCursor = reviewRepository.findAllActiveByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
         ScrollPaginationCollection<ReviewWithWriterProjection> scrollCollection = ScrollPaginationCollection.of(reviewsWithNextCursor, request.getSize());
         return ReviewScrollV2Response.of(scrollCollection, findStoresByReviews(scrollCollection.getItemsInCurrentScroll()),

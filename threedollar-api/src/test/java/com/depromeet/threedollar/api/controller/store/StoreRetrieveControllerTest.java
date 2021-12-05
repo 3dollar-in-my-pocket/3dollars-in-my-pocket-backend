@@ -551,7 +551,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, null);
 
             // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
+            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getTotalElements()).isEqualTo(3);
@@ -574,7 +574,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, store4.getId());
 
             // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
+            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getTotalElements()).isEqualTo(4);
@@ -593,7 +593,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, null);
 
             // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
+            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getTotalElements()).isEqualTo(1);
@@ -610,7 +610,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, store2.getId());
 
             // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
+            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
@@ -630,7 +630,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, store2.getId());
 
             // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
+            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
@@ -648,7 +648,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, null);
 
             // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
+            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getTotalElements()).isEqualTo(1);
@@ -670,7 +670,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveMyStoresV2Request request = RetrieveMyStoresV2Request.testInstance(2, null, null, null, null);
 
             // when
-            ApiResponse<StoresScrollV2Response> response = storeRetrieveMockApiCaller.getMyStoresV2(request, token, 200);
+            ApiResponse<StoresScrollV2Response> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistoriesV2(request, token, 200);
 
             // then
             assertThat(response.getData().getTotalElements()).isEqualTo(0);
@@ -693,7 +693,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, null);
 
             // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
+            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getContents()).hasSize(1);
@@ -728,7 +728,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 .build();
 
             // when
-            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresByDistance(request, 200);
+            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByDistance(request, 200);
 
             // then
             assertThat(response.getData().getStoreList50()).hasSize(1);
@@ -764,7 +764,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 .build();
 
             // when
-            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresByDistance(request, 200);
+            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByDistance(request, 200);
 
             // then
             assertThat(response.getData().getStoreList50()).hasSize(2);
@@ -792,7 +792,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 .build();
 
             // when
-            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresByDistance(request, 200);
+            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByDistance(request, 200);
 
             // then
             assertThat(response.getData().getStoreList50()).isEmpty();
@@ -819,7 +819,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 .build();
 
             // when
-            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresByDistance(request, 200);
+            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByDistance(request, 200);
 
             // then
             assertThat(response.getData().getStoreList50()).isEmpty();
@@ -847,7 +847,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 .build();
 
             // when
-            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresByDistance(request, 200);
+            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByDistance(request, 200);
 
             // then
             assertThat(response.getData().getStoreList50()).hasSize(1);
@@ -891,7 +891,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 .build();
 
             // when
-            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresByReview(request, 200);
+            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByReview(request, 200);
 
             // then
             assertThat(response.getData().getStoreList1()).hasSize(1);
@@ -932,7 +932,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 .build();
 
             // when
-            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresByReview(request, 200);
+            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByReview(request, 200);
 
             // then
             assertThat(response.getData().getStoreList1()).hasSize(3);
@@ -961,7 +961,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 .build();
 
             // when
-            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresByReview(request, 200);
+            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByReview(request, 200);
 
             // then
             assertThat(response.getData().getStoreList1()).isEmpty();
@@ -988,7 +988,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 .build();
 
             // when
-            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresByReview(request, 200);
+            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByReview(request, 200);
 
             // then
             assertThat(response.getData().getStoreList1()).isEmpty();
@@ -1015,7 +1015,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 .build();
 
             // when
-            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresByReview(request, 200);
+            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByReview(request, 200);
 
             // then
             assertThat(response.getData().getStoreList1()).hasSize(1);

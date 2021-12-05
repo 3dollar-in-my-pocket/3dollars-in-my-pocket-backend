@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.api.service.user;
 
 import com.depromeet.threedollar.api.service.SetupUserServiceTest;
-import com.depromeet.threedollar.api.service.user.UserMedalFacadeService;
 import com.depromeet.threedollar.domain.domain.medal.*;
 import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
@@ -49,10 +48,10 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
     @AfterEach
     void cleanUp() {
         super.cleanup();
-        visitHistoryRepository.deleteAll();
-        storeRepository.deleteAll();
-        storeDeleteRequestRepository.deleteAll();
-        reviewRepository.deleteAll();
+        visitHistoryRepository.deleteAllInBatch();
+        storeRepository.deleteAllInBatch();
+        storeDeleteRequestRepository.deleteAllInBatch();
+        reviewRepository.deleteAllInBatch();
     }
 
     @DisplayName("가게 추가 조건 메달 획득")

@@ -22,20 +22,20 @@ public class UserMedalFacadeService {
     private final VisitHistoryRepository visitHistoryRepository;
 
     public void addObtainableMedalsByAddStore(Long userId) {
-        userMedalService.addMedalsIfMatchCondition(userId, ADD_STORE, () -> storeRepository.findCountsByUserId(userId));
+        userMedalService.addMedalsIfSatisfyCondition(userId, ADD_STORE, () -> storeRepository.findCountsByUserId(userId));
     }
 
     public void addObtainableMedalsByDeleteStore(Long userId) {
-        userMedalService.addMedalsIfMatchCondition(userId, DELETE_STORE, () -> storeDeleteRequestRepository.findCountsByUserId(userId));
+        userMedalService.addMedalsIfSatisfyCondition(userId, DELETE_STORE, () -> storeDeleteRequestRepository.findCountsByUserId(userId));
     }
 
     public void addObtainableMedalsByAddReview(Long userId) {
-        userMedalService.addMedalsIfMatchCondition(userId, ADD_REVIEW, () -> reviewRepository.findCountsByUserId(userId));
+        userMedalService.addMedalsIfSatisfyCondition(userId, ADD_REVIEW, () -> reviewRepository.findCountsByUserId(userId));
     }
 
     public void addObtainableMedalsByVisitStore(Long userId) {
-        userMedalService.addMedalsIfMatchCondition(userId, VISIT_STORE, () -> visitHistoryRepository.findCountsByUserId(userId));
-        userMedalService.addMedalsIfMatchCondition(userId, VISIT_NOT_EXISTS_STORE, () -> visitHistoryRepository.findCountsByUserIdAndVisitType(userId, VisitType.NOT_EXISTS));
+        userMedalService.addMedalsIfSatisfyCondition(userId, VISIT_STORE, () -> visitHistoryRepository.findCountsByUserId(userId));
+        userMedalService.addMedalsIfSatisfyCondition(userId, VISIT_NOT_EXISTS_STORE, () -> visitHistoryRepository.findCountsByUserIdAndVisitType(userId, VisitType.NOT_EXISTS));
     }
 
 }

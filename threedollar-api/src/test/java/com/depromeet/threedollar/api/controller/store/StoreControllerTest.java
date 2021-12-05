@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.controller.store;
 
 import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
-import com.depromeet.threedollar.api.service.store.dto.request.AddStoreRequest;
+import com.depromeet.threedollar.api.service.store.dto.request.RegisterStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.DeleteStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.MenuRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.UpdateStoreRequest;
@@ -73,7 +73,7 @@ class StoreControllerTest extends SetupUserControllerTest {
             double latitude = 34.0;
             double longitude = 130.0;
 
-            AddStoreRequest request = AddStoreRequest.testBuilder()
+            RegisterStoreRequest request = RegisterStoreRequest.testBuilder()
                 .latitude(latitude)
                 .longitude(longitude)
                 .storeName(storeName)
@@ -84,7 +84,7 @@ class StoreControllerTest extends SetupUserControllerTest {
                 .build();
 
             // when
-            ApiResponse<StoreInfoResponse> response = storeMockApiCaller.addStore(request, token, 200);
+            ApiResponse<StoreInfoResponse> response = storeMockApiCaller.registerStore(request, token, 200);
 
             // then
             assertStoreInfoResponse(response.getData(), latitude, longitude, storeName, List.of(MenuCategoryType.BUNGEOPPANG));

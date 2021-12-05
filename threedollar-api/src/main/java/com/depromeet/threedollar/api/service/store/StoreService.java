@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.service.store;
 
 import com.depromeet.threedollar.domain.event.store.StoreCreatedEvent;
 import com.depromeet.threedollar.domain.event.store.StoreDeletedEvent;
-import com.depromeet.threedollar.api.service.store.dto.request.AddStoreRequest;
+import com.depromeet.threedollar.api.service.store.dto.request.RegisterStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.DeleteStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.UpdateStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.response.StoreDeleteResponse;
@@ -37,7 +37,7 @@ public class StoreService {
 
     @CacheEvict(key = "#userId", value = USER_STORES_COUNTS)
     @Transactional
-    public StoreInfoResponse addStore(AddStoreRequest request, Long userId) {
+    public StoreInfoResponse registerStore(RegisterStoreRequest request, Long userId) {
         Store store = storeRepository.save(request.toStore(userId));
         eventPublisher.publishEvent(StoreCreatedEvent.of(store.getId(), userId));
         return StoreInfoResponse.of(store);

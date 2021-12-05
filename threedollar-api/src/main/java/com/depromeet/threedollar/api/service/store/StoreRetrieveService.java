@@ -51,7 +51,7 @@ public class StoreRetrieveService {
 
     @Transactional(readOnly = true)
     public List<StoreWithVisitsAndDistanceResponse> getNearStores(RetrieveNearStoresRequest request) {
-        List<Store> nearStores = findNearCategoryStores(request.getMapLatitude(), request.getMapLongitude(), request.getDistance(), request.getCategory());
+        List<Store> nearStores = findNearStoresFilterByCategory(request.getMapLatitude(), request.getMapLongitude(), request.getDistance(), request.getCategory());
         VisitHistoriesCounterCollection collection = findVisitHistoriesCountByStoreIds(nearStores);
         return nearStores.stream()
             .map(store -> StoreWithVisitsAndDistanceResponse.of(store, request.getLatitude(), request.getLongitude(),
@@ -67,22 +67,22 @@ public class StoreRetrieveService {
         List<StoreImage> images = storeImageRepository.findAllByStoreId(request.getStoreId());
         List<ReviewWithWriterProjection> reviews = reviewRepository.findAllWithCreatorByStoreId(request.getStoreId());
         List<VisitHistoryWithUserProjection> visitHistories = visitHistoryRepository.findAllVisitWithUserByStoreIdBetweenDate(request.getStoreId(), request.getStartDate(), request.getEndDate());
-        VisitHistoriesCounterCollection visitHistoriesCountCollection = findVisitHistoriesCountByStoreIds(Collections.singletonList(store));
+        VisitHistoriesCounterCollection visitHistoriesCounter = findVisitHistoriesCountByStoreIds(Collections.singletonList(store));
         UserMedalsCollection userMedalCollection = findActiveMedalByUserIds(reviews, visitHistories);
-        return StoreDetailResponse.of(store, images, request.getLatitude(), request.getLongitude(), creator, reviews, visitHistoriesCountCollection, visitHistories, userMedalCollection);
+        return StoreDetailResponse.of(store, images, request.getLatitude(), request.getLongitude(), creator, reviews, visitHistoriesCounter, visitHistories, userMedalCollection);
     }
 
     @Transactional(readOnly = true)
-    public StoresScrollResponse retrieveMyStores(RetrieveMyStoresRequest request, Long userId) {
+    public StoresScrollResponse retrieveMyReportedStoreHistories(RetrieveMyStoresRequest request, Long userId) {
         List<Store> storesWithNextCursor = storeRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
         ScrollPaginationCollection<Store> scrollCollection = ScrollPaginationCollection.of(storesWithNextCursor, request.getSize());
-        VisitHistoriesCounterCollection visitHistoryCountsCollection = findVisitHistoriesCountByStoreIds(scrollCollection.getItemsInCurrentScroll());
-        return StoresScrollResponse.of(scrollCollection, visitHistoryCountsCollection, storeRepository.findCountsByUserId(userId));
+        VisitHistoriesCounterCollection visitHistoriesCounter = findVisitHistoriesCountByStoreIds(scrollCollection.getItemsInCurrentScroll());
+        return StoresScrollResponse.of(scrollCollection, visitHistoriesCounter, storeRepository.findCountsByUserId(userId));
     }
 
     @Deprecated
     @Transactional(readOnly = true)
-    public StoresScrollV2Response retrieveMyStoresV2(RetrieveMyStoresV2Request request, Long userId) {
+    public StoresScrollV2Response retrieveMyReportedStoreHistoriesV2(RetrieveMyStoresV2Request request, Long userId) {
         List<Store> storesWithNextCursor = storeRepository.findAllActiveByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
         ScrollPaginationCollection<Store> scrollCollection = ScrollPaginationCollection.of(storesWithNextCursor, request.getSize());
         VisitHistoriesCounterCollection visitHistoryCountsCollection = findVisitHistoriesCountByStoreIds(scrollCollection.getItemsInCurrentScroll());
@@ -93,12 +93,12 @@ public class StoreRetrieveService {
     @Deprecated
     @Transactional(readOnly = true)
     public StoresGroupByDistanceV2Response getNearStoresGroupByDistance(RetrieveStoreGroupByCategoryV2Request request) {
-        List<Store> nearStores = findNearCategoryStores(request.getMapLatitude(), request.getMapLongitude(), MAX_RADIUS_DISTANCE, request.getCategory());
-        VisitHistoriesCounterCollection visitHistoriesCountCollection = findVisitHistoriesCountByStoreIds(nearStores);
+        List<Store> nearStores = findNearStoresFilterByCategory(request.getMapLatitude(), request.getMapLongitude(), MAX_RADIUS_DISTANCE, request.getCategory());
+        VisitHistoriesCounterCollection visitHistoriesCounter = findVisitHistoriesCountByStoreIds(nearStores);
         List<StoreWithVisitsAndDistanceResponse> nearCategoryStores = nearStores.stream()
             .map(store -> StoreWithVisitsAndDistanceResponse.of(store, request.getLatitude(), request.getLongitude(),
-                visitHistoriesCountCollection.getStoreExistsVisitsCount(store.getId()),
-                visitHistoriesCountCollection.getStoreNotExistsVisitsCount(store.getId())))
+                visitHistoriesCounter.getStoreExistsVisitsCount(store.getId()),
+                visitHistoriesCounter.getStoreNotExistsVisitsCount(store.getId())))
             .sorted(StoreOrderType.DISTANCE_ASC.getSorted())
             .collect(Collectors.toList());
         return StoresGroupByDistanceV2Response.of(nearCategoryStores);
@@ -107,18 +107,18 @@ public class StoreRetrieveService {
     @Deprecated
     @Transactional(readOnly = true)
     public StoresGroupByReviewV2Response getNearStoresGroupByReview(RetrieveStoreGroupByCategoryV2Request request) {
-        List<Store> nearStores = findNearCategoryStores(request.getMapLatitude(), request.getMapLongitude(), MAX_RADIUS_DISTANCE, request.getCategory());
-        VisitHistoriesCounterCollection visitHistoriesCountCollection = findVisitHistoriesCountByStoreIds(nearStores);
+        List<Store> nearStores = findNearStoresFilterByCategory(request.getMapLatitude(), request.getMapLongitude(), MAX_RADIUS_DISTANCE, request.getCategory());
+        VisitHistoriesCounterCollection visitHistoriesCounter = findVisitHistoriesCountByStoreIds(nearStores);
         List<StoreWithVisitsAndDistanceResponse> nearCategoryStores = nearStores.stream()
             .map(store -> StoreWithVisitsAndDistanceResponse.of(store, request.getLatitude(), request.getLongitude(),
-                visitHistoriesCountCollection.getStoreExistsVisitsCount(store.getId()),
-                visitHistoriesCountCollection.getStoreNotExistsVisitsCount(store.getId())))
+                visitHistoriesCounter.getStoreExistsVisitsCount(store.getId()),
+                visitHistoriesCounter.getStoreNotExistsVisitsCount(store.getId())))
             .sorted(StoreOrderType.REVIEW_DESC.getSorted())
             .collect(Collectors.toList());
         return StoresGroupByReviewV2Response.of(nearCategoryStores);
     }
 
-    private List<Store> findNearCategoryStores(double mapLatitude, double mapLongitude, double distance, @Nullable MenuCategoryType categoryType) {
+    private List<Store> findNearStoresFilterByCategory(double mapLatitude, double mapLongitude, double distance, @Nullable MenuCategoryType categoryType) {
         List<Store> nearStores = storeRepository.findStoresByLocationLessThanDistance(mapLatitude, mapLongitude, Math.min(distance, MAX_RADIUS_DISTANCE));
         if (categoryType == null) {
             return nearStores;

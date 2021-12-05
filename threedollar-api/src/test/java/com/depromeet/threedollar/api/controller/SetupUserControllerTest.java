@@ -58,7 +58,7 @@ public abstract class SetupUserControllerTest {
         userMedalRepository.deleteAllInBatch();
         medalRepository.deleteAllInBatch();
         userRepository.deleteAllInBatch();
-        withdrawalUserRepository.deleteAll();
+        withdrawalUserRepository.deleteAllInBatch();
     }
 
 }

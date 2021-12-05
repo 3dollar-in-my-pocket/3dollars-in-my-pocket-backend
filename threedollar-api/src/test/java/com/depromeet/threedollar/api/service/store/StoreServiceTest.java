@@ -4,7 +4,7 @@ import com.depromeet.threedollar.api.controller.user.UserMedalEventListener;
 import com.depromeet.threedollar.domain.event.store.StoreCreatedEvent;
 import com.depromeet.threedollar.domain.event.store.StoreDeletedEvent;
 import com.depromeet.threedollar.api.service.SetupUserServiceTest;
-import com.depromeet.threedollar.api.service.store.dto.request.AddStoreRequest;
+import com.depromeet.threedollar.api.service.store.dto.request.RegisterStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.DeleteStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.MenuRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.UpdateStoreRequest;
@@ -84,7 +84,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             double latitude = 34.0;
             double longitude = 130.0;
 
-            AddStoreRequest request = AddStoreRequest.testBuilder()
+            RegisterStoreRequest request = RegisterStoreRequest.testBuilder()
                 .latitude(latitude)
                 .longitude(longitude)
                 .storeName(storeName)
@@ -95,7 +95,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .build();
 
             // when
-            storeService.addStore(request, userId);
+            storeService.registerStore(request, userId);
 
             // then
             List<Store> stores = storeRepository.findAll();
@@ -107,7 +107,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         @ParameterizedTest
         void 가게_등록시_개장일_데이터도_추가된다(Set<DayOfTheWeek> appearanceDays) {
             // given
-            AddStoreRequest request = AddStoreRequest.testBuilder()
+            RegisterStoreRequest request = RegisterStoreRequest.testBuilder()
                 .latitude(34.0)
                 .longitude(130.0)
                 .storeName("붕어빵")
@@ -118,7 +118,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .build();
 
             // when
-            storeService.addStore(request, userId);
+            storeService.registerStore(request, userId);
 
             // then
             List<AppearanceDay> appearanceDayList = appearanceDayRepository.findAll();
@@ -130,7 +130,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         @ParameterizedTest
         void 가게_등록시_결제방법_데이터도_추가된다(Set<PaymentMethodType> paymentMethods) {
             // given
-            AddStoreRequest request = AddStoreRequest.testBuilder()
+            RegisterStoreRequest request = RegisterStoreRequest.testBuilder()
                 .latitude(34.0)
                 .longitude(130.0)
                 .storeName("붕어빵")
@@ -141,7 +141,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .build();
 
             // when
-            storeService.addStore(request, userId);
+            storeService.registerStore(request, userId);
 
             // then
             List<PaymentMethod> paymentMethodsList = paymentMethodRepository.findAll();
@@ -155,7 +155,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             // given
             Set<MenuRequest> menus = Set.of(MenuRequest.of(menuName, price, type));
 
-            AddStoreRequest request = AddStoreRequest.testBuilder()
+            RegisterStoreRequest request = RegisterStoreRequest.testBuilder()
                 .latitude(34.0)
                 .longitude(130.0)
                 .storeName("붕어빵")
@@ -166,7 +166,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .build();
 
             // when
-            storeService.addStore(request, userId);
+            storeService.registerStore(request, userId);
 
             // then
             List<Menu> menuList = menuRepository.findAll();
@@ -183,7 +183,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 MenuRequest.of(menuName, price, type))
             );
 
-            AddStoreRequest request = AddStoreRequest.testBuilder()
+            RegisterStoreRequest request = RegisterStoreRequest.testBuilder()
                 .latitude(34.0)
                 .longitude(130.0)
                 .storeName("붕어빵")
@@ -194,7 +194,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .build();
 
             // when
-            storeService.addStore(request, userId);
+            storeService.registerStore(request, userId);
 
             // then
             List<Menu> menuList = menuRepository.findAll();
@@ -205,7 +205,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         @Test
         void 가게_등록시_메달을_획득하는_작업이_수행된다() {
             // given
-            AddStoreRequest request = AddStoreRequest.testBuilder()
+            RegisterStoreRequest request = RegisterStoreRequest.testBuilder()
                 .latitude(34.0)
                 .longitude(130.0)
                 .storeName("가게 이름")
@@ -216,7 +216,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .build();
 
             // when
-            storeService.addStore(request, userId);
+            storeService.registerStore(request, userId);
 
             verify(userMedalEventListener, times(1)).addObtainableMedalsByAddStore(any(StoreCreatedEvent.class));
         }

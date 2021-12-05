@@ -16,7 +16,7 @@ public class StoreRatingService {
     private final StoreRepository storeRepository;
 
     @Transactional
-    public void renewStoreRating(Store store) {
+    public void renewStoreAverageRating(Store store) {
         double average = calculateAverageRating(store.getId());
         store.updateAverageRating(average);
         storeRepository.save(store);

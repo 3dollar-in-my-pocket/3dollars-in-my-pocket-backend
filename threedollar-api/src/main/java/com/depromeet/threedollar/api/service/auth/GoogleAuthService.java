@@ -26,7 +26,7 @@ public class GoogleAuthService implements AuthService {
     @Override
     public Long signUp(SignUpRequest request) {
         GoogleProfileInfoResponse response = googleApiClient.getProfileInfo((HttpHeaderUtils.withBearerToken(request.getToken())));
-        return userService.createUser(request.toCreateUserRequest(response.getId()));
+        return userService.registerUser(request.toCreateUserRequest(response.getId()));
     }
 
     @Override

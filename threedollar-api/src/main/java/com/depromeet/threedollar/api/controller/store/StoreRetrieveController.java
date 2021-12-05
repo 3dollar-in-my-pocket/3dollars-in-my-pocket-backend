@@ -40,8 +40,8 @@ public class StoreRetrieveController {
     @ApiOperation("[인증] 마이페이지 - 내가 제보한 가게 목록들을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 O)")
     @Auth
     @GetMapping("/api/v3/stores/me")
-    public ApiResponse<StoresScrollResponse> getMyStores(@Valid RetrieveMyStoresRequest request, @UserId Long userId) {
-        return ApiResponse.success(storeRetrieveService.retrieveMyStores(request, userId));
+    public ApiResponse<StoresScrollResponse> retrieveMyReportedStoreHistories(@Valid RetrieveMyStoresRequest request, @UserId Long userId) {
+        return ApiResponse.success(storeRetrieveService.retrieveMyReportedStoreHistories(request, userId));
     }
 
     /**
@@ -53,8 +53,8 @@ public class StoreRetrieveController {
     @ApiOperation("[인증] 마이페이지 - 내가 제보한 가게 목록들을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 X)")
     @Auth
     @GetMapping("/api/v2/stores/me")
-    public ApiResponse<StoresScrollV2Response> getMyStoresV2(@Valid RetrieveMyStoresV2Request request, @UserId Long userId) {
-        return ApiResponse.success(storeRetrieveService.retrieveMyStoresV2(request, userId));
+    public ApiResponse<StoresScrollV2Response> retrieveMyReportedStoreHistoriesV2(@Valid RetrieveMyStoresV2Request request, @UserId Long userId) {
+        return ApiResponse.success(storeRetrieveService.retrieveMyReportedStoreHistoriesV2(request, userId));
     }
 
     /**

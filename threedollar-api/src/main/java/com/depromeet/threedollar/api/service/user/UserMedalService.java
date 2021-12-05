@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.user;
 
-import com.depromeet.threedollar.api.service.user.dto.request.ActivateUserMedalRequest;
+import com.depromeet.threedollar.api.service.user.dto.request.ActivateRepresentativeMedalRequest;
 import com.depromeet.threedollar.api.service.user.dto.response.UserMedalResponse;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.domain.domain.medal.Medal;
@@ -26,16 +26,16 @@ public class UserMedalService {
     private final MedalRepository medalRepository;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void addMedalsIfMatchCondition(Long userId, MedalAcquisitionConditionType conditionType, Supplier<Long> findCountsByUser) {
+    public void addMedalsIfSatisfyCondition(Long userId, MedalAcquisitionConditionType conditionType, Supplier<Long> findCountsByUser) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
-        List<Medal> medalsNotOwned = getNoOwnedMedalsByCondition(user, conditionType);
-        if (hasNoMoreMedalsCanBeObtained(medalsNotOwned)) {
+        List<Medal> medalsUserNotHeldByCondition = getMedalsUserNotHeldByCondition(user, conditionType);
+        if (hasNoMoreMedalsCanBeObtained(medalsUserNotHeldByCondition)) {
             return;
         }
-        user.addMedals(newUserMedalsCanBeObtained(medalsNotOwned, conditionType, findCountsByUser.get()));
+        user.addMedals(filterMedalsSatisfyCondition(medalsUserNotHeldByCondition, conditionType, findCountsByUser.get()));
     }
 
-    private List<Medal> getNoOwnedMedalsByCondition(User user, MedalAcquisitionConditionType conditionType) {
+    private List<Medal> getMedalsUserNotHeldByCondition(User user, MedalAcquisitionConditionType conditionType) {
         List<Medal> medals = medalRepository.findAllByConditionType(conditionType);
         List<Long> medalsUserObtains = user.getUserMedals().stream()
             .map(UserMedal::getMedalId)
@@ -49,14 +49,14 @@ public class UserMedalService {
         return medals.isEmpty();
     }
 
-    private List<Medal> newUserMedalsCanBeObtained(List<Medal> medals, MedalAcquisitionConditionType conditionType, long counts) {
+    private List<Medal> filterMedalsSatisfyCondition(List<Medal> medals, MedalAcquisitionConditionType conditionType, long counts) {
         return medals.stream()
             .filter(medal -> medal.canObtain(conditionType, counts))
             .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public List<UserMedalResponse> getAvailableUserMedals(Long userId) {
+    public List<UserMedalResponse> retrieveObtainedMedals(Long userId) {
         List<UserMedal> userMedals = UserServiceUtils.findUserById(userRepository, userId).getUserMedals();
         return userMedals.stream()
             .map(UserMedalResponse::of)
@@ -64,7 +64,7 @@ public class UserMedalService {
     }
 
     @Transactional
-    public UserInfoResponse activateUserMedal(ActivateUserMedalRequest request, Long userId) {
+    public UserInfoResponse updateRepresentativeMedal(ActivateRepresentativeMedalRequest request, Long userId) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
         user.updateActivatedMedal(request.getUserMedalId());
         return UserInfoResponse.of(user);

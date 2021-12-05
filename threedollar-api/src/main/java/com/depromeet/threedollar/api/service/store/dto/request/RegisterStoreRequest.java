@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class AddStoreRequest {
+public class RegisterStoreRequest {
 
     @NotNull(message = "{store.latitude.notNull}")
     private Double latitude;
@@ -42,8 +42,8 @@ public class AddStoreRequest {
     private Set<MenuRequest> menus;
 
     @Builder(builderClassName = "TestBuilder", builderMethodName = "testBuilder")
-    public AddStoreRequest(Double latitude, Double longitude, String storeName, @Nullable StoreType storeType,
-                           Set<DayOfTheWeek> appearanceDays, Set<PaymentMethodType> paymentMethods, Set<MenuRequest> menus) {
+    public RegisterStoreRequest(Double latitude, Double longitude, String storeName, @Nullable StoreType storeType,
+                                Set<DayOfTheWeek> appearanceDays, Set<PaymentMethodType> paymentMethods, Set<MenuRequest> menus) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.storeName = storeName;

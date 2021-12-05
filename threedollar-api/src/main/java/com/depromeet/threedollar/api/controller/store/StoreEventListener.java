@@ -14,7 +14,7 @@ public class StoreEventListener {
 
     @EventListener
     public void renewStoreRating(ReviewChangedEvent event) {
-        storeRatingService.renewStoreRating(event.getStore());
+        storeRatingService.renewStoreAverageRating(event.getStore());
     }
 
 }

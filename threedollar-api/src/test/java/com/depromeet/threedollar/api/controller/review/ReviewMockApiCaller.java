@@ -24,11 +24,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class ReviewMockApiCaller extends MockMvcUtils {
 
-    public ReviewMockApiCaller(MockMvc mockMvc, ObjectMapper objectMapper) {
+    ReviewMockApiCaller(MockMvc mockMvc, ObjectMapper objectMapper) {
         super(mockMvc, objectMapper);
     }
 
-    public ApiResponse<ReviewInfoResponse> addReview(AddReviewRequest request, String token, int expectedStatus) throws Exception {
+    ApiResponse<ReviewInfoResponse> addReview(AddReviewRequest request, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = post("/api/v2/store/review")
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(MediaType.APPLICATION_JSON)
@@ -45,7 +45,7 @@ class ReviewMockApiCaller extends MockMvcUtils {
         );
     }
 
-    public ApiResponse<ReviewInfoResponse> updateReview(Long reviewId, UpdateReviewRequest request, String token, int expectedStatus) throws Exception {
+    ApiResponse<ReviewInfoResponse> updateReview(Long reviewId, UpdateReviewRequest request, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = put("/api/v2/store/review/".concat(String.valueOf(reviewId)))
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(MediaType.APPLICATION_JSON)
@@ -62,7 +62,7 @@ class ReviewMockApiCaller extends MockMvcUtils {
         );
     }
 
-    public ApiResponse<String> deleteReview(Long reviewId, String token, int expectedStatus) throws Exception {
+    ApiResponse<String> deleteReview(Long reviewId, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = delete("/api/v2/store/review/".concat(String.valueOf(reviewId)))
             .header(HttpHeaders.AUTHORIZATION, token);
 
@@ -77,7 +77,7 @@ class ReviewMockApiCaller extends MockMvcUtils {
         );
     }
 
-    public ApiResponse<ReviewScrollResponse> retrieveMyReviews(RetrieveMyReviewsRequest request, String token, int expectedStatus) throws Exception {
+    ApiResponse<ReviewScrollResponse> retrieveMyReviewHistories(RetrieveMyReviewsRequest request, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v3/store/reviews/me")
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))
@@ -95,7 +95,7 @@ class ReviewMockApiCaller extends MockMvcUtils {
     }
 
     @Deprecated
-    public ApiResponse<ReviewScrollV2Response> retrieveMyReviewsV2(RetrieveMyReviewsV2Request request, String token, int expectedStatus) throws Exception {
+    ApiResponse<ReviewScrollV2Response> retrieveMyReviewHistoriesV2(RetrieveMyReviewsV2Request request, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/store/reviews/me")
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))

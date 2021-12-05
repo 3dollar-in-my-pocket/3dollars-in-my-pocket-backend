@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.controller.store;
 import com.depromeet.threedollar.api.config.interceptor.Auth;
 import com.depromeet.threedollar.api.config.resolver.UserId;
 import com.depromeet.threedollar.api.service.store.StoreService;
-import com.depromeet.threedollar.api.service.store.dto.request.AddStoreRequest;
+import com.depromeet.threedollar.api.service.store.dto.request.RegisterStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.DeleteStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.UpdateStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.response.StoreDeleteResponse;
@@ -28,8 +28,8 @@ public class StoreController {
     @ApiOperation("[인증] 가게 등록 페이지 - 새로운 가게를 제보합니다")
     @Auth
     @PostMapping("/api/v2/store")
-    public ApiResponse<StoreInfoResponse> addStore(@Valid @RequestBody AddStoreRequest request, @UserId Long userId) {
-        return ApiResponse.success(storeService.addStore(request, userId));
+    public ApiResponse<StoreInfoResponse> registerStore(@Valid @RequestBody RegisterStoreRequest request, @UserId Long userId) {
+        return ApiResponse.success(storeService.registerStore(request, userId));
     }
 
     @ApiOperation("[인증] 가게 상세 페이지 - 특정 가게의 정보를 수정합니다")

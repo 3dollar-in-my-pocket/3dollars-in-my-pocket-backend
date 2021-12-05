@@ -7,13 +7,13 @@ import org.jetbrains.annotations.Nullable;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ActivateUserMedalRequest {
+public class ActivateRepresentativeMedalRequest {
 
     @Nullable
     private Long userMedalId;
 
-    public static ActivateUserMedalRequest testInstance(Long userMedalId) {
-        return new ActivateUserMedalRequest(userMedalId);
+    public static ActivateRepresentativeMedalRequest testInstance(Long userMedalId) {
+        return new ActivateRepresentativeMedalRequest(userMedalId);
     }
 
 }

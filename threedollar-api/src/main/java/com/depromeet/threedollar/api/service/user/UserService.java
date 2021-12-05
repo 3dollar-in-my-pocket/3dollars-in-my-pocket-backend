@@ -20,7 +20,7 @@ public class UserService {
     private final WithdrawalUserRepository withdrawalUserRepository;
 
     @Transactional
-    public Long createUser(CreateUserRequest request) {
+    public Long registerUser(CreateUserRequest request) {
         UserServiceUtils.validateNotExistsUser(userRepository, request.getSocialId(), request.getSocialType());
         UserServiceUtils.validateNotExistsUserName(userRepository, request.getName());
         return userRepository.save(request.toEntity()).getId();
@@ -33,7 +33,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public void checkAvailableName(CheckAvailableNameRequest request) {
+    public void checkIsAvailableName(CheckAvailableNameRequest request) {
         UserServiceUtils.validateNotExistsUserName(userRepository, request.getName());
     }
 

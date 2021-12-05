@@ -20,11 +20,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class AuthMockApiCaller extends MockMvcUtils {
 
-    public AuthMockApiCaller(MockMvc mockMvc, ObjectMapper objectMapper) {
+    AuthMockApiCaller(MockMvc mockMvc, ObjectMapper objectMapper) {
         super(mockMvc, objectMapper);
     }
 
-    public ApiResponse<LoginResponse> signUp(SignUpRequest request, int expectedStatus) throws Exception {
+    ApiResponse<LoginResponse> signUp(SignUpRequest request, int expectedStatus) throws Exception {
         return objectMapper.readValue(
             mockMvc.perform(post("/api/v2/signup")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -38,7 +38,7 @@ class AuthMockApiCaller extends MockMvcUtils {
         );
     }
 
-    public ApiResponse<LoginResponse> login(LoginRequest request, int expectedStatus) throws Exception {
+    ApiResponse<LoginResponse> login(LoginRequest request, int expectedStatus) throws Exception {
         return objectMapper.readValue(
             mockMvc.perform(post("/api/v2/login")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -52,7 +52,7 @@ class AuthMockApiCaller extends MockMvcUtils {
         );
     }
 
-    public ApiResponse<String> signOut(String token, int expectedStatus) throws Exception {
+    ApiResponse<String> signOut(String token, int expectedStatus) throws Exception {
         return objectMapper.readValue(
             mockMvc.perform(delete("/api/v2/signout")
                 .header(HttpHeaders.AUTHORIZATION, token))
@@ -65,7 +65,7 @@ class AuthMockApiCaller extends MockMvcUtils {
         );
     }
 
-    public ApiResponse<String> logout(String token, int expectedStatus) throws Exception {
+    ApiResponse<String> logout(String token, int expectedStatus) throws Exception {
         return objectMapper.readValue(
             mockMvc.perform(post("/api/v2/logout")
                 .contentType(MediaType.APPLICATION_JSON)
