@@ -19,7 +19,7 @@ class PopupRepositoryTest {
 
     @AfterEach
     void cleanUp() {
-        popupRepository.deleteAll();
+        popupRepository.deleteAllInBatch();
     }
 
     @Test

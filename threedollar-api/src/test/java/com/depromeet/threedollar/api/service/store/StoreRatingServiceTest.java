@@ -25,7 +25,7 @@ class StoreRatingServiceTest extends SetupStoreServiceTest {
     @AfterEach
     void cleanUp() {
         super.cleanup();
-        reviewRepository.deleteAll();
+        reviewRepository.deleteAllInBatch();
     }
 
     @Test

@@ -49,9 +49,9 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
     void cleanUp() {
         super.cleanup();
         visitHistoryRepository.deleteAllInBatch();
-        storeRepository.deleteAllInBatch();
         storeDeleteRequestRepository.deleteAllInBatch();
         reviewRepository.deleteAllInBatch();
+        storeRepository.deleteAll();
     }
 
     @DisplayName("가게 추가 조건 메달 획득")

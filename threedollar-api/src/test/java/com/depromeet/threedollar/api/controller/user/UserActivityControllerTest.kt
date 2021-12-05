@@ -20,14 +20,14 @@ import org.springframework.test.web.servlet.get
 @SpringBootTest
 internal class UserActivityControllerTest(
     private val storeRepository: StoreRepository,
-    private val reviewRepository: ReviewRepository,
+    private val reviewRepository: ReviewRepository
 ) : SetupUserControllerTest() {
 
     @AfterEach
     fun cleanUp() {
         super.cleanup()
         storeRepository.deleteAll()
-        reviewRepository.deleteAll()
+        reviewRepository.deleteAllInBatch()
     }
 
     @Test

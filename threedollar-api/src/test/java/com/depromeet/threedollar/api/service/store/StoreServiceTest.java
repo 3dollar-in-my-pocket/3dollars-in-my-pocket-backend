@@ -71,7 +71,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         paymentMethodRepository.deleteAllInBatch();
         menuRepository.deleteAllInBatch();
         storeRepository.deleteAllInBatch();
-        storeDeleteRequestRepository.deleteAll();
+        storeDeleteRequestRepository.deleteAllInBatch();
     }
 
     @Nested

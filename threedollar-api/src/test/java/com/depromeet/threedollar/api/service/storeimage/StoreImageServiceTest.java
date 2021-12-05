@@ -44,7 +44,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
     @AfterEach
     void cleanUp() {
         super.cleanup();
-        storeImageRepository.deleteAll();
+        storeImageRepository.deleteAllInBatch();
     }
 
     @Nested

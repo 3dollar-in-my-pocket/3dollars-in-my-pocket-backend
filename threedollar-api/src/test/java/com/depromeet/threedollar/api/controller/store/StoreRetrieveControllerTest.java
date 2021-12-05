@@ -73,8 +73,8 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
     @AfterEach
     void cleanUp() {
         super.cleanup();
-        storeImageRepository.deleteAll();
-        reviewRepository.deleteAll();
+        storeImageRepository.deleteAllInBatch();
+        reviewRepository.deleteAllInBatch();
         appearanceDayRepository.deleteAllInBatch();
         paymentMethodRepository.deleteAllInBatch();
         menuRepository.deleteAllInBatch();

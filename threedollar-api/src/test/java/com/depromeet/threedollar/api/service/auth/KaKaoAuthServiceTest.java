@@ -45,8 +45,8 @@ class KaKaoAuthServiceTest {
 
     @AfterEach
     void cleanUp() {
-        withdrawalUserRepository.deleteAll();
         userRepository.deleteAll();
+        withdrawalUserRepository.deleteAllInBatch();
     }
 
     @Nested

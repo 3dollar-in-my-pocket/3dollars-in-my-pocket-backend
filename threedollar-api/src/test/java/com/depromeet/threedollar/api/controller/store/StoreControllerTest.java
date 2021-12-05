@@ -54,12 +54,11 @@ class StoreControllerTest extends SetupUserControllerTest {
     @AfterEach
     void cleanUp() {
         super.cleanup();
-        storeRepository.deleteAll();
         appearanceDayRepository.deleteAllInBatch();
         paymentMethodRepository.deleteAllInBatch();
         menuRepository.deleteAllInBatch();
         storeRepository.deleteAllInBatch();
-        storeDeleteRequestRepository.deleteAll();
+        storeDeleteRequestRepository.deleteAllInBatch();
     }
 
     @DisplayName("POST /api/v2/store")

@@ -33,7 +33,7 @@ class PopupControllerTest(
 
     @AfterEach
     fun cleanUp() {
-        popupRepository.deleteAll()
+        popupRepository.deleteAllInBatch()
     }
 
     @AutoSource

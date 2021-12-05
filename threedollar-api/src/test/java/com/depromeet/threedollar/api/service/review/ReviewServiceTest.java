@@ -45,8 +45,8 @@ class ReviewServiceTest extends SetupStoreServiceTest {
 
     @AfterEach
     void cleanUp() {
-        reviewRepository.deleteAll();
         super.cleanup();
+        reviewRepository.deleteAllInBatch();
     }
 
     @Nested

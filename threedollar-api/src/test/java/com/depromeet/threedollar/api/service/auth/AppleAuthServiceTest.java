@@ -44,8 +44,8 @@ class AppleAuthServiceTest {
 
     @AfterEach
     void cleanUp() {
-        withdrawalUserRepository.deleteAll();
         userRepository.deleteAll();
+        withdrawalUserRepository.deleteAllInBatch();
     }
 
     @Nested
