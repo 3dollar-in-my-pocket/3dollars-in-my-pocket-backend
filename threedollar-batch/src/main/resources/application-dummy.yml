@@ -1,6 +1,5 @@
 apple:
   client_id: test
-  issuer: test
 cloud:
   aws:
     s3:
