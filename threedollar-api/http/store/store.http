@@ -52,7 +52,7 @@ client.test("200 OK", function() {
 %}
 
 ### 특정 가게의 정보를 조회합니다. (v2.1 방문 인증 기능 추가)
-GET {{host_api}}/api/v2/store/?storeId={{STORE_ID}}&latitude=34&longitude=126&startDate=2021-10-10&endDate=2021-11-10
+GET {{host_api}}/api/v2/store/?storeId={{STORE_ID}}&latitude=34&longitude=126&startDate=2021-10-10
 
 > {%
 client.test("200 OK", function() {

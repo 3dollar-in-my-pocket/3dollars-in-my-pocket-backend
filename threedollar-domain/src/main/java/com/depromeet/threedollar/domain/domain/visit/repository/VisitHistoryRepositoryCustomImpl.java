@@ -35,7 +35,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
     }
 
     @Override
-    public List<VisitHistoryWithUserProjection> findAllVisitWithUserByStoreIdBetweenDate(Long storeId, LocalDate startDate, LocalDate endDate) {
+    public List<VisitHistoryWithUserProjection> findAllVisitWithUserByStoreIdAfterDate(Long storeId, LocalDate startDate) {
         return queryFactory.select(new QVisitHistoryWithUserProjection(
             visitHistory.id,
             visitHistory.store.id,
@@ -51,8 +51,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
             .leftJoin(user).on(visitHistory.userId.eq(user.id))
             .where(
                 visitHistory.store.id.eq(storeId),
-                visitHistory.dateOfVisit.goe(startDate),
-                visitHistory.dateOfVisit.loe(endDate)
+                visitHistory.dateOfVisit.goe(startDate)
             )
             .orderBy(visitHistory.id.desc())
             .fetch();
@@ -86,11 +85,12 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
     }
 
     @Override
-    public List<VisitHistoryCountProjection> findCountsByStoreIdWithGroup(List<Long> storeIds) {
+    public List<VisitHistoryCountProjection> findCountsByStoreIdWithGroup(List<Long> storeIds, LocalDate startDate) {
         return queryFactory.select(new QVisitHistoryCountProjection(visitHistory.store.id, visitHistory.type, visitHistory.id.count()))
             .from(visitHistory)
             .where(
-                visitHistory.store.id.in(storeIds)
+                visitHistory.store.id.in(storeIds),
+                visitHistory.dateOfVisit.goe(startDate)
             )
             .groupBy(visitHistory.store.id, visitHistory.type)
             .fetch();

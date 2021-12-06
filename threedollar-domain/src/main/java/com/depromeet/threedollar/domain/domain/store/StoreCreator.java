@@ -41,7 +41,7 @@ public class StoreCreator {
         return createWithDefaultMenu(userId, storeName, StoreType.STORE, latitude, longitude, rating);
     }
 
-    public static Store createWithDefaultMenu(Long userId, String storeName, StoreType storeType, double latitude, double longitude) {
+    private static Store createWithDefaultMenu(Long userId, String storeName, StoreType storeType, double latitude, double longitude) {
         return createWithDefaultMenu(userId, storeName, storeType, latitude, longitude, 3.0);
     }
 

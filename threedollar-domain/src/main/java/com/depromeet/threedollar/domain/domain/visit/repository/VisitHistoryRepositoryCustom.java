@@ -12,11 +12,11 @@ public interface VisitHistoryRepositoryCustom {
 
     boolean existsByStoreIdAndUserIdAndDateOfVisit(Long storeId, Long userId, LocalDate dateOfVisit);
 
-    List<VisitHistoryWithUserProjection> findAllVisitWithUserByStoreIdBetweenDate(Long storeId, LocalDate startDate, LocalDate endDate);
+    List<VisitHistoryWithUserProjection> findAllVisitWithUserByStoreIdAfterDate(Long storeId, LocalDate startDate);
 
     List<VisitHistory> findAllByUserIdWithScroll(Long userId, Long lastHistoryId, int size);
 
-    List<VisitHistoryCountProjection> findCountsByStoreIdWithGroup(List<Long> storeIds);
+    List<VisitHistoryCountProjection> findCountsByStoreIdWithGroup(List<Long> storeIds, LocalDate startDate);
 
 	long findCountsByUserId(Long userId);
 

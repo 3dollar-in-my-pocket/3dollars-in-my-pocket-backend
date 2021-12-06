@@ -31,6 +31,7 @@ import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -52,7 +53,7 @@ public class StoreRetrieveService {
     @Transactional(readOnly = true)
     public List<StoreWithVisitsAndDistanceResponse> getNearStores(RetrieveNearStoresRequest request) {
         List<Store> nearStores = findNearStoresFilterByCategory(request.getMapLatitude(), request.getMapLongitude(), request.getDistance(), request.getCategory());
-        VisitHistoriesCounterCollection collection = findVisitHistoriesCountByStoreIds(nearStores);
+        VisitHistoriesCounterCollection collection = findVisitHistoriesCountByStoreIdsInDuration(nearStores);
         return nearStores.stream()
             .map(store -> StoreWithVisitsAndDistanceResponse.of(store, request.getLatitude(), request.getLongitude(),
                 collection.getStoreExistsVisitsCount(store.getId()), collection.getStoreNotExistsVisitsCount(store.getId())))
@@ -66,8 +67,8 @@ public class StoreRetrieveService {
         User creator = userRepository.findUserById(store.getUserId());
         List<StoreImage> images = storeImageRepository.findAllByStoreId(request.getStoreId());
         List<ReviewWithWriterProjection> reviews = reviewRepository.findAllWithCreatorByStoreId(request.getStoreId());
-        List<VisitHistoryWithUserProjection> visitHistories = visitHistoryRepository.findAllVisitWithUserByStoreIdBetweenDate(request.getStoreId(), request.getStartDate(), request.getEndDate());
-        VisitHistoriesCounterCollection visitHistoriesCounter = findVisitHistoriesCountByStoreIds(Collections.singletonList(store));
+        List<VisitHistoryWithUserProjection> visitHistories = visitHistoryRepository.findAllVisitWithUserByStoreIdAfterDate(request.getStoreId(), request.getStartDate());
+        VisitHistoriesCounterCollection visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(Collections.singletonList(store));
         UserMedalsCollection userMedalCollection = findActiveMedalByUserIds(reviews, visitHistories);
         return StoreDetailResponse.of(store, images, request.getLatitude(), request.getLongitude(), creator, reviews, visitHistoriesCounter, visitHistories, userMedalCollection);
     }
@@ -76,7 +77,7 @@ public class StoreRetrieveService {
     public StoresScrollResponse retrieveMyReportedStoreHistories(RetrieveMyStoresRequest request, Long userId) {
         List<Store> storesWithNextCursor = storeRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
         ScrollPaginationCollection<Store> scrollCollection = ScrollPaginationCollection.of(storesWithNextCursor, request.getSize());
-        VisitHistoriesCounterCollection visitHistoriesCounter = findVisitHistoriesCountByStoreIds(scrollCollection.getItemsInCurrentScroll());
+        VisitHistoriesCounterCollection visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(scrollCollection.getItemsInCurrentScroll());
         return StoresScrollResponse.of(scrollCollection, visitHistoriesCounter, storeRepository.findCountsByUserId(userId));
     }
 
@@ -85,7 +86,7 @@ public class StoreRetrieveService {
     public StoresScrollV2Response retrieveMyReportedStoreHistoriesV2(RetrieveMyStoresV2Request request, Long userId) {
         List<Store> storesWithNextCursor = storeRepository.findAllActiveByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
         ScrollPaginationCollection<Store> scrollCollection = ScrollPaginationCollection.of(storesWithNextCursor, request.getSize());
-        VisitHistoriesCounterCollection visitHistoryCountsCollection = findVisitHistoriesCountByStoreIds(scrollCollection.getItemsInCurrentScroll());
+        VisitHistoriesCounterCollection visitHistoryCountsCollection = findVisitHistoriesCountByStoreIdsInDuration(scrollCollection.getItemsInCurrentScroll());
         long totalElements = Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> storeRepository.findActiveCountsByUserId(userId));
         return StoresScrollV2Response.of(scrollCollection, visitHistoryCountsCollection, totalElements, request.getLatitude(), request.getLongitude());
     }
@@ -94,7 +95,7 @@ public class StoreRetrieveService {
     @Transactional(readOnly = true)
     public StoresGroupByDistanceV2Response getNearStoresGroupByDistance(RetrieveStoreGroupByCategoryV2Request request) {
         List<Store> nearStores = findNearStoresFilterByCategory(request.getMapLatitude(), request.getMapLongitude(), MAX_RADIUS_DISTANCE, request.getCategory());
-        VisitHistoriesCounterCollection visitHistoriesCounter = findVisitHistoriesCountByStoreIds(nearStores);
+        VisitHistoriesCounterCollection visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(nearStores);
         List<StoreWithVisitsAndDistanceResponse> nearCategoryStores = nearStores.stream()
             .map(store -> StoreWithVisitsAndDistanceResponse.of(store, request.getLatitude(), request.getLongitude(),
                 visitHistoriesCounter.getStoreExistsVisitsCount(store.getId()),
@@ -108,7 +109,7 @@ public class StoreRetrieveService {
     @Transactional(readOnly = true)
     public StoresGroupByReviewV2Response getNearStoresGroupByReview(RetrieveStoreGroupByCategoryV2Request request) {
         List<Store> nearStores = findNearStoresFilterByCategory(request.getMapLatitude(), request.getMapLongitude(), MAX_RADIUS_DISTANCE, request.getCategory());
-        VisitHistoriesCounterCollection visitHistoriesCounter = findVisitHistoriesCountByStoreIds(nearStores);
+        VisitHistoriesCounterCollection visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(nearStores);
         List<StoreWithVisitsAndDistanceResponse> nearCategoryStores = nearStores.stream()
             .map(store -> StoreWithVisitsAndDistanceResponse.of(store, request.getLatitude(), request.getLongitude(),
                 visitHistoriesCounter.getStoreExistsVisitsCount(store.getId()),
@@ -128,11 +129,12 @@ public class StoreRetrieveService {
             .collect(Collectors.toList());
     }
 
-    private VisitHistoriesCounterCollection findVisitHistoriesCountByStoreIds(List<Store> stores) {
+    private VisitHistoriesCounterCollection findVisitHistoriesCountByStoreIdsInDuration(List<Store> stores) {
+        LocalDate monthAgo = LocalDate.now().minusMonths(1);
         List<Long> storeIds = stores.stream()
             .map(Store::getId).distinct()
             .collect(Collectors.toList());
-        return VisitHistoriesCounterCollection.of(visitHistoryRepository.findCountsByStoreIdWithGroup(storeIds));
+        return VisitHistoriesCounterCollection.of(visitHistoryRepository.findCountsByStoreIdWithGroup(storeIds, monthAgo));
     }
 
     private UserMedalsCollection findActiveMedalByUserIds(List<ReviewWithWriterProjection> reviews, List<VisitHistoryWithUserProjection> visitHistories) {

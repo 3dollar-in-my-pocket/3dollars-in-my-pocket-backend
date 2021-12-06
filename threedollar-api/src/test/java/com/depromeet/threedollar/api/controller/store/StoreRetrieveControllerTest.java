@@ -162,15 +162,16 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 주변_가게들을_조회할때_방문_성공_및_실패정보와_인증된_가게여부를_반환한다() throws Exception {
+        void 주변_가게_목록_조회시_한달간의_방문_목록_카운트를_반환한다() throws Exception {
             // given
             Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름", 34.0, 126.0);
             storeRepository.save(store);
 
+            LocalDate today = LocalDate.now();
             visitHistoryRepository.saveAll(List.of(
-                VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 17)),
-                VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 18)),
-                VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 19))
+                VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, today.minusMonths(1)),
+                VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, today.minusWeeks(1)),
+                VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, today)
             ));
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
@@ -187,6 +188,30 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // then
             assertThat(response.getData()).hasSize(1);
             assertVisitHistoryInfoResponse(response.getData().get(0).getVisitHistory(), 2, 1, true);
+        }
+
+        @Test
+        void 주변_가게들을_조회할때_한달이_지난_방문기록은_방문_카운트에_포함되지_않는다() throws Exception {
+            // given
+            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름", 34.0, 126.0);
+            storeRepository.save(store);
+
+            LocalDate today = LocalDate.now();
+            visitHistoryRepository.save(VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, today.minusMonths(1).minusDays(1)));
+            RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
+                .latitude(34.0)
+                .longitude(126.0)
+                .mapLatitude(34.0)
+                .mapLongitude(126.0)
+                .distance(1000)
+                .build();
+
+            // when
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+
+            // then
+            assertThat(response.getData()).hasSize(1);
+            assertVisitHistoryInfoResponse(response.getData().get(0).getVisitHistory(), 0, 0, false);
         }
 
         @Test
@@ -275,7 +300,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
         @AutoSource
         @ParameterizedTest
-        void 특정_가게에_대한_상세_가게_정보를_조회한다(String storeName, StoreType storeType) throws Exception {
+        void 특정_가게에_대한_상세_가게_정보를_조회한다(String storeName) throws Exception {
             // given
             Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), storeName);
             DayOfTheWeek day = DayOfTheWeek.FRIDAY;
@@ -457,56 +482,48 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 가게_상세_조회시_가게에_등록된_방문_성공_및_실패_횟수_및_가게_인증_여부를_반환한다() throws Exception {
+        void 가게_상세_조회시_한달간의_방문_목록_카운트를_반환한다() throws Exception {
             // given
-            LocalDate startDate = LocalDate.of(2021, 10, 19);
-            LocalDate endDate = LocalDate.of(2021, 10, 20);
-
+            LocalDate today = LocalDate.now();
             Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름");
             storeRepository.save(store);
 
-            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 19));
-            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 20));
-            visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
+            visitHistoryRepository.save(VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, today.minusMonths(1)));
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), startDate, endDate);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
 
             // then
-            assertVisitHistoryInfoResponse(response.getData().getVisitHistory(), 1, 1, false);
+            assertVisitHistoryInfoResponse(response.getData().getVisitHistory(), 1, 0, true);
         }
 
         @Test
         void 가게_상세_조회시_기간내에_가게에_방문한_기록과_유저정보를_방문한_기록들을_최근_생성된것부터_조회한다() throws Exception {
             // given
             LocalDate startDate = LocalDate.of(2021, 10, 19);
-            LocalDate endDate = LocalDate.of(2021, 10, 20);
 
             Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름");
             storeRepository.save(store);
 
-            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 18));
-            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 19));
-            VisitHistory visitHistory3 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 20));
-            VisitHistory visitHistory4 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 21));
-            visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2, visitHistory3, visitHistory4));
+            VisitHistory visitHistoryBeforeStartDate = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 18));
+            VisitHistory visitHistoryAfterStartDate = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 19));
+            visitHistoryRepository.saveAll(List.of(visitHistoryBeforeStartDate, visitHistoryAfterStartDate));
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), startDate, endDate);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), startDate);
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
 
             // then
             assertAll(
-                () -> assertThat(response.getData().getVisitHistories()).hasSize(2),
-                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(0), visitHistory3, testUser),
-                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(1), visitHistory2, testUser)
+                () -> assertThat(response.getData().getVisitHistories()).hasSize(1),
+                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(0), visitHistoryAfterStartDate, testUser)
             );
         }
 
-        @DisplayName("기본적으로 startDate, endDate를 넘기지 않으면 지난 7일간의 방문 기록을 조회한다")
+        @DisplayName("앱 호환을 위해 기본적으로 startDate를 넘기지 않으면 지난 7일간의 방문 기록을 조회한다")
         @Test
         void 가게_상세_조회시_기본적으로_일주일간_방문_인증_기록들을_조회한다() throws Exception {
             // given
@@ -517,8 +534,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             VisitHistory beforeLastWeekHistory = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, today.minusWeeks(1).minusDays(1));
             VisitHistory lastWeekHistory = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, today.minusWeeks(1));
             VisitHistory todayHistory = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, today);
-            VisitHistory afterTodayHistory = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, today.plusDays(1));
-            visitHistoryRepository.saveAll(List.of(beforeLastWeekHistory, lastWeekHistory, todayHistory, afterTodayHistory));
+            visitHistoryRepository.saveAll(List.of(beforeLastWeekHistory, lastWeekHistory, todayHistory));
 
             RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
@@ -582,21 +598,6 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getContents()).hasSize(2);
             assertStoreWithVisitsResponse(response.getData().getContents().get(0), store3);
             assertStoreWithVisitsResponse(response.getData().getContents().get(1), store2);
-        }
-
-        @Test
-        void 내가_작성한_가게_목록_조회시_cachingTotalElement를_따로_넘기지_않는경우_제보한_가게의_총_개수를_서버에서_계산해서_반환한다() throws Exception {
-            // given
-            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게1");
-            storeRepository.save(store);
-
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, null);
-
-            // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
-
-            // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(1);
         }
 
         @DisplayName("마지막 페이지인경우 nextCursor = -1")
@@ -679,15 +680,16 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 내가_작성한_가게_목록_조회시_방문_성공_및_실패_횟수와_가게_인증_여부를_반환한다() throws Exception {
+        void 내가_작성한_가게_목록_조회시_한달간의_방문_목록_카운트를_반환한다() throws Exception {
             // given
             Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름");
             storeRepository.save(store);
 
+            LocalDate today = LocalDate.now();
             visitHistoryRepository.saveAll(List.of(
-                VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 15)),
-                VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 16)),
-                VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 17)))
+                VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, today.minusMonths(1)),
+                VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, today.minusWeeks(1)),
+                VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, today))
             );
 
             RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, null);
@@ -836,7 +838,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34.0, 126.0);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", menuCategoryType)));
             storeRepository.save(store);
-            visitHistoryRepository.save(VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 18)));
+            visitHistoryRepository.save(VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.now()));
 
             RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(menuCategoryType)
@@ -1004,7 +1006,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Store store = StoreCreator.create(testUser.getId(), "가게 1.1", 34, 126, 1.1);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴1", "가격1", menuCategoryType)));
             storeRepository.save(store);
-            visitHistoryRepository.save(VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 18)));
+            visitHistoryRepository.save(VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.now()));
 
             RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(menuCategoryType)
