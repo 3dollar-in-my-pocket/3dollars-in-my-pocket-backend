@@ -20,11 +20,11 @@ import static com.depromeet.threedollar.common.exception.ErrorCode.VALIDATION_LO
 @Embeddable
 public class Location {
 
-    private static final double KOREA_MIN_LATITUDE = 33.1;
-    private static final double KOREA_MAX_LATITUDE = 38.61;
+    private static final double SOUTH_KOREA_MIN_LATITUDE = 33.1;
+    private static final double SOUTH_KOREA_MAX_LATITUDE = 38.61;
 
-    private static final double KOREA_MIN_LONGITUDE = 124.60;
-    private static final double KOREA_MAX_LONGITUDE = 131.87;
+    private static final double SOUTH_KOREA_MIN_LONGITUDE = 124.60;
+    private static final double SOUTH_KOREA_MAX_LONGITUDE = 131.87;
 
     @Column(nullable = false)
     private double latitude;
@@ -39,10 +39,10 @@ public class Location {
     }
 
     private void validateIsScopeOfKorea(double latitude, double longitude) {
-        if (latitude < KOREA_MIN_LATITUDE || latitude > KOREA_MAX_LATITUDE) {
+        if (latitude < SOUTH_KOREA_MIN_LATITUDE || latitude > SOUTH_KOREA_MAX_LATITUDE) {
             throw new ValidationException(String.format("잘못된 위도 (%s)가 입력되었습니다. (33.1 ~ 38.61) 사이의 범위만 허용됩니다)", latitude), VALIDATION_LATITUDE_EXCEPTION);
         }
-        if (longitude < KOREA_MIN_LONGITUDE || longitude > KOREA_MAX_LONGITUDE) {
+        if (longitude < SOUTH_KOREA_MIN_LONGITUDE || longitude > SOUTH_KOREA_MAX_LONGITUDE) {
             throw new ValidationException(String.format("잘못된 경도 (%s)가 입력되었습니다. (124.6 ~ 131.87) 사이의 범위만 허용됩니다)", longitude), VALIDATION_LONGITUDE_EXCEPTION);
         }
     }
