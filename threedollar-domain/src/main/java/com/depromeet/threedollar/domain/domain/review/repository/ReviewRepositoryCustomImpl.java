@@ -12,9 +12,9 @@ import javax.persistence.LockModeType;
 import java.util.List;
 
 import static com.depromeet.threedollar.domain.config.cache.CacheType.CacheKey.USER_REVIEWS_COUNTS;
+import static com.depromeet.threedollar.domain.domain.review.QReview.review;
 import static com.depromeet.threedollar.domain.domain.store.QStore.store;
 import static com.depromeet.threedollar.domain.domain.user.QUser.user;
-import static com.depromeet.threedollar.domain.domain.review.QReview.review;
 
 @RequiredArgsConstructor
 public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
@@ -29,6 +29,16 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
                 review.userId.eq(userId),
                 review.status.eq(ReviewStatus.POSTED)
             ).fetchOne();
+    }
+
+    @Override
+    public List<Review> findAllByStoreId(Long storeId) {
+        return queryFactory.selectFrom(review)
+            .where(
+                review.storeId.eq(storeId),
+                review.status.eq(ReviewStatus.POSTED)
+            )
+            .fetch();
     }
 
     @Override
@@ -69,16 +79,6 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
                 store.status.eq(StoreStatus.ACTIVE)
             )
             .fetchCount();
-    }
-
-    @Override
-    public List<Review> findAllWithCreatorByStoreId(Long storeId) {
-        return queryFactory.selectFrom(review)
-            .where(
-                review.storeId.eq(storeId),
-                review.status.eq(ReviewStatus.POSTED)
-            )
-            .fetch();
     }
 
     @Override

@@ -31,10 +31,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
@@ -61,7 +63,7 @@ public class StoreRetrieveService {
     @Transactional(readOnly = true)
     public StoreDetailResponse getDetailStoreInfo(RetrieveStoreDetailRequest request) {
         Store store = StoreServiceUtils.findStoreByIdFetchJoinMenu(storeRepository, request.getStoreId());
-        List<Review> reviews = reviewRepository.findAllWithCreatorByStoreId(request.getStoreId());
+        List<Review> reviews = reviewRepository.findAllByStoreId(request.getStoreId());
         List<StoreImage> storeImages = storeImageRepository.findAllByStoreId(request.getStoreId());
         List<VisitHistoryWithUserProjection> visitHistories = visitHistoryRepository.findAllVisitWithUserByStoreIdAfterDate(request.getStoreId(), request.getStartDate());
         UserCacheCollection users = UserCacheCollection.of(userRepository.findAllByUserId(assembleUserIds(reviews, visitHistories, store)));
@@ -70,14 +72,15 @@ public class StoreRetrieveService {
     }
 
     private List<Long> assembleUserIds(List<Review> reviews, List<VisitHistoryWithUserProjection> visitHistories, Store store) {
-        List<Long> reviewUserIds = reviews.stream().map(Review::getUserId).collect(Collectors.toList());
-        List<Long> visitHistoryUserIds = visitHistories.stream().map(VisitHistoryWithUserProjection::getUserId).collect(Collectors.toList());
-        Long storeUserId = store.getUserId();
-        reviewUserIds.addAll(visitHistoryUserIds);
-        reviewUserIds.add(storeUserId);
-        return reviewUserIds.stream()
-            .filter(Objects::nonNull)
-            .distinct()
+        return Stream.of(reviews.stream()
+                .map(Review::getUserId)
+                .collect(Collectors.toList()),
+            visitHistories.stream()
+                .map(VisitHistoryWithUserProjection::getUserId)
+                .collect(Collectors.toList()),
+            List.of(store.getUserId())
+        )
+            .flatMap(Collection::stream)
             .collect(Collectors.toList());
     }
 

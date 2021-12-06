@@ -3,8 +3,6 @@ package com.depromeet.threedollar.domain.domain.store.repository;
 import com.depromeet.threedollar.domain.config.querydsl.OrderByNull;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreStatus;
-import com.depromeet.threedollar.domain.domain.store.projection.QStoreWithReportedCountProjection;
-import com.depromeet.threedollar.domain.domain.store.projection.StoreWithReportedCountProjection;
 import com.querydsl.core.types.Ops;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
@@ -18,7 +16,6 @@ import java.util.List;
 import static com.depromeet.threedollar.domain.config.cache.CacheType.CacheKey.USER_STORES_COUNTS;
 import static com.depromeet.threedollar.domain.domain.store.QMenu.menu;
 import static com.depromeet.threedollar.domain.domain.store.QStore.store;
-import static com.depromeet.threedollar.domain.domain.storedelete.QStoreDeleteRequest.storeDeleteRequest;
 import static com.querydsl.core.types.dsl.MathExpressions.*;
 
 @RequiredArgsConstructor
@@ -49,6 +46,17 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
                 store.id.eq(storeId),
                 store.status.eq(StoreStatus.ACTIVE)
             ).fetchOne();
+    }
+
+    @Override
+    public List<Store> findAllByIds(List<Long> storeIds) {
+        return queryFactory.selectFrom(store).distinct()
+            .innerJoin(store.menus, menu).fetchJoin()
+            .where(
+                store.id.in(storeIds)
+            )
+            .orderBy(store.id.desc())
+            .fetch();
     }
 
     @Cacheable(key = "#userId", value = USER_STORES_COUNTS)
@@ -137,17 +145,6 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
         return store.id.lt(lastStoreId);
     }
 
-    @Override
-    public List<Store> findAllByIds(List<Long> storeIds) {
-        return queryFactory.selectFrom(store).distinct()
-            .innerJoin(store.menus, menu).fetchJoin()
-            .where(
-                store.id.in(storeIds)
-            )
-            .orderBy(store.id.desc())
-            .fetch();
-    }
-
     // TODO TODO B-Tree의 공간정보 인덱스 한계로, R-Tree 인덱스 리서치 필요.
     @Override
     public List<Store> findStoresByLocationLessThanDistance(double latitude, double longitude, double distance) {
@@ -179,33 +176,6 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
                 .multiply(cos(radians(store.location.latitude)))
                 .multiply(cos(radians(Expressions.constant(longitude)).subtract(radians(store.location.longitude))))
             )).multiply(6371);
-    }
-
-    @Override
-    public List<StoreWithReportedCountProjection> findStoresByMoreThanReportCntWithPagination(int cnt, long offset, int size) {
-        return queryFactory.select(new QStoreWithReportedCountProjection(
-            store.id,
-            store.name,
-            store.location.latitude,
-            store.location.longitude,
-            store.type,
-            store.rating,
-            store.createdAt,
-            store.updatedAt,
-            storeDeleteRequest.id.count()
-        ))
-            .from(store)
-            .innerJoin(storeDeleteRequest)
-            .on(store.id.eq(storeDeleteRequest.store.id))
-            .where(
-                store.status.eq(StoreStatus.ACTIVE)
-            )
-            .groupBy(store.id)
-            .having(store.id.count().goe(cnt))
-            .orderBy(store.id.count().desc())
-            .limit(size)
-            .offset(offset * size)
-            .fetch();
     }
 
 }

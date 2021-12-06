@@ -18,7 +18,7 @@ public class MedalRepositoryCustomImpl implements MedalRepositoryCustom {
     @Override
     public List<Medal> findAllActiveMedals() {
         return queryFactory.selectFrom(medal)
-            .innerJoin(medal.acquisitionCondition, medalAcquisitionCondition)
+            .innerJoin(medal.acquisitionCondition, medalAcquisitionCondition).fetchJoin()
             .fetch();
     }
 

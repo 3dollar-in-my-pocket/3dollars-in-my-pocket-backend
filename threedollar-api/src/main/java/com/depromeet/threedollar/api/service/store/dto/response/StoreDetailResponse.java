@@ -64,9 +64,8 @@ public class StoreDetailResponse extends AuditingTimeResponse {
         this.visitHistory = visitHistory;
     }
 
-    public static StoreDetailResponse of(Store store, double latitude, double longitude, List<StoreImage> storeImages,
-                                         UserCacheCollection userCacheCollection, List<Review> reviews,
-                                         VisitHistoryCounter visitHistoriesCollection, List<VisitHistoryWithUserProjection> visitHistories) {
+    public static StoreDetailResponse of(Store store, double latitude, double longitude, List<StoreImage> storeImages, UserCacheCollection userCacheCollection,
+                                         List<Review> reviews, VisitHistoryCounter visitHistoriesCollection, List<VisitHistoryWithUserProjection> visitHistories) {
         StoreDetailResponse response = StoreDetailResponse.builder()
             .storeId(store.getId())
             .latitude(store.getLatitude())
