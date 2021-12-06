@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.review;
 
-import com.depromeet.threedollar.api.controller.medal.UserMedalEventListener;
+import com.depromeet.threedollar.api.controller.medal.AddUserMedalEventListener;
 import com.depromeet.threedollar.api.controller.store.StoreEventListener;
 import com.depromeet.threedollar.domain.event.review.ReviewChangedEvent;
 import com.depromeet.threedollar.domain.event.review.ReviewCreatedEvent;
@@ -41,7 +41,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
     private StoreEventListener storeEventListener;
 
     @MockBean
-    private UserMedalEventListener userMedalEventListener;
+    private AddUserMedalEventListener userMedalEventListener;
 
     @AfterEach
     void cleanUp() {

@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.visit;
 
-import com.depromeet.threedollar.api.controller.medal.UserMedalEventListener;
+import com.depromeet.threedollar.api.controller.medal.AddUserMedalEventListener;
 import com.depromeet.threedollar.domain.event.visit.VisitHistoryAddedEvent;
 import com.depromeet.threedollar.api.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRequest;
@@ -41,7 +41,7 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
     private VisitHistoryRepository visitHistoryRepository;
 
     @MockBean
-    private UserMedalEventListener userMedalEventListener;
+    private AddUserMedalEventListener userMedalEventListener;
 
     @AfterEach
     void cleanUp() {

@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.controller.medal;
 
-import com.depromeet.threedollar.api.service.medal.UserMedalFacadeService;
+import com.depromeet.threedollar.api.service.medal.AddUserMedalFacadeService;
 import com.depromeet.threedollar.domain.event.review.ReviewCreatedEvent;
 import com.depromeet.threedollar.domain.event.store.StoreCreatedEvent;
 import com.depromeet.threedollar.domain.event.store.StoreDeletedEvent;
@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class UserMedalEventListener {
+public class AddUserMedalEventListener {
 
-    private final UserMedalFacadeService userMedalFacadeService;
+    private final AddUserMedalFacadeService userMedalFacadeService;
 
     @Async
     @EventListener

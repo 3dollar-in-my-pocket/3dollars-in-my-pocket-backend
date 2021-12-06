@@ -12,9 +12,9 @@ import static com.depromeet.threedollar.domain.domain.medal.MedalAcquisitionCond
 
 @RequiredArgsConstructor
 @Component
-public class UserMedalFacadeService {
+public class AddUserMedalFacadeService {
 
-    private final UserMedalService userMedalService;
+    private final AddUserMedalService userMedalService;
 
     private final StoreRepository storeRepository;
     private final ReviewRepository reviewRepository;

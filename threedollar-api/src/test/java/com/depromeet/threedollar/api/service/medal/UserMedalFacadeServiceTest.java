@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.api.service.medal;
 
 import com.depromeet.threedollar.api.service.SetupUserServiceTest;
-import com.depromeet.threedollar.api.service.medal.UserMedalFacadeService;
 import com.depromeet.threedollar.domain.domain.medal.*;
 import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
@@ -32,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class UserMedalFacadeServiceTest extends SetupUserServiceTest {
 
     @Autowired
-    private UserMedalFacadeService userMedalFacadeService;
+    private AddUserMedalFacadeService userMedalFacadeService;
 
     @Autowired
     private StoreRepository storeRepository;

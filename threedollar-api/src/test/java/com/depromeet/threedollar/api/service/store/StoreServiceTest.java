@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.store;
 
-import com.depromeet.threedollar.api.controller.medal.UserMedalEventListener;
+import com.depromeet.threedollar.api.controller.medal.AddUserMedalEventListener;
 import com.depromeet.threedollar.domain.event.store.StoreCreatedEvent;
 import com.depromeet.threedollar.domain.event.store.StoreDeletedEvent;
 import com.depromeet.threedollar.api.service.SetupUserServiceTest;
@@ -62,7 +62,7 @@ class StoreServiceTest extends SetupUserServiceTest {
     private MenuRepository menuRepository;
 
     @MockBean
-    private UserMedalEventListener userMedalEventListener;
+    private AddUserMedalEventListener userMedalEventListener;
 
     @AfterEach
     void cleanUp() {
