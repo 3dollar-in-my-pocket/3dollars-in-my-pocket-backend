@@ -11,51 +11,11 @@ import java.util.List;
 public class StoreCreator {
 
     public static Store create(Long userId, String storeName) {
-        return Store.builder()
-            .userId(userId)
-            .name(storeName)
-            .type(StoreType.STORE)
-            .latitude(33.0)
-            .longitude(124.0)
-            .build();
-    }
-
-    public static Store createWithDefaultMenu(Long userId, String storeName) {
-        Store store = create(userId, storeName);
-        store.addMenus(List.of(MenuCreator.create(store, "메뉴 이름", "메뉴 가격", MenuCategoryType.BUNGEOPPANG)));
-        return store;
+        return create(userId, storeName, 34.0, 126.0);
     }
 
     public static Store create(Long userId, String storeName, double latitude, double longitude) {
-        return Store.builder()
-            .userId(userId)
-            .name(storeName)
-            .type(StoreType.STORE)
-            .latitude(latitude)
-            .longitude(longitude)
-            .build();
-    }
-
-    public static Store createWithDefaultMenu(Long userId, String storeName, double latitude, double longitude) {
-        Store store = create(userId, storeName, latitude, longitude);
-        store.addMenus(List.of(MenuCreator.create(store, "메뉴 이름", "메뉴 가격", MenuCategoryType.BUNGEOPPANG)));
-        return store;
-    }
-
-    private static Store create(Long userId, String storeName, StoreType storeType, double latitude, double longitude) {
-        return Store.builder()
-            .userId(userId)
-            .name(storeName)
-            .type(storeType)
-            .latitude(latitude)
-            .longitude(longitude)
-            .build();
-    }
-
-    public static Store createWithDefaultMenu(Long userId, String storeName, StoreType storeType, double latitude, double longitude) {
-        Store store = create(userId, storeName, storeType, latitude, longitude);
-        store.addMenus(List.of(MenuCreator.create(store, "메뉴 이름", "메뉴 가격", MenuCategoryType.BUNGEOPPANG)));
-        return store;
+        return create(userId, storeName, latitude, longitude, 0);
     }
 
     public static Store create(Long userId, String storeName, double latitude, double longitude, double rating) {
@@ -69,23 +29,37 @@ public class StoreCreator {
             .build();
     }
 
+    public static Store createWithDefaultMenu(Long userId, String storeName) {
+        return createWithDefaultMenu(userId, storeName, StoreType.STORE, 34.0, 126.0);
+    }
+
+    public static Store createWithDefaultMenu(Long userId, String storeName, double latitude, double longitude) {
+        return createWithDefaultMenu(userId, storeName, latitude, longitude, 3);
+    }
+
     public static Store createWithDefaultMenu(Long userId, String storeName, double latitude, double longitude, double rating) {
-        Store store = create(userId, storeName, latitude, longitude, rating);
+        return createWithDefaultMenu(userId, storeName, StoreType.STORE, latitude, longitude, rating);
+    }
+
+    public static Store createWithDefaultMenu(Long userId, String storeName, StoreType storeType, double latitude, double longitude) {
+        return createWithDefaultMenu(userId, storeName, storeType, latitude, longitude, 3.0);
+    }
+
+    private static Store createWithDefaultMenu(Long userId, String storeName, StoreType storeType, double latitude, double longitude, double rating) {
+        Store store = Store.builder()
+            .userId(userId)
+            .name(storeName)
+            .type(storeType)
+            .latitude(latitude)
+            .longitude(longitude)
+            .rating(rating)
+            .build();
         store.addMenus(List.of(MenuCreator.create(store, "메뉴 이름", "메뉴 가격", MenuCategoryType.BUNGEOPPANG)));
         return store;
     }
 
     public static Store createDeleted(Long userId, String storeName) {
-        Store store = create(userId, storeName);
-        store.delete();
-        return store;
-    }
-
-    public static Store createDeletedWithDefaultMenu(Long userId, String storeName) {
-        Store store = create(userId, storeName);
-        store.addMenus(List.of(MenuCreator.create(store, "메뉴 이름", "메뉴 가격", MenuCategoryType.BUNGEOPPANG)));
-        store.delete();
-        return store;
+        return createDeleted(userId, storeName, 34.0, 126.0);
     }
 
     public static Store createDeleted(Long userId, String storeName, double latitude, double longitude) {
@@ -94,10 +68,13 @@ public class StoreCreator {
         return store;
     }
 
+    public static Store createDeletedWithDefaultMenu(Long userId, String storeName) {
+        return createDeletedWithDefaultMenu(userId, storeName, 34.0, 126.0);
+    }
+
     public static Store createDeletedWithDefaultMenu(Long userId, String storeName, double latitude, double longitude) {
-        Store store = create(userId, storeName, latitude, longitude);
+        Store store = createDeleted(userId, storeName, latitude, longitude);
         store.addMenus(List.of(MenuCreator.create(store, "메뉴 이름", "메뉴 가격", MenuCategoryType.BUNGEOPPANG)));
-        store.delete();
         return store;
     }
 

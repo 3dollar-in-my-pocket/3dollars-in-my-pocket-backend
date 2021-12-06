@@ -26,12 +26,12 @@ public class RetrieveStoreDetailRequest {
     @NotNull(message = "{visit.endDate.notNull}")
     private LocalDate endDate = LocalDate.now(); // TODO: 호환성을 위해 기본값으로 차후 제거
 
-    public static RetrieveStoreDetailRequest testInstance(Long storeId, Double latitude, Double longitude, LocalDate startDate, LocalDate endDate) {
-        return new RetrieveStoreDetailRequest(storeId, latitude, longitude, startDate, endDate);
+    public static RetrieveStoreDetailRequest testInstance(Long storeId, LocalDate startDate, LocalDate endDate) {
+        return new RetrieveStoreDetailRequest(storeId, 34.0, 126.0, startDate, endDate);
     }
 
-    public static RetrieveStoreDetailRequest testInstance(Long storeId, Double latitude, Double longitude) {
-        return new RetrieveStoreDetailRequest(storeId, latitude, longitude, LocalDate.now().minusWeeks(1), LocalDate.now());
+    public static RetrieveStoreDetailRequest testInstance(Long storeId) {
+        return new RetrieveStoreDetailRequest(storeId, 34.0, 126.0, LocalDate.now().minusWeeks(1), LocalDate.now());
     }
 
 }

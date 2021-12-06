@@ -33,10 +33,10 @@ internal class StoreControllerTest(
     @Test
     fun N개이상_삭제_요청된_가게들을_삭제요청이_많은것부터_조회한다_첫페이지() {
         // given
-        val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1", 34.0, 124.0)
-        val store2 = StoreCreator.createWithDefaultMenu(101L, "가게2", 34.0, 124.0)
-        val store3 = StoreCreator.createWithDefaultMenu(102L, "가게3", 34.0, 124.0)
-        val store4 = StoreCreator.createWithDefaultMenu(103L, "가게4", 34.0, 124.0)
+        val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1")
+        val store2 = StoreCreator.createWithDefaultMenu(101L, "가게2")
+        val store3 = StoreCreator.createWithDefaultMenu(102L, "가게3")
+        val store4 = StoreCreator.createWithDefaultMenu(103L, "가게4")
 
         storeRepository.saveAll(listOf(store1, store2, store3, store4))
         storeDeleteRequestRepository.saveAll(
@@ -86,10 +86,10 @@ internal class StoreControllerTest(
     @Test
     fun N개이상_삭제_요청된_가게들을_삭제요청이_많은것부터_조회한다_두번째_페이지() {
         // given
-        val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1", 34.0, 124.0)
-        val store2 = StoreCreator.createWithDefaultMenu(101L, "가게2", 34.0, 124.0)
-        val store3 = StoreCreator.createWithDefaultMenu(102L, "가게3", 34.0, 124.0)
-        val store4 = StoreCreator.createWithDefaultMenu(103L, "가게4", 34.0, 124.0)
+        val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1")
+        val store2 = StoreCreator.createWithDefaultMenu(101L, "가게2")
+        val store3 = StoreCreator.createWithDefaultMenu(102L, "가게3")
+        val store4 = StoreCreator.createWithDefaultMenu(103L, "가게4")
 
         storeRepository.saveAll(listOf(store1, store2, store3, store4))
         storeDeleteRequestRepository.saveAll(
@@ -138,7 +138,7 @@ internal class StoreControllerTest(
     @Test
     fun N개이상_삭제_요청된_가게들을_조회시_minCount보다_요청수가_적은_가게들은_조회되지_않는다() {
         // given
-        val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1", 34.0, 124.0)
+        val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1")
 
         storeRepository.save(store1)
 
@@ -176,10 +176,10 @@ internal class StoreControllerTest(
     @Test
     fun 최신순으로_스크롤_페이지네이션으로_가게를_조회한다_첫스크롤() {
         // given
-        val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1", 34.0, 124.0)
-        val store2 = StoreCreator.createWithDefaultMenu(101L, "가게2", 34.0, 124.0)
-        val store3 = StoreCreator.createWithDefaultMenu(102L, "가게3", 34.0, 124.0)
-        val store4 = StoreCreator.createWithDefaultMenu(103L, "가게3", 34.0, 124.0)
+        val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1")
+        val store2 = StoreCreator.createWithDefaultMenu(101L, "가게2")
+        val store3 = StoreCreator.createWithDefaultMenu(102L, "가게3")
+        val store4 = StoreCreator.createWithDefaultMenu(103L, "가게3")
         storeRepository.saveAll(listOf(store1, store2, store3, store4))
 
         val size = 2
@@ -207,10 +207,10 @@ internal class StoreControllerTest(
     @Test
     fun 최신순으로_스크롤_페이지네이션으로_가게를_조회한다_마지막_스크롤() {
         // given
-        val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1", 34.0, 124.0)
-        val store2 = StoreCreator.createWithDefaultMenu(101L, "가게2", 34.0, 124.0)
-        val store3 = StoreCreator.createWithDefaultMenu(102L, "가게3", 34.0, 124.0)
-        val store4 = StoreCreator.createWithDefaultMenu(103L, "가게3", 34.0, 124.0)
+        val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1")
+        val store2 = StoreCreator.createWithDefaultMenu(101L, "가게2")
+        val store3 = StoreCreator.createWithDefaultMenu(102L, "가게3")
+        val store4 = StoreCreator.createWithDefaultMenu(103L, "가게3")
         storeRepository.saveAll(listOf(store1, store2, store3, store4))
 
         val size = 2

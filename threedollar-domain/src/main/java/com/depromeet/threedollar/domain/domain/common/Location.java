@@ -25,8 +25,8 @@ import static com.depromeet.threedollar.common.exception.ErrorCode.VALIDATION_LO
 @Embeddable
 public class Location {
 
-    private static final double KOREA_MIN_LATITUDE = 33.10000000;
-    private static final double KOREA_MAX_LATITUDE = 38.45000000;
+    private static final double KOREA_MIN_LATITUDE = 33.1;
+    private static final double KOREA_MAX_LATITUDE = 38.45;
 
     private static final double KOREA_MIN_LONGITUDE = 125.06666667;
     private static final double KOREA_MAX_LONGITUDE = 131.87222222;
@@ -45,10 +45,10 @@ public class Location {
 
     private void validateIsScopeOfKorea(double latitude, double longitude) {
         if (latitude < KOREA_MIN_LATITUDE || latitude > KOREA_MAX_LATITUDE) {
-            throw new ValidationException(String.format("잘못된 위도 (%s)가 입력되었습니다. (33 ~ 43) 사이의 범위만 허용됩니다)", latitude), VALIDATION_LATITUDE_EXCEPTION);
+            throw new ValidationException(String.format("잘못된 위도 (%s)가 입력되었습니다. (33.10000000 ~ 38.45000000) 사이의 범위만 허용됩니다)", latitude), VALIDATION_LATITUDE_EXCEPTION);
         }
         if (longitude < KOREA_MIN_LONGITUDE || longitude > KOREA_MAX_LONGITUDE) {
-            throw new ValidationException(String.format("잘못된 경도 (%s)가 입력되었습니다. (124 ~ 132) 사이의 범위만 허용됩니다)", longitude), VALIDATION_LONGITUDE_EXCEPTION);
+            throw new ValidationException(String.format("잘못된 경도 (%s)가 입력되었습니다. (125.06666667 ~ 131.87222222) 사이의 범위만 허용됩니다)", longitude), VALIDATION_LONGITUDE_EXCEPTION);
         }
     }
 
