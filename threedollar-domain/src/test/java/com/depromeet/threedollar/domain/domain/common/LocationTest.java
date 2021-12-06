@@ -16,8 +16,9 @@ class LocationTest {
     class 인스턴스_생성 {
 
         @CsvSource({
-            "33.10000000, 125.06666667",
-            "38.45000000, 131.87222222"
+            "33.1, 124.6",
+            "35.0, 128.0",
+            "38.61, 131.87"
         })
         @ParameterizedTest
         void 위도와_경도로_위치_객체를_생성한다(double latitude, double longitude) {
@@ -30,8 +31,8 @@ class LocationTest {
         }
 
         @CsvSource({
-            "33, 130",
-            "39, 130"
+            "33.09, 130.0",
+            "38.62, 130.0"
         })
         @ParameterizedTest
         void 허용된_위도_범위_밖인경우_VALIDATION_LATITUDE_EXEPTION(double latitude, double longitude) {
@@ -40,8 +41,8 @@ class LocationTest {
         }
 
         @CsvSource({
-            "35, 124",
-            "35, 132"
+            "35.0, 124.59",
+            "35.0, 131.88"
         })
         @ParameterizedTest
         void 허용된_경도_범위_밖인경우_VALIDATION_LATITUDE_EXEPTION(double latitude, double longitude) {

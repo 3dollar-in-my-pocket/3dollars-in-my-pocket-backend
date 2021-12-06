@@ -14,8 +14,8 @@ public enum ErrorCode {
     // 400 Bad Request
     VALIDATION_EXCEPTION(BAD_REQUEST, OFF, "BR001", "잘못된 요청입니다"),
     VALIDATION_RATING_EXCEPTION(BAD_REQUEST, OFF, "BR002", "허용되지 않은 평가 점수입니다. (1 ~ 5)"), // TODO 403에러로 변경
-    VALIDATION_LATITUDE_EXCEPTION(BAD_REQUEST, OFF, "BR003", "허용되지 않은 위도 범위를 입력하였습니다. (33.1 ~ 38.45)"), // TODO 차후 403에러로 변경
-    VALIDATION_LONGITUDE_EXCEPTION(BAD_REQUEST, OFF, "BR004", "허용되지 않은 경도 범위를 입력하였습니다. (125.06666667 ~ 131.87222222)"), // TODO 차후 403에러로 변경
+    VALIDATION_LATITUDE_EXCEPTION(BAD_REQUEST, OFF, "BR003", "허용되지 않은 위도 범위를 입력하였습니다. (33.1 ~ 38.61)"), // TODO 차후 403에러로 변경
+    VALIDATION_LONGITUDE_EXCEPTION(BAD_REQUEST, OFF, "BR004", "허용되지 않은 경도 범위를 입력하였습니다. (124.60 ~ 131.87)"), // TODO 차후 403에러로 변경
     VALIDATION_FILE_TYPE_EXCEPTION(BAD_REQUEST, OFF, "BR005", "허용되지 않은 파일 형식입니다"), // TODO 차후 403에러로 변경
     VALIDATION_APPLE_TOKEN_EXCEPTION(BAD_REQUEST, OFF, "BR006", "잘못된 애플 토큰입니다"),
     VALIDATION_APPLE_TOKEN_EXPIRED_EXCEPTION(BAD_REQUEST, OFF, "BR007", "만료된 애플 토큰입니다."),
