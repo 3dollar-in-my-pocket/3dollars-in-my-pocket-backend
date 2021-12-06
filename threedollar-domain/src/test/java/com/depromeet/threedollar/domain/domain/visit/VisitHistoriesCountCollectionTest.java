@@ -23,16 +23,16 @@ class VisitHistoriesCountCollectionTest {
         VisitHistoryCountProjection storeTwoNotExistsCounts = new VisitHistoryCountProjection(storeTwoId, VisitType.NOT_EXISTS, 0);
 
         // when
-        VisitHistoriesCounter collection = VisitHistoriesCounter.of(
+        VisitHistoriesCounter counter = VisitHistoriesCounter.of(
             List.of(storeOneExistsCounts, storeOneNotExistsCounts, storeTwoExistsCounts, storeTwoNotExistsCounts));
 
         // then
         assertAll(
-            () -> assertThat(collection.getStoreExistsVisitsCount(storeOneId)).isEqualTo(3L),
-            () -> assertThat(collection.getStoreNotExistsVisitsCount(storeOneId)).isEqualTo(1L),
+            () -> assertThat(counter.getStoreExistsVisitsCount(storeOneId)).isEqualTo(3L),
+            () -> assertThat(counter.getStoreNotExistsVisitsCount(storeOneId)).isEqualTo(1L),
 
-            () -> assertThat(collection.getStoreExistsVisitsCount(storeTwoId)).isEqualTo(2L),
-            () -> assertThat(collection.getStoreNotExistsVisitsCount(storeTwoId)).isEqualTo(0L)
+            () -> assertThat(counter.getStoreExistsVisitsCount(storeTwoId)).isEqualTo(2L),
+            () -> assertThat(counter.getStoreNotExistsVisitsCount(storeTwoId)).isEqualTo(0L)
         );
     }
 

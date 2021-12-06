@@ -63,10 +63,6 @@ public class UserMedal extends AuditingTimeEntity {
         return this.getMedalId().equals(medalId);
     }
 
-    Long getUserId() {
-        return this.user.getId();
-    }
-
     public Long getMedalId() {
         return this.medal.getId();
     }

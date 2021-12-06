@@ -2,8 +2,6 @@ package com.depromeet.threedollar.domain.domain.review.repository;
 
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewStatus;
-import com.depromeet.threedollar.domain.domain.review.projection.QReviewWithWriterProjection;
-import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
 import com.depromeet.threedollar.domain.domain.store.StoreStatus;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -74,24 +72,13 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
     }
 
     @Override
-    public List<ReviewWithWriterProjection> findAllWithCreatorByStoreId(Long storeId) {
-        return queryFactory.select(new QReviewWithWriterProjection(
-            review.id,
-            review.rating.rating,
-            review.contents,
-            review.createdAt,
-            review.updatedAt,
-            review.storeId,
-            user.id,
-            user.name,
-            user.socialInfo.socialType
-        ))
-            .from(review)
-            .leftJoin(user).on(review.userId.eq(user.id))
+    public List<Review> findAllWithCreatorByStoreId(Long storeId) {
+        return queryFactory.selectFrom(review)
             .where(
                 review.storeId.eq(storeId),
                 review.status.eq(ReviewStatus.POSTED)
-            ).fetch();
+            )
+            .fetch();
     }
 
     @Override

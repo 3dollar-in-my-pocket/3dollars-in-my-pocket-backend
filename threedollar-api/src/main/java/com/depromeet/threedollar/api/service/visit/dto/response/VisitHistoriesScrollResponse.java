@@ -26,11 +26,11 @@ public class VisitHistoriesScrollResponse {
         this.nextCursor = nextCursor;
     }
 
-    public static VisitHistoriesScrollResponse of(ScrollPaginationCollection<VisitHistory> scrollPaginationCollection) {
-        if (scrollPaginationCollection.isLastScroll()) {
-            return newLastScroll(scrollPaginationCollection.getItemsInCurrentScroll());
+    public static VisitHistoriesScrollResponse of(ScrollPaginationCollection<VisitHistory> visitHistoryScrollCollection) {
+        if (visitHistoryScrollCollection.isLastScroll()) {
+            return newLastScroll(visitHistoryScrollCollection.getItemsInCurrentScroll());
         }
-        return newScrollHasNext(scrollPaginationCollection.getItemsInCurrentScroll(), scrollPaginationCollection.getNextCursor().getId());
+        return newScrollHasNext(visitHistoryScrollCollection.getItemsInCurrentScroll(), visitHistoryScrollCollection.getNextCursor().getId());
     }
 
     private static VisitHistoriesScrollResponse newLastScroll(List<VisitHistory> visitHistories) {

@@ -13,18 +13,17 @@ import com.depromeet.threedollar.api.service.store.dto.response.deprecated.Store
 import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresScrollV2Response;
 import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
 import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
-import com.depromeet.threedollar.domain.domain.medal.UserMedalsCollection;
+import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
-import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
 import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImageRepository;
-import com.depromeet.threedollar.domain.domain.user.User;
+import com.depromeet.threedollar.domain.domain.user.UserCacheCollection;
 import com.depromeet.threedollar.domain.domain.user.UserRepository;
-import com.depromeet.threedollar.domain.domain.visit.collection.VisitHistoriesCounter;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
+import com.depromeet.threedollar.domain.domain.visit.collection.VisitHistoriesCounter;
 import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithUserProjection;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.Nullable;
@@ -36,7 +35,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
@@ -63,13 +61,24 @@ public class StoreRetrieveService {
     @Transactional(readOnly = true)
     public StoreDetailResponse getDetailStoreInfo(RetrieveStoreDetailRequest request) {
         Store store = StoreServiceUtils.findStoreByIdFetchJoinMenu(storeRepository, request.getStoreId());
-        User creator = userRepository.findUserById(store.getUserId());
-        List<StoreImage> images = storeImageRepository.findAllByStoreId(request.getStoreId());
-        List<ReviewWithWriterProjection> reviews = reviewRepository.findAllWithCreatorByStoreId(request.getStoreId());
+        List<Review> reviews = reviewRepository.findAllWithCreatorByStoreId(request.getStoreId());
+        List<StoreImage> storeImages = storeImageRepository.findAllByStoreId(request.getStoreId());
         List<VisitHistoryWithUserProjection> visitHistories = visitHistoryRepository.findAllVisitWithUserByStoreIdAfterDate(request.getStoreId(), request.getStartDate());
+        UserCacheCollection users = UserCacheCollection.of(userRepository.findAllByUserId(assembleUserIds(reviews, visitHistories, store)));
         VisitHistoriesCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(Collections.singletonList(store));
-        UserMedalsCollection userMedalCollection = findActiveMedalByUserIds(reviews, visitHistories);
-        return StoreDetailResponse.of(store, images, request.getLatitude(), request.getLongitude(), creator, reviews, visitHistoriesCounter, visitHistories, userMedalCollection);
+        return StoreDetailResponse.of(store, request.getLatitude(), request.getLongitude(), storeImages, users, reviews, visitHistoriesCounter, visitHistories);
+    }
+
+    private List<Long> assembleUserIds(List<Review> reviews, List<VisitHistoryWithUserProjection> visitHistories, Store store) {
+        List<Long> reviewUserIds = reviews.stream().map(Review::getUserId).collect(Collectors.toList());
+        List<Long> visitHistoryUserIds = visitHistories.stream().map(VisitHistoryWithUserProjection::getUserId).collect(Collectors.toList());
+        Long storeUserId = store.getUserId();
+        reviewUserIds.addAll(visitHistoryUserIds);
+        reviewUserIds.add(storeUserId);
+        return reviewUserIds.stream()
+            .filter(Objects::nonNull)
+            .distinct()
+            .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
@@ -130,23 +139,6 @@ public class StoreRetrieveService {
             .map(Store::getId).distinct()
             .collect(Collectors.toList());
         return VisitHistoriesCounter.of(visitHistoryRepository.findCountsByStoreIdWithGroup(storeIds, monthAgo));
-    }
-
-    private UserMedalsCollection findActiveMedalByUserIds(List<ReviewWithWriterProjection> reviews, List<VisitHistoryWithUserProjection> visitHistories) {
-        List<Long> distinctUserIds = getDistinctUserIds(reviews, visitHistories);
-        return UserMedalsCollection.of(userRepository.findAllByUserId(distinctUserIds));
-    }
-
-    private List<Long> getDistinctUserIds(List<ReviewWithWriterProjection> reviews, List<VisitHistoryWithUserProjection> visitHistories) {
-        return Stream.concat(reviews.stream()
-                .map(ReviewWithWriterProjection::getUserId)
-                .collect(Collectors.toList()).stream(),
-            visitHistories.stream()
-                .map(VisitHistoryWithUserProjection::getUserId)
-                .collect(Collectors.toList()).stream())
-            .filter(Objects::nonNull)
-            .distinct()
-            .collect(Collectors.toList());
     }
 
 }

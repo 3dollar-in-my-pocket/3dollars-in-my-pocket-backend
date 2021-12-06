@@ -8,11 +8,10 @@ import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWith
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
-import com.depromeet.threedollar.domain.domain.medal.UserMedalsCollection;
-import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
+import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
-import com.depromeet.threedollar.domain.domain.user.User;
+import com.depromeet.threedollar.domain.domain.user.UserCacheCollection;
 import com.depromeet.threedollar.domain.domain.visit.collection.VisitHistoriesCounter;
 import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithUserProjection;
 import lombok.*;
@@ -65,10 +64,9 @@ public class StoreDetailResponse extends AuditingTimeResponse {
         this.visitHistory = visitHistory;
     }
 
-    public static StoreDetailResponse of(Store store, List<StoreImage> storeImages, double latitude,
-                                         double longitude, User user, List<ReviewWithWriterProjection> reviews,
-                                         VisitHistoriesCounter visitHistoriesCollection, List<VisitHistoryWithUserProjection> visitHistories,
-                                         UserMedalsCollection userMedalCollection) {
+    public static StoreDetailResponse of(Store store, double latitude, double longitude, List<StoreImage> storeImages,
+                                         UserCacheCollection userCacheCollection, List<Review> reviews,
+                                         VisitHistoriesCounter visitHistoriesCollection, List<VisitHistoryWithUserProjection> visitHistories) {
         StoreDetailResponse response = StoreDetailResponse.builder()
             .storeId(store.getId())
             .latitude(store.getLatitude())
@@ -77,7 +75,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
             .storeType(store.getType())
             .rating(store.getRating())
             .distance(LocationDistanceUtils.getDistance(store.getLatitude(), store.getLongitude(), latitude, longitude))
-            .user(UserInfoResponse.of(user))
+            .user(UserInfoResponse.of(userCacheCollection.getUser(store.getUserId())))
             .visitHistory(VisitHistoryCountsResponse.of(visitHistoriesCollection.getStoreExistsVisitsCount(store.getId()), visitHistoriesCollection.getStoreNotExistsVisitsCount(store.getId())))
             .build();
         response.categories.addAll(store.getMenuCategoriesSortedByCounts());
@@ -85,21 +83,21 @@ public class StoreDetailResponse extends AuditingTimeResponse {
         response.paymentMethods.addAll(store.getPaymentMethodTypes());
         response.images.addAll(toImageResponse(storeImages));
         response.menus.addAll(toMenuResponse(store.getMenus()));
-        response.reviews.addAll(toReviewResponse(reviews, userMedalCollection));
-        response.visitHistories.addAll(toVisitHistoryResponse(visitHistories, userMedalCollection));
+        response.reviews.addAll(toReviewResponse(reviews, userCacheCollection));
+        response.visitHistories.addAll(toVisitHistoryResponse(visitHistories, userCacheCollection));
         response.setBaseTime(store);
         return response;
     }
 
-    private static List<VisitHistoryWithUserResponse> toVisitHistoryResponse(List<VisitHistoryWithUserProjection> visitHistories, UserMedalsCollection userMedalCollection) {
+    private static List<VisitHistoryWithUserResponse> toVisitHistoryResponse(List<VisitHistoryWithUserProjection> visitHistories, UserCacheCollection userCacheCollection) {
         return visitHistories.stream()
-            .map(visitHistory -> VisitHistoryWithUserResponse.of(visitHistory, userMedalCollection.getUserMedal(visitHistory.getUserId())))
+            .map(visitHistory -> VisitHistoryWithUserResponse.of(visitHistory, userCacheCollection.getUser(visitHistory.getUserId())))
             .collect(Collectors.toList());
     }
 
-    private static List<ReviewWithUserResponse> toReviewResponse(List<ReviewWithWriterProjection> reviews, UserMedalsCollection userMedalCollection) {
+    private static List<ReviewWithUserResponse> toReviewResponse(List<Review> reviews, UserCacheCollection userCacheCollection) {
         return reviews.stream()
-            .map(review -> ReviewWithUserResponse.of(review, userMedalCollection.getUserMedal(review.getUserId())))
+            .map(review -> ReviewWithUserResponse.of(review, userCacheCollection.getUser(review.getUserId())))
             .sorted(Comparator.comparing(ReviewWithUserResponse::getReviewId).reversed())
             .collect(Collectors.toList());
     }

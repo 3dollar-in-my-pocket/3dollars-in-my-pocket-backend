@@ -11,11 +11,11 @@ data class StoreScrollResponse(
     companion object {
         private const val LAST_CURSOR = -1L
 
-        fun of(scrollCollection: ScrollPaginationCollection<Store>): StoreScrollResponse {
-            if (scrollCollection.isLastScroll) {
-                return newLastScroll(scrollCollection.itemsInCurrentScroll)
+        fun of(stores: ScrollPaginationCollection<Store>): StoreScrollResponse {
+            if (stores.isLastScroll) {
+                return newLastScroll(stores.itemsInCurrentScroll)
             }
-            return newScrollHasNext(scrollCollection.itemsInCurrentScroll, scrollCollection.nextCursor.id)
+            return newScrollHasNext(stores.itemsInCurrentScroll, stores.nextCursor.id)
         }
 
         private fun newLastScroll(stores: List<Store>): StoreScrollResponse {

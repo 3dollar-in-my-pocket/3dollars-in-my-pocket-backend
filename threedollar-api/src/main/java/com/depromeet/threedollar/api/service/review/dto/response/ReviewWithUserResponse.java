@@ -2,8 +2,8 @@ package com.depromeet.threedollar.api.service.review.dto.response;
 
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
-import com.depromeet.threedollar.domain.domain.medal.UserMedal;
-import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
+import com.depromeet.threedollar.domain.domain.review.Review;
+import com.depromeet.threedollar.domain.domain.user.User;
 import lombok.*;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,14 +26,14 @@ public class ReviewWithUserResponse extends AuditingTimeResponse {
         this.user = user;
     }
 
-    public static ReviewWithUserResponse of(ReviewWithWriterProjection projection, @Nullable UserMedal userMedal) {
+    public static ReviewWithUserResponse of(Review review, @Nullable User user) {
         ReviewWithUserResponse response = ReviewWithUserResponse.builder()
-            .reviewId(projection.getReviewId())
-            .rating(projection.getRating())
-            .contents(projection.getContents())
-            .user(UserInfoResponse.of(projection.getUserId(), projection.getUserName(), projection.getUserSocialType(), userMedal))
+            .reviewId(review.getId())
+            .rating(review.getRating())
+            .contents(review.getContents())
+            .user(UserInfoResponse.of(user))
             .build();
-        response.setBaseTime(projection.getCreatedAt(), projection.getUpdatedAt());
+        response.setBaseTime(review);
         return response;
     }
 

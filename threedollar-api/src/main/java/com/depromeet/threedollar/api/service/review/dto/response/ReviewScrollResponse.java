@@ -28,20 +28,20 @@ public class ReviewScrollResponse {
         this.nextCursor = nextCursor;
     }
 
-    public static ReviewScrollResponse of(ScrollPaginationCollection<Review> scrollCollection, StoreCollection storeCollection, User user) {
-        if (scrollCollection.isLastScroll()) {
-            return newLastScroll(scrollCollection.getItemsInCurrentScroll(), storeCollection, user);
+    public static ReviewScrollResponse of(ScrollPaginationCollection<Review> reviewsScroll, StoreCollection stores, User user) {
+        if (reviewsScroll.isLastScroll()) {
+            return newLastScroll(reviewsScroll.getItemsInCurrentScroll(), stores, user);
         }
-        return newScrollHasNext(scrollCollection.getItemsInCurrentScroll(), storeCollection, user, scrollCollection.getNextCursor().getId());
+        return newScrollHasNext(reviewsScroll.getItemsInCurrentScroll(), stores, user, reviewsScroll.getNextCursor().getId());
     }
 
-    private static ReviewScrollResponse newLastScroll(List<Review> reviews, StoreCollection storeCollection, User user) {
-        return newScrollHasNext(reviews, storeCollection, user, LAST_CURSOR);
+    private static ReviewScrollResponse newLastScroll(List<Review> reviews, StoreCollection stores, User user) {
+        return newScrollHasNext(reviews, stores, user, LAST_CURSOR);
     }
 
-    private static ReviewScrollResponse newScrollHasNext(List<Review> reviews, StoreCollection storeCollection, User user, long nextCursor) {
+    private static ReviewScrollResponse newScrollHasNext(List<Review> reviews, StoreCollection stores, User user, long nextCursor) {
         List<ReviewDetailResponse> contents = reviews.stream()
-            .map(review -> ReviewDetailResponse.of(review, storeCollection.getStore(review.getStoreId()), user))
+            .map(review -> ReviewDetailResponse.of(review, stores.getStore(review.getStoreId()), user))
             .collect(Collectors.toList());
         return new ReviewScrollResponse(contents, nextCursor);
     }

@@ -10,6 +10,7 @@ import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.store.StoreCollection;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,26 +30,21 @@ public class ReviewRetrieveService {
 
     @Transactional(readOnly = true)
     public ReviewScrollResponse retrieveMyReviewHistories(RetrieveMyReviewsRequest request, Long userId) {
+        User user = UserServiceUtils.findUserById(userRepository, userId);
         List<Review> reviewsWithNextCursor = reviewRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
-        ScrollPaginationCollection<Review> reviewsScrollCollection = ScrollPaginationCollection.of(reviewsWithNextCursor, request.getSize());
-        return ReviewScrollResponse.of(
-            reviewsScrollCollection,
-            findStoresByReviews(reviewsScrollCollection.getItemsInCurrentScroll()),
-            UserServiceUtils.findUserById(userRepository, userId)
-        );
+        ScrollPaginationCollection<Review> reviews = ScrollPaginationCollection.of(reviewsWithNextCursor, request.getSize());
+        StoreCollection stores = findStoresByReviews(reviews.getItemsInCurrentScroll());
+        return ReviewScrollResponse.of(reviews, stores, user);
     }
 
     @Deprecated
     @Transactional(readOnly = true)
     public ReviewScrollV2Response retrieveMyReviewHistoriesV2(RetrieveMyReviewsV2Request request, Long userId) {
+        User user = UserServiceUtils.findUserById(userRepository, userId);
         List<Review> reviewsWithNextCursor = reviewRepository.findAllActiveByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
-        ScrollPaginationCollection<Review> reviewScrollCollection = ScrollPaginationCollection.of(reviewsWithNextCursor, request.getSize());
-        return ReviewScrollV2Response.of(
-            reviewScrollCollection,
-            findStoresByReviews(reviewScrollCollection.getItemsInCurrentScroll()),
-            UserServiceUtils.findUserById(userRepository, userId),
-            Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> reviewRepository.findActiveCountsByUserId(userId))
-        );
+        ScrollPaginationCollection<Review> reviews = ScrollPaginationCollection.of(reviewsWithNextCursor, request.getSize());
+        StoreCollection stores = findStoresByReviews(reviews.getItemsInCurrentScroll());
+        return ReviewScrollV2Response.of(reviews, stores, user, Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> reviewRepository.findActiveCountsByUserId(userId)));
     }
 
     private StoreCollection findStoresByReviews(List<Review> reviews) {

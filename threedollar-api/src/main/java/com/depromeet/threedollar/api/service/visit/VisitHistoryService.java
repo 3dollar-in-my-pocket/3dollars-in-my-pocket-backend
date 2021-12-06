@@ -37,8 +37,8 @@ public class VisitHistoryService {
     @Transactional(readOnly = true)
     public VisitHistoriesScrollResponse retrieveMyVisitHistories(RetrieveMyVisitHistoriesRequest request, Long userId) {
         List<VisitHistory> visitHistoriesWithNextCursor = visitHistoryRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
-        ScrollPaginationCollection<VisitHistory> scrollCollection = ScrollPaginationCollection.of(visitHistoriesWithNextCursor, request.getSize());
-        return VisitHistoriesScrollResponse.of(scrollCollection);
+        ScrollPaginationCollection<VisitHistory> visitHistories = ScrollPaginationCollection.of(visitHistoriesWithNextCursor, request.getSize());
+        return VisitHistoriesScrollResponse.of(visitHistories);
     }
 
 }
