@@ -42,7 +42,7 @@ public class ReviewScrollResponse {
 
     private static ReviewScrollResponse newScrollHasNext(List<ReviewWithWriterProjection> reviews, Map<Long, Store> cachedStores, UserMedalsCollection userMedalCollection, long nextCursor) {
         List<ReviewDetailResponse> contents = reviews.stream()
-            .map(review -> ReviewDetailResponse.of(review, cachedStores.get(review.getStoreId()), userMedalCollection.getCachedUserMedals().get(review.getUserId())))
+            .map(review -> ReviewDetailResponse.of(review, cachedStores.get(review.getStoreId()), userMedalCollection.getUserMedal(review.getUserId())))
             .collect(Collectors.toList());
         return new ReviewScrollResponse(contents, nextCursor);
     }

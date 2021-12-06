@@ -93,13 +93,13 @@ public class StoreDetailResponse extends AuditingTimeResponse {
 
     private static List<VisitHistoryWithUserResponse> toVisitHistoryResponse(List<VisitHistoryWithUserProjection> visitHistories, UserMedalsCollection userMedalCollection) {
         return visitHistories.stream()
-            .map(visitHistory -> VisitHistoryWithUserResponse.of(visitHistory, userMedalCollection.getCachedUserMedals().get(visitHistory.getUserId())))
+            .map(visitHistory -> VisitHistoryWithUserResponse.of(visitHistory, userMedalCollection.getUserMedal(visitHistory.getUserId())))
             .collect(Collectors.toList());
     }
 
     private static List<ReviewWithUserResponse> toReviewResponse(List<ReviewWithWriterProjection> reviews, UserMedalsCollection userMedalCollection) {
         return reviews.stream()
-            .map(review -> ReviewWithUserResponse.of(review, userMedalCollection.getCachedUserMedals().get(review.getUserId())))
+            .map(review -> ReviewWithUserResponse.of(review, userMedalCollection.getUserMedal(review.getUserId())))
             .sorted(Comparator.comparing(ReviewWithUserResponse::getReviewId).reversed())
             .collect(Collectors.toList());
     }

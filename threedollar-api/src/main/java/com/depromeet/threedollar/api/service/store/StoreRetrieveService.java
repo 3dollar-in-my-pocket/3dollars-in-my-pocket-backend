@@ -149,6 +149,7 @@ public class StoreRetrieveService {
             visitHistories.stream()
                 .map(VisitHistoryWithUserProjection::getUserId)
                 .collect(Collectors.toList()).stream())
+            .filter(Objects::nonNull)
             .distinct()
             .collect(Collectors.toList());
     }
