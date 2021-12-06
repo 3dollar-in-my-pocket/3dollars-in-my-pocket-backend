@@ -1,6 +1,7 @@
-package com.depromeet.threedollar.api.service.user;
+package com.depromeet.threedollar.api.service.medal;
 
 import com.depromeet.threedollar.api.service.SetupUserServiceTest;
+import com.depromeet.threedollar.api.service.medal.UserMedalService;
 import com.depromeet.threedollar.api.service.user.dto.request.ActivateRepresentativeMedalRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.medal.*;

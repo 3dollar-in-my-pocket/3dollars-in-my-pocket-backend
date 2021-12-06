@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.controller.user;
+package com.depromeet.threedollar.api.controller.medal;
 
 import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
 import com.depromeet.threedollar.domain.domain.medal.Medal;

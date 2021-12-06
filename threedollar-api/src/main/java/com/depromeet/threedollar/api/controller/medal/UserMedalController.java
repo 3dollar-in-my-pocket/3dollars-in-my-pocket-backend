@@ -1,10 +1,10 @@
-package com.depromeet.threedollar.api.controller.user;
+package com.depromeet.threedollar.api.controller.medal;
 
 import com.depromeet.threedollar.api.config.interceptor.Auth;
 import com.depromeet.threedollar.api.config.resolver.UserId;
-import com.depromeet.threedollar.api.service.user.UserMedalService;
+import com.depromeet.threedollar.api.service.medal.UserMedalService;
 import com.depromeet.threedollar.api.service.user.dto.request.ActivateRepresentativeMedalRequest;
-import com.depromeet.threedollar.api.service.user.dto.response.UserMedalResponse;
+import com.depromeet.threedollar.api.service.medal.dto.response.UserMedalResponse;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import io.swagger.annotations.ApiOperation;

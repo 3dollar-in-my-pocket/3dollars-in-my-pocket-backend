@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.service.user.dto.response;
+package com.depromeet.threedollar.api.service.medal.dto.response;
 
 import com.depromeet.threedollar.domain.domain.medal.UserMedal;
 import lombok.*;

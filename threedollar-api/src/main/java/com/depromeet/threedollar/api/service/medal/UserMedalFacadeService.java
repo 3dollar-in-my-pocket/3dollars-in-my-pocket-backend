@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.service.user;
+package com.depromeet.threedollar.api.service.medal;
 
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
