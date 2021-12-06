@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.domain.domain.storeimage;
 
 import com.depromeet.threedollar.domain.domain.common.AuditingTimeEntity;
+import com.depromeet.threedollar.domain.domain.store.Store;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(
-    indexes = @Index(name = "idx_store_image_1", columnList = "storeId")
+    indexes = @Index(name = "idx_store_image_1", columnList = "store_id")
 )
 public class StoreImage extends AuditingTimeEntity {
 
@@ -20,8 +21,9 @@ public class StoreImage extends AuditingTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Long storeId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id", nullable = false)
+    private Store store;
 
     @Column(nullable = false)
     private Long userId;
@@ -34,15 +36,15 @@ public class StoreImage extends AuditingTimeEntity {
     private StoreImageStatus status;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private StoreImage(Long storeId, Long userId, String url) {
-        this.storeId = storeId;
+    private StoreImage(Store store, Long userId, String url) {
+        this.store = store;
         this.userId = userId;
         this.url = url;
         this.status = StoreImageStatus.ACTIVE;
     }
 
-    public static StoreImage newInstance(Long storeId, Long userId, String imageUrl) {
-        return new StoreImage(storeId, userId, imageUrl);
+    public static StoreImage newInstance(Store store, Long userId, String imageUrl) {
+        return new StoreImage(store, userId, imageUrl);
     }
 
     public void delete() {

@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.domain.domain.storeimage;
 
 import com.depromeet.threedollar.common.docs.ObjectMother;
+import com.depromeet.threedollar.domain.domain.store.Store;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -8,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class StoreImageCreator {
 
-    static StoreImage create(Long storeId, Long userId, String url) {
+    static StoreImage create(Store store, Long userId, String url) {
         return StoreImage.builder()
-            .storeId(storeId)
+            .store(store)
             .userId(userId)
             .url(url)
             .build();

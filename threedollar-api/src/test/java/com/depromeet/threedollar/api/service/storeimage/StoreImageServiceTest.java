@@ -43,8 +43,8 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
 
     @AfterEach
     void cleanUp() {
-        super.cleanup();
         storeImageRepository.deleteAllInBatch();
+        super.cleanup();
     }
 
     @Nested
@@ -85,7 +85,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
         @ParameterizedTest
         void 가게_이미지_삭제_성공시_해당_이미지가_INACTIVE로_변경된다(String imageUrl) {
             // given
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, imageUrl);
+            StoreImage storeImage = StoreImage.newInstance(store, userId, imageUrl);
             storeImageRepository.save(storeImage);
 
             // when
@@ -109,7 +109,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
         @Test
         void 가게_이미지_삭제_요청시_해당하는_가게_이미지가_INACTIVE_삭제일경우_NOT_FOUND_STORE_EXCEPTION() {
             // given
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, "https://profile.com");
+            StoreImage storeImage = StoreImage.newInstance(store, userId, "https://profile.com");
             storeImage.delete();
             storeImageRepository.save(storeImage);
 
@@ -126,7 +126,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
         @ParameterizedTest
         void 가게에_등록된_이미지_목록을_조회한다(String imageUrl) {
             // given
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, imageUrl);
+            StoreImage storeImage = StoreImage.newInstance(store, userId, imageUrl);
             storeImageRepository.save(storeImage);
 
             // when
@@ -140,7 +140,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
         @Test
         void 가게에_등록된_이미지_목록을_조회시_삭제된_이미지는_조회되지_않는다() {
             // given
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, "https://store-image.com");
+            StoreImage storeImage = StoreImage.newInstance(store, userId, "https://store-image.com");
             storeImage.delete();
             storeImageRepository.save(storeImage);
 

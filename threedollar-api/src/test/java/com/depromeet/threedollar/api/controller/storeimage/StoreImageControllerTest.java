@@ -33,8 +33,8 @@ class StoreImageControllerTest extends SetupStoreControllerTest {
 
     @AfterEach
     void cleanUp() {
-        super.cleanup();
         storeImageRepository.deleteAllInBatch();
+        super.cleanup();
     }
 
     @DisplayName("GET /api/v2/store/storeId/images")
@@ -45,8 +45,8 @@ class StoreImageControllerTest extends SetupStoreControllerTest {
         @ParameterizedTest
         void 가게에_등록된_사진들을_조회한다(String imageUrl1, String imageUrl2) throws Exception {
             // given
-            StoreImage storeImage1 = StoreImage.newInstance(storeId, testUser.getId(), imageUrl1);
-            StoreImage storeImage2 = StoreImage.newInstance(storeId, testUser.getId(), imageUrl2);
+            StoreImage storeImage1 = StoreImage.newInstance(store, testUser.getId(), imageUrl1);
+            StoreImage storeImage2 = StoreImage.newInstance(store, testUser.getId(), imageUrl2);
             storeImageRepository.saveAll(List.of(storeImage1, storeImage2));
 
             // when
@@ -70,7 +70,7 @@ class StoreImageControllerTest extends SetupStoreControllerTest {
         @ParameterizedTest
         void 가게_이미지_삭제요청_성공시_200_OK(String imageUrl) throws Exception {
             // given
-            StoreImage storeImage = storeImageRepository.save(StoreImage.newInstance(storeId, testUser.getId(), imageUrl));
+            StoreImage storeImage = storeImageRepository.save(StoreImage.newInstance(store, testUser.getId(), imageUrl));
 
             // when
             ApiResponse<String> response = storeImageMockApiCaller.deleteStoreImage(storeImage.getId(), token, 200);

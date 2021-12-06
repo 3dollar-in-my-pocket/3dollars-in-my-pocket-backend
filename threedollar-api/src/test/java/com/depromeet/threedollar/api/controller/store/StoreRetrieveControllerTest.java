@@ -394,7 +394,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름");
             storeRepository.save(store);
 
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), testUser.getId(), imageUrl);
+            StoreImage storeImage = StoreImage.newInstance(store, testUser.getId(), imageUrl);
             storeImageRepository.save(storeImage);
 
             RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
@@ -415,7 +415,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름");
             storeRepository.save(store);
 
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), testUser.getId(), "https://store-image.com");
+            StoreImage storeImage = StoreImage.newInstance(store, testUser.getId(), "https://store-image.com");
             storeImage.delete();
             storeImageRepository.save(storeImage);
 
