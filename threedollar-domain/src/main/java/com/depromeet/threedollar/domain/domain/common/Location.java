@@ -11,8 +11,13 @@ import static com.depromeet.threedollar.common.exception.ErrorCode.VALIDATION_LO
 
 /**
  * 대한민국의 위도 / 경도
- * 위도: 북위33 ~ 북위43
- * 경도: 동경124 ~ 동경132
+ * 한반도 전체
+ * 위도: 북위 33.11111111 ~ 북위 43.00972222
+ * 경도: 동경 124.19583333 ~ 동경 131.87222222
+ * -
+ * 북한 제외
+ * 위도: 북위 33.10000000 ~ 북위 38.45000000
+ * 경도: 동경 125.06666667 ~ 131.87222222
  */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,11 +25,11 @@ import static com.depromeet.threedollar.common.exception.ErrorCode.VALIDATION_LO
 @Embeddable
 public class Location {
 
-    private static final double KOREA_MIN_LATITUDE = 33;
-    private static final double KOREA_MAX_LATITUDE = 43;
+    private static final double KOREA_MIN_LATITUDE = 33.10000000;
+    private static final double KOREA_MAX_LATITUDE = 38.45000000;
 
-    private static final double KOREA_MIN_LONGITUDE = 124;
-    private static final double KOREA_MAX_LONGITUDE = 132;
+    private static final double KOREA_MIN_LONGITUDE = 125.06666667;
+    private static final double KOREA_MAX_LONGITUDE = 131.87222222;
 
     @Column(nullable = false)
     private double latitude;
