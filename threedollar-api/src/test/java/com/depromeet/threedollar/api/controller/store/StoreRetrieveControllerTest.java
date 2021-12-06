@@ -456,7 +456,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 가게_상세조회시_작성된_리뷰_와_작성자_정보가_최근_생성순으로_조회된다() throws Exception {
             // given
-            Long notFoundUserId = Long.MAX_VALUE;
+            Long notFoundUserId = -1L;
 
             Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름");
             storeRepository.save(store);

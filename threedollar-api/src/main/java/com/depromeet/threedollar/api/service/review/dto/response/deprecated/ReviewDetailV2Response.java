@@ -2,9 +2,10 @@ package com.depromeet.threedollar.api.service.review.dto.response.deprecated;
 
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
+import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
 import com.depromeet.threedollar.domain.domain.store.Store;
+import com.depromeet.threedollar.domain.domain.user.User;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -40,15 +41,15 @@ public class ReviewDetailV2Response extends AuditingTimeResponse {
         this.categories.addAll(categories);
     }
 
-    public static ReviewDetailV2Response of(ReviewWithWriterProjection review, Store store) {
+    public static ReviewDetailV2Response of(Review review, Store store, User user) {
         ReviewDetailV2Response response = ReviewDetailV2Response.builder()
-            .reviewId(review.getReviewId())
+            .reviewId(review.getId())
             .rating(review.getRating())
             .contents(review.getContents())
             .storeId(review.getStoreId())
             .storeName(store.getName())
             .isDeletedStore(store.isDeleted())
-            .user(UserInfoResponse.of(review.getUserId(), review.getUserName(), review.getUserSocialType(), null))
+            .user(UserInfoResponse.of(user))
             .categories(store.getMenuCategoriesSortedByCounts())
             .build();
         response.setBaseTime(review.getCreatedAt(), review.getUpdatedAt());

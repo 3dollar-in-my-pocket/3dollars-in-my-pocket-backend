@@ -18,9 +18,9 @@ public interface ReviewRepositoryCustom {
 
     List<ReviewWithWriterProjection> findAllWithCreatorByStoreId(Long storeId);
 
-    List<ReviewWithWriterProjection> findAllByUserIdWithScroll(Long userId, Long lastStoreId, int size);
+    List<Review> findAllByUserIdWithScroll(Long userId, Long lastStoreId, int size);
 
     @Deprecated
-    List<ReviewWithWriterProjection> findAllActiveByUserIdWithScroll(Long userId, Long lastStoreId, int size);
+    List<Review> findAllActiveByUserIdWithScroll(Long userId, Long lastStoreId, int size);
 
 }
