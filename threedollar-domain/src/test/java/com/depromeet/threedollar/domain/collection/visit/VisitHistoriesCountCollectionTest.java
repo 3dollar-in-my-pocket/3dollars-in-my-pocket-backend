@@ -1,6 +1,6 @@
-package com.depromeet.threedollar.domain.domain.visit;
+package com.depromeet.threedollar.domain.collection.visit;
 
-import com.depromeet.threedollar.domain.domain.visit.collection.VisitHistoriesCounter;
+import com.depromeet.threedollar.domain.domain.visit.VisitType;
 import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryCountProjection;
 import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,7 +23,7 @@ class VisitHistoriesCountCollectionTest {
         VisitHistoryCountProjection storeTwoNotExistsCounts = new VisitHistoryCountProjection(storeTwoId, VisitType.NOT_EXISTS, 0);
 
         // when
-        VisitHistoriesCounter counter = VisitHistoriesCounter.of(
+        VisitHistoryCounter counter = VisitHistoryCounter.of(
             List.of(storeOneExistsCounts, storeOneNotExistsCounts, storeTwoExistsCounts, storeTwoNotExistsCounts));
 
         // then

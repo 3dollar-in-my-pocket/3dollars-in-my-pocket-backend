@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.visit.dto.response;
 
-import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
+import com.depromeet.threedollar.domain.collection.common.ScrollPaginationCollection;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -26,11 +26,11 @@ public class VisitHistoriesScrollResponse {
         this.nextCursor = nextCursor;
     }
 
-    public static VisitHistoriesScrollResponse of(ScrollPaginationCollection<VisitHistory> visitHistoryScrollCollection) {
-        if (visitHistoryScrollCollection.isLastScroll()) {
-            return newLastScroll(visitHistoryScrollCollection.getItemsInCurrentScroll());
+    public static VisitHistoriesScrollResponse of(ScrollPaginationCollection<VisitHistory> visitHistoriesScroll) {
+        if (visitHistoriesScroll.isLastScroll()) {
+            return newLastScroll(visitHistoriesScroll.getCurrentScrollItems());
         }
-        return newScrollHasNext(visitHistoryScrollCollection.getItemsInCurrentScroll(), visitHistoryScrollCollection.getNextCursor().getId());
+        return newScrollHasNext(visitHistoriesScroll.getCurrentScrollItems(), visitHistoriesScroll.getNextCursor().getId());
     }
 
     private static VisitHistoriesScrollResponse newLastScroll(List<VisitHistory> visitHistories) {

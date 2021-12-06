@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.domain.visit.collection;
+package com.depromeet.threedollar.domain.collection.visit;
 
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
 import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryCountProjection;
@@ -11,12 +11,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class VisitHistoriesCounter {
+public final class VisitHistoryCounter {
 
     private final Map<Long, Long> existCounter = new HashMap<>();
     private final Map<Long, Long> notExistCounter = new HashMap<>();
 
-    private VisitHistoriesCounter(List<VisitHistoryCountProjection> visitHistoryWithCounts) {
+    private VisitHistoryCounter(List<VisitHistoryCountProjection> visitHistoryWithCounts) {
         this.existCounter.putAll(visitHistoryWithCounts.stream()
             .filter(visit -> VisitType.EXISTS.equals(visit.getVisitType()))
             .collect(Collectors.toMap(VisitHistoryCountProjection::getStoreId, VisitHistoryCountProjection::getCounts)));
@@ -25,8 +25,8 @@ public final class VisitHistoriesCounter {
             .collect(Collectors.toMap(VisitHistoryCountProjection::getStoreId, VisitHistoryCountProjection::getCounts)));
     }
 
-    public static VisitHistoriesCounter of(List<VisitHistoryCountProjection> visitHistoryWithCounts) {
-        return new VisitHistoriesCounter(visitHistoryWithCounts);
+    public static VisitHistoryCounter of(List<VisitHistoryCountProjection> visitHistoryWithCounts) {
+        return new VisitHistoryCounter(visitHistoryWithCounts);
     }
 
     public Long getStoreExistsVisitsCount(Long storeId) {

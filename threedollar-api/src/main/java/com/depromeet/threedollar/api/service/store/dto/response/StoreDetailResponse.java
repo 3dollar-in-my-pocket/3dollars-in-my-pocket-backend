@@ -11,8 +11,8 @@ import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
-import com.depromeet.threedollar.domain.domain.user.UserCacheCollection;
-import com.depromeet.threedollar.domain.domain.visit.collection.VisitHistoriesCounter;
+import com.depromeet.threedollar.domain.collection.user.UserCacheCollection;
+import com.depromeet.threedollar.domain.collection.visit.VisitHistoryCounter;
 import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithUserProjection;
 import lombok.*;
 
@@ -66,7 +66,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
 
     public static StoreDetailResponse of(Store store, double latitude, double longitude, List<StoreImage> storeImages,
                                          UserCacheCollection userCacheCollection, List<Review> reviews,
-                                         VisitHistoriesCounter visitHistoriesCollection, List<VisitHistoryWithUserProjection> visitHistories) {
+                                         VisitHistoryCounter visitHistoriesCollection, List<VisitHistoryWithUserProjection> visitHistories) {
         StoreDetailResponse response = StoreDetailResponse.builder()
             .storeId(store.getId())
             .latitude(store.getLatitude())

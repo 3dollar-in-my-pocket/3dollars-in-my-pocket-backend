@@ -1,18 +1,17 @@
-package com.depromeet.threedollar.domain.domain.user;
+package com.depromeet.threedollar.domain.collection.user;
 
+import com.depromeet.threedollar.domain.domain.user.User;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserCacheCollection {
 
-    private Map<Long, User> cachedUser;
+    private final Map<Long, User> cachedUser;
 
     public static UserCacheCollection of(List<User> users) {
         return new UserCacheCollection(users.stream()

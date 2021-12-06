@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.api.service.review.dto.response.deprecated;
 
-import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
+import com.depromeet.threedollar.domain.collection.common.ScrollPaginationCollection;
 import com.depromeet.threedollar.domain.domain.review.Review;
-import com.depromeet.threedollar.domain.domain.store.StoreCollection;
+import com.depromeet.threedollar.domain.collection.store.StoreCacheCollection;
 import com.depromeet.threedollar.domain.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -31,18 +31,18 @@ public class ReviewScrollV2Response {
         this.nextCursor = nextCursor;
     }
 
-    public static ReviewScrollV2Response of(ScrollPaginationCollection<Review> scrollCollection, StoreCollection storeCollection, User user, long totalElements) {
-        if (scrollCollection.isLastScroll()) {
-            return newLastScroll(scrollCollection.getItemsInCurrentScroll(), storeCollection, user, totalElements);
+    public static ReviewScrollV2Response of(ScrollPaginationCollection<Review> reviewsScroll, StoreCacheCollection storeCollection, User user, long totalElements) {
+        if (reviewsScroll.isLastScroll()) {
+            return newLastScroll(reviewsScroll.getCurrentScrollItems(), storeCollection, user, totalElements);
         }
-        return newScrollHasNext(scrollCollection.getItemsInCurrentScroll(), storeCollection, user, totalElements, scrollCollection.getNextCursor().getId());
+        return newScrollHasNext(reviewsScroll.getCurrentScrollItems(), storeCollection, user, totalElements, reviewsScroll.getNextCursor().getId());
     }
 
-    private static ReviewScrollV2Response newLastScroll(List<Review> reviews, StoreCollection storeCollection, User user, long totalElements) {
+    private static ReviewScrollV2Response newLastScroll(List<Review> reviews, StoreCacheCollection storeCollection, User user, long totalElements) {
         return newScrollHasNext(reviews, storeCollection, user, totalElements, LAST_CURSOR);
     }
 
-    private static ReviewScrollV2Response newScrollHasNext(List<Review> reviews, StoreCollection storeCollection, User user, long totalElements, long nextCursor) {
+    private static ReviewScrollV2Response newScrollHasNext(List<Review> reviews, StoreCacheCollection storeCollection, User user, long totalElements, long nextCursor) {
         List<ReviewDetailV2Response> contents = reviews.stream()
             .map(review -> ReviewDetailV2Response.of(review, storeCollection.getStore(review.getStoreId()), user))
             .collect(Collectors.toList());

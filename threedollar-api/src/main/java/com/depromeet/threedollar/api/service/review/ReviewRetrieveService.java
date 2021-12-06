@@ -5,10 +5,10 @@ import com.depromeet.threedollar.api.service.review.dto.request.deprecated.Retri
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.deprecated.ReviewScrollV2Response;
 import com.depromeet.threedollar.api.service.user.UserServiceUtils;
-import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
+import com.depromeet.threedollar.domain.collection.common.ScrollPaginationCollection;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
-import com.depromeet.threedollar.domain.domain.store.StoreCollection;
+import com.depromeet.threedollar.domain.collection.store.StoreCacheCollection;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserRepository;
@@ -32,9 +32,9 @@ public class ReviewRetrieveService {
     public ReviewScrollResponse retrieveMyReviewHistories(RetrieveMyReviewsRequest request, Long userId) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
         List<Review> reviewsWithNextCursor = reviewRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
-        ScrollPaginationCollection<Review> reviews = ScrollPaginationCollection.of(reviewsWithNextCursor, request.getSize());
-        StoreCollection stores = findStoresByReviews(reviews.getItemsInCurrentScroll());
-        return ReviewScrollResponse.of(reviews, stores, user);
+        ScrollPaginationCollection<Review> reviewsScroll = ScrollPaginationCollection.of(reviewsWithNextCursor, request.getSize());
+        StoreCacheCollection stores = findStoresByReviews(reviewsScroll.getCurrentScrollItems());
+        return ReviewScrollResponse.of(reviewsScroll, stores, user);
     }
 
     @Deprecated
@@ -42,16 +42,16 @@ public class ReviewRetrieveService {
     public ReviewScrollV2Response retrieveMyReviewHistoriesV2(RetrieveMyReviewsV2Request request, Long userId) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
         List<Review> reviewsWithNextCursor = reviewRepository.findAllActiveByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
-        ScrollPaginationCollection<Review> reviews = ScrollPaginationCollection.of(reviewsWithNextCursor, request.getSize());
-        StoreCollection stores = findStoresByReviews(reviews.getItemsInCurrentScroll());
-        return ReviewScrollV2Response.of(reviews, stores, user, Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> reviewRepository.findActiveCountsByUserId(userId)));
+        ScrollPaginationCollection<Review> reviewsScroll = ScrollPaginationCollection.of(reviewsWithNextCursor, request.getSize());
+        StoreCacheCollection stores = findStoresByReviews(reviewsScroll.getCurrentScrollItems());
+        return ReviewScrollV2Response.of(reviewsScroll, stores, user, Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> reviewRepository.findActiveCountsByUserId(userId)));
     }
 
-    private StoreCollection findStoresByReviews(List<Review> reviews) {
+    private StoreCacheCollection findStoresByReviews(List<Review> reviews) {
         List<Long> storeIds = reviews.stream()
             .map(Review::getStoreId)
             .collect(Collectors.toList());
-        return StoreCollection.of(storeRepository.findAllByIds(storeIds));
+        return StoreCacheCollection.of(storeRepository.findAllByIds(storeIds));
     }
 
 }
