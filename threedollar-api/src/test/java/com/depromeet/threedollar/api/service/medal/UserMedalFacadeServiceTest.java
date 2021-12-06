@@ -114,7 +114,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
             Store store = StoreCreator.createWithDefaultMenu(userId, "가게");
             storeRepository.save(store);
 
-            storeDeleteRequestRepository.save(StoreDeleteRequestCreator.create(store.getId(), userId, DeleteReasonType.OVERLAPSTORE));
+            storeDeleteRequestRepository.save(StoreDeleteRequestCreator.create(store, userId, DeleteReasonType.OVERLAPSTORE));
 
             // when
             userMedalFacadeService.addObtainableMedalsByDeleteStore(userId);

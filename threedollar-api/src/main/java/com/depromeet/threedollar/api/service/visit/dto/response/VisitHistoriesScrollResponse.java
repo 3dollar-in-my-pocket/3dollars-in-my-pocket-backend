@@ -39,7 +39,7 @@ public class VisitHistoriesScrollResponse {
 
     private static VisitHistoriesScrollResponse newScrollHasNext(List<VisitHistory> visitHistories, long nextCursor) {
         return new VisitHistoriesScrollResponse(visitHistories.stream()
-            .map(history -> VisitHistoryWithStoreResponse.of(history, history.getStore()))
+            .map(VisitHistoryWithStoreResponse::of)
             .collect(Collectors.toList()), nextCursor);
     }
 

@@ -70,8 +70,8 @@ class StoreServiceTest extends SetupUserServiceTest {
         appearanceDayRepository.deleteAllInBatch();
         paymentMethodRepository.deleteAllInBatch();
         menuRepository.deleteAllInBatch();
-        storeRepository.deleteAllInBatch();
         storeDeleteRequestRepository.deleteAllInBatch();
+        storeRepository.deleteAllInBatch();
     }
 
     @Nested
@@ -471,7 +471,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 
-            storeDeleteRequestRepository.save(StoreDeleteRequestCreator.create(store.getId(), 90L, DeleteReasonType.WRONG_CONTENT));
+            storeDeleteRequestRepository.save(StoreDeleteRequestCreator.create(store, 90L, DeleteReasonType.WRONG_CONTENT));
 
             // when
             StoreDeleteResponse response = storeService.deleteStore(store.getId(), DeleteStoreRequest.testInstance(deleteReasonType), userId);
@@ -497,8 +497,8 @@ class StoreServiceTest extends SetupUserServiceTest {
             storeRepository.save(store);
 
             storeDeleteRequestRepository.saveAll(List.of(
-                StoreDeleteRequestCreator.create(store.getId(), 1000L, DeleteReasonType.NOSTORE),
-                StoreDeleteRequestCreator.create(store.getId(), 1001L, DeleteReasonType.NOSTORE))
+                StoreDeleteRequestCreator.create(store, 1000L, DeleteReasonType.NOSTORE),
+                StoreDeleteRequestCreator.create(store, 1001L, DeleteReasonType.NOSTORE))
             );
 
             // when
@@ -525,7 +525,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 
-            storeDeleteRequestRepository.save(StoreDeleteRequestCreator.create(store.getId(), userId, DeleteReasonType.NOSTORE));
+            storeDeleteRequestRepository.save(StoreDeleteRequestCreator.create(store, userId, DeleteReasonType.NOSTORE));
 
             // when & then
             assertThatThrownBy(() -> storeService.deleteStore(store.getId(), DeleteStoreRequest.testInstance(reasonType), userId))

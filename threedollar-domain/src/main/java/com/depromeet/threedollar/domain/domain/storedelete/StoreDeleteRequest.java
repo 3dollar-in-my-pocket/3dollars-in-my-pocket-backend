@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.domain.domain.storedelete;
 
 import com.depromeet.threedollar.domain.domain.common.AuditingTimeEntity;
+import com.depromeet.threedollar.domain.domain.store.Store;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,11 +13,11 @@ import javax.persistence.*;
 @Entity
 @Table(
     indexes = {
-        @Index(name = "idx_store_delete_request_1", columnList = "storeId"),
+        @Index(name = "idx_store_delete_request_1", columnList = "store_id"),
         @Index(name = "idx_store_delete_request_2", columnList = "userId")
     },
     uniqueConstraints = {
-        @UniqueConstraint(name = "uni_store_delete_request_1", columnNames = {"storeId", "userId"})
+        @UniqueConstraint(name = "uni_store_delete_request_1", columnNames = {"store_id", "userId"})
     }
 )
 public class StoreDeleteRequest extends AuditingTimeEntity {
@@ -25,8 +26,9 @@ public class StoreDeleteRequest extends AuditingTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Long storeId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id", nullable = false)
+    private Store store;
 
     @Column(nullable = false)
     private Long userId;
@@ -35,14 +37,14 @@ public class StoreDeleteRequest extends AuditingTimeEntity {
     @Enumerated(value = EnumType.STRING)
     private DeleteReasonType reason;
 
-    private StoreDeleteRequest(Long storeId, Long userId, DeleteReasonType reason) {
-        this.storeId = storeId;
+    private StoreDeleteRequest(Store store, Long userId, DeleteReasonType reason) {
+        this.store = store;
         this.userId = userId;
         this.reason = reason;
     }
 
-    public static StoreDeleteRequest of(Long storeId, Long userId, DeleteReasonType reason) {
-        return new StoreDeleteRequest(storeId, userId, reason);
+    public static StoreDeleteRequest of(Store store, Long userId, DeleteReasonType reason) {
+        return new StoreDeleteRequest(store, userId, reason);
     }
 
 }

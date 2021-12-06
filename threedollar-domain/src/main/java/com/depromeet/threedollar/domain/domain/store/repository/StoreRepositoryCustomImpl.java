@@ -196,7 +196,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
         ))
             .from(store)
             .innerJoin(storeDeleteRequest)
-            .on(store.id.eq(storeDeleteRequest.storeId))
+            .on(store.id.eq(storeDeleteRequest.store.id))
             .where(
                 store.status.eq(StoreStatus.ACTIVE)
             )

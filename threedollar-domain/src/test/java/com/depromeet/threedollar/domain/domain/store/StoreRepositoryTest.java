@@ -148,12 +148,12 @@ class StoreRepositoryTest {
             storeRepository.saveAll(List.of(store0, store1, store2, store3));
 
             storeDeleteRequestRepository.saveAll(List.of(
-                StoreDeleteRequestCreator.create(store1.getId(), 100L, DeleteReasonType.NOSTORE),
-                StoreDeleteRequestCreator.create(store2.getId(), 100L, DeleteReasonType.OVERLAPSTORE),
-                StoreDeleteRequestCreator.create(store2.getId(), 101L, DeleteReasonType.NOSTORE),
-                StoreDeleteRequestCreator.create(store3.getId(), 100L, DeleteReasonType.OVERLAPSTORE),
-                StoreDeleteRequestCreator.create(store3.getId(), 101L, DeleteReasonType.NOSTORE),
-                StoreDeleteRequestCreator.create(store3.getId(), 102L, DeleteReasonType.NOSTORE)
+                StoreDeleteRequestCreator.create(store1, 100L, DeleteReasonType.NOSTORE),
+                StoreDeleteRequestCreator.create(store2, 100L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequestCreator.create(store2, 101L, DeleteReasonType.NOSTORE),
+                StoreDeleteRequestCreator.create(store3, 100L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequestCreator.create(store3, 101L, DeleteReasonType.NOSTORE),
+                StoreDeleteRequestCreator.create(store3, 102L, DeleteReasonType.NOSTORE)
             ));
 
             // when
@@ -175,12 +175,12 @@ class StoreRepositoryTest {
             storeRepository.saveAll(List.of(store1, store2, store3));
 
             storeDeleteRequestRepository.saveAll(List.of(
-                StoreDeleteRequestCreator.create(store1.getId(), 100L, DeleteReasonType.NOSTORE),
-                StoreDeleteRequestCreator.create(store2.getId(), 100L, DeleteReasonType.OVERLAPSTORE),
-                StoreDeleteRequestCreator.create(store2.getId(), 101L, DeleteReasonType.NOSTORE),
-                StoreDeleteRequestCreator.create(store3.getId(), 100L, DeleteReasonType.OVERLAPSTORE),
-                StoreDeleteRequestCreator.create(store3.getId(), 101L, DeleteReasonType.NOSTORE),
-                StoreDeleteRequestCreator.create(store3.getId(), 102L, DeleteReasonType.NOSTORE)
+                StoreDeleteRequestCreator.create(store1, 100L, DeleteReasonType.NOSTORE),
+                StoreDeleteRequestCreator.create(store2, 100L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequestCreator.create(store2, 101L, DeleteReasonType.NOSTORE),
+                StoreDeleteRequestCreator.create(store3, 100L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequestCreator.create(store3, 101L, DeleteReasonType.NOSTORE),
+                StoreDeleteRequestCreator.create(store3, 102L, DeleteReasonType.NOSTORE)
             ));
 
             // when
@@ -202,12 +202,12 @@ class StoreRepositoryTest {
             storeRepository.saveAll(List.of(store1, store2, store3));
 
             storeDeleteRequestRepository.saveAll(List.of(
-                StoreDeleteRequestCreator.create(store1.getId(), 100L, DeleteReasonType.NOSTORE),
-                StoreDeleteRequestCreator.create(store2.getId(), 100L, DeleteReasonType.OVERLAPSTORE),
-                StoreDeleteRequestCreator.create(store2.getId(), 101L, DeleteReasonType.NOSTORE),
-                StoreDeleteRequestCreator.create(store3.getId(), 100L, DeleteReasonType.OVERLAPSTORE),
-                StoreDeleteRequestCreator.create(store3.getId(), 101L, DeleteReasonType.NOSTORE),
-                StoreDeleteRequestCreator.create(store3.getId(), 102L, DeleteReasonType.NOSTORE)
+                StoreDeleteRequestCreator.create(store1, 100L, DeleteReasonType.NOSTORE),
+                StoreDeleteRequestCreator.create(store2, 100L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequestCreator.create(store2, 101L, DeleteReasonType.NOSTORE),
+                StoreDeleteRequestCreator.create(store3, 100L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequestCreator.create(store3, 101L, DeleteReasonType.NOSTORE),
+                StoreDeleteRequestCreator.create(store3, 102L, DeleteReasonType.NOSTORE)
             ));
 
             // when

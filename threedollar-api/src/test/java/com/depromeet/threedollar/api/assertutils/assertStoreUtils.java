@@ -131,7 +131,7 @@ public final class assertStoreUtils {
      */
     public static void assertStoreDeleteRequest(StoreDeleteRequest storeDeleteRequest, Long storeId, Long userId, DeleteReasonType type) {
         assertAll(
-            () -> assertThat(storeDeleteRequest.getStoreId()).isEqualTo(storeId),
+            () -> assertThat(storeDeleteRequest.getStore().getId()).isEqualTo(storeId),
             () -> assertThat(storeDeleteRequest.getUserId()).isEqualTo(userId),
             () -> assertThat(storeDeleteRequest.getReason()).isEqualTo(type)
         );

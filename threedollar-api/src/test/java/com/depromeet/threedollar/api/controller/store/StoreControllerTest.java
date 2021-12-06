@@ -57,8 +57,8 @@ class StoreControllerTest extends SetupUserControllerTest {
         appearanceDayRepository.deleteAllInBatch();
         paymentMethodRepository.deleteAllInBatch();
         menuRepository.deleteAllInBatch();
-        storeRepository.deleteAllInBatch();
         storeDeleteRequestRepository.deleteAllInBatch();
+        storeRepository.deleteAllInBatch();
     }
 
     @DisplayName("POST /api/v2/store")
@@ -153,8 +153,8 @@ class StoreControllerTest extends SetupUserControllerTest {
             storeRepository.save(store);
 
             storeDeleteRequestRepository.saveAll(List.of(
-                StoreDeleteRequestCreator.create(store.getId(), 1000L, DeleteReasonType.NOSTORE),
-                StoreDeleteRequestCreator.create(store.getId(), 1001L, DeleteReasonType.NOSTORE)
+                StoreDeleteRequestCreator.create(store, 1000L, DeleteReasonType.NOSTORE),
+                StoreDeleteRequestCreator.create(store, 1001L, DeleteReasonType.NOSTORE)
             ));
 
             DeleteStoreRequest request = DeleteStoreRequest.testInstance(deleteReasonType);

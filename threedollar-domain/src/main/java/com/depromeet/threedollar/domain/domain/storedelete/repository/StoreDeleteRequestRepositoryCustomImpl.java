@@ -20,7 +20,7 @@ public class StoreDeleteRequestRepositoryCustomImpl implements StoreDeleteReques
             .setHint("javax.persistence.lock.timeout", 2000)
             .from(storeDeleteRequest)
             .where(
-                storeDeleteRequest.storeId.eq(storeId)
+                storeDeleteRequest.store.id.eq(storeId)
             ).fetch();
     }
 
