@@ -13,7 +13,7 @@ import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWrite
 import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
 import com.depromeet.threedollar.domain.domain.user.User;
-import com.depromeet.threedollar.domain.domain.visit.VisitHistoriesCounterCollection;
+import com.depromeet.threedollar.domain.domain.visit.collection.VisitHistoriesCounter;
 import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithUserProjection;
 import lombok.*;
 
@@ -67,7 +67,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
 
     public static StoreDetailResponse of(Store store, List<StoreImage> storeImages, double latitude,
                                          double longitude, User user, List<ReviewWithWriterProjection> reviews,
-                                         VisitHistoriesCounterCollection visitHistoriesCollection, List<VisitHistoryWithUserProjection> visitHistories,
+                                         VisitHistoriesCounter visitHistoriesCollection, List<VisitHistoryWithUserProjection> visitHistories,
                                          UserMedalsCollection userMedalCollection) {
         StoreDetailResponse response = StoreDetailResponse.builder()
             .storeId(store.getId())

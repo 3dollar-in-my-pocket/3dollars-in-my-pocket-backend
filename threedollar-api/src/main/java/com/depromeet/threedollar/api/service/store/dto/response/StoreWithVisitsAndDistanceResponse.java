@@ -5,6 +5,7 @@ import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
 import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.domain.store.Store;
+import com.depromeet.threedollar.domain.domain.visit.collection.VisitHistoriesCounter;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class StoreWithVisitsAndDistanceResponse extends AuditingTimeResponse {
             .build();
     }
 
-    public static StoreWithVisitsAndDistanceResponse of(Store store, Double latitude, Double longitude, long existsVisitsCount, long notExistsVisitsCount) {
+    public static StoreWithVisitsAndDistanceResponse of(Store store, Double latitude, Double longitude, VisitHistoriesCounter visitsCounter) {
         StoreWithVisitsAndDistanceResponse response = StoreWithVisitsAndDistanceResponse.builder()
             .storeId(store.getId())
             .latitude(store.getLatitude())
@@ -55,8 +56,8 @@ public class StoreWithVisitsAndDistanceResponse extends AuditingTimeResponse {
             .storeName(store.getName())
             .rating(store.getRating())
             .distance(LocationDistanceUtils.getDistance(latitude, longitude, store.getLatitude(), store.getLongitude()))
-            .existsVisitsCount(existsVisitsCount)
-            .notExistsVisitsCount(notExistsVisitsCount)
+            .existsVisitsCount(visitsCounter.getStoreExistsVisitsCount(store.getId()))
+            .notExistsVisitsCount(visitsCounter.getStoreNotExistsVisitsCount(store.getId()))
             .isDeleted(store.isDeleted())
             .build();
         response.categories.addAll(store.getMenuCategoriesSortedByCounts());
