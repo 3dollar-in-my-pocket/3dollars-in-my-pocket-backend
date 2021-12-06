@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.service.medal;
 
 import com.depromeet.threedollar.api.service.medal.dto.request.ActivateRepresentativeMedalRequest;
-import com.depromeet.threedollar.api.service.medal.dto.response.MedalResponse;
+import com.depromeet.threedollar.application.service.medal.dto.response.MedalResponse;
 import com.depromeet.threedollar.api.service.user.UserServiceUtils;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.domain.domain.medal.UserMedal;

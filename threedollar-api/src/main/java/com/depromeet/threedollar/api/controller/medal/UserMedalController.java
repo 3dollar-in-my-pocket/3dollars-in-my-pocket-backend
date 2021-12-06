@@ -4,7 +4,7 @@ import com.depromeet.threedollar.api.config.interceptor.Auth;
 import com.depromeet.threedollar.api.config.resolver.UserId;
 import com.depromeet.threedollar.api.service.medal.UserMedalService;
 import com.depromeet.threedollar.api.service.medal.dto.request.ActivateRepresentativeMedalRequest;
-import com.depromeet.threedollar.api.service.medal.dto.response.MedalResponse;
+import com.depromeet.threedollar.application.service.medal.dto.response.MedalResponse;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import io.swagger.annotations.ApiOperation;

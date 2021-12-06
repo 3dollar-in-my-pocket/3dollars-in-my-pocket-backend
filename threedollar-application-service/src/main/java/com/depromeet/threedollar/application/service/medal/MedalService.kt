@@ -1,6 +1,6 @@
-package com.depromeet.threedollar.api.service.medal
+package com.depromeet.threedollar.application.service.medal
 
-import com.depromeet.threedollar.api.service.medal.dto.response.MedalResponse
+import com.depromeet.threedollar.application.service.medal.dto.response.MedalResponse
 import com.depromeet.threedollar.domain.config.cache.CacheType.CacheKey.MEDALS
 import com.depromeet.threedollar.domain.domain.medal.MedalRepository
 import org.springframework.cache.annotation.Cacheable
