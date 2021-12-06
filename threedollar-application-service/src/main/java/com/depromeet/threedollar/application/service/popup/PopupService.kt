@@ -18,9 +18,7 @@ class PopupService(
     @Transactional(readOnly = true)
     fun getActivatedPopups(request: GetActivatedPopupsRequest): List<PopupResponse> {
         return popupRepository.findActivatedPopupsByPlatform(request.platform, LocalDateTime.now())
-            .map {
-                PopupResponse.of(it)
-            }
+            .map { PopupResponse.of(it) }
     }
 
 }

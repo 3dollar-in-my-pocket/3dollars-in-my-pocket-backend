@@ -59,8 +59,8 @@ public class UserMedal extends AuditingTimeEntity {
         return this.status == UserMedalStatus.ACTIVE;
     }
 
-    public boolean hasSameId(Long userMedalId) {
-        return this.id.equals(userMedalId);
+    public boolean hasSameMedalId(Long medalId) {
+        return this.getMedalId().equals(medalId);
     }
 
     Long getUserId() {
@@ -69,14 +69,6 @@ public class UserMedal extends AuditingTimeEntity {
 
     public Long getMedalId() {
         return this.medal.getId();
-    }
-
-    public String getMedalName() {
-        return this.medal.getName();
-    }
-
-    public String getMedalIconUrl() {
-        return this.medal.getIconUrl();
     }
 
 }

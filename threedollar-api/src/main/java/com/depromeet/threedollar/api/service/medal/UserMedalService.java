@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.service.medal;
 
 import com.depromeet.threedollar.api.service.user.UserServiceUtils;
 import com.depromeet.threedollar.api.service.user.dto.request.ActivateRepresentativeMedalRequest;
-import com.depromeet.threedollar.api.service.medal.dto.response.UserMedalResponse;
+import com.depromeet.threedollar.api.service.medal.dto.response.MedalResponse;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.domain.domain.medal.Medal;
 import com.depromeet.threedollar.domain.domain.medal.MedalAcquisitionConditionType;
@@ -57,17 +57,17 @@ public class UserMedalService {
     }
 
     @Transactional(readOnly = true)
-    public List<UserMedalResponse> retrieveObtainedMedals(Long userId) {
+    public List<MedalResponse> retrieveObtainedMedals(Long userId) {
         List<UserMedal> userMedals = UserServiceUtils.findUserById(userRepository, userId).getUserMedals();
         return userMedals.stream()
-            .map(UserMedalResponse::of)
+            .map(MedalResponse::of)
             .collect(Collectors.toList());
     }
 
     @Transactional
     public UserInfoResponse updateRepresentativeMedal(ActivateRepresentativeMedalRequest request, Long userId) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
-        user.updateActivatedMedal(request.getUserMedalId());
+        user.updateActivatedMedal(request.getMedalId());
         return UserInfoResponse.of(user);
     }
 

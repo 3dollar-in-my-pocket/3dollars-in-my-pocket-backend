@@ -4,7 +4,7 @@ import com.depromeet.threedollar.api.config.interceptor.Auth;
 import com.depromeet.threedollar.api.config.resolver.UserId;
 import com.depromeet.threedollar.api.service.medal.UserMedalService;
 import com.depromeet.threedollar.api.service.user.dto.request.ActivateRepresentativeMedalRequest;
-import com.depromeet.threedollar.api.service.medal.dto.response.UserMedalResponse;
+import com.depromeet.threedollar.api.service.medal.dto.response.MedalResponse;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import io.swagger.annotations.ApiOperation;
@@ -26,7 +26,7 @@ public class UserMedalController {
     @ApiOperation("[인증] 마이페이지 - 사용자가 보유중인 메달들을 조회한다")
     @Auth
     @GetMapping("/api/v1/user/medals")
-    public ApiResponse<List<UserMedalResponse>> retrieveMyMedalsObtained(@UserId Long userId) {
+    public ApiResponse<List<MedalResponse>> retrieveMyMedalsObtained(@UserId Long userId) {
         return ApiResponse.success(userMedalService.retrieveObtainedMedals(userId));
     }
 

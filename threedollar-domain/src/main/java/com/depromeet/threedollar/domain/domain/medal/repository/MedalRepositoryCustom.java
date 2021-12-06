@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface MedalRepositoryCustom {
 
+    List<Medal> findAllActiveMedals();
+
     List<Medal> findAllByConditionType(MedalAcquisitionConditionType conditionType);
 
 }

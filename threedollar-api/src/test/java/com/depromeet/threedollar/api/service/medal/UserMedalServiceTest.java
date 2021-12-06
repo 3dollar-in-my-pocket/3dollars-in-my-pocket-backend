@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.api.service.medal;
 
 import com.depromeet.threedollar.api.service.SetupUserServiceTest;
-import com.depromeet.threedollar.api.service.medal.UserMedalService;
 import com.depromeet.threedollar.api.service.user.dto.request.ActivateRepresentativeMedalRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.medal.*;
@@ -46,7 +45,7 @@ class UserMedalServiceTest extends SetupUserServiceTest {
             UserMedal userMedal = UserMedalCreator.createInActive(medal, user);
             userMedalRepository.save(userMedal);
 
-            ActivateRepresentativeMedalRequest request = ActivateRepresentativeMedalRequest.testInstance(userMedal.getId());
+            ActivateRepresentativeMedalRequest request = ActivateRepresentativeMedalRequest.testInstance(medal.getId());
 
             // when
             userMedalService.updateRepresentativeMedal(request, userId);

@@ -16,6 +16,13 @@ public class MedalRepositoryCustomImpl implements MedalRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
+    public List<Medal> findAllActiveMedals() {
+        return queryFactory.selectFrom(medal)
+            .innerJoin(medal.acquisitionCondition, medalAcquisitionCondition)
+            .fetch();
+    }
+
+    @Override
     public List<Medal> findAllByConditionType(MedalAcquisitionConditionType conditionType) {
         return queryFactory.selectFrom(medal)
             .innerJoin(medal.acquisitionCondition, medalAcquisitionCondition).fetchJoin()

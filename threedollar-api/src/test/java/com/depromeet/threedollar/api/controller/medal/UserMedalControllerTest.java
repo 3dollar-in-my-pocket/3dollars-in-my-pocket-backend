@@ -47,10 +47,10 @@ class UserMedalControllerTest extends SetupUserControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data", hasSize(2)))
-                .andExpect(jsonPath("$.data[0].userMedalId").value(medalActive.getId()))
+                .andExpect(jsonPath("$.data[0].medalId").value(medalActive.getId()))
                 .andExpect(jsonPath("$.data[0].name").value(medalActive.getName()))
                 .andExpect(jsonPath("$.data[0].iconUrl").value(medalActive.getIconUrl()))
-                .andExpect(jsonPath("$.data[1].userMedalId").value(medalInActive.getId()))
+                .andExpect(jsonPath("$.data[1].medalId").value(medalInActive.getId()))
                 .andExpect(jsonPath("$.data[1].name").value(medalInActive.getName()))
                 .andExpect(jsonPath("$.data[1].iconUrl").value(medalInActive.getIconUrl()));
         }

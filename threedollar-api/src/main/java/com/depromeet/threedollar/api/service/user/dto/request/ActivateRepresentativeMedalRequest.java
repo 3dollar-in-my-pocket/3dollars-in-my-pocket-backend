@@ -10,10 +10,10 @@ import org.jetbrains.annotations.Nullable;
 public class ActivateRepresentativeMedalRequest {
 
     @Nullable
-    private Long userMedalId;
+    private Long medalId;
 
-    public static ActivateRepresentativeMedalRequest testInstance(Long userMedalId) {
-        return new ActivateRepresentativeMedalRequest(userMedalId);
+    public static ActivateRepresentativeMedalRequest testInstance(Long medalId) {
+        return new ActivateRepresentativeMedalRequest(medalId);
     }
 
 }

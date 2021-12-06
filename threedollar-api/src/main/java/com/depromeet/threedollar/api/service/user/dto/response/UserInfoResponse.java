@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.user.dto.response;
 
-import com.depromeet.threedollar.api.service.medal.dto.response.UserMedalResponse;
+import com.depromeet.threedollar.api.service.medal.dto.response.MedalResponse;
 import com.depromeet.threedollar.domain.domain.medal.UserMedal;
 import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
@@ -18,20 +18,20 @@ public class UserInfoResponse {
     private Long userId;
     private String name;
     private UserSocialType socialType;
-    private UserMedalResponse medal;
+    private MedalResponse medal;
 
     public static UserInfoResponse of(User user) {
         if (user == null) {
             return SIGN_OUT_USER;
         }
-        return new UserInfoResponse(user.getId(), user.getName(), user.getSocialType(), UserMedalResponse.of(user.getActivatedMedal()));
+        return new UserInfoResponse(user.getId(), user.getName(), user.getSocialType(), MedalResponse.of(user.getActivatedMedal()));
     }
 
     public static UserInfoResponse of(@Nullable Long userId, @Nullable String userName, @Nullable UserSocialType userSocialType, @Nullable UserMedal userMedal) {
         if (userId == null) {
             return SIGN_OUT_USER;
         }
-        return new UserInfoResponse(userId, userName, userSocialType, UserMedalResponse.of(userMedal));
+        return new UserInfoResponse(userId, userName, userSocialType, MedalResponse.of(userMedal));
     }
 
 }

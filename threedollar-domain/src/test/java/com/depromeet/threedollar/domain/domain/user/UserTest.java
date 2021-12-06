@@ -71,7 +71,7 @@ class UserTest {
 
     @NullSource
     @ParameterizedTest
-    void null을_넘기면_유저의_대표_메달을_비활성화시킨다(Long userMedalId) {
+    void null을_넘기면_유저의_대표_메달을_비활성화시킨다(Long medalId) {
         // given
         User user = UserCreator.create("social-id", UserSocialType.KAKAO, "닉네임");
         Medal medalA = MedalCreator.create("메달 A", "iconUrl", MedalAcquisitionConditionType.ADD_STORE, 3);
@@ -79,7 +79,7 @@ class UserTest {
         user.addMedals(List.of(medalA, medalB));
 
         // when
-        user.updateActivatedMedal(userMedalId);
+        user.updateActivatedMedal(medalId);
 
         // then
         assertThat(user.getUserMedals()).extracting(UserMedal::getStatus).containsOnly(UserMedalStatus.IN_ACTIVE);
