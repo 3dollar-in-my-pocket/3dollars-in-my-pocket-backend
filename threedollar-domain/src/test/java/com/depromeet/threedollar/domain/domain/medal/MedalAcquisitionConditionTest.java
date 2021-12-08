@@ -34,7 +34,7 @@ class MedalAcquisitionConditionTest {
         MedalAcquisitionCondition medalAcquisitionCondition = MedalAcquisitionCondition.of(MedalCreator.create("메달 A", "iconUrl"), MedalAcquisitionConditionType.ADD_STORE, count);
 
         // when
-        boolean result = medalAcquisitionCondition.canObtain(MedalAcquisitionConditionType.VISIT_STORE, count);
+        boolean result = medalAcquisitionCondition.canObtain(MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE, count);
 
         // then
         assertThat(result).isFalse();

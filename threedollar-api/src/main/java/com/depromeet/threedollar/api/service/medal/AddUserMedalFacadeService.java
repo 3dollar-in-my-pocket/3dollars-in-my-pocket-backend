@@ -35,7 +35,7 @@ public class AddUserMedalFacadeService {
     }
 
     public void addObtainableMedalsByVisitStore(Long userId) {
-        userMedalService.addMedalsIfSatisfyCondition(userId, VISIT_STORE, () -> visitHistoryRepository.findCountsByUserIdAndCategory(userId, MenuCategoryType.BUNGEOPPANG));
+        userMedalService.addMedalsIfSatisfyCondition(userId, VISIT_BUNGEOPPANG_STORE, () -> visitHistoryRepository.findCountsByUserIdAndCategory(userId, MenuCategoryType.BUNGEOPPANG));
         userMedalService.addMedalsIfSatisfyCondition(userId, VISIT_NOT_EXISTS_STORE, () -> visitHistoryRepository.findCountsByUserIdAndVisitType(userId, VisitType.NOT_EXISTS));
     }
 
