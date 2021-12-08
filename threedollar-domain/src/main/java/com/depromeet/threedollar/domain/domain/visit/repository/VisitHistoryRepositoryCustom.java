@@ -1,9 +1,11 @@
 package com.depromeet.threedollar.domain.domain.visit.repository;
 
+import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
 import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryCountProjection;
 import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithUserProjection;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,7 +20,7 @@ public interface VisitHistoryRepositoryCustom {
 
     List<VisitHistoryCountProjection> findCountsByStoreIdWithGroup(List<Long> storeIds, LocalDate startDate);
 
-	long findCountsByUserId(Long userId);
+	long findCountsByUserIdAndCategory(Long userId, @Nullable MenuCategoryType menuCategoryType);
 
     long findCountsByUserIdAndVisitType(Long userId, VisitType visitType);
 

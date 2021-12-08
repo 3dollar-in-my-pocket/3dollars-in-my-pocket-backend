@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.domain.domain.visit.repository;
 
+import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
 import com.depromeet.threedollar.domain.domain.visit.projection.QVisitHistoryCountProjection;
@@ -9,6 +10,7 @@ import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWith
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -97,12 +99,22 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
     }
 
     @Override
-    public long findCountsByUserId(Long userId) {
+    public long findCountsByUserIdAndCategory(Long userId, @Nullable MenuCategoryType menuCategoryType) {
         return queryFactory.select(visitHistory.id)
             .from(visitHistory)
+            .innerJoin(visitHistory.store, store).fetchJoin()
+            .innerJoin(store.menus, menu).fetchJoin()
             .where(
-                visitHistory.userId.eq(userId)
+                visitHistory.userId.eq(userId),
+                eqMenuCategory(menuCategoryType)
             ).fetchCount();
+    }
+
+    private BooleanExpression eqMenuCategory(@Nullable MenuCategoryType menuCategoryType) {
+        if (menuCategoryType == null) {
+            return null;
+        }
+        return menu.category.eq(menuCategoryType);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.service.medal;
 
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
+import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestRepository;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
@@ -34,7 +35,7 @@ public class AddUserMedalFacadeService {
     }
 
     public void addObtainableMedalsByVisitStore(Long userId) {
-        userMedalService.addMedalsIfSatisfyCondition(userId, VISIT_STORE, () -> visitHistoryRepository.findCountsByUserId(userId));
+        userMedalService.addMedalsIfSatisfyCondition(userId, VISIT_STORE, () -> visitHistoryRepository.findCountsByUserIdAndCategory(userId, MenuCategoryType.BUNGEOPPANG));
         userMedalService.addMedalsIfSatisfyCondition(userId, VISIT_NOT_EXISTS_STORE, () -> visitHistoryRepository.findCountsByUserIdAndVisitType(userId, VisitType.NOT_EXISTS));
     }
 

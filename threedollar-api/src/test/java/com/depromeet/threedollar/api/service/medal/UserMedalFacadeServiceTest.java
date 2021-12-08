@@ -4,9 +4,7 @@ import com.depromeet.threedollar.api.service.SetupUserServiceTest;
 import com.depromeet.threedollar.domain.domain.medal.*;
 import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
-import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.domain.store.StoreCreator;
-import com.depromeet.threedollar.domain.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.storedelete.DeleteReasonType;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestCreator;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestRepository;
@@ -203,14 +201,15 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
     @Nested
     class addObtainableMedalsByVisitStore {
 
-        @DisplayName("[방문 2] - 방문 2 -> 메달 획득 성공")
+        @DisplayName("[붕어빵 가게 방문 2] - 붕어빵 가게 방문 2 -> 메달 획득 성공")
         @Test
         void 방문_인증_조건을_만족하면_해당_메달을_획득한다() {
             // given
             Medal medal = MedalCreator.create("붕어빵 챌린지", "https://icon.png", MedalAcquisitionConditionType.VISIT_STORE, 2);
             medalRepository.save(medal);
 
-            Store store = StoreCreator.createWithDefaultMenu(userId, "가게");
+            Store store = StoreCreator.create(userId, "가게");
+            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵 2개", "천원", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             visitHistoryRepository.saveAll(List.of(
@@ -229,14 +228,15 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
             );
         }
 
-        @DisplayName("[방문 2] - 방문 1 -> 메달 획득 실패")
+        @DisplayName("[붕어빵 가게 방문 2] - 붕어빵 가게 방문 1 -> 메달 획득 실패")
         @Test
         void 방문_인증_조건을_만족하지_못하면_메달을_획득하지_못한다() {
             // given
             Medal medal = MedalCreator.create("붕어빵 챌린지", "https://icon.png", MedalAcquisitionConditionType.VISIT_STORE, 2);
             medalRepository.save(medal);
 
-            Store store = StoreCreator.createWithDefaultMenu(userId, "가게");
+            Store store = StoreCreator.create(userId, "가게");
+            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵 2개", "천원", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 1, 1)));
@@ -247,6 +247,33 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
             // then
             List<UserMedal> userMedals = userMedalRepository.findAll();
             assertThat(userMedals).isEmpty();
+        }
+
+        @DisplayName("[붕어빵 가게 방문 2] - 붕어빵이 아닌 가게 방문 2 -> 메달 획득 실패")
+        @Test
+        void 붕어빵을_파는_가게가_아닌경우_카운트에_포함되지_않는다() {
+            // given
+            Medal medal = MedalCreator.create("붕어빵 챌린지", "https://icon.png", MedalAcquisitionConditionType.VISIT_STORE, 2);
+            medalRepository.save(medal);
+
+            Store store = StoreCreator.create(userId, "가게");
+            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵 2개", "천원", MenuCategoryType.BUNGEOPPANG)));
+            storeRepository.save(store);
+
+            visitHistoryRepository.saveAll(List.of(
+                VisitHistoryCreator.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 1, 1)),
+                VisitHistoryCreator.create(store, userId, VisitType.NOT_EXISTS, LocalDate.of(2021, 1, 2))
+            ));
+
+            // when
+            userMedalFacadeService.addObtainableMedalsByVisitStore(userId);
+
+            // then
+            List<UserMedal> userMedals = userMedalRepository.findAll();
+            assertAll(
+                () -> assertThat(userMedals).hasSize(1),
+                () -> assertUserMedal(userMedals.get(0), userId, medal.getId(), UserMedalStatus.IN_ACTIVE)
+            );
         }
 
         @DisplayName("[방문 실패2] - 성공 2 -> 메달 획득 성공")
