@@ -1,7 +1,8 @@
 package com.depromeet.threedollar.api.service.medal.dto.request;
 
 import lombok.*;
-import org.jetbrains.annotations.Nullable;
+
+import javax.validation.constraints.NotNull;
 
 @ToString
 @Getter
@@ -9,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ActivateRepresentativeMedalRequest {
 
-    @Nullable
+    @NotNull(message = "{user.medalId.notNull}")
     private Long medalId;
 
     public static ActivateRepresentativeMedalRequest testInstance(Long medalId) {

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum MedalAcquisitionConditionType {
 
+    NO_CONDITION("기본 메달"),
     ADD_STORE("가게 등록"),
     ADD_REVIEW("리뷰 등록"),
     VISIT_STORE("가게 방문 인증"),
