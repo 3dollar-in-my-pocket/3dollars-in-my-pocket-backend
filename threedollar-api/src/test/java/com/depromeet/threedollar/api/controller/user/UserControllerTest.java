@@ -45,8 +45,7 @@ class UserControllerTest extends SetupUserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.userId").value(testUser.getId()))
                 .andExpect(jsonPath("$.data.name").value(testUser.getName()))
-                .andExpect(jsonPath("$.data.socialType").value(testUser.getSocialType().name()))
-                .andExpect(jsonPath("$.data.medal").isEmpty());
+                .andExpect(jsonPath("$.data.socialType").value(testUser.getSocialType().name()));
         }
 
         @AutoSource

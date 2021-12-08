@@ -38,4 +38,8 @@ public class AddUserMedalFacadeService {
         userMedalService.addMedalsIfSatisfyCondition(userId, VISIT_NOT_EXISTS_STORE, () -> visitHistoryRepository.findCountsByUserIdAndVisitType(userId, VisitType.NOT_EXISTS));
     }
 
+    public void addAndActivateDefaultMedals(Long userId) {
+        userMedalService.addAndActivateDefaultMedals(userId);
+    }
+
 }

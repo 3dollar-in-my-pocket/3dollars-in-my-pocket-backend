@@ -33,6 +33,17 @@ public class AddUserMedalService {
         user.addMedals(filterMedalsSatisfyCondition(medalsUserNotHeldByCondition, conditionType, findCountsByUser.get()));
     }
 
+    @Transactional
+    public void addAndActivateDefaultMedals(Long userId) {
+        User user = UserServiceUtils.findUserById(userRepository, userId);
+        List<Medal> medalsUserNotHeld = getMedalsUserNotHeldByCondition(user, MedalAcquisitionConditionType.NO_CONDITION);
+        if (hasNoMoreMedalsCanBeObtained(medalsUserNotHeld)) {
+            return;
+        }
+        user.addMedals(medalsUserNotHeld);
+        user.updateActivatedMedal(medalsUserNotHeld.get(0).getId());
+    }
+
     private List<Medal> getMedalsUserNotHeldByCondition(User user, MedalAcquisitionConditionType conditionType) {
         List<Medal> medals = medalRepository.findAllByConditionType(conditionType);
         List<Long> medalsUserObtains = user.getUserMedals().stream()

@@ -68,29 +68,6 @@ class UserMedalServiceTest extends SetupUserServiceTest {
             assertThatThrownBy(() -> userMedalService.updateRepresentativeMedal(request, userId)).isInstanceOfAny(NotFoundException.class);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 대표_칭호_변경시_메달_종류를_NULL을_요청하면_대표_칭호가_비활성화된다(String name, String iconUrl) {
-            // given
-            Medal medal = MedalCreator.create(name, iconUrl);
-            medalRepository.save(medal);
-
-            UserMedal userMedal = UserMedalCreator.createActive(medal, user);
-            userMedalRepository.save(userMedal);
-
-            ActivateRepresentativeMedalRequest request = ActivateRepresentativeMedalRequest.testInstance(null);
-
-            // when
-            userMedalService.updateRepresentativeMedal(request, userId);
-
-            // then
-            List<UserMedal> userMedals = userMedalRepository.findAll();
-            assertAll(
-                () -> assertThat(userMedals).hasSize(1),
-                () -> assertUserMedal(userMedals.get(0), userId, medal.getId(), UserMedalStatus.IN_ACTIVE)
-            );
-        }
-
     }
 
 }

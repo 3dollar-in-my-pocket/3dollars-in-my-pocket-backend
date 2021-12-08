@@ -8,7 +8,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -65,11 +64,8 @@ public class User extends AuditingTimeEntity {
         this.userMedals.add(UserMedal.of(medal, this));
     }
 
-    public void updateActivatedMedal(@Nullable Long medalId) {
+    public void updateActivatedMedal(@NotNull Long medalId) {
         inactivatedAllUserMedals();
-        if (medalId == null) {
-            return;
-        }
         findUserMedal(medalId).updateToActive();
     }
 
@@ -94,12 +90,11 @@ public class User extends AuditingTimeEntity {
         return this.socialInfo.getSocialType();
     }
 
-    @Nullable
     public UserMedal getActivatedMedal() {
         return this.userMedals.stream()
             .filter(UserMedal::isActiveStatus)
             .findFirst()
-            .orElse(null);
+            .orElse(null); // TODO: 차후 마이그레이션 이후 Not-Null
     }
 
 }

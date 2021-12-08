@@ -43,7 +43,6 @@ internal class UserActivityControllerTest(
                     jsonPath("$.data.userId") { value(testUser.id) }
                     jsonPath("$.data.name") { value(testUser.name) }
                     jsonPath("$.data.socialType") { value(testUser.socialType.toString()) }
-                    jsonPath("$.data.medal") { doesNotExist() }
                 }
             }
     }
