@@ -50,7 +50,7 @@ internal class UserActivityControllerTest(
     @Test
     fun `유저의 회원 정보를 조회시 활성화중인 메달이 있는 경우 함께 조회된다`() {
         // given
-        val medal = MedalCreator.create("붕어빵 챌린저", "http://medal-image.png")
+        val medal = MedalCreator.create("붕어빵 챌린저", "http://medal-image.png", "http://medal-image-disable.png")
         medalRepository.save(medal)
         userMedalRepository.save(UserMedalCreator.createActive(medal, testUser))
 
@@ -63,7 +63,8 @@ internal class UserActivityControllerTest(
                 status { isOk() }
                 content {
                     jsonPath("$.data.medal.name") { value(medal.name) }
-                    jsonPath("$.data.medal.iconUrl") { value(medal.iconUrl) }
+                    jsonPath("$.data.medal.iconUrl") { value(medal.activationIconUrl) }
+                    jsonPath("$.data.medal.disableIconUrl") { value(medal.disableIconUrl) }
                 }
             }
     }
@@ -121,8 +122,8 @@ internal class UserActivityControllerTest(
     @Test
     fun `유저가 보유한 메달 개수 조회한다`() {
         // given
-        val medalOne = MedalCreator.create("붕어빵 챌린저", "http://medal-image.png")
-        val medalTwo = MedalCreator.create("붕어빵 챌린저", "http://medal-image.png")
+        val medalOne = MedalCreator.create("붕어빵 챌린저 1", "http://medal-image-one.png", "http://medal-image-disable-one.png")
+        val medalTwo = MedalCreator.create("붕어빵 챌린저 2", "http://medal-image-two.png", "http://medal-image-disable-two.png")
         medalRepository.saveAll(listOf(medalOne, medalTwo))
 
         userMedalRepository.saveAll(

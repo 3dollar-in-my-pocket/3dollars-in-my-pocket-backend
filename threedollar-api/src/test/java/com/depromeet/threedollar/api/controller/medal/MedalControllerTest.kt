@@ -48,11 +48,13 @@ class MedalControllerTest(
 
                     jsonPath("$.data[0].medalId") { value(medalOne.id) }
                     jsonPath("$.data[0].name") { value(medalOne.name) }
-                    jsonPath("$.data[0].iconUrl") { value(medalOne.iconUrl) }
+                    jsonPath("$.data[0].iconUrl") { value(medalOne.activationIconUrl) }
+                    jsonPath("$.data[0].disableIconUrl") { value(medalOne.disableIconUrl) }
 
                     jsonPath("$.data[1].medalId") { value(medalTwo.id) }
                     jsonPath("$.data[1].name") { value(medalTwo.name) }
-                    jsonPath("$.data[1].iconUrl") { value(medalTwo.iconUrl) }
+                    jsonPath("$.data[1].iconUrl") { value(medalTwo.activationIconUrl) }
+                    jsonPath("$.data[1].disableIconUrl") { value(medalTwo.disableIconUrl) }
                 }
             }
     }

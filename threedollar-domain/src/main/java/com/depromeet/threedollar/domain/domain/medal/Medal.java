@@ -19,20 +19,28 @@ public class Medal extends AuditingTimeEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String iconUrl;
+    @Embedded
+    private MedalImage medalImage;
 
     @OneToOne(mappedBy = "medal", cascade = CascadeType.ALL, orphanRemoval = true)
     private MedalAcquisitionCondition acquisitionCondition;
 
-    Medal(String name, String iconUrl, MedalAcquisitionConditionType conditionType, int count) {
+    Medal(String name, String activationIconUrl, String disableIconUrl, MedalAcquisitionConditionType conditionType, int count) {
         this.name = name;
-        this.iconUrl = iconUrl;
+        this.medalImage = MedalImage.of(activationIconUrl, disableIconUrl);
         this.acquisitionCondition = MedalAcquisitionCondition.of(this, conditionType, count);
     }
 
     public boolean canObtain(MedalAcquisitionConditionType conditionType, long counts) {
         return this.acquisitionCondition.canObtain(conditionType, counts);
+    }
+
+    public String getActivationIconUrl() {
+        return this.medalImage.getActivationIconUrl();
+    }
+
+    public String getDisableIconUrl() {
+        return this.medalImage.getDisableIconUrl();
     }
 
 }

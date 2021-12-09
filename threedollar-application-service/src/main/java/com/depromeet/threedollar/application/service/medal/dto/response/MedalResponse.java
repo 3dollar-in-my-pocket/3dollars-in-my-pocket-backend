@@ -20,6 +20,8 @@ public class MedalResponse {
 
     private String iconUrl;
 
+    private String disableIconUrl;
+
     // TODO: 차후 마이그레이션 이후 Not-Null
     public static MedalResponse of(@Nullable UserMedal userMedal) {
         if (userMedal == null) {
@@ -29,11 +31,11 @@ public class MedalResponse {
     }
 
     public static MedalResponse of(@NotNull Medal medal) {
-        return new MedalResponse(medal.getId(), medal.getName(), medal.getIconUrl());
+        return new MedalResponse(medal.getId(), medal.getName(), medal.getActivationIconUrl(), medal.getDisableIconUrl());
     }
 
     public static MedalResponse signOut() {
-        return new MedalResponse(null, SIGN_OUT_MEDAL_NAME, null);
+        return new MedalResponse(null, SIGN_OUT_MEDAL_NAME, null, null);
     }
 
 }

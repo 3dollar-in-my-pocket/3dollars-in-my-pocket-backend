@@ -33,8 +33,8 @@ class UserMedalControllerTest extends SetupUserControllerTest {
         @Test
         void 보유중인_칭호들을_모두_조회한다() throws Exception {
             // given
-            Medal medalActive = MedalCreator.create("활성화중인 메달", "메달 아이콘 A");
-            Medal medalInActive = MedalCreator.create("비활성화중인 메달", "메달 아이콘 B");
+            Medal medalActive = MedalCreator.create("활성화중인 메달", "메달 아이콘 A", "비활성화 아이콘 A");
+            Medal medalInActive = MedalCreator.create("비활성화중인 메달", "메달 아이콘 B", "비활성화 아이콘 B");
             medalRepository.saveAll(List.of(medalActive, medalInActive));
 
             userMedalRepository.saveAll(List.of(
@@ -49,10 +49,13 @@ class UserMedalControllerTest extends SetupUserControllerTest {
                 .andExpect(jsonPath("$.data", hasSize(2)))
                 .andExpect(jsonPath("$.data[0].medalId").value(medalActive.getId()))
                 .andExpect(jsonPath("$.data[0].name").value(medalActive.getName()))
-                .andExpect(jsonPath("$.data[0].iconUrl").value(medalActive.getIconUrl()))
+                .andExpect(jsonPath("$.data[0].iconUrl").value(medalActive.getActivationIconUrl()))
+                .andExpect(jsonPath("$.data[0].disableIconUrl").value(medalActive.getDisableIconUrl()))
+
                 .andExpect(jsonPath("$.data[1].medalId").value(medalInActive.getId()))
                 .andExpect(jsonPath("$.data[1].name").value(medalInActive.getName()))
-                .andExpect(jsonPath("$.data[1].iconUrl").value(medalInActive.getIconUrl()));
+                .andExpect(jsonPath("$.data[1].iconUrl").value(medalInActive.getActivationIconUrl()))
+                .andExpect(jsonPath("$.data[1].disableIconUrl").value(medalInActive.getDisableIconUrl()));
         }
 
         private ResultActions retrieveMyMedalsObtained(String token) throws Exception {

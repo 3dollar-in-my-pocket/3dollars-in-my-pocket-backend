@@ -18,7 +18,7 @@ class MedalAcquisitionConditionTest {
         // given
         int countCanObtainMedal = 5;
         MedalAcquisitionConditionType conditionType = MedalAcquisitionConditionType.ADD_STORE;
-        MedalAcquisitionCondition medalAcquisitionCondition = MedalAcquisitionCondition.of(MedalCreator.create("메달 A", "iconUrl"), conditionType, countCanObtainMedal);
+        MedalAcquisitionCondition medalAcquisitionCondition = MedalAcquisitionCondition.of(MedalCreator.create("메달 A", "iconUrl", "disableIconUrl"), conditionType, countCanObtainMedal);
 
         // when
         boolean result = medalAcquisitionCondition.canObtain(conditionType, count);
@@ -31,7 +31,7 @@ class MedalAcquisitionConditionTest {
     void 메달_획득_정책이_일치하지_않는경우_메달을_획득할_수_없다() {
         // given
         int count = 2;
-        MedalAcquisitionCondition medalAcquisitionCondition = MedalAcquisitionCondition.of(MedalCreator.create("메달 A", "iconUrl"), MedalAcquisitionConditionType.ADD_STORE, count);
+        MedalAcquisitionCondition medalAcquisitionCondition = MedalAcquisitionCondition.of(MedalCreator.create("메달 A", "iconUrl", "disableIconUrl"), MedalAcquisitionConditionType.ADD_STORE, count);
 
         // when
         boolean result = medalAcquisitionCondition.canObtain(MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE, count);

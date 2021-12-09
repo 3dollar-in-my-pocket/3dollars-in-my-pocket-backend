@@ -37,9 +37,9 @@ class UserMedalServiceTest extends SetupUserServiceTest {
 
         @AutoSource
         @ParameterizedTest
-        void 장착중인_대표_칭호를_변경한다(String name, String iconUrl) {
+        void 장착중인_대표_칭호를_변경한다(String name, String activationIconUrl, String disableIconUrl) {
             // given
-            Medal medal = MedalCreator.create(name, iconUrl);
+            Medal medal = MedalCreator.create(name, activationIconUrl, disableIconUrl);
             medalRepository.save(medal);
 
             UserMedal userMedal = UserMedalCreator.createInActive(medal, user);

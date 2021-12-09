@@ -50,9 +50,9 @@ class UserControllerTest extends SetupUserControllerTest {
 
         @AutoSource
         @ParameterizedTest
-        void 나의_회원정보_조회시_활성화중인_메달이_있는경우_함께_조회된다(String medalName, String iconUrl) throws Exception {
+        void 나의_회원정보_조회시_활성화중인_메달이_있는경우_함께_조회된다(String medalName, String activationIconUrl, String disableIconurl) throws Exception {
             // given
-            Medal medal = MedalCreator.create(medalName, iconUrl);
+            Medal medal = MedalCreator.create(medalName, activationIconUrl, disableIconurl);
             medalRepository.save(medal);
             userMedalRepository.save(UserMedalCreator.createActive(medal, testUser));
 
@@ -61,7 +61,8 @@ class UserControllerTest extends SetupUserControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.medal.name").value(medalName))
-                .andExpect(jsonPath("$.data.medal.iconUrl").value(iconUrl));
+                .andExpect(jsonPath("$.data.medal.iconUrl").value(activationIconUrl))
+                .andExpect(jsonPath("$.data.medal.disableIconUrl").value(disableIconurl));
         }
 
 

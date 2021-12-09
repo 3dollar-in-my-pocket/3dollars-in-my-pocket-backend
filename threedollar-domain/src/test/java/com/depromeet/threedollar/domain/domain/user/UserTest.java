@@ -32,7 +32,7 @@ class UserTest {
     private void assertUserMedal(UserMedal userMedal, String name, String iconUrl, MedalAcquisitionConditionType conditionType, int count) {
         assertAll(
             () -> assertThat(userMedal.getMedal().getName()).isEqualTo(name),
-            () -> assertThat(userMedal.getMedal().getIconUrl()).isEqualTo(iconUrl),
+            () -> assertThat(userMedal.getMedal().getActivationIconUrl()).isEqualTo(iconUrl),
             () -> assertThat(userMedal.getMedal().getAcquisitionCondition().getConditionType()).isEqualTo(conditionType),
             () -> assertThat(userMedal.getMedal().getAcquisitionCondition().getCount()).isEqualTo(count)
         );
