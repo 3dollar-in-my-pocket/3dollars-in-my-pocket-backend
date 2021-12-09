@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.batch.jobs
 
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
-import com.depromeet.threedollar.domain.domain.medal.Medal
+import com.depromeet.threedollar.domain.collection.medal.MedalUserObtainCollection
 import com.depromeet.threedollar.domain.domain.medal.MedalAcquisitionConditionType
 import com.depromeet.threedollar.domain.domain.medal.MedalRepository
 import com.depromeet.threedollar.domain.domain.user.User
@@ -15,7 +15,6 @@ import org.springframework.batch.item.database.JpaPagingItemReader
 import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import java.util.stream.Collectors
 import javax.persistence.EntityManagerFactory
 
 @Configuration
@@ -57,27 +56,18 @@ class GiveDefaultMedalsToAllUserJobConfiguration(
     @Bean
     fun giveDefaultMedalsItemProcessor(): ItemProcessor<User, User> {
         return ItemProcessor<User, User> { user ->
-            val medalsUserNotHeld = getMedalsUserNotHeldByCondition(user)
-            if (hasMoreMedalsCanBeObtained(medalsUserNotHeld)) {
-                user.addMedals(medalsUserNotHeld)
-                user.updateActivatedMedal(medalsUserNotHeld[0].id)
+            val collection = MedalUserObtainCollection.of(
+                medalRepository.findAllByConditionType(MedalAcquisitionConditionType.NO_CONDITION),
+                MedalAcquisitionConditionType.NO_CONDITION,
+                user
+            )
+            if (collection.hasMoreMedalsCanBeObtained()) {
+                val medalsSatisfyCondition = collection.satisfyMedalsCanBeObtainedByDefault
+                user.addMedals(medalsSatisfyCondition)
+                user.updateActivatedMedal(medalsSatisfyCondition[0].id)
             }
             user
         }
-    }
-
-    private fun getMedalsUserNotHeldByCondition(user: User): List<Medal> {
-        val medals = medalRepository.findAllByConditionType(MedalAcquisitionConditionType.NO_CONDITION)
-        val medalsUserObtains = user.userMedals.stream()
-            .map { userMedal -> userMedal.medalId }
-            .collect(Collectors.toList())
-        return medals.stream()
-            .filter { medal: Medal -> !medalsUserObtains.contains(medal.id) }
-            .collect(Collectors.toList())
-    }
-
-    private fun hasMoreMedalsCanBeObtained(medals: List<Medal>): Boolean {
-        return medals.isNotEmpty()
     }
 
     @Bean
