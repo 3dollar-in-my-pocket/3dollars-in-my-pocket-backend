@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 public final class ProcessUtils {
 
     private static final int LOWEST_PORT = 10000;
-    private static final int HIGHEST_PORT = 30000;
+    private static final int HIGHEST_PORT = 65535;
 
     private static final String OS = System.getProperty("os.name").toLowerCase();
 
@@ -28,7 +28,7 @@ public final class ProcessUtils {
                 return port;
             }
         }
-        throw new InternalServerException("사용가능한 포트를 찾을 수 없습니다. (10000 ~ 65535)");
+        throw new InternalServerException(String.format("사용가능한 포트를 찾을 수 없습니다. (%s~%s)", LOWEST_PORT, HIGHEST_PORT));
     }
 
     private static Process executeGrepProcessCommand(int port) throws IOException {
@@ -55,7 +55,7 @@ public final class ProcessUtils {
                 pidInfo.append(line);
             }
         } catch (Exception e) {
-            throw new InternalServerException("사용가능한 포트를 찾는 중 에러가 발생하였습니다.");
+            throw new InternalServerException("포트를 사용 여부를 확인 중 에러가 발생하였습니다.");
         }
         return StringUtils.hasLength(pidInfo.toString());
     }

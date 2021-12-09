@@ -7,8 +7,10 @@ cloud:
   aws:
     s3:
       bucket: 3dollar-local-embedded-bucket
+      mock:
+        port: 10000
     cloudfront:
-      url: http://localhost:10000/${cloud.aws.s3.bucket}/
+      url: http://localhost:${cloud.aws.s3.mock.port}/${cloud.aws.s3.bucket}/
     region:
       static: ap-northeast-2
     stack:
