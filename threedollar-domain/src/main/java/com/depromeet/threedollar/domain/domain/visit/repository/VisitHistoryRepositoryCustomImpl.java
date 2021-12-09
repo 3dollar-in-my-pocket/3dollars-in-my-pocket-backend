@@ -66,7 +66,9 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
             .where(
                 visitHistory.userId.eq(userId),
                 lessThanId(lastHistoryId)
-            ).limit(size)
+            )
+            .orderBy(visitHistory.id.desc())
+            .limit(size)
             .fetch();
 
         return queryFactory.selectFrom(visitHistory).distinct()
