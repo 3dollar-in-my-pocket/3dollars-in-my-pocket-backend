@@ -56,7 +56,6 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
                 visitHistory.dateOfVisit.goe(startDate)
             )
             .orderBy(visitHistory.id.desc())
-            .limit(100)
             .fetch();
     }
 

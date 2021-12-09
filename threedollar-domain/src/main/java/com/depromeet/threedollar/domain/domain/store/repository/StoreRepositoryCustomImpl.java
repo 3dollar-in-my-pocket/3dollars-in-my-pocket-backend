@@ -86,7 +86,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
 
     @Override
     public List<Store> findAllWithScroll(Long lastStoreId, int size) {
-        List<Long> storeIds = queryFactory.select(store.id).distinct()
+        List<Long> storeIds = queryFactory.select(store.id)
             .from(store)
             .innerJoin(menu).on(menu.store.id.eq(store.id))
             .where(
@@ -106,7 +106,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
      */
     @Override
     public List<Store> findAllByUserIdWithScroll(Long userId, Long lastStoreId, int size) {
-        List<Long> storeIds = queryFactory.select(store.id).distinct()
+        List<Long> storeIds = queryFactory.select(store.id)
             .from(store)
             .innerJoin(menu).on(menu.store.id.eq(store.id))
             .where(
@@ -123,7 +123,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
     @Deprecated
     @Override
     public List<Store> findAllActiveByUserIdWithScroll(Long userId, Long lastStoreId, int size) {
-        List<Long> storeIds = queryFactory.select(store.id).distinct()
+        List<Long> storeIds = queryFactory.select(store.id)
             .from(store)
             .innerJoin(menu).on(menu.store.id.eq(store.id))
             .where(
