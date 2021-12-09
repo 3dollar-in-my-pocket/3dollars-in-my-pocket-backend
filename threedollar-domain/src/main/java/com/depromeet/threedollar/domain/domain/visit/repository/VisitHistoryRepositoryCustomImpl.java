@@ -56,6 +56,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
                 visitHistory.dateOfVisit.goe(startDate)
             )
             .orderBy(visitHistory.id.desc())
+            .limit(100)
             .fetch();
     }
 
@@ -78,6 +79,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
                 visitHistory.id.in(visitHistoriesIds)
             )
             .orderBy(visitHistory.id.desc())
+            .limit(size)
             .fetch();
     }
 

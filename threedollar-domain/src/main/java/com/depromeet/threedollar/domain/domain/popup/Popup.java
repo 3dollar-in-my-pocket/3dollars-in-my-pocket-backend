@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(
     indexes = {
-        @Index(name = "idx_popup_1", columnList = "platformType,startDateTime,endDateTime")
+        @Index(name = "idx_popup_1", columnList = "platformType,id,startDateTime")
     }
 )
 public class Popup extends AuditingTimeEntity {
