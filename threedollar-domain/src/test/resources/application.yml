@@ -5,6 +5,9 @@ spring:
       hibernate.use_sql_comments: true
       hibernate.format_sql: true
     open-in-view: false
+  output:
+    ansi:
+      enabled: always
   flyway:
     enabled: false
   profiles:
@@ -13,3 +16,5 @@ logging:
   level:
     com.amazonaws.util.EC2MetadataUtils: error
     com.amazonaws.internal.InstanceMetadataServiceResourceFetcher: error
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type: trace
