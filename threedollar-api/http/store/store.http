@@ -62,7 +62,7 @@ client.test("200 OK", function() {
 
 
 ### 위도, 경도 주위 가게 목록을 조회합니다.
-GET {{host_api}}/api/v2/stores/near?latitude=33&longitude=124&mapLatitude=33&mapLongitude=126&distance=5000&category=DALGONA&orderType=REVIEW_DESC
+GET {{host_api}}/api/v2/stores/near?latitude=34&longitude=126&mapLatitude=34&mapLongitude=126&distance=5000&category=DALGONA&orderType=REVIEW_DESC
 
 > {%
 client.test("200 OK", function() {
