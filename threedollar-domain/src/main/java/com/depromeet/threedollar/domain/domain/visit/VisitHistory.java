@@ -19,7 +19,8 @@ import java.time.LocalDate;
     },
     indexes = {
         @Index(name = "idx_visit_history_2", columnList = "userId,type"),
-        @Index(name = "idx_visit_history_3", columnList = "store_id,type,dateOfVisit")
+        @Index(name = "idx_visit_history_3", columnList = "store_id,type,dateOfVisit"),
+        @Index(name = "idx_visit_history_4", columnList = "store_id,id,userId,dateOfVisit")
     }
 )
 public class VisitHistory extends AuditingTimeEntity {
