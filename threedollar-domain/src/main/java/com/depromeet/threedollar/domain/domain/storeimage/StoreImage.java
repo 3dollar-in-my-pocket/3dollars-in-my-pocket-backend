@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(
-    indexes = @Index(name = "idx_store_image_1", columnList = "store_id")
+    indexes = @Index(name = "idx_store_image_1", columnList = "store_id,status")
 )
 public class StoreImage extends AuditingTimeEntity {
 
