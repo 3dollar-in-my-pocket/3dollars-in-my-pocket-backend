@@ -7,8 +7,10 @@ import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRe
 import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoriesScrollResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
+import com.depromeet.threedollar.domain.event.visit.VisitHistoryAddedEvent;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,12 +24,14 @@ import java.time.LocalDate;
 public class VisitHistoryController {
 
     private final VisitHistoryService visitHistoryService;
+    private final ApplicationEventPublisher eventPublisher;
 
     @ApiOperation("[인증] 가게 방문 인증 페이지 - 특정 가게에 대한 방문 인증을 추가합니다")
     @Auth
     @PostMapping("/api/v2/store/visit")
     public ApiResponse<String> addVisitHistory(@Valid @RequestBody AddVisitHistoryRequest request, @UserId Long userId) {
-        visitHistoryService.addVisitHistory(request, userId, LocalDate.now());
+        Long visitHistoryId = visitHistoryService.addVisitHistory(request, userId, LocalDate.now());
+        eventPublisher.publishEvent(VisitHistoryAddedEvent.of(visitHistoryId, userId));
         return ApiResponse.SUCCESS;
     }
 

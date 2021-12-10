@@ -1,9 +1,6 @@
 package com.depromeet.threedollar.api.service.review;
 
-import com.depromeet.threedollar.api.controller.medal.AddUserMedalEventListener;
 import com.depromeet.threedollar.api.controller.store.StoreEventListener;
-import com.depromeet.threedollar.domain.event.review.ReviewChangedEvent;
-import com.depromeet.threedollar.domain.event.review.ReviewCreatedEvent;
 import com.depromeet.threedollar.api.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
@@ -12,6 +9,7 @@ import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.review.ReviewStatus;
+import com.depromeet.threedollar.domain.event.review.ReviewChangedEvent;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -39,9 +37,6 @@ class ReviewServiceTest extends SetupStoreServiceTest {
 
     @MockBean
     private StoreEventListener storeEventListener;
-
-    @MockBean
-    private AddUserMedalEventListener userMedalEventListener;
 
     @AfterEach
     void cleanUp() {
@@ -88,18 +83,6 @@ class ReviewServiceTest extends SetupStoreServiceTest {
 
             // then
             verify(storeEventListener, times(1)).renewStoreRating(any(ReviewChangedEvent.class));
-        }
-
-        @Test
-        void 리뷰_등록시_메달을_획득하는_작업이_수행된다() {
-            // given
-            AddReviewRequest request = AddReviewRequest.testInstance(store.getId(), "우와", 4);
-
-            // when
-            reviewService.addReview(request, userId);
-
-            // then
-            verify(userMedalEventListener, times(1)).addObtainableMedalsByAddReview(any(ReviewCreatedEvent.class));
         }
 
     }

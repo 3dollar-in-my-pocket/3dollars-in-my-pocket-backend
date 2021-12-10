@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.controller.review;
 
 import com.depromeet.threedollar.api.controller.SetupStoreControllerTest;
+import com.depromeet.threedollar.api.controller.medal.AddUserMedalEventListener;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.deprecated.RetrieveMyReviewsV2Request;
@@ -14,14 +15,19 @@ import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreCreator;
+import com.depromeet.threedollar.domain.event.review.ReviewCreatedEvent;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
 
 import static com.depromeet.threedollar.api.assertutils.assertReviewUtils.assertReviewDetailInfoResponse;
 import static com.depromeet.threedollar.api.assertutils.assertReviewUtils.assertReviewInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 class ReviewControllerTest extends SetupStoreControllerTest {
 
@@ -34,6 +40,9 @@ class ReviewControllerTest extends SetupStoreControllerTest {
 
     @Autowired
     private ReviewRepository reviewRepository;
+
+    @MockBean
+    private AddUserMedalEventListener addUserMedalEventListener;
 
     @AfterEach
     void cleanUp() {
@@ -55,6 +64,18 @@ class ReviewControllerTest extends SetupStoreControllerTest {
 
             // then
             assertReviewInfoResponse(response.getData(), store.getId(), request.getContents(), request.getRating());
+        }
+
+        @Test
+        void 리뷰_등록시_메달을_획득하는_작업이_수행된다() throws Exception {
+            // given
+            AddReviewRequest request = AddReviewRequest.testInstance(store.getId(), "우와", 4);
+
+            // when
+            reviewMockApiCaller.addReview(request, token, 200);
+
+            // then
+            verify(addUserMedalEventListener, times(1)).addObtainableMedalsByAddReview(any(ReviewCreatedEvent.class));
         }
 
     }

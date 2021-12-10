@@ -6,14 +6,16 @@ import com.depromeet.threedollar.api.service.review.ReviewRetrieveService;
 import com.depromeet.threedollar.api.service.review.ReviewService;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsRequest;
-import com.depromeet.threedollar.api.service.review.dto.request.deprecated.RetrieveMyReviewsV2Request;
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
+import com.depromeet.threedollar.api.service.review.dto.request.deprecated.RetrieveMyReviewsV2Request;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.deprecated.ReviewScrollV2Response;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
+import com.depromeet.threedollar.domain.event.review.ReviewCreatedEvent;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,12 +26,15 @@ public class ReviewController {
 
     private final ReviewService reviewService;
     private final ReviewRetrieveService reviewRetrieveService;
+    private final ApplicationEventPublisher eventPublisher;
 
     @ApiOperation("[인증] 가게 상세 페이지 - 가게에 새로운 리뷰를 등록합니다")
     @Auth
     @PostMapping("/api/v2/store/review")
     public ApiResponse<ReviewInfoResponse> addReview(@Valid @RequestBody AddReviewRequest request, @UserId Long userId) {
-        return ApiResponse.success(reviewService.addReview(request, userId));
+        ReviewInfoResponse response = reviewService.addReview(request, userId);
+        eventPublisher.publishEvent(ReviewCreatedEvent.of(response.getReviewId(), userId));
+        return ApiResponse.success(response);
     }
 
     @ApiOperation("[인증] 가게 상세 페이지 - 내가 작성한 리뷰를 수정합니다")
