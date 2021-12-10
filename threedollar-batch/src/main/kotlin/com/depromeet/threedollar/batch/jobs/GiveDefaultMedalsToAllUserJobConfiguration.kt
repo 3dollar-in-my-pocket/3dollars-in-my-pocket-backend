@@ -49,7 +49,7 @@ class GiveDefaultMedalsToAllUserJobConfiguration(
             .name("userPagingItemReader")
             .entityManagerFactory(entityManagerFactory)
             .pageSize(CHUNK_SIZE)
-            .queryString("SELECT u FROM User u")
+            .queryString("SELECT u FROM User u ORDER BY id ASC")
             .build()
     }
 
