@@ -19,6 +19,7 @@ spring:
       - feign
       - security
       - secret
+      - swagger
   servlet:
     multipart:
       max-file-size: 10MB
