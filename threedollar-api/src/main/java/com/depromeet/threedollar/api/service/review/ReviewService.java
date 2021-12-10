@@ -31,7 +31,7 @@ public class ReviewService {
     @Transactional
     public ReviewInfoResponse addReview(AddReviewRequest request, Long userId) {
         Store store = StoreServiceUtils.findStoreById(storeRepository, request.getStoreId());
-        Review review = reviewRepository.saveAndFlush(request.toEntity(userId));
+        Review review = reviewRepository.save(request.toEntity(userId));
         eventPublisher.publishEvent(ReviewChangedEvent.of(store));
         eventPublisher.publishEvent(ReviewCreatedEvent.of(review.getId(), userId));
         return ReviewInfoResponse.of(review);

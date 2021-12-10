@@ -30,7 +30,7 @@ public class VisitHistoryService {
     public void addVisitHistory(AddVisitHistoryRequest request, Long userId, LocalDate dateOfVisit) {
         Store store = StoreServiceUtils.findStoreById(storeRepository, request.getStoreId());
         VisitHistoryServiceUtils.validateNotVisitedToday(visitHistoryRepository, request.getStoreId(), userId, dateOfVisit);
-        VisitHistory visitHistory = visitHistoryRepository.saveAndFlush(request.toEntity(store, userId, dateOfVisit));
+        VisitHistory visitHistory = visitHistoryRepository.save(request.toEntity(store, userId, dateOfVisit));
         eventPublisher.publishEvent(VisitHistoryAddedEvent.of(visitHistory.getId(), userId));
     }
 
