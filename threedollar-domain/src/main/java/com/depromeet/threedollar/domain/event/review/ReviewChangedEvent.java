@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.domain.event.review;
 
-import com.depromeet.threedollar.domain.domain.store.Store;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,10 +8,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class ReviewChangedEvent {
 
-    private final Store store;
+    private final Long storeId;
 
-    public static ReviewChangedEvent of(Store store) {
-        return new ReviewChangedEvent(store);
+    public static ReviewChangedEvent of(Long storeId) {
+        return new ReviewChangedEvent(storeId);
     }
 
 }

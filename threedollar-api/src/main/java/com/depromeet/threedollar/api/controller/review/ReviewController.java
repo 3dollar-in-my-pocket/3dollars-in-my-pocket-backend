@@ -12,6 +12,7 @@ import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoRespo
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.deprecated.ReviewScrollV2Response;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
+import com.depromeet.threedollar.domain.event.review.ReviewChangedEvent;
 import com.depromeet.threedollar.domain.event.review.ReviewCreatedEvent;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,7 @@ public class ReviewController {
     public ApiResponse<ReviewInfoResponse> addReview(@Valid @RequestBody AddReviewRequest request, @UserId Long userId) {
         ReviewInfoResponse response = reviewService.addReview(request, userId);
         eventPublisher.publishEvent(ReviewCreatedEvent.of(response.getReviewId(), userId));
+        eventPublisher.publishEvent(ReviewChangedEvent.of(request.getStoreId()));
         return ApiResponse.success(response);
     }
 
@@ -42,14 +44,17 @@ public class ReviewController {
     @PutMapping("/api/v2/store/review/{reviewId}")
     public ApiResponse<ReviewInfoResponse> updateReview(@PathVariable Long reviewId, @Valid @RequestBody UpdateReviewRequest request,
                                                         @UserId Long userId) {
-        return ApiResponse.success(reviewService.updateReview(reviewId, request, userId));
+        ReviewInfoResponse response = reviewService.updateReview(reviewId, request, userId);
+        eventPublisher.publishEvent(ReviewChangedEvent.of(response.getStoreId()));
+        return ApiResponse.success(response);
     }
 
     @ApiOperation("[인증] 가게 상세 페이지 - 내가 작성한 리뷰를 삭제합니다")
     @Auth
     @DeleteMapping("/api/v2/store/review/{reviewId}")
     public ApiResponse<String> deleteReview(@PathVariable Long reviewId, @UserId Long userId) {
-        reviewService.deleteReview(reviewId, userId);
+        ReviewInfoResponse response = reviewService.deleteReview(reviewId, userId);
+        eventPublisher.publishEvent(ReviewChangedEvent.of(response.getStoreId()));
         return ApiResponse.SUCCESS;
     }
 

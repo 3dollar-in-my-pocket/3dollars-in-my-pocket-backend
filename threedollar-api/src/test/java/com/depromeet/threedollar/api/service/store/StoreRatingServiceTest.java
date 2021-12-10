@@ -37,7 +37,7 @@ class StoreRatingServiceTest extends SetupStoreServiceTest {
         ));
 
         // when
-        storeRatingService.renewStoreAverageRating(store);
+        storeRatingService.renewStoreAverageRating(store.getId());
 
         // then
         List<Store> stores = storeRepository.findAll();
@@ -48,7 +48,7 @@ class StoreRatingServiceTest extends SetupStoreServiceTest {
     @Test
     void 아무런_리뷰가_없는경우_평균점수는_0점이_된다() {
         // when
-        storeRatingService.renewStoreAverageRating(store);
+        storeRatingService.renewStoreAverageRating(store.getId());
 
         // then
         List<Store> stores = storeRepository.findAll();

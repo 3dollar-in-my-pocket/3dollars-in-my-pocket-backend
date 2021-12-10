@@ -2,6 +2,7 @@ package com.depromeet.threedollar.api.controller.review;
 
 import com.depromeet.threedollar.api.controller.SetupStoreControllerTest;
 import com.depromeet.threedollar.api.controller.medal.AddUserMedalEventListener;
+import com.depromeet.threedollar.api.controller.store.StoreEventListener;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.deprecated.RetrieveMyReviewsV2Request;
@@ -15,6 +16,7 @@ import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreCreator;
+import com.depromeet.threedollar.domain.event.review.ReviewChangedEvent;
 import com.depromeet.threedollar.domain.event.review.ReviewCreatedEvent;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,9 @@ class ReviewControllerTest extends SetupStoreControllerTest {
 
     @MockBean
     private AddUserMedalEventListener addUserMedalEventListener;
+
+    @MockBean
+    private StoreEventListener storeEventListener;
 
     @AfterEach
     void cleanUp() {
@@ -99,6 +104,22 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertReviewInfoResponse(response.getData(), store.getId(), request.getContents(), request.getRating());
         }
 
+        @Test
+        void 리뷰를_수정하면_가게의_평균_리뷰점수가_갱신된다() throws Exception {
+            // given
+            Review review = ReviewCreator.create(store.getId(), testUser.getId(), "맛 없어요", 2);
+            reviewRepository.save(review);
+
+            // when
+            UpdateReviewRequest request = UpdateReviewRequest.testInstance("우와", 4);
+
+            // when
+            reviewMockApiCaller.updateReview(review.getId(), request, token, 200);
+
+            // then
+            verify(storeEventListener, times(1)).renewStoreRating(any(ReviewChangedEvent.class));
+        }
+
     }
 
     @DisplayName("DELETE /api/v2/store/review")
@@ -116,6 +137,19 @@ class ReviewControllerTest extends SetupStoreControllerTest {
 
             // then
             assertThat(response.getData()).isEqualTo("OK");
+        }
+
+        @Test
+        void 리뷰를_삭제하면_가게의_평균_리뷰점수가_갱신된다() throws Exception {
+            // given
+            Review review = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요", 5);
+            reviewRepository.save(review);
+
+            // when
+            reviewMockApiCaller.deleteReview(review.getId(), token, 200);
+
+            // then
+            verify(storeEventListener, times(1)).renewStoreRating(any(ReviewChangedEvent.class));
         }
 
     }
