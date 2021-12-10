@@ -20,4 +20,4 @@ COPY deploy/newrelic.yml $HOME/newrelic/newrelic.yml
 
 EXPOSE 5000
 
-ENTRYPOINT ["java", "-jar", "-javaagent:/usr/app/newrelic/newrelic.jar", "-Duser.timezone=Asia/Seoul", "/threedollar-api.jar"]
+ENTRYPOINT ["java", "-XX:CompileThreshold=100", "-XX:+TieredCompilation", "-javaagent:/usr/app/newrelic/newrelic.jar", "-Duser.timezone=Asia/Seoul", "-jar", "/threedollar-api.jar"]

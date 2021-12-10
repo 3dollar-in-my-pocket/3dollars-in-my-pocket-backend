@@ -4,8 +4,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import static com.depromeet.threedollar.common.exception.ErrorAlarmOptions.*;
-import static com.depromeet.threedollar.common.exception.ErrorStatusCode.*;
+import static com.depromeet.threedollar.common.exception.ErrorAlarmOptionType.*;
+import static com.depromeet.threedollar.common.exception.HttpStatusCode.*;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -14,20 +14,18 @@ public enum ErrorCode {
     // 400 Bad Request
     VALIDATION_EXCEPTION(BAD_REQUEST, OFF, "BR001", "잘못된 요청입니다"),
     VALIDATION_RATING_EXCEPTION(BAD_REQUEST, OFF, "BR002", "허용되지 않은 평가 점수입니다. (1 ~ 5)"), // TODO 403에러로 변경
-    VALIDATION_LATITUDE_EXCEPTION(BAD_REQUEST, OFF, "BR003", "허용되지 않은 위도 범위를 입력하였습니다. (33 ~ 43)"), // TODO 차후 403에러로 변경
-    VALIDATION_LONGITUDE_EXCEPTION(BAD_REQUEST, OFF, "BR004", "허용되지 않은 경도 범위를 입력하였습니다. (124 ~ 132)"), // TODO 차후 403에러로 변경
+    VALIDATION_LATITUDE_EXCEPTION(BAD_REQUEST, OFF, "BR003", "허용되지 않은 위도 범위를 입력하였습니다. (33.1 ~ 38.61)"), // TODO 차후 403에러로 변경
+    VALIDATION_LONGITUDE_EXCEPTION(BAD_REQUEST, OFF, "BR004", "허용되지 않은 경도 범위를 입력하였습니다. (124.60 ~ 131.87)"), // TODO 차후 403에러로 변경
     VALIDATION_FILE_TYPE_EXCEPTION(BAD_REQUEST, OFF, "BR005", "허용되지 않은 파일 형식입니다"), // TODO 차후 403에러로 변경
     VALIDATION_APPLE_TOKEN_EXCEPTION(BAD_REQUEST, OFF, "BR006", "잘못된 애플 토큰입니다"),
     VALIDATION_APPLE_TOKEN_EXPIRED_EXCEPTION(BAD_REQUEST, OFF, "BR007", "만료된 애플 토큰입니다."),
     VALIDATION_SOCIAL_TYPE_EXCEPTION(BAD_REQUEST, OFF, "BR008", "잘못된 소셜 프로바이더 입니다."),
-    VALIDATION_FILE_UPLOAD_EXCEPTION(BAD_REQUEST, OFF, "BR009", "파일 업로드 중 에러가 발생하였습니다"),
-    VALIDATION_ENUM_VALUE_EXCEPTION(BAD_REQUEST, OFF, "BR010", "잘못된 Enum 값 입니다"),
     VALIDATION_REQUEST_MISSING_EXCEPTION(BAD_REQUEST, OFF, "BR011", "필수적인 요청 값이 입력되지 않았습니다"),
     VALIDATION_WRONG_TYPE_EXCEPTION(BAD_REQUEST, OFF, "BR012", "잘못된 타입이 입력되었습니다."),
     VALIDATION_UPLOAD_SIZE_EXCEPTION(BAD_REQUEST, ON, "BR013", "업로드 가능한 최대 파일의 크기를 초과했습니다"), // TODO 차후 403에러로 변경
 
     // 401 UnAuthorized
-    UNAUTHORIZED_EXCEPTION(UNAUTHORIZED, OFF, "UA001", "세션이 만료되었습니다.\n다시 로그인 해주세요"),
+    UNAUTHORIZED_EXCEPTION(UNAUTHORIZED, OFF, "UA001", "세션이 만료되었습니다. 다시 로그인 해주세요"),
 
     // 403 Forbidden
     FORBIDDEN_EXCEPTION(FORBIDDEN, OFF, "FB001", "허용하지 않는 요청입니다."),
@@ -39,6 +37,7 @@ public enum ErrorCode {
     NOT_FOUND_REVIEW_EXCEPTION(NOT_FOUND, OFF, "NF004", "삭제되거나 존재하지 않는 리뷰입니다"),
     NOT_FOUND_STORE_IMAGE_EXCEPTION(NOT_FOUND, OFF, "NF005", "삭제되거나 존재하지 않는 가게 이미지입니다"),
     NOT_FOUND_FAQ_EXCEPTION(NOT_FOUND, OFF, "NF006", "삭제되거나 존재하지 않는 FAQ입니다"),
+    NOT_FOUND_MEDAL_EXCEPTION(NOT_FOUND, OFF, "N007", "보유하지 않는 메달입니다"),
 
     // 405 Method Not Allowed
     METHOD_NOT_ALLOWED_EXCEPTION(METHOD_NOT_ALLOWED, OFF, "MN001", "지원하지 않는 메소드 입니다"),
@@ -67,8 +66,8 @@ public enum ErrorCode {
     SERVICE_UNAVAILABLE_EXCEPTION(SERVICE_UNAVAILABLE, OFF, "SU001", "현재 점검 중입니다.\n잠시 후 다시 시도해주세요!"),
     ;
 
-    private final ErrorStatusCode statusCode;
-    private final ErrorAlarmOptions alarmOptions;
+    private final HttpStatusCode statusCode;
+    private final ErrorAlarmOptionType alarmOptions;
     private final String code;
     private final String message;
 

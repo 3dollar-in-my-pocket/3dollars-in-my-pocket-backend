@@ -18,7 +18,7 @@ internal class AdminControllerTest(
     @AfterEach
     fun cleanUp() {
         super.cleanup()
-        adminRepository.deleteAll()
+        adminRepository.deleteAllInBatch()
     }
 
     @DisplayName("GET /admin/v1/admin/me 200 OK")

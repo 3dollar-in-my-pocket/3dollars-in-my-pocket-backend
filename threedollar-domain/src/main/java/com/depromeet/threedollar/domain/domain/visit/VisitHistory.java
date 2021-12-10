@@ -15,11 +15,12 @@ import java.time.LocalDate;
 @Entity
 @Table(
     uniqueConstraints = {
-        @UniqueConstraint(name = "uni_visit_history_1", columnNames = {"store_id", "dateOfVisit", "userId"})
+        @UniqueConstraint(name = "uni_visit_history_1", columnNames = {"store_id", "userId", "dateOfVisit"})
     },
     indexes = {
-        @Index(name = "idx_visit_history_2", columnList = "userId"),
-        @Index(name = "idx_visit_history_3", columnList = "store_id,type"),
+        @Index(name = "idx_visit_history_2", columnList = "userId,type"),
+        @Index(name = "idx_visit_history_3", columnList = "store_id,type,dateOfVisit"),
+        @Index(name = "idx_visit_history_4", columnList = "store_id,id,userId,dateOfVisit")
     }
 )
 public class VisitHistory extends AuditingTimeEntity {

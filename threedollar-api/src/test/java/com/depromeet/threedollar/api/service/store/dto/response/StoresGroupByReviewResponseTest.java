@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.service.store.dto.response;
 
+import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByReviewV2Response;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -15,10 +16,10 @@ class StoresGroupByReviewResponseTest {
     @ParameterizedTest
     void ZERO_TO_ONE(double rating) {
         // given
-        StoreWithDistanceResponse store = StoreWithDistanceResponse.testInstance(DISTANCE, rating);
+        StoreWithVisitsAndDistanceResponse store = StoreWithVisitsAndDistanceResponse.testInstance(DISTANCE, rating);
 
         // when
-        StoresGroupByReviewResponse response = StoresGroupByReviewResponse.of(List.of(store));
+        StoresGroupByReviewV2Response response = StoresGroupByReviewV2Response.of(List.of(store));
 
         // then
         assertThat(response.getStoreList0()).hasSize(1);
@@ -28,10 +29,10 @@ class StoresGroupByReviewResponseTest {
     @ParameterizedTest
     void ONE_TO_TWO(double rating) {
         // given
-        StoreWithDistanceResponse store = StoreWithDistanceResponse.testInstance(DISTANCE, rating);
+        StoreWithVisitsAndDistanceResponse store = StoreWithVisitsAndDistanceResponse.testInstance(DISTANCE, rating);
 
         // when
-        StoresGroupByReviewResponse response = StoresGroupByReviewResponse.of(List.of(store));
+        StoresGroupByReviewV2Response response = StoresGroupByReviewV2Response.of(List.of(store));
 
         // then
         assertThat(response.getStoreList1()).hasSize(1);
@@ -41,10 +42,10 @@ class StoresGroupByReviewResponseTest {
     @ParameterizedTest
     void TWO_TO_THREE(double rating) {
         // given
-        StoreWithDistanceResponse store = StoreWithDistanceResponse.testInstance(DISTANCE, rating);
+        StoreWithVisitsAndDistanceResponse store = StoreWithVisitsAndDistanceResponse.testInstance(DISTANCE, rating);
 
         // when
-        StoresGroupByReviewResponse response = StoresGroupByReviewResponse.of(List.of(store));
+        StoresGroupByReviewV2Response response = StoresGroupByReviewV2Response.of(List.of(store));
 
         // then
         assertThat(response.getStoreList2()).hasSize(1);
@@ -54,10 +55,10 @@ class StoresGroupByReviewResponseTest {
     @ParameterizedTest
     void THREE_TO_FOUR(double rating) {
         // given
-        StoreWithDistanceResponse store = StoreWithDistanceResponse.testInstance(DISTANCE, rating);
+        StoreWithVisitsAndDistanceResponse store = StoreWithVisitsAndDistanceResponse.testInstance(DISTANCE, rating);
 
         // when
-        StoresGroupByReviewResponse response = StoresGroupByReviewResponse.of(List.of(store));
+        StoresGroupByReviewV2Response response = StoresGroupByReviewV2Response.of(List.of(store));
 
         // then
         assertThat(response.getStoreList3()).hasSize(1);
@@ -67,10 +68,10 @@ class StoresGroupByReviewResponseTest {
     @ParameterizedTest
     void FOUR_TO_FIVE(double rating) {
         // given
-        StoreWithDistanceResponse store = StoreWithDistanceResponse.testInstance(1000, rating);
+        StoreWithVisitsAndDistanceResponse store = StoreWithVisitsAndDistanceResponse.testInstance(1000, rating);
 
         // when
-        StoresGroupByReviewResponse response = StoresGroupByReviewResponse.of(List.of(store));
+        StoresGroupByReviewV2Response response = StoresGroupByReviewV2Response.of(List.of(store));
 
         // then
         assertThat(response.getStoreList4()).hasSize(1);

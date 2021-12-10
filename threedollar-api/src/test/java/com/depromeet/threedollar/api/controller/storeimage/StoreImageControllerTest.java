@@ -1,10 +1,8 @@
 package com.depromeet.threedollar.api.controller.storeimage;
 
-import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
+import com.depromeet.threedollar.api.controller.SetupStoreControllerTest;
 import com.depromeet.threedollar.api.service.storeimage.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.domain.domain.store.MenuRepository;
-import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImageRepository;
 import org.javaunit.autoparams.AutoSource;
@@ -21,7 +19,7 @@ import static com.depromeet.threedollar.api.assertutils.assertStoreImageUtils.as
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class StoreImageControllerTest extends SetupUserControllerTest {
+class StoreImageControllerTest extends SetupStoreControllerTest {
 
     private StoreImageMockApiCaller storeImageMockApiCaller;
 
@@ -31,28 +29,12 @@ class StoreImageControllerTest extends SetupUserControllerTest {
     }
 
     @Autowired
-    private StoreRepository storeRepository;
-
-    @Autowired
-    private AppearanceDayRepository appearanceDayRepository;
-
-    @Autowired
-    private PaymentMethodRepository paymentMethodRepository;
-
-    @Autowired
-    private MenuRepository menuRepository;
-
-    @Autowired
     private StoreImageRepository storeImageRepository;
 
     @AfterEach
     void cleanUp() {
+        storeImageRepository.deleteAllInBatch();
         super.cleanup();
-        appearanceDayRepository.deleteAllInBatch();
-        paymentMethodRepository.deleteAllInBatch();
-        menuRepository.deleteAllInBatch();
-        storeRepository.deleteAllInBatch();
-        storeImageRepository.deleteAll();
     }
 
     @DisplayName("GET /api/v2/store/storeId/images")
@@ -63,16 +45,12 @@ class StoreImageControllerTest extends SetupUserControllerTest {
         @ParameterizedTest
         void 가게에_등록된_사진들을_조회한다(String imageUrl1, String imageUrl2) throws Exception {
             // given
-            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "storeName", 34, 124);
-            storeRepository.save(store);
-
-            StoreImage storeImage1 = StoreImage.newInstance(store.getId(), testUser.getId(), imageUrl1);
-            StoreImage storeImage2 = StoreImage.newInstance(store.getId(), testUser.getId(), imageUrl2);
-
+            StoreImage storeImage1 = StoreImage.newInstance(store, testUser.getId(), imageUrl1);
+            StoreImage storeImage2 = StoreImage.newInstance(store, testUser.getId(), imageUrl2);
             storeImageRepository.saveAll(List.of(storeImage1, storeImage2));
 
             // when
-            ApiResponse<List<StoreImageResponse>> response = storeImageMockApiCaller.getStoreImages(store.getId(), 200);
+            ApiResponse<List<StoreImageResponse>> response = storeImageMockApiCaller.getStoreImages(storeId, 200);
 
             // then
             assertAll(
@@ -90,9 +68,9 @@ class StoreImageControllerTest extends SetupUserControllerTest {
 
         @AutoSource
         @ParameterizedTest
-        void 가게_이미지_삭제요청_성공시_200_OK(Long storeId, String imageUrl) throws Exception {
+        void 가게_이미지_삭제요청_성공시_200_OK(String imageUrl) throws Exception {
             // given
-            StoreImage storeImage = storeImageRepository.save(StoreImage.newInstance(storeId, testUser.getId(), imageUrl));
+            StoreImage storeImage = storeImageRepository.save(StoreImage.newInstance(store, testUser.getId(), imageUrl));
 
             // when
             ApiResponse<String> response = storeImageMockApiCaller.deleteStoreImage(storeImage.getId(), token, 200);

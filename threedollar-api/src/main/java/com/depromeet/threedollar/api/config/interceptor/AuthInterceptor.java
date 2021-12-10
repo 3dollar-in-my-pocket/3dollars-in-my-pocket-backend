@@ -9,6 +9,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static com.depromeet.threedollar.api.config.session.SessionConstants.USER_ID;
+
 @RequiredArgsConstructor
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
@@ -26,7 +28,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             return true;
         }
         Long userId = loginCheckHandler.getUserId(request);
-        request.setAttribute("userId", userId);
+        request.setAttribute(USER_ID, userId);
         return true;
     }
 

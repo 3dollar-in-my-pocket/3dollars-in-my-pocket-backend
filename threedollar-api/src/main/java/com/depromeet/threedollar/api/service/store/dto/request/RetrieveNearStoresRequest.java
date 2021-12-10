@@ -1,8 +1,9 @@
 package com.depromeet.threedollar.api.service.store.dto.request;
 
-import com.depromeet.threedollar.api.service.store.dto.response.StoreWithDistanceResponse;
+import com.depromeet.threedollar.api.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
 import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.domain.domain.store.StoreRadiusDistance;
 import lombok.*;
 import org.jetbrains.annotations.Nullable;
 
@@ -48,11 +49,11 @@ public class RetrieveNearStoresRequest {
         this.orderType = orderType;
     }
 
-    public double getDistance() {
-        return this.distance / 1000;
+    public StoreRadiusDistance getDistance() {
+        return StoreRadiusDistance.of(this.distance / 1000);
     }
 
-    public Comparator<StoreWithDistanceResponse> getSorted() {
+    public Comparator<StoreWithVisitsAndDistanceResponse> getSorted() {
         return this.orderType.getSorted();
     }
 

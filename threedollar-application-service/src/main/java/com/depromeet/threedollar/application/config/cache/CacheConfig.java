@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.application.config.cache;
 
+import com.depromeet.threedollar.domain.config.cache.CacheType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.EnableCaching;

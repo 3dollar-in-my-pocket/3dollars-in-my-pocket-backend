@@ -1,7 +1,8 @@
 package com.depromeet.threedollar.api.controller.store;
 
 import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
-import com.depromeet.threedollar.api.service.store.dto.request.AddStoreRequest;
+import com.depromeet.threedollar.api.controller.medal.AddUserMedalEventListener;
+import com.depromeet.threedollar.api.service.store.dto.request.RegisterStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.DeleteStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.MenuRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.UpdateStoreRequest;
@@ -9,25 +10,26 @@ import com.depromeet.threedollar.api.service.store.dto.response.StoreDeleteRespo
 import com.depromeet.threedollar.api.service.store.dto.response.StoreInfoResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
-import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.store.MenuRepository;
 import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.storedelete.DeleteReasonType;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestCreator;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestRepository;
+import com.depromeet.threedollar.domain.event.store.StoreCreatedEvent;
+import com.depromeet.threedollar.domain.event.store.StoreDeletedEvent;
 import org.javaunit.autoparams.AutoSource;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
 import java.util.Set;
 
 import static com.depromeet.threedollar.api.assertutils.assertStoreUtils.assertStoreInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 class StoreControllerTest extends SetupUserControllerTest {
 
@@ -53,15 +55,17 @@ class StoreControllerTest extends SetupUserControllerTest {
     @Autowired
     private StoreDeleteRequestRepository storeDeleteRequestRepository;
 
+    @MockBean
+    private AddUserMedalEventListener addUserMedalEventListener;
+
     @AfterEach
     void cleanUp() {
         super.cleanup();
-        storeRepository.deleteAll();
         appearanceDayRepository.deleteAllInBatch();
         paymentMethodRepository.deleteAllInBatch();
         menuRepository.deleteAllInBatch();
+        storeDeleteRequestRepository.deleteAllInBatch();
         storeRepository.deleteAllInBatch();
-        storeDeleteRequestRepository.deleteAll();
     }
 
     @DisplayName("POST /api/v2/store")
@@ -75,7 +79,7 @@ class StoreControllerTest extends SetupUserControllerTest {
             double latitude = 34.0;
             double longitude = 130.0;
 
-            AddStoreRequest request = AddStoreRequest.testBuilder()
+            RegisterStoreRequest request = RegisterStoreRequest.testBuilder()
                 .latitude(latitude)
                 .longitude(longitude)
                 .storeName(storeName)
@@ -86,10 +90,30 @@ class StoreControllerTest extends SetupUserControllerTest {
                 .build();
 
             // when
-            ApiResponse<StoreInfoResponse> response = storeMockApiCaller.addStore(request, token, 200);
+            ApiResponse<StoreInfoResponse> response = storeMockApiCaller.registerStore(request, token, 200);
 
             // then
             assertStoreInfoResponse(response.getData(), latitude, longitude, storeName, List.of(MenuCategoryType.BUNGEOPPANG));
+        }
+
+        @Test
+        void 가게_등록시_메달을_획득하는_작업이_수행된다() throws Exception {
+            // given
+            RegisterStoreRequest request = RegisterStoreRequest.testBuilder()
+                .latitude(34.0)
+                .longitude(130.0)
+                .storeName("가게 이름")
+                .storeType(StoreType.STORE)
+                .appearanceDays(Set.of(DayOfTheWeek.FRIDAY))
+                .paymentMethods(Set.of(PaymentMethodType.CARD))
+                .menus(Set.of(MenuRequest.of("메뉴 이름", "한 개에 만원", MenuCategoryType.BUNGEOPPANG)))
+                .build();
+
+            // when
+            storeMockApiCaller.registerStore(request, token, 200);
+
+            // then
+            verify(addUserMedalEventListener, times(1)).addObtainableMedalsByAddStore(any(StoreCreatedEvent.class));
         }
 
     }
@@ -156,8 +180,8 @@ class StoreControllerTest extends SetupUserControllerTest {
             storeRepository.save(store);
 
             storeDeleteRequestRepository.saveAll(List.of(
-                StoreDeleteRequestCreator.create(store.getId(), 1000L, DeleteReasonType.NOSTORE),
-                StoreDeleteRequestCreator.create(store.getId(), 1001L, DeleteReasonType.NOSTORE)
+                StoreDeleteRequestCreator.create(store, 1000L, DeleteReasonType.NOSTORE),
+                StoreDeleteRequestCreator.create(store, 1001L, DeleteReasonType.NOSTORE)
             ));
 
             DeleteStoreRequest request = DeleteStoreRequest.testInstance(deleteReasonType);
@@ -167,6 +191,20 @@ class StoreControllerTest extends SetupUserControllerTest {
 
             // then
             assertThat(response.getData().getIsDeleted()).isTrue();
+        }
+
+        @AutoSource
+        @ParameterizedTest
+        void 가게_삭제_요청시_메달을_획득하는_작업이_수행된다(DeleteReasonType reasonType) throws Exception {
+            // given
+            Store store = StoreCreator.create(testUser.getId(), "storeName");
+            storeRepository.save(store);
+
+            // when
+            storeMockApiCaller.deleteStore(store.getId(), DeleteStoreRequest.testInstance(reasonType), token, 200);
+
+            // then
+            verify(addUserMedalEventListener, times(1)).addObtainableMedalsByDeleteStore(any(StoreDeletedEvent.class));
         }
 
     }

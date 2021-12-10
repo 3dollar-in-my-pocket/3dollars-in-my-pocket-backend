@@ -29,7 +29,7 @@ public class PaymentMethod extends AuditingTimeEntity {
         this.method = method;
     }
 
-    public static PaymentMethod of(Store store, PaymentMethodType type) {
+    static PaymentMethod of(Store store, PaymentMethodType type) {
         return new PaymentMethod(store, type);
     }
 

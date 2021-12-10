@@ -30,7 +30,7 @@ class FaqControllerTest extends SetupUserControllerTest {
     @AfterEach
     void cleanUp() {
         super.cleanup();
-        faqRepository.deleteAll();
+        faqRepository.deleteAllInBatch();
     }
 
     @DisplayName("GET /api/v2/faqs")

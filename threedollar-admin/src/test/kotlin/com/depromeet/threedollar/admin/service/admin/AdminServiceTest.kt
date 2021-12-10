@@ -17,7 +17,7 @@ internal class AdminServiceTest(
 
     @AfterEach
     fun cleanUp() {
-        adminRepository.deleteAll()
+        adminRepository.deleteAllInBatch()
     }
 
     @Test

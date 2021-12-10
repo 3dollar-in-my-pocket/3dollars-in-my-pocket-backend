@@ -8,8 +8,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class LocationDistanceUtilsTest {
 
     @CsvSource({
-        "34, 124, 35, 124, 111189",
-        "34, 124, 34, 124, 0"
+        "34, 126, 35, 126, 111189",
+        "34, 126, 34, 126, 0"
     })
     @ParameterizedTest
     void 두_지점간의_거리를_계산한다(double sourceLatitude, double sourceLongitude, double targetLatitude, double targetLongitude, int distance) {

@@ -42,6 +42,10 @@ public class Menu extends AuditingTimeEntity {
         return new Menu(store, name, price, category);
     }
 
+    boolean isCategory(MenuCategoryType category) {
+        return this.category.equals(category);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -2,12 +2,10 @@ package com.depromeet.threedollar;
 
 import com.depromeet.threedollar.domain.ThreeDollarDomainRoot;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@EnableAutoConfiguration
-@SpringBootConfiguration
-public class ThreeDollarApplicationTests extends ThreeDollarDomainRoot {
+@SpringBootApplication(scanBasePackageClasses = ThreeDollarDomainRoot.class)
+class ThreeDollarApplicationTests extends ThreeDollarDomainRoot {
 
     @Test
     void contextLoads() {

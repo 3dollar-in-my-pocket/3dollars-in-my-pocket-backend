@@ -19,11 +19,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class StoreImageMockApiCaller extends MockMvcUtils {
 
-    public StoreImageMockApiCaller(MockMvc mockMvc, ObjectMapper objectMapper) {
+    StoreImageMockApiCaller(MockMvc mockMvc, ObjectMapper objectMapper) {
         super(mockMvc, objectMapper);
     }
 
-    public ApiResponse<List<StoreImageResponse>> getStoreImages(Long storeId, int expectedStatus) throws Exception {
+    ApiResponse<List<StoreImageResponse>> getStoreImages(Long storeId, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/store/" + storeId + "/images")
             .param("storeId", String.valueOf(storeId));
 
@@ -38,7 +38,7 @@ class StoreImageMockApiCaller extends MockMvcUtils {
         );
     }
 
-    public ApiResponse<String> deleteStoreImage(Long imageId, String token, int expectedStatus) throws Exception {
+    ApiResponse<String> deleteStoreImage(Long imageId, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = delete("/api/v2/store/image/".concat(String.valueOf(imageId)))
             .header(HttpHeaders.AUTHORIZATION, token);
 

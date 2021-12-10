@@ -22,7 +22,7 @@ internal abstract class AdminSetUpTest {
     }
 
     protected fun cleanup() {
-        adminRepository.deleteAll()
+        adminRepository.deleteAllInBatch()
     }
 
 }

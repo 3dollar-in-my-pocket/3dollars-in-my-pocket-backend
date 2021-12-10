@@ -1,13 +1,14 @@
 package com.depromeet.threedollar.domain.domain.review.repository;
 
 import com.depromeet.threedollar.domain.domain.review.Review;
-import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
 
 import java.util.List;
 
 public interface ReviewRepositoryCustom {
 
     Review findReviewByIdAndUserId(Long reviewId, Long userId);
+
+    List<Review> findAllByStoreId(Long storeId);
 
     List<Review> findAllByStoreIdWithLock(Long storeId);
 
@@ -16,11 +17,9 @@ public interface ReviewRepositoryCustom {
     @Deprecated
     long findActiveCountsByUserId(Long userId);
 
-    List<ReviewWithWriterProjection> findAllWithCreatorByStoreId(Long storeId);
-
-    List<ReviewWithWriterProjection> findAllByUserIdWithScroll(Long userId, Long lastStoreId, int size);
+    List<Review> findAllByUserIdWithScroll(Long userId, Long lastStoreId, int size);
 
     @Deprecated
-    List<ReviewWithWriterProjection> findAllActiveByUserIdWithScroll(Long userId, Long lastStoreId, int size);
+    List<Review> findAllActiveByUserIdWithScroll(Long userId, Long lastStoreId, int size);
 
 }

@@ -12,6 +12,9 @@ import java.io.InputStreamReader;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ProcessUtils {
 
+    private static final int LOWEST_PORT = 10000;
+    private static final int HIGHEST_PORT = 65535;
+
     private static final String OS = System.getProperty("os.name").toLowerCase();
 
     public static boolean isRunningPort(int port) throws IOException {
@@ -19,13 +22,13 @@ public final class ProcessUtils {
     }
 
     public static int findAvailableRandomPort() throws IOException {
-        for (int port = 10000; port <= 65535; port++) {
+        for (int port = LOWEST_PORT; port <= HIGHEST_PORT; port++) {
             Process process = executeGrepProcessCommand(port);
             if (!isRunning(process)) {
                 return port;
             }
         }
-        throw new InternalServerException("사용가능한 포트를 찾을 수 없습니다. (10000 ~ 65535)");
+        throw new InternalServerException(String.format("사용가능한 포트를 찾을 수 없습니다. (%s~%s)", LOWEST_PORT, HIGHEST_PORT));
     }
 
     private static Process executeGrepProcessCommand(int port) throws IOException {
@@ -52,7 +55,7 @@ public final class ProcessUtils {
                 pidInfo.append(line);
             }
         } catch (Exception e) {
-            throw new InternalServerException("사용가능한 포트를 찾는 중 에러가 발생하였습니다.");
+            throw new InternalServerException("포트를 사용 여부를 확인 중 에러가 발생하였습니다.");
         }
         return StringUtils.hasLength(pidInfo.toString());
     }

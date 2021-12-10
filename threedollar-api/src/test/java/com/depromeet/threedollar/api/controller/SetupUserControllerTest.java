@@ -1,9 +1,13 @@
 package com.depromeet.threedollar.api.controller;
 
 import com.depromeet.threedollar.api.controller.user.UserMockApiCaller;
+import com.depromeet.threedollar.domain.domain.medal.MedalAcquisitionConditionRepository;
+import com.depromeet.threedollar.domain.domain.medal.MedalRepository;
+import com.depromeet.threedollar.domain.domain.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserRepository;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
+import com.depromeet.threedollar.domain.domain.user.WithdrawalUserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +28,17 @@ public abstract class SetupUserControllerTest {
     @Autowired
     protected UserRepository userRepository;
 
-    protected UserMockApiCaller userMockApiCaller;
+    @Autowired
+    private WithdrawalUserRepository withdrawalUserRepository;
+
+    @Autowired
+    protected UserMedalRepository userMedalRepository;
+
+    @Autowired
+    protected MedalRepository medalRepository;
+
+    @Autowired
+    protected MedalAcquisitionConditionRepository medalAcquisitionConditionRepository;
 
     protected User testUser;
 
@@ -32,13 +46,17 @@ public abstract class SetupUserControllerTest {
 
     @BeforeEach
     void setupUser() throws Exception {
-        userMockApiCaller = new UserMockApiCaller(mockMvc, objectMapper);
+        UserMockApiCaller userMockApiCaller = new UserMockApiCaller(mockMvc, objectMapper);
         token = userMockApiCaller.getTestToken().getData().getToken();
         testUser = userRepository.findUserBySocialIdAndSocialType("test-uid", UserSocialType.KAKAO);
     }
 
     protected void cleanup() {
-        userRepository.deleteAll();
+        medalAcquisitionConditionRepository.deleteAllInBatch();
+        userMedalRepository.deleteAllInBatch();
+        medalRepository.deleteAllInBatch();
+        userRepository.deleteAllInBatch();
+        withdrawalUserRepository.deleteAllInBatch();
     }
 
 }

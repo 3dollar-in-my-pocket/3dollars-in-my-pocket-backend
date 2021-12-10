@@ -4,7 +4,7 @@ import com.depromeet.threedollar.admin.service.store.dto.request.RetrieveLatestS
 import com.depromeet.threedollar.admin.service.store.dto.request.RetrieveReportedStoresRequest
 import com.depromeet.threedollar.admin.service.store.dto.response.ReportedStoresResponse
 import com.depromeet.threedollar.admin.service.store.dto.response.StoreScrollResponse
-import com.depromeet.threedollar.common.collection.ScrollPaginationCollection
+import com.depromeet.threedollar.domain.collection.common.ScrollPaginationCollection
 import com.depromeet.threedollar.domain.domain.store.StoreRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -28,8 +28,8 @@ class StoreAdminService(
     @Transactional(readOnly = true)
     fun retrieveLatestStores(request: RetrieveLatestStoresRequest): StoreScrollResponse {
         val storesWithNextCursor =  storeRepository.findAllWithScroll(request.cursor, request.size + 1)
-        val scrollCollection = ScrollPaginationCollection.of(storesWithNextCursor, request.size)
-        return StoreScrollResponse.of(scrollCollection)
+        val stores = ScrollPaginationCollection.of(storesWithNextCursor, request.size)
+        return StoreScrollResponse.of(stores)
     }
 
 }

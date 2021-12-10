@@ -1,11 +1,13 @@
 package com.depromeet.threedollar.domain.domain.visit;
 
+import com.depromeet.threedollar.common.docs.ObjectMother;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+@ObjectMother
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class VisitHistoryCreator {
 

@@ -1,11 +1,6 @@
 package com.depromeet.threedollar.api.controller;
 
-import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.store.MenuCreator;
-import com.depromeet.threedollar.domain.domain.store.MenuRepository;
-import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.domain.store.StoreCreator;
-import com.depromeet.threedollar.domain.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.domain.store.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,6 +13,12 @@ public class SetupStoreControllerTest extends SetupUserControllerTest {
 
     @Autowired
     protected MenuRepository menuRepository;
+
+    @Autowired
+    protected AppearanceDayRepository appearanceDayRepository;
+
+    @Autowired
+    private PaymentMethodRepository paymentMethodRepository;
 
     protected Long storeId;
 
@@ -34,6 +35,8 @@ public class SetupStoreControllerTest extends SetupUserControllerTest {
     @Override
     protected void cleanup() {
         super.cleanup();
+        appearanceDayRepository.deleteAllInBatch();
+        paymentMethodRepository.deleteAllInBatch();
         menuRepository.deleteAllInBatch();
         storeRepository.deleteAllInBatch();
     }

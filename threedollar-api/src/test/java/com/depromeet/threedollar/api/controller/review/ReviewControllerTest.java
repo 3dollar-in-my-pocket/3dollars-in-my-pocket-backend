@@ -1,28 +1,35 @@
 package com.depromeet.threedollar.api.controller.review;
 
 import com.depromeet.threedollar.api.controller.SetupStoreControllerTest;
+import com.depromeet.threedollar.api.controller.medal.AddUserMedalEventListener;
+import com.depromeet.threedollar.api.controller.store.StoreEventListener;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsRequest;
+import com.depromeet.threedollar.api.service.review.dto.request.deprecated.RetrieveMyReviewsV2Request;
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
-import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollV2Response;
+import com.depromeet.threedollar.api.service.review.dto.response.deprecated.ReviewScrollV2Response;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.domain.domain.store.MenuRepository;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreCreator;
-import com.depromeet.threedollar.domain.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.event.review.ReviewChangedEvent;
+import com.depromeet.threedollar.domain.event.review.ReviewCreatedEvent;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
 
 import static com.depromeet.threedollar.api.assertutils.assertReviewUtils.assertReviewDetailInfoResponse;
 import static com.depromeet.threedollar.api.assertutils.assertReviewUtils.assertReviewInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 class ReviewControllerTest extends SetupStoreControllerTest {
 
@@ -36,18 +43,16 @@ class ReviewControllerTest extends SetupStoreControllerTest {
     @Autowired
     private ReviewRepository reviewRepository;
 
-    @Autowired
-    private StoreRepository storeRepository;
+    @MockBean
+    private AddUserMedalEventListener addUserMedalEventListener;
 
-    @Autowired
-    private MenuRepository menuRepository;
+    @MockBean
+    private StoreEventListener storeEventListener;
 
     @AfterEach
     void cleanUp() {
         super.cleanup();
-        reviewRepository.deleteAll();
-        menuRepository.deleteAllInBatch();
-        storeRepository.deleteAllInBatch();
+        reviewRepository.deleteAllInBatch();
     }
 
     @DisplayName("POST /api/v2/store/review")
@@ -64,6 +69,18 @@ class ReviewControllerTest extends SetupStoreControllerTest {
 
             // then
             assertReviewInfoResponse(response.getData(), store.getId(), request.getContents(), request.getRating());
+        }
+
+        @Test
+        void 리뷰_등록시_메달을_획득하는_작업이_수행된다() throws Exception {
+            // given
+            AddReviewRequest request = AddReviewRequest.testInstance(store.getId(), "우와", 4);
+
+            // when
+            reviewMockApiCaller.addReview(request, token, 200);
+
+            // then
+            verify(addUserMedalEventListener, times(1)).addObtainableMedalsByAddReview(any(ReviewCreatedEvent.class));
         }
 
     }
@@ -87,6 +104,22 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertReviewInfoResponse(response.getData(), store.getId(), request.getContents(), request.getRating());
         }
 
+        @Test
+        void 리뷰를_수정하면_가게의_평균_리뷰점수가_갱신된다() throws Exception {
+            // given
+            Review review = ReviewCreator.create(store.getId(), testUser.getId(), "맛 없어요", 2);
+            reviewRepository.save(review);
+
+            // when
+            UpdateReviewRequest request = UpdateReviewRequest.testInstance("우와", 4);
+
+            // when
+            reviewMockApiCaller.updateReview(review.getId(), request, token, 200);
+
+            // then
+            verify(storeEventListener, times(1)).renewStoreRating(any(ReviewChangedEvent.class));
+        }
+
     }
 
     @DisplayName("DELETE /api/v2/store/review")
@@ -106,6 +139,19 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertThat(response.getData()).isEqualTo("OK");
         }
 
+        @Test
+        void 리뷰를_삭제하면_가게의_평균_리뷰점수가_갱신된다() throws Exception {
+            // given
+            Review review = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요", 5);
+            reviewRepository.save(review);
+
+            // when
+            reviewMockApiCaller.deleteReview(review.getId(), token, 200);
+
+            // then
+            verify(storeEventListener, times(1)).renewStoreRating(any(ReviewChangedEvent.class));
+        }
+
     }
 
     @DisplayName("GET /api/v2/store/reviews/me")
@@ -121,13 +167,12 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review4 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요4", 2);
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null, null);
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null);
 
             // when
-            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
+            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(4);
             assertThat(response.getData().getNextCursor()).isEqualTo(review3.getId());
             assertThat(response.getData().getContents()).hasSize(2);
 
@@ -144,13 +189,12 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review4 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요4", 2);
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review4.getId(), 4L);
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review4.getId());
 
             // when
-            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
+            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(4);
             assertThat(response.getData().getNextCursor()).isEqualTo(review2.getId());
             assertThat(response.getData().getContents()).hasSize(2);
 
@@ -167,13 +211,12 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review4 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요4", 2);
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review4.getId(), null);
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review4.getId());
 
             // when
-            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
+            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(4);
             assertThat(response.getData().getNextCursor()).isEqualTo(review2.getId());
             assertThat(response.getData().getContents()).hasSize(2);
 
@@ -190,13 +233,12 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review4 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요4", 2);
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review3.getId(), null);
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review3.getId());
 
             // when
-            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
+            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(4);
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
             assertThat(response.getData().getContents()).hasSize(2);
 
@@ -213,13 +255,12 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review4 = ReviewCreator.create(store.getId(), testUser.getId(), "너무 맛있어요4", 2);
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review2.getId(), null);
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review2.getId());
 
             // when
-            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
+            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(4);
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
             assertThat(response.getData().getContents()).hasSize(1);
 
@@ -232,13 +273,12 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review = ReviewCreator.createDeleted(store.getId(), testUser.getId(), "너무 맛있어요", 5);
             reviewRepository.save(review);
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null, null);
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null);
 
             // when
-            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
+            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(0);
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
             assertThat(response.getData().getContents()).isEmpty();
         }
@@ -252,13 +292,12 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review = ReviewCreator.create(deletedStore.getId(), testUser.getId(), "너무 맛있어요", 5);
             reviewRepository.save(review);
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null, null);
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null);
 
             // when
-            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviews(request, token, 200);
+            ApiResponse<ReviewScrollResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(1);
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
             assertThat(response.getData().getContents()).hasSize(1);
 
@@ -275,10 +314,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review = ReviewCreator.create(deletedStore.getId(), testUser.getId(), "너무 맛있어요", 5);
             reviewRepository.save(review);
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null, null);
+            RetrieveMyReviewsV2Request request = RetrieveMyReviewsV2Request.testInstance(2, null, null);
 
             // when
-            ApiResponse<ReviewScrollV2Response> response = reviewMockApiCaller.retrieveMyReviewsV2(request, token, 200);
+            ApiResponse<ReviewScrollV2Response> response = reviewMockApiCaller.retrieveMyReviewHistoriesV2(request, token, 200);
 
             // then
             assertThat(response.getData().getTotalElements()).isEqualTo(0);

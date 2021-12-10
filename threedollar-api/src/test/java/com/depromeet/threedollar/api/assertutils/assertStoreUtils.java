@@ -1,9 +1,6 @@
 package com.depromeet.threedollar.api.assertutils;
 
-import com.depromeet.threedollar.api.service.store.dto.response.MenuResponse;
-import com.depromeet.threedollar.api.service.store.dto.response.StoreDetailResponse;
-import com.depromeet.threedollar.api.service.store.dto.response.StoreInfoResponse;
-import com.depromeet.threedollar.api.service.store.dto.response.StoreWithDistanceResponse;
+import com.depromeet.threedollar.api.service.store.dto.response.*;
 import com.depromeet.threedollar.domain.domain.common.Location;
 import com.depromeet.threedollar.domain.domain.store.Menu;
 import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
@@ -56,7 +53,7 @@ public final class assertStoreUtils {
         );
     }
 
-    public static void assertStoreWithDistanceResponse(StoreWithDistanceResponse response, Store store) {
+    public static void assertStoreWithVisitsResponse(StoreWithVisitsResponse response, Store store) {
         assertAll(
             () -> assertThat(response.getStoreId()).isEqualTo(store.getId()),
             () -> assertThat(response.getStoreName()).isEqualTo(store.getName()),
@@ -68,16 +65,17 @@ public final class assertStoreUtils {
         );
     }
 
-    public static void assertStoreWithDistanceResponse(StoreWithDistanceResponse response, double latitude, double longitude, String storeName, List<MenuCategoryType> categories) {
+    public static void assertStoreWithVisitsResponse(StoreWithVisitsResponse response, Long storeId, Double latitude, Double longitude, String name, double rating) {
         assertAll(
+            () -> assertThat(response.getStoreId()).isEqualTo(storeId),
             () -> assertThat(response.getLatitude()).isEqualTo(latitude),
             () -> assertThat(response.getLongitude()).isEqualTo(longitude),
-            () -> assertThat(response.getStoreName()).isEqualTo(storeName),
-            () -> assertThat(response.getCategories()).isEqualTo(categories)
+            () -> assertThat(response.getStoreName()).isEqualTo(name),
+            () -> assertThat(response.getRating()).isEqualTo(rating)
         );
     }
 
-    public static void assertStoreWithDistanceResponse(StoreWithDistanceResponse response, Long storeId, Double latitude, Double longitude, String name, double rating) {
+    public static void assertStoreWithVisitsAndDistanceResponse(StoreWithVisitsAndDistanceResponse response, Long storeId, Double latitude, Double longitude, String name, double rating) {
         assertAll(
             () -> assertThat(response.getStoreId()).isEqualTo(storeId),
             () -> assertThat(response.getLatitude()).isEqualTo(latitude),
@@ -133,7 +131,7 @@ public final class assertStoreUtils {
      */
     public static void assertStoreDeleteRequest(StoreDeleteRequest storeDeleteRequest, Long storeId, Long userId, DeleteReasonType type) {
         assertAll(
-            () -> assertThat(storeDeleteRequest.getStoreId()).isEqualTo(storeId),
+            () -> assertThat(storeDeleteRequest.getStore().getId()).isEqualTo(storeId),
             () -> assertThat(storeDeleteRequest.getUserId()).isEqualTo(userId),
             () -> assertThat(storeDeleteRequest.getReason()).isEqualTo(type)
         );

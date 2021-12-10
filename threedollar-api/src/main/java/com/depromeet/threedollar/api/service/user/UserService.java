@@ -4,8 +4,13 @@ import com.depromeet.threedollar.api.service.user.dto.request.CheckAvailableName
 import com.depromeet.threedollar.api.service.user.dto.request.CreateUserRequest;
 import com.depromeet.threedollar.api.service.user.dto.request.UpdateUserInfoRequest;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
-import com.depromeet.threedollar.domain.domain.user.*;
+import com.depromeet.threedollar.domain.domain.user.User;
+import com.depromeet.threedollar.domain.domain.user.UserRepository;
+import com.depromeet.threedollar.domain.domain.user.WithdrawalUser;
+import com.depromeet.threedollar.domain.domain.user.WithdrawalUserRepository;
+import com.depromeet.threedollar.domain.event.user.NewUserCreatedEvent;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,14 +18,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService {
 
+    private final ApplicationEventPublisher eventPublisher;
     private final UserRepository userRepository;
     private final WithdrawalUserRepository withdrawalUserRepository;
 
     @Transactional
-    public Long createUser(CreateUserRequest request) {
+    public Long registerUser(CreateUserRequest request) {
         UserServiceUtils.validateNotExistsUser(userRepository, request.getSocialId(), request.getSocialType());
         UserServiceUtils.validateNotExistsUserName(userRepository, request.getName());
-        return userRepository.save(request.toEntity()).getId();
+        User user = userRepository.save(request.toEntity());
+        eventPublisher.publishEvent(NewUserCreatedEvent.of(user.getId()));
+        return user.getId();
     }
 
     @Transactional(readOnly = true)
@@ -30,7 +38,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public void checkAvailableName(CheckAvailableNameRequest request) {
+    public void checkIsAvailableName(CheckAvailableNameRequest request) {
         UserServiceUtils.validateNotExistsUserName(userRepository, request.getName());
     }
 
@@ -38,7 +46,7 @@ public class UserService {
     public UserInfoResponse updateUserInfo(UpdateUserInfoRequest request, Long userId) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
         UserServiceUtils.validateNotExistsUserName(userRepository, request.getName());
-        user.update(request.getName());
+        user.updateName(request.getName());
         return UserInfoResponse.of(user);
     }
 

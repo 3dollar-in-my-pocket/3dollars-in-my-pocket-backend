@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.service.user.dto.response;
 
+import com.depromeet.threedollar.application.service.medal.dto.response.MedalResponse;
 import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import lombok.*;
@@ -10,24 +11,22 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserInfoResponse {
 
-    private static final UserInfoResponse SIGN_OUT_USER = new UserInfoResponse(null, "사라진 제보자", null);
+    private static final String SIGN_OUT_NICKNAME = "사라진 제보자";
 
     private Long userId;
     private String name;
     private UserSocialType socialType;
+    private MedalResponse medal;
 
     public static UserInfoResponse of(User user) {
         if (user == null) {
-            return SIGN_OUT_USER;
+            return signOut();
         }
-        return new UserInfoResponse(user.getId(), user.getName(), user.getSocialType());
+        return new UserInfoResponse(user.getId(), user.getName(), user.getSocialType(), MedalResponse.of(user.getActivatedMedal()));
     }
 
-    public static UserInfoResponse of(Long userId, String userName, UserSocialType userSocialType) {
-        if (userId == null) {
-            return SIGN_OUT_USER;
-        }
-        return new UserInfoResponse(userId, userName, userSocialType);
+    private static UserInfoResponse signOut() {
+        return new UserInfoResponse(null, SIGN_OUT_NICKNAME, null, MedalResponse.signOut());
     }
 
 }

@@ -36,8 +36,8 @@ class UserServiceTest {
 
     @AfterEach
     void cleanUp() {
-        userRepository.deleteAll();
-        withdrawalUserRepository.deleteAll();
+        userRepository.deleteAllInBatch();
+        withdrawalUserRepository.deleteAllInBatch();
     }
 
     @Nested
@@ -50,7 +50,7 @@ class UserServiceTest {
             CreateUserRequest request = CreateUserRequest.testInstance(socialId, socialType, name);
 
             // when
-            userService.createUser(request);
+            userService.registerUser(request);
 
             // then
             List<User> users = userRepository.findAll();
@@ -67,7 +67,7 @@ class UserServiceTest {
             CreateUserRequest request = CreateUserRequest.testInstance("another-id", UserSocialType.APPLE, name);
 
             // when & then
-            assertThatThrownBy(() -> userService.createUser(request)).isInstanceOf(ConflictException.class);
+            assertThatThrownBy(() -> userService.registerUser(request)).isInstanceOf(ConflictException.class);
         }
 
         @AutoSource
@@ -79,7 +79,7 @@ class UserServiceTest {
             CreateUserRequest request = CreateUserRequest.testInstance(socialId, socialType, "새로운 닉네임");
 
             // when & then
-            assertThatThrownBy(() -> userService.createUser(request)).isInstanceOf(ConflictException.class);
+            assertThatThrownBy(() -> userService.registerUser(request)).isInstanceOf(ConflictException.class);
         }
 
     }
@@ -111,7 +111,7 @@ class UserServiceTest {
             CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
 
             // when & then
-            assertThatThrownBy(() -> userService.checkAvailableName(request)).isInstanceOf(ConflictException.class);
+            assertThatThrownBy(() -> userService.checkIsAvailableName(request)).isInstanceOf(ConflictException.class);
         }
 
         @AutoSource
@@ -121,7 +121,7 @@ class UserServiceTest {
             CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
 
             // when & then
-            userService.checkAvailableName(request);
+            userService.checkIsAvailableName(request);
         }
 
     }

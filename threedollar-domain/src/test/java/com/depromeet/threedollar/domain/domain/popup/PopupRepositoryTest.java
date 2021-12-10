@@ -19,11 +19,11 @@ class PopupRepositoryTest {
 
     @AfterEach
     void cleanUp() {
-        popupRepository.deleteAll();
+        popupRepository.deleteAllInBatch();
     }
 
     @Test
-    void 날짜_범위안에_속한_팝업을_조회한다_시작_이후인경우() {
+    void 팝업_시작_날짜와_종료_날짜_사이인경우_활성화된_팝업에_포함된다_시작부근인경우() {
         // given
         PopupPlatformType platformType = PopupPlatformType.AOS;
         LocalDateTime startDateTime = LocalDateTime.of(2021, 11, 25, 0, 0);
@@ -48,7 +48,7 @@ class PopupRepositoryTest {
     }
 
     @Test
-    void 날짜_범위안에_속한_팝업을_조회한다_종료_전() {
+    void 팝업_시작_날짜와_종료_날짜_사이인경우_활성화된_팝업에_포함된다_종료부근인경우() {
         // given
         PopupPlatformType platformType = PopupPlatformType.IOS;
         LocalDateTime startDateTime = LocalDateTime.of(2021, 11, 24, 0, 0);

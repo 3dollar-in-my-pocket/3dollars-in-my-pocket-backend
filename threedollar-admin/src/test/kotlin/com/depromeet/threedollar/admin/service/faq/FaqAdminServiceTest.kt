@@ -24,7 +24,7 @@ internal class FaqAdminServiceTest(
 
     @AfterEach
     fun cleanUp() {
-        faqRepository.deleteAll()
+        faqRepository.deleteAllInBatch()
     }
 
     @DisplayName("신규 FAQ 등록")

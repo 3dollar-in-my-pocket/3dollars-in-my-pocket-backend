@@ -1,18 +1,14 @@
 package com.depromeet.threedollar.api.service.store;
 
 import com.depromeet.threedollar.api.service.SetupUserServiceTest;
-import com.depromeet.threedollar.api.service.store.dto.request.AddStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.DeleteStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.MenuRequest;
+import com.depromeet.threedollar.api.service.store.dto.request.RegisterStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.UpdateStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.response.StoreDeleteResponse;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
-import com.depromeet.threedollar.domain.domain.store.Menu;
-import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.store.MenuCreator;
-import com.depromeet.threedollar.domain.domain.store.MenuRepository;
 import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.storedelete.DeleteReasonType;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequest;
@@ -64,8 +60,8 @@ class StoreServiceTest extends SetupUserServiceTest {
         appearanceDayRepository.deleteAllInBatch();
         paymentMethodRepository.deleteAllInBatch();
         menuRepository.deleteAllInBatch();
+        storeDeleteRequestRepository.deleteAllInBatch();
         storeRepository.deleteAllInBatch();
-        storeDeleteRequestRepository.deleteAll();
     }
 
     @Nested
@@ -78,7 +74,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             double latitude = 34.0;
             double longitude = 130.0;
 
-            AddStoreRequest request = AddStoreRequest.testBuilder()
+            RegisterStoreRequest request = RegisterStoreRequest.testBuilder()
                 .latitude(latitude)
                 .longitude(longitude)
                 .storeName(storeName)
@@ -89,7 +85,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .build();
 
             // when
-            storeService.addStore(request, userId);
+            storeService.registerStore(request, userId);
 
             // then
             List<Store> stores = storeRepository.findAll();
@@ -101,7 +97,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         @ParameterizedTest
         void 가게_등록시_개장일_데이터도_추가된다(Set<DayOfTheWeek> appearanceDays) {
             // given
-            AddStoreRequest request = AddStoreRequest.testBuilder()
+            RegisterStoreRequest request = RegisterStoreRequest.testBuilder()
                 .latitude(34.0)
                 .longitude(130.0)
                 .storeName("붕어빵")
@@ -112,7 +108,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .build();
 
             // when
-            storeService.addStore(request, userId);
+            storeService.registerStore(request, userId);
 
             // then
             List<AppearanceDay> appearanceDayList = appearanceDayRepository.findAll();
@@ -124,7 +120,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         @ParameterizedTest
         void 가게_등록시_결제방법_데이터도_추가된다(Set<PaymentMethodType> paymentMethods) {
             // given
-            AddStoreRequest request = AddStoreRequest.testBuilder()
+            RegisterStoreRequest request = RegisterStoreRequest.testBuilder()
                 .latitude(34.0)
                 .longitude(130.0)
                 .storeName("붕어빵")
@@ -135,7 +131,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .build();
 
             // when
-            storeService.addStore(request, userId);
+            storeService.registerStore(request, userId);
 
             // then
             List<PaymentMethod> paymentMethodsList = paymentMethodRepository.findAll();
@@ -149,7 +145,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             // given
             Set<MenuRequest> menus = Set.of(MenuRequest.of(menuName, price, type));
 
-            AddStoreRequest request = AddStoreRequest.testBuilder()
+            RegisterStoreRequest request = RegisterStoreRequest.testBuilder()
                 .latitude(34.0)
                 .longitude(130.0)
                 .storeName("붕어빵")
@@ -160,7 +156,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .build();
 
             // when
-            storeService.addStore(request, userId);
+            storeService.registerStore(request, userId);
 
             // then
             List<Menu> menuList = menuRepository.findAll();
@@ -177,7 +173,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 MenuRequest.of(menuName, price, type))
             );
 
-            AddStoreRequest request = AddStoreRequest.testBuilder()
+            RegisterStoreRequest request = RegisterStoreRequest.testBuilder()
                 .latitude(34.0)
                 .longitude(130.0)
                 .storeName("붕어빵")
@@ -188,7 +184,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .build();
 
             // when
-            storeService.addStore(request, userId);
+            storeService.registerStore(request, userId);
 
             // then
             List<Menu> menuList = menuRepository.findAll();
@@ -446,7 +442,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 
-            storeDeleteRequestRepository.save(StoreDeleteRequestCreator.create(store.getId(), 90L, DeleteReasonType.WRONG_CONTENT));
+            storeDeleteRequestRepository.save(StoreDeleteRequestCreator.create(store, 90L, DeleteReasonType.WRONG_CONTENT));
 
             // when
             StoreDeleteResponse response = storeService.deleteStore(store.getId(), DeleteStoreRequest.testInstance(deleteReasonType), userId);
@@ -472,8 +468,8 @@ class StoreServiceTest extends SetupUserServiceTest {
             storeRepository.save(store);
 
             storeDeleteRequestRepository.saveAll(List.of(
-                StoreDeleteRequestCreator.create(store.getId(), 1000L, DeleteReasonType.NOSTORE),
-                StoreDeleteRequestCreator.create(store.getId(), 1001L, DeleteReasonType.NOSTORE))
+                StoreDeleteRequestCreator.create(store, 1000L, DeleteReasonType.NOSTORE),
+                StoreDeleteRequestCreator.create(store, 1001L, DeleteReasonType.NOSTORE))
             );
 
             // when
@@ -500,7 +496,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 
-            storeDeleteRequestRepository.save(StoreDeleteRequestCreator.create(store.getId(), userId, DeleteReasonType.NOSTORE));
+            storeDeleteRequestRepository.save(StoreDeleteRequestCreator.create(store, userId, DeleteReasonType.NOSTORE));
 
             // when & then
             assertThatThrownBy(() -> storeService.deleteStore(store.getId(), DeleteStoreRequest.testInstance(reasonType), userId))

@@ -1,8 +1,9 @@
 package com.depromeet.threedollar.api.service.review.dto.response;
 
-import com.depromeet.threedollar.common.collection.ScrollPaginationCollection;
-import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
-import com.depromeet.threedollar.domain.domain.store.Store;
+import com.depromeet.threedollar.domain.collection.common.ScrollPaginationCollection;
+import com.depromeet.threedollar.domain.domain.review.Review;
+import com.depromeet.threedollar.domain.collection.store.StoreCacheCollection;
+import com.depromeet.threedollar.domain.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,6 @@ import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @ToString
@@ -21,31 +21,29 @@ public class ReviewScrollResponse {
     private static final long LAST_CURSOR = -1L;
 
     private List<ReviewDetailResponse> contents = new ArrayList<>();
-    private long totalElements;
     private long nextCursor;
 
-    private ReviewScrollResponse(List<ReviewDetailResponse> contents, long totalElements, long nextCursor) {
+    private ReviewScrollResponse(List<ReviewDetailResponse> contents, long nextCursor) {
         this.contents = contents;
-        this.totalElements = totalElements;
         this.nextCursor = nextCursor;
     }
 
-    public static ReviewScrollResponse of(ScrollPaginationCollection<ReviewWithWriterProjection> scrollCollection, Map<Long, Store> cachedStores, long totalElements) {
-        if (scrollCollection.isLastScroll()) {
-            return newLastScroll(scrollCollection.getItemsInCurrentScroll(), cachedStores, totalElements);
+    public static ReviewScrollResponse of(ScrollPaginationCollection<Review> reviewsScroll, StoreCacheCollection stores, User user) {
+        if (reviewsScroll.isLastScroll()) {
+            return newLastScroll(reviewsScroll.getCurrentScrollItems(), stores, user);
         }
-        return newScrollHasNext(scrollCollection.getItemsInCurrentScroll(), cachedStores, totalElements, scrollCollection.getNextCursor().getReviewId());
+        return newScrollHasNext(reviewsScroll.getCurrentScrollItems(), stores, user, reviewsScroll.getNextCursor().getId());
     }
 
-    private static ReviewScrollResponse newLastScroll(List<ReviewWithWriterProjection> reviews, Map<Long, Store> cachedStores, long totalElements) {
-        return newScrollHasNext(reviews, cachedStores, totalElements, LAST_CURSOR);
+    private static ReviewScrollResponse newLastScroll(List<Review> reviews, StoreCacheCollection stores, User user) {
+        return newScrollHasNext(reviews, stores, user, LAST_CURSOR);
     }
 
-    private static ReviewScrollResponse newScrollHasNext(List<ReviewWithWriterProjection> reviews, Map<Long, Store> cachedStores, long totalElements, long nextCursor) {
+    private static ReviewScrollResponse newScrollHasNext(List<Review> reviews, StoreCacheCollection stores, User user, long nextCursor) {
         List<ReviewDetailResponse> contents = reviews.stream()
-            .map(review -> ReviewDetailResponse.of(review, cachedStores.get(review.getStoreId())))
+            .map(review -> ReviewDetailResponse.of(review, stores.getStore(review.getStoreId()), user))
             .collect(Collectors.toList());
-        return new ReviewScrollResponse(contents, totalElements, nextCursor);
+        return new ReviewScrollResponse(contents, nextCursor);
     }
 
 }

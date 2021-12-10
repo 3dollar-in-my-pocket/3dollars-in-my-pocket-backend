@@ -7,3 +7,4 @@
     - threedollar-domain
         - threedollar-common
 - threedollar-external
+    - threedollar-common

@@ -28,7 +28,7 @@ public class ImageUploadFileRequest implements UploadFileRequest {
 
     @Override
     public void validateAvailableFileType(String contentType) {
-        if (contentType != null && contentType.contains(SEPARATOR) && contentType.split(SEPARATOR)[0].equals(IMAGE_CONTENT_TYPE_TYPE)) {
+        if (contentType != null && contentType.contains(SEPARATOR) && IMAGE_CONTENT_TYPE_TYPE.equals(contentType.split(SEPARATOR)[0])) {
             return;
         }
         throw new ValidationException(String.format("허용되지 않은 파일 형식 (%s) 입니다", contentType), VALIDATION_FILE_TYPE_EXCEPTION);

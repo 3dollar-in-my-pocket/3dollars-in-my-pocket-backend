@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.service.storeimage;
 
+import com.depromeet.threedollar.api.provider.upload.UploadProvider;
 import com.depromeet.threedollar.api.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.service.storeimage.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.api.service.storeimage.dto.response.StoreImageResponse;
@@ -9,12 +10,12 @@ import com.depromeet.threedollar.domain.domain.storeimage.StoreImageRepository;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImageStatus;
 import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.util.List;
@@ -23,26 +24,27 @@ import static com.depromeet.threedollar.api.assertutils.assertStoreImageUtils.as
 import static com.depromeet.threedollar.api.assertutils.assertStoreImageUtils.assertStoreImageResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class StoreImageServiceTest extends SetupStoreServiceTest {
 
-    private static final String IMAGE_URL = "https://image.url";
+    private static final String IMAGE_URL = "image.png";
 
+    @Autowired
     private StoreImageService storeImageService;
 
     @Autowired
     private StoreImageRepository storeImageRepository;
 
+    @MockBean
+    private UploadProvider uploadProvider;
+
     @AfterEach
     void cleanUp() {
+        storeImageRepository.deleteAllInBatch();
         super.cleanup();
-        storeImageRepository.deleteAll();
-    }
-
-    @BeforeEach
-    void setUpStoreImageService() {
-        storeImageService = new StoreImageService(storeRepository, storeImageRepository, (request, file) -> IMAGE_URL);
     }
 
     @Nested
@@ -51,6 +53,8 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
         @Test
         void 가게에_새로운_이미지를_등록한다() {
             // given
+            when(uploadProvider.uploadFile(any(), any())).thenReturn(IMAGE_URL);
+
             AddStoreImageRequest request = AddStoreImageRequest.testInstance(store.getId());
 
             // when
@@ -81,7 +85,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
         @ParameterizedTest
         void 가게_이미지_삭제_성공시_해당_이미지가_INACTIVE로_변경된다(String imageUrl) {
             // given
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, imageUrl);
+            StoreImage storeImage = StoreImage.newInstance(store, userId, imageUrl);
             storeImageRepository.save(storeImage);
 
             // when
@@ -105,7 +109,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
         @Test
         void 가게_이미지_삭제_요청시_해당하는_가게_이미지가_INACTIVE_삭제일경우_NOT_FOUND_STORE_EXCEPTION() {
             // given
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, "https://profile.com");
+            StoreImage storeImage = StoreImage.newInstance(store, userId, "https://profile.com");
             storeImage.delete();
             storeImageRepository.save(storeImage);
 
@@ -122,7 +126,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
         @ParameterizedTest
         void 가게에_등록된_이미지_목록을_조회한다(String imageUrl) {
             // given
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, imageUrl);
+            StoreImage storeImage = StoreImage.newInstance(store, userId, imageUrl);
             storeImageRepository.save(storeImage);
 
             // when
@@ -136,7 +140,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
         @Test
         void 가게에_등록된_이미지_목록을_조회시_삭제된_이미지는_조회되지_않는다() {
             // given
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, "https://store-image.com");
+            StoreImage storeImage = StoreImage.newInstance(store, userId, "https://store-image.com");
             storeImage.delete();
             storeImageRepository.save(storeImage);
 

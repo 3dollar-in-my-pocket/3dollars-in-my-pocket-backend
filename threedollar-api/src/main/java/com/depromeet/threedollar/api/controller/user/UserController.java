@@ -39,8 +39,9 @@ public class UserController {
     @ApiOperation("회원가입 & 마이페이지 - 닉네임 사용 여부를 체크 요청합니다. (중복된 닉네임 409 or 사용 불가능한 닉네임 400)")
     @GetMapping("/api/v2/user/name/check")
     public ApiResponse<String> checkAvailableName(@Valid CheckAvailableNameRequest request) {
-        userService.checkAvailableName(request);
+        userService.checkIsAvailableName(request);
         return ApiResponse.SUCCESS;
     }
+
 
 }

@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.service.storeimage.dto.request;
 
+import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
 import lombok.*;
 
@@ -14,8 +15,8 @@ public class AddStoreImageRequest {
     @NotNull(message = "{store.storeId.notNull}")
     private Long storeId;
 
-    public StoreImage toEntity(Long userId, String imageUrl) {
-        return StoreImage.newInstance(storeId, userId, imageUrl);
+    public StoreImage toEntity(Store store, Long userId, String imageUrl) {
+        return StoreImage.newInstance(store, userId, imageUrl);
     }
 
     public static AddStoreImageRequest testInstance(Long storeId) {

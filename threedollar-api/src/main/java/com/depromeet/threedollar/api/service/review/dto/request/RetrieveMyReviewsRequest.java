@@ -19,11 +19,8 @@ public class RetrieveMyReviewsRequest {
     @Nullable
     private Long cursor;
 
-    @Nullable
-    private Long cachingTotalElements; // 총 리뷰 수를 매번 서버에서 조회하지 않고, 캐싱하기 위한 필드. (Optional)
-
-    public static RetrieveMyReviewsRequest testInstance(int size, Long cursor, Long cachingTotalElements) {
-        return new RetrieveMyReviewsRequest(size, cursor, cachingTotalElements);
+    public static RetrieveMyReviewsRequest testInstance(int size, Long cursor) {
+        return new RetrieveMyReviewsRequest(size, cursor);
     }
 
 }

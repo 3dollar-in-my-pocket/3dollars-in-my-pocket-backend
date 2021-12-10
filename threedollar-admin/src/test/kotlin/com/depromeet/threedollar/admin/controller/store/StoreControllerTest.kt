@@ -25,36 +25,36 @@ internal class StoreControllerTest(
     @AfterEach
     fun cleanUp() {
         super.cleanup()
+        storeDeleteRequestRepository.deleteAllInBatch()
         storeRepository.deleteAll()
-        storeDeleteRequestRepository.deleteAll()
     }
 
     @DisplayName("GET /admin/v1/stores/reported")
     @Test
     fun N개이상_삭제_요청된_가게들을_삭제요청이_많은것부터_조회한다_첫페이지() {
         // given
-        val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1", 34.0, 124.0)
-        val store2 = StoreCreator.createWithDefaultMenu(101L, "가게2", 34.0, 124.0)
-        val store3 = StoreCreator.createWithDefaultMenu(102L, "가게3", 34.0, 124.0)
-        val store4 = StoreCreator.createWithDefaultMenu(103L, "가게4", 34.0, 124.0)
+        val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1")
+        val store2 = StoreCreator.createWithDefaultMenu(101L, "가게2")
+        val store3 = StoreCreator.createWithDefaultMenu(102L, "가게3")
+        val store4 = StoreCreator.createWithDefaultMenu(103L, "가게4")
 
         storeRepository.saveAll(listOf(store1, store2, store3, store4))
         storeDeleteRequestRepository.saveAll(
             listOf(
                 // store1: 4개의 삭제 요청
-                StoreDeleteRequest.of(store1.id, 100L, DeleteReasonType.OVERLAPSTORE),
-                StoreDeleteRequest.of(store1.id, 101L, DeleteReasonType.OVERLAPSTORE),
-                StoreDeleteRequest.of(store1.id, 102L, DeleteReasonType.OVERLAPSTORE),
-                StoreDeleteRequest.of(store1.id, 103L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequest.of(store1, 100L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequest.of(store1, 101L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequest.of(store1, 102L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequest.of(store1, 103L, DeleteReasonType.OVERLAPSTORE),
 
                 // store2: 3개의 삭제 요청
-                StoreDeleteRequest.of(store2.id, 100L, DeleteReasonType.OVERLAPSTORE),
-                StoreDeleteRequest.of(store2.id, 101L, DeleteReasonType.OVERLAPSTORE),
-                StoreDeleteRequest.of(store2.id, 102L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequest.of(store2, 100L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequest.of(store2, 101L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequest.of(store2, 102L, DeleteReasonType.OVERLAPSTORE),
 
                 // store4: 2개의 삭제 요청
-                StoreDeleteRequest.of(store4.id, 100L, DeleteReasonType.OVERLAPSTORE),
-                StoreDeleteRequest.of(store4.id, 101L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequest.of(store4, 100L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequest.of(store4, 101L, DeleteReasonType.OVERLAPSTORE),
             )
         )
 
@@ -76,7 +76,7 @@ internal class StoreControllerTest(
 
         // then
         assertAll({
-            assertThat(response.data)
+            assertThat(response.data).hasSize(2)
             assertReportedStoresResponse(response.data[0], store1, 4)
             assertReportedStoresResponse(response.data[1], store2, 3)
         })
@@ -86,28 +86,28 @@ internal class StoreControllerTest(
     @Test
     fun N개이상_삭제_요청된_가게들을_삭제요청이_많은것부터_조회한다_두번째_페이지() {
         // given
-        val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1", 34.0, 124.0)
-        val store2 = StoreCreator.createWithDefaultMenu(101L, "가게2", 34.0, 124.0)
-        val store3 = StoreCreator.createWithDefaultMenu(102L, "가게3", 34.0, 124.0)
-        val store4 = StoreCreator.createWithDefaultMenu(103L, "가게4", 34.0, 124.0)
+        val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1")
+        val store2 = StoreCreator.createWithDefaultMenu(101L, "가게2")
+        val store3 = StoreCreator.createWithDefaultMenu(102L, "가게3")
+        val store4 = StoreCreator.createWithDefaultMenu(103L, "가게4")
 
         storeRepository.saveAll(listOf(store1, store2, store3, store4))
         storeDeleteRequestRepository.saveAll(
             listOf(
                 // store1: 4개의 삭제 요청
-                StoreDeleteRequest.of(store1.id, 100L, DeleteReasonType.OVERLAPSTORE),
-                StoreDeleteRequest.of(store1.id, 101L, DeleteReasonType.OVERLAPSTORE),
-                StoreDeleteRequest.of(store1.id, 102L, DeleteReasonType.OVERLAPSTORE),
-                StoreDeleteRequest.of(store1.id, 103L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequest.of(store1, 100L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequest.of(store1, 101L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequest.of(store1, 102L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequest.of(store1, 103L, DeleteReasonType.OVERLAPSTORE),
 
                 // store2: 3개의 삭제 요청
-                StoreDeleteRequest.of(store2.id, 100L, DeleteReasonType.OVERLAPSTORE),
-                StoreDeleteRequest.of(store2.id, 101L, DeleteReasonType.OVERLAPSTORE),
-                StoreDeleteRequest.of(store2.id, 102L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequest.of(store2, 100L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequest.of(store2, 101L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequest.of(store2, 102L, DeleteReasonType.OVERLAPSTORE),
 
                 // store4: 2개의 삭제 요청
-                StoreDeleteRequest.of(store4.id, 100L, DeleteReasonType.OVERLAPSTORE),
-                StoreDeleteRequest.of(store4.id, 101L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequest.of(store4, 100L, DeleteReasonType.OVERLAPSTORE),
+                StoreDeleteRequest.of(store4, 101L, DeleteReasonType.OVERLAPSTORE),
             )
         )
 
@@ -138,7 +138,7 @@ internal class StoreControllerTest(
     @Test
     fun N개이상_삭제_요청된_가게들을_조회시_minCount보다_요청수가_적은_가게들은_조회되지_않는다() {
         // given
-        val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1", 34.0, 124.0)
+        val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1")
 
         storeRepository.save(store1)
 
@@ -176,10 +176,10 @@ internal class StoreControllerTest(
     @Test
     fun 최신순으로_스크롤_페이지네이션으로_가게를_조회한다_첫스크롤() {
         // given
-        val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1", 34.0, 124.0)
-        val store2 = StoreCreator.createWithDefaultMenu(101L, "가게2", 34.0, 124.0)
-        val store3 = StoreCreator.createWithDefaultMenu(102L, "가게3", 34.0, 124.0)
-        val store4 = StoreCreator.createWithDefaultMenu(103L, "가게3", 34.0, 124.0)
+        val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1")
+        val store2 = StoreCreator.createWithDefaultMenu(101L, "가게2")
+        val store3 = StoreCreator.createWithDefaultMenu(102L, "가게3")
+        val store4 = StoreCreator.createWithDefaultMenu(103L, "가게3")
         storeRepository.saveAll(listOf(store1, store2, store3, store4))
 
         val size = 2
@@ -207,10 +207,10 @@ internal class StoreControllerTest(
     @Test
     fun 최신순으로_스크롤_페이지네이션으로_가게를_조회한다_마지막_스크롤() {
         // given
-        val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1", 34.0, 124.0)
-        val store2 = StoreCreator.createWithDefaultMenu(101L, "가게2", 34.0, 124.0)
-        val store3 = StoreCreator.createWithDefaultMenu(102L, "가게3", 34.0, 124.0)
-        val store4 = StoreCreator.createWithDefaultMenu(103L, "가게3", 34.0, 124.0)
+        val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1")
+        val store2 = StoreCreator.createWithDefaultMenu(101L, "가게2")
+        val store3 = StoreCreator.createWithDefaultMenu(102L, "가게3")
+        val store4 = StoreCreator.createWithDefaultMenu(103L, "가게3")
         storeRepository.saveAll(listOf(store1, store2, store3, store4))
 
         val size = 2

@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.controller.visit;
 
 import com.depromeet.threedollar.api.controller.SetupStoreControllerTest;
+import com.depromeet.threedollar.api.controller.medal.AddUserMedalEventListener;
 import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoriesScrollResponse;
@@ -11,10 +12,12 @@ import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
+import com.depromeet.threedollar.domain.event.visit.VisitHistoryAddedEvent;
 import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,6 +26,9 @@ import static com.depromeet.threedollar.api.assertutils.assertStoreUtils.assertS
 import static com.depromeet.threedollar.api.assertutils.assertVisitHistoryUtils.assertVisitHistoryWithStoreResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 class VisitHistoryControllerTest extends SetupStoreControllerTest {
 
@@ -35,6 +41,9 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
 
     @Autowired
     private VisitHistoryRepository visitHistoryRepository;
+
+    @MockBean
+    private AddUserMedalEventListener addUserMedalEventListener;
 
     @AfterEach
     void cleanUp() {
@@ -59,6 +68,19 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             assertAll(
                 () -> assertThat(response.getData()).isEqualTo(ApiResponse.SUCCESS.getData())
             );
+        }
+
+        @AutoSource
+        @ParameterizedTest
+        void 가게_방문시_메달을_획득하는_작업이_수행된다(VisitType visitType) throws Exception {
+            // given
+            AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(storeId, visitType);
+
+            // when
+            visitHistoryApiCaller.addVisitHistory(request, token, 200);
+
+            // then
+            verify(addUserMedalEventListener, times(1)).addObtainableMedalsByVisitStore(any(VisitHistoryAddedEvent.class));
         }
 
     }

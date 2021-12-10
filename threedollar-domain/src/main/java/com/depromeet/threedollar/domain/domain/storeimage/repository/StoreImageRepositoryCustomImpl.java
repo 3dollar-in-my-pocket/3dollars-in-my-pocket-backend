@@ -27,7 +27,7 @@ public class StoreImageRepositoryCustomImpl implements StoreImageRepositoryCusto
     public List<StoreImage> findAllByStoreId(Long storeId) {
         return queryFactory.selectFrom(storeImage)
             .where(
-                storeImage.storeId.eq(storeId),
+                storeImage.store.id.eq(storeId),
                 storeImage.status.eq(StoreImageStatus.ACTIVE)
             ).fetch();
     }

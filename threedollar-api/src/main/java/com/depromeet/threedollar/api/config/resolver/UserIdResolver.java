@@ -10,6 +10,8 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
+import static com.depromeet.threedollar.api.config.session.SessionConstants.USER_ID;
+
 @Component
 public class UserIdResolver implements HandlerMethodArgumentResolver {
 
@@ -25,7 +27,7 @@ public class UserIdResolver implements HandlerMethodArgumentResolver {
         if (parameter.getMethodAnnotation(Auth.class) == null) {
             throw new InternalServerException("인증이 필요한 컨트롤러 입니다. @Auth 어노테이션을 붙여주세요.");
         }
-        return webRequest.getAttribute("userId", 0);
+        return webRequest.getAttribute(USER_ID, 0);
     }
 
 }

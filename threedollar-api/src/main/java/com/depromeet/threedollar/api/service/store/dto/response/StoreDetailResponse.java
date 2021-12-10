@@ -1,22 +1,18 @@
 package com.depromeet.threedollar.api.service.store.dto.response;
 
+import com.depromeet.threedollar.api.service.review.dto.response.ReviewWithUserResponse;
 import com.depromeet.threedollar.api.service.storeimage.dto.response.StoreImageResponse;
+import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryCountsResponse;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithUserResponse;
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
-import com.depromeet.threedollar.api.service.review.dto.response.ReviewWithUserResponse;
-import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
-import com.depromeet.threedollar.domain.domain.store.Menu;
-import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.review.projection.ReviewWithWriterProjection;
-import com.depromeet.threedollar.domain.domain.store.PaymentMethodType;
-import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.domain.store.StoreType;
+import com.depromeet.threedollar.domain.domain.review.Review;
+import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
-import com.depromeet.threedollar.domain.domain.user.User;
-import com.depromeet.threedollar.domain.domain.visit.VisitHistoriesCountCollection;
+import com.depromeet.threedollar.domain.collection.user.UserCacheCollection;
+import com.depromeet.threedollar.domain.collection.visit.VisitHistoryCounter;
 import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithUserProjection;
 import lombok.*;
 
@@ -68,9 +64,8 @@ public class StoreDetailResponse extends AuditingTimeResponse {
         this.visitHistory = visitHistory;
     }
 
-    public static StoreDetailResponse of(Store store, List<StoreImage> storeImages, double latitude,
-                                         double longitude, User user, List<ReviewWithWriterProjection> reviews,
-                                         VisitHistoriesCountCollection visitHistoriesCollection, List<VisitHistoryWithUserProjection> visitHistories) {
+    public static StoreDetailResponse of(Store store, double latitude, double longitude, List<StoreImage> storeImages, UserCacheCollection userCacheCollection,
+                                         List<Review> reviews, VisitHistoryCounter visitHistoriesCollection, List<VisitHistoryWithUserProjection> visitHistories) {
         StoreDetailResponse response = StoreDetailResponse.builder()
             .storeId(store.getId())
             .latitude(store.getLatitude())
@@ -79,7 +74,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
             .storeType(store.getType())
             .rating(store.getRating())
             .distance(LocationDistanceUtils.getDistance(store.getLatitude(), store.getLongitude(), latitude, longitude))
-            .user(UserInfoResponse.of(user))
+            .user(UserInfoResponse.of(userCacheCollection.getUser(store.getUserId())))
             .visitHistory(VisitHistoryCountsResponse.of(visitHistoriesCollection.getStoreExistsVisitsCount(store.getId()), visitHistoriesCollection.getStoreNotExistsVisitsCount(store.getId())))
             .build();
         response.categories.addAll(store.getMenuCategoriesSortedByCounts());
@@ -87,21 +82,21 @@ public class StoreDetailResponse extends AuditingTimeResponse {
         response.paymentMethods.addAll(store.getPaymentMethodTypes());
         response.images.addAll(toImageResponse(storeImages));
         response.menus.addAll(toMenuResponse(store.getMenus()));
-        response.reviews.addAll(toReviewResponse(reviews));
-        response.visitHistories.addAll(toVisitHistoryResponse(visitHistories));
+        response.reviews.addAll(toReviewResponse(reviews, userCacheCollection));
+        response.visitHistories.addAll(toVisitHistoryResponse(visitHistories, userCacheCollection));
         response.setBaseTime(store);
         return response;
     }
 
-    private static Collection<VisitHistoryWithUserResponse> toVisitHistoryResponse(List<VisitHistoryWithUserProjection> visitHistories) {
+    private static List<VisitHistoryWithUserResponse> toVisitHistoryResponse(List<VisitHistoryWithUserProjection> visitHistories, UserCacheCollection userCacheCollection) {
         return visitHistories.stream()
-            .map(VisitHistoryWithUserResponse::of)
+            .map(visitHistory -> VisitHistoryWithUserResponse.of(visitHistory, userCacheCollection.getUser(visitHistory.getUserId())))
             .collect(Collectors.toList());
     }
 
-    private static List<ReviewWithUserResponse> toReviewResponse(List<ReviewWithWriterProjection> reviews) {
+    private static List<ReviewWithUserResponse> toReviewResponse(List<Review> reviews, UserCacheCollection userCacheCollection) {
         return reviews.stream()
-            .map(ReviewWithUserResponse::of)
+            .map(review -> ReviewWithUserResponse.of(review, userCacheCollection.getUser(review.getUserId())))
             .sorted(Comparator.comparing(ReviewWithUserResponse::getReviewId).reversed())
             .collect(Collectors.toList());
     }

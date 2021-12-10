@@ -30,7 +30,7 @@ public class AppearanceDay extends AuditingTimeEntity {
         this.day = day;
     }
 
-    public static AppearanceDay of(Store store, DayOfTheWeek day) {
+    static AppearanceDay of(Store store, DayOfTheWeek day) {
         return new AppearanceDay(store, day);
     }
 

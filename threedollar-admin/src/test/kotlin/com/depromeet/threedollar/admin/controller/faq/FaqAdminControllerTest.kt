@@ -32,7 +32,7 @@ internal class FaqAdminControllerTest(
     @AfterEach
     fun cleanUp() {
         super.cleanup()
-        faqRepository.deleteAll()
+        faqRepository.deleteAllInBatch()
     }
 
     @DisplayName("POST /admin/v1/faq")

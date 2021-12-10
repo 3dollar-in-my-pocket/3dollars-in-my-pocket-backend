@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.service.store.dto.response;
 
+import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByDistanceV2Response;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -15,10 +16,10 @@ class StoresGroupByDistanceResponseTest {
     @ParameterizedTest
     void UNDER_FIFTY(int distance) {
         // given
-        StoreWithDistanceResponse store = StoreWithDistanceResponse.testInstance(distance, RATING);
+        StoreWithVisitsAndDistanceResponse store = StoreWithVisitsAndDistanceResponse.testInstance(distance, RATING);
 
         // when
-        StoresGroupByDistanceResponse response = StoresGroupByDistanceResponse.of(List.of(store));
+        StoresGroupByDistanceV2Response response = StoresGroupByDistanceV2Response.of(List.of(store));
 
         // then
         assertThat(response.getStoreList50()).hasSize(1);
@@ -28,10 +29,10 @@ class StoresGroupByDistanceResponseTest {
     @ParameterizedTest
     void FIFTY_TO_HUNDRED(int distance) {
         // given
-        StoreWithDistanceResponse store = StoreWithDistanceResponse.testInstance(distance, RATING);
+        StoreWithVisitsAndDistanceResponse store = StoreWithVisitsAndDistanceResponse.testInstance(distance, RATING);
 
         // when
-        StoresGroupByDistanceResponse response = StoresGroupByDistanceResponse.of(List.of(store));
+        StoresGroupByDistanceV2Response response = StoresGroupByDistanceV2Response.of(List.of(store));
 
         // then
         assertThat(response.getStoreList100()).hasSize(1);
@@ -41,10 +42,10 @@ class StoresGroupByDistanceResponseTest {
     @ParameterizedTest
     void HUNDRED_TO_FIVE_HUNDRED(int distance) {
         // given
-        StoreWithDistanceResponse store = StoreWithDistanceResponse.testInstance(distance, RATING);
+        StoreWithVisitsAndDistanceResponse store = StoreWithVisitsAndDistanceResponse.testInstance(distance, RATING);
 
         // when
-        StoresGroupByDistanceResponse response = StoresGroupByDistanceResponse.of(List.of(store));
+        StoresGroupByDistanceV2Response response = StoresGroupByDistanceV2Response.of(List.of(store));
 
         // then
         assertThat(response.getStoreList500()).hasSize(1);
@@ -54,10 +55,10 @@ class StoresGroupByDistanceResponseTest {
     @ParameterizedTest
     void FIVE_HUNDRED_TO_THOUSAND(int distance) {
         // given
-        StoreWithDistanceResponse store = StoreWithDistanceResponse.testInstance(distance, RATING);
+        StoreWithVisitsAndDistanceResponse store = StoreWithVisitsAndDistanceResponse.testInstance(distance, RATING);
 
         // when
-        StoresGroupByDistanceResponse response = StoresGroupByDistanceResponse.of(List.of(store));
+        StoresGroupByDistanceV2Response response = StoresGroupByDistanceV2Response.of(List.of(store));
 
         // then
         assertThat(response.getStoreList1000()).hasSize(1);
@@ -67,10 +68,10 @@ class StoresGroupByDistanceResponseTest {
     @ParameterizedTest
     void OVER_THOUSAND(int distance) {
         // given
-        StoreWithDistanceResponse store = StoreWithDistanceResponse.testInstance(distance, RATING);
+        StoreWithVisitsAndDistanceResponse store = StoreWithVisitsAndDistanceResponse.testInstance(distance, RATING);
 
         // when
-        StoresGroupByDistanceResponse response = StoresGroupByDistanceResponse.of(List.of(store));
+        StoresGroupByDistanceV2Response response = StoresGroupByDistanceV2Response.of(List.of(store));
 
         // then
         assertThat(response.getStoreListOver1000()).hasSize(1);

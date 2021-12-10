@@ -1,7 +1,5 @@
 package com.depromeet.threedollar.api.service.review;
 
-import com.depromeet.threedollar.api.controller.store.StoreEventListener;
-import com.depromeet.threedollar.api.event.ReviewChangedEvent;
 import com.depromeet.threedollar.api.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
@@ -15,16 +13,12 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
 
 import static com.depromeet.threedollar.api.assertutils.assertReviewUtils.assertReview;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 class ReviewServiceTest extends SetupStoreServiceTest {
@@ -35,13 +29,10 @@ class ReviewServiceTest extends SetupStoreServiceTest {
     @Autowired
     private ReviewRepository reviewRepository;
 
-    @MockBean
-    private StoreEventListener storeEventListener;
-
     @AfterEach
     void cleanUp() {
-        reviewRepository.deleteAll();
         super.cleanup();
+        reviewRepository.deleteAllInBatch();
     }
 
     @Nested
@@ -71,18 +62,6 @@ class ReviewServiceTest extends SetupStoreServiceTest {
 
             // when & then
             assertThatThrownBy(() -> reviewService.addReview(request, userId)).isInstanceOf(NotFoundException.class);
-        }
-
-        @Test
-        void 리뷰_등록시_가게의_평균_리뷰점수가_갱신된다() {
-            // given
-            AddReviewRequest request = AddReviewRequest.testInstance(store.getId(), "우와", 4);
-
-            // when
-            reviewService.addReview(request, userId);
-
-            // then
-            verify(storeEventListener, times(1)).renewStoreRating(any(ReviewChangedEvent.class));
         }
 
     }
@@ -133,22 +112,6 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             assertThatThrownBy(() -> reviewService.updateReview(review.getId(), request, userId)).isInstanceOf(NotFoundException.class);
         }
 
-        @Test
-        void 리뷰를_수정하면_가게의_평균_리뷰점수가_갱신된다() {
-            // given
-            Review review = ReviewCreator.create(store.getId(), userId, "맛 없어요", 2);
-            reviewRepository.save(review);
-
-            // when
-            UpdateReviewRequest request = UpdateReviewRequest.testInstance("우와", 4);
-
-            // when
-            reviewService.updateReview(review.getId(), request, userId);
-
-            // then
-            verify(storeEventListener, times(1)).renewStoreRating(any(ReviewChangedEvent.class));
-        }
-
     }
 
     @Nested
@@ -187,19 +150,6 @@ class ReviewServiceTest extends SetupStoreServiceTest {
 
             // when & then
             assertThatThrownBy(() -> reviewService.deleteReview(review.getId(), notFoundUserId)).isInstanceOf(NotFoundException.class);
-        }
-
-        @Test
-        void 리뷰를_삭제하면_가게의_평균_리뷰점수가_갱신된다() {
-            // given
-            Review review = ReviewCreator.create(store.getId(), userId, "너무 맛있어요", 5);
-            reviewRepository.save(review);
-
-            // when
-            reviewService.deleteReview(review.getId(), userId);
-
-            // then
-            verify(storeEventListener, times(1)).renewStoreRating(any(ReviewChangedEvent.class));
         }
 
     }

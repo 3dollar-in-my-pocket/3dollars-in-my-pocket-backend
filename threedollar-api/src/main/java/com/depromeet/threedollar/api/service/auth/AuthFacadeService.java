@@ -18,26 +18,26 @@ public class AuthFacadeService {
     private final AuthService googleAuthService;
 
     public Long signUp(SignUpRequest request) {
-        if (request.getSocialType().equals(UserSocialType.KAKAO)) {
+        if (UserSocialType.KAKAO.equals(request.getSocialType())) {
             return kaKaoAuthService.signUp(request);
         }
-        if (request.getSocialType().equals(UserSocialType.APPLE)) {
+        if (UserSocialType.APPLE.equals(request.getSocialType())) {
             return appleAuthService.signUp(request);
         }
-        if (request.getSocialType().equals(UserSocialType.GOOGLE)) {
+        if (UserSocialType.GOOGLE.equals(request.getSocialType())) {
             return googleAuthService.signUp(request);
         }
         throw new ValidationException(String.format("허용하지 않는 소셜 타입 (%s) 입니다.", request.getSocialType()), VALIDATION_SOCIAL_TYPE_EXCEPTION);
     }
 
     public Long login(LoginRequest request) {
-        if (request.getSocialType().equals(UserSocialType.KAKAO)) {
+        if (UserSocialType.KAKAO.equals(request.getSocialType())) {
             return kaKaoAuthService.login(request);
         }
-        if (request.getSocialType().equals(UserSocialType.APPLE)) {
+        if (UserSocialType.APPLE.equals(request.getSocialType())) {
             return appleAuthService.login(request);
         }
-        if (request.getSocialType().equals(UserSocialType.GOOGLE)) {
+        if (UserSocialType.GOOGLE.equals(request.getSocialType())) {
             return googleAuthService.login(request);
         }
         throw new ValidationException(String.format("허용하지 않는 소셜 타입 (%s) 입니다.", request.getSocialType()), VALIDATION_SOCIAL_TYPE_EXCEPTION);

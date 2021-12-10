@@ -1,18 +1,16 @@
 package com.depromeet.threedollar.api.controller.store;
 
 import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveMyStoresRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStoresRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailRequest;
-import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreGroupByCategoryRequest;
+import com.depromeet.threedollar.api.service.store.dto.request.*;
+import com.depromeet.threedollar.api.service.store.dto.request.deprecated.RetrieveMyStoresV2Request;
+import com.depromeet.threedollar.api.service.store.dto.request.deprecated.RetrieveStoreGroupByCategoryV2Request;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
+import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByDistanceV2Response;
+import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByReviewV2Response;
+import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresScrollV2Response;
 import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
-import com.depromeet.threedollar.domain.domain.store.Menu;
-import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.store.MenuCreator;
-import com.depromeet.threedollar.domain.domain.store.MenuRepository;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
@@ -75,8 +73,8 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
     @AfterEach
     void cleanUp() {
         super.cleanup();
-        storeImageRepository.deleteAll();
-        reviewRepository.deleteAll();
+        storeImageRepository.deleteAllInBatch();
+        reviewRepository.deleteAllInBatch();
         appearanceDayRepository.deleteAllInBatch();
         paymentMethodRepository.deleteAllInBatch();
         menuRepository.deleteAllInBatch();
@@ -92,32 +90,32 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @ParameterizedTest
         void 나의_지도상_주변_가게들을_조회한다(String storeName1, String storeName2) throws Exception {
             // given
-            Store store1 = StoreCreator.createWithDefaultMenu(testUser.getId(), storeName1, 34, 124);
-            Store store2 = StoreCreator.createWithDefaultMenu(testUser.getId(), storeName2, 34, 124);
+            Store store1 = StoreCreator.createWithDefaultMenu(testUser.getId(), storeName1, 34, 126);
+            Store store2 = StoreCreator.createWithDefaultMenu(testUser.getId(), storeName2, 34, 126);
             storeRepository.saveAll(List.of(store1, store2));
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
                 .latitude(34.0)
-                .longitude(124.0)
+                .longitude(126.0)
                 .mapLatitude(34.0)
-                .mapLongitude(124.0)
+                .mapLongitude(126.0)
                 .distance(1000)
                 .build();
 
             // when
-            ApiResponse<List<StoreWithDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
 
             // then
             assertThat(response.getData()).hasSize(2);
-            assertStoreWithDistanceResponse(response.getData().get(0), store1.getId(), store1.getLatitude(), store1.getLongitude(), storeName1, store1.getRating());
-            assertStoreWithDistanceResponse(response.getData().get(1), store2.getId(), store2.getLatitude(), store2.getLongitude(), storeName2, store2.getRating());
+            assertStoreWithVisitsAndDistanceResponse(response.getData().get(0), store1.getId(), store1.getLatitude(), store1.getLongitude(), storeName1, store1.getRating());
+            assertStoreWithVisitsAndDistanceResponse(response.getData().get(1), store2.getId(), store2.getLatitude(), store2.getLongitude(), storeName2, store2.getRating());
         }
 
         @AutoSource
         @ParameterizedTest
         void 주변_가게들을_조회할때_메뉴_카테고리_목록도_반환된다(Set<MenuCategoryType> menuCategories) throws Exception {
             // given
-            Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124);
+            Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34.0, 126.0);
             List<Menu> menus = menuCategories.stream()
                 .map(category -> MenuCreator.create(store, "메뉴 정보", "가격 정보", category))
                 .collect(Collectors.toList());
@@ -126,14 +124,14 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
                 .latitude(34.0)
-                .longitude(124.0)
+                .longitude(126.0)
                 .mapLatitude(34.0)
-                .mapLongitude(124.0)
+                .mapLongitude(126.0)
                 .distance(1000)
                 .build();
 
             // when
-            ApiResponse<List<StoreWithDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
 
             // then
             assertThat(response.getData()).hasSize(1);
@@ -145,46 +143,47 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 주변_가게들을_조회할때_삭제된_가게는_포함되지_않는다() throws Exception {
             // given
-            Store store = StoreCreator.createDeletedWithDefaultMenu(testUser.getId(), "가게 이름", 34, 124);
+            Store store = StoreCreator.createDeletedWithDefaultMenu(testUser.getId(), "가게 이름", 34.0, 126.0);
             storeRepository.save(store);
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
                 .latitude(34.0)
-                .longitude(124.0)
+                .longitude(126.0)
                 .mapLatitude(34.0)
-                .mapLongitude(124.0)
+                .mapLongitude(126.0)
                 .distance(1000)
                 .build();
 
             // when
-            ApiResponse<List<StoreWithDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
 
             // then
             assertThat(response.getData()).isEmpty();
         }
 
         @Test
-        void 주변_가게들을_조회할때_방문_성공_및_실패정보와_인증된_가게여부를_반환한다() throws Exception {
+        void 주변_가게_목록_조회시_한달간의_방문_목록_카운트를_반환한다() throws Exception {
             // given
-            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름", 34, 124);
+            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름", 34.0, 126.0);
             storeRepository.save(store);
 
+            LocalDate today = LocalDate.now();
             visitHistoryRepository.saveAll(List.of(
-                VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 17)),
-                VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 18)),
-                VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 19))
+                VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, today.minusMonths(1)),
+                VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, today.minusWeeks(1)),
+                VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, today)
             ));
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
                 .latitude(34.0)
-                .longitude(124.0)
+                .longitude(126.0)
                 .mapLatitude(34.0)
-                .mapLongitude(124.0)
+                .mapLongitude(126.0)
                 .distance(1000)
                 .build();
 
             // when
-            ApiResponse<List<StoreWithDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
 
             // then
             assertThat(response.getData()).hasSize(1);
@@ -192,27 +191,51 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
+        void 주변_가게들을_조회할때_한달이_지난_방문기록은_방문_카운트에_포함되지_않는다() throws Exception {
+            // given
+            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름", 34.0, 126.0);
+            storeRepository.save(store);
+
+            LocalDate today = LocalDate.now();
+            visitHistoryRepository.save(VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, today.minusMonths(1).minusDays(1)));
+            RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
+                .latitude(34.0)
+                .longitude(126.0)
+                .mapLatitude(34.0)
+                .mapLongitude(126.0)
+                .distance(1000)
+                .build();
+
+            // when
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+
+            // then
+            assertThat(response.getData()).hasSize(1);
+            assertVisitHistoryInfoResponse(response.getData().get(0).getVisitHistory(), 0, 0, false);
+        }
+
+        @Test
         void 주변_가게들을_조회할때_카테고리를_넘기면_해당_카테고리_메뉴를_판매하는_가게들_내에서_조회된다() throws Exception {
             // given
-            Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34, 124, 1);
+            Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34, 126);
             store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", MenuCategoryType.DALGONA)));
 
-            Store store2 = StoreCreator.create(testUser.getId(), "가게1", 34, 124, 1);
+            Store store2 = StoreCreator.create(testUser.getId(), "가게1", 34, 126);
             store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", MenuCategoryType.BUNGEOPPANG)));
 
             storeRepository.saveAll(List.of(store1, store2));
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
                 .latitude(34.0)
-                .longitude(124.0)
+                .longitude(126.0)
                 .mapLatitude(34.0)
-                .mapLongitude(124.0)
+                .mapLongitude(126.0)
                 .distance(1000)
                 .category(MenuCategoryType.DALGONA)
                 .build();
 
             // when
-            ApiResponse<List<StoreWithDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
 
             // then
             assertThat(response.getData()).hasSize(1);
@@ -222,21 +245,21 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 주변_가게들을_거리가_가까운_순으로_정렬해서_조회한다_DISTANCE_ASC() throws Exception {
             // given
-            Store store1 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게1", 34.00015, 124, 1);
-            Store store2 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게2", 34.0001, 124, 1);
+            Store store1 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게1", 34.00015, 126);
+            Store store2 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게2", 34.0001, 126);
             storeRepository.saveAll(List.of(store1, store2));
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
                 .latitude(34.0)
-                .longitude(124.0)
+                .longitude(126.0)
                 .mapLatitude(34.0)
-                .mapLongitude(124.0)
+                .mapLongitude(126.0)
                 .distance(2000)
                 .orderType(StoreOrderType.DISTANCE_ASC)
                 .build();
 
             // when
-            ApiResponse<List<StoreWithDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
 
             // then
             assertThat(response.getData()).hasSize(2);
@@ -247,21 +270,21 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 주변_가게들을_리뷰_평점이_높은순으로_정렬해서_조회한다_REVIEW_DESC() throws Exception {
             // given
-            Store store1 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게1", 34.00015, 124, 5);
-            Store store2 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게2", 34.0001, 124, 1);
+            Store store1 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게1", 34.00015, 126, 5);
+            Store store2 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게2", 34.0001, 126, 1);
             storeRepository.saveAll(List.of(store1, store2));
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
                 .latitude(34.0)
-                .longitude(124.0)
+                .longitude(126.0)
                 .mapLatitude(34.0)
-                .mapLongitude(124.0)
+                .mapLongitude(126.0)
                 .distance(2000)
                 .orderType(StoreOrderType.REVIEW_DESC)
                 .build();
 
             // when
-            ApiResponse<List<StoreWithDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
 
             // then
             assertThat(response.getData()).hasSize(2);
@@ -277,9 +300,9 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
         @AutoSource
         @ParameterizedTest
-        void 특정_가게에_대한_상세_가게_정보를_조회한다(String storeName, StoreType storeType) throws Exception {
+        void 특정_가게에_대한_상세_가게_정보를_조회한다(String storeName) throws Exception {
             // given
-            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), storeName, storeType, 34, 124);
+            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), storeName);
             DayOfTheWeek day = DayOfTheWeek.FRIDAY;
             store.addAppearanceDays(Set.of(day));
 
@@ -288,7 +311,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             storeRepository.save(store);
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -301,13 +324,13 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 특정_가게에_대한_상세_정보를_조회할때_메뉴_목록_에_대한_정보가_반환된다() throws Exception {
             // given
-            Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124);
+            Store store = StoreCreator.create(testUser.getId(), "가게 이름");
             Menu menu1 = MenuCreator.create(store, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG);
             Menu menu2 = MenuCreator.create(store, "메뉴2", "가격2", MenuCategoryType.GUKWAPPANG);
             store.addMenus(List.of(menu1, menu2));
             storeRepository.save(store);
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -323,10 +346,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 특정_가게에_대한_상세_정보를_조회할떄_제보자_정보도_함께_반환된다() throws Exception {
             // given
-            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름", 34, 124);
+            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름");
             storeRepository.save(store);
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -339,11 +362,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @ParameterizedTest
         void 특정_가게에_대한_상세_정보를_조회할떄_개장일_정보도_반환된다(Set<DayOfTheWeek> dayOfTheWeeks) throws Exception {
             // given
-            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름", 34, 124);
+            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름");
             store.addAppearanceDays(dayOfTheWeeks);
             storeRepository.save(store);
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -357,11 +380,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @ParameterizedTest
         void 특정_가게에_대한_상세_정보를_조회할때_결제방법_정보도_반환된다(Set<PaymentMethodType> paymentMethodTypes) throws Exception {
             // given
-            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름", 34, 124);
+            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름");
             store.addPaymentMethods(paymentMethodTypes);
             storeRepository.save(store);
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -376,10 +399,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // given
             Long notFoundUserId = -1L;
 
-            Store store = StoreCreator.createWithDefaultMenu(notFoundUserId, "가게 이름", 34, 124);
+            Store store = StoreCreator.createWithDefaultMenu(notFoundUserId, "가게 이름");
             storeRepository.save(store);
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -393,13 +416,13 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @ParameterizedTest
         void 가게에_등록된_이미지_목록을_조회한다(String imageUrl) throws Exception {
             // given
-            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름", 34, 124);
+            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름");
             storeRepository.save(store);
 
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), testUser.getId(), imageUrl);
+            StoreImage storeImage = StoreImage.newInstance(store, testUser.getId(), imageUrl);
             storeImageRepository.save(storeImage);
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -414,14 +437,14 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 가게에_등록된_이미지_목록을_조회시_삭제된_이미지는_조회되지_않는다() throws Exception {
             // given
-            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름", 34, 124);
+            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름");
             storeRepository.save(store);
 
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), testUser.getId(), "https://store-image.com");
+            StoreImage storeImage = StoreImage.newInstance(store, testUser.getId(), "https://store-image.com");
             storeImage.delete();
             storeImageRepository.save(storeImage);
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -433,9 +456,9 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 가게_상세조회시_작성된_리뷰_와_작성자_정보가_최근_생성순으로_조회된다() throws Exception {
             // given
-            Long notFoundUserId = Long.MAX_VALUE;
+            Long notFoundUserId = -1L;
 
-            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름", 34, 124);
+            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름");
             storeRepository.save(store);
 
             Review review1 = ReviewCreator.create(store.getId(), testUser.getId(), "댓글 1", 5);
@@ -443,7 +466,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             reviewRepository.saveAll(List.of(review1, review2));
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -459,70 +482,61 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 가게_상세_조회시_가게에_등록된_방문_성공_및_실패_횟수_및_가게_인증_여부를_반환한다() throws Exception {
+        void 가게_상세_조회시_한달간의_방문_목록_카운트를_반환한다() throws Exception {
             // given
-            LocalDate startDate = LocalDate.of(2021, 10, 19);
-            LocalDate endDate = LocalDate.of(2021, 10, 20);
-
-            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름", 34, 124);
+            LocalDate today = LocalDate.now();
+            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름");
             storeRepository.save(store);
 
-            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 19));
-            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 20));
-            visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
+            visitHistoryRepository.save(VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, today.minusMonths(1)));
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0, startDate, endDate);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
 
             // then
-            assertVisitHistoryInfoResponse(response.getData().getVisitHistory(), 1, 1, false);
+            assertVisitHistoryInfoResponse(response.getData().getVisitHistory(), 1, 0, true);
         }
 
         @Test
-        void 가게_상세_조회시_기간내에_가게에_방문한_기록과_유저정보를_방문한_기록들을_조회한다() throws Exception {
+        void 가게_상세_조회시_기간내에_가게에_방문한_기록과_유저정보를_방문한_기록들을_최근_생성된것부터_조회한다() throws Exception {
             // given
             LocalDate startDate = LocalDate.of(2021, 10, 19);
-            LocalDate endDate = LocalDate.of(2021, 10, 20);
 
-            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름", 34, 124);
+            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름");
             storeRepository.save(store);
 
-            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 18));
-            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 19));
-            VisitHistory visitHistory3 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 20));
-            VisitHistory visitHistory4 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 21));
-            visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2, visitHistory3, visitHistory4));
+            VisitHistory visitHistoryBeforeStartDate = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 18));
+            VisitHistory visitHistoryAfterStartDate = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 19));
+            visitHistoryRepository.saveAll(List.of(visitHistoryBeforeStartDate, visitHistoryAfterStartDate));
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0, startDate, endDate);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), startDate);
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
 
             // then
             assertAll(
-                () -> assertThat(response.getData().getVisitHistories()).hasSize(2),
-                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(0), visitHistory2, store, testUser),
-                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(1), visitHistory3, store, testUser)
+                () -> assertThat(response.getData().getVisitHistories()).hasSize(1),
+                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(0), visitHistoryAfterStartDate, testUser)
             );
         }
 
-        @DisplayName("기본적으로 startDate, endDate를 넘기지 않으면 지난 7일간의 방문 기록을 조회한다")
+        @DisplayName("앱 호환을 위해 기본적으로 startDate를 넘기지 않으면 지난 7일간의 방문 기록을 조회한다")
         @Test
         void 가게_상세_조회시_기본적으로_일주일간_방문_인증_기록들을_조회한다() throws Exception {
             // given
             LocalDate today = LocalDate.now();
-            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름", 34, 124);
+            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름");
             storeRepository.save(store);
 
             VisitHistory beforeLastWeekHistory = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, today.minusWeeks(1).minusDays(1));
             VisitHistory lastWeekHistory = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, today.minusWeeks(1));
             VisitHistory todayHistory = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, today);
-            VisitHistory afterTodayHistory = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, today.plusDays(1));
-            visitHistoryRepository.saveAll(List.of(beforeLastWeekHistory, lastWeekHistory, todayHistory, afterTodayHistory));
+            visitHistoryRepository.saveAll(List.of(beforeLastWeekHistory, lastWeekHistory, todayHistory));
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), 34.0, 124.0);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
@@ -530,8 +544,8 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getVisitHistories()).hasSize(2),
-                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(0), lastWeekHistory, store, testUser),
-                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(1), todayHistory, store, testUser)
+                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(0), todayHistory, testUser),
+                () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(1), lastWeekHistory, testUser)
             );
         }
 
@@ -544,90 +558,60 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 내가_작성한_가게_목록_조회시_커서를_넘기지_않으면_가장_최신의_N개의_가게_정보를_반환한다() throws Exception {
             // given
-            Store store1 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게1", 34, 124);
-            Store store2 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게2", 34, 124);
-            Store store3 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게3", 34, 124);
+            Store store1 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게1");
+            Store store2 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게2");
+            Store store3 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게3");
 
             storeRepository.saveAll(List.of(store1, store2, store3));
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, null, null, null, null);
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, null);
 
             // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
+            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getTotalElements()).isEqualTo(3);
             assertThat(response.getData().getNextCursor()).isEqualTo(store2.getId());
             assertThat(response.getData().getContents()).hasSize(2);
 
-            assertStoreWithDistanceResponse(response.getData().getContents().get(0), store3);
-            assertStoreWithDistanceResponse(response.getData().getContents().get(1), store2);
+            assertStoreWithVisitsResponse(response.getData().getContents().get(0), store3);
+            assertStoreWithVisitsResponse(response.getData().getContents().get(1), store2);
         }
 
         @Test
         void 내가_작성한_가게_목록_조회시_커서를_넘기면_해당_커서_이전에_생성된_가게_목록들이_N개_반환한다() throws Exception {
             // given
-            Store store1 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게1", 34, 124);
-            Store store2 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게2", 34, 124);
-            Store store3 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게3", 34, 124);
-            Store store4 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게3", 34, 124);
+            Store store1 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게1");
+            Store store2 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게2");
+            Store store3 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게3");
+            Store store4 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게3");
             storeRepository.saveAll(List.of(store1, store2, store3, store4));
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, store4.getId(), 4L, 34.0, null);
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, store4.getId());
 
             // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
+            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getTotalElements()).isEqualTo(4);
             assertThat(response.getData().getNextCursor()).isEqualTo(store2.getId());
             assertThat(response.getData().getContents()).hasSize(2);
-            assertStoreWithDistanceResponse(response.getData().getContents().get(0), store3);
-            assertStoreWithDistanceResponse(response.getData().getContents().get(1), store2);
-        }
-
-        @Test
-        void 내가_작성한_가게_목록_조회시_cachingTotalElement를_따로_넘기지_않는경우_제보한_가게의_총_개수를_서버에서_계산해서_반환한다() throws Exception {
-            // given
-            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게1", 34, 124);
-            storeRepository.save(store);
-
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, null, null, 33.0, 123.0);
-
-            // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
-
-            // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(1);
-        }
-
-        @Test
-        void 내가_작성한_가게_목록_조회시_cachingTotalElements를_함께_넘기면_서버에서_별도로_가게_총_개수_계산없이_해당_캐시_정보를_반환한다() throws Exception {
-            // given
-            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게1", 34, 124);
-            storeRepository.save(store);
-
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, null, 10L, 33.0, 123.0);
-
-            // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
-
-            // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(10);
+            assertStoreWithVisitsResponse(response.getData().getContents().get(0), store3);
+            assertStoreWithVisitsResponse(response.getData().getContents().get(1), store2);
         }
 
         @DisplayName("마지막 페이지인경우 nextCursor = -1")
         @Test
         void 내가_작성한_가게_목록_조회시_이후에_더이상_조회할_가게가_없을경우_커서를_마이너스_1_로_반환환다() throws Exception {
             // given
-            Store store1 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게1", 34, 124);
-            Store store2 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게2", 34, 124);
+            Store store1 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게1");
+            Store store2 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게2");
             storeRepository.saveAll(List.of(store1, store2));
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, store2.getId(), null, null, null);
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, store2.getId());
 
             // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
+            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
@@ -639,39 +623,39 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 내가_작성한_가게_목록_조회시_요청한_개수보다_적은_가게를_반환하면_마지막_스크롤이라고_판단하고_마이너스_1을_반환한다() throws Exception {
             // given
-            Store store1 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게1", 34, 124);
-            Store store2 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게2", 34, 124);
-            Store store3 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게3", 34, 124);
+            Store store1 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게1");
+            Store store2 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게2");
+            Store store3 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게3");
             storeRepository.saveAll(List.of(store1, store2, store3));
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, store2.getId(), 3L, null, null);
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, store2.getId());
 
             // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
+            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
             assertThat(response.getData().getTotalElements()).isEqualTo(3);
             assertThat(response.getData().getContents()).hasSize(1);
-            assertStoreWithDistanceResponse(response.getData().getContents().get(0), store1);
+            assertStoreWithVisitsResponse(response.getData().getContents().get(0), store1);
         }
 
         @Test
         void 내가_작성한_가게_목록_조회시_삭제된_가게는_삭제된_가게로_조회된다() throws Exception {
             // given
-            Store store = StoreCreator.createDeletedWithDefaultMenu(testUser.getId(), "가게 이름", 34, 124);
+            Store store = StoreCreator.createDeletedWithDefaultMenu(testUser.getId(), "가게 이름");
             storeRepository.save(store);
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, null, null, null, null);
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, null);
 
             // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
+            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getTotalElements()).isEqualTo(1);
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
             assertThat(response.getData().getContents()).hasSize(1);
-            assertStoreWithDistanceResponse(response.getData().getContents().get(0), store.getId(), store.getLatitude(), store.getLongitude(), store.getName(), store.getRating());
+            assertStoreWithVisitsResponse(response.getData().getContents().get(0), store.getId(), store.getLatitude(), store.getLongitude(), store.getName(), store.getRating());
 
             assertThat(response.getData().getContents().get(0).getCategories()).hasSize(1);
             assertThat(response.getData().getContents().get(0).getCategories()).containsExactlyInAnyOrder(MenuCategoryType.BUNGEOPPANG);
@@ -681,13 +665,13 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void V2버전에서는_내가_작성한_가게_목록_조회시_삭제된_가게는_조회되지_않는다() throws Exception {
             // given
-            Store store = StoreCreator.createDeletedWithDefaultMenu(testUser.getId(), "가게 이름", 34, 124);
+            Store store = StoreCreator.createDeletedWithDefaultMenu(testUser.getId(), "가게 이름");
             storeRepository.save(store);
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, null, null, null, null);
+            RetrieveMyStoresV2Request request = RetrieveMyStoresV2Request.testInstance(2, null, null, null, null);
 
             // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStoresV2(request, token, 200);
+            ApiResponse<StoresScrollV2Response> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistoriesV2(request, token, 200);
 
             // then
             assertThat(response.getData().getTotalElements()).isEqualTo(0);
@@ -696,21 +680,22 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 내가_작성한_가게_목록_조회시_방문_성공_및_실패_횟수와_가게_인증_여부를_반환한다() throws Exception {
+        void 내가_작성한_가게_목록_조회시_한달간의_방문_목록_카운트를_반환한다() throws Exception {
             // given
-            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름", 34, 124);
+            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름");
             storeRepository.save(store);
 
+            LocalDate today = LocalDate.now();
             visitHistoryRepository.saveAll(List.of(
-                VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 15)),
-                VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 16)),
-                VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 17)))
+                VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, today.minusMonths(1)),
+                VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, today.minusWeeks(1)),
+                VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, today))
             );
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, null, null, null, null);
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, null);
 
             // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.getMyStores(request, token, 200);
+            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getContents()).hasSize(1);
@@ -728,24 +713,24 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @ParameterizedTest
         void 특정_카테고리의_가게_리스트를_거리수를_그룹화해서_보여준다(MenuCategoryType menuCategoryType) throws Exception {
             // given
-            Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34.0001, 124, 1);
+            Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34.0001, 126);
             store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", menuCategoryType)));
 
-            Store store2 = StoreCreator.create(testUser.getId(), "가게1", 34.001, 124, 1);
+            Store store2 = StoreCreator.create(testUser.getId(), "가게1", 34.001, 126);
             store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", menuCategoryType)));
 
             storeRepository.saveAll(List.of(store1, store2));
 
-            RetrieveStoreGroupByCategoryRequest request = RetrieveStoreGroupByCategoryRequest.testBuilder()
+            RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(menuCategoryType)
                 .latitude(34.0)
-                .longitude(124.0)
+                .longitude(126.0)
                 .mapLatitude(34.0)
-                .mapLongitude(124.0)
+                .mapLongitude(126.0)
                 .build();
 
             // when
-            ApiResponse<StoresGroupByDistanceResponse> response = storeRetrieveMockApiCaller.getStoresByDistance(request, 200);
+            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByDistance(request, 200);
 
             // then
             assertThat(response.getData().getStoreList50()).hasSize(1);
@@ -764,24 +749,24 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @ParameterizedTest
         void 같은_그룹내에서_거리가_가까운_순서대로_조회된다(MenuCategoryType menuCategoryType) throws Exception {
             // given
-            Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34.00015, 124, 1);
+            Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34.00015, 126);
             store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", menuCategoryType)));
 
-            Store store2 = StoreCreator.create(testUser.getId(), "가게1", 34.0001, 124, 1);
+            Store store2 = StoreCreator.create(testUser.getId(), "가게1", 34.0001, 126);
             store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", menuCategoryType)));
 
             storeRepository.saveAll(List.of(store1, store2));
 
-            RetrieveStoreGroupByCategoryRequest request = RetrieveStoreGroupByCategoryRequest.testBuilder()
+            RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(menuCategoryType)
                 .latitude(34.0)
-                .longitude(124.0)
+                .longitude(126.0)
                 .mapLatitude(34.0)
-                .mapLongitude(124.0)
+                .mapLongitude(126.0)
                 .build();
 
             // when
-            ApiResponse<StoresGroupByDistanceResponse> response = storeRetrieveMockApiCaller.getStoresByDistance(request, 200);
+            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByDistance(request, 200);
 
             // then
             assertThat(response.getData().getStoreList50()).hasSize(2);
@@ -792,7 +777,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 다른_카테고리는_조회되지_않는다() throws Exception {
             // given
-            Store store = StoreCreator.create(testUser.getId(), "가게1", 34, 124, 1.1);
+            Store store = StoreCreator.create(testUser.getId(), "가게1", 34, 126);
             store.addMenus(List.of(
                 MenuCreator.create(store, "메뉴1", "가격1", MenuCategoryType.EOMUK),
                 MenuCreator.create(store, "메뉴2", "가격2", MenuCategoryType.GUKWAPPANG),
@@ -800,16 +785,16 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             ));
             storeRepository.save(store);
 
-            RetrieveStoreGroupByCategoryRequest request = RetrieveStoreGroupByCategoryRequest.testBuilder()
+            RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(MenuCategoryType.BUNGEOPPANG)
                 .latitude(34.0)
-                .longitude(124.0)
+                .longitude(126.0)
                 .mapLatitude(34.0)
-                .mapLongitude(124.0)
+                .mapLongitude(126.0)
                 .build();
 
             // when
-            ApiResponse<StoresGroupByDistanceResponse> response = storeRetrieveMockApiCaller.getStoresByDistance(request, 200);
+            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByDistance(request, 200);
 
             // then
             assertThat(response.getData().getStoreList50()).isEmpty();
@@ -823,20 +808,20 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @ParameterizedTest
         void 삭제된_가게는_조회되지_않는다(MenuCategoryType menuCategoryType) throws Exception {
             // given
-            Store store = StoreCreator.createDeleted(testUser.getId(), "가게 이름", 34, 124);
+            Store store = StoreCreator.createDeleted(testUser.getId(), "가게 이름", 34.0, 126.0);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴1", "가격1", menuCategoryType)));
             storeRepository.save(store);
 
-            RetrieveStoreGroupByCategoryRequest request = RetrieveStoreGroupByCategoryRequest.testBuilder()
+            RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(menuCategoryType)
                 .latitude(34.0)
-                .longitude(124.0)
+                .longitude(126.0)
                 .mapLatitude(34.0)
-                .mapLongitude(124.0)
+                .mapLongitude(126.0)
                 .build();
 
             // when
-            ApiResponse<StoresGroupByDistanceResponse> response = storeRetrieveMockApiCaller.getStoresByDistance(request, 200);
+            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByDistance(request, 200);
 
             // then
             assertThat(response.getData().getStoreList50()).isEmpty();
@@ -850,21 +835,21 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @ParameterizedTest
         void 거리순으로_내_주변의_특정_카테고리_가게_조회시_방문_정보도_함께_조회된다(MenuCategoryType menuCategoryType) throws Exception {
             // given
-            Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34, 124, 1.1);
+            Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34.0, 126.0);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", menuCategoryType)));
             storeRepository.save(store);
-            visitHistoryRepository.save(VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 18)));
+            visitHistoryRepository.save(VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.now()));
 
-            RetrieveStoreGroupByCategoryRequest request = RetrieveStoreGroupByCategoryRequest.testBuilder()
+            RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(menuCategoryType)
                 .latitude(34.0)
-                .longitude(124.0)
+                .longitude(126.0)
                 .mapLatitude(34.0)
-                .mapLongitude(124.0)
+                .mapLongitude(126.0)
                 .build();
 
             // when
-            ApiResponse<StoresGroupByDistanceResponse> response = storeRetrieveMockApiCaller.getStoresByDistance(request, 200);
+            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByDistance(request, 200);
 
             // then
             assertThat(response.getData().getStoreList50()).hasSize(1);
@@ -882,33 +867,33 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @ParameterizedTest
         void 특정_카테고리의_가게_리스트를_리뷰_평가_점수로_그룹화해서_보여준다(MenuCategoryType menuCategoryType) throws Exception {
             // given
-            Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34, 124, 1);
+            Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34, 126, 1);
             store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", menuCategoryType)));
 
-            Store store2 = StoreCreator.create(testUser.getId(), "가게2", 34, 124, 2);
+            Store store2 = StoreCreator.create(testUser.getId(), "가게2", 34, 126, 2);
             store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", menuCategoryType)));
 
-            Store store3 = StoreCreator.create(testUser.getId(), "가게3", 34, 124, 3);
+            Store store3 = StoreCreator.create(testUser.getId(), "가게3", 34, 126, 3);
             store3.addMenus(List.of(MenuCreator.create(store3, "메뉴2", "가격2", menuCategoryType)));
 
-            Store store4 = StoreCreator.create(testUser.getId(), "가게4", 34, 124, 4);
+            Store store4 = StoreCreator.create(testUser.getId(), "가게4", 34, 126, 4);
             store4.addMenus(List.of(MenuCreator.create(store4, "메뉴2", "가격2", menuCategoryType)));
 
-            Store store5 = StoreCreator.create(testUser.getId(), "가게5", 34, 124, 5);
+            Store store5 = StoreCreator.create(testUser.getId(), "가게5", 34, 126, 5);
             store5.addMenus(List.of(MenuCreator.create(store5, "메뉴1", "가격1", menuCategoryType)));
 
             storeRepository.saveAll(List.of(store1, store2, store3, store4, store5));
 
-            RetrieveStoreGroupByCategoryRequest request = RetrieveStoreGroupByCategoryRequest.testBuilder()
+            RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(menuCategoryType)
                 .latitude(34.0)
-                .longitude(124.0)
+                .longitude(126.0)
                 .mapLatitude(34.0)
-                .mapLongitude(124.0)
+                .mapLongitude(126.0)
                 .build();
 
             // when
-            ApiResponse<StoresGroupByReviewResponse> response = storeRetrieveMockApiCaller.getStoresByReview(request, 200);
+            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByReview(request, 200);
 
             // then
             assertThat(response.getData().getStoreList1()).hasSize(1);
@@ -929,27 +914,27 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @ParameterizedTest
         void 같은_그룹내에서_높은_리뷰부터_보여진다(MenuCategoryType menuCategoryType) throws Exception {
             // given
-            Store store1 = StoreCreator.create(testUser.getId(), "가게 1.1", 34, 124, 1.1);
+            Store store1 = StoreCreator.create(testUser.getId(), "가게 1.1", 34, 126, 1.1);
             store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", menuCategoryType)));
 
-            Store store2 = StoreCreator.create(testUser.getId(), "가게 1.5", 34, 124, 1.5);
+            Store store2 = StoreCreator.create(testUser.getId(), "가게 1.5", 34, 126, 1.5);
             store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", menuCategoryType)));
 
-            Store store3 = StoreCreator.create(testUser.getId(), "가게 1.9", 34, 124, 1.9);
+            Store store3 = StoreCreator.create(testUser.getId(), "가게 1.9", 34, 126, 1.9);
             store3.addMenus(List.of(MenuCreator.create(store3, "메뉴2", "가격2", menuCategoryType)));
 
             storeRepository.saveAll(List.of(store1, store2, store3));
 
-            RetrieveStoreGroupByCategoryRequest request = RetrieveStoreGroupByCategoryRequest.testBuilder()
+            RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(menuCategoryType)
                 .latitude(34.0)
-                .longitude(124.0)
+                .longitude(126.0)
                 .mapLatitude(34.0)
-                .mapLongitude(124.0)
+                .mapLongitude(126.0)
                 .build();
 
             // when
-            ApiResponse<StoresGroupByReviewResponse> response = storeRetrieveMockApiCaller.getStoresByReview(request, 200);
+            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByReview(request, 200);
 
             // then
             assertThat(response.getData().getStoreList1()).hasSize(3);
@@ -961,7 +946,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 다른_카테고리는_조회되지_않는다() throws Exception {
             // given
-            Store store = StoreCreator.create(testUser.getId(), "가게1", 34, 124, 1.1);
+            Store store = StoreCreator.create(testUser.getId(), "가게1", 34, 126, 1.1);
             store.addMenus(List.of(
                 MenuCreator.create(store, "메뉴1", "가격1", MenuCategoryType.EOMUK),
                 MenuCreator.create(store, "메뉴2", "가격2", MenuCategoryType.GUKWAPPANG),
@@ -969,16 +954,16 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             ));
             storeRepository.save(store);
 
-            RetrieveStoreGroupByCategoryRequest request = RetrieveStoreGroupByCategoryRequest.testBuilder()
+            RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(MenuCategoryType.BUNGEOPPANG)
                 .latitude(34.0)
-                .longitude(124.0)
+                .longitude(126.0)
                 .mapLatitude(34.0)
-                .mapLongitude(124.0)
+                .mapLongitude(126.0)
                 .build();
 
             // when
-            ApiResponse<StoresGroupByReviewResponse> response = storeRetrieveMockApiCaller.getStoresByReview(request, 200);
+            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByReview(request, 200);
 
             // then
             assertThat(response.getData().getStoreList1()).isEmpty();
@@ -991,21 +976,21 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @ParameterizedTest
         void 삭제된_가게는_조회되지_않는다(MenuCategoryType menuCategoryType) throws Exception {
             // given
-            Store store = StoreCreator.createDeleted(testUser.getId(), "storeName", 34, 124);
+            Store store = StoreCreator.createDeleted(testUser.getId(), "storeName");
             Menu menu = MenuCreator.create(store, "메뉴1", "가격1", menuCategoryType);
             store.addMenus(List.of(menu));
             storeRepository.save(store);
 
-            RetrieveStoreGroupByCategoryRequest request = RetrieveStoreGroupByCategoryRequest.testBuilder()
+            RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(menuCategoryType)
                 .latitude(34.0)
-                .longitude(124.0)
+                .longitude(126.0)
                 .mapLatitude(34.0)
-                .mapLongitude(124.0)
+                .mapLongitude(126.0)
                 .build();
 
             // when
-            ApiResponse<StoresGroupByReviewResponse> response = storeRetrieveMockApiCaller.getStoresByReview(request, 200);
+            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByReview(request, 200);
 
             // then
             assertThat(response.getData().getStoreList1()).isEmpty();
@@ -1018,21 +1003,21 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @ParameterizedTest
         void 리뷰순으로_내_주변의_특정_카테고리_가게_조회시_방문_정보도_함께_조회된다(MenuCategoryType menuCategoryType) throws Exception {
             // given
-            Store store = StoreCreator.create(testUser.getId(), "가게 1.1", 34, 124, 1.1);
+            Store store = StoreCreator.create(testUser.getId(), "가게 1.1", 34, 126, 1.1);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴1", "가격1", menuCategoryType)));
             storeRepository.save(store);
-            visitHistoryRepository.save(VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 18)));
+            visitHistoryRepository.save(VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.now()));
 
-            RetrieveStoreGroupByCategoryRequest request = RetrieveStoreGroupByCategoryRequest.testBuilder()
+            RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(menuCategoryType)
                 .latitude(34.0)
-                .longitude(124.0)
+                .longitude(126.0)
                 .mapLatitude(34.0)
-                .mapLongitude(124.0)
+                .mapLongitude(126.0)
                 .build();
 
             // when
-            ApiResponse<StoresGroupByReviewResponse> response = storeRetrieveMockApiCaller.getStoresByReview(request, 200);
+            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByReview(request, 200);
 
             // then
             assertThat(response.getData().getStoreList1()).hasSize(1);

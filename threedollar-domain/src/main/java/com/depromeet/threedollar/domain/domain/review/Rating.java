@@ -24,11 +24,11 @@ public class Rating {
     private int rating;
 
     private Rating(int rating) {
-        validateRating(rating);
+        validateRatingInAvailableRange(rating);
         this.rating = rating;
     }
 
-    private void validateRating(int rating) {
+    private void validateRatingInAvailableRange(int rating) {
         if (rating < MIN_RATING_VALUE || rating > MAX_RATING_VALUE) {
             throw new ValidationException(String.format("잘못된 Rating 값입니다. (%s)", rating), VALIDATION_RATING_EXCEPTION);
         }
