@@ -9,11 +9,12 @@ import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.function.Supplier;
+
+import static com.depromeet.threedollar.domain.domain.medal.MedalAcquisitionConditionType.NO_CONDITION;
 
 @RequiredArgsConstructor
 @Service
@@ -22,20 +23,20 @@ public class AddUserMedalService {
     private final UserRepository userRepository;
     private final MedalRepository medalRepository;
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void addMedalsIfSatisfyCondition(Long userId, MedalAcquisitionConditionType conditionType, Supplier<Long> findCountsByUser) {
+    @Transactional
+    public void addMedalsIfSatisfyCondition(Long userId, MedalAcquisitionConditionType conditionType, Supplier<Long> countsByUserSupplier) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
         MedalUserObtainCollection collection = MedalUserObtainCollection.of(medalRepository.findAllByConditionType(conditionType), conditionType, user);
         if (collection.hasNoMoreMedalsCanBeObtained()) {
             return;
         }
-        user.addMedals(collection.getSatisfyMedalsCanBeObtained(findCountsByUser.get()));
+        user.addMedals(collection.getSatisfyMedalsCanBeObtained(countsByUserSupplier.get()));
     }
 
     @Transactional
     public void addAndActivateDefaultMedals(Long userId) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
-        MedalUserObtainCollection collection = MedalUserObtainCollection.of(medalRepository.findAllByConditionType(MedalAcquisitionConditionType.NO_CONDITION), MedalAcquisitionConditionType.NO_CONDITION, user);
+        MedalUserObtainCollection collection = MedalUserObtainCollection.of(medalRepository.findAllByConditionType(NO_CONDITION), NO_CONDITION, user);
         if (collection.hasNoMoreMedalsCanBeObtained()) {
             return;
         }

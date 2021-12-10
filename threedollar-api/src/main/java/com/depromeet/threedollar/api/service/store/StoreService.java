@@ -38,7 +38,7 @@ public class StoreService {
     @CacheEvict(key = "#userId", value = USER_STORES_COUNTS)
     @Transactional
     public StoreInfoResponse registerStore(RegisterStoreRequest request, Long userId) {
-        Store store = storeRepository.save(request.toStore(userId));
+        Store store = storeRepository.saveAndFlush(request.toStore(userId));
         eventPublisher.publishEvent(StoreCreatedEvent.of(store.getId(), userId));
         return StoreInfoResponse.of(store);
     }
@@ -60,7 +60,7 @@ public class StoreService {
         if (reporters.contains(userId)) {
             throw new ConflictException(String.format("사용자 (%s)는 가게 (%s)에 대해 이미 삭제 요청을 하였습니다", userId, storeId), CONFLICT_DELETE_REQUEST_STORE_EXCEPTION);
         }
-        storeDeleteRequestRepository.save(request.toEntity(store, userId));
+        storeDeleteRequestRepository.saveAndFlush(request.toEntity(store, userId));
         eventPublisher.publishEvent(StoreDeletedEvent.of(store.getId(), userId));
         return StoreDeleteResponse.of(deleteStoreIfSatisfyCondition(store, reporters));
     }
