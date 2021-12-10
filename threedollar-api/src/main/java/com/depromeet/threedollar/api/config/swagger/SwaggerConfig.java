@@ -4,7 +4,6 @@ import com.depromeet.threedollar.api.config.resolver.UserId;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +28,6 @@ import java.util.stream.Stream;
 
 import static springfox.documentation.builders.RequestHandlerSelectors.withClassAnnotation;
 
-@Profile("!prod")
 @Import(BeanValidatorPluginsConfiguration.class)
 @EnableSwagger2
 @Configuration
