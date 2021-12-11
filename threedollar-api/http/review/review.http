@@ -46,7 +46,7 @@ client.test("200 OK", function() {
 
 
 ### [인증] 사용자가 작성한 리뷰를 전체 조회합니다. (페이지네이션)
-GET {{host_api}}/api/v3/store/reviews/me?size=10
+GET {{host_api}}/api/v3/store/reviews/me?size=30
 Authorization: {{AUTHORIZATION}}
 
 > {%
@@ -58,7 +58,7 @@ client.test("200 OK", function() {
 
 
 ### (Deprecated) [인증] 사용자가 작성한 리뷰를 전체 조회합니다. (페이지네이션)
-GET {{host_api}}/api/v2/store/reviews/me?size=10
+GET {{host_api}}/api/v2/store/reviews/me?size=30
 Authorization: {{AUTHORIZATION}}
 
 > {%

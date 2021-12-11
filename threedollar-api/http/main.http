@@ -8,7 +8,7 @@ client.test("200 OK", function() {
 %}
 
 
-### 테스트를 위한 세션
+### (개발 서버용) 테스트를 위한 세션
 GET {{host_api}}/test-token
 
 > {%
@@ -17,7 +17,3 @@ client.test("200 OK", function() {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
-
-
-### 강제 삭제
-DELETE {{host_api}}/test-store?storeId={{STORE_ID}}
