@@ -18,6 +18,8 @@ public class WarmingUpApplication implements CommandLineRunner {
         try {
             for (int i = 0; i < 10; i++) {
                 apiClient.retrieveNearStores(34.0, 126.0, 34.0, 126.0, 2000);
+                apiClient.getMedals();
+                apiClient.getStoreMenuCategories();
                 apiClient.getFaqs();
                 apiClient.getPopups("AOS");
                 apiClient.getPopups("IOS");
