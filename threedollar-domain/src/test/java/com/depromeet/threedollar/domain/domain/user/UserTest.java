@@ -1,9 +1,7 @@
 package com.depromeet.threedollar.domain.domain.user;
 
 import com.depromeet.threedollar.domain.domain.medal.*;
-import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 
 import java.util.List;
 
@@ -12,10 +10,14 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class UserTest {
 
-    @AutoSource
-    @ParameterizedTest
-    void 유저에게_보유한_메달을_추가한다(String medalName, String medalIconUrl, MedalAcquisitionConditionType conditionType, int count) {
+    @Test
+    void 유저에게_보유한_메달을_추가한다() {
         // given
+        String medalName = "리뷰 5번 작성시 획득하는 메달";
+        String medalIconUrl = "medalIconUrl";
+        MedalAcquisitionConditionType conditionType = MedalAcquisitionConditionType.ADD_REVIEW;
+        int count = 5;
+
         User user = UserCreator.create("social-id", UserSocialType.KAKAO, "닉네임");
         Medal medal = MedalCreator.create(medalName, medalIconUrl, conditionType, count);
 

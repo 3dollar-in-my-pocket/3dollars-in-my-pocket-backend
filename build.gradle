@@ -1,10 +1,8 @@
 buildscript {
     ext {
-        springBootVersion = "2.5.6"
+        springBootVersion = "2.5.7"
         kotlinVersion = "1.5.31"
         springCloudVersion = "2020.0.4"
-        springBootAdminVersion = "2.4.3"
-        autoParamVersion = "0.3.0"
     }
     repositories {
         mavenCentral()
@@ -15,6 +13,9 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
     }
 }
+
+// log4j2 Vulnerability (스프링 부트 기본 버전 올라가면 제거)
+ext['log4j2.version'] = '2.15.0'
 
 allprojects {
     group = "com.depromeet.threedollar"
@@ -61,7 +62,6 @@ subprojects {
 
         // Test
         testImplementation('org.springframework.boot:spring-boot-starter-test')
-        testImplementation("io.github.javaunit:autoparams:${autoParamVersion}")
 
         // Lombok
         compileOnly("org.projectlombok:lombok")

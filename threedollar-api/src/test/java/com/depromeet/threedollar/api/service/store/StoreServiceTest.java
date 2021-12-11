@@ -14,12 +14,10 @@ import com.depromeet.threedollar.domain.domain.storedelete.DeleteReasonType;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequest;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestCreator;
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestRepository;
-import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -67,10 +65,11 @@ class StoreServiceTest extends SetupUserServiceTest {
     @Nested
     class 가게_정보_등록 {
 
-        @AutoSource
-        @ParameterizedTest
-        void 새로운_가게를_등록하면_새로운_가게_데이터가_추가된다(String storeName, StoreType storeType) {
+        @Test
+        void 새로운_가게를_등록하면_새로운_가게_데이터가_추가된다() {
             // given
+            String storeName = "토끼의 붕어빵";
+            StoreType storeType = StoreType.STORE;
             double latitude = 34.0;
             double longitude = 130.0;
 
@@ -93,10 +92,11 @@ class StoreServiceTest extends SetupUserServiceTest {
             assertStore(stores.get(0), latitude, longitude, storeName, storeType, userId);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_등록시_개장일_데이터도_추가된다(Set<DayOfTheWeek> appearanceDays) {
+        @Test
+        void 가게_등록시_개장일_데이터도_추가된다() {
             // given
+            Set<DayOfTheWeek> appearanceDays = Set.of(DayOfTheWeek.SATURDAY, DayOfTheWeek.SUNDAY);
+
             RegisterStoreRequest request = RegisterStoreRequest.testBuilder()
                 .latitude(34.0)
                 .longitude(130.0)
@@ -116,10 +116,11 @@ class StoreServiceTest extends SetupUserServiceTest {
             assertThat(getDayOfTheWeeks(appearanceDayList)).containsExactlyInAnyOrderElementsOf(appearanceDays);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_등록시_결제방법_데이터도_추가된다(Set<PaymentMethodType> paymentMethods) {
+        @Test
+        void 가게_등록시_결제방법_데이터도_추가된다() {
             // given
+            Set<PaymentMethodType> paymentMethods = Set.of(PaymentMethodType.CASH, PaymentMethodType.ACCOUNT_TRANSFER);
+
             RegisterStoreRequest request = RegisterStoreRequest.testBuilder()
                 .latitude(34.0)
                 .longitude(130.0)
@@ -139,10 +140,13 @@ class StoreServiceTest extends SetupUserServiceTest {
             assertThat(getPaymentMethodTypes(paymentMethodsList)).containsExactlyInAnyOrderElementsOf(paymentMethods);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_등록시_메뉴_데이터도_추가된다(String menuName, String price, MenuCategoryType type) {
+        @Test
+        void 가게_등록시_메뉴_데이터도_추가된다() {
             // given
+            String menuName = "슈크림 붕어빵";
+            String price = "2개에 천원";
+            MenuCategoryType type = MenuCategoryType.BUNGEOPPANG;
+
             Set<MenuRequest> menus = Set.of(MenuRequest.of(menuName, price, type));
 
             RegisterStoreRequest request = RegisterStoreRequest.testBuilder()
@@ -164,10 +168,13 @@ class StoreServiceTest extends SetupUserServiceTest {
             assertMenu(menuList.get(0), menuName, price, type);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_등록시_중복된_메뉴는_한개만_저장된다(String menuName, String price, MenuCategoryType type) {
+        @Test
+        void 가게_등록시_중복된_메뉴는_한개만_저장된다() {
             // given
+            String menuName = "슈크림 붕어빵";
+            String price = "2개에 천원";
+            MenuCategoryType type = MenuCategoryType.BUNGEOPPANG;
+
             Set<MenuRequest> menus = new HashSet<>(List.of(
                 MenuRequest.of(menuName, price, type),
                 MenuRequest.of(menuName, price, type))
@@ -198,10 +205,13 @@ class StoreServiceTest extends SetupUserServiceTest {
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     class 가게_정보_수정 {
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게의_기본_정보를_수정한다(String menuName, String price, MenuCategoryType type) {
+        @Test
+        void 가게의_기본_정보를_수정한다() {
             // given
+            String menuName = "슈크림 붕어빵";
+            String price = "2개에 천원";
+            MenuCategoryType type = MenuCategoryType.BUNGEOPPANG;
+
             Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 
@@ -232,10 +242,11 @@ class StoreServiceTest extends SetupUserServiceTest {
             assertMenu(menus.get(0), store.getId(), menuName, price, type);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게의_결제방법을_수정한다(Set<PaymentMethodType> paymentMethodTypes) {
+        @Test
+        void 가게의_결제방법을_수정한다() {
             // given
+            Set<PaymentMethodType> paymentMethodTypes = Set.of(PaymentMethodType.CARD);
+
             Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             store.addPaymentMethods(Set.of(PaymentMethodType.CARD));
             storeRepository.save(store);
@@ -259,10 +270,11 @@ class StoreServiceTest extends SetupUserServiceTest {
             assertThat(getPaymentMethodTypes(paymentMethodsList)).containsExactlyInAnyOrderElementsOf(paymentMethodTypes);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게의_개시일을_수정한다(Set<DayOfTheWeek> appearanceDays) {
+        @Test
+        void 가게의_개시일을_수정한다() {
             // given
+            Set<DayOfTheWeek> appearanceDays = Set.of(DayOfTheWeek.SATURDAY, DayOfTheWeek.FRIDAY);
+
             Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             store.addAppearanceDays(Set.of(DayOfTheWeek.TUESDAY, DayOfTheWeek.WEDNESDAY));
             storeRepository.save(store);
@@ -286,10 +298,13 @@ class StoreServiceTest extends SetupUserServiceTest {
             assertThat(getDayOfTheWeeks(appearanceDayList)).containsExactlyInAnyOrderElementsOf(appearanceDays);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게의_메뉴정보를_수정한다(String menuName, String price, MenuCategoryType type) {
+        @Test
+        void 가게의_메뉴정보를_수정한다() {
             // given
+            String menuName = "슈크림 붕어빵";
+            String price = "2개에 천원";
+            MenuCategoryType type = MenuCategoryType.BUNGEOPPANG;
+
             Store store = StoreCreator.create(userId, "storeName");
             store.addMenus(List.of(
                 MenuCreator.create(store, "메뉴 1", "1000원", MenuCategoryType.DALGONA),
@@ -326,10 +341,13 @@ class StoreServiceTest extends SetupUserServiceTest {
             assertMenu(findMenus.get(1), store.getId(), newMenuName, newMenuPrice, newMenuCategory);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_메뉴_수정시_중복된_메뉴는_한개만_저장된다(String menuName, String price, MenuCategoryType type) {
+        @Test
+        void 가게_메뉴_수정시_중복된_메뉴는_한개만_저장된다() {
             // given
+            String menuName = "슈크림 붕어빵";
+            String price = "2개에 천원";
+            MenuCategoryType type = MenuCategoryType.BUNGEOPPANG;
+
             Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 
@@ -413,10 +431,11 @@ class StoreServiceTest extends SetupUserServiceTest {
     @Nested
     class 가게_삭제_요청 {
 
-        @AutoSource
-        @ParameterizedTest
-        void 삭제_요청이_1개_쌓이면_실제로_가게정보가_삭제되지_않는다(DeleteReasonType deleteReasonType) {
+        @Test
+        void 삭제_요청이_1개_쌓이면_실제로_가게정보가_삭제되지_않는다() {
             // given
+            DeleteReasonType deleteReasonType = DeleteReasonType.OVERLAPSTORE;
+
             Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 
@@ -435,10 +454,11 @@ class StoreServiceTest extends SetupUserServiceTest {
             assertThat(response.getIsDeleted()).isFalse();
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 삭제_요청이_2개_쌓이면_실제로_가게정보가_삭제되지_않는다(DeleteReasonType deleteReasonType) {
+        @Test
+        void 삭제_요청이_2개_쌓이면_실제로_가게정보가_삭제되지_않는다() {
             // given
+            DeleteReasonType deleteReasonType = DeleteReasonType.OVERLAPSTORE;
+
             Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 
@@ -460,10 +480,11 @@ class StoreServiceTest extends SetupUserServiceTest {
             assertThat(response.getIsDeleted()).isFalse();
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 삭제_요청이_3개_쌓이면_실제로_가게정보가_실제로_삭제된다(DeleteReasonType deleteReasonType) {
+        @Test
+        void 삭제_요청이_3개_쌓이면_실제로_가게정보가_실제로_삭제된다() {
             // given
+            DeleteReasonType deleteReasonType = DeleteReasonType.WRONG_CONTENT;
+
             Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 
@@ -489,10 +510,10 @@ class StoreServiceTest extends SetupUserServiceTest {
             assertThat(response.getIsDeleted()).isTrue();
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_삭제요청시_내가_이미_삭제요청한_가게인경우_CONFLICT_EXCEPTION(DeleteReasonType reasonType) {
+        @Test
+        void 가게_삭제요청시_내가_이미_삭제요청한_가게인경우_CONFLICT_EXCEPTION() {
             // given
+            DeleteReasonType reasonType = DeleteReasonType.OVERLAPSTORE;
             Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 

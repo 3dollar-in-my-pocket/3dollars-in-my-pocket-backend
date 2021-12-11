@@ -16,9 +16,7 @@ import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestCre
 import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestRepository;
 import com.depromeet.threedollar.domain.event.store.StoreCreatedEvent;
 import com.depromeet.threedollar.domain.event.store.StoreDeletedEvent;
-import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -72,10 +70,13 @@ class StoreControllerTest extends SetupUserControllerTest {
     @Nested
     class 가게_정보_등록 {
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_등록_성공시_가게_정보를_반환한다(String storeName, StoreType storeType, Set<DayOfTheWeek> appearanceDays, Set<PaymentMethodType> paymentMethods) throws Exception {
+        @Test
+        void 가게_등록_성공시_가게_정보를_반환한다() throws Exception {
             // given
+            String storeName = "가게 이름";
+            StoreType storeType = StoreType.STORE;
+            Set<DayOfTheWeek> appearanceDays = Set.of(DayOfTheWeek.SATURDAY, DayOfTheWeek.MONDAY);
+            Set<PaymentMethodType> paymentMethods = Set.of(PaymentMethodType.CASH, PaymentMethodType.ACCOUNT_TRANSFER);
             double latitude = 34.0;
             double longitude = 130.0;
 
@@ -122,10 +123,14 @@ class StoreControllerTest extends SetupUserControllerTest {
     @Nested
     class 가게_정보_수정 {
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_수정_성공시_수정된_가게_정보를_반환한다(String storeName, StoreType storeType, Set<DayOfTheWeek> appearanceDays, Set<PaymentMethodType> paymentMethods) throws Exception {
+        @Test
+        void 가게_수정_성공시_수정된_가게_정보를_반환한다() throws Exception {
             // given
+            String storeName = "가게 이름";
+            StoreType storeType = StoreType.STORE;
+            Set<DayOfTheWeek> appearanceDays = Set.of(DayOfTheWeek.SATURDAY, DayOfTheWeek.MONDAY);
+            Set<PaymentMethodType> paymentMethods = Set.of(PaymentMethodType.CASH, PaymentMethodType.ACCOUNT_TRANSFER);
+
             Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "storeName");
             storeRepository.save(store);
 
@@ -156,14 +161,13 @@ class StoreControllerTest extends SetupUserControllerTest {
     @Nested
     class 가게_정보_삭제 {
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_삭제_요청시_실제로_삭제되지_않으면_False를_반환한다(DeleteReasonType deleteReasonType) throws Exception {
+        @Test
+        void 가게_삭제_요청시_실제로_삭제되지_않으면_False를_반환한다() throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "storeName");
             storeRepository.save(store);
 
-            DeleteStoreRequest request = DeleteStoreRequest.testInstance(deleteReasonType);
+            DeleteStoreRequest request = DeleteStoreRequest.testInstance(DeleteReasonType.OVERLAPSTORE);
 
             // when
             ApiResponse<StoreDeleteResponse> response = storeMockApiCaller.deleteStore(store.getId(), request, token, 200);
@@ -172,9 +176,8 @@ class StoreControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getIsDeleted()).isFalse();
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_삭제_요청시_실제로_삭제되면_True를_반환한다(DeleteReasonType deleteReasonType) throws Exception {
+        @Test
+        void 가게_삭제_요청시_실제로_삭제되면_True를_반환한다() throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "storeName");
             storeRepository.save(store);
@@ -184,7 +187,7 @@ class StoreControllerTest extends SetupUserControllerTest {
                 StoreDeleteRequestCreator.create(store, 1001L, DeleteReasonType.NOSTORE)
             ));
 
-            DeleteStoreRequest request = DeleteStoreRequest.testInstance(deleteReasonType);
+            DeleteStoreRequest request = DeleteStoreRequest.testInstance(DeleteReasonType.WRONG_CONTENT);
 
             // when
             ApiResponse<StoreDeleteResponse> response = storeMockApiCaller.deleteStore(store.getId(), request, token, 200);
@@ -193,15 +196,14 @@ class StoreControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getIsDeleted()).isTrue();
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_삭제_요청시_메달을_획득하는_작업이_수행된다(DeleteReasonType reasonType) throws Exception {
+        @Test
+        void 가게_삭제_요청시_메달을_획득하는_작업이_수행된다() throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "storeName");
             storeRepository.save(store);
 
             // when
-            storeMockApiCaller.deleteStore(store.getId(), DeleteStoreRequest.testInstance(reasonType), token, 200);
+            storeMockApiCaller.deleteStore(store.getId(), DeleteStoreRequest.testInstance(DeleteReasonType.OVERLAPSTORE), token, 200);
 
             // then
             verify(addUserMedalEventListener, times(1)).addObtainableMedalsByDeleteStore(any(StoreDeletedEvent.class));

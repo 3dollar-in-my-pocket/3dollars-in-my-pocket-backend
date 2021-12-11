@@ -9,12 +9,10 @@ import com.depromeet.threedollar.domain.domain.medal.MedalCreator;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalCreator;
 import com.depromeet.threedollar.domain.domain.user.UserCreator;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
-import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -48,10 +46,13 @@ class UserControllerTest extends SetupUserControllerTest {
                 .andExpect(jsonPath("$.data.socialType").value(testUser.getSocialType().name()));
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 나의_회원정보_조회시_활성화중인_메달이_있는경우_함께_조회된다(String medalName, String activationIconUrl, String disableIconurl) throws Exception {
+        @Test
+        void 나의_회원정보_조회시_활성화중인_메달이_있는경우_함께_조회된다() throws Exception {
             // given
+            String medalName = "붕어빵 챌린저";
+            String activationIconUrl = "activationIconUrl";
+            String disableIconurl = "disableIconUrl";
+
             Medal medal = MedalCreator.create(medalName, activationIconUrl, disableIconurl);
             medalRepository.save(medal);
             userMedalRepository.save(UserMedalCreator.createActive(medal, testUser));

@@ -8,12 +8,10 @@ import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
-import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -44,10 +42,12 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
     @Nested
     class AddStoreVisitHistory {
 
-        @AutoSource
-        @ParameterizedTest
-        void 유저가_가게_방문_인증_정보를_추가한다(LocalDate dateOfVisit, VisitType visitType) {
+        @Test
+        void 유저가_가게_방문_인증_정보를_추가한다() {
             // given
+            LocalDate dateOfVisit = LocalDate.of(2021, 12, 1);
+            VisitType visitType = VisitType.EXISTS;
+
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(storeId, visitType);
 
             // when
@@ -71,10 +71,12 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
             assertThatThrownBy(() -> visitHistoryService.addVisitHistory(request, userId, LocalDate.of(2021, 11, 18))).isInstanceOf(NotFoundException.class);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_방문_인증시_오늘_이미_방문인증한_가게면_Conflict_에러가_발생한다(LocalDate dateOfVisit, VisitType visitType) {
+        @Test
+        void 가게_방문_인증시_오늘_이미_방문인증한_가게면_Conflict_에러가_발생한다() {
             // given
+            LocalDate dateOfVisit = LocalDate.of(2021, 12, 1);
+            VisitType visitType = VisitType.EXISTS;
+
             visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, dateOfVisit));
 
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(storeId, visitType);

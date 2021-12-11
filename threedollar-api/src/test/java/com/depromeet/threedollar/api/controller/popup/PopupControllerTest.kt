@@ -8,10 +8,9 @@ import com.depromeet.threedollar.domain.domain.popup.PopupRepository
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.assertj.core.api.Assertions.assertThat
-import org.javaunit.autoparams.AutoSource
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import org.junit.jupiter.params.ParameterizedTest
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
@@ -36,10 +35,10 @@ class PopupControllerTest(
         popupRepository.deleteAllInBatch()
     }
 
-    @AutoSource
-    @ParameterizedTest
-    fun 활성화중인_팝업_목록을_확인한다(platform: PopupPlatformType) {
+    @Test
+    fun 활성화중인_팝업_목록을_확인한다() {
         // given
+        val platform = PopupPlatformType.AOS
         val popup = PopupCreator.create(
             "https://pop-up-image.png",
             "https://my-link.com",

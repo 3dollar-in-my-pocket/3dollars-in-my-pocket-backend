@@ -9,9 +9,7 @@ import com.depromeet.threedollar.domain.domain.faq.FaqCreator
 import com.depromeet.threedollar.domain.domain.faq.FaqRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.javaunit.autoparams.AutoSource
 import org.junit.jupiter.api.*
-import org.junit.jupiter.params.ParameterizedTest
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
 
@@ -31,10 +29,13 @@ internal class FaqAdminServiceTest(
     @Nested
     inner class AddFAQ {
 
-        @AutoSource
-        @ParameterizedTest
-        fun 새로운_FAQ_를_등록하면_FAQ_데이터가_추가된다(question: String, answer: String, category: FaqCategory) {
+        @Test
+        fun 새로운_FAQ_를_등록하면_FAQ_데이터가_추가된다() {
             // given
+            val question = "이름이 뭔가요?"
+            val answer = "가슴속 삼천원입니다"
+            val category = FaqCategory.ETC
+
             val request = AddFaqRequest(question, answer, category)
 
             // when
@@ -54,10 +55,13 @@ internal class FaqAdminServiceTest(
     @Nested
     inner class UpdateFaq {
 
-        @AutoSource
-        @ParameterizedTest
-        fun 등록된_FAQ를_수정하면_FAQ_데이터가_수정된다(question: String, answer: String, category: FaqCategory) {
+        @Test
+        fun 등록된_FAQ를_수정하면_FAQ_데이터가_수정된다() {
             // given
+            val question = "이름이 뭔가요?"
+            val answer = "가슴속 삼천원입니다"
+            val category = FaqCategory.ETC
+
             val faq = FaqCreator.create("기존의 질문", "기존의 답변", FaqCategory.CATEGORY)
             faqRepository.save(faq)
 
