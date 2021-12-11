@@ -13,9 +13,7 @@ import com.depromeet.threedollar.domain.domain.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
 import com.depromeet.threedollar.domain.event.visit.VisitHistoryAddedEvent;
-import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -55,11 +53,10 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
     @Nested
     class AddVisitHistory {
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_방문_인증_등록시_성공시_200_OK(VisitType visitType) throws Exception {
+        @Test
+        void 가게_방문_인증_등록시_성공시_200_OK() throws Exception {
             // given
-            AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(store.getId(), visitType);
+            AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(store.getId(), VisitType.EXISTS);
 
             // when
             ApiResponse<String> response = visitHistoryApiCaller.addVisitHistory(request, token, 200);
@@ -70,11 +67,10 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             );
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_방문시_메달을_획득하는_작업이_수행된다(VisitType visitType) throws Exception {
+        @Test
+        void 가게_방문시_메달을_획득하는_작업이_수행된다() throws Exception {
             // given
-            AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(storeId, visitType);
+            AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(storeId, VisitType.NOT_EXISTS);
 
             // when
             visitHistoryApiCaller.addVisitHistory(request, token, 200);

@@ -21,15 +21,12 @@ import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
-import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static com.depromeet.threedollar.api.assertutils.assertReviewUtils.assertReviewWithWriterResponse;
 import static com.depromeet.threedollar.api.assertutils.assertStoreImageUtils.assertStoreImageResponse;
@@ -86,12 +83,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
     @Nested
     class 주변의_가게_조회 {
 
-        @AutoSource
-        @ParameterizedTest
-        void 나의_지도상_주변_가게들을_조회한다(String storeName1, String storeName2) throws Exception {
+        @Test
+        void 나의_지도상_주변_가게들을_조회한다() throws Exception {
             // given
-            Store store1 = StoreCreator.createWithDefaultMenu(testUser.getId(), storeName1, 34, 126);
-            Store store2 = StoreCreator.createWithDefaultMenu(testUser.getId(), storeName2, 34, 126);
+            Store store1 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름 1", 34, 126);
+            Store store2 = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름 2", 34, 126);
             storeRepository.saveAll(List.of(store1, store2));
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
@@ -107,19 +103,18 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             // then
             assertThat(response.getData()).hasSize(2);
-            assertStoreWithVisitsAndDistanceResponse(response.getData().get(0), store1.getId(), store1.getLatitude(), store1.getLongitude(), storeName1, store1.getRating());
-            assertStoreWithVisitsAndDistanceResponse(response.getData().get(1), store2.getId(), store2.getLatitude(), store2.getLongitude(), storeName2, store2.getRating());
+            assertStoreWithVisitsAndDistanceResponse(response.getData().get(0), store1.getId(), store1.getLatitude(), store1.getLongitude(), store1.getName(), store1.getRating());
+            assertStoreWithVisitsAndDistanceResponse(response.getData().get(1), store2.getId(), store2.getLatitude(), store2.getLongitude(), store2.getName(), store2.getRating());
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 주변_가게들을_조회할때_메뉴_카테고리_목록도_반환된다(Set<MenuCategoryType> menuCategories) throws Exception {
+        @Test
+        void 주변_가게들을_조회할때_메뉴_카테고리_목록도_반환된다() throws Exception {
             // given
             Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34.0, 126.0);
-            List<Menu> menus = menuCategories.stream()
-                .map(category -> MenuCreator.create(store, "메뉴 정보", "가격 정보", category))
-                .collect(Collectors.toList());
-            store.addMenus(menus);
+            store.addMenus(List.of(
+                MenuCreator.create(store, "메뉴 1", "가격 1", MenuCategoryType.SUNDAE),
+                MenuCreator.create(store, "메뉴 1", "가격 1", MenuCategoryType.DALGONA)
+            ));
             storeRepository.save(store);
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
@@ -136,8 +131,8 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // then
             assertThat(response.getData()).hasSize(1);
 
-            assertThat(response.getData().get(0).getCategories()).hasSize(menuCategories.size());
-            assertThat(response.getData().get(0).getCategories()).containsExactlyInAnyOrderElementsOf(menuCategories);
+            assertThat(response.getData().get(0).getCategories()).hasSize(2);
+            assertThat(response.getData().get(0).getCategories()).containsExactlyInAnyOrder(MenuCategoryType.SUNDAE, MenuCategoryType.DALGONA);
         }
 
         @Test
@@ -298,11 +293,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
     @Nested
     class 가게_상세_정보_조회 {
 
-        @AutoSource
-        @ParameterizedTest
-        void 특정_가게에_대한_상세_가게_정보를_조회한다(String storeName) throws Exception {
+        @Test
+        void 특정_가게에_대한_상세_가게_정보를_조회한다() throws Exception {
             // given
-            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), storeName);
+            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름");
             DayOfTheWeek day = DayOfTheWeek.FRIDAY;
             store.addAppearanceDays(Set.of(day));
 
@@ -358,10 +352,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertUserInfoResponse(response.getData().getUser(), testUser);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 특정_가게에_대한_상세_정보를_조회할떄_개장일_정보도_반환된다(Set<DayOfTheWeek> dayOfTheWeeks) throws Exception {
+        @Test
+        void 특정_가게에_대한_상세_정보를_조회할떄_개장일_정보도_반환된다() throws Exception {
             // given
+            Set<DayOfTheWeek> dayOfTheWeeks = Set.of(DayOfTheWeek.SATURDAY, DayOfTheWeek.FRIDAY, DayOfTheWeek.THURSDAY);
             Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름");
             store.addAppearanceDays(dayOfTheWeeks);
             storeRepository.save(store);
@@ -376,10 +370,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getAppearanceDays()).containsExactlyInAnyOrderElementsOf(dayOfTheWeeks);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 특정_가게에_대한_상세_정보를_조회할때_결제방법_정보도_반환된다(Set<PaymentMethodType> paymentMethodTypes) throws Exception {
+        @Test
+        void 특정_가게에_대한_상세_정보를_조회할때_결제방법_정보도_반환된다() throws Exception {
             // given
+            Set<PaymentMethodType> paymentMethodTypes = Set.of(PaymentMethodType.CASH, PaymentMethodType.CARD);
             Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름");
             store.addPaymentMethods(paymentMethodTypes);
             storeRepository.save(store);
@@ -412,10 +406,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertUserInfoResponse(data.getUser(), null, "사라진 제보자", null);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게에_등록된_이미지_목록을_조회한다(String imageUrl) throws Exception {
+        @Test
+        void 가게에_등록된_이미지_목록을_조회한다() throws Exception {
             // given
+            String imageUrl = "https://image.url";
+
             Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "가게 이름");
             storeRepository.save(store);
 
@@ -430,7 +425,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getImages()).hasSize(1),
-                () -> assertStoreImageResponse(response.getData().getImages().get(0), storeImage.getId(), storeImage.getUrl())
+                () -> assertStoreImageResponse(response.getData().getImages().get(0), storeImage.getId(), imageUrl)
             );
         }
 
@@ -709,10 +704,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
     @Nested
     class 가게_리스트_거리수_그룹화_조회 {
 
-        @AutoSource
-        @ParameterizedTest
-        void 특정_카테고리의_가게_리스트를_거리수를_그룹화해서_보여준다(MenuCategoryType menuCategoryType) throws Exception {
+        @Test
+        void 특정_카테고리의_가게_리스트를_거리수를_그룹화해서_보여준다() throws Exception {
             // given
+            MenuCategoryType menuCategoryType = MenuCategoryType.DALGONA;
+
             Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34.0001, 126);
             store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", menuCategoryType)));
 
@@ -745,10 +741,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getStoreListOver1000()).isEmpty();
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 같은_그룹내에서_거리가_가까운_순서대로_조회된다(MenuCategoryType menuCategoryType) throws Exception {
+        @Test
+        void 같은_그룹내에서_거리가_가까운_순서대로_조회된다() throws Exception {
             // given
+            MenuCategoryType menuCategoryType = MenuCategoryType.GUKWAPPANG;
+
             Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34.00015, 126);
             store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", menuCategoryType)));
 
@@ -804,10 +801,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getStoreListOver1000()).isEmpty();
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 삭제된_가게는_조회되지_않는다(MenuCategoryType menuCategoryType) throws Exception {
+        @Test
+        void 삭제된_가게는_조회되지_않는다() throws Exception {
             // given
+            MenuCategoryType menuCategoryType = MenuCategoryType.GYERANPPANG;
+
             Store store = StoreCreator.createDeleted(testUser.getId(), "가게 이름", 34.0, 126.0);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴1", "가격1", menuCategoryType)));
             storeRepository.save(store);
@@ -831,10 +829,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getStoreListOver1000()).isEmpty();
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 거리순으로_내_주변의_특정_카테고리_가게_조회시_방문_정보도_함께_조회된다(MenuCategoryType menuCategoryType) throws Exception {
+        @Test
+        void 거리순으로_내_주변의_특정_카테고리_가게_조회시_방문_정보도_함께_조회된다() throws Exception {
             // given
+            MenuCategoryType menuCategoryType = MenuCategoryType.GYERANPPANG;
+
             Store store = StoreCreator.create(testUser.getId(), "가게 이름", 34.0, 126.0);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", menuCategoryType)));
             storeRepository.save(store);
@@ -863,10 +862,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
     @Nested
     class 가게_리스트_리뷰_평가_점수_그룹화_조회 {
 
-        @AutoSource
-        @ParameterizedTest
-        void 특정_카테고리의_가게_리스트를_리뷰_평가_점수로_그룹화해서_보여준다(MenuCategoryType menuCategoryType) throws Exception {
+        @Test
+        void 특정_카테고리의_가게_리스트를_리뷰_평가_점수로_그룹화해서_보여준다() throws Exception {
             // given
+            MenuCategoryType menuCategoryType = MenuCategoryType.GYERANPPANG;
+
             Store store1 = StoreCreator.create(testUser.getId(), "가게1", 34, 126, 1);
             store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", menuCategoryType)));
 
@@ -910,10 +910,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getStoreList4().get(1).getStoreId()).isEqualTo(store4.getId());
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 같은_그룹내에서_높은_리뷰부터_보여진다(MenuCategoryType menuCategoryType) throws Exception {
+        @Test
+        void 같은_그룹내에서_높은_리뷰부터_보여진다() throws Exception {
             // given
+            MenuCategoryType menuCategoryType = MenuCategoryType.GYERANPPANG;
+
             Store store1 = StoreCreator.create(testUser.getId(), "가게 1.1", 34, 126, 1.1);
             store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", menuCategoryType)));
 
@@ -972,10 +973,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getStoreList4()).isEmpty();
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 삭제된_가게는_조회되지_않는다(MenuCategoryType menuCategoryType) throws Exception {
+        @Test
+        void 삭제된_가게는_조회되지_않는다() throws Exception {
             // given
+            MenuCategoryType menuCategoryType = MenuCategoryType.BUNGEOPPANG;
+
             Store store = StoreCreator.createDeleted(testUser.getId(), "storeName");
             Menu menu = MenuCreator.create(store, "메뉴1", "가격1", menuCategoryType);
             store.addMenus(List.of(menu));
@@ -999,10 +1001,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData().getStoreList4()).isEmpty();
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 리뷰순으로_내_주변의_특정_카테고리_가게_조회시_방문_정보도_함께_조회된다(MenuCategoryType menuCategoryType) throws Exception {
+        @Test
+        void 리뷰순으로_내_주변의_특정_카테고리_가게_조회시_방문_정보도_함께_조회된다() throws Exception {
             // given
+            MenuCategoryType menuCategoryType = MenuCategoryType.BUNGEOPPANG;
+
             Store store = StoreCreator.create(testUser.getId(), "가게 1.1", 34, 126, 1.1);
             store.addMenus(List.of(MenuCreator.create(store, "메뉴1", "가격1", menuCategoryType)));
             storeRepository.save(store);

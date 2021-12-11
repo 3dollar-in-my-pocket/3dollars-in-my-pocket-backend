@@ -8,11 +8,9 @@ import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImageRepository;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImageStatus;
-import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -81,10 +79,10 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
     @Nested
     class 가게_이미지_삭제 {
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_이미지_삭제_성공시_해당_이미지가_INACTIVE로_변경된다(String imageUrl) {
+        @Test
+        void 가게_이미지_삭제_성공시_해당_이미지가_INACTIVE로_변경된다() {
             // given
+            String imageUrl = "https://image.png";
             StoreImage storeImage = StoreImage.newInstance(store, userId, imageUrl);
             storeImageRepository.save(storeImage);
 
@@ -122,10 +120,10 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
     @Nested
     class 가게_이미지_조회 {
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게에_등록된_이미지_목록을_조회한다(String imageUrl) {
+        @Test
+        void 가게에_등록된_이미지_목록을_조회한다() {
             // given
+            String imageUrl = "https://image.png";
             StoreImage storeImage = StoreImage.newInstance(store, userId, imageUrl);
             storeImageRepository.save(storeImage);
 
@@ -134,7 +132,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
 
             // then
             assertThat(responses).hasSize(1);
-            assertStoreImageResponse(responses.get(0), storeImage.getId(), storeImage.getUrl());
+            assertStoreImageResponse(responses.get(0), storeImage.getId(), imageUrl);
         }
 
         @Test

@@ -6,12 +6,10 @@ import com.depromeet.threedollar.api.service.user.dto.request.UpdateUserInfoRequ
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.user.*;
-import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -43,10 +41,13 @@ class UserServiceTest {
     @Nested
     class 신규_유저_생성 {
 
-        @AutoSource
-        @ParameterizedTest
-        void 새로운_유저가_회원가입하면_새로운_데이터가_추가된다(String socialId, UserSocialType socialType, String name) {
+        @Test
+        void 새로운_유저가_회원가입하면_새로운_데이터가_추가된다() {
             // given
+            String socialId = "social-id";
+            UserSocialType socialType = UserSocialType.APPLE;
+            String name = "토끼";
+
             CreateUserRequest request = CreateUserRequest.testInstance(socialId, socialType, name);
 
             // when
@@ -58,10 +59,10 @@ class UserServiceTest {
             assertUser(users.get(0), socialId, socialType, name);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 회원가입시_중복되는_닉네임인경우_Conflict_에러가_발생한다(String name) {
+        @Test
+        void 회원가입시_중복되는_닉네임인경우_Conflict_에러가_발생한다() {
             // given
+            String name = "will";
             userRepository.save(UserCreator.create("social-id", UserSocialType.KAKAO, name));
 
             CreateUserRequest request = CreateUserRequest.testInstance("another-id", UserSocialType.APPLE, name);
@@ -70,10 +71,12 @@ class UserServiceTest {
             assertThatThrownBy(() -> userService.registerUser(request)).isInstanceOf(ConflictException.class);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 회원가입시_중복되는_소셜정보면_Conflict_에러가_발생한다(String socialId, UserSocialType socialType) {
+        @Test
+        void 회원가입시_중복되는_소셜정보면_Conflict_에러가_발생한다() {
             // given
+            String socialId = "social-id";
+            UserSocialType socialType = UserSocialType.GOOGLE;
+
             userRepository.save(UserCreator.create(socialId, socialType, "기존의 닉네임"));
 
             CreateUserRequest request = CreateUserRequest.testInstance(socialId, socialType, "새로운 닉네임");
@@ -101,10 +104,10 @@ class UserServiceTest {
     @Nested
     class 중복된_닉네임_체크 {
 
-        @AutoSource
-        @ParameterizedTest
-        void 중복된_닉네임인경우_Conflcit_에러가_발생한다(String name) {
+        @Test
+        void 중복된_닉네임인경우_Conflcit_에러가_발생한다() {
             // given
+            String name = "토끼";
             User user = UserCreator.create("social-id", UserSocialType.KAKAO, name);
             userRepository.save(user);
 
@@ -114,10 +117,11 @@ class UserServiceTest {
             assertThatThrownBy(() -> userService.checkIsAvailableName(request)).isInstanceOf(ConflictException.class);
         }
 
-        @AutoSource
-        @ParameterizedTest
-        void 중복되지_않은_닉네임이면_통과한다(String name) {
+        @Test
+        void 중복되지_않은_닉네임이면_통과한다() {
             // given
+            String name = "토끼";
+
             CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
 
             // when & then
@@ -129,10 +133,13 @@ class UserServiceTest {
     @Nested
     class 회원정보_수정 {
 
-        @AutoSource
-        @ParameterizedTest
-        void 나의_회원정보를_수정시_해당_회원의_데이터가_수정된다(String socialId, UserSocialType socialType, String name) {
+        @Test
+        void 나의_회원정보를_수정시_해당_회원의_데이터가_수정된다() {
             // given
+            String socialId = "social-id";
+            UserSocialType socialType = UserSocialType.APPLE;
+            String name = "토끼";
+
             User user = UserCreator.create(socialId, socialType, "기존의 닉네임");
             userRepository.save(user);
 
@@ -162,11 +169,10 @@ class UserServiceTest {
     @Nested
     class 회원탈퇴 {
 
-        @AutoSource
-        @ParameterizedTest
-        void 회원탈퇴시_유저의_백업데이터가_생성된다(String socialId, UserSocialType socialType, String name) {
+        @Test
+        void 회원탈퇴시_유저의_백업데이터가_생성된다() {
             // given
-            User user = UserCreator.create(socialId, socialType, name);
+            User user = UserCreator.create("social-id", UserSocialType.KAKAO, "디프만");
             userRepository.save(user);
 
             // when

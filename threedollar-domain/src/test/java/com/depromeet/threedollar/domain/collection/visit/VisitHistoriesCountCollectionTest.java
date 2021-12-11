@@ -2,8 +2,7 @@ package com.depromeet.threedollar.domain.collection.visit;
 
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
 import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryCountProjection;
-import org.javaunit.autoparams.AutoSource;
-import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -12,10 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class VisitHistoriesCountCollectionTest {
 
-    @AutoSource
-    @ParameterizedTest
-    void 가게별로_방문_성공_실패_카운트를_저장하는_컬렉션(Long storeOneId, Long storeTwoId) {
+    @Test
+    void 가게별로_방문_성공_실패_카운트를_저장하는_컬렉션() {
         // given
+        Long storeOneId = 333333L;
+        Long storeTwoId = 777777L;
+
         VisitHistoryCountProjection storeOneExistsCounts = new VisitHistoryCountProjection(storeOneId, VisitType.EXISTS, 3);
         VisitHistoryCountProjection storeOneNotExistsCounts = new VisitHistoryCountProjection(storeOneId, VisitType.NOT_EXISTS, 1);
 

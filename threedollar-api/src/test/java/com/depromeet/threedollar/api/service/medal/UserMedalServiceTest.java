@@ -4,12 +4,10 @@ import com.depromeet.threedollar.api.service.SetupUserServiceTest;
 import com.depromeet.threedollar.api.service.medal.dto.request.ActivateRepresentativeMedalRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.medal.*;
-import org.javaunit.autoparams.AutoSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -35,10 +33,13 @@ class UserMedalServiceTest extends SetupUserServiceTest {
     @Nested
     class ActivateUserMedal {
 
-        @AutoSource
-        @ParameterizedTest
-        void 장착중인_대표_칭호를_변경한다(String name, String activationIconUrl, String disableIconUrl) {
+        @Test
+        void 장착중인_대표_칭호를_변경한다() {
             // given
+            String name = "붕어빵 칭호";
+            String activationIconUrl = "iconUrl";
+            String disableIconUrl = "disableIconUrl";
+
             Medal medal = MedalCreator.create(name, activationIconUrl, disableIconUrl);
             medalRepository.save(medal);
 

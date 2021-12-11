@@ -11,7 +11,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 
     // spring cloud aws
-    implementation("org.springframework.cloud:spring-cloud-starter-aws:${springCloudAwsVersion }")
+    implementation("org.springframework.cloud:spring-cloud-starter-aws:${springCloudAwsVersion}")
 
     // embedded s3
     implementation("io.findify:s3mock_2.13:${s3MockVersion}")

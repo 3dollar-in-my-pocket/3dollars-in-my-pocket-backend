@@ -5,12 +5,7 @@ import com.depromeet.threedollar.api.service.storeimage.dto.response.StoreImageR
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImageRepository;
-import org.javaunit.autoparams.AutoSource;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -41,10 +36,12 @@ class StoreImageControllerTest extends SetupStoreControllerTest {
     @Nested
     class 특정_가게에_등록된_이미지들을_조회한다 {
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게에_등록된_사진들을_조회한다(String imageUrl1, String imageUrl2) throws Exception {
+        @Test
+        void 가게에_등록된_사진들을_조회한다() throws Exception {
             // given
+            String imageUrl1 = "imageUrl1";
+            String imageUrl2 = "imageUrl2";
+
             StoreImage storeImage1 = StoreImage.newInstance(store, testUser.getId(), imageUrl1);
             StoreImage storeImage2 = StoreImage.newInstance(store, testUser.getId(), imageUrl2);
             storeImageRepository.saveAll(List.of(storeImage1, storeImage2));
@@ -66,11 +63,10 @@ class StoreImageControllerTest extends SetupStoreControllerTest {
     @Nested
     class 가게_이미지_삭제 {
 
-        @AutoSource
-        @ParameterizedTest
-        void 가게_이미지_삭제요청_성공시_200_OK(String imageUrl) throws Exception {
+        @Test
+        void 가게_이미지_삭제요청_성공시_200_OK() throws Exception {
             // given
-            StoreImage storeImage = storeImageRepository.save(StoreImage.newInstance(store, testUser.getId(), imageUrl));
+            StoreImage storeImage = storeImageRepository.save(StoreImage.newInstance(store, testUser.getId(), "imageUrl"));
 
             // when
             ApiResponse<String> response = storeImageMockApiCaller.deleteStoreImage(storeImage.getId(), token, 200);
