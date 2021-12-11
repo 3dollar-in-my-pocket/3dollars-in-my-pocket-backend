@@ -8,12 +8,14 @@ import com.depromeet.threedollar.domain.domain.medal.MedalRepository;
 import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.function.Supplier;
 
+import static com.depromeet.threedollar.domain.config.cache.CacheType.CacheKey.USER_MEDALS;
 import static com.depromeet.threedollar.domain.domain.medal.MedalAcquisitionConditionType.NO_CONDITION;
 
 @RequiredArgsConstructor
@@ -23,6 +25,7 @@ public class AddUserMedalService {
     private final UserRepository userRepository;
     private final MedalRepository medalRepository;
 
+    @CacheEvict(key = "#userId", value = USER_MEDALS)
     @Transactional
     public void addMedalsIfSatisfyCondition(Long userId, MedalAcquisitionConditionType conditionType, Supplier<Long> countsByUserSupplier) {
         User user = UserServiceUtils.findUserById(userRepository, userId);

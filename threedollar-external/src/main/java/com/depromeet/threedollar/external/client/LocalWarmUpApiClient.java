@@ -22,4 +22,10 @@ public interface LocalWarmUpApiClient {
     @GetMapping("/api/v1/popups")
     void getPopups(@RequestParam String platform);
 
+    @GetMapping("/api/v1/medals")
+    void getMedals();
+
+    @GetMapping("/api/v2/store/menu/categories")
+    void getStoreMenuCategories();
+
 }

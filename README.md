@@ -32,7 +32,7 @@
 - Junit5, AssertJ, Mockito
 
 ### 인프라 (Production)
-![img.png](images/3dollars-architecture-20211126.png)
+![img.png](images/3dollars-architecture-20211211.png)
 
 - ECS Fargate
 - RDS (MariaDB), flyway

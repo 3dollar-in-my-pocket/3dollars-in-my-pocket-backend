@@ -3,9 +3,6 @@ GET {{host_api}}/test-token
 
 > {%
 client.global.set("AUTHORIZATION", response.body["data"]["token"])
-client.test("200 OK", function() {
-    client.assert(response.status === 200, "응답 실패");
-});
 %}
 
 
@@ -17,6 +14,14 @@ Authorization: {{AUTHORIZATION}}
 client.test("200 OK", function() {
     client.assert(response.status === 200, "응답 실패");
 });
+%}
+
+
+### 테스트를 위한 세션
+GET {{host_api}}/test-token
+
+> {%
+client.global.set("AUTHORIZATION", response.body["data"]["token"])
 %}
 
 

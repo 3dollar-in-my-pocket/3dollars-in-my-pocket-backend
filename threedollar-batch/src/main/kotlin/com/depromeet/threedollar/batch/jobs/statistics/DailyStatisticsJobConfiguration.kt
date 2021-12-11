@@ -2,6 +2,7 @@ package com.depromeet.threedollar.batch.jobs.statistics
 
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
 import com.depromeet.threedollar.batch.jobs.statistics.StatisticsMessageFormat.*
+import com.depromeet.threedollar.domain.domain.medal.MedalRepository
 import com.depromeet.threedollar.domain.domain.store.MenuRepository
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository
 import com.depromeet.threedollar.domain.domain.store.StoreRepository
@@ -28,6 +29,7 @@ class DailyStatisticsJobConfiguration(
     private val storeRepository: StoreRepository,
     private val reviewRepository: ReviewRepository,
     private val visitHistoryRepository: VisitHistoryRepository,
+    private val medalRepository: MedalRepository,
 
     private val slackApiClient: SlackApiClient
 ) {
@@ -43,6 +45,7 @@ class DailyStatisticsJobConfiguration(
             .next(countsActiveMenuStep())
             .next(countsNewReviewsStep())
             .next(countsNewVisitHistoriesStep())
+            .next(countsUserMedalGroupByMedal())
             .build()
     }
 
@@ -150,6 +153,22 @@ class DailyStatisticsJobConfiguration(
                     visitHistoryRepository.findCountsBetweenDate(yesterday, yesterday),
                     visitHistoryRepository.findCountsBetweenDate(yesterday.minusWeeks(1), yesterday)
                 )
+                RepeatStatus.FINISHED
+            }
+            .build()
+    }
+
+    @Bean
+    fun countsUserMedalGroupByMedal(): Step {
+        return stepBuilderFactory["countsUserMedalGroupByMedal"]
+            .tasklet { _, _ ->
+                val result = medalRepository.findUserMedalsCountsGroupByMedal()
+                val message = result.asSequence()
+                    .sortedByDescending { it.counts }
+                    .joinToString(separator = "\n") {
+                        COUNTS_MEDAL.messageFormat.format(it.medalName, it.counts)
+                    }
+                slackApiClient.postMessage(PostSlackMessageRequest.of(COUNTS_MEDALS.messageFormat.format(message)))
                 RepeatStatus.FINISHED
             }
             .build()

@@ -57,6 +57,17 @@ enum class StatisticsMessageFormat(
             - 오늘 %s번의 방문 인증 기록이 신규 등록되었습니다.
             - 일주일 간 %s번의 방문 인증 기록이 신규 등록되었습니다.
         """.trimIndent()
-    )
+    ),
+    COUNTS_MEDALS(
+        """
+            7. 활성화 중인 메달 정보
+            %s
+        """.trimIndent()
+    ),
+    COUNTS_MEDAL(
+        """
+            - %s: 사용자 %s명이 보유하고 있습니다.
+        """.trimIndent()
+    ),
 
 }
