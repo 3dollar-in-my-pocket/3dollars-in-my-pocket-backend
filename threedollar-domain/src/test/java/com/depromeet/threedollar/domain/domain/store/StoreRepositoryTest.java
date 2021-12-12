@@ -30,7 +30,7 @@ class StoreRepositoryTest {
         @Test
         void 반경에_있는_가게들을_조회한다() {
             // given
-            Store store = StoreCreator.createWithDefaultMenu(10000L, "storeName",37.358483,126.930947);
+            Store store = StoreCreator.createWithDefaultMenu(10000L, "storeName", 37.358483, 126.930947);
             storeRepository.save(store);
 
             // when
@@ -44,7 +44,7 @@ class StoreRepositoryTest {
         @Test
         void 반경에_있는_가게들을_조회할떄_아무_가게가_없는경우_빈_리스트를_반환한다() {
             // given
-            Store store = StoreCreator.createWithDefaultMenu(10000L, "storeName",37.328431,126.91674);
+            Store store = StoreCreator.createWithDefaultMenu(10000L, "storeName", 37.328431, 126.91674);
             storeRepository.save(store);
 
             // when
@@ -91,7 +91,7 @@ class StoreRepositoryTest {
 
     @DisplayName("내가 제보한 가게들을 스크롤 페이지네이션으로 조회한다")
     @Nested
-    class findAllByUserIdWithScroll {
+    class findAllByUserIdUsingCursor {
 
         @DisplayName("lastStoreId가 null이면 첫 스크롤 페이지를 조회한다")
         @Test
@@ -105,7 +105,7 @@ class StoreRepositoryTest {
             storeRepository.saveAll(List.of(store1, store2, store3));
 
             // when
-            List<Store> stores = storeRepository.findAllByUserIdWithScroll(userId, null, 2);
+            List<Store> stores = storeRepository.findAllByUserIdUsingCursor(userId, null, 2);
 
             // then
             assertThat(stores).hasSize(2);
@@ -125,7 +125,7 @@ class StoreRepositoryTest {
             storeRepository.saveAll(List.of(store1, store2, store3));
 
             // when
-            List<Store> stores = storeRepository.findAllByUserIdWithScroll(userId, store2.getId(), 2);
+            List<Store> stores = storeRepository.findAllByUserIdUsingCursor(userId, store2.getId(), 2);
 
             // then
             assertThat(stores).hasSize(1);

@@ -6,8 +6,8 @@ import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReview
 import com.depromeet.threedollar.api.service.review.dto.request.deprecated.RetrieveMyReviewsV2Request;
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
-import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
-import com.depromeet.threedollar.api.service.review.dto.response.deprecated.ReviewScrollV2Response;
+import com.depromeet.threedollar.api.service.review.dto.response.ReviewsCursorResponse;
+import com.depromeet.threedollar.api.service.review.dto.response.deprecated.ReviewsCursorV2Response;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -77,7 +77,7 @@ class ReviewMockApiCaller extends MockMvcUtils {
         );
     }
 
-    ApiResponse<ReviewScrollResponse> retrieveMyReviewHistories(RetrieveMyReviewsRequest request, String token, int expectedStatus) throws Exception {
+    ApiResponse<ReviewsCursorResponse> retrieveMyReviewHistories(RetrieveMyReviewsRequest request, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v3/store/reviews/me")
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))
@@ -95,7 +95,7 @@ class ReviewMockApiCaller extends MockMvcUtils {
     }
 
     @Deprecated
-    ApiResponse<ReviewScrollV2Response> retrieveMyReviewHistoriesV2(RetrieveMyReviewsV2Request request, String token, int expectedStatus) throws Exception {
+    ApiResponse<ReviewsCursorV2Response> retrieveMyReviewHistoriesV2(RetrieveMyReviewsV2Request request, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/store/reviews/me")
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))

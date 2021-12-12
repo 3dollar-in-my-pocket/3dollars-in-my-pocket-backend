@@ -4,7 +4,7 @@ import com.depromeet.threedollar.api.controller.SetupStoreControllerTest;
 import com.depromeet.threedollar.api.controller.medal.AddUserMedalEventListener;
 import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
-import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoriesScrollResponse;
+import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoriesCursorResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreCreator;
@@ -96,7 +96,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(2, null);
 
             // when
-            ApiResponse<VisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+            ApiResponse<VisitHistoriesCursorResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
 
             // then
             assertAll(
@@ -118,7 +118,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(1, null);
 
             // when
-            ApiResponse<VisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+            ApiResponse<VisitHistoriesCursorResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
 
             // then
             assertAll(
@@ -139,7 +139,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(2, visitHistory2.getId());
 
             // when
-            ApiResponse<VisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+            ApiResponse<VisitHistoriesCursorResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
 
             // then
             assertAll(
@@ -155,7 +155,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(2, null);
 
             // when
-            ApiResponse<VisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+            ApiResponse<VisitHistoriesCursorResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
 
             // then
             assertAll(
@@ -176,7 +176,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(2, null);
 
             // when
-            ApiResponse<VisitHistoriesScrollResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
+            ApiResponse<VisitHistoriesCursorResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
 
             // then
             assertAll(

@@ -7,13 +7,13 @@ import com.depromeet.threedollar.api.service.store.dto.request.deprecated.Retrie
 import com.depromeet.threedollar.api.service.store.dto.request.deprecated.RetrieveStoreGroupByCategoryV2Request;
 import com.depromeet.threedollar.api.service.store.dto.response.StoreDetailResponse;
 import com.depromeet.threedollar.api.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
-import com.depromeet.threedollar.api.service.store.dto.response.StoresScrollResponse;
+import com.depromeet.threedollar.api.service.store.dto.response.StoresCursorResponse;
 import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByDistanceV2Response;
 import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByReviewV2Response;
-import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresScrollV2Response;
+import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresCursorV2Response;
 import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
-import com.depromeet.threedollar.domain.collection.common.ScrollPaginationCollection;
-import com.depromeet.threedollar.domain.collection.user.UserCacheCollection;
+import com.depromeet.threedollar.domain.collection.common.CursorSupporter;
+import com.depromeet.threedollar.domain.collection.user.UserDictionary;
 import com.depromeet.threedollar.domain.collection.visit.VisitHistoryCounter;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
@@ -65,9 +65,9 @@ public class StoreRetrieveService {
         List<Review> reviews = reviewRepository.findAllByStoreId(request.getStoreId());
         List<StoreImage> storeImages = storeImageRepository.findAllByStoreId(request.getStoreId());
         List<VisitHistoryWithUserProjection> visitHistories = visitHistoryRepository.findAllVisitWithUserByStoreIdAfterDate(request.getStoreId(), request.getStartDate());
-        UserCacheCollection users = UserCacheCollection.of(userRepository.findAllByUserId(assembleUserIds(reviews, visitHistories, store)));
+        UserDictionary userDictionary = UserDictionary.of(userRepository.findAllByUserId(assembleUserIds(reviews, visitHistories, store)));
         VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(Collections.singletonList(store));
-        return StoreDetailResponse.of(store, request.getLatitude(), request.getLongitude(), storeImages, users, reviews, visitHistoriesCounter, visitHistories);
+        return StoreDetailResponse.of(store, request.getLatitude(), request.getLongitude(), storeImages, userDictionary, reviews, visitHistoriesCounter, visitHistories);
     }
 
     private List<Long> assembleUserIds(List<Review> reviews, List<VisitHistoryWithUserProjection> visitHistories, Store store) {
@@ -84,21 +84,21 @@ public class StoreRetrieveService {
     }
 
     @Transactional(readOnly = true)
-    public StoresScrollResponse retrieveMyReportedStoreHistories(RetrieveMyStoresRequest request, Long userId) {
-        List<Store> storesWithNextCursor = storeRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
-        ScrollPaginationCollection<Store> storesScroll = ScrollPaginationCollection.of(storesWithNextCursor, request.getSize());
-        VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(storesScroll.getCurrentScrollItems());
-        return StoresScrollResponse.of(storesScroll, visitHistoriesCounter, storeRepository.findCountsByUserId(userId));
+    public StoresCursorResponse retrieveMyReportedStoreHistories(RetrieveMyStoresRequest request, Long userId) {
+        List<Store> storesWithNextCursor = storeRepository.findAllByUserIdUsingCursor(userId, request.getCursor(), request.getSize() + 1);
+        CursorSupporter<Store> storesCursor = CursorSupporter.of(storesWithNextCursor, request.getSize());
+        VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(storesCursor.getItemsInCurrentCursor());
+        return StoresCursorResponse.of(storesCursor, visitHistoriesCounter, storeRepository.findCountsByUserId(userId));
     }
 
     @Deprecated
     @Transactional(readOnly = true)
-    public StoresScrollV2Response retrieveMyReportedStoreHistoriesV2(RetrieveMyStoresV2Request request, Long userId) {
-        List<Store> storesWithNextCursor = storeRepository.findAllActiveByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
-        ScrollPaginationCollection<Store> storesScroll = ScrollPaginationCollection.of(storesWithNextCursor, request.getSize());
-        VisitHistoryCounter visitHistoryCountsCollection = findVisitHistoriesCountByStoreIdsInDuration(storesScroll.getCurrentScrollItems());
+    public StoresCursorV2Response retrieveMyReportedStoreHistoriesV2(RetrieveMyStoresV2Request request, Long userId) {
+        List<Store> storesWithNextCursor = storeRepository.findAllActiveByUserIdUsingCursor(userId, request.getCursor(), request.getSize() + 1);
+        CursorSupporter<Store> storeCursor = CursorSupporter.of(storesWithNextCursor, request.getSize());
+        VisitHistoryCounter visitHistoryCountsCollection = findVisitHistoriesCountByStoreIdsInDuration(storeCursor.getItemsInCurrentCursor());
         long totalElements = Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> storeRepository.findActiveCountsByUserId(userId));
-        return StoresScrollV2Response.of(storesScroll, visitHistoryCountsCollection, totalElements, request.getLatitude(), request.getLongitude());
+        return StoresCursorV2Response.of(storeCursor, visitHistoryCountsCollection, totalElements, request.getLatitude(), request.getLongitude());
     }
 
     @Deprecated

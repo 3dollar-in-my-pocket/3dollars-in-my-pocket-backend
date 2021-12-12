@@ -3,7 +3,7 @@ package com.depromeet.threedollar.admin.controller.store
 import com.depromeet.threedollar.admin.controller.ControllerTestUtils
 import com.depromeet.threedollar.admin.service.store.dto.response.ReportedStoresResponse
 import com.depromeet.threedollar.admin.service.store.dto.response.StoreInfoResponse
-import com.depromeet.threedollar.admin.service.store.dto.response.StoreScrollResponse
+import com.depromeet.threedollar.admin.service.store.dto.response.StoresCursorResponse
 import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.domain.domain.store.Store
 import com.depromeet.threedollar.domain.domain.store.StoreCreator
@@ -192,7 +192,7 @@ internal class StoreControllerTest(
             status { isOk() }
         }.andDo {
             print()
-        }.andReturn().response.contentAsString, object : TypeReference<ApiResponse<StoreScrollResponse>>() {})
+        }.andReturn().response.contentAsString, object : TypeReference<ApiResponse<StoresCursorResponse>>() {})
 
         // then
         assertAll({
@@ -225,7 +225,7 @@ internal class StoreControllerTest(
             status { isOk() }
         }.andDo {
             print()
-        }.andReturn().response.contentAsString, object : TypeReference<ApiResponse<StoreScrollResponse>>() {})
+        }.andReturn().response.contentAsString, object : TypeReference<ApiResponse<StoresCursorResponse>>() {})
 
         // then
         assertAll({

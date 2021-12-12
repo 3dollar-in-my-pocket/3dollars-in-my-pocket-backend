@@ -60,7 +60,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
     }
 
     @Override
-    public List<VisitHistory> findAllByUserIdWithScroll(Long userId, Long lastHistoryId, int size) {
+    public List<VisitHistory> findAllByUserIdUsingCursor(Long userId, Long lastHistoryId, int size) {
         List<Long> visitHistoriesIds = queryFactory.select(visitHistory.id)
             .from(visitHistory)
             .where(

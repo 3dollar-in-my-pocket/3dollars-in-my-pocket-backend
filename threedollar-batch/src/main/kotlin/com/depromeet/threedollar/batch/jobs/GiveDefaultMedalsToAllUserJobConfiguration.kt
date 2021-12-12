@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.batch.jobs
 
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
-import com.depromeet.threedollar.domain.collection.medal.MedalUserObtainCollection
+import com.depromeet.threedollar.domain.collection.medal.MedalObtainCollection
 import com.depromeet.threedollar.domain.domain.medal.MedalAcquisitionConditionType
 import com.depromeet.threedollar.domain.domain.medal.MedalRepository
 import com.depromeet.threedollar.domain.domain.user.User
@@ -56,13 +56,13 @@ class GiveDefaultMedalsToAllUserJobConfiguration(
     @Bean
     fun giveDefaultMedalsItemProcessor(): ItemProcessor<User, User> {
         return ItemProcessor<User, User> { user ->
-            val collection = MedalUserObtainCollection.of(
+            val medalObtainCollection = MedalObtainCollection.of(
                 medalRepository.findAllByConditionType(MedalAcquisitionConditionType.NO_CONDITION),
                 MedalAcquisitionConditionType.NO_CONDITION,
                 user
             )
-            if (collection.hasMoreMedalsCanBeObtained()) {
-                val medalsSatisfyCondition = collection.satisfyMedalsCanBeObtainedByDefault
+            if (medalObtainCollection.hasMoreMedalsCanBeObtained()) {
+                val medalsSatisfyCondition = medalObtainCollection.satisfyMedalsCanBeObtainedByDefault
                 user.addMedals(medalsSatisfyCondition)
                 user.updateActivatedMedal(medalsSatisfyCondition[0].id)
             }

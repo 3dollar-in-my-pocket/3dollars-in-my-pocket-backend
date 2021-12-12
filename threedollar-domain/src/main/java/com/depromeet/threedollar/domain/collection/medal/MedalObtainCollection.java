@@ -12,14 +12,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class MedalUserObtainCollection {
+public class MedalObtainCollection {
 
     private final List<Medal> medalsUserNotHeld;
     private final MedalAcquisitionConditionType conditionType;
 
-    public static MedalUserObtainCollection of(List<Medal> medals, MedalAcquisitionConditionType conditionType, @NotNull User user) {
+    public static MedalObtainCollection of(List<Medal> medals, MedalAcquisitionConditionType conditionType, @NotNull User user) {
         List<Medal> userNotHeldMedals = filterMedalsUserNotHeld(medals, user);
-        return new MedalUserObtainCollection(userNotHeldMedals, conditionType);
+        return new MedalObtainCollection(userNotHeldMedals, conditionType);
     }
 
     private static List<Medal> filterMedalsUserNotHeld(List<Medal> medals, @NotNull User user) {

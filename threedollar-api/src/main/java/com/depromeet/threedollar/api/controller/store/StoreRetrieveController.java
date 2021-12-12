@@ -9,7 +9,7 @@ import com.depromeet.threedollar.api.service.store.dto.request.deprecated.Retrie
 import com.depromeet.threedollar.api.service.store.dto.response.*;
 import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByDistanceV2Response;
 import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByReviewV2Response;
-import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresScrollV2Response;
+import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresCursorV2Response;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +40,7 @@ public class StoreRetrieveController {
     @ApiOperation("[인증] 마이페이지 - 내가 제보한 가게 목록들을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 O)")
     @Auth
     @GetMapping("/api/v3/stores/me")
-    public ApiResponse<StoresScrollResponse> retrieveMyReportedStoreHistories(@Valid RetrieveMyStoresRequest request, @UserId Long userId) {
+    public ApiResponse<StoresCursorResponse> retrieveMyReportedStoreHistories(@Valid RetrieveMyStoresRequest request, @UserId Long userId) {
         return ApiResponse.success(storeRetrieveService.retrieveMyReportedStoreHistories(request, userId));
     }
 
@@ -53,7 +53,7 @@ public class StoreRetrieveController {
     @ApiOperation("[인증] 마이페이지 - 내가 제보한 가게 목록들을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 X)")
     @Auth
     @GetMapping("/api/v2/stores/me")
-    public ApiResponse<StoresScrollV2Response> retrieveMyReportedStoreHistoriesV2(@Valid RetrieveMyStoresV2Request request, @UserId Long userId) {
+    public ApiResponse<StoresCursorV2Response> retrieveMyReportedStoreHistoriesV2(@Valid RetrieveMyStoresV2Request request, @UserId Long userId) {
         return ApiResponse.success(storeRetrieveService.retrieveMyReportedStoreHistoriesV2(request, userId));
     }
 

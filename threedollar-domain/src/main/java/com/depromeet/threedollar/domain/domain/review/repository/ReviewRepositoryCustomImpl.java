@@ -84,7 +84,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
     }
 
     @Override
-    public List<Review> findAllByUserIdWithScroll(Long userId, Long lastStoreId, int size) {
+    public List<Review> findAllByUserIdUsingCursor(Long userId, Long lastStoreId, int size) {
         return queryFactory.selectFrom(review)
             .where(
                 review.userId.eq(userId),
@@ -98,7 +98,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
 
     @Deprecated
     @Override
-    public List<Review> findAllActiveByUserIdWithScroll(Long userId, Long lastStoreId, int size) {
+    public List<Review> findAllActiveByUserIdUsingCursor(Long userId, Long lastStoreId, int size) {
         List<Long> reviewIds = queryFactory.select(review.id)
             .from(review)
             .innerJoin(store).on(review.storeId.eq(store.id))

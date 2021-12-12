@@ -9,8 +9,8 @@ import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReview
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.deprecated.RetrieveMyReviewsV2Request;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
-import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
-import com.depromeet.threedollar.api.service.review.dto.response.deprecated.ReviewScrollV2Response;
+import com.depromeet.threedollar.api.service.review.dto.response.ReviewsCursorResponse;
+import com.depromeet.threedollar.api.service.review.dto.response.deprecated.ReviewsCursorV2Response;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.event.review.ReviewChangedEvent;
 import com.depromeet.threedollar.domain.event.review.ReviewCreatedEvent;
@@ -61,7 +61,7 @@ public class ReviewController {
     @ApiOperation("[인증] 마이 페이지 - 내가 작성한 리뷰 목록을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 O)")
     @Auth
     @GetMapping("/api/v3/store/reviews/me")
-    public ApiResponse<ReviewScrollResponse> retrieveMyReviewHistories(@Valid RetrieveMyReviewsRequest request, @UserId Long userId) {
+    public ApiResponse<ReviewsCursorResponse> retrieveMyReviewHistories(@Valid RetrieveMyReviewsRequest request, @UserId Long userId) {
         return ApiResponse.success(reviewRetrieveService.retrieveMyReviewHistories(request, userId));
     }
 
@@ -74,7 +74,7 @@ public class ReviewController {
     @ApiOperation("[인증] 마이 페이지 - 내가 작성한 리뷰 목록을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 X)")
     @Auth
     @GetMapping("/api/v2/store/reviews/me")
-    public ApiResponse<ReviewScrollV2Response> retrieveMyReviewHistoriesV2(@Valid RetrieveMyReviewsV2Request request, @UserId Long userId) {
+    public ApiResponse<ReviewsCursorV2Response> retrieveMyReviewHistoriesV2(@Valid RetrieveMyReviewsV2Request request, @UserId Long userId) {
         return ApiResponse.success(reviewRetrieveService.retrieveMyReviewHistoriesV2(request, userId));
     }
 

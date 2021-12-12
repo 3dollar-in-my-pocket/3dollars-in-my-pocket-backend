@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.service.medal;
 
 import com.depromeet.threedollar.api.service.user.UserServiceUtils;
-import com.depromeet.threedollar.domain.collection.medal.MedalUserObtainCollection;
+import com.depromeet.threedollar.domain.collection.medal.MedalObtainCollection;
 import com.depromeet.threedollar.domain.domain.medal.Medal;
 import com.depromeet.threedollar.domain.domain.medal.MedalAcquisitionConditionType;
 import com.depromeet.threedollar.domain.domain.medal.MedalRepository;
@@ -29,21 +29,21 @@ public class AddUserMedalService {
     @Transactional
     public void addMedalsIfSatisfyCondition(Long userId, MedalAcquisitionConditionType conditionType, Supplier<Long> countsByUserSupplier) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
-        MedalUserObtainCollection collection = MedalUserObtainCollection.of(medalRepository.findAllByConditionType(conditionType), conditionType, user);
-        if (collection.hasNoMoreMedalsCanBeObtained()) {
+        MedalObtainCollection medalObtainCollection = MedalObtainCollection.of(medalRepository.findAllByConditionType(conditionType), conditionType, user);
+        if (medalObtainCollection.hasNoMoreMedalsCanBeObtained()) {
             return;
         }
-        user.addMedals(collection.getSatisfyMedalsCanBeObtained(countsByUserSupplier.get()));
+        user.addMedals(medalObtainCollection.getSatisfyMedalsCanBeObtained(countsByUserSupplier.get()));
     }
 
     @Transactional
     public void addAndActivateDefaultMedals(Long userId) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
-        MedalUserObtainCollection collection = MedalUserObtainCollection.of(medalRepository.findAllByConditionType(NO_CONDITION), NO_CONDITION, user);
-        if (collection.hasNoMoreMedalsCanBeObtained()) {
+        MedalObtainCollection medalObtainCollection = MedalObtainCollection.of(medalRepository.findAllByConditionType(NO_CONDITION), NO_CONDITION, user);
+        if (medalObtainCollection.hasNoMoreMedalsCanBeObtained()) {
             return;
         }
-        List<Medal> medalSatisfyCondition = collection.getSatisfyMedalsCanBeObtainedByDefault();
+        List<Medal> medalSatisfyCondition = medalObtainCollection.getSatisfyMedalsCanBeObtainedByDefault();
         user.addMedals(medalSatisfyCondition);
         user.updateActivatedMedal(medalSatisfyCondition.get(0).getId());
     }
