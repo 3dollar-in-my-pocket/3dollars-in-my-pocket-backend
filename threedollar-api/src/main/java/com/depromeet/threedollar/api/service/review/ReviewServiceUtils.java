@@ -5,12 +5,14 @@ import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import static com.depromeet.threedollar.common.exception.ErrorCode.NOT_FOUND_REVIEW_EXCEPTION;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class ReviewServiceUtils {
 
+    @NotNull
     static Review findReviewByIdAndUserId(ReviewRepository reviewRepository, Long reviewId, Long userId) {
         Review review = reviewRepository.findReviewByIdAndUserId(reviewId, userId);
         if (review == null) {

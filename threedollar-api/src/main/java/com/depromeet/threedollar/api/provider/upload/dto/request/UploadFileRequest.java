@@ -1,9 +1,11 @@
 package com.depromeet.threedollar.api.provider.upload.dto.request;
 
+import org.jetbrains.annotations.Nullable;
+
 public interface UploadFileRequest {
 
-    void validateAvailableFileType(String contentType);
+    void validateAvailableFileType(@Nullable String contentType);
 
-    String createFileName(String originalFileName);
+    String createFileName(@Nullable String originalFileName);
 
 }

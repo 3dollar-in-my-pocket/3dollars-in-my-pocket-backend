@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,18 +29,18 @@ public class ReviewScrollResponse {
         this.nextCursor = nextCursor;
     }
 
-    public static ReviewScrollResponse of(ScrollPaginationCollection<Review> reviewsScroll, StoreCacheCollection stores, User user) {
+    public static ReviewScrollResponse of(@NotNull ScrollPaginationCollection<Review> reviewsScroll, @NotNull StoreCacheCollection stores, @NotNull User user) {
         if (reviewsScroll.isLastScroll()) {
             return newLastScroll(reviewsScroll.getCurrentScrollItems(), stores, user);
         }
         return newScrollHasNext(reviewsScroll.getCurrentScrollItems(), stores, user, reviewsScroll.getNextCursor().getId());
     }
 
-    private static ReviewScrollResponse newLastScroll(List<Review> reviews, StoreCacheCollection stores, User user) {
+    private static ReviewScrollResponse newLastScroll(List<Review> reviews, @NotNull StoreCacheCollection stores, @NotNull User user) {
         return newScrollHasNext(reviews, stores, user, LAST_CURSOR);
     }
 
-    private static ReviewScrollResponse newScrollHasNext(List<Review> reviews, StoreCacheCollection stores, User user, long nextCursor) {
+    private static ReviewScrollResponse newScrollHasNext(List<Review> reviews, @NotNull StoreCacheCollection stores, @NotNull User user, long nextCursor) {
         List<ReviewDetailResponse> contents = reviews.stream()
             .map(review -> ReviewDetailResponse.of(review, stores.getStore(review.getStoreId()), user))
             .collect(Collectors.toList());

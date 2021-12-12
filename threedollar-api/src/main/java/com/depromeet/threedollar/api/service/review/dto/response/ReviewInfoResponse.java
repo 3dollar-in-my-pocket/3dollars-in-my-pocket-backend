@@ -3,6 +3,7 @@ package com.depromeet.threedollar.api.service.review.dto.response;
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 
 @ToString
 @Getter
@@ -22,7 +23,7 @@ public class ReviewInfoResponse extends AuditingTimeResponse {
         this.rating = rating;
     }
 
-    public static ReviewInfoResponse of(Review review) {
+    public static ReviewInfoResponse of(@NotNull Review review) {
         ReviewInfoResponse response = ReviewInfoResponse.builder()
             .reviewId(review.getId())
             .storeId(review.getStoreId())

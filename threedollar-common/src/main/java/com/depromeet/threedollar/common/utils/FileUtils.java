@@ -3,6 +3,7 @@ package com.depromeet.threedollar.common.utils;
 import com.depromeet.threedollar.common.exception.model.ValidationException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import static com.depromeet.threedollar.common.exception.ErrorCode.VALIDATION_FILE_TYPE_EXCEPTION;
 
@@ -16,7 +17,7 @@ public class FileUtils {
      * @param fileName ex) image.png
      * @return ex) .png
      */
-    public static String getFileExtension(String fileName) {
+    public static String getFileExtension(@NotNull String fileName) {
         try {
             String extension = fileName.substring(fileName.lastIndexOf("."));
             if (extension.length() < 2) {

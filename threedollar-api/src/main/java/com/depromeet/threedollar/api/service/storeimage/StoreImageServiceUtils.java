@@ -5,12 +5,14 @@ import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImageRepository;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import static com.depromeet.threedollar.common.exception.ErrorCode.NOT_FOUND_STORE_IMAGE_EXCEPTION;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class StoreImageServiceUtils {
 
+    @NotNull
     static StoreImage findStoreImageById(StoreImageRepository storeImageRepository, Long storeImageId) {
         StoreImage storeImage = storeImageRepository.findStoreImageById(storeImageId);
         if (storeImage == null) {

@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -35,7 +36,8 @@ public class WithdrawalUser extends AuditingTimeEntity {
         this.userCreatedAt = userCreatedAt;
     }
 
-    public static WithdrawalUser newInstance(User signOutUser) {
+    @NotNull
+    public static WithdrawalUser newInstance(@NotNull User signOutUser) {
         return WithdrawalUser.builder()
             .userId(signOutUser.getId())
             .name(signOutUser.getName())

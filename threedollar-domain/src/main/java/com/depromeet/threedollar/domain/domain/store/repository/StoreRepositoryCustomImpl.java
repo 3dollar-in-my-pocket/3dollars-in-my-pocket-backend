@@ -9,6 +9,7 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
+    @Nullable
     @Override
     public Store findStoreById(Long storeId) {
         return queryFactory.selectFrom(store)
@@ -38,6 +40,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
      * default_batch_fetch_size: 1000 으로 설정하며
      * 1000개 칼럼씩 WHERE store_id IN (...)으로 조회해서 N+1 문제를 해결하는 중.
      */
+    @Nullable
     @Override
     public Store findStoreByIdFetchJoinMenu(Long storeId) {
         return queryFactory.selectFrom(store)

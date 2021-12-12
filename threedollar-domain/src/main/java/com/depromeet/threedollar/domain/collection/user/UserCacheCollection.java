@@ -3,6 +3,7 @@ package com.depromeet.threedollar.domain.collection.user;
 import com.depromeet.threedollar.domain.domain.user.User;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ public class UserCacheCollection {
             .collect(Collectors.toMap(User::getId, user -> user)));
     }
 
+    @Nullable
     public User getUser(Long userId) {
         return cachedUser.get(userId);
     }

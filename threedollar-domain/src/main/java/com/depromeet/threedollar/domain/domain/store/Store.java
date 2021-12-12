@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.util.*;
@@ -213,6 +214,7 @@ public class Store extends AuditingTimeEntity {
         return MathUtils.round(rating, 1);
     }
 
+    @NotNull
     public String getName() {
         if (isDeleted()) {
             return DELETE_STORE_NAME;

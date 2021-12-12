@@ -5,6 +5,7 @@ import com.depromeet.threedollar.domain.domain.faq.FaqCategory;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class FaqRepositoryCustomImpl implements FaqRepositoryCustom {
         return faq.category.eq(category);
     }
 
+    @Nullable
     @Override
     public Faq findFaqById(long faqId) {
         return queryFactory.selectFrom(faq)

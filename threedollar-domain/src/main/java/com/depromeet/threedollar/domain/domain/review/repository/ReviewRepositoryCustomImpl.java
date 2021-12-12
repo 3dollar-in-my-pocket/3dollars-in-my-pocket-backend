@@ -6,6 +6,7 @@ import com.depromeet.threedollar.domain.domain.store.StoreStatus;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.LockModeType;
@@ -21,6 +22,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
+    @Nullable
     @Override
     public Review findReviewByIdAndUserId(Long reviewId, Long userId) {
         return queryFactory.selectFrom(review)

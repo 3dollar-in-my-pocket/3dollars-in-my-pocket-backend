@@ -7,6 +7,7 @@ import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.user.User;
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 
 @ToString
 @Getter
@@ -30,7 +31,7 @@ public class ReviewDetailResponse extends AuditingTimeResponse {
         this.store = store;
     }
 
-    public static ReviewDetailResponse of(Review review, Store store, User user) {
+    public static ReviewDetailResponse of(@NotNull Review review, @NotNull Store store, @NotNull User user) {
         ReviewDetailResponse response = ReviewDetailResponse.builder()
             .reviewId(review.getId())
             .rating(review.getRating())
