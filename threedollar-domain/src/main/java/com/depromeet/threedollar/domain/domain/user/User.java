@@ -47,7 +47,6 @@ public class User extends AuditingTimeEntity {
         this.name = name;
     }
 
-    @NotNull
     public static User newInstance(String socialId, UserSocialType socialType, String name) {
         return new User(socialId, socialType, name);
     }

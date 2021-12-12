@@ -2,6 +2,7 @@ package com.depromeet.threedollar.domain.collection.common;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class ScrollPaginationCollection<T> {
         return this.itemsWithNextCursor.subList(0, countPerScroll);
     }
 
+    @NotNull
     public T getNextCursor() {
         return itemsWithNextCursor.get(countPerScroll - 1);
     }

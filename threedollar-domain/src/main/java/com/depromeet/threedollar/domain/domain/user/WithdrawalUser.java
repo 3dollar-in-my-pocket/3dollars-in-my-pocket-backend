@@ -36,7 +36,6 @@ public class WithdrawalUser extends AuditingTimeEntity {
         this.userCreatedAt = userCreatedAt;
     }
 
-    @NotNull
     public static WithdrawalUser newInstance(@NotNull User signOutUser) {
         return WithdrawalUser.builder()
             .userId(signOutUser.getId())

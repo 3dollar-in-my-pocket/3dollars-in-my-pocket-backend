@@ -3,6 +3,7 @@ package com.depromeet.threedollar.domain.collection.store;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ public class StoreCacheCollection {
             .collect(Collectors.toMap(Store::getId, store -> store)));
     }
 
+    @NotNull
     public Store getStore(Long storeId) {
         return cachedStore.get(storeId);
     }

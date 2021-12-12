@@ -29,11 +29,11 @@ public final class VisitHistoryCounter {
         return new VisitHistoryCounter(visitHistoryWithCounts);
     }
 
-    public Long getStoreExistsVisitsCount(Long storeId) {
+    public long getStoreExistsVisitsCount(Long storeId) {
         return existCounter.getOrDefault(storeId, 0L);
     }
 
-    public Long getStoreNotExistsVisitsCount(Long storeId) {
+    public long getStoreNotExistsVisitsCount(Long storeId) {
         return notExistCounter.getOrDefault(storeId, 0L);
     }
 
