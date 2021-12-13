@@ -11,7 +11,7 @@ import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
-import com.depromeet.threedollar.domain.collection.user.UserCacheCollection;
+import com.depromeet.threedollar.domain.collection.user.UserDictionary;
 import com.depromeet.threedollar.domain.collection.visit.VisitHistoryCounter;
 import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithUserProjection;
 import lombok.*;
@@ -64,7 +64,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
         this.visitHistory = visitHistory;
     }
 
-    public static StoreDetailResponse of(Store store, double latitude, double longitude, List<StoreImage> storeImages, UserCacheCollection userCacheCollection,
+    public static StoreDetailResponse of(Store store, double latitude, double longitude, List<StoreImage> storeImages, UserDictionary userDictionary,
                                          List<Review> reviews, VisitHistoryCounter visitHistoriesCollection, List<VisitHistoryWithUserProjection> visitHistories) {
         StoreDetailResponse response = StoreDetailResponse.builder()
             .storeId(store.getId())
@@ -74,7 +74,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
             .storeType(store.getType())
             .rating(store.getRating())
             .distance(LocationDistanceUtils.getDistance(store.getLatitude(), store.getLongitude(), latitude, longitude))
-            .user(UserInfoResponse.of(userCacheCollection.getUser(store.getUserId())))
+            .user(UserInfoResponse.of(userDictionary.getUser(store.getUserId())))
             .visitHistory(VisitHistoryCountsResponse.of(visitHistoriesCollection.getStoreExistsVisitsCount(store.getId()), visitHistoriesCollection.getStoreNotExistsVisitsCount(store.getId())))
             .build();
         response.categories.addAll(store.getMenuCategoriesSortedByCounts());
@@ -82,19 +82,19 @@ public class StoreDetailResponse extends AuditingTimeResponse {
         response.paymentMethods.addAll(store.getPaymentMethodTypes());
         response.images.addAll(toImageResponse(storeImages));
         response.menus.addAll(toMenuResponse(store.getMenus()));
-        response.reviews.addAll(toReviewResponse(reviews, userCacheCollection));
-        response.visitHistories.addAll(toVisitHistoryResponse(visitHistories, userCacheCollection));
+        response.reviews.addAll(toReviewResponse(reviews, userDictionary));
+        response.visitHistories.addAll(toVisitHistoryResponse(visitHistories, userDictionary));
         response.setBaseTime(store);
         return response;
     }
 
-    private static List<VisitHistoryWithUserResponse> toVisitHistoryResponse(List<VisitHistoryWithUserProjection> visitHistories, UserCacheCollection userCacheCollection) {
+    private static List<VisitHistoryWithUserResponse> toVisitHistoryResponse(List<VisitHistoryWithUserProjection> visitHistories, UserDictionary userCacheCollection) {
         return visitHistories.stream()
             .map(visitHistory -> VisitHistoryWithUserResponse.of(visitHistory, userCacheCollection.getUser(visitHistory.getUserId())))
             .collect(Collectors.toList());
     }
 
-    private static List<ReviewWithUserResponse> toReviewResponse(List<Review> reviews, UserCacheCollection userCacheCollection) {
+    private static List<ReviewWithUserResponse> toReviewResponse(List<Review> reviews, UserDictionary userCacheCollection) {
         return reviews.stream()
             .map(review -> ReviewWithUserResponse.of(review, userCacheCollection.getUser(review.getUserId())))
             .sorted(Comparator.comparing(ReviewWithUserResponse::getReviewId).reversed())

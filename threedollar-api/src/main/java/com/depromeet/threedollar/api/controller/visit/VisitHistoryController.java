@@ -5,7 +5,7 @@ import com.depromeet.threedollar.api.config.resolver.UserId;
 import com.depromeet.threedollar.api.service.visit.VisitHistoryService;
 import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
-import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoriesScrollResponse;
+import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoriesCursorResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.event.visit.VisitHistoryAddedEvent;
 import io.swagger.annotations.ApiOperation;
@@ -38,7 +38,7 @@ public class VisitHistoryController {
     @ApiOperation("[인증] 마이페이지 - 내가 추가한 방문 인증 목록을 스크롤 페이지네이션으로 조회합니다.")
     @Auth
     @GetMapping("/api/v2/store/visits/me")
-    public ApiResponse<VisitHistoriesScrollResponse> retrieveMyVisitHistories(@Valid RetrieveMyVisitHistoriesRequest request, @UserId Long userId) {
+    public ApiResponse<VisitHistoriesCursorResponse> retrieveMyVisitHistories(@Valid RetrieveMyVisitHistoriesRequest request, @UserId Long userId) {
         return ApiResponse.success(visitHistoryService.retrieveMyVisitHistories(request, userId));
     }
 

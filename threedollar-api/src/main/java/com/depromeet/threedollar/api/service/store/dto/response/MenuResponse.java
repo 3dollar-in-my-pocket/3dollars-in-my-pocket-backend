@@ -4,6 +4,7 @@ import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.domain.domain.store.Menu;
 import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 
 @ToString
 @Getter
@@ -23,7 +24,7 @@ public class MenuResponse extends AuditingTimeResponse {
         this.price = price;
     }
 
-    public static MenuResponse of(Menu menu) {
+    public static MenuResponse of(@NotNull Menu menu) {
         MenuResponse response = MenuResponse.builder()
             .menuId(menu.getId())
             .category(menu.getCategory())

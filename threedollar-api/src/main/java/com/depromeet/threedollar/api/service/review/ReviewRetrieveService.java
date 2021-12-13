@@ -2,13 +2,13 @@ package com.depromeet.threedollar.api.service.review;
 
 import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.deprecated.RetrieveMyReviewsV2Request;
-import com.depromeet.threedollar.api.service.review.dto.response.ReviewScrollResponse;
-import com.depromeet.threedollar.api.service.review.dto.response.deprecated.ReviewScrollV2Response;
+import com.depromeet.threedollar.api.service.review.dto.response.ReviewsCursorResponse;
+import com.depromeet.threedollar.api.service.review.dto.response.deprecated.ReviewsCursorV2Response;
 import com.depromeet.threedollar.api.service.user.UserServiceUtils;
-import com.depromeet.threedollar.domain.collection.common.ScrollPaginationCollection;
+import com.depromeet.threedollar.domain.collection.common.CursorSupporter;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
-import com.depromeet.threedollar.domain.collection.store.StoreCacheCollection;
+import com.depromeet.threedollar.domain.collection.store.StoreDictionary;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserRepository;
@@ -29,29 +29,29 @@ public class ReviewRetrieveService {
     private final StoreRepository storeRepository;
 
     @Transactional(readOnly = true)
-    public ReviewScrollResponse retrieveMyReviewHistories(RetrieveMyReviewsRequest request, Long userId) {
+    public ReviewsCursorResponse retrieveMyReviewHistories(RetrieveMyReviewsRequest request, Long userId) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
-        List<Review> reviewsWithNextCursor = reviewRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
-        ScrollPaginationCollection<Review> reviewsScroll = ScrollPaginationCollection.of(reviewsWithNextCursor, request.getSize());
-        StoreCacheCollection stores = findStoresByReviews(reviewsScroll.getCurrentScrollItems());
-        return ReviewScrollResponse.of(reviewsScroll, stores, user);
+        List<Review> reviewsWithNextCursor = reviewRepository.findAllByUserIdUsingCursor(userId, request.getCursor(), request.getSize() + 1);
+        CursorSupporter<Review> reviewsCursor = CursorSupporter.of(reviewsWithNextCursor, request.getSize());
+        StoreDictionary storeDictionary = findStoresByReviews(reviewsCursor.getItemsInCurrentCursor());
+        return ReviewsCursorResponse.of(reviewsCursor, storeDictionary, user);
     }
 
     @Deprecated
     @Transactional(readOnly = true)
-    public ReviewScrollV2Response retrieveMyReviewHistoriesV2(RetrieveMyReviewsV2Request request, Long userId) {
+    public ReviewsCursorV2Response retrieveMyReviewHistoriesV2(RetrieveMyReviewsV2Request request, Long userId) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
-        List<Review> reviewsWithNextCursor = reviewRepository.findAllActiveByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
-        ScrollPaginationCollection<Review> reviewsScroll = ScrollPaginationCollection.of(reviewsWithNextCursor, request.getSize());
-        StoreCacheCollection stores = findStoresByReviews(reviewsScroll.getCurrentScrollItems());
-        return ReviewScrollV2Response.of(reviewsScroll, stores, user, Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> reviewRepository.findActiveCountsByUserId(userId)));
+        List<Review> reviewsWithNextCursor = reviewRepository.findAllActiveByUserIdUsingCursor(userId, request.getCursor(), request.getSize() + 1);
+        CursorSupporter<Review> reviewsCursor = CursorSupporter.of(reviewsWithNextCursor, request.getSize());
+        StoreDictionary storeDictionary = findStoresByReviews(reviewsCursor.getItemsInCurrentCursor());
+        return ReviewsCursorV2Response.of(reviewsCursor, storeDictionary, user, Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> reviewRepository.findActiveCountsByUserId(userId)));
     }
 
-    private StoreCacheCollection findStoresByReviews(List<Review> reviews) {
+    private StoreDictionary findStoresByReviews(List<Review> reviews) {
         List<Long> storeIds = reviews.stream()
             .map(Review::getStoreId)
             .collect(Collectors.toList());
-        return StoreCacheCollection.of(storeRepository.findAllByIds(storeIds));
+        return StoreDictionary.of(storeRepository.findAllByIds(storeIds));
     }
 
 }

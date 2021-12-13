@@ -6,6 +6,7 @@ import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
 import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithUserProjection;
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
@@ -29,7 +30,7 @@ public class VisitHistoryWithUserResponse extends AuditingTimeResponse {
         this.user = user;
     }
 
-    public static VisitHistoryWithUserResponse of(VisitHistoryWithUserProjection projection, @Nullable User user) {
+    public static VisitHistoryWithUserResponse of(@NotNull VisitHistoryWithUserProjection projection, @Nullable User user) {
         VisitHistoryWithUserResponse response = VisitHistoryWithUserResponse.builder()
             .visitHistoryId(projection.getVisitHistoryId())
             .type(projection.getType())

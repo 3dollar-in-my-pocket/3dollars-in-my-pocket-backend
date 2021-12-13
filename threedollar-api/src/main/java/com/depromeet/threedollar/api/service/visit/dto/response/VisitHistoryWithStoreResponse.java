@@ -5,6 +5,7 @@ import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.domain.visit.VisitType;
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 
@@ -27,7 +28,7 @@ public class VisitHistoryWithStoreResponse extends AuditingTimeResponse {
         this.store = store;
     }
 
-    public static VisitHistoryWithStoreResponse of(VisitHistory visitHistory) {
+    public static VisitHistoryWithStoreResponse of(@NotNull VisitHistory visitHistory) {
         VisitHistoryWithStoreResponse response = VisitHistoryWithStoreResponse.builder()
             .visitHistoryId(visitHistory.getId())
             .type(visitHistory.getType())

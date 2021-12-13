@@ -8,6 +8,7 @@ import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import com.depromeet.threedollar.external.client.s3.dto.properties.AmazonCloudFrontProperties;
 import com.depromeet.threedollar.external.client.s3.dto.properties.AmazonS3Properties;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,7 +25,7 @@ public class S3ClientImpl implements S3Client {
     private final AmazonCloudFrontProperties cloudFrontProperties;
 
     @Override
-    public void uploadFile(MultipartFile file, String fileName) {
+    public void uploadFile(@NotNull MultipartFile file, @NotNull String fileName) {
         try (InputStream inputStream = file.getInputStream()) {
             amazonS3.putObject(new PutObjectRequest(s3Properties.getBucket(), fileName, inputStream, createObjectMetadata(file))
                 .withCannedAcl(CannedAccessControlList.PublicRead));
@@ -33,7 +34,7 @@ public class S3ClientImpl implements S3Client {
         }
     }
 
-    private ObjectMetadata createObjectMetadata(MultipartFile file) {
+    private ObjectMetadata createObjectMetadata(@NotNull MultipartFile file) {
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentType(file.getContentType());
         objectMetadata.setContentLength(file.getSize());
@@ -41,7 +42,7 @@ public class S3ClientImpl implements S3Client {
     }
 
     @Override
-    public String getFileUrl(String fileName) {
+    public String getFileUrl(@NotNull String fileName) {
         return cloudFrontProperties.getFullPathFileUrl(fileName);
     }
 

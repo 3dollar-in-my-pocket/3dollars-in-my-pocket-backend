@@ -4,7 +4,7 @@ import com.depromeet.threedollar.admin.service.store.StoreAdminService
 import com.depromeet.threedollar.admin.service.store.dto.request.RetrieveLatestStoresRequest
 import com.depromeet.threedollar.admin.service.store.dto.request.RetrieveReportedStoresRequest
 import com.depromeet.threedollar.admin.service.store.dto.response.ReportedStoresResponse
-import com.depromeet.threedollar.admin.service.store.dto.response.StoreScrollResponse
+import com.depromeet.threedollar.admin.service.store.dto.response.StoresCursorResponse
 import com.depromeet.threedollar.application.common.dto.ApiResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
@@ -25,7 +25,7 @@ class StoreAdminController(
     @GetMapping("/admin/v1/stores/latest")
     fun retrieveLatestStores(
         @Valid request: RetrieveLatestStoresRequest
-    ): ApiResponse<StoreScrollResponse> {
+    ): ApiResponse<StoresCursorResponse> {
         return ApiResponse.success(storeAdminService.retrieveLatestStores(request))
     }
 

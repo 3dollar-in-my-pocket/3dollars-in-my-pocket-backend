@@ -4,6 +4,7 @@ import com.depromeet.threedollar.application.service.medal.dto.response.MedalRes
 import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import lombok.*;
+import org.jetbrains.annotations.Nullable;
 
 @ToString
 @Getter
@@ -18,7 +19,7 @@ public class UserInfoResponse {
     private UserSocialType socialType;
     private MedalResponse medal;
 
-    public static UserInfoResponse of(User user) {
+    public static UserInfoResponse of(@Nullable User user) {
         if (user == null) {
             return signOut();
         }

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
@@ -34,7 +35,7 @@ public class AppleTokenProviderImpl implements AppleTokenProvider {
     private final ObjectMapper objectMapper;
 
     @Override
-    public String getSocialIdFromIdToken(String idToken) {
+    public String getSocialIdFromIdToken(@NotNull String idToken) {
         String headerIdToken = idToken.split("\\.")[0];
         try {
             Map<String, String> header = objectMapper.readValue(new String(Base64.getDecoder().decode(headerIdToken), StandardCharsets.UTF_8), new TypeReference<>() {

@@ -6,22 +6,23 @@ import com.depromeet.threedollar.domain.domain.medal.UserMedal;
 import com.depromeet.threedollar.domain.domain.user.User;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class MedalUserObtainCollection {
+public class MedalObtainCollection {
 
     private final List<Medal> medalsUserNotHeld;
     private final MedalAcquisitionConditionType conditionType;
 
-    public static MedalUserObtainCollection of(List<Medal> medals, MedalAcquisitionConditionType conditionType, User user) {
+    public static MedalObtainCollection of(List<Medal> medals, MedalAcquisitionConditionType conditionType, @NotNull User user) {
         List<Medal> userNotHeldMedals = filterMedalsUserNotHeld(medals, user);
-        return new MedalUserObtainCollection(userNotHeldMedals, conditionType);
+        return new MedalObtainCollection(userNotHeldMedals, conditionType);
     }
 
-    private static List<Medal> filterMedalsUserNotHeld(List<Medal> medals, User user) {
+    private static List<Medal> filterMedalsUserNotHeld(List<Medal> medals, @NotNull User user) {
         List<Long> medalsUserObtains = user.getUserMedals().stream()
             .map(UserMedal::getMedalId)
             .collect(Collectors.toList());
@@ -42,7 +43,7 @@ public class MedalUserObtainCollection {
         return getSatisfyMedalsCanBeObtained(0L);
     }
 
-    public List<Medal> getSatisfyMedalsCanBeObtained(Long counts) {
+    public List<Medal> getSatisfyMedalsCanBeObtained(long counts) {
         return this.medalsUserNotHeld.stream()
             .filter(medal -> medal.canObtain(conditionType, counts))
             .collect(Collectors.toList());

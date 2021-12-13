@@ -2,6 +2,7 @@ package com.depromeet.threedollar.domain.domain.review;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.function.Predicate;
@@ -17,6 +18,7 @@ public enum RatingGroupType {
 
     private final Predicate<Double> expression;
 
+    @NotNull
     public static RatingGroupType of(double rating) {
         return Arrays.stream(values())
             .filter(x -> x.expression.test(rating))

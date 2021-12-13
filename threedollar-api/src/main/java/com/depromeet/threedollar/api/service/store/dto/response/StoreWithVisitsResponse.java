@@ -5,6 +5,7 @@ import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class StoreWithVisitsResponse extends AuditingTimeResponse {
         this.visitHistory = VisitHistoryCountsResponse.of(existsVisitsCount, notExistsVisitsCount);
     }
 
-    public static StoreWithVisitsResponse of(Store store, long existsVisitsCount, long notExistsVisitsCount) {
+    public static StoreWithVisitsResponse of(@NotNull Store store, long existsVisitsCount, long notExistsVisitsCount) {
         StoreWithVisitsResponse response = StoreWithVisitsResponse.builder()
             .storeId(store.getId())
             .latitude(store.getLatitude())

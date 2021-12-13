@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -45,10 +46,12 @@ public class Popup extends AuditingTimeEntity {
         this.dateTimeInterval = DateTimeInterval.of(startDateTime, endDateTime);
     }
 
+    @NotNull
     public LocalDateTime getStartDateTime() {
         return dateTimeInterval.getStartDateTime();
     }
 
+    @NotNull
     public LocalDateTime getEndDateTime() {
         return dateTimeInterval.getEndDateTime();
     }

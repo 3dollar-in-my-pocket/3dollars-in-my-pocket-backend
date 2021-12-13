@@ -4,6 +4,7 @@ import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImageStatus;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class StoreImageRepositoryCustomImpl implements StoreImageRepositoryCusto
 
     private final JPAQueryFactory queryFactory;
 
+    @Nullable
     @Override
     public StoreImage findStoreImageById(Long storeImageId) {
         return queryFactory.selectFrom(storeImage)

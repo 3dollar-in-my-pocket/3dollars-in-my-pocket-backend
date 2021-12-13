@@ -7,7 +7,7 @@ import com.depromeet.threedollar.api.service.store.dto.request.deprecated.Retrie
 import com.depromeet.threedollar.api.service.store.dto.response.*;
 import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByDistanceV2Response;
 import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByReviewV2Response;
-import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresScrollV2Response;
+import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresCursorV2Response;
 import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
@@ -562,7 +562,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, null);
 
             // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
+            ApiResponse<StoresCursorResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getTotalElements()).isEqualTo(3);
@@ -585,7 +585,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, store4.getId());
 
             // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
+            ApiResponse<StoresCursorResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getTotalElements()).isEqualTo(4);
@@ -606,7 +606,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, store2.getId());
 
             // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
+            ApiResponse<StoresCursorResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
@@ -626,7 +626,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, store2.getId());
 
             // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
+            ApiResponse<StoresCursorResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getNextCursor()).isEqualTo(-1);
@@ -644,7 +644,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, null);
 
             // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
+            ApiResponse<StoresCursorResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getTotalElements()).isEqualTo(1);
@@ -666,7 +666,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveMyStoresV2Request request = RetrieveMyStoresV2Request.testInstance(2, null, null, null, null);
 
             // when
-            ApiResponse<StoresScrollV2Response> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistoriesV2(request, token, 200);
+            ApiResponse<StoresCursorV2Response> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistoriesV2(request, token, 200);
 
             // then
             assertThat(response.getData().getTotalElements()).isEqualTo(0);
@@ -690,7 +690,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, null);
 
             // when
-            ApiResponse<StoresScrollResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
+            ApiResponse<StoresCursorResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
             assertThat(response.getData().getContents()).hasSize(1);

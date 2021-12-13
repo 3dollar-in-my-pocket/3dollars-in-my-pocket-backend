@@ -5,6 +5,7 @@ import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.user.User;
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @ToString
@@ -26,7 +27,7 @@ public class ReviewWithUserResponse extends AuditingTimeResponse {
         this.user = user;
     }
 
-    public static ReviewWithUserResponse of(Review review, @Nullable User user) {
+    public static ReviewWithUserResponse of(@NotNull Review review, @Nullable User user) {
         ReviewWithUserResponse response = ReviewWithUserResponse.builder()
             .reviewId(review.getId())
             .rating(review.getRating())

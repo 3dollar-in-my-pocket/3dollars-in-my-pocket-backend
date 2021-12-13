@@ -7,6 +7,7 @@ import com.depromeet.threedollar.domain.domain.store.StoreRadiusDistance;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class StoreServiceUtils {
         }
     }
 
+    @NotNull
     public static Store findStoreById(StoreRepository storeRepository, Long storeId) {
         Store store = storeRepository.findStoreById(storeId);
         if (store == null) {
@@ -31,6 +33,7 @@ public class StoreServiceUtils {
         return store;
     }
 
+    @NotNull
     static Store findStoreByIdFetchJoinMenu(StoreRepository storeRepository, Long storeId) {
         Store store = storeRepository.findStoreByIdFetchJoinMenu(storeId);
         if (store == null) {

@@ -57,7 +57,7 @@ class UserTest {
     }
 
     @Test
-    void 유저가_장착한_대표_메달을_조회한다() {
+    void 유저에게_활성화중인_메달이_없는경우_예외가_아닌_null_을_반환한다() {
         // given
         User user = UserCreator.create("social-id", UserSocialType.KAKAO, "닉네임");
         Medal medalA = MedalCreator.create("메달 A", "iconUrl", MedalAcquisitionConditionType.ADD_STORE, 3);

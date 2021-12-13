@@ -4,6 +4,7 @@ import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class StoreInfoResponse extends AuditingTimeResponse {
         this.isDeleted = isDeleted;
     }
 
-    public static StoreInfoResponse of(Store store) {
+    public static StoreInfoResponse of(@NotNull Store store) {
         StoreInfoResponse response = StoreInfoResponse.builder()
             .storeId(store.getId())
             .latitude(store.getLatitude())

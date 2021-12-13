@@ -4,6 +4,7 @@ import com.depromeet.threedollar.domain.domain.common.AuditingTimeEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 
@@ -35,10 +36,12 @@ public class Medal extends AuditingTimeEntity {
         return this.acquisitionCondition.canObtain(conditionType, counts);
     }
 
+    @NotNull
     public String getActivationIconUrl() {
         return this.medalImage.getActivationIconUrl();
     }
 
+    @NotNull
     public String getDisableIconUrl() {
         return this.medalImage.getDisableIconUrl();
     }

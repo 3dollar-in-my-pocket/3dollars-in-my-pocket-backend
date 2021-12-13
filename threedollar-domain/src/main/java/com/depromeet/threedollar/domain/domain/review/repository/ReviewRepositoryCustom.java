@@ -1,11 +1,13 @@
 package com.depromeet.threedollar.domain.domain.review.repository;
 
 import com.depromeet.threedollar.domain.domain.review.Review;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public interface ReviewRepositoryCustom {
 
+    @Nullable
     Review findReviewByIdAndUserId(Long reviewId, Long userId);
 
     List<Review> findAllByStoreId(Long storeId);
@@ -17,9 +19,9 @@ public interface ReviewRepositoryCustom {
     @Deprecated
     long findActiveCountsByUserId(Long userId);
 
-    List<Review> findAllByUserIdWithScroll(Long userId, Long lastStoreId, int size);
+    List<Review> findAllByUserIdUsingCursor(Long userId, Long lastStoreId, int size);
 
     @Deprecated
-    List<Review> findAllActiveByUserIdWithScroll(Long userId, Long lastStoreId, int size);
+    List<Review> findAllActiveByUserIdUsingCursor(Long userId, Long lastStoreId, int size);
 
 }

@@ -6,6 +6,7 @@ import com.depromeet.threedollar.domain.domain.store.StoreStatus;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.LockModeType;
@@ -21,6 +22,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
+    @Nullable
     @Override
     public Review findReviewByIdAndUserId(Long reviewId, Long userId) {
         return queryFactory.selectFrom(review)
@@ -82,7 +84,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
     }
 
     @Override
-    public List<Review> findAllByUserIdWithScroll(Long userId, Long lastStoreId, int size) {
+    public List<Review> findAllByUserIdUsingCursor(Long userId, Long lastStoreId, int size) {
         return queryFactory.selectFrom(review)
             .where(
                 review.userId.eq(userId),
@@ -96,7 +98,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
 
     @Deprecated
     @Override
-    public List<Review> findAllActiveByUserIdWithScroll(Long userId, Long lastStoreId, int size) {
+    public List<Review> findAllActiveByUserIdUsingCursor(Long userId, Long lastStoreId, int size) {
         List<Long> reviewIds = queryFactory.select(review.id)
             .from(review)
             .innerJoin(store).on(review.storeId.eq(store.id))

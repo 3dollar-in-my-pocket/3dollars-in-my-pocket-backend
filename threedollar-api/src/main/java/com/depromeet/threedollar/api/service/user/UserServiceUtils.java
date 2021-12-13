@@ -7,6 +7,7 @@ import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import static com.depromeet.threedollar.common.exception.ErrorCode.*;
 
@@ -25,6 +26,7 @@ public class UserServiceUtils {
         }
     }
 
+    @NotNull
     public static User findUserById(UserRepository userRepository, Long userId) {
         User user = userRepository.findUserById(userId);
         if (user == null) {
@@ -33,6 +35,7 @@ public class UserServiceUtils {
         return user;
     }
 
+    @NotNull
     public static User findUserBySocialIdAndSocialType(UserRepository userRepository, String socialId, UserSocialType socialType) {
         User user = userRepository.findUserBySocialIdAndSocialType(socialId, socialType);
         if (user == null) {

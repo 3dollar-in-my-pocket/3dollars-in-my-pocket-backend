@@ -1,13 +1,15 @@
 package com.depromeet.threedollar.api.provider.upload.dto.request;
 
 import com.depromeet.threedollar.common.exception.model.ValidationException;
-import com.depromeet.threedollar.domain.domain.common.ImageType;
 import com.depromeet.threedollar.common.utils.FileUtils;
+import com.depromeet.threedollar.domain.domain.common.ImageType;
 import lombok.*;
+import org.jetbrains.annotations.Nullable;
 
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
+import static com.depromeet.threedollar.common.exception.ErrorCode.VALIDATION_FILE_NAME_EXCEPTION;
 import static com.depromeet.threedollar.common.exception.ErrorCode.VALIDATION_FILE_TYPE_EXCEPTION;
 
 @ToString
@@ -27,7 +29,7 @@ public class ImageUploadFileRequest implements UploadFileRequest {
     }
 
     @Override
-    public void validateAvailableFileType(String contentType) {
+    public void validateAvailableFileType(@Nullable String contentType) {
         if (contentType != null && contentType.contains(SEPARATOR) && IMAGE_CONTENT_TYPE_TYPE.equals(contentType.split(SEPARATOR)[0])) {
             return;
         }
@@ -35,7 +37,10 @@ public class ImageUploadFileRequest implements UploadFileRequest {
     }
 
     @Override
-    public String createFileName(String originalFileName) {
+    public String createFileName(@Nullable String originalFileName) {
+        if (originalFileName == null) {
+            throw new ValidationException("잘못된 파일의 originFilename 입니다", VALIDATION_FILE_NAME_EXCEPTION);
+        }
         String extension = FileUtils.getFileExtension(originalFileName);
         return type.getFileNameWithDirectory(UUID.randomUUID().toString().concat(extension));
     }

@@ -3,8 +3,8 @@ package com.depromeet.threedollar.api.service.visit;
 import com.depromeet.threedollar.api.service.store.StoreServiceUtils;
 import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
-import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoriesScrollResponse;
-import com.depromeet.threedollar.domain.collection.common.ScrollPaginationCollection;
+import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoriesCursorResponse;
+import com.depromeet.threedollar.domain.collection.common.CursorSupporter;
 import com.depromeet.threedollar.domain.domain.store.Store;
 import com.depromeet.threedollar.domain.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
@@ -31,10 +31,10 @@ public class VisitHistoryService {
     }
 
     @Transactional(readOnly = true)
-    public VisitHistoriesScrollResponse retrieveMyVisitHistories(RetrieveMyVisitHistoriesRequest request, Long userId) {
-        List<VisitHistory> visitHistoriesWithNextCursor = visitHistoryRepository.findAllByUserIdWithScroll(userId, request.getCursor(), request.getSize() + 1);
-        ScrollPaginationCollection<VisitHistory> visitHistoriesScroll = ScrollPaginationCollection.of(visitHistoriesWithNextCursor, request.getSize());
-        return VisitHistoriesScrollResponse.of(visitHistoriesScroll);
+    public VisitHistoriesCursorResponse retrieveMyVisitHistories(RetrieveMyVisitHistoriesRequest request, Long userId) {
+        List<VisitHistory> visitHistoriesWithNextCursor = visitHistoryRepository.findAllByUserIdUsingCursor(userId, request.getCursor(), request.getSize() + 1);
+        CursorSupporter<VisitHistory> visitHistoriesCursor = CursorSupporter.of(visitHistoriesWithNextCursor, request.getSize());
+        return VisitHistoriesCursorResponse.of(visitHistoriesCursor);
     }
 
 }

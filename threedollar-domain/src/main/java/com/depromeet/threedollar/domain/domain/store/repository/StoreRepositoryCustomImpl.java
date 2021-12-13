@@ -9,6 +9,7 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
+    @Nullable
     @Override
     public Store findStoreById(Long storeId) {
         return queryFactory.selectFrom(store)
@@ -38,6 +40,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
      * default_batch_fetch_size: 1000 으로 설정하며
      * 1000개 칼럼씩 WHERE store_id IN (...)으로 조회해서 N+1 문제를 해결하는 중.
      */
+    @Nullable
     @Override
     public Store findStoreByIdFetchJoinMenu(Long storeId) {
         return queryFactory.selectFrom(store)
@@ -85,7 +88,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
     }
 
     @Override
-    public List<Store> findAllWithScroll(Long lastStoreId, int size) {
+    public List<Store> findAllUsingCursor(Long lastStoreId, int size) {
         List<Long> storeIds = queryFactory.select(store.id).distinct()
             .from(store)
             .innerJoin(menu).on(menu.store.id.eq(store.id))
@@ -105,7 +108,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
      * 이 문제를 해결하기 위해서 StoreId 리스트 조회 후 페치조인하는 방식으로 조회.
      */
     @Override
-    public List<Store> findAllByUserIdWithScroll(Long userId, Long lastStoreId, int size) {
+    public List<Store> findAllByUserIdUsingCursor(Long userId, Long lastStoreId, int size) {
         List<Long> storeIds = queryFactory.select(store.id).distinct()
             .from(store)
             .innerJoin(menu).on(menu.store.id.eq(store.id))
@@ -122,7 +125,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
 
     @Deprecated
     @Override
-    public List<Store> findAllActiveByUserIdWithScroll(Long userId, Long lastStoreId, int size) {
+    public List<Store> findAllActiveByUserIdUsingCursor(Long userId, Long lastStoreId, int size) {
         List<Long> storeIds = queryFactory.select(store.id).distinct()
             .from(store)
             .innerJoin(menu).on(menu.store.id.eq(store.id))

@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -64,9 +65,10 @@ public class User extends AuditingTimeEntity {
         this.userMedals.add(UserMedal.of(medal, this));
     }
 
-    public void updateActivatedMedal(@NotNull Long medalId) {
+    public void updateActivatedMedal(Long medalId) {
         inactivatedAllUserMedals();
-        findUserMedal(medalId).updateToActive();
+        UserMedal userMedal = findUserMedal(medalId);
+        userMedal.updateToActive();
     }
 
     private void inactivatedAllUserMedals() {
@@ -75,26 +77,30 @@ public class User extends AuditingTimeEntity {
         }
     }
 
-    private UserMedal findUserMedal(@NotNull Long medalId) {
+    @NotNull
+    private UserMedal findUserMedal(Long medalId) {
         return this.userMedals.stream()
             .filter(userMedal -> userMedal.hasSameMedalId(medalId))
             .findFirst()
             .orElseThrow(() -> new NotFoundException(String.format("해당 유저(%s)는 해당하는 유저 메달(%s)을 보유하고 있지 않습니다", this.id, medalId), NOT_FOUND_MEDAL_EXCEPTION));
     }
 
+    @NotNull
     public String getSocialId() {
         return this.socialInfo.getSocialId();
     }
 
+    @NotNull
     public UserSocialType getSocialType() {
         return this.socialInfo.getSocialType();
     }
 
+    @Nullable
     public UserMedal getActivatedMedal() {
         return this.userMedals.stream()
             .filter(UserMedal::isActiveStatus)
             .findFirst()
-            .orElse(null); // TODO: 차후 마이그레이션 이후 Not-Null
+            .orElse(null);
     }
 
 }
