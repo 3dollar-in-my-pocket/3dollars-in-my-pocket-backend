@@ -26,8 +26,8 @@ class MedalRepositoryTest {
     @Test
     void 통계용_유저가_보유한_메달의_갯수를_조회한다() {
         // given
-        Medal medalOne = MedalCreator.create("붕어빵 챌린지", "iconUrl", MedalAcquisitionConditionType.ADD_REVIEW, 3);
-        Medal medalTwo = MedalCreator.create("달고나 토끼", "iconUrl", MedalAcquisitionConditionType.ADD_STORE, 2);
+        Medal medalOne = MedalCreator.create("붕어빵 챌린지");
+        Medal medalTwo = MedalCreator.create("달고나 토끼");
         medalRepository.saveAll(List.of(medalOne, medalTwo));
 
         User userHasTwoMedals = UserCreator.create("social-id1", UserSocialType.KAKAO, "닉네임 1");

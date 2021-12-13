@@ -32,14 +32,14 @@ class UserMedalControllerTest extends SetupUserControllerTest {
 
         @Test
         void 보유중인_칭호들을_모두_조회한다() throws Exception {
-            // given
-            Medal medalActive = MedalCreator.create("활성화중인 메달", "메달 아이콘 A", "비활성화 아이콘 A");
-            Medal medalInActive = MedalCreator.create("비활성화중인 메달", "메달 아이콘 B", "비활성화 아이콘 B");
+            // given.
+            Medal medalActive = MedalCreator.create("활성화중인 메달", "활성중인 메달 설명", "메달 아이콘 A", "비활성화 아이콘 A");
+            Medal medalInActive = MedalCreator.create("비활성화중인 메달", "비활성화중인 메달 설명", "메달 아이콘 B", "비활성화 아이콘 B");
             medalRepository.saveAll(List.of(medalActive, medalInActive));
 
             userMedalRepository.saveAll(List.of(
                 UserMedalCreator.createActive(medalActive, testUser),
-                UserMedalCreator.createActive(medalInActive, testUser)
+                UserMedalCreator.createInActive(medalInActive, testUser)
             ));
 
             // when & then

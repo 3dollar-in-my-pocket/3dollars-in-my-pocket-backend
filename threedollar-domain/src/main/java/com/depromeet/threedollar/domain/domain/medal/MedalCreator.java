@@ -8,12 +8,48 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MedalCreator {
 
-    public static Medal create(String name, String activationIconUrl, String disableIconUrl) {
-        return new Medal(name, activationIconUrl, disableIconUrl, MedalAcquisitionConditionType.ADD_STORE, 3);
+    public static Medal create(String name) {
+        return Medal.builder()
+            .name(name)
+            .introduction("메달 설명")
+            .activationIconUrl("https://activation-icon-url.png")
+            .disableIconUrl("https://disableIconurl.png")
+            .conditionType(MedalAcquisitionConditionType.ADD_STORE)
+            .count(3)
+            .build();
     }
 
-    public static Medal create(String name, String iconUrl, MedalAcquisitionConditionType conditionType, int count) {
-        return new Medal(name, iconUrl, "disableIconUrl", conditionType, count);
+    public static Medal create(String name, MedalAcquisitionConditionType conditionType, int count) {
+        return Medal.builder()
+            .name(name)
+            .introduction("메달 설명")
+            .activationIconUrl("iconUrl")
+            .disableIconUrl("disableUrl")
+            .conditionType(conditionType)
+            .count(count)
+            .build();
+    }
+
+    public static Medal create(String name, String introduction, String activationIconUrl, String disableIconUrl) {
+        return Medal.builder()
+            .name(name)
+            .introduction(introduction)
+            .activationIconUrl(activationIconUrl)
+            .disableIconUrl(disableIconUrl)
+            .conditionType(MedalAcquisitionConditionType.ADD_STORE)
+            .count(3)
+            .build();
+    }
+
+    public static Medal create(String name, String introduction, String activationIconUrl, String disableIconUrl, MedalAcquisitionConditionType conditionType, int count) {
+        return Medal.builder()
+            .name(name)
+            .introduction(introduction)
+            .activationIconUrl(activationIconUrl)
+            .disableIconUrl(disableIconUrl)
+            .conditionType(conditionType)
+            .count(count)
+            .build();
     }
 
 }

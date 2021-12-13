@@ -60,7 +60,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
         @Test
         void 가게_추가_조건을_만족하면_해당_메달을_획득한다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", "https://icon.png", MedalAcquisitionConditionType.ADD_STORE, 2);
+            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.ADD_STORE, 2);
             medalRepository.save(medal);
 
             storeRepository.saveAll(List.of(
@@ -83,7 +83,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
         @Test
         void 가게_추가_조건을_만족하지_못하면_메달을_획득하지_못한다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", "https://icon.png", MedalAcquisitionConditionType.ADD_STORE, 2);
+            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.ADD_STORE, 2);
             medalRepository.save(medal);
 
             storeRepository.save(StoreCreator.createWithDefaultMenu(userId, "가게 A"));
@@ -106,7 +106,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
         @Test
         void 가게_삭제_조건을_만족하면_해당_메달을_획득한다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", "https://icon.png", MedalAcquisitionConditionType.DELETE_STORE, 1);
+            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.DELETE_STORE, 1);
             medalRepository.save(medal);
 
             Store store = StoreCreator.createWithDefaultMenu(userId, "가게");
@@ -129,7 +129,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
         @Test
         void 가게_삭제_조건을_만족하지_못하면_메달을_획득하지_못한다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", "https://icon.png", MedalAcquisitionConditionType.DELETE_STORE, 1);
+            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.DELETE_STORE, 1);
             medalRepository.save(medal);
 
             Store store = StoreCreator.createWithDefaultMenu(userId, "가게");
@@ -153,7 +153,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
         @Test
         void 리뷰_작성_조건을_만족하면_해당_메달을_획득한다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", "https://icon.png", MedalAcquisitionConditionType.ADD_REVIEW, 2);
+            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.ADD_REVIEW, 2);
             medalRepository.save(medal);
 
             Store store = StoreCreator.createWithDefaultMenu(userId, "가게");
@@ -179,7 +179,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
         @Test
         void 리뷰_작성_조건을_만족하지_못하면_메달을_획득하지_못한다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", "https://icon.png", MedalAcquisitionConditionType.ADD_REVIEW, 2);
+            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.ADD_REVIEW, 2);
             medalRepository.save(medal);
 
             Store store = StoreCreator.createWithDefaultMenu(userId, "가게");
@@ -205,7 +205,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
         @Test
         void 방문_인증_조건을_만족하면_해당_메달을_획득한다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", "https://icon.png", MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE, 2);
+            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE, 2);
             medalRepository.save(medal);
 
             Store store = StoreCreator.create(userId, "가게");
@@ -232,7 +232,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
         @Test
         void 방문_인증_조건을_만족하지_못하면_메달을_획득하지_못한다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", "https://icon.png", MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE, 2);
+            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE, 2);
             medalRepository.save(medal);
 
             Store store = StoreCreator.create(userId, "가게");
@@ -253,7 +253,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
         @Test
         void 붕어빵을_파는_가게가_아닌경우_카운트에_포함되지_않는다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", "https://icon.png", MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE, 2);
+            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE, 2);
             medalRepository.save(medal);
 
             Store store = StoreCreator.create(userId, "가게");
@@ -280,7 +280,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
         @Test
         void 방문_인증_실패_조건을_만족하면_해당_메달을_획득한다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", "https://icon.png", MedalAcquisitionConditionType.VISIT_NOT_EXISTS_STORE, 2);
+            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.VISIT_NOT_EXISTS_STORE, 2);
             medalRepository.save(medal);
 
             Store store = StoreCreator.createWithDefaultMenu(userId, "가게");
@@ -306,7 +306,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
         @Test
         void 방문_인증_실패_조건을_만족하지_못하면_메달을_획득하지_못한다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", "https://icon.png", MedalAcquisitionConditionType.VISIT_NOT_EXISTS_STORE, 2);
+            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.VISIT_NOT_EXISTS_STORE, 2);
             medalRepository.save(medal);
 
             Store store = StoreCreator.createWithDefaultMenu(userId, "가게");

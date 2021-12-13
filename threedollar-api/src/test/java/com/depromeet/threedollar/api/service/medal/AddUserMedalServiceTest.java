@@ -26,7 +26,7 @@ class AddUserMedalServiceTest extends SetupUserServiceTest {
     @Test
     void 기본_메달을_유저에게_부여하면_새로운_유저_메달이_추가되고_활성화된다() {
         // given
-        Medal medal = MedalCreator.create("기본 메달", "iconUrl", MedalAcquisitionConditionType.NO_CONDITION, 0);
+        Medal medal = MedalCreator.create("기본 메달", MedalAcquisitionConditionType.NO_CONDITION, 0);
         medalRepository.save(medal);
 
         // when
@@ -45,8 +45,8 @@ class AddUserMedalServiceTest extends SetupUserServiceTest {
     @Test
     void 여러_기본_메달이_있는경우_첫번째_메달만_활성화된다() {
         // given
-        Medal medalFirst = MedalCreator.create("첫번째 메달", "iconUrl1", MedalAcquisitionConditionType.NO_CONDITION, 0);
-        Medal medalSecond = MedalCreator.create("두번째 메달", "iconUrl2", MedalAcquisitionConditionType.NO_CONDITION, 0);
+        Medal medalFirst = MedalCreator.create("첫번째 메달", MedalAcquisitionConditionType.NO_CONDITION, 0);
+        Medal medalSecond = MedalCreator.create("두번째 메달", MedalAcquisitionConditionType.NO_CONDITION, 0);
         medalRepository.saveAll(List.of(medalFirst, medalSecond));
 
         // when

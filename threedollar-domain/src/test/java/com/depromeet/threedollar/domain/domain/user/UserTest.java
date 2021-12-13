@@ -13,13 +13,15 @@ class UserTest {
     @Test
     void 유저에게_보유한_메달을_추가한다() {
         // given
-        String medalName = "리뷰 5번 작성시 획득하는 메달";
-        String medalIconUrl = "medalIconUrl";
+        String medalName = "리뷰왕";
+        String description = "리뷰 5번 작성시 획득하는 메달";
+        String activationIconUrl = "activationIconUrl";
+        String disabledIconUrl = "disabledIconUrl";
         MedalAcquisitionConditionType conditionType = MedalAcquisitionConditionType.ADD_REVIEW;
         int count = 5;
 
         User user = UserCreator.create("social-id", UserSocialType.KAKAO, "닉네임");
-        Medal medal = MedalCreator.create(medalName, medalIconUrl, conditionType, count);
+        Medal medal = MedalCreator.create(medalName, description, activationIconUrl, disabledIconUrl, conditionType, count);
 
         // when
         user.addMedals(List.of(medal));
@@ -27,7 +29,7 @@ class UserTest {
         // then
         assertAll(
             () -> assertThat(user.getUserMedals()).hasSize(1),
-            () -> assertUserMedal(user.getUserMedals().get(0), medalName, medalIconUrl, conditionType, count)
+            () -> assertUserMedal(user.getUserMedals().get(0), medalName, activationIconUrl, conditionType, count)
         );
     }
 
@@ -44,7 +46,7 @@ class UserTest {
     void 유저에게_메달이_추가되면_기본적으로_비활성화_상태이다() {
         // given
         User user = UserCreator.create("social-id", UserSocialType.KAKAO, "닉네임");
-        Medal medalA = MedalCreator.create("메달 A", "iconUrl", MedalAcquisitionConditionType.ADD_STORE, 3);
+        Medal medalA = MedalCreator.create("메달 A");
 
         // when
         user.addMedals(List.of(medalA));
@@ -60,7 +62,7 @@ class UserTest {
     void 유저에게_활성화중인_메달이_없는경우_예외가_아닌_null_을_반환한다() {
         // given
         User user = UserCreator.create("social-id", UserSocialType.KAKAO, "닉네임");
-        Medal medalA = MedalCreator.create("메달 A", "iconUrl", MedalAcquisitionConditionType.ADD_STORE, 3);
+        Medal medalA = MedalCreator.create("메달 A");
         user.addMedals(List.of(medalA));
 
         // when

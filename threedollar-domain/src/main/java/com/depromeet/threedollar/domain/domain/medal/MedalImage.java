@@ -12,10 +12,10 @@ import javax.persistence.Embeddable;
 @Embeddable
 class MedalImage {
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2048)
     private String activationIconUrl;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2048)
     private String disableIconUrl;
 
     static MedalImage of(String activationIconUrl, String disableIconUrl) {
