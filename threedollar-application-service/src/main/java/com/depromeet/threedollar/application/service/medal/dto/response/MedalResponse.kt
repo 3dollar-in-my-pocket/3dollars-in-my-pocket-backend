@@ -9,7 +9,7 @@ data class MedalResponse(
     val iconUrl: String,
     val disableIconUrl: String,
     val introduction: String?,
-    val acquisitionResponse: MedalAcquisitionResponse
+    val acquisition: MedalAcquisitionResponse
 ) {
 
     companion object {
