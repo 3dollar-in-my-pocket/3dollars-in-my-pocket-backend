@@ -71,9 +71,11 @@ class GiveMedalsToUserByUserActivity(
                 user
             )
             if (medalCanBeObtainedByAddStore.hasMoreMedalsCanBeObtained()) {
-                val medalsByAddStore =
-                    medalCanBeObtainedByAddStore.getSatisfyMedalsCanBeObtained(storeRepository.findCountsByUserId(user.id))
-                user.addMedals(medalsByAddStore)
+                user.addMedals(
+                    medalCanBeObtainedByAddStore.getSatisfyMedalsCanBeObtained(
+                        storeRepository.findCountsByUserId(user.id)
+                    )
+                )
             }
 
             val medalsCanBeObtainedByDeleteStore = MedalObtainCollection.of(
@@ -82,10 +84,11 @@ class GiveMedalsToUserByUserActivity(
                 user
             )
             if (medalsCanBeObtainedByDeleteStore.hasMoreMedalsCanBeObtained()) {
-                val medalsSatisfyCondition = medalsCanBeObtainedByDeleteStore.getSatisfyMedalsCanBeObtained(
-                    storeDeleteRequestRepository.findCountsByUserId(user.id)
+                user.addMedals(
+                    medalsCanBeObtainedByDeleteStore.getSatisfyMedalsCanBeObtained(
+                        storeDeleteRequestRepository.findCountsByUserId(user.id)
+                    )
                 )
-                user.addMedals(medalsSatisfyCondition)
             }
 
             val medalsCanBeObtainedByAddReview = MedalObtainCollection.of(
@@ -94,10 +97,11 @@ class GiveMedalsToUserByUserActivity(
                 user
             )
             if (medalsCanBeObtainedByAddReview.hasMoreMedalsCanBeObtained()) {
-                val medalsSatisfyCondition = medalsCanBeObtainedByAddReview.getSatisfyMedalsCanBeObtained(
-                    reviewRepository.findCountsByUserId(user.id)
+                user.addMedals(
+                    medalsCanBeObtainedByAddReview.getSatisfyMedalsCanBeObtained(
+                        reviewRepository.findCountsByUserId(user.id)
+                    )
                 )
-                user.addMedals(medalsSatisfyCondition)
             }
 
             val medalsCanBeObtainedByVisitStore = MedalObtainCollection.of(
@@ -106,13 +110,14 @@ class GiveMedalsToUserByUserActivity(
                 user
             )
             if (medalsCanBeObtainedByVisitStore.hasMoreMedalsCanBeObtained()) {
-                val medalsSatisfyCondition = medalsCanBeObtainedByVisitStore.getSatisfyMedalsCanBeObtained(
-                    visitHistoryRepository.findCountsByUserIdAndCategory(
-                        user.id,
-                        MenuCategoryType.BUNGEOPPANG
+                user.addMedals(
+                    medalsCanBeObtainedByVisitStore.getSatisfyMedalsCanBeObtained(
+                        visitHistoryRepository.findCountsByUserIdAndCategory(
+                            user.id,
+                            MenuCategoryType.BUNGEOPPANG
+                        )
                     )
                 )
-                user.addMedals(medalsSatisfyCondition)
             }
 
             val medalsCanBeObtainedByVisitNotExistsStore = MedalObtainCollection.of(
@@ -121,14 +126,14 @@ class GiveMedalsToUserByUserActivity(
                 user
             )
             if (medalsCanBeObtainedByVisitNotExistsStore.hasMoreMedalsCanBeObtained()) {
-                val medalsSatisfyCondition =
+                user.addMedals(
                     medalsCanBeObtainedByVisitNotExistsStore.getSatisfyMedalsCanBeObtained(
                         visitHistoryRepository.findCountsByUserIdAndVisitType(
                             user.id,
                             VisitType.NOT_EXISTS
                         )
                     )
-                user.addMedals(medalsSatisfyCondition)
+                )
             }
             user
         }
@@ -143,7 +148,7 @@ class GiveMedalsToUserByUserActivity(
 
     companion object {
         private const val JOB_NAME = "giveMedalsToUserByUserActivityJob"
-        private const val CHUNK_SIZE = 1000
+        private const val CHUNK_SIZE = 4
     }
 
 }
