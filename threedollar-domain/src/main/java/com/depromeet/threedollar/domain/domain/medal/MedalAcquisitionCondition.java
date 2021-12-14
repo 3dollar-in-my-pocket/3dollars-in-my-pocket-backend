@@ -23,21 +23,26 @@ public class MedalAcquisitionCondition extends AuditingTimeEntity {
     @JoinColumn(name = "medal_id", nullable = false)
     private Medal medal;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     @Enumerated(EnumType.STRING)
     private MedalAcquisitionConditionType conditionType;
 
     @Column(nullable = false)
     private int count;
 
-    private MedalAcquisitionCondition(Medal medal, MedalAcquisitionConditionType conditionType, int count) {
+    @Column(length = 200)
+    private String description;
+
+    @Builder(access = AccessLevel.PACKAGE)
+    private MedalAcquisitionCondition(Medal medal, MedalAcquisitionConditionType conditionType, int count, String description) {
         this.medal = medal;
         this.conditionType = conditionType;
         this.count = count;
+        this.description = description;
     }
 
-    static MedalAcquisitionCondition of(Medal medal, MedalAcquisitionConditionType conditionType, int count) {
-        return new MedalAcquisitionCondition(medal, conditionType, count);
+    static MedalAcquisitionCondition of(Medal medal, MedalAcquisitionConditionType conditionType, int count, String description) {
+        return new MedalAcquisitionCondition(medal, conditionType, count, description);
     }
 
     boolean canObtain(MedalAcquisitionConditionType conditionType, long counts) {

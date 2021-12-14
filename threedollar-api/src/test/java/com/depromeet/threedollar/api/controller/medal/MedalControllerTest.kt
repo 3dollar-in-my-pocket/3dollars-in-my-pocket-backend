@@ -32,8 +32,8 @@ class MedalControllerTest(
     @Test
     fun 모든_메달_목록을_조회한다() {
         // given
-        val medalOne = MedalCreator.create("붕어빵 챌린저", "붕어빵 챌린저 아이콘 URL", MedalAcquisitionConditionType.ADD_STORE, 1)
-        val medalTwo = MedalCreator.create("붕어빵 전문가", "붕어빵 전문가 아이콘 URL", MedalAcquisitionConditionType.ADD_STORE, 3)
+        val medalOne = MedalCreator.create("붕어빵 챌린저")
+        val medalTwo = MedalCreator.create("붕어빵 전문가")
         medalRepository.saveAll(listOf(medalOne, medalTwo))
 
         // when & then
@@ -50,11 +50,15 @@ class MedalControllerTest(
                     jsonPath("$.data[0].name") { value(medalOne.name) }
                     jsonPath("$.data[0].iconUrl") { value(medalOne.activationIconUrl) }
                     jsonPath("$.data[0].disableIconUrl") { value(medalOne.disableIconUrl) }
+                    jsonPath("$.data[0].introduction") { value(medalOne.introduction) }
+                    jsonPath("$.data[0].acquisition.description") { value(medalOne.acquisitionCondition.description) }
 
                     jsonPath("$.data[1].medalId") { value(medalTwo.id) }
                     jsonPath("$.data[1].name") { value(medalTwo.name) }
                     jsonPath("$.data[1].iconUrl") { value(medalTwo.activationIconUrl) }
                     jsonPath("$.data[1].disableIconUrl") { value(medalTwo.disableIconUrl) }
+                    jsonPath("$.data[1].introduction") { value(medalTwo.introduction) }
+                    jsonPath("$.data[1].acquisition.description") { value(medalTwo.acquisitionCondition.description) }
                 }
             }
     }

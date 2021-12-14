@@ -1,0 +1,2 @@
+ALTER TABLE `medal`
+    ADD COLUMN `introduction` VARCHAR(200) DEFAULT NULL;

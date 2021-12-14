@@ -33,7 +33,7 @@ public class UserMedal extends AuditingTimeEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     @Enumerated(EnumType.STRING)
     private UserMedalStatus status;
 

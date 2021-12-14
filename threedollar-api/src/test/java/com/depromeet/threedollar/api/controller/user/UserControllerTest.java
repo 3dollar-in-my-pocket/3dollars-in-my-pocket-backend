@@ -49,11 +49,12 @@ class UserControllerTest extends SetupUserControllerTest {
         @Test
         void 나의_회원정보_조회시_활성화중인_메달이_있는경우_함께_조회된다() throws Exception {
             // given
-            String medalName = "붕어빵 챌린저";
-            String activationIconUrl = "activationIconUrl";
-            String disableIconurl = "disableIconUrl";
+            String medalName = "붕어빵 전문가";
+            String description = "우리 동네 붕어빵에 대해서는 내가 바로 척척박사";
+            String activationIconUrl = "https://activation-icon.png";
+            String disableIconUrl = "https://disable-icon.png";
 
-            Medal medal = MedalCreator.create(medalName, activationIconUrl, disableIconurl);
+            Medal medal = MedalCreator.create(medalName, description, activationIconUrl, disableIconUrl);
             medalRepository.save(medal);
             userMedalRepository.save(UserMedalCreator.createActive(medal, testUser));
 
@@ -63,7 +64,7 @@ class UserControllerTest extends SetupUserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.medal.name").value(medalName))
                 .andExpect(jsonPath("$.data.medal.iconUrl").value(activationIconUrl))
-                .andExpect(jsonPath("$.data.medal.disableIconUrl").value(disableIconurl));
+                .andExpect(jsonPath("$.data.medal.disableIconUrl").value(disableIconUrl));
         }
 
 

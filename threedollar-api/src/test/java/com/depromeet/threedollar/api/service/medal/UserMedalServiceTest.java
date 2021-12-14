@@ -36,11 +36,7 @@ class UserMedalServiceTest extends SetupUserServiceTest {
         @Test
         void 장착중인_대표_칭호를_변경한다() {
             // given
-            String name = "붕어빵 칭호";
-            String activationIconUrl = "iconUrl";
-            String disableIconUrl = "disableIconUrl";
-
-            Medal medal = MedalCreator.create(name, activationIconUrl, disableIconUrl);
+            Medal medal = MedalCreator.create("붕친맨");
             medalRepository.save(medal);
 
             UserMedal userMedal = UserMedalCreator.createInActive(medal, user);

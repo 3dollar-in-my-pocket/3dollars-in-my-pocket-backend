@@ -78,7 +78,6 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
                 visitHistory.id.in(visitHistoriesIds)
             )
             .orderBy(visitHistory.id.desc())
-            .limit(size)
             .fetch();
     }
 
