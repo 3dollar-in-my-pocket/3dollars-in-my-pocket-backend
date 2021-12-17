@@ -60,13 +60,24 @@ enum class StatisticsMessageFormat(
     ),
     COUNTS_MEDALS(
         """
-            7. 활성화 중인 메달 정보
+            7. 보유 중인 메달 정보
             %s
         """.trimIndent()
     ),
     COUNTS_MEDAL(
         """
             - %s: 사용자 %s명이 보유하고 있습니다.
+        """.trimIndent()
+    ),
+    COUNTS_ACTIVE_MEDALS(
+        """
+            8. 장착중인 메달 정보
+            %s
+        """.trimIndent()
+    ),
+    COUNTS_ACTIVE_MEDAL(
+        """
+            - %s: 사용자 %s명이 장착하고 있습니다.
         """.trimIndent()
     ),
 

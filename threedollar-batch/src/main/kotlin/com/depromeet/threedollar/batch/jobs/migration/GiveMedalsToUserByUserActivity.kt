@@ -23,6 +23,9 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import javax.persistence.EntityManagerFactory
 
+/**
+ * 마이그레이션을 위해 기존의 유저의 활동 이력을 통해 메달을 제공하는 배치
+ */
 @Configuration
 class GiveMedalsToUserByUserActivity(
     private val jobBuilderFactory: JobBuilderFactory,

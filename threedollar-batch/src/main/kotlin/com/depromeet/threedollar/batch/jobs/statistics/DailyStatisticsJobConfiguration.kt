@@ -19,6 +19,9 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.time.LocalDate
 
+/**
+ * 알일 통계 정보를 알려주는 슬랙 봇 관련 배치 잡
+ */
 @Configuration
 class DailyStatisticsJobConfiguration(
     private val jobBuilderFactory: JobBuilderFactory,
@@ -46,13 +49,13 @@ class DailyStatisticsJobConfiguration(
             .next(countsNewReviewsStep())
             .next(countsNewVisitHistoriesStep())
             .next(countsUserMedalGroupByMedal())
+            .next(countsActiveUserMedalCounts())
             .build()
     }
 
-
     @Bean
     fun notificationStatisticsInfo(): Step {
-        return stepBuilderFactory[" notificationStatisticsInf"]
+        return stepBuilderFactory["notificationStatisticsInfo"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 slackApiClient.postMessage(
@@ -169,6 +172,22 @@ class DailyStatisticsJobConfiguration(
                         COUNTS_MEDAL.messageFormat.format(it.medalName, it.counts)
                     }
                 slackApiClient.postMessage(PostSlackMessageRequest.of(COUNTS_MEDALS.messageFormat.format(message)))
+                RepeatStatus.FINISHED
+            }
+            .build()
+    }
+
+    @Bean
+    fun countsActiveUserMedalCounts(): Step {
+        return stepBuilderFactory["countsActiveUserMedalCounts"]
+            .tasklet { _, _ ->
+                val result = medalRepository.findActiveCountsGroupByMedal()
+                val message = result.asSequence()
+                    .sortedByDescending { it.counts }
+                    .joinToString(separator = "\n") {
+                        COUNTS_ACTIVE_MEDAL.messageFormat.format(it.medalName, it.counts)
+                    }
+                slackApiClient.postMessage(PostSlackMessageRequest.of(COUNTS_ACTIVE_MEDALS.messageFormat.format(message)))
                 RepeatStatus.FINISHED
             }
             .build()
