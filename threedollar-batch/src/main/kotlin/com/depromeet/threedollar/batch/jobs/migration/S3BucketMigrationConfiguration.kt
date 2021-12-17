@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
+/**
+ * S3 버킷을 마이그레이션 하는 배치.
+ */
 @Configuration
 class S3BucketMigrationConfiguration(
     private val jobBuilderFactory: JobBuilderFactory,
