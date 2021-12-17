@@ -8,4 +8,6 @@ public interface MedalStatisticsRepositoryCustom {
 
     List<MedalCountsStatisticsProjection> findUserMedalsCountsGroupByMedal();
 
+    List<MedalCountsStatisticsProjection> findActiveCountsGroupByMedal();
+
 }
