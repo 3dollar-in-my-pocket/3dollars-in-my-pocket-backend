@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.config.filter;
 
-import com.depromeet.threedollar.common.exception.HttpStatusCode;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
@@ -27,33 +27,27 @@ class RequestLoggingFilter implements Filter {
         ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper((HttpServletRequest) request);
         ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper((HttpServletResponse) response);
 
-        String path = ((HttpServletRequest) request).getRequestURI();
-        if (EXCLUDE_LOGGING_RESPONSE_URLS.contains(path) && HttpStatusCode.BAD_REQUEST.getStatus() <= responseWrapper.getStatus()) {
-            long start = System.currentTimeMillis();
-            chain.doFilter(requestWrapper, responseWrapper);
-            long end = System.currentTimeMillis();
+        long start = System.currentTimeMillis();
+        chain.doFilter(requestWrapper, responseWrapper);
+        long end = System.currentTimeMillis();
 
+        String requestURI = ((HttpServletRequest) request).getRequestURI();
+        if (EXCLUDE_LOGGING_RESPONSE_URLS.contains(requestURI) && responseWrapper.getStatus() == HttpStatus.OK.value()) {
             log.info("\n" +
                     "[REQUEST] {} - {}{} {} - {}s\n" +
                     "Headers : {}\n",
-                ((HttpServletRequest) request).getMethod(), ((HttpServletRequest) request).getRequestURI(),
-                getQueryString((HttpServletRequest) request), responseWrapper.getStatus(), (end - start) / 1000.0,
+                ((HttpServletRequest) request).getMethod(), requestURI, getQueryString((HttpServletRequest) request), responseWrapper.getStatus(), (end - start) / 1000.0,
                 getHeaders((HttpServletRequest) request));
             responseWrapper.copyBodyToResponse();
             return;
         }
-
-        long start = System.currentTimeMillis();
-        chain.doFilter(requestWrapper, responseWrapper);
-        long end = System.currentTimeMillis();
 
         log.info("\n" +
                 "[REQUEST] {} - {}{} {} - {}s\n" +
                 "Headers : {}\n" +
                 "Request : {}\n" +
                 "Response : {}\n",
-            ((HttpServletRequest) request).getMethod(), ((HttpServletRequest) request).getRequestURI(),
-            getQueryString((HttpServletRequest) request), responseWrapper.getStatus(), (end - start) / 1000.0,
+            ((HttpServletRequest) request).getMethod(), requestURI, getQueryString((HttpServletRequest) request), responseWrapper.getStatus(), (end - start) / 1000.0,
             getHeaders((HttpServletRequest) request),
             getRequestBody(requestWrapper),
             getResponseBody(responseWrapper));
