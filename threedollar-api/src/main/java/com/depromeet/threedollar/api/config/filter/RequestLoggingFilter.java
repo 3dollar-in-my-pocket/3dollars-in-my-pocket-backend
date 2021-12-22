@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.config.filter;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
@@ -13,10 +14,13 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
 class RequestLoggingFilter implements Filter {
+
+    private final static List<String> EXCLUDE_LOGGING_RESPONSE_URLS = List.of("/api/v2/stores/near");
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -27,13 +31,23 @@ class RequestLoggingFilter implements Filter {
         chain.doFilter(requestWrapper, responseWrapper);
         long end = System.currentTimeMillis();
 
+        String requestURI = ((HttpServletRequest) request).getRequestURI();
+        if (EXCLUDE_LOGGING_RESPONSE_URLS.contains(requestURI) && responseWrapper.getStatus() == HttpStatus.OK.value()) {
+            log.info("\n" +
+                    "[REQUEST] {} - {}{} {} - {}s\n" +
+                    "Headers : {}\n",
+                ((HttpServletRequest) request).getMethod(), requestURI, getQueryString((HttpServletRequest) request), responseWrapper.getStatus(), (end - start) / 1000.0,
+                getHeaders((HttpServletRequest) request));
+            responseWrapper.copyBodyToResponse();
+            return;
+        }
+
         log.info("\n" +
                 "[REQUEST] {} - {}{} {} - {}s\n" +
                 "Headers : {}\n" +
                 "Request : {}\n" +
                 "Response : {}\n",
-            ((HttpServletRequest) request).getMethod(), ((HttpServletRequest) request).getRequestURI(),
-            getQueryString((HttpServletRequest) request), responseWrapper.getStatus(), (end - start) / 1000.0,
+            ((HttpServletRequest) request).getMethod(), requestURI, getQueryString((HttpServletRequest) request), responseWrapper.getStatus(), (end - start) / 1000.0,
             getHeaders((HttpServletRequest) request),
             getRequestBody(requestWrapper),
             getResponseBody(responseWrapper));
