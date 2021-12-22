@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.config.filter;
 
+import com.depromeet.threedollar.common.exception.HttpStatusCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 import org.springframework.web.util.ContentCachingRequestWrapper;
@@ -13,15 +14,34 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
 class RequestLoggingFilter implements Filter {
 
+    private final static List<String> EXCLUDE_LOGGING_RESPONSE_URLS = List.of("/api/v2/stores/near");
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper((HttpServletRequest) request);
         ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper((HttpServletResponse) response);
+
+        String path = ((HttpServletRequest) request).getRequestURI();
+        if (EXCLUDE_LOGGING_RESPONSE_URLS.contains(path) && HttpStatusCode.BAD_REQUEST.getStatus() <= responseWrapper.getStatus()) {
+            long start = System.currentTimeMillis();
+            chain.doFilter(requestWrapper, responseWrapper);
+            long end = System.currentTimeMillis();
+
+            log.info("\n" +
+                    "[REQUEST] {} - {}{} {} - {}s\n" +
+                    "Headers : {}\n",
+                ((HttpServletRequest) request).getMethod(), ((HttpServletRequest) request).getRequestURI(),
+                getQueryString((HttpServletRequest) request), responseWrapper.getStatus(), (end - start) / 1000.0,
+                getHeaders((HttpServletRequest) request));
+            responseWrapper.copyBodyToResponse();
+            return;
+        }
 
         long start = System.currentTimeMillis();
         chain.doFilter(requestWrapper, responseWrapper);
