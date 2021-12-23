@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.controller.store;
 
+import com.depromeet.threedollar.api.config.resolver.Coordinate;
 import com.depromeet.threedollar.api.controller.MockMvcUtils;
 import com.depromeet.threedollar.api.service.store.dto.request.*;
 import com.depromeet.threedollar.api.service.store.dto.request.deprecated.RetrieveMyStoresV2Request;
@@ -29,12 +30,12 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         super(mockMvc, objectMapper);
     }
 
-    ApiResponse<List<StoreWithVisitsAndDistanceResponse>> getNearStores(RetrieveNearStoresRequest request, int expectedStatus) throws Exception {
+    ApiResponse<List<StoreWithVisitsAndDistanceResponse>> getNearStores(RetrieveNearStoresRequest request, Coordinate coordinate, Coordinate mapCoordinate, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/stores/near")
-            .param("latitude", String.valueOf(request.getLatitude()))
-            .param("longitude", String.valueOf(request.getLongitude()))
-            .param("mapLatitude", String.valueOf(request.getMapLatitude()))
-            .param("mapLongitude", String.valueOf(request.getMapLongitude()))
+            .param("latitude", String.valueOf(coordinate.getLatitude()))
+            .param("longitude", String.valueOf(coordinate.getLongitude()))
+            .param("mapLatitude", String.valueOf(mapCoordinate.getLatitude()))
+            .param("mapLongitude", String.valueOf(mapCoordinate.getLongitude()))
             .param("distance", String.valueOf(request.getDistance().getDistance() * 1000))
             .param("category", request.getCategory() == null ? null : String.valueOf(request.getCategory()))
             .param("orderType", request.getOrderType() == null ? String.valueOf(StoreOrderType.DISTANCE_ASC) : String.valueOf(request.getOrderType()));
@@ -50,10 +51,10 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         );
     }
 
-    ApiResponse<StoreDetailResponse> getStoreDetailInfo(RetrieveStoreDetailRequest request, int expectedStatus) throws Exception {
+    ApiResponse<StoreDetailResponse> getStoreDetailInfo(RetrieveStoreDetailRequest request, Coordinate coordinate, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/store")
-            .param("latitude", String.valueOf(request.getLatitude()))
-            .param("longitude", String.valueOf(request.getLongitude()))
+            .param("latitude", String.valueOf(coordinate.getLatitude()))
+            .param("longitude", String.valueOf(coordinate.getLongitude()))
             .param("storeId", String.valueOf(request.getStoreId()))
             .param("startDate", request.getStartDate() == null ? null : String.valueOf(request.getStartDate()));
 
@@ -85,14 +86,14 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         );
     }
 
-    ApiResponse<StoresCursorV2Response> retrieveMyReportedStoreHistoriesV2(RetrieveMyStoresV2Request request, String token, int expectedStatus) throws Exception {
+    ApiResponse<StoresCursorV2Response> retrieveMyReportedStoreHistoriesV2(RetrieveMyStoresV2Request request, Coordinate coordinate, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/stores/me")
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))
             .param("cursor", request.getCursor() == null ? null : String.valueOf(request.getCursor()))
             .param("cachingTotalElements", request.getCachingTotalElements() == null ? null : String.valueOf(request.getCachingTotalElements()))
-            .param("latitude", request.getLatitude() == null ? null : String.valueOf(request.getLatitude()))
-            .param("longitude", request.getLongitude() == null ? null : String.valueOf(request.getLongitude()));
+            .param("latitude", coordinate.getLatitude() == null ? null : String.valueOf(coordinate.getLatitude()))
+            .param("longitude", coordinate.getLongitude() == null ? null : String.valueOf(coordinate.getLongitude()));
 
         return objectMapper.readValue(
             mockMvc.perform(builder)
@@ -106,12 +107,12 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
     }
 
     @Deprecated
-    ApiResponse<StoresGroupByDistanceV2Response> getStoresGroupByDistance(RetrieveStoreGroupByCategoryV2Request request, int expectedStatus) throws Exception {
+    ApiResponse<StoresGroupByDistanceV2Response> getStoresGroupByDistance(RetrieveStoreGroupByCategoryV2Request request, Coordinate coordinate, Coordinate mapCoordinate, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/stores/distance")
-            .param("latitude", String.valueOf(request.getLatitude()))
-            .param("longitude", String.valueOf(request.getLongitude()))
-            .param("mapLatitude", String.valueOf(request.getMapLatitude()))
-            .param("mapLongitude", String.valueOf(request.getMapLongitude()))
+            .param("latitude", String.valueOf(coordinate.getLatitude()))
+            .param("longitude", String.valueOf(coordinate.getLongitude()))
+            .param("mapLatitude", String.valueOf(mapCoordinate.getLatitude()))
+            .param("mapLongitude", String.valueOf(mapCoordinate.getLongitude()))
             .param("category", String.valueOf(request.getCategory()));
 
         return objectMapper.readValue(
@@ -126,12 +127,12 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
     }
 
     @Deprecated
-    ApiResponse<StoresGroupByReviewV2Response> getStoresGroupByReview(RetrieveStoreGroupByCategoryV2Request request, int expectedStatus) throws Exception {
+    ApiResponse<StoresGroupByReviewV2Response> getStoresGroupByReview(RetrieveStoreGroupByCategoryV2Request request, Coordinate coordinate, Coordinate mapCoordinate, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/stores/review")
-            .param("latitude", String.valueOf(request.getLatitude()))
-            .param("longitude", String.valueOf(request.getLongitude()))
-            .param("mapLatitude", String.valueOf(request.getMapLatitude()))
-            .param("mapLongitude", String.valueOf(request.getMapLongitude()))
+            .param("latitude", String.valueOf(coordinate.getLatitude()))
+            .param("longitude", String.valueOf(coordinate.getLongitude()))
+            .param("mapLatitude", String.valueOf(mapCoordinate.getLatitude()))
+            .param("mapLongitude", String.valueOf(mapCoordinate.getLongitude()))
             .param("category", String.valueOf(request.getCategory()));
 
         return objectMapper.readValue(

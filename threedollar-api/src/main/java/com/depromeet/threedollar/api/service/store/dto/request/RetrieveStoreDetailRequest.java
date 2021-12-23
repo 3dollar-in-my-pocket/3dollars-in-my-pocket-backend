@@ -15,21 +15,15 @@ public class RetrieveStoreDetailRequest {
     @NotNull(message = "{store.storeId.notNull}")
     private Long storeId;
 
-    @NotNull(message = "{store.latitude.notNull}")
-    private Double latitude;
-
-    @NotNull(message = "{store.longitude.notNull}")
-    private Double longitude;
-
     @Nullable
     private LocalDate startDate;
 
     public static RetrieveStoreDetailRequest testInstance(Long storeId, LocalDate startDate) {
-        return new RetrieveStoreDetailRequest(storeId, 34.0, 126.0, startDate);
+        return new RetrieveStoreDetailRequest(storeId, startDate);
     }
 
     public static RetrieveStoreDetailRequest testInstance(Long storeId) {
-        return new RetrieveStoreDetailRequest(storeId, 34.0, 126.0, null);
+        return new RetrieveStoreDetailRequest(storeId, null);
     }
 
     public LocalDate getStartDate() {

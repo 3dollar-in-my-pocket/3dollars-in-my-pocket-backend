@@ -133,8 +133,8 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     protected ApiResponse<Object> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException e) {
         log.error(e.getMessage(), e);
-        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(VALIDATION_UPLOAD_SIZE_EXCEPTION, e));
-        return ApiResponse.error(VALIDATION_UPLOAD_SIZE_EXCEPTION);
+        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(FORBIDDEN_UPLOAD_SIZE_EXCEPTION, e));
+        return ApiResponse.error(FORBIDDEN_UPLOAD_SIZE_EXCEPTION);
     }
 
     /**
