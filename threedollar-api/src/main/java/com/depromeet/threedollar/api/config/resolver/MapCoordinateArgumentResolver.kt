@@ -36,7 +36,7 @@ class MapCoordinateArgumentResolver : HandlerMethodArgumentResolver {
             mapLongitude ?: throw ValidationException("mapLongitude를 입력해주세요", VALIDATION_MAP_LONGITUDE_EXCEPTION)
         }
 
-        return Coordinate.of(mapLatitude, mapLongitude)
+        return Coordinate.of(mapLatitude ?: 0.0, mapLongitude ?: 0.0)
     }
 
 }

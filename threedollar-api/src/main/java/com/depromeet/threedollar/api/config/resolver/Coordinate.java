@@ -1,20 +1,18 @@
 package com.depromeet.threedollar.api.config.resolver;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @ToString
+@EqualsAndHashCode
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class Coordinate {
 
-    private final Double latitude;
+    private final double latitude;
 
-    private final Double longitude;
+    private final double longitude;
 
-    public static Coordinate of(Double latitude, Double longitude) {
+    public static Coordinate of(double latitude, double longitude) {
         return new Coordinate(latitude, longitude);
     }
 

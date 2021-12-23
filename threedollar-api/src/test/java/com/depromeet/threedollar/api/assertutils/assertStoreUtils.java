@@ -21,7 +21,7 @@ public final class assertStoreUtils {
     /**
      * Store
      */
-    public static void assertStore(Store store, Double latitude, Double longitude, String storeName, StoreType storeType, Long userId) {
+    public static void assertStore(Store store, double latitude, double longitude, String storeName, StoreType storeType, Long userId) {
         assertAll(
             () -> assertThat(store.getLocation()).isEqualTo(Location.of(latitude, longitude)),
             () -> assertThat(store.getLatitude()).isEqualTo(latitude),
@@ -65,7 +65,7 @@ public final class assertStoreUtils {
         );
     }
 
-    public static void assertStoreWithVisitsResponse(StoreWithVisitsResponse response, Long storeId, Double latitude, Double longitude, String name, double rating) {
+    public static void assertStoreWithVisitsResponse(StoreWithVisitsResponse response, Long storeId, double latitude, double longitude, String name, double rating) {
         assertAll(
             () -> assertThat(response.getStoreId()).isEqualTo(storeId),
             () -> assertThat(response.getLatitude()).isEqualTo(latitude),
@@ -75,7 +75,7 @@ public final class assertStoreUtils {
         );
     }
 
-    public static void assertStoreWithVisitsAndDistanceResponse(StoreWithVisitsAndDistanceResponse response, Long storeId, Double latitude, Double longitude, String name, double rating) {
+    public static void assertStoreWithVisitsAndDistanceResponse(StoreWithVisitsAndDistanceResponse response, Long storeId, double latitude, double longitude, String name, double rating) {
         assertAll(
             () -> assertThat(response.getStoreId()).isEqualTo(storeId),
             () -> assertThat(response.getLatitude()).isEqualTo(latitude),

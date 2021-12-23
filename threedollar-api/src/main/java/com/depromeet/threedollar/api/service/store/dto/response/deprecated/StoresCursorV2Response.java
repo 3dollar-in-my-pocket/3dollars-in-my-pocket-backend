@@ -32,7 +32,7 @@ public class StoresCursorV2Response {
     }
 
     public static StoresCursorV2Response of(CursorSupporter<Store> storesCursor, VisitHistoryCounter visitHistoriesCounts,
-                                            long totalElements, Double latitude, Double longitude) {
+                                            long totalElements, double latitude, double longitude) {
         if (storesCursor.isLastCursor()) {
             return StoresCursorV2Response.newLastCursor(storesCursor.getItemsInCurrentCursor(), visitHistoriesCounts, latitude, longitude, totalElements);
         }
@@ -41,16 +41,16 @@ public class StoresCursorV2Response {
     }
 
     private static StoresCursorV2Response newLastCursor(List<Store> stores, VisitHistoryCounter collection,
-                                                        Double latitude, Double longitude, long totalElements) {
+                                                        double latitude, double longitude, long totalElements) {
         return newCursorHasNext(stores, collection, latitude, longitude, totalElements, LAST_CURSOR);
     }
 
     private static StoresCursorV2Response newCursorHasNext(List<Store> stores, VisitHistoryCounter collection,
-                                                           Double latitude, Double longitude, long totalElements, long nextCursor) {
+                                                           double latitude, double longitude, long totalElements, long nextCursor) {
         return new StoresCursorV2Response(getContents(stores, collection, latitude, longitude), totalElements, nextCursor);
     }
 
-    private static List<StoreWithVisitsAndDistanceResponse> getContents(List<Store> stores, VisitHistoryCounter collection, Double latitude, Double longitude) {
+    private static List<StoreWithVisitsAndDistanceResponse> getContents(List<Store> stores, VisitHistoryCounter collection, double latitude, double longitude) {
         return stores.stream()
             .map(store -> StoreWithVisitsAndDistanceResponse.of(store, latitude, longitude, collection))
             .collect(Collectors.toList());

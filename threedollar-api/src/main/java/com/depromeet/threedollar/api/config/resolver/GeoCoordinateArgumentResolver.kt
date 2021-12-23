@@ -36,7 +36,7 @@ class GeoCoordinateArgumentResolver : HandlerMethodArgumentResolver {
             longitude ?: throw ValidationException("longitude를 입력해주세요", VALIDATION_LONGITUDE_EXCEPTION)
         }
 
-        return Coordinate.of(latitude, longitude)
+        return Coordinate.of(latitude ?: 0.0, longitude ?: 0.0)
     }
 
 }

@@ -25,7 +25,7 @@ public class UserMedalResponse {
     private String disableIconUrl;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private UserMedalResponse(Long medalId, String name, String iconUrl, String disableIconUrl) {
+    private UserMedalResponse(@Nullable Long medalId, String name, @Nullable String iconUrl, @Nullable String disableIconUrl) {
         this.medalId = medalId;
         this.name = name;
         this.iconUrl = iconUrl;
@@ -39,7 +39,7 @@ public class UserMedalResponse {
         return of(userMedal.getMedal());
     }
 
-    public static UserMedalResponse of(@NotNull Medal medal) {
+    private static UserMedalResponse of(@NotNull Medal medal) {
         return UserMedalResponse.builder()
             .medalId(medal.getId())
             .name(medal.getName())

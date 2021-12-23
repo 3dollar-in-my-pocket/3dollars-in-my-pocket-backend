@@ -49,7 +49,7 @@ public class StoreWithVisitsAndDistanceResponse extends AuditingTimeResponse {
             .build();
     }
 
-    public static StoreWithVisitsAndDistanceResponse of(@NotNull Store store, Double latitude, Double longitude, VisitHistoryCounter visitsCounter) {
+    public static StoreWithVisitsAndDistanceResponse of(@NotNull Store store, double latitude, double longitude, VisitHistoryCounter visitsCounter) {
         StoreWithVisitsAndDistanceResponse response = StoreWithVisitsAndDistanceResponse.builder()
             .storeId(store.getId())
             .latitude(store.getLatitude())

@@ -635,7 +635,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveMyStoresV2Request request = RetrieveMyStoresV2Request.testInstance(2, null, null);
 
             // when
-            ApiResponse<StoresCursorV2Response> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistoriesV2(request, Coordinate.of(null, null), token, 200);
+            ApiResponse<StoresCursorV2Response> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistoriesV2(request, Coordinate.of(0, 0), token, 200);
 
             // then
             assertThat(response.getData().getTotalElements()).isEqualTo(0);
