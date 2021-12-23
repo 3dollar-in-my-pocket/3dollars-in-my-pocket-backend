@@ -29,7 +29,7 @@ class MapCoordinateArgumentResolver : HandlerMethodArgumentResolver {
         val mapLongitude = webRequest.getParameter("mapLongitude")?.toDoubleOrNull()
 
         val annotation = parameter.getParameterAnnotation(MapCoordinate::class.java)
-            ?: throw InternalServerException("예상치 못한 에러가 발생하였습니다. @MapCoordinate이 null일 수 없습니다")
+            ?: throw InternalServerException("예상치 못한 에러가 발생하였습니다. @MapCoordinate can't be null")
 
         if (annotation.required) {
             mapLatitude ?: throw ValidationException("mapLatitude를 입력해주세요", VALIDATION_MAP_LATITUDE_EXCEPTION)

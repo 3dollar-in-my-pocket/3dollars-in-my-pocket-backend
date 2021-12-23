@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.controller.store;
 
 import com.depromeet.threedollar.api.config.interceptor.Auth;
-import com.depromeet.threedollar.api.config.resolver.CurrentCoordinate;
+import com.depromeet.threedollar.api.config.resolver.GeoCoordinate;
 import com.depromeet.threedollar.api.config.resolver.Coordinate;
 import com.depromeet.threedollar.api.config.resolver.MapCoordinate;
 import com.depromeet.threedollar.api.config.resolver.UserId;
@@ -31,7 +31,7 @@ public class StoreRetrieveController {
     @ApiOperation(value = "메인 페이지 - 위도, 경도 기준 내 주위의 가게 목록을 조회합니다", notes = "orderType: 정렬이 필요한 경우 category: 카테고리 필터링이 필요한 경우")
     @GetMapping("/api/v2/stores/near")
     public ApiResponse<List<StoreWithVisitsAndDistanceResponse>> getNearStores(@Valid RetrieveNearStoresRequest request,
-                                                                               @CurrentCoordinate Coordinate coordinate,
+                                                                               @GeoCoordinate Coordinate coordinate,
                                                                                @MapCoordinate Coordinate mapCoordinate) {
         return ApiResponse.success(storeRetrieveService.getNearStores(request, coordinate, mapCoordinate));
     }
@@ -39,7 +39,7 @@ public class StoreRetrieveController {
     @ApiOperation("가게 상세 페이지 - 특정 가게의 정보를 상세 조회합니다")
     @GetMapping("/api/v2/store")
     public ApiResponse<StoreDetailResponse> getDetailStoreInfo(@Valid RetrieveStoreDetailRequest request,
-                                                               @CurrentCoordinate Coordinate coordinate) {
+                                                               @GeoCoordinate Coordinate coordinate) {
         return ApiResponse.success(storeRetrieveService.getDetailStoreInfo(request, coordinate));
     }
 
@@ -60,7 +60,7 @@ public class StoreRetrieveController {
     @Auth
     @GetMapping("/api/v2/stores/me")
     public ApiResponse<StoresCursorV2Response> retrieveMyReportedStoreHistoriesV2(@Valid RetrieveMyStoresV2Request request,
-                                                                                  @CurrentCoordinate(required = false) Coordinate coordinate,
+                                                                                  @GeoCoordinate(required = false) Coordinate coordinate,
                                                                                   @UserId Long userId) {
         return ApiResponse.success(storeRetrieveService.retrieveMyReportedStoreHistoriesV2(request, coordinate, userId));
     }
@@ -73,7 +73,7 @@ public class StoreRetrieveController {
     @ApiOperation("[Deprecated] 가게 카테고리별 조회 페이지 - 거리순으로 특정 메뉴를 판매하는 가게 목록을 조회합니다")
     @GetMapping("/api/v2/stores/distance")
     public ApiResponse<StoresGroupByDistanceV2Response> getStoresGroupByDistance(@Valid RetrieveStoreGroupByCategoryV2Request request,
-                                                                                 @CurrentCoordinate Coordinate coordinate,
+                                                                                 @GeoCoordinate Coordinate coordinate,
                                                                                  @MapCoordinate Coordinate mapCoordinate) {
         return ApiResponse.success(storeRetrieveService.getNearStoresGroupByDistance(request, coordinate, mapCoordinate));
     }
@@ -86,7 +86,7 @@ public class StoreRetrieveController {
     @ApiOperation("[Deprecated] 가게 카테고리별 조회 페이지 - 리뷰순으로 특정 메뉴를 판매하는 가게 목록을 조회합니다")
     @GetMapping("/api/v2/stores/review")
     public ApiResponse<StoresGroupByReviewV2Response> getStoresGroupByReview(@Valid RetrieveStoreGroupByCategoryV2Request request,
-                                                                             @CurrentCoordinate Coordinate coordinate,
+                                                                             @GeoCoordinate Coordinate coordinate,
                                                                              @MapCoordinate Coordinate mapCoordinate) {
         return ApiResponse.success(storeRetrieveService.getNearStoresGroupByReview(request, coordinate, mapCoordinate));
     }

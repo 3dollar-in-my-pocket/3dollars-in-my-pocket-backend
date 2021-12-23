@@ -12,10 +12,10 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
 
 @Component
-class CurrentCoordinateArgumentResolver : HandlerMethodArgumentResolver {
+class GeoCoordinateArgumentResolver : HandlerMethodArgumentResolver {
 
     override fun supportsParameter(parameter: MethodParameter): Boolean {
-        return parameter.getParameterAnnotation(CurrentCoordinate::class.java) != null
+        return parameter.getParameterAnnotation(GeoCoordinate::class.java) != null
             && Coordinate::class.java == parameter.parameterType
     }
 
@@ -28,8 +28,8 @@ class CurrentCoordinateArgumentResolver : HandlerMethodArgumentResolver {
         val latitude = webRequest.getParameter("latitude")?.toDoubleOrNull()
         val longitude = webRequest.getParameter("longitude")?.toDoubleOrNull()
 
-        val annotation = parameter.getParameterAnnotation(CurrentCoordinate::class.java)
-            ?: throw InternalServerException("예상치 못한 에러가 발생하였습니다. @CurrentCoordinate이 null일 수 없습니다")
+        val annotation = parameter.getParameterAnnotation(GeoCoordinate::class.java)
+            ?: throw InternalServerException("예상치 못한 에러가 발생하였습니다. @GeoCoordinate can't be null")
 
         if (annotation.required) {
             latitude ?: throw ValidationException("latitude를 입력해주세요", VALIDATION_LATITUDE_EXCEPTION)
