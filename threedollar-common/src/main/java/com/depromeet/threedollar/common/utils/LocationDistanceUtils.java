@@ -2,7 +2,6 @@ package com.depromeet.threedollar.common.utils;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.Nullable;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LocationDistanceUtils {
@@ -13,8 +12,8 @@ public class LocationDistanceUtils {
      * 두 위도/경도간의 거리를 계산해주는 유틸성 메소드.
      * 일단 기존의 프로젝트의 방법 적용하였음.
      */
-    public static int getDistance(@Nullable Double sourceLatitude, @Nullable Double sourceLongitude, @Nullable Double targetLatitude, @Nullable Double targetLongitude) {
-        if (sourceLatitude == null || sourceLongitude == null || targetLatitude == null || targetLongitude == null) {
+    public static int getDistance(double sourceLatitude, double sourceLongitude, double targetLatitude, double targetLongitude) {
+        if (sourceLatitude == 0 || sourceLongitude == 0 || targetLatitude == 0 || targetLongitude == 0) {
             return 0;
         }
         double theta = sourceLongitude - targetLongitude;

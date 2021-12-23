@@ -23,14 +23,8 @@ public class RetrieveMyStoresV2Request {
     @Nullable
     private Long cachingTotalElements; // 총 가게 수를 매번 서버에서 조회하지 않고, 캐싱하기 위한 필드. (Optional)
 
-    @Nullable
-    private Double latitude;
-
-    @Nullable
-    private Double longitude;
-
-    public static RetrieveMyStoresV2Request testInstance(int size, @Nullable Long cursor, @Nullable Long cachingTotalElements, @Nullable Double latitude, @Nullable Double longitude) {
-        return new RetrieveMyStoresV2Request(size, cursor, cachingTotalElements, latitude, longitude);
+    public static RetrieveMyStoresV2Request testInstance(int size, @Nullable Long cursor, @Nullable Long cachingTotalElements) {
+        return new RetrieveMyStoresV2Request(size, cursor, cachingTotalElements);
     }
 
 }

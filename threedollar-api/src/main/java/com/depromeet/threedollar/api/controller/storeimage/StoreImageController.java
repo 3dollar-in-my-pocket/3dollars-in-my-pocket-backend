@@ -22,22 +22,29 @@ public class StoreImageController {
 
     @ApiOperation("가게 상세 페이지 - 특정 가게에 등록된 이미지 목록을 조회합니다")
     @GetMapping("/api/v2/store/{storeId}/images")
-    public ApiResponse<List<StoreImageResponse>> getStoreImages(@PathVariable Long storeId) {
+    public ApiResponse<List<StoreImageResponse>> getStoreImages(
+        @PathVariable Long storeId
+    ) {
         return ApiResponse.success(storeImageService.getStoreImages(storeId));
     }
 
     @ApiOperation("[인증] 가게 상세 페이지 - 가게에 신규 이미지들을 등록합니다")
     @Auth
     @PostMapping("/api/v2/store/images")
-    public ApiResponse<List<StoreImageResponse>> addStoreImage(@RequestPart(value = "images") List<MultipartFile> images,
-                                                               @Valid AddStoreImageRequest request, @UserId Long userId) {
+    public ApiResponse<List<StoreImageResponse>> addStoreImage(
+        @RequestPart(value = "images") List<MultipartFile> images,
+        @Valid AddStoreImageRequest request,
+        @UserId Long userId
+    ) {
         return ApiResponse.success(storeImageService.addStoreImages(request, images, userId));
     }
 
     @ApiOperation("[인증] 가게 상세 페이지 - 가게에 등록된 특정 이미지를 삭제합니다")
     @Auth
     @DeleteMapping("/api/v2/store/image/{imageId}")
-    public ApiResponse<String> deleteStoreImage(@PathVariable Long imageId) {
+    public ApiResponse<String> deleteStoreImage(
+        @PathVariable Long imageId
+    ) {
         storeImageService.deleteStoreImage(imageId);
         return ApiResponse.SUCCESS;
     }

@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.service.store;
 
+import com.depromeet.threedollar.api.config.resolver.Coordinate;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveMyStoresRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStoresRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailRequest;
@@ -50,24 +51,24 @@ public class StoreRetrieveService {
     private final VisitHistoryRepository visitHistoryRepository;
 
     @Transactional(readOnly = true)
-    public List<StoreWithVisitsAndDistanceResponse> getNearStores(RetrieveNearStoresRequest request) {
-        List<Store> nearStores = findNearStoresFilterByCategory(storeRepository, request.getMapLatitude(), request.getMapLongitude(), request.getDistance(), request.getCategory());
+    public List<StoreWithVisitsAndDistanceResponse> getNearStores(RetrieveNearStoresRequest request, Coordinate geoCoordinate, Coordinate mapCoordinate) {
+        List<Store> nearStores = findNearStoresFilterByCategory(storeRepository, mapCoordinate.getLatitude(), mapCoordinate.getLongitude(), request.getDistance(), request.getCategory());
         VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(nearStores);
         return nearStores.stream()
-            .map(store -> StoreWithVisitsAndDistanceResponse.of(store, request.getLatitude(), request.getLongitude(), visitHistoriesCounter))
+            .map(store -> StoreWithVisitsAndDistanceResponse.of(store, geoCoordinate.getLatitude(), geoCoordinate.getLongitude(), visitHistoriesCounter))
             .sorted(request.getSorted())
             .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public StoreDetailResponse getDetailStoreInfo(RetrieveStoreDetailRequest request) {
+    public StoreDetailResponse getDetailStoreInfo(RetrieveStoreDetailRequest request, Coordinate geoCoordinate) {
         Store store = StoreServiceUtils.findStoreByIdFetchJoinMenu(storeRepository, request.getStoreId());
         List<Review> reviews = reviewRepository.findAllByStoreId(request.getStoreId());
         List<StoreImage> storeImages = storeImageRepository.findAllByStoreId(request.getStoreId());
         List<VisitHistoryWithUserProjection> visitHistories = visitHistoryRepository.findAllVisitWithUserByStoreIdAfterDate(request.getStoreId(), request.getStartDate());
         UserDictionary userDictionary = UserDictionary.of(userRepository.findAllByUserId(assembleUserIds(reviews, visitHistories, store)));
         VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(Collections.singletonList(store));
-        return StoreDetailResponse.of(store, request.getLatitude(), request.getLongitude(), storeImages, userDictionary, reviews, visitHistoriesCounter, visitHistories);
+        return StoreDetailResponse.of(store, geoCoordinate.getLatitude(), geoCoordinate.getLongitude(), storeImages, userDictionary, reviews, visitHistoriesCounter, visitHistories);
     }
 
     private List<Long> assembleUserIds(List<Review> reviews, List<VisitHistoryWithUserProjection> visitHistories, Store store) {
@@ -93,21 +94,21 @@ public class StoreRetrieveService {
 
     @Deprecated
     @Transactional(readOnly = true)
-    public StoresCursorV2Response retrieveMyReportedStoreHistoriesV2(RetrieveMyStoresV2Request request, Long userId) {
+    public StoresCursorV2Response retrieveMyReportedStoreHistoriesV2(RetrieveMyStoresV2Request request, Coordinate geoCoordinate, Long userId) {
         List<Store> storesWithNextCursor = storeRepository.findAllActiveByUserIdUsingCursor(userId, request.getCursor(), request.getSize() + 1);
         CursorSupporter<Store> storeCursor = CursorSupporter.of(storesWithNextCursor, request.getSize());
         VisitHistoryCounter visitHistoryCountsCollection = findVisitHistoriesCountByStoreIdsInDuration(storeCursor.getItemsInCurrentCursor());
         long totalElements = Objects.requireNonNullElseGet(request.getCachingTotalElements(), () -> storeRepository.findActiveCountsByUserId(userId));
-        return StoresCursorV2Response.of(storeCursor, visitHistoryCountsCollection, totalElements, request.getLatitude(), request.getLongitude());
+        return StoresCursorV2Response.of(storeCursor, visitHistoryCountsCollection, totalElements, geoCoordinate.getLatitude(), geoCoordinate.getLongitude());
     }
 
     @Deprecated
     @Transactional(readOnly = true)
-    public StoresGroupByDistanceV2Response getNearStoresGroupByDistance(RetrieveStoreGroupByCategoryV2Request request) {
-        List<Store> nearStores = findNearStoresFilterByCategory(storeRepository, request.getMapLatitude(), request.getMapLongitude(), StoreRadiusDistance.max(), request.getCategory());
+    public StoresGroupByDistanceV2Response getNearStoresGroupByDistance(RetrieveStoreGroupByCategoryV2Request request, Coordinate geoCoordinate, Coordinate mapCoordinate) {
+        List<Store> nearStores = findNearStoresFilterByCategory(storeRepository, mapCoordinate.getLatitude(), mapCoordinate.getLongitude(), StoreRadiusDistance.max(), request.getCategory());
         VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(nearStores);
         List<StoreWithVisitsAndDistanceResponse> nearCategoryStores = nearStores.stream()
-            .map(store -> StoreWithVisitsAndDistanceResponse.of(store, request.getLatitude(), request.getLongitude(), visitHistoriesCounter))
+            .map(store -> StoreWithVisitsAndDistanceResponse.of(store, geoCoordinate.getLatitude(), geoCoordinate.getLongitude(), visitHistoriesCounter))
             .sorted(StoreOrderType.DISTANCE_ASC.getSorted())
             .collect(Collectors.toList());
         return StoresGroupByDistanceV2Response.of(nearCategoryStores);
@@ -115,11 +116,11 @@ public class StoreRetrieveService {
 
     @Deprecated
     @Transactional(readOnly = true)
-    public StoresGroupByReviewV2Response getNearStoresGroupByReview(RetrieveStoreGroupByCategoryV2Request request) {
-        List<Store> nearStores = findNearStoresFilterByCategory(storeRepository, request.getMapLatitude(), request.getMapLongitude(), StoreRadiusDistance.max(), request.getCategory());
+    public StoresGroupByReviewV2Response getNearStoresGroupByReview(RetrieveStoreGroupByCategoryV2Request request, Coordinate geoCoordinate, Coordinate mapCoordinate) {
+        List<Store> nearStores = findNearStoresFilterByCategory(storeRepository, mapCoordinate.getLatitude(), mapCoordinate.getLongitude(), StoreRadiusDistance.max(), request.getCategory());
         VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(nearStores);
         List<StoreWithVisitsAndDistanceResponse> nearCategoryStores = nearStores.stream()
-            .map(store -> StoreWithVisitsAndDistanceResponse.of(store, request.getLatitude(), request.getLongitude(), visitHistoriesCounter))
+            .map(store -> StoreWithVisitsAndDistanceResponse.of(store, geoCoordinate.getLatitude(), geoCoordinate.getLongitude(), visitHistoriesCounter))
             .sorted(StoreOrderType.REVIEW_DESC.getSorted())
             .collect(Collectors.toList());
         return StoresGroupByReviewV2Response.of(nearCategoryStores);

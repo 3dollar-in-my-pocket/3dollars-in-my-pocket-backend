@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.controller.store;
 
+import com.depromeet.threedollar.api.config.resolver.Coordinate;
 import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
 import com.depromeet.threedollar.api.service.store.dto.request.*;
 import com.depromeet.threedollar.api.service.store.dto.request.deprecated.RetrieveMyStoresV2Request;
@@ -91,15 +92,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             storeRepository.saveAll(List.of(store1, store2));
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
-                .latitude(34.0)
-                .longitude(126.0)
-                .mapLatitude(34.0)
-                .mapLongitude(126.0)
                 .distance(1000)
                 .build();
 
             // when
-            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, Coordinate.of(34.0, 126.0), Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData()).hasSize(2);
@@ -118,15 +115,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             storeRepository.save(store);
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
-                .latitude(34.0)
-                .longitude(126.0)
-                .mapLatitude(34.0)
-                .mapLongitude(126.0)
                 .distance(1000)
                 .build();
 
             // when
-            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, Coordinate.of(34.0, 126.0), Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData()).hasSize(1);
@@ -142,15 +135,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             storeRepository.save(store);
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
-                .latitude(34.0)
-                .longitude(126.0)
-                .mapLatitude(34.0)
-                .mapLongitude(126.0)
                 .distance(1000)
                 .build();
 
             // when
-            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, Coordinate.of(34.0, 126.0), Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData()).isEmpty();
@@ -170,15 +159,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             ));
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
-                .latitude(34.0)
-                .longitude(126.0)
-                .mapLatitude(34.0)
-                .mapLongitude(126.0)
                 .distance(1000)
                 .build();
 
             // when
-            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, Coordinate.of(34.0, 126.0), Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData()).hasSize(1);
@@ -194,15 +179,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             LocalDate today = LocalDate.now();
             visitHistoryRepository.save(VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, today.minusMonths(1).minusDays(1)));
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
-                .latitude(34.0)
-                .longitude(126.0)
-                .mapLatitude(34.0)
-                .mapLongitude(126.0)
                 .distance(1000)
                 .build();
 
             // when
-            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, Coordinate.of(34.0, 126.0), Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData()).hasSize(1);
@@ -221,16 +202,12 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             storeRepository.saveAll(List.of(store1, store2));
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
-                .latitude(34.0)
-                .longitude(126.0)
-                .mapLatitude(34.0)
-                .mapLongitude(126.0)
                 .distance(1000)
                 .category(MenuCategoryType.DALGONA)
                 .build();
 
             // when
-            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, Coordinate.of(34.0, 126.0), Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData()).hasSize(1);
@@ -245,16 +222,12 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             storeRepository.saveAll(List.of(store1, store2));
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
-                .latitude(34.0)
-                .longitude(126.0)
-                .mapLatitude(34.0)
-                .mapLongitude(126.0)
                 .distance(2000)
                 .orderType(StoreOrderType.DISTANCE_ASC)
                 .build();
 
             // when
-            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, Coordinate.of(34.0, 126.0), Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData()).hasSize(2);
@@ -270,16 +243,12 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             storeRepository.saveAll(List.of(store1, store2));
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
-                .latitude(34.0)
-                .longitude(126.0)
-                .mapLatitude(34.0)
-                .mapLongitude(126.0)
                 .distance(2000)
                 .orderType(StoreOrderType.REVIEW_DESC)
                 .build();
 
             // when
-            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, 200);
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, Coordinate.of(34.0, 126.0), Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData()).hasSize(2);
@@ -308,7 +277,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
-            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
+            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, Coordinate.of(34.0, 126.0), 200);
 
             // then
             StoreDetailResponse data = response.getData();
@@ -327,7 +296,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
-            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
+            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData().getCategories()).containsExactlyInAnyOrderElementsOf(List.of(MenuCategoryType.BUNGEOPPANG, MenuCategoryType.GUKWAPPANG));
@@ -346,7 +315,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
-            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
+            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertUserInfoResponse(response.getData().getUser(), testUser);
@@ -363,7 +332,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
-            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
+            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData().getAppearanceDays()).hasSize(dayOfTheWeeks.size());
@@ -381,7 +350,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
-            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
+            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData().getPaymentMethods()).hasSize(paymentMethodTypes.size());
@@ -399,7 +368,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
-            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
+            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, Coordinate.of(34.0, 126.0), 200);
 
             // then
             StoreDetailResponse data = response.getData();
@@ -420,7 +389,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
-            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
+            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertAll(
@@ -442,7 +411,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
-            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
+            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData().getImages()).isEmpty();
@@ -464,7 +433,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
-            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
+            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, Coordinate.of(34.0, 126.0), 200);
 
             // then
             StoreDetailResponse data = response.getData();
@@ -488,7 +457,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
-            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
+            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertVisitHistoryInfoResponse(response.getData().getVisitHistory(), 1, 0, true);
@@ -509,7 +478,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), startDate);
 
             // when
-            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
+            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertAll(
@@ -534,7 +503,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
 
             // when
-            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, 200);
+            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertAll(
@@ -663,10 +632,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Store store = StoreCreator.createDeletedWithDefaultMenu(testUser.getId(), "가게 이름");
             storeRepository.save(store);
 
-            RetrieveMyStoresV2Request request = RetrieveMyStoresV2Request.testInstance(2, null, null, null, null);
+            RetrieveMyStoresV2Request request = RetrieveMyStoresV2Request.testInstance(2, null, null);
 
             // when
-            ApiResponse<StoresCursorV2Response> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistoriesV2(request, token, 200);
+            ApiResponse<StoresCursorV2Response> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistoriesV2(request, Coordinate.of(0, 0), token, 200);
 
             // then
             assertThat(response.getData().getTotalElements()).isEqualTo(0);
@@ -719,14 +688,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(menuCategoryType)
-                .latitude(34.0)
-                .longitude(126.0)
-                .mapLatitude(34.0)
-                .mapLongitude(126.0)
                 .build();
 
             // when
-            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByDistance(request, 200);
+            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByDistance(request, Coordinate.of(34.0, 126.0), Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData().getStoreList50()).hasSize(1);
@@ -756,14 +721,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(menuCategoryType)
-                .latitude(34.0)
-                .longitude(126.0)
-                .mapLatitude(34.0)
-                .mapLongitude(126.0)
                 .build();
 
             // when
-            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByDistance(request, 200);
+            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByDistance(request, Coordinate.of(34.0, 126.0), Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData().getStoreList50()).hasSize(2);
@@ -784,14 +745,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(MenuCategoryType.BUNGEOPPANG)
-                .latitude(34.0)
-                .longitude(126.0)
-                .mapLatitude(34.0)
-                .mapLongitude(126.0)
                 .build();
 
             // when
-            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByDistance(request, 200);
+            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByDistance(request, Coordinate.of(34.0, 126.0), Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData().getStoreList50()).isEmpty();
@@ -812,14 +769,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(menuCategoryType)
-                .latitude(34.0)
-                .longitude(126.0)
-                .mapLatitude(34.0)
-                .mapLongitude(126.0)
                 .build();
 
             // when
-            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByDistance(request, 200);
+            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByDistance(request, Coordinate.of(34.0, 126.0), Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData().getStoreList50()).isEmpty();
@@ -841,14 +794,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(menuCategoryType)
-                .latitude(34.0)
-                .longitude(126.0)
-                .mapLatitude(34.0)
-                .mapLongitude(126.0)
                 .build();
 
             // when
-            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByDistance(request, 200);
+            ApiResponse<StoresGroupByDistanceV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByDistance(request, Coordinate.of(34.0, 126.0), Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData().getStoreList50()).hasSize(1);
@@ -886,14 +835,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(menuCategoryType)
-                .latitude(34.0)
-                .longitude(126.0)
-                .mapLatitude(34.0)
-                .mapLongitude(126.0)
                 .build();
 
             // when
-            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByReview(request, 200);
+            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByReview(request, Coordinate.of(34.0, 126.0), Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData().getStoreList1()).hasSize(1);
@@ -928,14 +873,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(menuCategoryType)
-                .latitude(34.0)
-                .longitude(126.0)
-                .mapLatitude(34.0)
-                .mapLongitude(126.0)
                 .build();
 
             // when
-            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByReview(request, 200);
+            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByReview(request, Coordinate.of(34.0, 126.0), Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData().getStoreList1()).hasSize(3);
@@ -957,14 +898,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(MenuCategoryType.BUNGEOPPANG)
-                .latitude(34.0)
-                .longitude(126.0)
-                .mapLatitude(34.0)
-                .mapLongitude(126.0)
                 .build();
 
             // when
-            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByReview(request, 200);
+            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByReview(request, Coordinate.of(34.0, 126.0), Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData().getStoreList1()).isEmpty();
@@ -985,14 +922,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(menuCategoryType)
-                .latitude(34.0)
-                .longitude(126.0)
-                .mapLatitude(34.0)
-                .mapLongitude(126.0)
                 .build();
 
             // when
-            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByReview(request, 200);
+            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByReview(request, Coordinate.of(34.0, 126.0), Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData().getStoreList1()).isEmpty();
@@ -1013,14 +946,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             RetrieveStoreGroupByCategoryV2Request request = RetrieveStoreGroupByCategoryV2Request.testBuilder()
                 .category(menuCategoryType)
-                .latitude(34.0)
-                .longitude(126.0)
-                .mapLatitude(34.0)
-                .mapLongitude(126.0)
                 .build();
 
             // when
-            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByReview(request, 200);
+            ApiResponse<StoresGroupByReviewV2Response> response = storeRetrieveMockApiCaller.getStoresGroupByReview(request, Coordinate.of(34.0, 126.0), Coordinate.of(34.0, 126.0), 200);
 
             // then
             assertThat(response.getData().getStoreList1()).hasSize(1);

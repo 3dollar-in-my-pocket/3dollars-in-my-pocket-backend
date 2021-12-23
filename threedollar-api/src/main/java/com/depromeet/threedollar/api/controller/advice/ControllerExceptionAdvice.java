@@ -43,7 +43,7 @@ public class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException.class)
-    protected ApiResponse<Object> handleBadRequest(final BindException e) {
+    protected ApiResponse<Object> handleBadRequest(BindException e) {
         log.error(e.getMessage());
         FieldError fieldError = Objects.requireNonNull(e.getFieldError());
         return ApiResponse.error(VALIDATION_EXCEPTION, String.format("%s (%s)", fieldError.getDefaultMessage(), fieldError.getField()));
@@ -54,7 +54,7 @@ public class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    protected ApiResponse<Object> handleHttpMessageNotReadableException(final HttpMessageNotReadableException e) {
+    protected ApiResponse<Object> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         log.error(e.getMessage());
         return ApiResponse.error(VALIDATION_EXCEPTION);
     }
@@ -65,7 +65,7 @@ public class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MissingRequestValueException.class)
-    protected ApiResponse<Object> handle(final MissingRequestValueException e) {
+    protected ApiResponse<Object> handle(MissingRequestValueException e) {
         log.error(e.getMessage());
         return ApiResponse.error(VALIDATION_REQUEST_MISSING_EXCEPTION);
     }
@@ -76,7 +76,7 @@ public class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(TypeMismatchException.class)
-    protected ApiResponse<Object> handleTypeMismatchException(final TypeMismatchException e) {
+    protected ApiResponse<Object> handleTypeMismatchException(TypeMismatchException e) {
         log.error(e.getMessage());
         return ApiResponse.error(VALIDATION_WRONG_TYPE_EXCEPTION, String.format("%s (%s)", VALIDATION_WRONG_TYPE_EXCEPTION.getMessage(), e.getValue()));
     }
@@ -89,7 +89,7 @@ public class ControllerExceptionAdvice {
         InvalidFormatException.class,
         ServletRequestBindingException.class
     })
-    protected ApiResponse<Object> handleInvalidFormatException(final Exception e) {
+    protected ApiResponse<Object> handleInvalidFormatException(Exception e) {
         log.error(e.getMessage());
         return ApiResponse.error(VALIDATION_EXCEPTION);
     }
@@ -121,7 +121,7 @@ public class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
     @ExceptionHandler(HttpMediaTypeException.class)
-    protected ApiResponse<Object> handleHttpMediaTypeException(final HttpMediaTypeException e) {
+    protected ApiResponse<Object> handleHttpMediaTypeException(HttpMediaTypeException e) {
         log.error(e.getMessage(), e);
         return ApiResponse.error(UNSUPPORTED_MEDIA_TYPE_EXCEPTION);
     }
@@ -133,8 +133,8 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     protected ApiResponse<Object> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException e) {
         log.error(e.getMessage(), e);
-        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(VALIDATION_UPLOAD_SIZE_EXCEPTION, e));
-        return ApiResponse.error(VALIDATION_UPLOAD_SIZE_EXCEPTION);
+        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(FORBIDDEN_UPLOAD_SIZE_EXCEPTION, e));
+        return ApiResponse.error(FORBIDDEN_UPLOAD_SIZE_EXCEPTION);
     }
 
     /**
@@ -155,7 +155,7 @@ public class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    protected ApiResponse<Object> handleException(final Exception exception) {
+    protected ApiResponse<Object> handleException(Exception exception) {
         log.error(exception.getMessage(), exception);
         eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(INTERNAL_SERVER_EXCEPTION, exception));
         return ApiResponse.error(INTERNAL_SERVER_EXCEPTION);

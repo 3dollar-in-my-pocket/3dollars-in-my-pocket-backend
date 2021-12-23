@@ -9,8 +9,8 @@ import org.jetbrains.annotations.Nullable;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-import static com.depromeet.threedollar.common.exception.ErrorCode.VALIDATION_FILE_NAME_EXCEPTION;
-import static com.depromeet.threedollar.common.exception.ErrorCode.VALIDATION_FILE_TYPE_EXCEPTION;
+import static com.depromeet.threedollar.common.exception.ErrorCode.FORBIDDEN_FILE_NAME_EXCEPTION;
+import static com.depromeet.threedollar.common.exception.ErrorCode.FORBIDDEN_FILE_TYPE_EXCEPTION;
 
 @ToString
 @Getter
@@ -33,13 +33,13 @@ public class ImageUploadFileRequest implements UploadFileRequest {
         if (contentType != null && contentType.contains(SEPARATOR) && IMAGE_CONTENT_TYPE_TYPE.equals(contentType.split(SEPARATOR)[0])) {
             return;
         }
-        throw new ValidationException(String.format("허용되지 않은 파일 형식 (%s) 입니다", contentType), VALIDATION_FILE_TYPE_EXCEPTION);
+        throw new ValidationException(String.format("허용되지 않은 파일 형식 (%s) 입니다", contentType), FORBIDDEN_FILE_TYPE_EXCEPTION);
     }
 
     @Override
     public String createFileName(@Nullable String originalFileName) {
         if (originalFileName == null) {
-            throw new ValidationException("잘못된 파일의 originFilename 입니다", VALIDATION_FILE_NAME_EXCEPTION);
+            throw new ValidationException("잘못된 파일의 originFilename 입니다", FORBIDDEN_FILE_NAME_EXCEPTION);
         }
         String extension = FileUtils.getFileExtension(originalFileName);
         return type.getFileNameWithDirectory(UUID.randomUUID().toString().concat(extension));

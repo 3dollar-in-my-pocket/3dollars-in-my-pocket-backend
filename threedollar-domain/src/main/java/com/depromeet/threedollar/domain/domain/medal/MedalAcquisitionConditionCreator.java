@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @ObjectMother
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class MedalAcquisitionConditionCreator {
+class MedalAcquisitionConditionCreator {
 
     public static MedalAcquisitionCondition create(Medal medal, MedalAcquisitionConditionType conditionType, int count, String description) {
         return MedalAcquisitionCondition.builder()

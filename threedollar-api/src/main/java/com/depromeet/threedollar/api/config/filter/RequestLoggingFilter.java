@@ -20,7 +20,7 @@ import java.util.Map;
 @Slf4j
 class RequestLoggingFilter implements Filter {
 
-    private final static List<String> EXCLUDE_LOGGING_RESPONSE_URLS = List.of("/api/v2/stores/near");
+    private static final List<String> EXCLUDE_LOGGING_RESPONSE_URLS = List.of("/api/v2/stores/near");
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -87,7 +87,7 @@ class RequestLoggingFilter implements Filter {
         return " - ";
     }
 
-    private String getResponseBody(final HttpServletResponse response) throws IOException {
+    private String getResponseBody(HttpServletResponse response) throws IOException {
         String payload = null;
         ContentCachingResponseWrapper wrapper = WebUtils.getNativeResponse(response, ContentCachingResponseWrapper.class);
         if (wrapper != null) {
