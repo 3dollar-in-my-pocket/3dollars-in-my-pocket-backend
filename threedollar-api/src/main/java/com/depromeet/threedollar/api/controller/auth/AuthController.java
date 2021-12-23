@@ -31,7 +31,9 @@ public class AuthController {
 
     @ApiOperation("회원가입 페이지 - 회원가입을 요청합니다")
     @PostMapping("/api/v2/signup")
-    public ApiResponse<LoginResponse> signUp(@Valid @RequestBody SignUpRequest request) {
+    public ApiResponse<LoginResponse> signUp(
+        @Valid @RequestBody SignUpRequest request
+    ) {
         Long userId = authFacadeService.signUp(request);
         httpSession.setAttribute(USER_ID, userId);
         return ApiResponse.success(LoginResponse.of(httpSession.getId(), userId));
@@ -39,7 +41,9 @@ public class AuthController {
 
     @ApiOperation("로그인 페이지 - 로그인을 요청합니다")
     @PostMapping("/api/v2/login")
-    public ApiResponse<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+    public ApiResponse<LoginResponse> login(
+        @Valid @RequestBody LoginRequest request
+    ) {
         Long userId = authFacadeService.login(request);
         httpSession.setAttribute(USER_ID, userId);
         return ApiResponse.success(LoginResponse.of(httpSession.getId(), userId));
@@ -48,7 +52,9 @@ public class AuthController {
     @ApiOperation("[인증] 마이페이지 - 회원탈퇴를 요청합니다")
     @Auth
     @DeleteMapping("/api/v2/signout")
-    public ApiResponse<String> signOut(@UserId Long userId) {
+    public ApiResponse<String> signOut(
+        @UserId Long userId
+    ) {
         userService.signOut(userId);
         httpSession.invalidate();
         return ApiResponse.SUCCESS;

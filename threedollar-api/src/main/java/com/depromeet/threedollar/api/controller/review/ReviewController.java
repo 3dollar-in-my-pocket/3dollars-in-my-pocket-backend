@@ -32,7 +32,10 @@ public class ReviewController {
     @ApiOperation("[인증] 가게 상세 페이지 - 가게에 새로운 리뷰를 등록합니다")
     @Auth
     @PostMapping("/api/v2/store/review")
-    public ApiResponse<ReviewInfoResponse> addReview(@Valid @RequestBody AddReviewRequest request, @UserId Long userId) {
+    public ApiResponse<ReviewInfoResponse> addReview(
+        @Valid @RequestBody AddReviewRequest request,
+        @UserId Long userId
+    ) {
         ReviewInfoResponse response = reviewService.addReview(request, userId);
         eventPublisher.publishEvent(ReviewCreatedEvent.of(response.getReviewId(), userId));
         eventPublisher.publishEvent(ReviewChangedEvent.of(request.getStoreId()));
@@ -42,8 +45,11 @@ public class ReviewController {
     @ApiOperation("[인증] 가게 상세 페이지 - 내가 작성한 리뷰를 수정합니다")
     @Auth
     @PutMapping("/api/v2/store/review/{reviewId}")
-    public ApiResponse<ReviewInfoResponse> updateReview(@PathVariable Long reviewId, @Valid @RequestBody UpdateReviewRequest request,
-                                                        @UserId Long userId) {
+    public ApiResponse<ReviewInfoResponse> updateReview(
+        @PathVariable Long reviewId,
+        @Valid @RequestBody UpdateReviewRequest request,
+        @UserId Long userId
+    ) {
         ReviewInfoResponse response = reviewService.updateReview(reviewId, request, userId);
         eventPublisher.publishEvent(ReviewChangedEvent.of(response.getStoreId()));
         return ApiResponse.success(response);
@@ -52,7 +58,10 @@ public class ReviewController {
     @ApiOperation("[인증] 가게 상세 페이지 - 내가 작성한 리뷰를 삭제합니다")
     @Auth
     @DeleteMapping("/api/v2/store/review/{reviewId}")
-    public ApiResponse<String> deleteReview(@PathVariable Long reviewId, @UserId Long userId) {
+    public ApiResponse<String> deleteReview(
+        @PathVariable Long reviewId,
+        @UserId Long userId
+    ) {
         ReviewInfoResponse response = reviewService.deleteReview(reviewId, userId);
         eventPublisher.publishEvent(ReviewChangedEvent.of(response.getStoreId()));
         return ApiResponse.SUCCESS;
@@ -61,7 +70,10 @@ public class ReviewController {
     @ApiOperation("[인증] 마이 페이지 - 내가 작성한 리뷰 목록을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 O)")
     @Auth
     @GetMapping("/api/v3/store/reviews/me")
-    public ApiResponse<ReviewsCursorResponse> retrieveMyReviewHistories(@Valid RetrieveMyReviewsRequest request, @UserId Long userId) {
+    public ApiResponse<ReviewsCursorResponse> retrieveMyReviewHistories(
+        @Valid RetrieveMyReviewsRequest request,
+        @UserId Long userId
+    ) {
         return ApiResponse.success(reviewRetrieveService.retrieveMyReviewHistories(request, userId));
     }
 
@@ -74,7 +86,10 @@ public class ReviewController {
     @ApiOperation("[인증] 마이 페이지 - 내가 작성한 리뷰 목록을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 X)")
     @Auth
     @GetMapping("/api/v2/store/reviews/me")
-    public ApiResponse<ReviewsCursorV2Response> retrieveMyReviewHistoriesV2(@Valid RetrieveMyReviewsV2Request request, @UserId Long userId) {
+    public ApiResponse<ReviewsCursorV2Response> retrieveMyReviewHistoriesV2(
+        @Valid RetrieveMyReviewsV2Request request,
+        @UserId Long userId
+    ) {
         return ApiResponse.success(reviewRetrieveService.retrieveMyReviewHistoriesV2(request, userId));
     }
 

@@ -25,18 +25,23 @@ class MapCoordinateArgumentResolver : HandlerMethodArgumentResolver {
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?
     ): Any? {
-        val mapLatitude = webRequest.getParameter("mapLatitude")?.toDoubleOrNull()
-        val mapLongitude = webRequest.getParameter("mapLongitude")?.toDoubleOrNull()
+        val mapLatitude = webRequest.getParameter(MAP_LATITUDE)?.toDoubleOrNull()
+        val mapLongitude = webRequest.getParameter(MAP_LONGITUDE)?.toDoubleOrNull()
 
         val annotation = parameter.getParameterAnnotation(MapCoordinate::class.java)
-            ?: throw InternalServerException("예상치 못한 에러가 발생하였습니다. @MapCoordinate can't be null")
+            ?: throw InternalServerException("발생할 수 없는 에러가 발생하였습니다. @MapCoordinate can't be null")
 
         if (annotation.required) {
-            mapLatitude ?: throw ValidationException("mapLatitude를 입력해주세요", VALIDATION_MAP_LATITUDE_EXCEPTION)
-            mapLongitude ?: throw ValidationException("mapLongitude를 입력해주세요", VALIDATION_MAP_LONGITUDE_EXCEPTION)
+            mapLatitude ?: throw ValidationException("${MAP_LATITUDE}를 입력해주세요", VALIDATION_MAP_LATITUDE_EXCEPTION)
+            mapLongitude ?: throw ValidationException("${MAP_LONGITUDE}를 입력해주세요", VALIDATION_MAP_LONGITUDE_EXCEPTION)
         }
 
         return Coordinate.of(mapLatitude ?: 0.0, mapLongitude ?: 0.0)
+    }
+
+    companion object {
+        private const val MAP_LATITUDE = "mapLatitude"
+        private const val MAP_LONGITUDE = "mapLongitude"
     }
 
 }

@@ -32,7 +32,10 @@ public class StoreController {
     @ApiOperation("[인증] 가게 등록 페이지 - 새로운 가게를 제보합니다")
     @Auth
     @PostMapping("/api/v2/store")
-    public ApiResponse<StoreInfoResponse> registerStore(@Valid @RequestBody RegisterStoreRequest request, @UserId Long userId) {
+    public ApiResponse<StoreInfoResponse> registerStore(
+        @Valid @RequestBody RegisterStoreRequest request,
+        @UserId Long userId
+    ) {
         StoreInfoResponse response = storeService.registerStore(request, userId);
         eventPublisher.publishEvent(StoreCreatedEvent.of(response.getStoreId(), userId));
         return ApiResponse.success(response);
@@ -41,7 +44,10 @@ public class StoreController {
     @ApiOperation("[인증] 가게 상세 페이지 - 특정 가게의 정보를 수정합니다")
     @Auth
     @PutMapping("/api/v2/store/{storeId}")
-    public ApiResponse<StoreInfoResponse> updateStore(@PathVariable Long storeId, @Valid @RequestBody UpdateStoreRequest request) {
+    public ApiResponse<StoreInfoResponse> updateStore(
+        @PathVariable Long storeId,
+        @Valid @RequestBody UpdateStoreRequest request
+    ) {
         try {
             return ApiResponse.success(storeService.updateStore(storeId, request));
         } catch (ObjectOptimisticLockingFailureException e) {
@@ -53,7 +59,11 @@ public class StoreController {
     @ApiOperation("[인증] 가게 상세 페이지 - 특정 가게의 정보를 삭제 요청합니다")
     @Auth
     @DeleteMapping("/api/v2/store/{storeId}")
-    public ApiResponse<StoreDeleteResponse> deleteStore(@Valid DeleteStoreRequest request, @PathVariable Long storeId, @UserId Long userId) {
+    public ApiResponse<StoreDeleteResponse> deleteStore(
+        @Valid DeleteStoreRequest request,
+        @PathVariable Long storeId,
+        @UserId Long userId
+    ) {
         StoreDeleteResponse response = storeService.deleteStore(storeId, request, userId);
         eventPublisher.publishEvent(StoreDeletedEvent.of(storeId, userId));
         return ApiResponse.success(response);

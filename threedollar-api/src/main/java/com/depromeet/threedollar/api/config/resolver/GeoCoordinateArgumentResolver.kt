@@ -25,18 +25,23 @@ class GeoCoordinateArgumentResolver : HandlerMethodArgumentResolver {
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?
     ): Any? {
-        val latitude = webRequest.getParameter("latitude")?.toDoubleOrNull()
-        val longitude = webRequest.getParameter("longitude")?.toDoubleOrNull()
+        val latitude = webRequest.getParameter(LATITUDE)?.toDoubleOrNull()
+        val longitude = webRequest.getParameter(LONGITUDE)?.toDoubleOrNull()
 
         val annotation = parameter.getParameterAnnotation(GeoCoordinate::class.java)
-            ?: throw InternalServerException("예상치 못한 에러가 발생하였습니다. @GeoCoordinate can't be null")
+            ?: throw InternalServerException("발생할 수 없는 에러가 발생하였습니다. @GeoCoordinate can't be null")
 
         if (annotation.required) {
-            latitude ?: throw ValidationException("latitude를 입력해주세요", VALIDATION_LATITUDE_EXCEPTION)
-            longitude ?: throw ValidationException("longitude를 입력해주세요", VALIDATION_LONGITUDE_EXCEPTION)
+            latitude ?: throw ValidationException("${LATITUDE}를 입력해주세요", VALIDATION_LATITUDE_EXCEPTION)
+            longitude ?: throw ValidationException("${LONGITUDE}를 입력해주세요", VALIDATION_LONGITUDE_EXCEPTION)
         }
 
         return Coordinate.of(latitude ?: 0.0, longitude ?: 0.0)
+    }
+
+    companion object {
+        private const val LATITUDE = "latitude"
+        private const val LONGITUDE = "longitude"
     }
 
 }
