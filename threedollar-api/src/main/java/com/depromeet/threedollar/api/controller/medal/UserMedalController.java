@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.controller.medal;
 import com.depromeet.threedollar.api.config.interceptor.Auth;
 import com.depromeet.threedollar.api.config.resolver.UserId;
 import com.depromeet.threedollar.api.service.medal.UserMedalService;
-import com.depromeet.threedollar.api.service.medal.dto.request.ActivateRepresentativeMedalRequest;
+import com.depromeet.threedollar.api.service.medal.dto.request.ChangeRepresentativeMedalRequest;
 import com.depromeet.threedollar.api.service.user.dto.response.UserMedalResponse;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
@@ -26,7 +26,7 @@ public class UserMedalController {
     @ApiOperation("[인증] 마이페이지 - 사용자가 보유중인 메달들을 조회한다")
     @Auth
     @GetMapping("/api/v1/user/medals")
-    public ApiResponse<List<UserMedalResponse>> retrieveMyMedalsObtained(
+    public ApiResponse<List<UserMedalResponse>> getMyObtainedMedals(
         @UserId Long userId
     ) {
         return ApiResponse.success(userMedalService.retrieveObtainedMedals(userId));
@@ -35,8 +35,8 @@ public class UserMedalController {
     @ApiOperation("[인증] 마이페이지 - 사용자의 장착중인 메달을 수정한다")
     @Auth
     @PutMapping("/api/v1/user/medal")
-    public ApiResponse<UserInfoResponse> updateRepresentativeMedal(
-        @Valid @RequestBody ActivateRepresentativeMedalRequest request,
+    public ApiResponse<UserInfoResponse> changeRepresentativeMedal(
+        @Valid @RequestBody ChangeRepresentativeMedalRequest request,
         @UserId Long userId
     ) {
         return ApiResponse.success(userMedalService.updateRepresentativeMedal(request, userId));

@@ -8,13 +8,13 @@ import javax.validation.constraints.NotNull;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ActivateRepresentativeMedalRequest {
+public class ChangeRepresentativeMedalRequest {
 
     @NotNull(message = "{user.medalId.notNull}")
     private Long medalId;
 
-    public static ActivateRepresentativeMedalRequest testInstance(Long medalId) {
-        return new ActivateRepresentativeMedalRequest(medalId);
+    public static ChangeRepresentativeMedalRequest testInstance(Long medalId) {
+        return new ChangeRepresentativeMedalRequest(medalId);
     }
 
 }

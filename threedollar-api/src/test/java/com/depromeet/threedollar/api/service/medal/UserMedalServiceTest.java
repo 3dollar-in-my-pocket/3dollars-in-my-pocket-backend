@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.service.medal;
 
 import com.depromeet.threedollar.api.service.SetupUserServiceTest;
-import com.depromeet.threedollar.api.service.medal.dto.request.ActivateRepresentativeMedalRequest;
+import com.depromeet.threedollar.api.service.medal.dto.request.ChangeRepresentativeMedalRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.medal.*;
 import org.junit.jupiter.api.AfterEach;
@@ -42,7 +42,7 @@ class UserMedalServiceTest extends SetupUserServiceTest {
             UserMedal userMedal = UserMedalCreator.createInActive(medal, user);
             userMedalRepository.save(userMedal);
 
-            ActivateRepresentativeMedalRequest request = ActivateRepresentativeMedalRequest.testInstance(medal.getId());
+            ChangeRepresentativeMedalRequest request = ChangeRepresentativeMedalRequest.testInstance(medal.getId());
 
             // when
             userMedalService.updateRepresentativeMedal(request, userId);
@@ -59,7 +59,7 @@ class UserMedalServiceTest extends SetupUserServiceTest {
         void 대표_칭호_변경시_보유하지_않은_칭호를_장착하려하면_NotFound_에러가_발생한다() {
             // given
             Long notFoundMedalId = -1L;
-            ActivateRepresentativeMedalRequest request = ActivateRepresentativeMedalRequest.testInstance(notFoundMedalId);
+            ChangeRepresentativeMedalRequest request = ChangeRepresentativeMedalRequest.testInstance(notFoundMedalId);
 
             // when & then
             assertThatThrownBy(() -> userMedalService.updateRepresentativeMedal(request, userId)).isInstanceOfAny(NotFoundException.class);

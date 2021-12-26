@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.medal;
 
-import com.depromeet.threedollar.api.service.medal.dto.request.ActivateRepresentativeMedalRequest;
+import com.depromeet.threedollar.api.service.medal.dto.request.ChangeRepresentativeMedalRequest;
 import com.depromeet.threedollar.api.service.user.UserServiceUtils;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.api.service.user.dto.response.UserMedalResponse;
@@ -33,7 +33,7 @@ public class UserMedalService {
     }
 
     @Transactional
-    public UserInfoResponse updateRepresentativeMedal(ActivateRepresentativeMedalRequest request, Long userId) {
+    public UserInfoResponse updateRepresentativeMedal(ChangeRepresentativeMedalRequest request, Long userId) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
         user.updateActivatedMedal(request.getMedalId());
         return UserInfoResponse.of(user);
