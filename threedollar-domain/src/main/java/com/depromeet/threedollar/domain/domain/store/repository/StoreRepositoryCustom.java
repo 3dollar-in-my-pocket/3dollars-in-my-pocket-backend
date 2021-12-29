@@ -29,4 +29,6 @@ public interface StoreRepositoryCustom {
 
     List<Store> findStoresByLocationLessThanDistance(double latitude, double longitude, double distance);
 
+    boolean existsStoreAroundInDistance(double latitude, double longitude, double distance);
+
 }

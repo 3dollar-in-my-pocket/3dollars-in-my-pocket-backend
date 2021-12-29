@@ -146,4 +146,21 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         );
     }
 
+    ApiResponse<CheckExistStoresNearbyResponse> checkExistStoresNearby(CheckExistsStoresNearbyRequest request, Coordinate mapCoordinate, int expectedStatus) throws Exception {
+        MockHttpServletRequestBuilder builder = get("/api/v1/stores/near/exists")
+            .param("mapLatitude", String.valueOf(mapCoordinate.getLatitude()))
+            .param("mapLongitude", String.valueOf(mapCoordinate.getLongitude()))
+            .param("distance", String.valueOf(request.getDistance()));
+
+        return objectMapper.readValue(
+            mockMvc.perform(builder)
+                .andExpect(status().is(expectedStatus))
+                .andDo(print())
+                .andReturn()
+                .getResponse()
+                .getContentAsString(StandardCharsets.UTF_8), new TypeReference<>() {
+            }
+        );
+    }
+
 }

@@ -958,4 +958,33 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
     }
 
+    @DisplayName("GET /api/v1/stores/near/exists")
+    @Nested
+    class 주변에_가게가_존재하는지_확인하는_API {
+
+        @Test
+        void 주변에_가게가_존재하는_경우_return_True() throws Exception {
+            // given
+            Store store = StoreCreator.create(testUser.getId(), "붕어빵 가게", 34, 126, 1.1);
+            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵", "2개에 천원", MenuCategoryType.BUNGEOPPANG)));
+            storeRepository.save(store);
+
+            // when
+            ApiResponse<CheckExistStoresNearbyResponse> response = storeRetrieveMockApiCaller.checkExistStoresNearby(CheckExistsStoresNearbyRequest.testInstance(2000), Coordinate.of(34, 126), 200);
+
+            // then
+            assertThat(response.getData().getIsExists()).isTrue();
+        }
+
+        @Test
+        void 주변에_어떤_가게도_존재하지_않으면_return_False() throws Exception {
+            // when
+            ApiResponse<CheckExistStoresNearbyResponse> response = storeRetrieveMockApiCaller.checkExistStoresNearby(CheckExistsStoresNearbyRequest.testInstance(2000), Coordinate.of(34, 126), 200);
+
+            // then
+            assertThat(response.getData().getIsExists()).isFalse();
+        }
+
+    }
+
 }

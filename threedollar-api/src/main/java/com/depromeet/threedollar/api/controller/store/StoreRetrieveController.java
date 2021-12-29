@@ -104,4 +104,13 @@ public class StoreRetrieveController {
         return ApiResponse.success(storeRetrieveService.getNearStoresGroupByReview(request, coordinate, mapCoordinate));
     }
 
+    @ApiOperation("주변에 가게가 존재하는지 확인하는 API")
+    @GetMapping("/api/v1/stores/near/exists")
+    public ApiResponse<CheckExistStoresNearbyResponse> checkExistStoresNearby(
+        @Valid CheckExistsStoresNearbyRequest request,
+        @MapCoordinate Coordinate mapCoordinate
+    ) {
+        return ApiResponse.success(storeRetrieveService.checkExistStoresNearby(request, mapCoordinate));
+    }
+
 }
