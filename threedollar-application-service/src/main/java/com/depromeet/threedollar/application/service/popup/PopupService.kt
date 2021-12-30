@@ -14,11 +14,13 @@ class PopupService(
     private val popupRepository: PopupRepository
 ) {
 
-    @Cacheable(key = "#request.platform", value = [POPUP])
+    @Cacheable(key = "{#request.position, #request.platform}", value = [POPUP])
     @Transactional(readOnly = true)
     fun getActivatedPopups(request: GetActivatedPopupsRequest): List<PopupResponse> {
-        return popupRepository.findActivatedPopupsByPlatform(request.platform, LocalDateTime.now())
+        return popupRepository.findActivatedPopupsByPositionAndPlatform(request.position, request.platform, LocalDateTime.now()).asSequence()
+            .sortedByDescending { it.priority }
             .map { PopupResponse.of(it) }
+            .toList()
     }
 
 }

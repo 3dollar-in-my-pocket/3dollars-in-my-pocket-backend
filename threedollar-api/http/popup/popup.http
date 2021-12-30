@@ -1,5 +1,5 @@
 ### 활성화 중인 팝업 목록을 조회한다 (AOS)
-GET {{host_api}}/api/v1/popups?platform=AOS
+GET {{host_api}}/api/v1/popups?platform=AOS&position=SPLASH
 
 > {%
 client.test("200 OK", function() {
@@ -10,6 +10,16 @@ client.test("200 OK", function() {
 
 ### 활성화 중인 팝업 목록을 조회한다 (IOS)
 GET {{host_api}}/api/v1/popups?platform=IOS
+
+> {%
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 팝업 위치 목록을 조회합니다.
+GET {{host_api}}/api/v1/popup/positions
 
 > {%
 client.test("200 OK", function() {
