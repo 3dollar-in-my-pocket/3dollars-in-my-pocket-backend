@@ -17,7 +17,7 @@ class PopupService(
     @Cacheable(key = "#request.platform", value = [POPUP])
     @Transactional(readOnly = true)
     fun getActivatedPopups(request: GetActivatedPopupsRequest): List<PopupResponse> {
-        return popupRepository.findActivatedPopupsByPlatform(request.platform, LocalDateTime.now())
+        return popupRepository.findActivatedPopupsByPlatform(request.position, request.platform, LocalDateTime.now())
             .map { PopupResponse.of(it) }
     }
 
