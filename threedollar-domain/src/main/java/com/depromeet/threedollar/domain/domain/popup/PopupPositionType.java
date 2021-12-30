@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.domain.domain.popup;
 
+import com.depromeet.threedollar.common.exception.model.ValidationException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum PopupPositionType {
 
-    BANNER("배너"),
+    SPLASH("스플래시"),
     ;
 
     private final String description;

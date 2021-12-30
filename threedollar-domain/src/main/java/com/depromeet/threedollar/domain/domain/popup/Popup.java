@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(
     indexes = {
-        @Index(name = "idx_popup_1", columnList = "popupType,platformType,id,startDateTime")
+        @Index(name = "idx_popup_1", columnList = "positionType,platformType,id,startDateTime")
     }
 )
 public class Popup extends AuditingTimeEntity {
@@ -25,7 +25,7 @@ public class Popup extends AuditingTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     @Enumerated(EnumType.STRING)
     private PopupPositionType positionType;
 
@@ -40,19 +40,19 @@ public class Popup extends AuditingTimeEntity {
     private String linkUrl;
 
     @Column(nullable = false)
-    private int sequence;
+    private int priority;
 
     @Embedded
     private DateTimeInterval dateTimeInterval;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private Popup(PopupPositionType positionType, PopupPlatformType platformType, String imageUrl, String linkUrl, LocalDateTime startDateTime, LocalDateTime endDateTime, int sequence) {
+    private Popup(PopupPositionType positionType, PopupPlatformType platformType, String imageUrl, String linkUrl, LocalDateTime startDateTime, LocalDateTime endDateTime, int priority) {
         this.positionType = positionType;
         this.platformType = platformType;
         this.imageUrl = imageUrl;
         this.linkUrl = linkUrl;
         this.dateTimeInterval = DateTimeInterval.of(startDateTime, endDateTime);
-        this.sequence = sequence;
+        this.priority = priority;
     }
 
     @NotNull

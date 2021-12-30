@@ -1,5 +1,5 @@
 ### 활성화 중인 팝업 목록을 조회한다 (AOS)
-GET {{host_api}}/api/v1/popups?platform=AOS&position=BANNER
+GET {{host_api}}/api/v1/popups?platform=AOS&position=SPLASH
 
 > {%
 client.test("200 OK", function() {

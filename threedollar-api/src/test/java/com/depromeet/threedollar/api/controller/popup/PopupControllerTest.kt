@@ -4,6 +4,7 @@ import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.application.service.popup.dto.response.PopupResponse
 import com.depromeet.threedollar.domain.domain.popup.PopupCreator
 import com.depromeet.threedollar.domain.domain.popup.PopupPlatformType
+import com.depromeet.threedollar.domain.domain.popup.PopupPositionType
 import com.depromeet.threedollar.domain.domain.popup.PopupRepository
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -40,11 +41,12 @@ class PopupControllerTest(
         // given
         val platform = PopupPlatformType.AOS
         val popup = PopupCreator.create(
+            PopupPositionType.SPLASH,
+            platform,
             "https://pop-up-image.png",
             "https://my-link.com",
             LocalDateTime.of(2021, 1, 1, 0, 0),
             LocalDateTime.now().plusDays(1),
-            platform
         )
         popupRepository.save(popup)
 

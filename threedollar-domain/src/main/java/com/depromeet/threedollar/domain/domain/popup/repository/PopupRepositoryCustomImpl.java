@@ -17,7 +17,7 @@ public class PopupRepositoryCustomImpl implements PopupRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<Popup> findActivatedPopupsByPlatform(PopupPositionType positionType, PopupPlatformType platformType, LocalDateTime dateTime) {
+    public List<Popup> findActivatedPopupsByPositionAndPlatform(PopupPositionType positionType, PopupPlatformType platformType, LocalDateTime dateTime) {
         return queryFactory.selectFrom(popup)
             .where(
                 popup.positionType.eq(positionType),

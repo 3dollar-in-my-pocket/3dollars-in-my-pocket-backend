@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface PopupRepositoryCustom {
 
-    List<Popup> findActivatedPopupsByPlatform(PopupPositionType positionType, PopupPlatformType platformType, LocalDateTime dateTime);
+    List<Popup> findActivatedPopupsByPositionAndPlatform(PopupPositionType positionType, PopupPlatformType platformType, LocalDateTime dateTime);
 
 }

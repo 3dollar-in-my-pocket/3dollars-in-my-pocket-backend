@@ -9,5 +9,5 @@ data class GetActivatedPopupsRequest(
     val platform: PopupPlatformType?,
 
     @field:NotNull(message = "{popup.position.notnull}")
-    val position: PopupPositionType = PopupPositionType.BANNER
+    val position: PopupPositionType = PopupPositionType.SPLASH
 )
