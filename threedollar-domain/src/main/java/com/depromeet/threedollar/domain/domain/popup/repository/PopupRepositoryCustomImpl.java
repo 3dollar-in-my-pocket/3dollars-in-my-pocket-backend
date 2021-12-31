@@ -26,7 +26,6 @@ public class PopupRepositoryCustomImpl implements PopupRepositoryCustom {
                 popup.dateTimeInterval.endDateTime.goe(dateTime)
             )
             .orderBy(popup.id.desc())
-            .limit(1) // 일단 팝업 한개만으로 제한
             .fetch();
     }
 

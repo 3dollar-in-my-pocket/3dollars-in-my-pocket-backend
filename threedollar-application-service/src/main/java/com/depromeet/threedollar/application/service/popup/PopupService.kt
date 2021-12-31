@@ -18,7 +18,7 @@ class PopupService(
     @Transactional(readOnly = true)
     fun getActivatedPopups(request: GetActivatedPopupsRequest): List<PopupResponse> {
         return popupRepository.findActivatedPopupsByPositionAndPlatform(request.position, request.platform, LocalDateTime.now()).asSequence()
-            .sortedByDescending { it.priority }
+            .sortedBy { it.priority }
             .map { PopupResponse.of(it) }
             .toList()
     }
