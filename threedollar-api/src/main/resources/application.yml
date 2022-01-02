@@ -23,7 +23,7 @@ spring:
   servlet:
     multipart:
       max-file-size: 10MB
-      max-request-size: 15MB
+      max-request-size: 30MB
   mvc:
     format:
       date: yyyy-MM-dd
