@@ -44,7 +44,7 @@ public class StoreServiceUtils {
 
     static List<Store> findNearStoresFilterByCategory(StoreRepository storeRepository, double mapLatitude, double mapLongitude,
                                                       StoreRadiusDistance distance, @Nullable MenuCategoryType categoryType) {
-        List<Store> nearStores = storeRepository.findStoresByLocationLessThanDistance(mapLatitude, mapLongitude, distance.getDistance());
+        List<Store> nearStores = storeRepository.findStoresByLocationLessThanDistance(mapLatitude, mapLongitude, distance.getAvailableDistance());
         if (categoryType == null) {
             return nearStores;
         }

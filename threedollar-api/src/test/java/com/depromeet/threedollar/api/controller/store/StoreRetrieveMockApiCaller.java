@@ -36,7 +36,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
             .param("longitude", String.valueOf(coordinate.getLongitude()))
             .param("mapLatitude", String.valueOf(mapCoordinate.getLatitude()))
             .param("mapLongitude", String.valueOf(mapCoordinate.getLongitude()))
-            .param("distance", String.valueOf(request.getDistance().getDistance() * 1000))
+            .param("distance", String.valueOf(request.getDistance().getAvailableDistance() * 1000))
             .param("category", request.getCategory() == null ? null : String.valueOf(request.getCategory()))
             .param("orderType", request.getOrderType() == null ? String.valueOf(StoreOrderType.DISTANCE_ASC) : String.valueOf(request.getOrderType()));
 
@@ -134,6 +134,23 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
             .param("mapLatitude", String.valueOf(mapCoordinate.getLatitude()))
             .param("mapLongitude", String.valueOf(mapCoordinate.getLongitude()))
             .param("category", String.valueOf(request.getCategory()));
+
+        return objectMapper.readValue(
+            mockMvc.perform(builder)
+                .andExpect(status().is(expectedStatus))
+                .andDo(print())
+                .andReturn()
+                .getResponse()
+                .getContentAsString(StandardCharsets.UTF_8), new TypeReference<>() {
+            }
+        );
+    }
+
+    ApiResponse<CheckExistStoresNearbyResponse> checkExistStoresNearby(CheckExistsStoresNearbyRequest request, Coordinate mapCoordinate, int expectedStatus) throws Exception {
+        MockHttpServletRequestBuilder builder = get("/api/v1/stores/near/exists")
+            .param("mapLatitude", String.valueOf(mapCoordinate.getLatitude()))
+            .param("mapLongitude", String.valueOf(mapCoordinate.getLongitude()))
+            .param("distance", String.valueOf(request.getDistance().getAvailableDistance() * 1000));
 
         return objectMapper.readValue(
             mockMvc.perform(builder)

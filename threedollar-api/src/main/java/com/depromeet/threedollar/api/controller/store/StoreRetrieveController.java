@@ -32,7 +32,7 @@ public class StoreRetrieveController {
     @GetMapping("/api/v2/stores/near")
     public ApiResponse<List<StoreWithVisitsAndDistanceResponse>> getNearStores(
         @Valid RetrieveNearStoresRequest request,
-        @GeoCoordinate Coordinate geoCoordinate,
+        @GeoCoordinate(required = false) Coordinate geoCoordinate,
         @MapCoordinate Coordinate mapCoordinate
     ) {
         return ApiResponse.success(storeRetrieveService.getNearStores(request, geoCoordinate, mapCoordinate));
@@ -58,7 +58,7 @@ public class StoreRetrieveController {
     }
 
     /**
-     * v2.1.1 부터 Deprecated
+     * v2.1.1 부터 Deprecated (앱 기준 최소 지원 버전 v2.4.0 이상인 경우 삭제)
      * 내가 제보한 가게 조회시, 삭제된 가게들을 반환하되, 삭제된 가게라고 표기해줘야하는 이슈에 대응하기 위함. (호환성을 유지하기 위한 API)
      * use GET /api/v3/stores/me
      */
@@ -75,7 +75,7 @@ public class StoreRetrieveController {
     }
 
     /**
-     * v2.1부터 Deprecated
+     * v2.1.0부터 Deprecated (앱 기준 최소 지원 버전 v2.4.0 이상인 경우 삭제)
      * GET /api/v2/stores/near로 통합 관리
      */
     @Deprecated
@@ -90,7 +90,7 @@ public class StoreRetrieveController {
     }
 
     /**
-     * v2.1부터 Deprecated
+     * v2.1.0부터 Deprecated (앱 기준 최소 지원 버전 v2.4.0 이상인 경우 삭제)
      * GET /api/v2/stores/near로 통합 관리
      */
     @Deprecated
@@ -102,6 +102,15 @@ public class StoreRetrieveController {
         @MapCoordinate Coordinate mapCoordinate
     ) {
         return ApiResponse.success(storeRetrieveService.getNearStoresGroupByReview(request, coordinate, mapCoordinate));
+    }
+
+    @ApiOperation("주변에 가게가 존재하는지 확인하는 API")
+    @GetMapping("/api/v1/stores/near/exists")
+    public ApiResponse<CheckExistStoresNearbyResponse> checkExistStoresNearby(
+        @Valid CheckExistsStoresNearbyRequest request,
+        @MapCoordinate Coordinate mapCoordinate
+    ) {
+        return ApiResponse.success(storeRetrieveService.checkExistStoresNearby(request, mapCoordinate));
     }
 
 }

@@ -54,6 +54,19 @@ class StoreRepositoryTest {
             assertThat(stores).isEmpty();
         }
 
+        @Test
+        void abc() {
+            // given
+            Store store = StoreCreator.createWithDefaultMenu(10000L, "storeName", 37.328431, 126.91674);
+            storeRepository.save(store);
+
+            // when
+            boolean isExists = storeRepository.existsStoreAroundInDistance(37.358086, 126.933012, 2.0);
+
+            // then
+            assertThat(isExists).isFalse();
+        }
+
     }
 
     @DisplayName("내가 제보한 가게 수를 카운트한다")

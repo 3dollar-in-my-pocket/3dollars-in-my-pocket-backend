@@ -10,6 +10,8 @@ spring:
       enabled: always
   flyway:
     enabled: false
+  cache:
+    type: none
   profiles:
     active: local
 logging:

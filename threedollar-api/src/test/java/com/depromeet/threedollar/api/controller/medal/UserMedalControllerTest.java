@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.controller.medal;
 
 import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
+import com.depromeet.threedollar.api.service.medal.dto.request.ChangeRepresentativeMedalRequest;
 import com.depromeet.threedollar.domain.domain.medal.Medal;
 import com.depromeet.threedollar.domain.domain.medal.MedalCreator;
 import com.depromeet.threedollar.domain.domain.medal.UserMedalCreator;
@@ -9,12 +10,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -43,7 +46,7 @@ class UserMedalControllerTest extends SetupUserControllerTest {
             ));
 
             // when & then
-            retrieveMyMedalsObtained(token)
+            getMyObtainedMedals(token)
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data", hasSize(2)))
@@ -58,9 +61,39 @@ class UserMedalControllerTest extends SetupUserControllerTest {
                 .andExpect(jsonPath("$.data[1].disableIconUrl").value(medalInActive.getDisableIconUrl()));
         }
 
-        private ResultActions retrieveMyMedalsObtained(String token) throws Exception {
+        private ResultActions getMyObtainedMedals(String token) throws Exception {
             return mockMvc.perform(get("/api/v1/user/medals")
                 .header(HttpHeaders.AUTHORIZATION, token));
+        }
+
+    }
+
+    @DisplayName("PUT /api/v1/user/medal")
+    @Nested
+    class 장착중인_훈장을_변경한다 {
+
+        @Test
+        void 장착중인_훈장을_변경한다() throws Exception {
+            // given
+            Medal medal = MedalCreator.create("활성화중인 메달", "활성중인 메달 설명", "메달 아이콘 A", "비활성화 아이콘 A");
+            medalRepository.save(medal);
+
+            userMedalRepository.save(UserMedalCreator.createInActive(medal, testUser));
+
+            // when & then
+            changeRepresentativeMedal(ChangeRepresentativeMedalRequest.testInstance(medal.getId()), token)
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.medal.name").value(medal.getName()))
+                .andExpect(jsonPath("$.data.medal.iconUrl").value(medal.getActivationIconUrl()))
+                .andExpect(jsonPath("$.data.medal.disableIconUrl").value(medal.getDisableIconUrl()));
+        }
+
+        private ResultActions changeRepresentativeMedal(ChangeRepresentativeMedalRequest request, String token) throws Exception {
+            return mockMvc.perform(put("/api/v1/user/medal")
+                .header(HttpHeaders.AUTHORIZATION, token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)));
         }
 
     }

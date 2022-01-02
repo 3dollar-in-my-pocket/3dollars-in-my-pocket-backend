@@ -14,7 +14,7 @@ public class LocationDistanceUtils {
      */
     public static int getDistance(double sourceLatitude, double sourceLongitude, double targetLatitude, double targetLongitude) {
         if (sourceLatitude == 0 || sourceLongitude == 0 || targetLatitude == 0 || targetLongitude == 0) {
-            return 0;
+            return -1;
         }
         double theta = sourceLongitude - targetLongitude;
         double dist = Math.sin(convertDegreeToRadian(sourceLatitude)) * Math.sin(convertDegreeToRadian(targetLatitude))

@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.service.store;
 
 import com.depromeet.threedollar.api.config.resolver.Coordinate;
+import com.depromeet.threedollar.api.service.store.dto.request.CheckExistsStoresNearbyRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveMyStoresRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStoresRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveStoreDetailRequest;
@@ -9,6 +10,7 @@ import com.depromeet.threedollar.api.service.store.dto.request.deprecated.Retrie
 import com.depromeet.threedollar.api.service.store.dto.response.StoreDetailResponse;
 import com.depromeet.threedollar.api.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.api.service.store.dto.response.StoresCursorResponse;
+import com.depromeet.threedollar.api.service.store.dto.response.CheckExistStoresNearbyResponse;
 import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByDistanceV2Response;
 import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByReviewV2Response;
 import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresCursorV2Response;
@@ -132,6 +134,12 @@ public class StoreRetrieveService {
             .map(Store::getId).distinct()
             .collect(Collectors.toList());
         return VisitHistoryCounter.of(visitHistoryRepository.findCountsByStoreIdWithGroup(storeIds, monthAgo));
+    }
+
+    @Transactional(readOnly = true)
+    public CheckExistStoresNearbyResponse checkExistStoresNearby(CheckExistsStoresNearbyRequest request, Coordinate mapCoordinate) {
+        boolean isExists = storeRepository.existsStoreAroundInDistance(mapCoordinate.getLatitude(), mapCoordinate.getLongitude(), request.getDistance().getAvailableDistance());
+        return CheckExistStoresNearbyResponse.of(isExists);
     }
 
 }
