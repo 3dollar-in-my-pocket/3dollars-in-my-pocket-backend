@@ -32,7 +32,7 @@ public class StoreRetrieveController {
     @GetMapping("/api/v2/stores/near")
     public ApiResponse<List<StoreWithVisitsAndDistanceResponse>> getNearStores(
         @Valid RetrieveNearStoresRequest request,
-        @GeoCoordinate Coordinate geoCoordinate,
+        @GeoCoordinate(required = false) Coordinate geoCoordinate,
         @MapCoordinate Coordinate mapCoordinate
     ) {
         return ApiResponse.success(storeRetrieveService.getNearStores(request, geoCoordinate, mapCoordinate));
