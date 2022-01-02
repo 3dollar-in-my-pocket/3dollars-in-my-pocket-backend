@@ -150,7 +150,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         MockHttpServletRequestBuilder builder = get("/api/v1/stores/near/exists")
             .param("mapLatitude", String.valueOf(mapCoordinate.getLatitude()))
             .param("mapLongitude", String.valueOf(mapCoordinate.getLongitude()))
-            .param("distance", String.valueOf(request.getDistance()));
+            .param("distance", String.valueOf(request.getDistance().getAvailableDistance() * 1000));
 
         return objectMapper.readValue(
             mockMvc.perform(builder)
