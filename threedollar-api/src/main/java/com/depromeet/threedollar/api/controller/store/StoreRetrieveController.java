@@ -58,7 +58,7 @@ public class StoreRetrieveController {
     }
 
     /**
-     * v2.1.1 부터 Deprecated
+     * v2.1.1 부터 Deprecated (앱 기준 최소 지원 버전 v2.4.0 이상인 경우 삭제)
      * 내가 제보한 가게 조회시, 삭제된 가게들을 반환하되, 삭제된 가게라고 표기해줘야하는 이슈에 대응하기 위함. (호환성을 유지하기 위한 API)
      * use GET /api/v3/stores/me
      */
@@ -75,7 +75,7 @@ public class StoreRetrieveController {
     }
 
     /**
-     * v2.1부터 Deprecated
+     * v2.1.0부터 Deprecated (앱 기준 최소 지원 버전 v2.4.0 이상인 경우 삭제)
      * GET /api/v2/stores/near로 통합 관리
      */
     @Deprecated
@@ -90,7 +90,7 @@ public class StoreRetrieveController {
     }
 
     /**
-     * v2.1부터 Deprecated
+     * v2.1.0부터 Deprecated (앱 기준 최소 지원 버전 v2.4.0 이상인 경우 삭제)
      * GET /api/v2/stores/near로 통합 관리
      */
     @Deprecated
