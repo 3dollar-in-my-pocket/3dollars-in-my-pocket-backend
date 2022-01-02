@@ -18,7 +18,7 @@ public class StoreRadiusDistance {
         return new StoreRadiusDistance(MAX_RADIUS_DISTANCE);
     }
 
-    public double getDistance() {
+    public double getAvailableDistance() {
         return Math.min(distance, MAX_RADIUS_DISTANCE);
     }
 

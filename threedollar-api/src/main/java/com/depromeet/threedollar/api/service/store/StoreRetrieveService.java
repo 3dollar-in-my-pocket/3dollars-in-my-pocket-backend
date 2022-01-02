@@ -138,7 +138,7 @@ public class StoreRetrieveService {
 
     @Transactional(readOnly = true)
     public CheckExistStoresNearbyResponse checkExistStoresNearby(CheckExistsStoresNearbyRequest request, Coordinate mapCoordinate) {
-        boolean isExists = storeRepository.existsStoreAroundInDistance(mapCoordinate.getLatitude(), mapCoordinate.getLongitude(), request.getDistance());
+        boolean isExists = storeRepository.existsStoreAroundInDistance(mapCoordinate.getLatitude(), mapCoordinate.getLongitude(), request.getDistance().getAvailableDistance());
         return CheckExistStoresNearbyResponse.of(isExists);
     }
 
