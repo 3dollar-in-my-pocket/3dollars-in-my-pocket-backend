@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.controller.store;
+package com.depromeet.threedollar.api.listener.store;
 
 import com.depromeet.threedollar.domain.event.review.ReviewChangedEvent;
 import com.depromeet.threedollar.api.service.store.StoreRatingService;

@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.controller.store;
 
 import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
-import com.depromeet.threedollar.api.controller.medal.AddUserMedalEventListener;
+import com.depromeet.threedollar.api.listener.medal.AddUserMedalEventListener;
 import com.depromeet.threedollar.api.service.store.dto.request.RegisterStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.DeleteStoreRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.MenuRequest;

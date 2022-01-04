@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.controller.visit;
 
 import com.depromeet.threedollar.api.controller.SetupStoreControllerTest;
-import com.depromeet.threedollar.api.controller.medal.AddUserMedalEventListener;
+import com.depromeet.threedollar.api.listener.medal.AddUserMedalEventListener;
 import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoriesCursorResponse;
