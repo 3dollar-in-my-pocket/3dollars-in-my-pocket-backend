@@ -1,5 +1,8 @@
 package com.depromeet.threedollar.api.service.auth;
 
+import com.depromeet.threedollar.api.service.auth.policy.AppleAuthService;
+import com.depromeet.threedollar.api.service.auth.policy.GoogleAuthService;
+import com.depromeet.threedollar.api.service.auth.policy.KaKaoAuthService;
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +17,9 @@ public class AuthServiceProvider implements InitializingBean {
 
     private final Map<UserSocialType, AuthService> authServiceMap;
 
-    private final AuthService appleAuthService;
-    private final AuthService kaKaoAuthService;
-    private final AuthService googleAuthService;
+    private final AppleAuthService appleAuthService;
+    private final KaKaoAuthService kaKaoAuthService;
+    private final GoogleAuthService googleAuthService;
 
     @Override
     public void afterPropertiesSet() {
