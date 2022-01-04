@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.controller.medal;
+package com.depromeet.threedollar.api.listener.medal;
 
 import com.depromeet.threedollar.api.service.medal.AddUserMedalFacadeService;
 import com.depromeet.threedollar.domain.event.review.ReviewCreatedEvent;
