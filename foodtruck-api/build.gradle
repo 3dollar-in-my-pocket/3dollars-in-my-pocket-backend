@@ -1,0 +1,11 @@
+ext {
+
+}
+
+dependencies {
+    implementation project(':foodtruck-domain')
+
+    // Spring MVC
+    implementation("org.springframework.boot:spring-boot-starter-web")
+}
+

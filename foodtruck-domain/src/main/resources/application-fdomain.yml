@@ -1,0 +1,35 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        dialect: org.hibernate.dialect.MariaDB102Dialect
+        dialect.storage_engine: innodb
+        default_batch_fetch_size: 1000
+        query.in_clause_parameter_padding: true
+        connection.provider_disables_autocommit: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+  datasource:
+    hikari:
+      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:h2:mem:threedollar;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
+      username: sa
+      password:
+  jpa:
+    hibernate:
+      ddl-auto: update
