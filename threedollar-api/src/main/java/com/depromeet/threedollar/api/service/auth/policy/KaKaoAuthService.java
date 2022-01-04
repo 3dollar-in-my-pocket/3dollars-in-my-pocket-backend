@@ -1,5 +1,6 @@
-package com.depromeet.threedollar.api.service.auth;
+package com.depromeet.threedollar.api.service.auth.policy;
 
+import com.depromeet.threedollar.api.service.auth.AuthService;
 import com.depromeet.threedollar.api.service.auth.dto.request.LoginRequest;
 import com.depromeet.threedollar.api.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.service.user.UserService;
