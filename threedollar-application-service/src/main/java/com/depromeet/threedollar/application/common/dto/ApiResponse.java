@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.application.common.dto;
 
-import com.depromeet.threedollar.common.exception.ErrorCode;
+import com.depromeet.threedollar.common.exception.type.ErrorCode;
 import lombok.*;
 
 @ToString

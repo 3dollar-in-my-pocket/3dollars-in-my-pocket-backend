@@ -7,7 +7,7 @@ import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryCoun
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithUserResponse;
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
-import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
+import com.depromeet.threedollar.common.type.DayOfTheWeek;
 import com.depromeet.threedollar.domain.domain.review.Review;
 import com.depromeet.threedollar.domain.domain.store.*;
 import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;

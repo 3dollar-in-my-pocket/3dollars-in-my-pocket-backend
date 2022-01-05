@@ -2,7 +2,7 @@ package com.depromeet.threedollar.domain.domain.store;
 
 import com.depromeet.threedollar.common.utils.MathUtils;
 import com.depromeet.threedollar.domain.domain.common.AuditingTimeEntity;
-import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
+import com.depromeet.threedollar.common.type.DayOfTheWeek;
 import com.depromeet.threedollar.domain.domain.common.Location;
 import lombok.AccessLevel;
 import lombok.Builder;

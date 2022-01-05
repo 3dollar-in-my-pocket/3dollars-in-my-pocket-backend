@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.controller.advice;
 
 import com.depromeet.threedollar.domain.event.UnExpectedErrorOccurredEvent;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.common.exception.ErrorCode;
+import com.depromeet.threedollar.common.exception.type.ErrorCode;
 import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Objects;
 
-import static com.depromeet.threedollar.common.exception.ErrorCode.*;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.*;
 
 @Slf4j
 @RequiredArgsConstructor

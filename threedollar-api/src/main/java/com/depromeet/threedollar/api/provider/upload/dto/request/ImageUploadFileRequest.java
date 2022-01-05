@@ -2,15 +2,15 @@ package com.depromeet.threedollar.api.provider.upload.dto.request;
 
 import com.depromeet.threedollar.common.exception.model.ValidationException;
 import com.depromeet.threedollar.common.utils.FileUtils;
-import com.depromeet.threedollar.domain.domain.common.ImageType;
+import com.depromeet.threedollar.common.type.ImageType;
 import lombok.*;
 import org.jetbrains.annotations.Nullable;
 
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-import static com.depromeet.threedollar.common.exception.ErrorCode.FORBIDDEN_FILE_NAME_EXCEPTION;
-import static com.depromeet.threedollar.common.exception.ErrorCode.FORBIDDEN_FILE_TYPE_EXCEPTION;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.FORBIDDEN_FILE_NAME_EXCEPTION;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.FORBIDDEN_FILE_TYPE_EXCEPTION;
 
 @ToString
 @Getter

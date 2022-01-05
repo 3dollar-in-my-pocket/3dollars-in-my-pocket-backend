@@ -1,11 +1,12 @@
-package com.depromeet.threedollar.common.exception;
+package com.depromeet.threedollar.common.exception.type;
 
+import com.depromeet.threedollar.common.type.HttpStatusCode;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import static com.depromeet.threedollar.common.exception.ErrorAlarmOptionType.*;
-import static com.depromeet.threedollar.common.exception.HttpStatusCode.*;
+import static com.depromeet.threedollar.common.exception.type.ErrorAlarmOptionType.*;
+import static com.depromeet.threedollar.common.type.HttpStatusCode.*;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)

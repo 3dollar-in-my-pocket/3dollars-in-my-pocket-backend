@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.depromeet.threedollar.common.exception.ErrorCode.CONFLICT_DELETE_REQUEST_STORE_EXCEPTION;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.CONFLICT_DELETE_REQUEST_STORE_EXCEPTION;
 import static com.depromeet.threedollar.domain.config.cache.CacheType.CacheKey.USER_STORES_COUNTS;
 
 @RequiredArgsConstructor

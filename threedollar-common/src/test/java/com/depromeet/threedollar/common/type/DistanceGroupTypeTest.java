@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.domain.common;
+package com.depromeet.threedollar.common.type;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

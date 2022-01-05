@@ -14,7 +14,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.depromeet.threedollar.common.exception.ErrorCode.NOT_FOUND_MEDAL_EXCEPTION;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOT_FOUND_MEDAL_EXCEPTION;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

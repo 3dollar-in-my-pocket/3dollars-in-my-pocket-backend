@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.common.exception;
+package com.depromeet.threedollar.common.exception.type;
 
 public enum ErrorAlarmOptionType {
 

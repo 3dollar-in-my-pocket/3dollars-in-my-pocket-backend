@@ -1,9 +1,10 @@
 package com.depromeet.threedollar.api.config.resolver
 
-import com.depromeet.threedollar.common.exception.ErrorCode.VALIDATION_MAP_LATITUDE_EXCEPTION
-import com.depromeet.threedollar.common.exception.ErrorCode.VALIDATION_MAP_LONGITUDE_EXCEPTION
+import com.depromeet.threedollar.common.exception.type.ErrorCode.VALIDATION_MAP_LATITUDE_EXCEPTION
+import com.depromeet.threedollar.common.exception.type.ErrorCode.VALIDATION_MAP_LONGITUDE_EXCEPTION
 import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.common.exception.model.ValidationException
+import com.depromeet.threedollar.common.model.CoordinateValue
 import org.springframework.core.MethodParameter
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.support.WebDataBinderFactory
@@ -16,7 +17,7 @@ class MapCoordinateArgumentResolver : HandlerMethodArgumentResolver {
 
     override fun supportsParameter(parameter: MethodParameter): Boolean {
         return parameter.getParameterAnnotation(MapCoordinate::class.java) != null
-            && Coordinate::class.java == parameter.parameterType
+            && CoordinateValue::class.java == parameter.parameterType
     }
 
     override fun resolveArgument(
@@ -36,7 +37,7 @@ class MapCoordinateArgumentResolver : HandlerMethodArgumentResolver {
             mapLongitude ?: throw ValidationException("${MAP_LONGITUDE}를 입력해주세요", VALIDATION_MAP_LONGITUDE_EXCEPTION)
         }
 
-        return Coordinate.of(mapLatitude ?: 0.0, mapLongitude ?: 0.0)
+        return CoordinateValue.of(mapLatitude ?: 0.0, mapLongitude ?: 0.0)
     }
 
     companion object {

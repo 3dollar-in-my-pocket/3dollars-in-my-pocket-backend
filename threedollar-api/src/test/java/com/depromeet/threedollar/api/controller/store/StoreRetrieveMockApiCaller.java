@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.controller.store;
 
-import com.depromeet.threedollar.api.config.resolver.Coordinate;
+import com.depromeet.threedollar.common.model.CoordinateValue;
 import com.depromeet.threedollar.api.controller.MockMvcUtils;
 import com.depromeet.threedollar.api.service.store.dto.request.*;
 import com.depromeet.threedollar.api.service.store.dto.request.deprecated.RetrieveMyStoresV2Request;
@@ -30,7 +30,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         super(mockMvc, objectMapper);
     }
 
-    ApiResponse<List<StoreWithVisitsAndDistanceResponse>> getNearStores(RetrieveNearStoresRequest request, Coordinate coordinate, Coordinate mapCoordinate, int expectedStatus) throws Exception {
+    ApiResponse<List<StoreWithVisitsAndDistanceResponse>> getNearStores(RetrieveNearStoresRequest request, CoordinateValue coordinate, CoordinateValue mapCoordinate, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/stores/near")
             .param("latitude", String.valueOf(coordinate.getLatitude()))
             .param("longitude", String.valueOf(coordinate.getLongitude()))
@@ -51,7 +51,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         );
     }
 
-    ApiResponse<StoreDetailResponse> getStoreDetailInfo(RetrieveStoreDetailRequest request, Coordinate coordinate, int expectedStatus) throws Exception {
+    ApiResponse<StoreDetailResponse> getStoreDetailInfo(RetrieveStoreDetailRequest request, CoordinateValue coordinate, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/store")
             .param("latitude", String.valueOf(coordinate.getLatitude()))
             .param("longitude", String.valueOf(coordinate.getLongitude()))
@@ -86,7 +86,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         );
     }
 
-    ApiResponse<StoresCursorV2Response> retrieveMyReportedStoreHistoriesV2(RetrieveMyStoresV2Request request, Coordinate coordinate, String token, int expectedStatus) throws Exception {
+    ApiResponse<StoresCursorV2Response> retrieveMyReportedStoreHistoriesV2(RetrieveMyStoresV2Request request, CoordinateValue coordinate, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/stores/me")
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))
@@ -107,7 +107,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
     }
 
     @Deprecated
-    ApiResponse<StoresGroupByDistanceV2Response> getStoresGroupByDistance(RetrieveStoreGroupByCategoryV2Request request, Coordinate coordinate, Coordinate mapCoordinate, int expectedStatus) throws Exception {
+    ApiResponse<StoresGroupByDistanceV2Response> getStoresGroupByDistance(RetrieveStoreGroupByCategoryV2Request request, CoordinateValue coordinate, CoordinateValue mapCoordinate, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/stores/distance")
             .param("latitude", String.valueOf(coordinate.getLatitude()))
             .param("longitude", String.valueOf(coordinate.getLongitude()))
@@ -127,7 +127,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
     }
 
     @Deprecated
-    ApiResponse<StoresGroupByReviewV2Response> getStoresGroupByReview(RetrieveStoreGroupByCategoryV2Request request, Coordinate coordinate, Coordinate mapCoordinate, int expectedStatus) throws Exception {
+    ApiResponse<StoresGroupByReviewV2Response> getStoresGroupByReview(RetrieveStoreGroupByCategoryV2Request request, CoordinateValue coordinate, CoordinateValue mapCoordinate, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/stores/review")
             .param("latitude", String.valueOf(coordinate.getLatitude()))
             .param("longitude", String.valueOf(coordinate.getLongitude()))
@@ -146,7 +146,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         );
     }
 
-    ApiResponse<CheckExistStoresNearbyResponse> checkExistStoresNearby(CheckExistsStoresNearbyRequest request, Coordinate mapCoordinate, int expectedStatus) throws Exception {
+    ApiResponse<CheckExistStoresNearbyResponse> checkExistStoresNearby(CheckExistsStoresNearbyRequest request, CoordinateValue mapCoordinate, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v1/stores/near/exists")
             .param("mapLatitude", String.valueOf(mapCoordinate.getLatitude()))
             .param("mapLongitude", String.valueOf(mapCoordinate.getLongitude()))

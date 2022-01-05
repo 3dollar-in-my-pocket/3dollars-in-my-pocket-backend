@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.controller.advice;
 
-import com.depromeet.threedollar.common.exception.ErrorCode;
+import com.depromeet.threedollar.common.exception.type.ErrorCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

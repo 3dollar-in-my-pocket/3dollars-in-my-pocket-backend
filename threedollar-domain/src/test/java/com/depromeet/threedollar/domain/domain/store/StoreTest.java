@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.domain.store;
 
-import com.depromeet.threedollar.domain.domain.common.DayOfTheWeek;
+import com.depromeet.threedollar.common.type.DayOfTheWeek;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

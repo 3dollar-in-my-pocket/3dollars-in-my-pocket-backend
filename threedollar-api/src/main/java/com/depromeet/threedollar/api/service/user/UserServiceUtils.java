@@ -9,7 +9,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
-import static com.depromeet.threedollar.common.exception.ErrorCode.*;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserServiceUtils {
