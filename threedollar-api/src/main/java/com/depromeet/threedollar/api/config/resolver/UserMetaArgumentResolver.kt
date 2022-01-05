@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.config.resolver
 
 import com.depromeet.threedollar.common.model.UserMetaValue
-import com.depromeet.threedollar.common.type.PlatformType
+import com.depromeet.threedollar.common.type.OsPlatformType
 import org.springframework.core.MethodParameter
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.support.WebDataBinderFactory
@@ -20,7 +20,7 @@ class UserMetaArgumentResolver : HandlerMethodArgumentResolver {
         val userAgent = webRequest.getHeader(USER_AGENT_HEADER).toString()
         val sourceIp = webRequest.getHeader(SOURCE_IP_HEADER).toString()
         return UserMetaValue(
-            platformType = PlatformType.findByUserAgent(userAgent),
+            osPlatform = OsPlatformType.findByUserAgent(userAgent),
             userAgent = userAgent,
             sourceIp = sourceIp
         )

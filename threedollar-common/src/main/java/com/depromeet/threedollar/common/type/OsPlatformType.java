@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public enum PlatformType {
+public enum OsPlatformType {
 
     IPHONE(List.of("ios")),
     ANDROID(List.of("okhttp")),
@@ -23,11 +23,11 @@ public enum PlatformType {
     }
 
     @NotNull
-    public static PlatformType findByUserAgent(String userAgent) {
-        return Arrays.stream(PlatformType.values())
-            .filter(platformType -> platformType.hasKeyword(userAgent))
+    public static OsPlatformType findByUserAgent(String userAgent) {
+        return Arrays.stream(OsPlatformType.values())
+            .filter(osPlatformType -> osPlatformType.hasKeyword(userAgent))
             .findFirst()
-            .orElse(PlatformType.UNKNOWN);
+            .orElse(OsPlatformType.UNKNOWN);
     }
 
 }

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PlatformTypeTest {
+class OsPlatformTypeTest {
 
     @Test
     void Android_UserAgent() {
@@ -12,10 +12,10 @@ class PlatformTypeTest {
         String userAgent = "okhttp/4.9.1";
 
         // when
-        PlatformType platformType = PlatformType.findByUserAgent(userAgent);
+        OsPlatformType osPlatformType = OsPlatformType.findByUserAgent(userAgent);
 
         // then
-        assertThat(platformType).isEqualTo(PlatformType.ANDROID);
+        assertThat(osPlatformType).isEqualTo(OsPlatformType.ANDROID);
     }
 
     @Test
@@ -24,10 +24,10 @@ class PlatformTypeTest {
         String userAgent = "2.4.2 (com.macgongmon.-dollar-in-my-pocket; build:1; iOS 15.1.0";
 
         // when
-        PlatformType platformType = PlatformType.findByUserAgent(userAgent);
+        OsPlatformType osPlatformType = OsPlatformType.findByUserAgent(userAgent);
 
         // then
-        assertThat(platformType).isEqualTo(PlatformType.IPHONE);
+        assertThat(osPlatformType).isEqualTo(OsPlatformType.IPHONE);
     }
 
     @Test
@@ -36,10 +36,10 @@ class PlatformTypeTest {
         String userAgent = "Unknown";
 
         // when
-        PlatformType platformType = PlatformType.findByUserAgent(userAgent);
+        OsPlatformType osPlatformType = OsPlatformType.findByUserAgent(userAgent);
 
         // then
-        assertThat(platformType).isEqualTo(PlatformType.UNKNOWN);
+        assertThat(osPlatformType).isEqualTo(OsPlatformType.UNKNOWN);
     }
 
 }
