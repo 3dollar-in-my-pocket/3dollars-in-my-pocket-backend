@@ -32,7 +32,7 @@ public class EmbeddedRedisConfig {
     private int port;
 
     @PostConstruct
-    public void redisServer() throws IOException {
+    public void startRedis() throws IOException {
         port = isRunningPort(properties.getPort()) ? findAvailableRandomPort() : properties.getPort();
         redisServer = new RedisServer(port);
         redisServer.start();

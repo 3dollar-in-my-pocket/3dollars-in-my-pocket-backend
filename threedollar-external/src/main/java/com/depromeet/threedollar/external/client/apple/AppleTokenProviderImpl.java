@@ -30,7 +30,7 @@ import static com.depromeet.threedollar.common.exception.type.ErrorCode.*;
 @Component
 public class AppleTokenProviderImpl implements AppleTokenProvider {
 
-    private final AppleApiClient appleApiCaller;
+    private final AppleAuthApiClient appleApiCaller;
     private final AppleAuthProperties appleAuthProperties;
     private final ObjectMapper objectMapper;
 
