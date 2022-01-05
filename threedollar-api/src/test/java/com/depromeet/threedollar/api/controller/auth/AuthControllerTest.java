@@ -9,9 +9,9 @@ import com.depromeet.threedollar.domain.domain.user.User;
 import com.depromeet.threedollar.domain.domain.user.UserCreator;
 import com.depromeet.threedollar.domain.domain.user.UserSocialType;
 import com.depromeet.threedollar.external.client.apple.AppleTokenProvider;
-import com.depromeet.threedollar.external.client.google.GoogleApiClient;
+import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient;
 import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse;
-import com.depromeet.threedollar.external.client.kakao.KaKaoApiClient;
+import com.depromeet.threedollar.external.client.kakao.KaKaoAuthApiClient;
 import com.depromeet.threedollar.external.client.kakao.dto.response.KaKaoProfileResponse;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -25,10 +25,10 @@ class AuthControllerTest extends SetupUserControllerTest {
     private AuthMockApiCaller authMockApiCaller;
 
     @MockBean
-    private KaKaoApiClient kaKaoApiClient;
+    private KaKaoAuthApiClient kaKaoAuthApiClient;
 
     @MockBean
-    private GoogleApiClient googleApiClient;
+    private GoogleAuthApiClient googleAuthApiClient;
 
     @MockBean
     private AppleTokenProvider appleTokenProvider;
@@ -50,7 +50,7 @@ class AuthControllerTest extends SetupUserControllerTest {
         @Test
         void 카카오_회원가입_요청이_성공하면_토큰이_반환된다() throws Exception {
             // given
-            when(kaKaoApiClient.getProfileInfo(any())).thenReturn(KaKaoProfileResponse.testInstance("social-id"));
+            when(kaKaoAuthApiClient.getProfileInfo(any())).thenReturn(KaKaoProfileResponse.testInstance("social-id"));
 
             SignUpRequest request = SignUpRequest.testInstance("access-token", "will", UserSocialType.KAKAO);
 
@@ -82,7 +82,7 @@ class AuthControllerTest extends SetupUserControllerTest {
         @Test
         void 구글_회원가입_요청이_성공하면_토큰이_반환된다() throws Exception {
             // given
-            when(googleApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance("social-id"));
+            when(googleAuthApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance("social-id"));
 
             SignUpRequest request = SignUpRequest.testInstance("access-token", "will", UserSocialType.GOOGLE);
 
@@ -107,7 +107,7 @@ class AuthControllerTest extends SetupUserControllerTest {
             User user = UserCreator.create("social-id", UserSocialType.KAKAO, "카카오 계정");
             userRepository.save(user);
 
-            when(kaKaoApiClient.getProfileInfo(any())).thenReturn(KaKaoProfileResponse.testInstance(user.getSocialId()));
+            when(kaKaoAuthApiClient.getProfileInfo(any())).thenReturn(KaKaoProfileResponse.testInstance(user.getSocialId()));
 
             LoginRequest request = LoginRequest.testInstance("access-token", UserSocialType.KAKAO);
 
@@ -145,7 +145,7 @@ class AuthControllerTest extends SetupUserControllerTest {
             User user = UserCreator.create("social-id", UserSocialType.GOOGLE, "구글 계정");
             userRepository.save(user);
 
-            when(googleApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance(user.getSocialId()));
+            when(googleAuthApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance(user.getSocialId()));
 
             LoginRequest request = LoginRequest.testInstance("access-token", UserSocialType.GOOGLE);
 

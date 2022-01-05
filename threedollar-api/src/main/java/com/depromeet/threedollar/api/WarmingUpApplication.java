@@ -1,5 +1,7 @@
 package com.depromeet.threedollar.api;
 
+import com.depromeet.threedollar.common.type.RecommendedPlace;
+import com.depromeet.threedollar.domain.domain.popup.PopupPlatformType;
 import com.depromeet.threedollar.external.client.LocalWarmUpApiClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -11,18 +13,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class WarmingUpApplication implements CommandLineRunner {
 
+    private static final int API_CALL_COUNT = 10;
+
     private final LocalWarmUpApiClient apiClient;
 
     @Override
     public void run(String... args) {
         try {
-            for (int i = 0; i < 10; i++) {
-                apiClient.retrieveNearStores(34.0, 126.0, 34.0, 126.0, 2000);
+            for (int i = 0; i < API_CALL_COUNT; i++) {
+                for (RecommendedPlace place : RecommendedPlace.values()) {
+                    apiClient.retrieveNearStores(place.getLatitude(), place.getLongitude(), place.getLatitude(), place.getLongitude(), 2000);
+                }
                 apiClient.getMedals();
                 apiClient.getStoreMenuCategories();
                 apiClient.getFaqs();
-                apiClient.getPopups("AOS");
-                apiClient.getPopups("IOS");
+                for (PopupPlatformType platformType : PopupPlatformType.values()) {
+                    apiClient.getPopups(platformType.name());
+                }
             }
         } catch (Exception ignored) {
         }

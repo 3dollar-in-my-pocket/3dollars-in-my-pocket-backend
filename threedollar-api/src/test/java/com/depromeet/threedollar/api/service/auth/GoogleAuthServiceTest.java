@@ -7,7 +7,7 @@ import com.depromeet.threedollar.api.service.user.UserService;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.domain.user.*;
-import com.depromeet.threedollar.external.client.google.GoogleApiClient;
+import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient;
 import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,7 +41,7 @@ class GoogleAuthServiceTest {
 
     @BeforeEach
     void setup() {
-        authService = new GoogleAuthService(new StubGoogleApiClient(), userService, userRepository);
+        authService = new GoogleAuthService(new StubGoogleAuthApiClient(), userService, userRepository);
     }
 
     @AfterEach
@@ -109,7 +109,7 @@ class GoogleAuthServiceTest {
 
     }
 
-    private static class StubGoogleApiClient implements GoogleApiClient {
+    private static class StubGoogleAuthApiClient implements GoogleAuthApiClient {
 
         @Override
         public GoogleProfileInfoResponse getProfileInfo(String accessToken) {
