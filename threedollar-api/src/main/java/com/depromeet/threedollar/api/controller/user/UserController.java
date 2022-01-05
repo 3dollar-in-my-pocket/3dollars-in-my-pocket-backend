@@ -2,6 +2,8 @@ package com.depromeet.threedollar.api.controller.user;
 
 import com.depromeet.threedollar.api.config.interceptor.Auth;
 import com.depromeet.threedollar.api.config.resolver.UserId;
+import com.depromeet.threedollar.api.config.resolver.UserMeta;
+import com.depromeet.threedollar.api.config.resolver.UserMetaInfo;
 import com.depromeet.threedollar.api.service.user.UserService;
 import com.depromeet.threedollar.api.service.user.dto.request.CheckAvailableNameRequest;
 import com.depromeet.threedollar.api.service.user.dto.request.UpdateUserInfoRequest;
@@ -9,6 +11,7 @@ import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 public class UserController {
@@ -26,8 +30,10 @@ public class UserController {
     @Auth
     @GetMapping("/api/v2/user/me")
     public ApiResponse<UserInfoResponse> getMyUserInfo(
-        @UserId Long userId
+        @UserId Long userId,
+        @UserMeta UserMetaInfo userMetaInfo
     ) {
+        log.info("UserMeta: {}", userMetaInfo);
         return ApiResponse.success(userService.getUserInfo(userId));
     }
 
@@ -49,6 +55,5 @@ public class UserController {
         userService.checkIsAvailableName(request);
         return ApiResponse.SUCCESS;
     }
-
 
 }

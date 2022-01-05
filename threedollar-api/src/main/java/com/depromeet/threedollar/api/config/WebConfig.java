@@ -4,6 +4,7 @@ import com.depromeet.threedollar.api.config.interceptor.AuthInterceptor;
 import com.depromeet.threedollar.api.config.resolver.GeoCoordinateArgumentResolver;
 import com.depromeet.threedollar.api.config.resolver.MapCoordinateArgumentResolver;
 import com.depromeet.threedollar.api.config.resolver.UserIdResolver;
+import com.depromeet.threedollar.api.config.resolver.UserMetaArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
     private final UserIdResolver userIdResolver;
     private final GeoCoordinateArgumentResolver geoCoordinateArgumentResolver;
     private final MapCoordinateArgumentResolver mapCoordinateArgumentResolver;
+    private final UserMetaArgumentResolver userMetaArgumentResolver;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -34,7 +36,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.addAll(List.of(userIdResolver, geoCoordinateArgumentResolver, mapCoordinateArgumentResolver));
+        resolvers.addAll(List.of(userIdResolver, geoCoordinateArgumentResolver, mapCoordinateArgumentResolver, userMetaArgumentResolver));
     }
 
     @Override
