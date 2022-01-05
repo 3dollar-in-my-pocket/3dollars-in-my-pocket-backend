@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.service.store.dto.response.deprecated;
 
 import com.depromeet.threedollar.api.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
-import com.depromeet.threedollar.domain.domain.common.DistanceGroupType;
+import com.depromeet.threedollar.common.type.DistanceGroupType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

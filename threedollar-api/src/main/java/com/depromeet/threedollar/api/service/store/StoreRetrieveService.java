@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.store;
 
-import com.depromeet.threedollar.api.config.resolver.Coordinate;
+import com.depromeet.threedollar.common.model.CoordinateValue;
 import com.depromeet.threedollar.api.service.store.dto.request.CheckExistsStoresNearbyRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveMyStoresRequest;
 import com.depromeet.threedollar.api.service.store.dto.request.RetrieveNearStoresRequest;
@@ -53,7 +53,7 @@ public class StoreRetrieveService {
     private final VisitHistoryRepository visitHistoryRepository;
 
     @Transactional(readOnly = true)
-    public List<StoreWithVisitsAndDistanceResponse> getNearStores(RetrieveNearStoresRequest request, Coordinate geoCoordinate, Coordinate mapCoordinate) {
+    public List<StoreWithVisitsAndDistanceResponse> getNearStores(RetrieveNearStoresRequest request, CoordinateValue geoCoordinate, CoordinateValue mapCoordinate) {
         List<Store> nearStores = findNearStoresFilterByCategory(storeRepository, mapCoordinate.getLatitude(), mapCoordinate.getLongitude(), request.getDistance(), request.getCategory());
         VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(nearStores);
         return nearStores.stream()
@@ -63,7 +63,7 @@ public class StoreRetrieveService {
     }
 
     @Transactional(readOnly = true)
-    public StoreDetailResponse getDetailStoreInfo(RetrieveStoreDetailRequest request, Coordinate geoCoordinate) {
+    public StoreDetailResponse getDetailStoreInfo(RetrieveStoreDetailRequest request, CoordinateValue geoCoordinate) {
         Store store = StoreServiceUtils.findStoreByIdFetchJoinMenu(storeRepository, request.getStoreId());
         List<Review> reviews = reviewRepository.findAllByStoreId(request.getStoreId());
         List<StoreImage> storeImages = storeImageRepository.findAllByStoreId(request.getStoreId());
@@ -96,7 +96,7 @@ public class StoreRetrieveService {
 
     @Deprecated
     @Transactional(readOnly = true)
-    public StoresCursorV2Response retrieveMyReportedStoreHistoriesV2(RetrieveMyStoresV2Request request, Coordinate geoCoordinate, Long userId) {
+    public StoresCursorV2Response retrieveMyReportedStoreHistoriesV2(RetrieveMyStoresV2Request request, CoordinateValue geoCoordinate, Long userId) {
         List<Store> storesWithNextCursor = storeRepository.findAllActiveByUserIdUsingCursor(userId, request.getCursor(), request.getSize() + 1);
         CursorSupporter<Store> storeCursor = CursorSupporter.of(storesWithNextCursor, request.getSize());
         VisitHistoryCounter visitHistoryCountsCollection = findVisitHistoriesCountByStoreIdsInDuration(storeCursor.getItemsInCurrentCursor());
@@ -106,7 +106,7 @@ public class StoreRetrieveService {
 
     @Deprecated
     @Transactional(readOnly = true)
-    public StoresGroupByDistanceV2Response getNearStoresGroupByDistance(RetrieveStoreGroupByCategoryV2Request request, Coordinate geoCoordinate, Coordinate mapCoordinate) {
+    public StoresGroupByDistanceV2Response getNearStoresGroupByDistance(RetrieveStoreGroupByCategoryV2Request request, CoordinateValue geoCoordinate, CoordinateValue mapCoordinate) {
         List<Store> nearStores = findNearStoresFilterByCategory(storeRepository, mapCoordinate.getLatitude(), mapCoordinate.getLongitude(), StoreRadiusDistance.max(), request.getCategory());
         VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(nearStores);
         List<StoreWithVisitsAndDistanceResponse> nearCategoryStores = nearStores.stream()
@@ -118,7 +118,7 @@ public class StoreRetrieveService {
 
     @Deprecated
     @Transactional(readOnly = true)
-    public StoresGroupByReviewV2Response getNearStoresGroupByReview(RetrieveStoreGroupByCategoryV2Request request, Coordinate geoCoordinate, Coordinate mapCoordinate) {
+    public StoresGroupByReviewV2Response getNearStoresGroupByReview(RetrieveStoreGroupByCategoryV2Request request, CoordinateValue geoCoordinate, CoordinateValue mapCoordinate) {
         List<Store> nearStores = findNearStoresFilterByCategory(storeRepository, mapCoordinate.getLatitude(), mapCoordinate.getLongitude(), StoreRadiusDistance.max(), request.getCategory());
         VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(nearStores);
         List<StoreWithVisitsAndDistanceResponse> nearCategoryStores = nearStores.stream()
@@ -137,7 +137,7 @@ public class StoreRetrieveService {
     }
 
     @Transactional(readOnly = true)
-    public CheckExistStoresNearbyResponse checkExistStoresNearby(CheckExistsStoresNearbyRequest request, Coordinate mapCoordinate) {
+    public CheckExistStoresNearbyResponse checkExistStoresNearby(CheckExistsStoresNearbyRequest request, CoordinateValue mapCoordinate) {
         boolean isExists = storeRepository.existsStoreAroundInDistance(mapCoordinate.getLatitude(), mapCoordinate.getLongitude(), request.getDistance().getAvailableDistance());
         return CheckExistStoresNearbyResponse.of(isExists);
     }

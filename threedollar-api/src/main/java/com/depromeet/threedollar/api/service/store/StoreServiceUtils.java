@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.depromeet.threedollar.common.exception.ErrorCode.NOT_FOUND_STORE_EXCEPTION;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOT_FOUND_STORE_EXCEPTION;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StoreServiceUtils {

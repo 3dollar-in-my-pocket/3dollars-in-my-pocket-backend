@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.controller.store;
 
 import com.depromeet.threedollar.api.config.interceptor.Auth;
 import com.depromeet.threedollar.api.config.resolver.GeoCoordinate;
-import com.depromeet.threedollar.api.config.resolver.Coordinate;
+import com.depromeet.threedollar.common.model.CoordinateValue;
 import com.depromeet.threedollar.api.config.resolver.MapCoordinate;
 import com.depromeet.threedollar.api.config.resolver.UserId;
 import com.depromeet.threedollar.api.service.store.StoreRetrieveService;
@@ -32,8 +32,8 @@ public class StoreRetrieveController {
     @GetMapping("/api/v2/stores/near")
     public ApiResponse<List<StoreWithVisitsAndDistanceResponse>> getNearStores(
         @Valid RetrieveNearStoresRequest request,
-        @GeoCoordinate(required = false) Coordinate geoCoordinate,
-        @MapCoordinate Coordinate mapCoordinate
+        @GeoCoordinate(required = false) CoordinateValue geoCoordinate,
+        @MapCoordinate CoordinateValue mapCoordinate
     ) {
         return ApiResponse.success(storeRetrieveService.getNearStores(request, geoCoordinate, mapCoordinate));
     }
@@ -42,7 +42,7 @@ public class StoreRetrieveController {
     @GetMapping("/api/v2/store")
     public ApiResponse<StoreDetailResponse> getDetailStoreInfo(
         @Valid RetrieveStoreDetailRequest request,
-        @GeoCoordinate Coordinate geoCoordinate
+        @GeoCoordinate CoordinateValue geoCoordinate
     ) {
         return ApiResponse.success(storeRetrieveService.getDetailStoreInfo(request, geoCoordinate));
     }
@@ -68,7 +68,7 @@ public class StoreRetrieveController {
     @GetMapping("/api/v2/stores/me")
     public ApiResponse<StoresCursorV2Response> retrieveMyReportedStoreHistoriesV2(
         @Valid RetrieveMyStoresV2Request request,
-        @GeoCoordinate(required = false) Coordinate geoCoordinate,
+        @GeoCoordinate(required = false) CoordinateValue geoCoordinate,
         @UserId Long userId
     ) {
         return ApiResponse.success(storeRetrieveService.retrieveMyReportedStoreHistoriesV2(request, geoCoordinate, userId));
@@ -83,8 +83,8 @@ public class StoreRetrieveController {
     @GetMapping("/api/v2/stores/distance")
     public ApiResponse<StoresGroupByDistanceV2Response> getStoresGroupByDistance(
         @Valid RetrieveStoreGroupByCategoryV2Request request,
-        @GeoCoordinate Coordinate geoCoordinate,
-        @MapCoordinate Coordinate mapCoordinate
+        @GeoCoordinate CoordinateValue geoCoordinate,
+        @MapCoordinate CoordinateValue mapCoordinate
     ) {
         return ApiResponse.success(storeRetrieveService.getNearStoresGroupByDistance(request, geoCoordinate, mapCoordinate));
     }
@@ -98,8 +98,8 @@ public class StoreRetrieveController {
     @GetMapping("/api/v2/stores/review")
     public ApiResponse<StoresGroupByReviewV2Response> getStoresGroupByReview(
         @Valid RetrieveStoreGroupByCategoryV2Request request,
-        @GeoCoordinate Coordinate coordinate,
-        @MapCoordinate Coordinate mapCoordinate
+        @GeoCoordinate CoordinateValue coordinate,
+        @MapCoordinate CoordinateValue mapCoordinate
     ) {
         return ApiResponse.success(storeRetrieveService.getNearStoresGroupByReview(request, coordinate, mapCoordinate));
     }
@@ -108,7 +108,7 @@ public class StoreRetrieveController {
     @GetMapping("/api/v1/stores/near/exists")
     public ApiResponse<CheckExistStoresNearbyResponse> checkExistStoresNearby(
         @Valid CheckExistsStoresNearbyRequest request,
-        @MapCoordinate Coordinate mapCoordinate
+        @MapCoordinate CoordinateValue mapCoordinate
     ) {
         return ApiResponse.success(storeRetrieveService.checkExistStoresNearby(request, mapCoordinate));
     }

@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.config.swagger;
 
-import com.depromeet.threedollar.api.config.resolver.Coordinate;
+import com.depromeet.threedollar.common.model.CoordinateValue;
 import com.depromeet.threedollar.api.config.resolver.UserId;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -46,7 +46,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
             .apiInfo(apiInfo())
             .securitySchemes(authorization())
-            .ignoredParameterTypes(UserId.class, Coordinate.class)
+            .ignoredParameterTypes(UserId.class, CoordinateValue.class)
             .select()
             .apis(withClassAnnotation(RestController.class))
             .paths(PathSelectors.ant("/**"))

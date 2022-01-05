@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-import static com.depromeet.threedollar.common.exception.ErrorCode.CONFLICT_VISIT_HISTORY_EXCEPTION;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.CONFLICT_VISIT_HISTORY_EXCEPTION;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class VisitHistoryServiceUtils {

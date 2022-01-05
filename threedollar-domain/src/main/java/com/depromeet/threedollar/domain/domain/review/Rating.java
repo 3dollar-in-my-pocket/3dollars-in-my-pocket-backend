@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import static com.depromeet.threedollar.common.exception.ErrorCode.FORBIDDEN_RATING_EXCEPTION;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.FORBIDDEN_RATING_EXCEPTION;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

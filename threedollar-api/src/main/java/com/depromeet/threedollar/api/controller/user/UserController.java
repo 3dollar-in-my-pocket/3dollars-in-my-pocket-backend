@@ -2,8 +2,6 @@ package com.depromeet.threedollar.api.controller.user;
 
 import com.depromeet.threedollar.api.config.interceptor.Auth;
 import com.depromeet.threedollar.api.config.resolver.UserId;
-import com.depromeet.threedollar.api.config.resolver.UserMeta;
-import com.depromeet.threedollar.api.config.resolver.UserMetaInfo;
 import com.depromeet.threedollar.api.service.user.UserService;
 import com.depromeet.threedollar.api.service.user.dto.request.CheckAvailableNameRequest;
 import com.depromeet.threedollar.api.service.user.dto.request.UpdateUserInfoRequest;
@@ -30,10 +28,8 @@ public class UserController {
     @Auth
     @GetMapping("/api/v2/user/me")
     public ApiResponse<UserInfoResponse> getMyUserInfo(
-        @UserId Long userId,
-        @UserMeta UserMetaInfo userMetaInfo
+        @UserId Long userId
     ) {
-        log.info("UserMeta: {}", userMetaInfo);
         return ApiResponse.success(userService.getUserInfo(userId));
     }
 

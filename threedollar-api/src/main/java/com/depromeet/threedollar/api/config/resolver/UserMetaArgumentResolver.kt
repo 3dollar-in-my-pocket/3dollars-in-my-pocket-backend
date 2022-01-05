@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.config.resolver
 
+import com.depromeet.threedollar.common.model.UserMetaValue
 import com.depromeet.threedollar.common.type.PlatformType
 import org.springframework.core.MethodParameter
 import org.springframework.stereotype.Component
@@ -12,13 +13,13 @@ import org.springframework.web.method.support.ModelAndViewContainer
 class UserMetaArgumentResolver : HandlerMethodArgumentResolver {
 
     override fun supportsParameter(parameter: MethodParameter): Boolean {
-        return parameter.hasParameterAnnotation(UserMeta::class.java) && UserMetaInfo::class.java == parameter.parameterType
+        return parameter.hasParameterAnnotation(UserMeta::class.java) && UserMetaValue::class.java == parameter.parameterType
     }
 
     override fun resolveArgument(parameter: MethodParameter, mavContainer: ModelAndViewContainer?, webRequest: NativeWebRequest, binderFactory: WebDataBinderFactory?): Any? {
         val userAgent = webRequest.getHeader(USER_AGENT_HEADER).toString()
         val sourceIp = webRequest.getHeader(SOURCE_IP_HEADER).toString()
-        return UserMetaInfo(
+        return UserMetaValue(
             platformType = PlatformType.findByUserAgent(userAgent),
             userAgent = userAgent,
             sourceIp = sourceIp

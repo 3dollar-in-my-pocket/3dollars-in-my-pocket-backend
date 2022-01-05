@@ -6,8 +6,8 @@ import lombok.*;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import static com.depromeet.threedollar.common.exception.ErrorCode.FORBIDDEN_LATITUDE_EXCEPTION;
-import static com.depromeet.threedollar.common.exception.ErrorCode.FORBIDDEN_LONGITUDE_EXCEPTION;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.FORBIDDEN_LATITUDE_EXCEPTION;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.FORBIDDEN_LONGITUDE_EXCEPTION;
 
 /**
  * 대한민국의 위도 / 경도

@@ -7,7 +7,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
-import static com.depromeet.threedollar.common.exception.ErrorCode.NOT_FOUND_REVIEW_EXCEPTION;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOT_FOUND_REVIEW_EXCEPTION;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class ReviewServiceUtils {

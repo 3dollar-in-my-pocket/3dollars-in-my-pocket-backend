@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
-import static com.depromeet.threedollar.common.exception.ErrorCode.FORBIDDEN_FILE_TYPE_EXCEPTION;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.FORBIDDEN_FILE_TYPE_EXCEPTION;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FileUtils {

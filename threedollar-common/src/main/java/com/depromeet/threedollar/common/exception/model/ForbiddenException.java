@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.common.exception.model;
 
-import com.depromeet.threedollar.common.exception.ErrorCode;
+import com.depromeet.threedollar.common.exception.type.ErrorCode;
 
 public class ForbiddenException extends ThreeDollarsBaseException {
 

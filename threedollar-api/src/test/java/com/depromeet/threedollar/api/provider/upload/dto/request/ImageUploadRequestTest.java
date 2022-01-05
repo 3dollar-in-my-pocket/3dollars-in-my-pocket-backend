@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.provider.upload.dto.request;
 
 import com.depromeet.threedollar.common.exception.model.ValidationException;
-import com.depromeet.threedollar.domain.domain.common.ImageType;
+import com.depromeet.threedollar.common.type.ImageType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
