@@ -6,4 +6,5 @@ data class UserMetaValue(
     val osPlatform: OsPlatformType,
     val userAgent: String?,
     val sourceIp: String?,
+    val appVersion: String?
 )
