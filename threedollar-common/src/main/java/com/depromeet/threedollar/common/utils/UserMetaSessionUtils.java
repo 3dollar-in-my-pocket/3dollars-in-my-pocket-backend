@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.config.interceptor;
+package com.depromeet.threedollar.common.utils;
 
 import com.depromeet.threedollar.common.model.UserMetaValue;
 import lombok.AccessLevel;

@@ -2,6 +2,7 @@ package com.depromeet.threedollar.api.config.interceptor
 
 import com.depromeet.threedollar.common.model.UserMetaValue
 import com.depromeet.threedollar.common.type.OsPlatformType
+import com.depromeet.threedollar.common.utils.UserMetaSessionUtils
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
 import org.springframework.web.servlet.ModelAndView
