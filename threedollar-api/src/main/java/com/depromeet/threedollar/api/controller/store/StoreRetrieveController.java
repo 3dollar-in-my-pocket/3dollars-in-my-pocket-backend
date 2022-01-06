@@ -14,17 +14,14 @@ import com.depromeet.threedollar.api.service.store.dto.response.deprecated.Store
 import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByReviewV2Response;
 import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresCursorV2Response;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.common.utils.UserMetaSessionUtils;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
 
-@Slf4j
 @RequiredArgsConstructor
 @RestController
 public class StoreRetrieveController {
@@ -38,7 +35,6 @@ public class StoreRetrieveController {
         @GeoCoordinate(required = false) CoordinateValue geoCoordinate,
         @MapCoordinate CoordinateValue mapCoordinate
     ) {
-        log.info("UserMeta: {}", UserMetaSessionUtils.get());
         return ApiResponse.success(storeRetrieveService.getNearStores(request, geoCoordinate, mapCoordinate));
     }
 
