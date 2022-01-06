@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.api.config;
 
 import com.depromeet.threedollar.api.config.interceptor.AuthInterceptor;
+import com.depromeet.threedollar.api.config.interceptor.UserMetaInterceptor;
 import com.depromeet.threedollar.api.config.resolver.GeoCoordinateArgumentResolver;
 import com.depromeet.threedollar.api.config.resolver.MapCoordinateArgumentResolver;
 import com.depromeet.threedollar.api.config.resolver.UserIdResolver;
-import com.depromeet.threedollar.api.config.resolver.UserMetaArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -23,20 +23,21 @@ import java.util.List;
 public class WebConfig implements WebMvcConfigurer {
 
     private final AuthInterceptor authInterceptor;
+    private final UserMetaInterceptor userMetaInterceptor;
 
     private final UserIdResolver userIdResolver;
     private final GeoCoordinateArgumentResolver geoCoordinateArgumentResolver;
     private final MapCoordinateArgumentResolver mapCoordinateArgumentResolver;
-    private final UserMetaArgumentResolver userMetaArgumentResolver;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authInterceptor);
+        registry.addInterceptor(userMetaInterceptor);
     }
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.addAll(List.of(userIdResolver, geoCoordinateArgumentResolver, mapCoordinateArgumentResolver, userMetaArgumentResolver));
+        resolvers.addAll(List.of(userIdResolver, geoCoordinateArgumentResolver, mapCoordinateArgumentResolver));
     }
 
     @Override
