@@ -14,13 +14,25 @@ class UserMetaInterceptor : HandlerInterceptor {
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         val userAgent = request.getHeader(USER_AGENT_HEADER)
-        val sourceIp = request.getHeader(SOURCE_IP_HEADER)
+        val platform = OsPlatformType.findByUserAgent(userAgent)
+
         UserMetaSessionUtils.set(UserMetaValue(
-            osPlatform = OsPlatformType.findByUserAgent(userAgent),
+            osPlatform = platform,
             userAgent = userAgent,
-            sourceIp = sourceIp
+            sourceIp = request.getHeader(SOURCE_IP_HEADER),
+            appVersion = extractAppVersion(platform, request)
         ))
         return true
+    }
+
+    private fun extractAppVersion(platform: OsPlatformType, request: HttpServletRequest): String? {
+        if (OsPlatformType.IPHONE == platform) {
+            return request.getHeader(USER_AGENT_HEADER).split(IOS_USER_AGENT_POSTFIX)[0]
+        }
+        if (OsPlatformType.ANDROID == platform) {
+            return request.getHeader(ANDROID_VERSION_HEADER)
+        }
+        return null
     }
 
     override fun postHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any, modelAndView: ModelAndView?) {
@@ -30,6 +42,9 @@ class UserMetaInterceptor : HandlerInterceptor {
     companion object {
         private const val USER_AGENT_HEADER = "User-Agent"
         private const val SOURCE_IP_HEADER = "X-Forwarded-For"
+        private const val ANDROID_VERSION_HEADER = "X-Android-Service-Version"
+
+        private const val IOS_USER_AGENT_POSTFIX = " (com.macgongmon"
     }
 
 }
