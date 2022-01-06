@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class UserMetaInterceptor : HandlerInterceptor {
+class UserMetadataInterceptor : HandlerInterceptor {
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         val userAgent = request.getHeader(USER_AGENT_HEADER)
@@ -26,13 +26,11 @@ class UserMetaInterceptor : HandlerInterceptor {
     }
 
     private fun extractAppVersion(platform: OsPlatformType, request: HttpServletRequest): String? {
-        if (OsPlatformType.IPHONE == platform) {
-            return request.getHeader(USER_AGENT_HEADER).split(IOS_USER_AGENT_POSTFIX)[0]
+        return when (platform) {
+            OsPlatformType.IPHONE -> request.getHeader(USER_AGENT_HEADER).split(IOS_USER_AGENT_POSTFIX)[0]
+            OsPlatformType.ANDROID -> request.getHeader(ANDROID_VERSION_HEADER)
+            else -> null
         }
-        if (OsPlatformType.ANDROID == platform) {
-            return request.getHeader(ANDROID_VERSION_HEADER)
-        }
-        return null
     }
 
     override fun postHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any, modelAndView: ModelAndView?) {

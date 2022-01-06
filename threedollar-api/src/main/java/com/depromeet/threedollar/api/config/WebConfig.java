@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.config;
 
 import com.depromeet.threedollar.api.config.interceptor.AuthInterceptor;
-import com.depromeet.threedollar.api.config.interceptor.UserMetaInterceptor;
+import com.depromeet.threedollar.api.config.interceptor.UserMetadataInterceptor;
 import com.depromeet.threedollar.api.config.resolver.GeoCoordinateArgumentResolver;
 import com.depromeet.threedollar.api.config.resolver.MapCoordinateArgumentResolver;
 import com.depromeet.threedollar.api.config.resolver.UserIdResolver;
@@ -23,7 +23,7 @@ import java.util.List;
 public class WebConfig implements WebMvcConfigurer {
 
     private final AuthInterceptor authInterceptor;
-    private final UserMetaInterceptor userMetaInterceptor;
+    private final UserMetadataInterceptor userMetaDataInterceptor;
 
     private final UserIdResolver userIdResolver;
     private final GeoCoordinateArgumentResolver geoCoordinateArgumentResolver;
@@ -32,7 +32,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authInterceptor);
-        registry.addInterceptor(userMetaInterceptor);
+        registry.addInterceptor(userMetaDataInterceptor);
     }
 
     @Override
