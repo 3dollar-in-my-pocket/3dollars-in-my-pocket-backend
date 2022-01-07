@@ -22,13 +22,3 @@ services:
     command: redis-server --port 6379
     volumes:
       - ~/db/data:/data
-  elasticsearch:
-    image: elasticsearch:7.16.2
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    restart: unless-stopped
-    environment:
-      - "discovery.type=single-node"
-    volumes:
-      - ~/threedollars-api/elasticsearch:/usr/share/elasticsearch/data
