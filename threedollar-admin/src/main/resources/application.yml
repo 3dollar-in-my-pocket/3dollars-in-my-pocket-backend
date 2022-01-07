@@ -1,5 +1,5 @@
 server:
-  port: 4000
+  port: 5100
   shutdown: graceful
   servlet:
     encoding:

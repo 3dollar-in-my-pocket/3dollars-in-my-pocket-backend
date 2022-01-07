@@ -1,7 +1,7 @@
-package com.depromeet.threedollar.consumer.controller.click.store
+package com.depromeet.threedollar.statistics.controller.click.store
 
-import com.depromeet.threedollar.consumer.controller.ApiResponse
-import com.depromeet.threedollar.consumer.sevice.store.click.StoreClickEventLogService
+import com.depromeet.threedollar.statistics.controller.ApiResponse
+import com.depromeet.threedollar.statistics.sevice.store.click.StoreClickEventLogService
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 

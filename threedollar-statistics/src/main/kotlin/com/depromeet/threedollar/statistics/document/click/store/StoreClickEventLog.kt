@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.consumer.document.click.store
+package com.depromeet.threedollar.statistics.document.click.store
 
 import com.depromeet.threedollar.common.utils.UuidUtils
 import org.springframework.data.annotation.Id

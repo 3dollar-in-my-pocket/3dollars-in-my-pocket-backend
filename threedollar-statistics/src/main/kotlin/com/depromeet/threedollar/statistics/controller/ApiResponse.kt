@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.consumer.controller
+package com.depromeet.threedollar.statistics.controller
 
 class ApiResponse<T>(
     val code: String,

@@ -1,6 +1,6 @@
-package com.depromeet.threedollar.consumer.config
+package com.depromeet.threedollar.statistics.config
 
-import com.depromeet.threedollar.consumer.ThreeDollarConsumerApplication
+import com.depromeet.threedollar.statistics.ThreeDollarConsumerApplication
 import org.elasticsearch.client.RestHighLevelClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

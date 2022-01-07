@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.consumer.document.click.store
+package com.depromeet.threedollar.statistics.document.click.store
 
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 

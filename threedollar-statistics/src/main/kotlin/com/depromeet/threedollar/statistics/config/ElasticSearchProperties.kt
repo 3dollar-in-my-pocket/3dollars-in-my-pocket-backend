@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.consumer.config
+package com.depromeet.threedollar.statistics.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
