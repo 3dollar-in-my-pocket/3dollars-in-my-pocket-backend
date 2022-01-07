@@ -1,9 +1,7 @@
 ## Setup Disk Memory DB with docker-compose
 
 ```bash
-docker-compose -f ./local-environment/docker-compose.yml up -d
-```
+docker-compose -f ./local-environment/docker-compose.yml -p threedollar up -d
 
-```bash
-docker-compose -f ./local-environment/docker-compose.yml ps
+docker-compose -f ./local-environment/docker-compose-statistics.yml -p threedollar-statistics up -d
 ```
