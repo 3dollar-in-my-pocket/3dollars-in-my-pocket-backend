@@ -128,7 +128,7 @@ common: &default_settings
     enabled: true
 
     # Threshold in seconds for when to collect a transaction
-    # trace. When the response time of a controller action exceeds
+    # trace. When the response time of a com.depromeet.threedollar.consumer.controller action exceeds
     # this threshold, a transaction trace will be recorded and sent to
     # New Relic. Valid values are any float value, or (default) "apdex_f",
     # which will use the threshold for the "Frustrated" Apdex level

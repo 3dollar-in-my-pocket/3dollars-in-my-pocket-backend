@@ -1,0 +1,12 @@
+bootJar { enabled = false }
+jar { enabled = true }
+
+dependencies {
+    api project(":threedollar-common")
+
+    // Spring MVC
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
+    // elasticsearch
+    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+}

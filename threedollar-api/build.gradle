@@ -19,7 +19,7 @@ dependencies {
     // Spring Session Redis
     implementation("org.springframework.session:spring-session-data-redis")
 
-    //swagger
+    // swagger
     implementation("io.springfox:springfox-boot-starter:${swaggerVersion}")
     implementation("io.springfox:springfox-swagger-ui:${swaggerVersion}")
 
