@@ -21,14 +21,3 @@ services:
     restart: unless-stopped
     volumes:
       - ~/threedollars-api/redis/data:/data
-  elasticsearch:
-    image: elasticsearch:7.16.2
-    container_name: threedollar-api-elasticsearch
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    restart: unless-stopped
-    environment:
-      - "discovery.type=single-node"
-    volumes:
-      - ~/threedollars-api/elasticsearch:/usr/share/elasticsearch/data
