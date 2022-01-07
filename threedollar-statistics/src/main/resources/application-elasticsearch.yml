@@ -1,0 +1,18 @@
+threedollars:
+  elasticsearch:
+    node:
+      host: localhost:9200
+spring:
+  config:
+    activate:
+      on-profile: local
+---
+threedollars:
+  elasticsearch:
+    node:
+      host: elasticsearch
+spring:
+  config:
+    activate:
+      on-profile: dev
+---

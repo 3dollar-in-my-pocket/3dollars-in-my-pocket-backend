@@ -1,5 +1,5 @@
 server:
-  port: 5100
+  port: 5200
   shutdown: graceful
   servlet:
     encoding:
@@ -10,5 +10,9 @@ spring:
     active: local
     default: local
     include:
-      - domain
-      - redis
+      - elasticsearch
+  mvc:
+    format:
+      date: yyyy-MM-dd
+      date-time: yyyy-MM-dd'T'HH:mm:ss
+      time: HH:mm:ss
