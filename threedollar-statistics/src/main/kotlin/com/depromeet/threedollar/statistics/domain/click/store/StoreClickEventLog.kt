@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.statistics.document.click.store
+package com.depromeet.threedollar.statistics.domain.click.store
 
 import com.depromeet.threedollar.common.utils.UuidUtils
 import org.springframework.data.annotation.Id
@@ -8,7 +8,6 @@ import org.springframework.data.elasticsearch.annotations.Document
 class StoreClickEventLog(
     @Id
     val id: String,
-
     val storeId: Long,
     val userId: Long?,
     val timestamp: Long

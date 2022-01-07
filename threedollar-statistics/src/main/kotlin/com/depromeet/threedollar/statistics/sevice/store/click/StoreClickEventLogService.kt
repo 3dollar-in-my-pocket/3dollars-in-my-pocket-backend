@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.statistics.sevice.store.click
 
 import com.depromeet.threedollar.common.utils.LocalDateTimeUtils
-import com.depromeet.threedollar.statistics.document.click.store.StoreClickEventLog
-import com.depromeet.threedollar.statistics.document.click.store.StoreClickEventLogRepository
+import com.depromeet.threedollar.statistics.domain.click.store.StoreClickEventLog
+import com.depromeet.threedollar.statistics.domain.click.store.StoreClickEventLogRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
