@@ -12,7 +12,16 @@ services:
       context: .
       dockerfile: Dockerfile_admin
     ports:
-      - "4000:4000"
+      - "5100:5100"
     command: java -jar threedollar-admin.jar
+    environment:
+      - "SPRING_PROFILES_ACTIVE=local"
+  statistics:
+    build:
+      context: .
+      dockerfile: Dockerfile_statistics
+    ports:
+      - "5200:5200"
+    command: java -jar threedollar-statistics.jar
     environment:
       - "SPRING_PROFILES_ACTIVE=local"
