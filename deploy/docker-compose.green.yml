@@ -9,7 +9,6 @@ services:
       - "NEW_RELIC_APP_NAME=3dollars-api-dev"
     links:
       - "redis:redis"
-      - "elasticsearch:elasticsearch"
     volumes:
       - ~/logs:/logs
     env_file:
