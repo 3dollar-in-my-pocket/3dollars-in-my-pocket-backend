@@ -11,6 +11,7 @@ spring:
     default: local
     include:
       - elasticsearch
+      - kafka
   mvc:
     format:
       date: yyyy-MM-dd
