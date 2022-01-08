@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.statistics
+package com.depromeet.threedollar.statistics.initializer
 
 import org.springframework.boot.test.util.TestPropertyValues
 import org.springframework.context.ApplicationContextInitializer
