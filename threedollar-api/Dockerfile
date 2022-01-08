@@ -21,7 +21,7 @@ RUN curl -O https://download.newrelic.com/newrelic/java-agent/newrelic-agent/cur
 && rm $HOME/newrelic/newrelic.yml
 
 COPY --from=BUILD  $HOME/threedollar-api/build/libs/threedollar-api.jar /threedollar-api.jar
-COPY deploy/newrelic.yml $HOME/newrelic/newrelic.yml
+COPY ./deploy/newrelic.yml $HOME/newrelic/newrelic.yml
 
 EXPOSE 5000
 
