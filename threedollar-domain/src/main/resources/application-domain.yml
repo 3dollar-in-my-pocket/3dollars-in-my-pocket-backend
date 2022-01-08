@@ -46,7 +46,7 @@ spring:
 spring:
   config:
     activate:
-      on-profile: local-will
+      on-profile: local-docker
   jpa:
     hibernate:
       ddl-auto: none

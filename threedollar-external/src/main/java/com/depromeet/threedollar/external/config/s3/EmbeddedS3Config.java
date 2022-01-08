@@ -22,7 +22,7 @@ import static com.depromeet.threedollar.common.utils.ProcessUtils.findAvailableR
 import static com.depromeet.threedollar.common.utils.ProcessUtils.isRunningPort;
 
 @Slf4j
-@Profile({"local", "local-will"})
+@Profile({"local", "local-docker"})
 @Configuration
 public class EmbeddedS3Config {
 

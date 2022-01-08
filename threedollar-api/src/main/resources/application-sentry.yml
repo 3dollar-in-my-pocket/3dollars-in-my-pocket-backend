@@ -1,7 +1,9 @@
 spring:
   config:
     activate:
-      on-profile: local,local-will
+      on-profile:
+        - local
+        - local-docker
 sentry:
   logging:
     enabled: false

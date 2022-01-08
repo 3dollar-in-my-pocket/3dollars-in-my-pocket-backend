@@ -9,7 +9,7 @@ spring:
 spring:
   config:
     activate:
-      on-profile: local-will
+      on-profile: local-docker
   redis:
     host: localhost
     port: 6380

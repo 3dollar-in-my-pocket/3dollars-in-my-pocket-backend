@@ -20,7 +20,7 @@ spring:
     activate:
       on-profile:
         - local
-        - local-will
+        - local-docker
 ---
 cloud:
   aws:

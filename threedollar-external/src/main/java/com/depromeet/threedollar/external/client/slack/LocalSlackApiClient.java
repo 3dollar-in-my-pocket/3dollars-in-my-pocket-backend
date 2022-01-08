@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Primary
-@Profile({"local", "local-will"})
+@Profile({"local", "local-docker"})
 @Component
 public class LocalSlackApiClient implements SlackApiClient {
 
