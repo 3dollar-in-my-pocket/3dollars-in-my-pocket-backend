@@ -1,7 +1,9 @@
 version: "3"
 services:
   api:
-    build: .
+    build:
+      context: .
+      dockerfile: threedollar-api/Dockerfile
     ports:
       - "5000:5000"
     command: java -jar threedollar-api.jar
@@ -10,7 +12,7 @@ services:
   admin:
     build:
       context: .
-      dockerfile: Dockerfile_admin
+      dockerfile: threedollar-admin/Dockerfile
     ports:
       - "5100:5100"
     command: java -jar threedollar-admin.jar
@@ -19,7 +21,7 @@ services:
   statistics:
     build:
       context: .
-      dockerfile: Dockerfile_statistics
+      dockerfile: threedollar-statistics/Dockerfile
     ports:
       - "5200:5200"
     command: java -jar threedollar-statistics.jar

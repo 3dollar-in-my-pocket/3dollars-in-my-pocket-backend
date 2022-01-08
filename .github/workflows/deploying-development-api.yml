@@ -37,7 +37,7 @@ jobs:
           DOCKER_REPOSITORY: 3dollar-api-dev
           IMAGE_TAG: ${{ steps.dev-version.outputs.version }}
         run: |
-          docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG .
+          docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG -f ./threedollar-api/Dockerfile .
           docker tag $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
           docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG
           docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
