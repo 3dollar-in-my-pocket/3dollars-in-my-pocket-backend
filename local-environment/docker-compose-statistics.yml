@@ -24,7 +24,7 @@ services:
     image: wurstmeister/kafka:2.12-2.3.0
     restart: on-failure
     ports:
-      - "9095:9092"
+      - "9092:9092"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:

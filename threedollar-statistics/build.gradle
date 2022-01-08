@@ -1,9 +1,17 @@
+ext {
+    testContainersVersion = "1.16.2"
+}
+
 dependencies {
     api project(":threedollar-common")
 
     // Spring MVC
     implementation("org.springframework.boot:spring-boot-starter-web")
 
-    // elasticsearch
-    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+    // Elasticsearch
+    implementation("org.springframework.boot:spring-boot-starter-data-elasticsearch")
+
+    // Test Containers
+    implementation platform("org.testcontainers:testcontainers-bom:${testContainersVersion}")
+    testImplementation("org.testcontainers:elasticsearch")
 }
