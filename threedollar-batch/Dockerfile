@@ -1,7 +1,7 @@
 FROM adoptopenjdk/openjdk11:alpine-slim AS BUILD
 ENV HOME=/usr/app
 WORKDIR $HOME
-COPY .. $HOME
+COPY . $HOME
 RUN ./gradlew clean :threedollar-batch:bootJar \
 :threedollar-batch:test \
 :threedollar-domain:test \
