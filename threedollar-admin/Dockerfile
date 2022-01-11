@@ -4,7 +4,7 @@ WORKDIR $HOME
 COPY . $HOME
 RUN ./gradlew clean :threedollar-admin:bootJar \
 :threedollar-admin:test \
-:threedollar-application-service:test \
+:threedollar-api-core:test \
 :threedollar-domain:test \
 :threedollar-common:test
 

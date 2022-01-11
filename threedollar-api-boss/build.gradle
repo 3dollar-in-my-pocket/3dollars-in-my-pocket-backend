@@ -3,8 +3,7 @@ ext {
 }
 
 dependencies {
-    implementation project(':threedollar-application-service')
-    implementation project(':threedollar-domain')
+    implementation project(':threedollar-api-core')
 
     // Spring MVC
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -12,7 +11,7 @@ dependencies {
     // Redis Session
     implementation("org.springframework.session:spring-session-data-redis")
 
-    // swagger
+    // Swagger
     implementation("io.springfox:springfox-boot-starter:${swaggerVersion}")
     implementation("io.springfox:springfox-swagger-ui:${swaggerVersion}")
 }

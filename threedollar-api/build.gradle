@@ -4,7 +4,7 @@ ext {
 }
 
 dependencies {
-    implementation project(":threedollar-application-service")
+    implementation project(":threedollar-api-core")
     implementation project(":threedollar-external")
 
     // Spring MVC
