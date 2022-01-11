@@ -1,16 +1,16 @@
 package com.depromeet.threedollar.api.service.medal;
 
 import com.depromeet.threedollar.api.service.SetupUserServiceTest;
-import com.depromeet.threedollar.domain.domain.medal.*;
-import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
-import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
-import com.depromeet.threedollar.domain.domain.store.*;
-import com.depromeet.threedollar.domain.domain.storedelete.DeleteReasonType;
-import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestCreator;
-import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestRepository;
-import com.depromeet.threedollar.domain.domain.visit.VisitHistoryCreator;
-import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
-import com.depromeet.threedollar.domain.domain.visit.VisitType;
+import com.depromeet.threedollar.domain.user.domain.medal.*;
+import com.depromeet.threedollar.domain.user.domain.review.ReviewCreator;
+import com.depromeet.threedollar.domain.user.domain.review.ReviewRepository;
+import com.depromeet.threedollar.domain.user.domain.store.*;
+import com.depromeet.threedollar.domain.user.domain.storedelete.DeleteReasonType;
+import com.depromeet.threedollar.domain.user.domain.storedelete.StoreDeleteRequestCreator;
+import com.depromeet.threedollar.domain.user.domain.storedelete.StoreDeleteRequestRepository;
+import com.depromeet.threedollar.domain.user.domain.visit.VisitHistoryCreator;
+import com.depromeet.threedollar.domain.user.domain.visit.VisitHistoryRepository;
+import com.depromeet.threedollar.domain.user.domain.visit.VisitType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

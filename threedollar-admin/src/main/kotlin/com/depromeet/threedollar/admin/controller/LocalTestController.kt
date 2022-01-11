@@ -2,8 +2,8 @@ package com.depromeet.threedollar.admin.controller
 
 import com.depromeet.threedollar.admin.config.session.SessionConstants.ADMIN_ID
 import com.depromeet.threedollar.application.common.dto.ApiResponse
-import com.depromeet.threedollar.domain.domain.admin.AdminCreator
-import com.depromeet.threedollar.domain.domain.admin.AdminRepository
+import com.depromeet.threedollar.domain.user.domain.admin.AdminCreator
+import com.depromeet.threedollar.domain.user.domain.admin.AdminRepository
 import org.springframework.context.annotation.Profile
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController

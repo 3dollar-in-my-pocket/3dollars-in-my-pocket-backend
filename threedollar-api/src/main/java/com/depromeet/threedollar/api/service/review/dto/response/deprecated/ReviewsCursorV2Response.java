@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.service.review.dto.response.deprecated;
 
-import com.depromeet.threedollar.domain.collection.common.CursorSupporter;
-import com.depromeet.threedollar.domain.domain.review.Review;
-import com.depromeet.threedollar.domain.collection.store.StoreDictionary;
-import com.depromeet.threedollar.domain.domain.user.User;
+import com.depromeet.threedollar.domain.common.collection.CursorSupporter;
+import com.depromeet.threedollar.domain.user.domain.review.Review;
+import com.depromeet.threedollar.domain.user.collection.store.StoreDictionary;
+import com.depromeet.threedollar.domain.user.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

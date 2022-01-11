@@ -6,7 +6,7 @@ import com.depromeet.threedollar.api.service.auth.policy.AppleAuthService;
 import com.depromeet.threedollar.api.service.user.UserService;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
-import com.depromeet.threedollar.domain.domain.user.*;
+import com.depromeet.threedollar.domain.user.domain.user.*;
 import com.depromeet.threedollar.external.client.apple.AppleTokenProvider;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.AfterEach;

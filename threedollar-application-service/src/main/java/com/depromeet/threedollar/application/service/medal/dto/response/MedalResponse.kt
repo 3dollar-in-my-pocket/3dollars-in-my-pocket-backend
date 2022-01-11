@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.application.service.medal.dto.response
 
-import com.depromeet.threedollar.domain.domain.medal.Medal
-import com.depromeet.threedollar.domain.domain.medal.MedalAcquisitionCondition
+import com.depromeet.threedollar.domain.user.domain.medal.Medal
+import com.depromeet.threedollar.domain.user.domain.medal.MedalAcquisitionCondition
 
 data class MedalResponse(
     val medalId: Long,

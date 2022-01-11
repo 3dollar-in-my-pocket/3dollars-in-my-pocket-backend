@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.application.mapper.popup.dto.response
 
-import com.depromeet.threedollar.domain.domain.popup.PopupPositionType
+import com.depromeet.threedollar.domain.user.domain.popup.PopupPositionType
 
 data class PopupPositionResponse(
     val position: PopupPositionType,

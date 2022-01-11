@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.service.storeimage.dto.request;
 
-import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
+import com.depromeet.threedollar.domain.user.domain.store.Store;
+import com.depromeet.threedollar.domain.user.domain.storeimage.StoreImage;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;

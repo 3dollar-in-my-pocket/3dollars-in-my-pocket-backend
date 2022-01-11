@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.service.user.dto.response;
 
-import com.depromeet.threedollar.domain.domain.medal.Medal;
-import com.depromeet.threedollar.domain.domain.medal.UserMedal;
+import com.depromeet.threedollar.domain.user.domain.medal.Medal;
+import com.depromeet.threedollar.domain.user.domain.medal.UserMedal;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

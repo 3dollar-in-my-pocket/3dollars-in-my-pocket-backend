@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.admin.controller
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse
-import com.depromeet.threedollar.domain.domain.user.UserRepository
+import com.depromeet.threedollar.domain.user.domain.user.UserRepository
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.BeforeEach

@@ -10,8 +10,8 @@ import com.depromeet.threedollar.api.service.store.dto.response.StoreDeleteRespo
 import com.depromeet.threedollar.api.service.store.dto.response.StoreInfoResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
-import com.depromeet.threedollar.domain.event.store.StoreCreatedEvent;
-import com.depromeet.threedollar.domain.event.store.StoreDeletedEvent;
+import com.depromeet.threedollar.domain.user.event.store.StoreCreatedEvent;
+import com.depromeet.threedollar.domain.user.event.store.StoreDeletedEvent;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;

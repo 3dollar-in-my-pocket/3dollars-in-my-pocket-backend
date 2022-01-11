@@ -12,16 +12,16 @@ import com.depromeet.threedollar.api.service.store.dto.response.deprecated.Store
 import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
-import com.depromeet.threedollar.domain.domain.review.Review;
-import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
-import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
-import com.depromeet.threedollar.domain.domain.store.*;
-import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
-import com.depromeet.threedollar.domain.domain.storeimage.StoreImageRepository;
-import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
-import com.depromeet.threedollar.domain.domain.visit.VisitHistoryCreator;
-import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
-import com.depromeet.threedollar.domain.domain.visit.VisitType;
+import com.depromeet.threedollar.domain.user.domain.review.Review;
+import com.depromeet.threedollar.domain.user.domain.review.ReviewCreator;
+import com.depromeet.threedollar.domain.user.domain.review.ReviewRepository;
+import com.depromeet.threedollar.domain.user.domain.store.*;
+import com.depromeet.threedollar.domain.user.domain.storeimage.StoreImage;
+import com.depromeet.threedollar.domain.user.domain.storeimage.StoreImageRepository;
+import com.depromeet.threedollar.domain.user.domain.visit.VisitHistory;
+import com.depromeet.threedollar.domain.user.domain.visit.VisitHistoryCreator;
+import com.depromeet.threedollar.domain.user.domain.visit.VisitHistoryRepository;
+import com.depromeet.threedollar.domain.user.domain.visit.VisitType;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 

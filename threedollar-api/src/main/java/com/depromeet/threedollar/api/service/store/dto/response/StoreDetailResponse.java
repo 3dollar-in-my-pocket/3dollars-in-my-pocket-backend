@@ -8,12 +8,12 @@ import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWith
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
-import com.depromeet.threedollar.domain.domain.review.Review;
-import com.depromeet.threedollar.domain.domain.store.*;
-import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
-import com.depromeet.threedollar.domain.collection.user.UserDictionary;
-import com.depromeet.threedollar.domain.collection.visit.VisitHistoryCounter;
-import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithUserProjection;
+import com.depromeet.threedollar.domain.user.domain.review.Review;
+import com.depromeet.threedollar.domain.user.domain.store.*;
+import com.depromeet.threedollar.domain.user.domain.storeimage.StoreImage;
+import com.depromeet.threedollar.domain.user.collection.user.UserDictionary;
+import com.depromeet.threedollar.domain.user.collection.visit.VisitHistoryCounter;
+import com.depromeet.threedollar.domain.user.domain.visit.projection.VisitHistoryWithUserProjection;
 import lombok.*;
 
 import java.util.*;

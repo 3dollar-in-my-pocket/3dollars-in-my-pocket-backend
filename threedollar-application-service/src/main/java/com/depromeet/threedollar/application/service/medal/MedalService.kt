@@ -2,7 +2,7 @@ package com.depromeet.threedollar.application.service.medal
 
 import com.depromeet.threedollar.application.service.medal.dto.response.MedalResponse
 import com.depromeet.threedollar.domain.config.cache.CacheType.CacheKey.MEDALS
-import com.depromeet.threedollar.domain.domain.medal.MedalRepository
+import com.depromeet.threedollar.domain.user.domain.medal.MedalRepository
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

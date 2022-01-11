@@ -4,9 +4,9 @@ import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.service.store.StoreServiceUtils;
-import com.depromeet.threedollar.domain.domain.review.Review;
-import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
-import com.depromeet.threedollar.domain.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.user.domain.review.Review;
+import com.depromeet.threedollar.domain.user.domain.review.ReviewRepository;
+import com.depromeet.threedollar.domain.user.domain.store.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;

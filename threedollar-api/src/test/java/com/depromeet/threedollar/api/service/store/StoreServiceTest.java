@@ -9,11 +9,11 @@ import com.depromeet.threedollar.api.service.store.dto.response.StoreDeleteRespo
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
-import com.depromeet.threedollar.domain.domain.store.*;
-import com.depromeet.threedollar.domain.domain.storedelete.DeleteReasonType;
-import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequest;
-import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestCreator;
-import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestRepository;
+import com.depromeet.threedollar.domain.user.domain.store.*;
+import com.depromeet.threedollar.domain.user.domain.storedelete.DeleteReasonType;
+import com.depromeet.threedollar.domain.user.domain.storedelete.StoreDeleteRequest;
+import com.depromeet.threedollar.domain.user.domain.storedelete.StoreDeleteRequestCreator;
+import com.depromeet.threedollar.domain.user.domain.storedelete.StoreDeleteRequestRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

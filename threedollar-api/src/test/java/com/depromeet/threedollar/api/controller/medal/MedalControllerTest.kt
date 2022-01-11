@@ -1,10 +1,9 @@
 package com.depromeet.threedollar.api.controller.medal
 
 import com.depromeet.threedollar.application.service.medal.dto.response.MedalResponse
-import com.depromeet.threedollar.domain.domain.medal.MedalAcquisitionConditionRepository
-import com.depromeet.threedollar.domain.domain.medal.MedalAcquisitionConditionType
-import com.depromeet.threedollar.domain.domain.medal.MedalCreator
-import com.depromeet.threedollar.domain.domain.medal.MedalRepository
+import com.depromeet.threedollar.domain.user.domain.medal.MedalAcquisitionConditionRepository
+import com.depromeet.threedollar.domain.user.domain.medal.MedalCreator
+import com.depromeet.threedollar.domain.user.domain.medal.MedalRepository
 import org.hamcrest.collection.IsCollectionWithSize.hasSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test

@@ -1,12 +1,12 @@
 package com.depromeet.threedollar.api.service.medal;
 
 import com.depromeet.threedollar.api.service.user.UserServiceUtils;
-import com.depromeet.threedollar.domain.collection.medal.MedalObtainCollection;
-import com.depromeet.threedollar.domain.domain.medal.Medal;
-import com.depromeet.threedollar.domain.domain.medal.MedalAcquisitionConditionType;
-import com.depromeet.threedollar.domain.domain.medal.MedalRepository;
-import com.depromeet.threedollar.domain.domain.user.User;
-import com.depromeet.threedollar.domain.domain.user.UserRepository;
+import com.depromeet.threedollar.domain.user.collection.medal.MedalObtainCollection;
+import com.depromeet.threedollar.domain.user.domain.medal.Medal;
+import com.depromeet.threedollar.domain.user.domain.medal.MedalAcquisitionConditionType;
+import com.depromeet.threedollar.domain.user.domain.medal.MedalRepository;
+import com.depromeet.threedollar.domain.user.domain.user.User;
+import com.depromeet.threedollar.domain.user.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import static com.depromeet.threedollar.domain.config.cache.CacheType.CacheKey.USER_MEDALS;
-import static com.depromeet.threedollar.domain.domain.medal.MedalAcquisitionConditionType.NO_CONDITION;
+import static com.depromeet.threedollar.domain.user.domain.medal.MedalAcquisitionConditionType.NO_CONDITION;
 
 @RequiredArgsConstructor
 @Service

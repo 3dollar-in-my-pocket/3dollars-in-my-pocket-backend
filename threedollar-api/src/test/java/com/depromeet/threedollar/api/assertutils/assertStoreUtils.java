@@ -1,14 +1,14 @@
 package com.depromeet.threedollar.api.assertutils;
 
 import com.depromeet.threedollar.api.service.store.dto.response.*;
-import com.depromeet.threedollar.domain.domain.common.Location;
-import com.depromeet.threedollar.domain.domain.store.Menu;
-import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.domain.store.StoreType;
-import com.depromeet.threedollar.domain.domain.storedelete.DeleteReasonType;
-import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequest;
-import com.depromeet.threedollar.domain.domain.user.User;
+import com.depromeet.threedollar.domain.common.domain.Location;
+import com.depromeet.threedollar.domain.user.domain.store.Menu;
+import com.depromeet.threedollar.domain.user.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.domain.user.domain.store.Store;
+import com.depromeet.threedollar.domain.user.domain.store.StoreType;
+import com.depromeet.threedollar.domain.user.domain.storedelete.DeleteReasonType;
+import com.depromeet.threedollar.domain.user.domain.storedelete.StoreDeleteRequest;
+import com.depromeet.threedollar.domain.user.domain.user.User;
 
 import java.util.List;
 

@@ -4,7 +4,7 @@ import com.depromeet.threedollar.admin.controller.ControllerTestUtils
 import com.depromeet.threedollar.admin.service.admin.dto.response.AdminInfoResponse
 import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.common.exception.type.ErrorCode
-import com.depromeet.threedollar.domain.domain.admin.AdminRepository
+import com.depromeet.threedollar.domain.user.domain.admin.AdminRepository
 import com.fasterxml.jackson.core.type.TypeReference
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.*

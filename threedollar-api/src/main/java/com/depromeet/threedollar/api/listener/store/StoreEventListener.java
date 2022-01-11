@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.listener.store;
 
-import com.depromeet.threedollar.domain.event.review.ReviewChangedEvent;
+import com.depromeet.threedollar.domain.user.event.review.ReviewChangedEvent;
 import com.depromeet.threedollar.api.service.store.StoreRatingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;

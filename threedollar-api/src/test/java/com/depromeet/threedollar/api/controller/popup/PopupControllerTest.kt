@@ -2,10 +2,10 @@ package com.depromeet.threedollar.api.controller.popup
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.application.service.popup.dto.response.PopupResponse
-import com.depromeet.threedollar.domain.domain.popup.PopupCreator
-import com.depromeet.threedollar.domain.domain.popup.PopupPlatformType
-import com.depromeet.threedollar.domain.domain.popup.PopupPositionType
-import com.depromeet.threedollar.domain.domain.popup.PopupRepository
+import com.depromeet.threedollar.domain.user.domain.popup.PopupCreator
+import com.depromeet.threedollar.domain.user.domain.popup.PopupPlatformType
+import com.depromeet.threedollar.domain.user.domain.popup.PopupPositionType
+import com.depromeet.threedollar.domain.user.domain.popup.PopupRepository
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.assertj.core.api.Assertions.assertThat

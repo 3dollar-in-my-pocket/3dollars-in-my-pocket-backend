@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.service.auth.dto.request;
 
 import com.depromeet.threedollar.api.service.user.dto.request.CreateUserRequest;
 import com.depromeet.threedollar.application.config.validator.NickName;
-import com.depromeet.threedollar.domain.domain.user.UserSocialType;
+import com.depromeet.threedollar.domain.user.domain.user.UserSocialType;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;

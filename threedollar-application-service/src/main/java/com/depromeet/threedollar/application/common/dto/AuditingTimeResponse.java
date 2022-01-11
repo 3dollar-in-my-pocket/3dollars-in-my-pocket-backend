@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.application.common.dto;
 
-import com.depromeet.threedollar.domain.domain.common.AuditingTimeEntity;
+import com.depromeet.threedollar.domain.common.domain.AuditingTimeEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

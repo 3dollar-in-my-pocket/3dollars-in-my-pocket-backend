@@ -4,10 +4,10 @@ import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.application.mapper.faq.dto.response.FaqCategoryResponse;
 import com.depromeet.threedollar.application.service.faq.dto.response.FaqResponse;
-import com.depromeet.threedollar.domain.domain.faq.Faq;
-import com.depromeet.threedollar.domain.domain.faq.FaqCategory;
-import com.depromeet.threedollar.domain.domain.faq.FaqCreator;
-import com.depromeet.threedollar.domain.domain.faq.FaqRepository;
+import com.depromeet.threedollar.domain.user.domain.faq.Faq;
+import com.depromeet.threedollar.domain.user.domain.faq.FaqCategory;
+import com.depromeet.threedollar.domain.user.domain.faq.FaqCreator;
+import com.depromeet.threedollar.domain.user.domain.faq.FaqRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 

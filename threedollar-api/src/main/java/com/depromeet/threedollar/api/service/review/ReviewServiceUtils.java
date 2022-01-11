@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.api.service.review;
 
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
-import com.depromeet.threedollar.domain.domain.review.Review;
-import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
+import com.depromeet.threedollar.domain.user.domain.review.Review;
+import com.depromeet.threedollar.domain.user.domain.review.ReviewRepository;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;

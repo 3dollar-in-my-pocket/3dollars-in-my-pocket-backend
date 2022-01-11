@@ -7,9 +7,9 @@ import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.application.mapper.faq.dto.response.FaqCategoryResponse
 import com.depromeet.threedollar.application.service.faq.dto.request.RetrieveFaqsRequest
 import com.depromeet.threedollar.application.service.faq.dto.response.FaqResponse
-import com.depromeet.threedollar.domain.domain.faq.FaqCategory
-import com.depromeet.threedollar.domain.domain.faq.FaqCreator
-import com.depromeet.threedollar.domain.domain.faq.FaqRepository
+import com.depromeet.threedollar.domain.user.domain.faq.FaqCategory
+import com.depromeet.threedollar.domain.user.domain.faq.FaqCreator
+import com.depromeet.threedollar.domain.user.domain.faq.FaqRepository
 import org.hamcrest.collection.IsCollectionWithSize.hasSize
 import org.junit.jupiter.api.*
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc

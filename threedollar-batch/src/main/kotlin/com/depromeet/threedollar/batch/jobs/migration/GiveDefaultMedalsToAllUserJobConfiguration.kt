@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.batch.jobs.migration
 
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
-import com.depromeet.threedollar.domain.collection.medal.MedalObtainCollection
-import com.depromeet.threedollar.domain.domain.medal.MedalAcquisitionConditionType
-import com.depromeet.threedollar.domain.domain.medal.MedalRepository
-import com.depromeet.threedollar.domain.domain.user.User
+import com.depromeet.threedollar.domain.user.collection.medal.MedalObtainCollection
+import com.depromeet.threedollar.domain.user.domain.medal.MedalAcquisitionConditionType
+import com.depromeet.threedollar.domain.user.domain.medal.MedalRepository
+import com.depromeet.threedollar.domain.user.domain.user.User
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory

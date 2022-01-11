@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.store.dto.request;
 
-import com.depromeet.threedollar.domain.domain.store.StoreRadiusDistance;
+import com.depromeet.threedollar.domain.user.domain.store.StoreRadiusDistance;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;

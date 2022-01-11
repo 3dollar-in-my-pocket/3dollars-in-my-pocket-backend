@@ -1,15 +1,15 @@
 package com.depromeet.threedollar.api.service.medal;
 
-import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
-import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.store.StoreRepository;
-import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestRepository;
-import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
-import com.depromeet.threedollar.domain.domain.visit.VisitType;
+import com.depromeet.threedollar.domain.user.domain.review.ReviewRepository;
+import com.depromeet.threedollar.domain.user.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.domain.user.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.user.domain.storedelete.StoreDeleteRequestRepository;
+import com.depromeet.threedollar.domain.user.domain.visit.VisitHistoryRepository;
+import com.depromeet.threedollar.domain.user.domain.visit.VisitType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import static com.depromeet.threedollar.domain.domain.medal.MedalAcquisitionConditionType.*;
+import static com.depromeet.threedollar.domain.user.domain.medal.MedalAcquisitionConditionType.*;
 
 @RequiredArgsConstructor
 @Component

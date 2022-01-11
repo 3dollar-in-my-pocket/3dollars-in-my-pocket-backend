@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.store.dto.request;
 
-import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.domain.user.domain.store.MenuCategoryType;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

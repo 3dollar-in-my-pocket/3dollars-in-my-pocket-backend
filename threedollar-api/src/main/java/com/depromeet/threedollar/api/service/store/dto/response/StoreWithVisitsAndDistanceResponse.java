@@ -3,9 +3,9 @@ package com.depromeet.threedollar.api.service.store.dto.response;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryCountsResponse;
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
-import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.collection.visit.VisitHistoryCounter;
+import com.depromeet.threedollar.domain.user.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.domain.user.domain.store.Store;
+import com.depromeet.threedollar.domain.user.collection.visit.VisitHistoryCounter;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 

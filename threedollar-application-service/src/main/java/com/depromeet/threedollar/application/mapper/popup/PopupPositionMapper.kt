@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.application.mapper.popup
 
 import com.depromeet.threedollar.application.mapper.popup.dto.response.PopupPositionResponse
-import com.depromeet.threedollar.domain.domain.popup.PopupPositionType
+import com.depromeet.threedollar.domain.user.domain.popup.PopupPositionType
 
 object PopupPositionMapper {
 

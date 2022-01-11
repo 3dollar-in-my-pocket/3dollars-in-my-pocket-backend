@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.api.service.visit.dto.request;
 
-import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
-import com.depromeet.threedollar.domain.domain.visit.VisitType;
+import com.depromeet.threedollar.domain.user.domain.store.Store;
+import com.depromeet.threedollar.domain.user.domain.visit.VisitHistory;
+import com.depromeet.threedollar.domain.user.domain.visit.VisitType;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;

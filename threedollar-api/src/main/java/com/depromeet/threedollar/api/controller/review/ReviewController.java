@@ -12,8 +12,8 @@ import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoRespo
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewsCursorResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.deprecated.ReviewsCursorV2Response;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.domain.event.review.ReviewChangedEvent;
-import com.depromeet.threedollar.domain.event.review.ReviewCreatedEvent;
+import com.depromeet.threedollar.domain.user.event.review.ReviewChangedEvent;
+import com.depromeet.threedollar.domain.user.event.review.ReviewCreatedEvent;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;

@@ -1,12 +1,12 @@
 package com.depromeet.threedollar.api.service;
 
-import com.depromeet.threedollar.domain.domain.medal.MedalAcquisitionConditionRepository;
-import com.depromeet.threedollar.domain.domain.medal.MedalRepository;
-import com.depromeet.threedollar.domain.domain.medal.UserMedalRepository;
-import com.depromeet.threedollar.domain.domain.user.User;
-import com.depromeet.threedollar.domain.domain.user.UserCreator;
-import com.depromeet.threedollar.domain.domain.user.UserRepository;
-import com.depromeet.threedollar.domain.domain.user.UserSocialType;
+import com.depromeet.threedollar.domain.user.domain.medal.MedalAcquisitionConditionRepository;
+import com.depromeet.threedollar.domain.user.domain.medal.MedalRepository;
+import com.depromeet.threedollar.domain.user.domain.medal.UserMedalRepository;
+import com.depromeet.threedollar.domain.user.domain.user.User;
+import com.depromeet.threedollar.domain.user.domain.user.UserCreator;
+import com.depromeet.threedollar.domain.user.domain.user.UserRepository;
+import com.depromeet.threedollar.domain.user.domain.user.UserSocialType;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

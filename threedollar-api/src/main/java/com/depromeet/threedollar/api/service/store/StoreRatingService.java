@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.service.store;
 
-import com.depromeet.threedollar.domain.domain.review.Review;
-import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
-import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.user.domain.review.Review;
+import com.depromeet.threedollar.domain.user.domain.review.ReviewRepository;
+import com.depromeet.threedollar.domain.user.domain.store.Store;
+import com.depromeet.threedollar.domain.user.domain.store.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -2,8 +2,8 @@ package com.depromeet.threedollar.api.service.store.dto.request;
 
 import com.depromeet.threedollar.api.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
-import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.store.StoreRadiusDistance;
+import com.depromeet.threedollar.domain.user.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.domain.user.domain.store.StoreRadiusDistance;
 import lombok.*;
 import org.jetbrains.annotations.Nullable;
 

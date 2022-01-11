@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.service.medal;
 import com.depromeet.threedollar.api.service.SetupUserServiceTest;
 import com.depromeet.threedollar.api.service.medal.dto.request.ChangeRepresentativeMedalRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
-import com.depromeet.threedollar.domain.domain.medal.*;
+import com.depromeet.threedollar.domain.user.domain.medal.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

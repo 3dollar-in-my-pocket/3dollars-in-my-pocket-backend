@@ -2,8 +2,8 @@ package com.depromeet.threedollar.api.service.visit.dto.response;
 
 import com.depromeet.threedollar.api.service.store.dto.response.StoreInfoResponse;
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
-import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
-import com.depromeet.threedollar.domain.domain.visit.VisitType;
+import com.depromeet.threedollar.domain.user.domain.visit.VisitHistory;
+import com.depromeet.threedollar.domain.user.domain.visit.VisitType;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 

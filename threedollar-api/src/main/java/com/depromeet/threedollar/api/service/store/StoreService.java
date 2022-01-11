@@ -6,9 +6,9 @@ import com.depromeet.threedollar.api.service.store.dto.request.UpdateStoreReques
 import com.depromeet.threedollar.api.service.store.dto.response.StoreDeleteResponse;
 import com.depromeet.threedollar.api.service.store.dto.response.StoreInfoResponse;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
-import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.domain.store.StoreRepository;
-import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequestRepository;
+import com.depromeet.threedollar.domain.user.domain.store.Store;
+import com.depromeet.threedollar.domain.user.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.user.domain.storedelete.StoreDeleteRequestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;

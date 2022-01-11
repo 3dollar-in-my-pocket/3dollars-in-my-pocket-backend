@@ -2,7 +2,7 @@ package com.depromeet.threedollar.admin.config.interceptor
 
 import com.depromeet.threedollar.admin.config.session.SessionConstants.ADMIN_ID
 import com.depromeet.threedollar.common.exception.model.UnAuthorizedException
-import com.depromeet.threedollar.domain.domain.admin.AdminRepository
+import com.depromeet.threedollar.domain.user.domain.admin.AdminRepository
 import org.springframework.http.HttpHeaders
 import org.springframework.session.Session
 import org.springframework.session.SessionRepository

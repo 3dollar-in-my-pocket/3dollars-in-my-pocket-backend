@@ -3,10 +3,10 @@ package com.depromeet.threedollar.api.assertutils;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewDetailResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewWithUserResponse;
-import com.depromeet.threedollar.domain.domain.review.Review;
-import com.depromeet.threedollar.domain.domain.review.ReviewStatus;
-import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.domain.user.User;
+import com.depromeet.threedollar.domain.user.domain.review.Review;
+import com.depromeet.threedollar.domain.user.domain.review.ReviewStatus;
+import com.depromeet.threedollar.domain.user.domain.store.Store;
+import com.depromeet.threedollar.domain.user.domain.user.User;
 
 import static com.depromeet.threedollar.api.assertutils.assertStoreUtils.assertStoreInfoResponse;
 import static com.depromeet.threedollar.api.assertutils.assertUserUtils.assertUserInfoResponse;

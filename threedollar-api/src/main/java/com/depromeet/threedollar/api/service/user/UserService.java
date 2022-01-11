@@ -4,11 +4,11 @@ import com.depromeet.threedollar.api.service.user.dto.request.CheckAvailableName
 import com.depromeet.threedollar.api.service.user.dto.request.CreateUserRequest;
 import com.depromeet.threedollar.api.service.user.dto.request.UpdateUserInfoRequest;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
-import com.depromeet.threedollar.domain.domain.user.User;
-import com.depromeet.threedollar.domain.domain.user.UserRepository;
-import com.depromeet.threedollar.domain.domain.user.WithdrawalUser;
-import com.depromeet.threedollar.domain.domain.user.WithdrawalUserRepository;
-import com.depromeet.threedollar.domain.event.user.NewUserCreatedEvent;
+import com.depromeet.threedollar.domain.user.domain.user.User;
+import com.depromeet.threedollar.domain.user.domain.user.UserRepository;
+import com.depromeet.threedollar.domain.user.domain.user.WithdrawalUser;
+import com.depromeet.threedollar.domain.user.domain.user.WithdrawalUserRepository;
+import com.depromeet.threedollar.domain.user.event.user.NewUserCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;

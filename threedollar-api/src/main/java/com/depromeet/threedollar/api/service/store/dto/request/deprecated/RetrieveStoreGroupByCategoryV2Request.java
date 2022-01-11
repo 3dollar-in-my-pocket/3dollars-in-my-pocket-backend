@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.store.dto.request.deprecated;
 
-import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.domain.user.domain.store.MenuCategoryType;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;

@@ -1,11 +1,11 @@
 package com.depromeet.threedollar.api.listener.medal;
 
 import com.depromeet.threedollar.api.service.medal.AddUserMedalFacadeService;
-import com.depromeet.threedollar.domain.event.review.ReviewCreatedEvent;
-import com.depromeet.threedollar.domain.event.store.StoreCreatedEvent;
-import com.depromeet.threedollar.domain.event.store.StoreDeletedEvent;
-import com.depromeet.threedollar.domain.event.user.NewUserCreatedEvent;
-import com.depromeet.threedollar.domain.event.visit.VisitHistoryAddedEvent;
+import com.depromeet.threedollar.domain.user.event.review.ReviewCreatedEvent;
+import com.depromeet.threedollar.domain.user.event.store.StoreCreatedEvent;
+import com.depromeet.threedollar.domain.user.event.store.StoreDeletedEvent;
+import com.depromeet.threedollar.domain.user.event.user.NewUserCreatedEvent;
+import com.depromeet.threedollar.domain.user.event.visit.VisitHistoryAddedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;

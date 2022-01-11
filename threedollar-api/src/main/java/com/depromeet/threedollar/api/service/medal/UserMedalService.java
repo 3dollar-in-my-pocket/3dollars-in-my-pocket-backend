@@ -4,9 +4,9 @@ import com.depromeet.threedollar.api.service.medal.dto.request.ChangeRepresentat
 import com.depromeet.threedollar.api.service.user.UserServiceUtils;
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.api.service.user.dto.response.UserMedalResponse;
-import com.depromeet.threedollar.domain.domain.medal.UserMedal;
-import com.depromeet.threedollar.domain.domain.user.User;
-import com.depromeet.threedollar.domain.domain.user.UserRepository;
+import com.depromeet.threedollar.domain.user.domain.medal.UserMedal;
+import com.depromeet.threedollar.domain.user.domain.user.User;
+import com.depromeet.threedollar.domain.user.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;

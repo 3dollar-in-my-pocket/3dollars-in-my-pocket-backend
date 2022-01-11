@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.api.service.storeimage;
 
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
-import com.depromeet.threedollar.domain.domain.storeimage.StoreImage;
-import com.depromeet.threedollar.domain.domain.storeimage.StoreImageRepository;
+import com.depromeet.threedollar.domain.user.domain.storeimage.StoreImage;
+import com.depromeet.threedollar.domain.user.domain.storeimage.StoreImageRepository;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;

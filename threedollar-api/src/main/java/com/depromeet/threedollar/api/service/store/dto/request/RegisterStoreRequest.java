@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.service.store.dto.request;
 
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
-import com.depromeet.threedollar.domain.domain.store.PaymentMethodType;
-import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.domain.store.StoreType;
+import com.depromeet.threedollar.domain.user.domain.store.PaymentMethodType;
+import com.depromeet.threedollar.domain.user.domain.store.Store;
+import com.depromeet.threedollar.domain.user.domain.store.StoreType;
 import lombok.*;
 import org.jetbrains.annotations.Nullable;
 

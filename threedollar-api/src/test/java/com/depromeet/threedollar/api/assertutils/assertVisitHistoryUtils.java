@@ -3,10 +3,10 @@ package com.depromeet.threedollar.api.assertutils;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryCountsResponse;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithStoreResponse;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithUserResponse;
-import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.domain.user.User;
-import com.depromeet.threedollar.domain.domain.visit.VisitHistory;
-import com.depromeet.threedollar.domain.domain.visit.VisitType;
+import com.depromeet.threedollar.domain.user.domain.store.Store;
+import com.depromeet.threedollar.domain.user.domain.user.User;
+import com.depromeet.threedollar.domain.user.domain.visit.VisitHistory;
+import com.depromeet.threedollar.domain.user.domain.visit.VisitType;
 
 import java.time.LocalDate;
 

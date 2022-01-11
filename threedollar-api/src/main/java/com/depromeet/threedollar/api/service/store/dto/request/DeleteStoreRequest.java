@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.api.service.store.dto.request;
 
-import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.domain.storedelete.DeleteReasonType;
-import com.depromeet.threedollar.domain.domain.storedelete.StoreDeleteRequest;
+import com.depromeet.threedollar.domain.user.domain.store.Store;
+import com.depromeet.threedollar.domain.user.domain.storedelete.DeleteReasonType;
+import com.depromeet.threedollar.domain.user.domain.storedelete.StoreDeleteRequest;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;

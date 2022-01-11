@@ -2,9 +2,9 @@ package com.depromeet.threedollar.api.service.visit.dto.response;
 
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
-import com.depromeet.threedollar.domain.domain.user.User;
-import com.depromeet.threedollar.domain.domain.visit.VisitType;
-import com.depromeet.threedollar.domain.domain.visit.projection.VisitHistoryWithUserProjection;
+import com.depromeet.threedollar.domain.user.domain.user.User;
+import com.depromeet.threedollar.domain.user.domain.visit.VisitType;
+import com.depromeet.threedollar.domain.user.domain.visit.projection.VisitHistoryWithUserProjection;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

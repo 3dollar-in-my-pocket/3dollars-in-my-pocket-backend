@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.controller;
 
-import com.depromeet.threedollar.domain.domain.store.*;
+import com.depromeet.threedollar.domain.user.domain.store.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 

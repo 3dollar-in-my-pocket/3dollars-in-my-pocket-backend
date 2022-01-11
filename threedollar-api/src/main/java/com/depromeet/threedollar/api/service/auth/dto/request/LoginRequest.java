@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.auth.dto.request;
 
-import com.depromeet.threedollar.domain.domain.user.UserSocialType;
+import com.depromeet.threedollar.domain.user.domain.user.UserSocialType;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;

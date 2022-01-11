@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.review.dto.request;
 
-import com.depromeet.threedollar.domain.domain.review.Review;
+import com.depromeet.threedollar.domain.user.domain.review.Review;
 import lombok.*;
 
 import javax.validation.constraints.Max;

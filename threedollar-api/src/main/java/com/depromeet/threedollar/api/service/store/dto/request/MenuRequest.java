@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.api.service.store.dto.request;
 
-import com.depromeet.threedollar.domain.domain.store.Menu;
-import com.depromeet.threedollar.domain.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.domain.store.Store;
+import com.depromeet.threedollar.domain.user.domain.store.Menu;
+import com.depromeet.threedollar.domain.user.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.domain.user.domain.store.Store;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;

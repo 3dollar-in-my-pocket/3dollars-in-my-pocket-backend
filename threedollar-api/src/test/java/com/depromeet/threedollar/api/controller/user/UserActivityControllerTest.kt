@@ -1,12 +1,12 @@
 package com.depromeet.threedollar.api.controller.user
 
 import com.depromeet.threedollar.api.controller.SetupUserControllerTest
-import com.depromeet.threedollar.domain.domain.medal.MedalCreator
-import com.depromeet.threedollar.domain.domain.medal.UserMedalCreator
-import com.depromeet.threedollar.domain.domain.review.ReviewCreator
-import com.depromeet.threedollar.domain.domain.review.ReviewRepository
-import com.depromeet.threedollar.domain.domain.store.StoreCreator
-import com.depromeet.threedollar.domain.domain.store.StoreRepository
+import com.depromeet.threedollar.domain.user.domain.medal.MedalCreator
+import com.depromeet.threedollar.domain.user.domain.medal.UserMedalCreator
+import com.depromeet.threedollar.domain.user.domain.review.ReviewCreator
+import com.depromeet.threedollar.domain.user.domain.review.ReviewRepository
+import com.depromeet.threedollar.domain.user.domain.store.StoreCreator
+import com.depromeet.threedollar.domain.user.domain.store.StoreRepository
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc

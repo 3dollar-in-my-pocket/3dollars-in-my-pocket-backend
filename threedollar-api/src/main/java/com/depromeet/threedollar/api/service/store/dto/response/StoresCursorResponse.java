@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.api.service.store.dto.response;
 
-import com.depromeet.threedollar.domain.collection.common.CursorSupporter;
-import com.depromeet.threedollar.domain.domain.store.Store;
-import com.depromeet.threedollar.domain.collection.visit.VisitHistoryCounter;
+import com.depromeet.threedollar.domain.common.collection.CursorSupporter;
+import com.depromeet.threedollar.domain.user.domain.store.Store;
+import com.depromeet.threedollar.domain.user.collection.visit.VisitHistoryCounter;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

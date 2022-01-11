@@ -3,7 +3,7 @@ package com.depromeet.threedollar.application.service.popup
 import com.depromeet.threedollar.application.service.popup.dto.request.GetActivatedPopupsRequest
 import com.depromeet.threedollar.application.service.popup.dto.response.PopupResponse
 import com.depromeet.threedollar.domain.config.cache.CacheType.CacheKey.POPUP
-import com.depromeet.threedollar.domain.domain.popup.PopupRepository
+import com.depromeet.threedollar.domain.user.domain.popup.PopupRepository
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

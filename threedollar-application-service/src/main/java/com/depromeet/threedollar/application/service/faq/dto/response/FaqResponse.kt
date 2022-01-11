@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.application.service.faq.dto.response
 
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse
-import com.depromeet.threedollar.domain.domain.faq.Faq
-import com.depromeet.threedollar.domain.domain.faq.FaqCategory
+import com.depromeet.threedollar.domain.user.domain.faq.Faq
+import com.depromeet.threedollar.domain.user.domain.faq.FaqCategory
 
 data class FaqResponse(
     val faqId: Long,

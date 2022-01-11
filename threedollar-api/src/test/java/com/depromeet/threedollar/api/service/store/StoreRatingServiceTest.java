@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.service.store;
 
 import com.depromeet.threedollar.api.service.SetupStoreServiceTest;
-import com.depromeet.threedollar.domain.domain.review.ReviewCreator;
-import com.depromeet.threedollar.domain.domain.review.ReviewRepository;
-import com.depromeet.threedollar.domain.domain.store.Store;
+import com.depromeet.threedollar.domain.user.domain.review.ReviewCreator;
+import com.depromeet.threedollar.domain.user.domain.review.ReviewRepository;
+import com.depromeet.threedollar.domain.user.domain.store.Store;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

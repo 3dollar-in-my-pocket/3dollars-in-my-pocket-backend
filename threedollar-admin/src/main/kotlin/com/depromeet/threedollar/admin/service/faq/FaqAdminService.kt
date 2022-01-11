@@ -6,8 +6,8 @@ import com.depromeet.threedollar.application.service.faq.dto.response.FaqRespons
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.config.cache.CacheType.CacheKey.FAQS
-import com.depromeet.threedollar.domain.domain.faq.Faq
-import com.depromeet.threedollar.domain.domain.faq.FaqRepository
+import com.depromeet.threedollar.domain.user.domain.faq.Faq
+import com.depromeet.threedollar.domain.user.domain.faq.FaqRepository
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

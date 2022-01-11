@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.service.visit;
 
 import com.depromeet.threedollar.common.exception.model.ConflictException;
-import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository;
+import com.depromeet.threedollar.domain.user.domain.visit.VisitHistoryRepository;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

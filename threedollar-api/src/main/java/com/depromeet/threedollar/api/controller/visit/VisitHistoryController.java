@@ -7,7 +7,7 @@ import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRe
 import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoriesCursorResponse;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
-import com.depromeet.threedollar.domain.event.visit.VisitHistoryAddedEvent;
+import com.depromeet.threedollar.domain.user.event.visit.VisitHistoryAddedEvent;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;

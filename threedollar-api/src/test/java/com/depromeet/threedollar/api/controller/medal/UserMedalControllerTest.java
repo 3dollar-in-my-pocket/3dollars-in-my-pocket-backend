@@ -2,9 +2,9 @@ package com.depromeet.threedollar.api.controller.medal;
 
 import com.depromeet.threedollar.api.controller.SetupUserControllerTest;
 import com.depromeet.threedollar.api.service.medal.dto.request.ChangeRepresentativeMedalRequest;
-import com.depromeet.threedollar.domain.domain.medal.Medal;
-import com.depromeet.threedollar.domain.domain.medal.MedalCreator;
-import com.depromeet.threedollar.domain.domain.medal.UserMedalCreator;
+import com.depromeet.threedollar.domain.user.domain.medal.Medal;
+import com.depromeet.threedollar.domain.user.domain.medal.MedalCreator;
+import com.depromeet.threedollar.domain.user.domain.medal.UserMedalCreator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
