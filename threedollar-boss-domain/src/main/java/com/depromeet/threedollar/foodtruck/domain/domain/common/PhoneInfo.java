@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.foodtruck.domain.domain;
+package com.depromeet.threedollar.foodtruck.domain.domain.common;
 
 import lombok.*;
 

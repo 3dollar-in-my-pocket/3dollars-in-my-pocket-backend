@@ -14,18 +14,22 @@ import javax.persistence.Enumerated;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode
 @Embeddable
-public class FBossSocialInfo {
+public class BossSocialInfo {
 
     @Column(nullable = false, length = 200)
     private String socialId;
 
     @Column(nullable = false, length = 30)
     @Enumerated(EnumType.STRING)
-    private FBossAccountSocialType socialType;
+    private BossAccountSocialType socialType;
 
-    private FBossSocialInfo(String socialId, FBossAccountSocialType socialType) {
+    private BossSocialInfo(String socialId, BossAccountSocialType socialType) {
         this.socialId = socialId;
         this.socialType = socialType;
+    }
+
+    public static BossSocialInfo of(String socialId, BossAccountSocialType socialType) {
+        return new BossSocialInfo(socialId, socialType);
     }
 
 }

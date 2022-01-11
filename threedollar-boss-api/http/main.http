@@ -1,0 +1,14 @@
+### Ping
+GET {{host_boss_api}}/ping
+Authorization: Bearer {{BOSS_AUTHORIZATION}}
+
+
+### Test Token
+GET {{host_boss_api}}/test-token
+
+> {%
+client.global.set("BOSS_AUTHORIZATION", response.body["data"]["token"])
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}

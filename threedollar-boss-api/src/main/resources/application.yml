@@ -10,7 +10,8 @@ spring:
     active: local
     default: local
     include:
-      - fdomain
+      - boss-domain
+      - redis
   servlet:
     multipart:
       max-file-size: 10MB
