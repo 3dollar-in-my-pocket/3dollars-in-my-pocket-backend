@@ -7,4 +7,5 @@ include 'threedollar-admin'
 include 'threedollar-application-service'
 include 'threedollar-batch'
 include 'threedollar-statistics'
-
+include 'threedollar-boss-api'
+include 'threedollar-boss-domain'
