@@ -2,7 +2,7 @@ bootJar { enabled = false }
 jar { enabled = true }
 
 dependencies {
-    implementation project(":threedollar-common")
+    api project(":threedollar-common")
 
     // JPA
     api 'org.springframework.boot:spring-boot-starter-data-jpa'
