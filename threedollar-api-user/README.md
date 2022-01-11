@@ -1,4 +1,4 @@
-# threedollar-api
+# threedollar-api-user
 
 사용자 서버 애플리케이션 모듈
 

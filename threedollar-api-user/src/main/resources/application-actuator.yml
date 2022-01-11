@@ -17,4 +17,4 @@ management:
     health:
       show-details: always
     logfile:
-      external-file: /logs/threedollar-api/info.log
+      external-file: /logs/threedollar-api-user/info.log

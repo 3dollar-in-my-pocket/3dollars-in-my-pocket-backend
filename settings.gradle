@@ -1,5 +1,5 @@
 rootProject.name = 'threedollar'
-include 'threedollar-api'
+include 'threedollar-api-user'
 include 'threedollar-api-boss'
 include 'threedollar-admin'
 include 'threedollar-batch'
