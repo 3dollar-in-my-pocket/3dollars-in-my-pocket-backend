@@ -7,4 +7,5 @@ include 'threedollar-admin'
 include 'threedollar-application-service'
 include 'threedollar-batch'
 include 'threedollar-statistics'
-
+include 'foodtruck-api'
+include 'foodtruck-domain'

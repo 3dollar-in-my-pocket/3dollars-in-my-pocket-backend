@@ -1,6 +1,6 @@
-package com.depromeet.threedollar.foodtruck.domain.domain.repository;
+package com.depromeet.threedollar.foodtruck.domain.domain.account.repository;
 
-import com.depromeet.threedollar.foodtruck.domain.domain.FBossAccount;
+import com.depromeet.threedollar.foodtruck.domain.domain.account.FBossAccount;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
