@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.boss.api.controller.auth.dto.response
+package com.depromeet.threedollar.boss.api.service.auth.dto.response
 
 data class LoginResponse(
     val token: String,

@@ -15,8 +15,8 @@ import springfox.documentation.swagger.common.SwaggerPluginSupport
 @Component
 @Order(SwaggerPluginSupport.SWAGGER_PLUGIN_ORDER + 1000)
 class AuthorizationSwaggerConfig : OperationBuilderPlugin {
-    override fun apply(context: OperationContext) {
 
+    override fun apply(context: OperationContext) {
         context.operationBuilder()
             .requestParameters(listOf(authorizationHeader()))
             .authorizations(listOf(SecurityReference.builder()

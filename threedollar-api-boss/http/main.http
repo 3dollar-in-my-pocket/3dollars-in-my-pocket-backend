@@ -1,9 +1,8 @@
-### Ping
+### Health Check
 GET {{host_boss_api}}/ping
-Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 
-### Test Token
+### 테스트 토큰 발급
 GET {{host_boss_api}}/test-token
 
 > {%
