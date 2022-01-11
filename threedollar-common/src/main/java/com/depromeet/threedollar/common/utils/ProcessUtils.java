@@ -28,7 +28,7 @@ public final class ProcessUtils {
                 return port;
             }
         }
-        throw new InternalServerException(String.format("사용가능한 포트를 찾을 수 없습니다. (%s~%s)", LOWEST_PORT, HIGHEST_PORT));
+        throw new InternalServerException(String.format("사용가능한 포트를 찾을 수 없습니다. (%s ~ %s)", LOWEST_PORT, HIGHEST_PORT));
     }
 
     private static Process executeGrepProcessCommand(int port) throws IOException {

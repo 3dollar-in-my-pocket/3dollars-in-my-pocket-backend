@@ -2,6 +2,7 @@ package com.depromeet.threedollar.application.config.redis;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -29,14 +30,20 @@ public class EmbeddedRedisConfig {
 
     private RedisServer redisServer;
 
+    @Value("${spring.redis.port}")
     private int port;
 
     @PostConstruct
     public void startRedis() throws IOException {
-        port = isRunningPort(properties.getPort()) ? findAvailableRandomPort() : properties.getPort();
-        redisServer = new RedisServer(port);
-        redisServer.start();
-        log.info("임베디드 레디스 서버가 기동되었습니다. port: {}", port);
+        if (redisServer == null || !redisServer.isActive()) {
+            port = isRunningPort(port) ? findAvailableRandomPort() : port;
+            redisServer = RedisServer.builder()
+                .port(port)
+                .setting("maxmemory 128M")
+                .build();
+            redisServer.start();
+            log.info("임베디드 레디스 서버가 기동되었습니다. port: {}", port);
+        }
     }
 
     @PreDestroy
