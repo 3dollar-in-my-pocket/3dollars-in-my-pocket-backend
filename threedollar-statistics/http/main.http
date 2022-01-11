@@ -1,8 +1,0 @@
-### Health Check API
-GET {{host_consumer}}/ping
-
-> {%
-client.test("200 OK", function() {
-    client.assert(response.status === 200, "응답 실패");
-});
-%}

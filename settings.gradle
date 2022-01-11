@@ -3,7 +3,6 @@ include 'threedollar-api'
 include 'threedollar-api-boss'
 include 'threedollar-admin'
 include 'threedollar-batch'
-include 'threedollar-statistics'
 
 include 'threedollar-application-service'
 

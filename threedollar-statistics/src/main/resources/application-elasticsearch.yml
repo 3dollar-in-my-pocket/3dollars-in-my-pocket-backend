@@ -1,8 +1,0 @@
-spring:
-  elasticsearch:
-    rest:
-      uris: localhost:9200
-  config:
-    activate:
-      on-profile: local
----
