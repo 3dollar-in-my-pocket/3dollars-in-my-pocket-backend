@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.foodtruck.api.controller
 
+import com.depromeet.threedollar.domain.boss.domain.account.BossAccount
+import com.depromeet.threedollar.domain.boss.domain.account.BossAccountRepository
+import com.depromeet.threedollar.domain.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.foodtruck.api.config.session.SessionConstants
 import com.depromeet.threedollar.foodtruck.api.controller.auth.dto.response.LoginResponse
-import com.depromeet.threedollar.foodtruck.domain.domain.account.BossAccount
-import com.depromeet.threedollar.foodtruck.domain.domain.account.BossAccountRepository
-import com.depromeet.threedollar.foodtruck.domain.domain.account.BossAccountSocialType
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpSession

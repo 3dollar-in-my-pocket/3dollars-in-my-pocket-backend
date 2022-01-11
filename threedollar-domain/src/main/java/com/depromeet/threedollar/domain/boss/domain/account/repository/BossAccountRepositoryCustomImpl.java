@@ -1,11 +1,11 @@
-package com.depromeet.threedollar.foodtruck.domain.domain.account.repository;
+package com.depromeet.threedollar.domain.boss.domain.account.repository;
 
-import com.depromeet.threedollar.foodtruck.domain.domain.account.BossAccount;
-import com.depromeet.threedollar.foodtruck.domain.domain.account.BossAccountSocialType;
+import com.depromeet.threedollar.domain.boss.domain.account.BossAccount;
+import com.depromeet.threedollar.domain.boss.domain.account.BossAccountSocialType;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
-import static com.depromeet.threedollar.foodtruck.domain.domain.account.QBossAccount.bossAccount;
+import static com.depromeet.threedollar.domain.boss.domain.account.QBossAccount.*;
 
 @RequiredArgsConstructor
 public class BossAccountRepositoryCustomImpl implements BossAccountRepositoryCustom {

@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.foodtruck.domain.domain.account;
+package com.depromeet.threedollar.domain.boss.domain.account;
 
 public enum BossAccountSocialType {
 

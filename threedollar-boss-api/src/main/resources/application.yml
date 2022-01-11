@@ -10,7 +10,7 @@ spring:
     active: local
     default: local
     include:
-      - boss-domain
+      - domain
       - redis
   servlet:
     multipart:

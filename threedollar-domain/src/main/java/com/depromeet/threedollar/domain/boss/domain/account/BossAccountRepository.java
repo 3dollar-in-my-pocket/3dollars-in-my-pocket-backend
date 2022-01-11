@@ -1,6 +1,6 @@
-package com.depromeet.threedollar.foodtruck.domain.domain.account;
+package com.depromeet.threedollar.domain.boss.domain.account;
 
-import com.depromeet.threedollar.foodtruck.domain.domain.account.repository.BossAccountRepositoryCustom;
+import com.depromeet.threedollar.domain.boss.domain.account.repository.BossAccountRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BossAccountRepository extends JpaRepository<BossAccount, Long>, BossAccountRepositoryCustom {

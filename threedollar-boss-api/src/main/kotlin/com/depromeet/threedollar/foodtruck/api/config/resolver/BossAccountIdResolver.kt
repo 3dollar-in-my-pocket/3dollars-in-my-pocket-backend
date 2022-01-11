@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.foodtruck.api.config
+package com.depromeet.threedollar.foodtruck.api.config.resolver
 
 import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.foodtruck.api.config.session.SessionConstants.BOSS_ACCOUNT_ID

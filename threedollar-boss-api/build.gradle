@@ -1,19 +1,9 @@
-ext {
-    embeddedRedisVersion = "0.7.2"
-}
-
 dependencies {
-    implementation project(':threedollar-boss-domain')
+    implementation project(':threedollar-application-service')
+    implementation project(':threedollar-domain')
 
     // Spring MVC
     implementation("org.springframework.boot:spring-boot-starter-web")
-
-    // Jackson
-    implementation("org.springframework.boot:spring-boot-starter-json")
-
-    // Redis
-    implementation("org.springframework.boot:spring-boot-starter-data-redis")
-    implementation("it.ozimov:embedded-redis:${embeddedRedisVersion}")
 
     // Redis Session
     implementation("org.springframework.session:spring-session-data-redis")

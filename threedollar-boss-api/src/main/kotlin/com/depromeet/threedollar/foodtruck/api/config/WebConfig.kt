@@ -1,5 +1,7 @@
 package com.depromeet.threedollar.foodtruck.api.config
 
+import com.depromeet.threedollar.foodtruck.api.config.interceptor.AuthInterceptor
+import com.depromeet.threedollar.foodtruck.api.config.resolver.BossAccountIdResolver
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry

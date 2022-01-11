@@ -4,7 +4,8 @@ WORKDIR $HOME
 COPY . $HOME
 RUN ./gradlew clean :threedollar-boss-api:bootJar \
 :threedollar-boss-api:test \
-:threedollar-boss-domain:test \
+ :threedollar-application-service:test \
+:threedollar-domain:test \
 :threedollar-common:test
 
 FROM adoptopenjdk/openjdk11:alpine-jre

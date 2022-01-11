@@ -1,8 +1,8 @@
-package com.depromeet.threedollar.foodtruck.api.config
+package com.depromeet.threedollar.foodtruck.api.config.interceptor
 
 import com.depromeet.threedollar.common.exception.model.UnAuthorizedException
 import com.depromeet.threedollar.foodtruck.api.config.session.SessionConstants.BOSS_ACCOUNT_ID
-import com.depromeet.threedollar.foodtruck.domain.domain.account.BossAccountRepository
+import com.depromeet.threedollar.domain.boss.domain.account.BossAccountRepository
 import org.springframework.http.HttpHeaders
 import org.springframework.session.Session
 import org.springframework.session.SessionRepository

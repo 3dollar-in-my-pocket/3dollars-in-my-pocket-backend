@@ -1,6 +1,6 @@
-package com.depromeet.threedollar.foodtruck.domain.domain.account;
+package com.depromeet.threedollar.domain.boss.domain.account;
 
-import com.depromeet.threedollar.foodtruck.domain.domain.common.BaseTimeEntity;
+import com.depromeet.threedollar.domain.common.domain.AuditingTimeEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class BossAccount extends BaseTimeEntity {
+public class BossAccount extends AuditingTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
