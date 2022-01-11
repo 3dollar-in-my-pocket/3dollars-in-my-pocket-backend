@@ -1,7 +1,6 @@
-package com.depromeet.threedollar.domain.user.domain.common;
+package com.depromeet.threedollar.domain.common.domain;
 
 import com.depromeet.threedollar.common.exception.model.ValidationException;
-import com.depromeet.threedollar.domain.common.domain.Location;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;

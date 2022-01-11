@@ -1,7 +1,6 @@
-package com.depromeet.threedollar.domain.user.domain.common;
+package com.depromeet.threedollar.domain.common.domain;
 
 import com.depromeet.threedollar.common.exception.model.ValidationException;
-import com.depromeet.threedollar.domain.common.domain.DateTimeInterval;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
