@@ -57,7 +57,7 @@ jobs:
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: ${{ steps.download-task-definition.outputs.task-definition }}
-          container-name: threedollar-api-stage
+          container-name: threedollar-api-prod
           image: ${{ steps.build.outputs.image }}
 
       - name: Deploy to Amazon ECS service
