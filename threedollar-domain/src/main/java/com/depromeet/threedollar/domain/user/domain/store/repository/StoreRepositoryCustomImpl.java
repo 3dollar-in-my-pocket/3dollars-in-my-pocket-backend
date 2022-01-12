@@ -148,12 +148,26 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
         return store.id.lt(lastStoreId);
     }
 
-    // TODO TODO B-Tree의 공간정보 인덱스 한계로, R-Tree 인덱스 리서치 필요.
+    /**
+     * 위도 1km = 1 / 109.95도
+     * 경도 1km = 1 / 88.74도
+     * 1. 해당 거리 범위내에 도달할 수 있는 거리를 필터링해서
+     * 2. 그 안에서 커버링 인덱스해서 특정 거리내의 가게들을 조회.
+     * (커버링 인덱스 + Range 실행계획)
+     * -
+     * TODO R-Tree 인덱스 (Spatital Index) 리서치 필요.
+     */
     @Override
     public List<Store> findStoresByLocationLessThanDistance(double latitude, double longitude, double distance) {
         List<Long> storeIds = queryFactory.select(store.id)
             .from(store)
-            .where(Expressions.predicate(Ops.LOE, Expressions.asNumber(getDistanceExpression(latitude, longitude)), Expressions.asNumber(distance)))
+            .where(
+                store.location.latitude.goe(latitude - distance / 100),
+                store.location.latitude.loe(latitude + distance / 100),
+                store.location.longitude.goe(longitude - distance / 80),
+                store.location.longitude.loe(longitude + distance / 80),
+                Expressions.predicate(Ops.LOE, Expressions.asNumber(getDistanceExpression(latitude, longitude)), Expressions.asNumber(distance))
+            )
             .groupBy(store.id, store.location.latitude, store.location.longitude)
             .orderBy(OrderByNull.DEFAULT)
             .fetch();
