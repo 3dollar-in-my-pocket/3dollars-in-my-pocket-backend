@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.admin.service.faq.dto.request
 
-import com.depromeet.threedollar.domain.domain.faq.Faq
-import com.depromeet.threedollar.domain.domain.faq.FaqCategory
+import com.depromeet.threedollar.domain.user.domain.faq.Faq
+import com.depromeet.threedollar.domain.user.domain.faq.FaqCategory
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 

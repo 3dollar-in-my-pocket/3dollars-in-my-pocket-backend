@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.admin.service.admin
 
 import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.domain.domain.admin.AdminRepository
+import com.depromeet.threedollar.domain.user.domain.admin.AdminRepository
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test

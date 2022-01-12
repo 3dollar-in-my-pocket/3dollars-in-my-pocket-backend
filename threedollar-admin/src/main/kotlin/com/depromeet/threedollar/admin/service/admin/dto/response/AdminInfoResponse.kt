@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.admin.service.admin.dto.response
 
-import com.depromeet.threedollar.domain.domain.admin.Admin
+import com.depromeet.threedollar.domain.user.domain.admin.Admin
 
 data class AdminInfoResponse(
     val email: String,

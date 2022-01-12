@@ -20,7 +20,7 @@ spring:
     activate:
       on-profile:
         - local
-        - local-will
+        - local-docker
 ---
 cloud:
   aws:
@@ -54,4 +54,6 @@ cloud:
 spring:
   config:
     activate:
-      on-profile: prod
+      on-profile:
+        - prod
+        - stage

@@ -4,8 +4,8 @@ import com.depromeet.threedollar.admin.service.store.dto.request.RetrieveLatestS
 import com.depromeet.threedollar.admin.service.store.dto.request.RetrieveReportedStoresRequest
 import com.depromeet.threedollar.admin.service.store.dto.response.ReportedStoresResponse
 import com.depromeet.threedollar.admin.service.store.dto.response.StoresCursorResponse
-import com.depromeet.threedollar.domain.collection.common.CursorSupporter
-import com.depromeet.threedollar.domain.domain.store.StoreRepository
+import com.depromeet.threedollar.domain.common.collection.CursorSupporter
+import com.depromeet.threedollar.domain.user.domain.store.StoreRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

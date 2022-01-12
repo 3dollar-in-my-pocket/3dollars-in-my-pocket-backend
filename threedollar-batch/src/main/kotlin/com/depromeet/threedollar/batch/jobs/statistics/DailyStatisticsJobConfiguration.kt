@@ -2,12 +2,12 @@ package com.depromeet.threedollar.batch.jobs.statistics
 
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
 import com.depromeet.threedollar.batch.jobs.statistics.StatisticsMessageFormat.*
-import com.depromeet.threedollar.domain.domain.medal.MedalRepository
-import com.depromeet.threedollar.domain.domain.store.MenuRepository
-import com.depromeet.threedollar.domain.domain.review.ReviewRepository
-import com.depromeet.threedollar.domain.domain.store.StoreRepository
-import com.depromeet.threedollar.domain.domain.user.UserRepository
-import com.depromeet.threedollar.domain.domain.visit.VisitHistoryRepository
+import com.depromeet.threedollar.domain.user.domain.medal.MedalRepository
+import com.depromeet.threedollar.domain.user.domain.store.MenuRepository
+import com.depromeet.threedollar.domain.user.domain.review.ReviewRepository
+import com.depromeet.threedollar.domain.user.domain.store.StoreRepository
+import com.depromeet.threedollar.domain.user.domain.user.UserRepository
+import com.depromeet.threedollar.domain.user.domain.visit.VisitHistoryRepository
 import com.depromeet.threedollar.external.client.slack.SlackApiClient
 import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest
 import org.springframework.batch.core.Job

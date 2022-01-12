@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.admin.service.store.dto.response
 
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse
-import com.depromeet.threedollar.domain.domain.store.StoreType
-import com.depromeet.threedollar.domain.domain.store.projection.StoreWithReportedCountProjection
+import com.depromeet.threedollar.domain.user.domain.store.StoreType
+import com.depromeet.threedollar.domain.user.domain.store.projection.StoreWithReportedCountProjection
 
 data class ReportedStoresResponse(
     val storeId: Long,

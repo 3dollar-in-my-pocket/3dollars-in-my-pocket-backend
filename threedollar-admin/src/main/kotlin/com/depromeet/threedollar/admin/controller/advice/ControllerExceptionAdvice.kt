@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.admin.controller.advice
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse
-import com.depromeet.threedollar.common.exception.ErrorCode.*
+import com.depromeet.threedollar.common.exception.type.ErrorCode.*
 import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseException
 import com.depromeet.threedollar.common.utils.logger
 import com.fasterxml.jackson.databind.exc.InvalidFormatException

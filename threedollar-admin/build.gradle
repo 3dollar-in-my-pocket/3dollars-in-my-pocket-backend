@@ -1,5 +1,5 @@
 dependencies {
-    implementation project(":threedollar-application-service")
+    implementation project(":threedollar-api-core")
 
     // Spring MVC
     implementation("org.springframework.boot:spring-boot-starter-web")

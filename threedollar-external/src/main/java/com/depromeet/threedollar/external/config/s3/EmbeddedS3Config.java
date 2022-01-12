@@ -22,7 +22,7 @@ import static com.depromeet.threedollar.common.utils.ProcessUtils.findAvailableR
 import static com.depromeet.threedollar.common.utils.ProcessUtils.isRunningPort;
 
 @Slf4j
-@Profile({"local", "local-will"})
+@Profile({"local", "local-docker"})
 @Configuration
 public class EmbeddedS3Config {
 
@@ -51,14 +51,14 @@ public class EmbeddedS3Config {
     }
 
     @PostConstruct
-    public void startS3Mock() throws IOException {
+    public void start() throws IOException {
         port = isRunningPort(port) ? findAvailableRandomPort() : port;
         this.s3Mock().start();
         log.info("인메모리 S3 Mock 서버가 시작됩니다. port: {}", port);
     }
 
     @PreDestroy
-    public void destroyS3Mock() {
+    public void stop() {
         this.s3Mock().shutdown();
         log.info("인메모리 S3 Mock 서버가 종료됩니다. port: {}", port);
     }

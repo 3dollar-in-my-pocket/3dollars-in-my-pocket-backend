@@ -1,0 +1,20 @@
+management:
+  endpoints:
+    web:
+      base-path: /monitoring
+      exposure:
+        include:
+          - health
+          - sessions
+          - metrics
+          - threaddump
+          - heapdump
+          - loggers
+          - logfile
+          - scheduledtasks
+          - configprops
+  endpoint:
+    health:
+      show-details: always
+    logfile:
+      external-file: /logs/threedollar-api-user/info.log

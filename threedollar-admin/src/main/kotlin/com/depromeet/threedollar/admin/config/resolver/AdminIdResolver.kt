@@ -12,7 +12,7 @@ import org.springframework.web.method.support.ModelAndViewContainer
 class AccountIdResolver : HandlerMethodArgumentResolver {
 
     override fun supportsParameter(parameter: MethodParameter): Boolean {
-        return parameter.getParameterAnnotation(AdminId::class.java) != null && parameter.parameterType == Long::class.java
+        return parameter.hasParameterAnnotation(AdminId::class.java) && parameter.parameterType == Long::class.java
     }
 
     override fun resolveArgument(

@@ -46,7 +46,7 @@ spring:
 spring:
   config:
     activate:
-      on-profile: local-will
+      on-profile: local-docker
   jpa:
     hibernate:
       ddl-auto: none
@@ -74,7 +74,9 @@ spring:
 spring:
   config:
     activate:
-      on-profile: prod
+      on-profile:
+        - prod
+        - stage
   jpa:
     properties:
       hibernate:

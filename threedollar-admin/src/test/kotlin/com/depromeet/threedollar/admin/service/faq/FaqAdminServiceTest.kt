@@ -3,10 +3,10 @@ package com.depromeet.threedollar.admin.service.faq
 import com.depromeet.threedollar.admin.service.faq.dto.request.AddFaqRequest
 import com.depromeet.threedollar.admin.service.faq.dto.request.UpdateFaqRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.domain.domain.faq.Faq
-import com.depromeet.threedollar.domain.domain.faq.FaqCategory
-import com.depromeet.threedollar.domain.domain.faq.FaqCreator
-import com.depromeet.threedollar.domain.domain.faq.FaqRepository
+import com.depromeet.threedollar.domain.user.domain.faq.Faq
+import com.depromeet.threedollar.domain.user.domain.faq.FaqCategory
+import com.depromeet.threedollar.domain.user.domain.faq.FaqCreator
+import com.depromeet.threedollar.domain.user.domain.faq.FaqRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.*

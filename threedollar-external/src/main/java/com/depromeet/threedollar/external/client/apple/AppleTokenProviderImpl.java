@@ -21,7 +21,7 @@ import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
 import java.util.Map;
 
-import static com.depromeet.threedollar.common.exception.ErrorCode.*;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.*;
 
 /**
  * https://developer.apple.com/documentation/sign_in_with_apple/sign_in_with_apple_rest_api/verifying_a_user
@@ -30,7 +30,7 @@ import static com.depromeet.threedollar.common.exception.ErrorCode.*;
 @Component
 public class AppleTokenProviderImpl implements AppleTokenProvider {
 
-    private final AppleApiClient appleApiCaller;
+    private final AppleAuthApiClient appleApiCaller;
     private final AppleAuthProperties appleAuthProperties;
     private final ObjectMapper objectMapper;
 

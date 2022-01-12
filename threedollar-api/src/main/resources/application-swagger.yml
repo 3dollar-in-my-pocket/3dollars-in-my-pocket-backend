@@ -1,8 +1,0 @@
-springfox:
-  documentation:
-    enabled: false
-spring:
-  config:
-    activate:
-      on-profile: prod
----
