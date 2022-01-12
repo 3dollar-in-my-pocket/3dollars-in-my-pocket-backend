@@ -4,5 +4,7 @@ springfox:
 spring:
   config:
     activate:
-      on-profile: prod
+      on-profile:
+        - prod
+        - stage
 ---
