@@ -55,7 +55,7 @@ public class ControllerExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
     protected ApiResponse<Object> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
-        log.error(e.getMessage());
+        log.warn(e.getMessage());
         return ApiResponse.error(VALIDATION_EXCEPTION);
     }
 
@@ -66,7 +66,7 @@ public class ControllerExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MissingRequestValueException.class)
     protected ApiResponse<Object> handle(MissingRequestValueException e) {
-        log.error(e.getMessage());
+        log.warn(e.getMessage());
         return ApiResponse.error(VALIDATION_REQUEST_MISSING_EXCEPTION);
     }
 
@@ -77,7 +77,7 @@ public class ControllerExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(TypeMismatchException.class)
     protected ApiResponse<Object> handleTypeMismatchException(TypeMismatchException e) {
-        log.error(e.getMessage());
+        log.warn(e.getMessage());
         return ApiResponse.error(VALIDATION_WRONG_TYPE_EXCEPTION, String.format("%s (%s)", VALIDATION_WRONG_TYPE_EXCEPTION.getMessage(), e.getValue()));
     }
 
@@ -90,7 +90,7 @@ public class ControllerExceptionAdvice {
         ServletRequestBindingException.class
     })
     protected ApiResponse<Object> handleInvalidFormatException(Exception e) {
-        log.error(e.getMessage());
+        log.warn(e.getMessage());
         return ApiResponse.error(VALIDATION_EXCEPTION);
     }
 
@@ -101,7 +101,7 @@ public class ControllerExceptionAdvice {
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     protected ApiResponse<Object> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-        log.error(e.getMessage());
+        log.warn(e.getMessage());
         return ApiResponse.error(METHOD_NOT_ALLOWED_EXCEPTION);
     }
 
@@ -111,7 +111,7 @@ public class ControllerExceptionAdvice {
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
     protected ApiResponse<Object> handleHttpMediaTypeNotAcceptableException(HttpMediaTypeNotAcceptableException e) {
-        log.error(e.getMessage());
+        log.warn(e.getMessage());
         return ApiResponse.error(NOT_ACCEPTABLE_EXCEPTION);
     }
 
@@ -122,7 +122,7 @@ public class ControllerExceptionAdvice {
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
     @ExceptionHandler(HttpMediaTypeException.class)
     protected ApiResponse<Object> handleHttpMediaTypeException(HttpMediaTypeException e) {
-        log.error(e.getMessage(), e);
+        log.warn(e.getMessage(), e);
         return ApiResponse.error(UNSUPPORTED_MEDIA_TYPE_EXCEPTION);
     }
 

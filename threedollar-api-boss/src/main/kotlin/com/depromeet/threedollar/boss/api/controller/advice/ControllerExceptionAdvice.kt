@@ -45,7 +45,7 @@ class ControllerExceptionAdvice {
         HttpMessageNotReadableException::class
     )
     protected fun handleHttpMessageNotReadableException(e: HttpMessageNotReadableException): ApiResponse<Nothing> {
-        log.error(e.message)
+        log.warn(e.message)
         return ApiResponse.error(VALIDATION_EXCEPTION)
     }
 
@@ -58,7 +58,7 @@ class ControllerExceptionAdvice {
         MissingRequestValueException::class
     )
     protected fun handle(e: MissingRequestValueException): ApiResponse<Nothing> {
-        log.error(e.message)
+        log.warn(e.message)
         return ApiResponse.error(VALIDATION_REQUEST_MISSING_EXCEPTION)
     }
 
@@ -71,7 +71,7 @@ class ControllerExceptionAdvice {
         TypeMismatchException::class
     )
     protected fun handleTypeMismatchException(e: TypeMismatchException): ApiResponse<Nothing> {
-        log.error(e.message)
+        log.warn(e.message)
         val errorCode = VALIDATION_WRONG_TYPE_EXCEPTION
         return ApiResponse.error(errorCode, "${errorCode.message} (${e.value})")
     }
@@ -82,7 +82,7 @@ class ControllerExceptionAdvice {
         ServletRequestBindingException::class
     )
     private fun handleMethodArgumentNotValidException(e: Exception): ApiResponse<Nothing> {
-        log.error(e.message)
+        log.warn(e.message)
         return ApiResponse.error(VALIDATION_EXCEPTION)
     }
 
@@ -93,7 +93,7 @@ class ControllerExceptionAdvice {
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException::class)
     private fun handleHttpRequestMethodNotSupportedException(e: HttpRequestMethodNotSupportedException): ApiResponse<Nothing> {
-        log.error(e.message, e)
+        log.warn(e.message, e)
         return ApiResponse.error(METHOD_NOT_ALLOWED_EXCEPTION)
     }
 
@@ -105,7 +105,7 @@ class ControllerExceptionAdvice {
         HttpMediaTypeNotAcceptableException::class
     )
     protected fun handleHttpMediaTypeNotAcceptableException(e: HttpMediaTypeNotAcceptableException): ApiResponse<Nothing> {
-        log.error(e.message)
+        log.warn(e.message)
         return ApiResponse.error(NOT_ACCEPTABLE_EXCEPTION)
     }
 
@@ -116,7 +116,7 @@ class ControllerExceptionAdvice {
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
     @ExceptionHandler(HttpMediaTypeException::class)
     private fun handleHttpMediaTypeException(e: HttpMediaTypeException): ApiResponse<Nothing> {
-        log.error(e.message, e)
+        log.warn(e.message, e)
         return ApiResponse.error(UNSUPPORTED_MEDIA_TYPE_EXCEPTION)
     }
 

@@ -14,6 +14,7 @@
     <springProfile name="dev">
         <property name="LOG_DIR" value="logs/threedollar-api"/>
         <property name="LOG_INFO_FILE" value="${LOG_DIR}/info.log"/>
+        <property name="LOG_WARN_FILE" value="${LOG_DIR}/warn.log"/>
         <property name="LOG_ERROR_FILE" value="${LOG_DIR}/error.log"/>
 
         <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -27,6 +28,24 @@
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
                 <fileNamePattern>${LOG_INFO_FILE}.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
                 <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>10MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+                <maxHistory>14</maxHistory>
+            </rollingPolicy>
+        </appender>
+
+        <appender name="WARN_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>WARN</level>
+            </filter>
+            <file>${LOG_WARN_FILE}</file>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>${FILE_LOG_PATTERN}</pattern>
+            </encoder>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${LOG_WARN_FILE}.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+                <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                     <maxFileSize>10MB</maxFileSize>
                 </timeBasedFileNamingAndTriggeringPolicy>
                 <maxHistory>14</maxHistory>
@@ -61,6 +80,7 @@
         <logger name="com.depromeet.threedollar" level="DEBUG"/>
         <root level="INFO">
             <appender-ref ref="INFO_FILE"/>
+            <appender-ref ref="WARN_FILE"/>
             <appender-ref ref="ERROR_FILE"/>
             <appender-ref ref="Sentry"/>
         </root>
@@ -69,6 +89,7 @@
     <springProfile name="prod">
         <property name="LOG_DIR" value="logs/threedollar-api"/>
         <property name="LOG_INFO_FILE" value="${LOG_DIR}/info.log"/>
+        <property name="LOG_WARN_FILE" value="${LOG_DIR}/warn.log"/>
         <property name="LOG_ERROR_FILE" value="${LOG_DIR}/error.log"/>
 
         <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -82,6 +103,24 @@
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
                 <fileNamePattern>${LOG_INFO_FILE}.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
                 <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>10MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+                <maxHistory>30</maxHistory>
+            </rollingPolicy>
+        </appender>
+
+        <appender name="WARN_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>WARN</level>
+            </filter>
+            <file>${LOG_WARN_FILE}</file>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>${FILE_LOG_PATTERN}</pattern>
+            </encoder>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${LOG_WARN_FILE}.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+                <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                     <maxFileSize>10MB</maxFileSize>
                 </timeBasedFileNamingAndTriggeringPolicy>
                 <maxHistory>30</maxHistory>
@@ -117,6 +156,7 @@
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="INFO_FILE"/>
+            <appender-ref ref="WARN_FILE"/>
             <appender-ref ref="ERROR_FILE"/>
             <appender-ref ref="Sentry"/>
         </root>
