@@ -21,3 +21,9 @@ services:
     restart: unless-stopped
     volumes:
       - ~/threedollars-api/redis/data:/data
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - ~/threedollars-boss/mongo:/data/db

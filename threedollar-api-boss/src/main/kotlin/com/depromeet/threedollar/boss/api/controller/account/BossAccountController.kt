@@ -16,7 +16,7 @@ class BossAccountController(
     @ApiOperation("사장님 자신의 계정 정보를 조회합니다")
     @GetMapping("/api/v1/boss/account/me")
     fun getMyAccountInfo(
-        @BossAccountId bossAccountId: Long
+        @BossAccountId bossAccountId: String
     ): ApiResponse<BossAccountInfoResponse> {
         return ApiResponse.success(bossAccountService.getBossAccountInfo(bossAccountId))
     }

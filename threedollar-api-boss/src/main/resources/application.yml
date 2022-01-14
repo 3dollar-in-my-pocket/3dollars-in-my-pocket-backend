@@ -12,6 +12,7 @@ spring:
     include:
       - domain
       - redis
+      - mongo
   servlet:
     multipart:
       max-file-size: 10MB

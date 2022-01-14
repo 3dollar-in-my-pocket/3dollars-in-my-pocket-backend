@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.boss.api.service.account.dto.response
 
-import com.depromeet.threedollar.domain.boss.domain.account.BossAccount
-import com.depromeet.threedollar.domain.boss.domain.account.BossAccountSocialType
+import com.depromeet.threedollar.document.boss.document.account.BossAccount
+import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
 
 data class BossAccountInfoResponse(
-    val bossAccountId: Long,
+    val bossAccountId: String,
     val socialType: BossAccountSocialType,
     val name: String
 ) {

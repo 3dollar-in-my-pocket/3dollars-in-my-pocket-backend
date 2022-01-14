@@ -2,7 +2,7 @@ package com.depromeet.threedollar.boss.api.config.interceptor
 
 import com.depromeet.threedollar.common.exception.model.UnAuthorizedException
 import com.depromeet.threedollar.boss.api.config.session.SessionConstants.BOSS_ACCOUNT_ID
-import com.depromeet.threedollar.domain.boss.domain.account.BossAccountRepository
+import com.depromeet.threedollar.document.boss.document.account.BossAccountRepository
 import org.springframework.http.HttpHeaders
 import org.springframework.session.Session
 import org.springframework.session.SessionRepository
@@ -25,7 +25,7 @@ class AuthInterceptor(
             val session = findSessionBySessionId(sessionId)
 
             val bossAccount = bossAccountRepository.findBossAccountById(session.getAttribute(BOSS_ACCOUNT_ID))
-                ?: throw UnAuthorizedException("잘못된 세션 id(${sessionId})입니다 다시 로그인해주세요")
+                ?: throw UnAuthorizedException("잘못된 세션 id(${sessionId} 입니다 다시 로그인해주세요")
 
             request.setAttribute(BOSS_ACCOUNT_ID, bossAccount.id)
             return true
