@@ -6,3 +6,5 @@
 - threedollar-api-core
     - threedollar-domain
         - threedollar-common
+- threedollar-document
+    - threedollar-common
