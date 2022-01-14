@@ -6,8 +6,8 @@ import org.springframework.boot.runApplication
 
 @ConfigurationPropertiesScan(basePackages = ["com.depromeet.threedollar"])
 @SpringBootApplication(scanBasePackages = ["com.depromeet.threedollar"])
-class FoodTruckApiApplication
+class ThreeDollarBossApiApplication
 
 fun main(args: Array<String>) {
-    runApplication<FoodTruckApiApplication>(*args)
+    runApplication<ThreeDollarBossApiApplication>(*args)
 }

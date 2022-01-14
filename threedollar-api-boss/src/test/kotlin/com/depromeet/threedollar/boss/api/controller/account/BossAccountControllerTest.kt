@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.boss.api.controller.account
 
 import com.depromeet.threedollar.boss.api.controller.ControllerTestUtils
-import com.depromeet.threedollar.domain.boss.domain.account.BossAccountSocialType
+import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

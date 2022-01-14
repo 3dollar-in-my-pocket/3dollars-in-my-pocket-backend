@@ -10,10 +10,10 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
 
 @Configuration
-class BossAccountIdResolver : HandlerMethodArgumentResolver {
+class BossIdResolver : HandlerMethodArgumentResolver {
 
     override fun supportsParameter(parameter: MethodParameter): Boolean {
-        return parameter.hasParameterAnnotation(BossAccountId::class.java) && parameter.parameterType == Long::class.java
+        return parameter.hasParameterAnnotation(BossId::class.java) && parameter.parameterType == String::class.java
     }
 
     override fun resolveArgument(
@@ -23,7 +23,7 @@ class BossAccountIdResolver : HandlerMethodArgumentResolver {
         binderFactory: WebDataBinderFactory?
     ): Any {
         return webRequest.getAttribute(BOSS_ACCOUNT_ID, 0)
-            ?: throw InternalServerException("bossAccountId를 받아오지 못했습니다.")
+            ?: throw InternalServerException("bossId를 받아오지 못했습니다.")
     }
 
 }

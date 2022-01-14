@@ -2,7 +2,7 @@ package com.depromeet.threedollar.boss.api.controller
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.boss.api.service.auth.dto.response.LoginResponse
-import com.depromeet.threedollar.domain.boss.domain.account.BossAccountRepository
+import com.depromeet.threedollar.document.boss.document.account.BossAccountRepository
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.BeforeEach

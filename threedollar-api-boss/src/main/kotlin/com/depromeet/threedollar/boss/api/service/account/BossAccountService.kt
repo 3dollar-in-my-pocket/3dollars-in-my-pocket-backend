@@ -2,8 +2,8 @@ package com.depromeet.threedollar.boss.api.service.account
 
 import com.depromeet.threedollar.boss.api.service.account.dto.response.BossAccountInfoResponse
 import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.domain.boss.domain.account.BossAccount
-import com.depromeet.threedollar.domain.boss.domain.account.BossAccountRepository
+import com.depromeet.threedollar.document.boss.document.account.BossAccount
+import com.depromeet.threedollar.document.boss.document.account.BossAccountRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -13,14 +13,14 @@ class BossAccountService(
 ) {
 
     @Transactional(readOnly = true)
-    fun getBossAccountInfo(bossAccountId: Long): BossAccountInfoResponse {
-        val bossAccount = findBossAccountById(bossAccountRepository, bossAccountId)
+    fun getBossAccountInfo(bossId: String): BossAccountInfoResponse {
+        val bossAccount = findBossAccountById(bossAccountRepository, bossId)
         return BossAccountInfoResponse.of(bossAccount)
     }
 
 }
 
-fun findBossAccountById(bossAccountRepository: BossAccountRepository, bossAccountId: Long): BossAccount {
-    return bossAccountRepository.findBossAccountById(bossAccountId)
-        ?: throw NotFoundException("해당하는 id($bossAccountId)를 가진 사장님은 존재하지 않습니다")
+fun findBossAccountById(bossAccountRepository: BossAccountRepository, bossId: String): BossAccount {
+    return bossAccountRepository.findBossAccountById(bossId)
+        ?: throw NotFoundException("해당하는 id($bossId)를 가진 사장님은 존재하지 않습니다")
 }

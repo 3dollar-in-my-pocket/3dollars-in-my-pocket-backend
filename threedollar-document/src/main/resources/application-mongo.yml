@@ -1,0 +1,20 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 0
+      database: threedollar
+  config:
+    activate:
+      on-profile: local
+---
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: threedollar
+  config:
+    activate:
+      on-profile: local-will
+---

@@ -2,7 +2,7 @@ package com.depromeet.threedollar.boss.api.config.interceptor
 
 import com.depromeet.threedollar.common.exception.model.UnAuthorizedException
 import com.depromeet.threedollar.boss.api.config.session.SessionConstants.BOSS_ACCOUNT_ID
-import com.depromeet.threedollar.domain.boss.domain.account.BossAccountRepository
+import com.depromeet.threedollar.document.boss.document.account.BossAccountRepository
 import org.springframework.http.HttpHeaders
 import org.springframework.session.Session
 import org.springframework.session.SessionRepository
@@ -20,17 +20,17 @@ class AuthInterceptor(
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         val header = request.getHeader(HttpHeaders.AUTHORIZATION)
-        if (StringUtils.hasText(header) && header.startsWith(TOKEN_PREFIX)) {
-            val sessionId = header.split(TOKEN_PREFIX)[1]
+        if (StringUtils.hasText(header) && header.startsWith(HEADER_BEARER_PREFIX)) {
+            val sessionId = header.split(HEADER_BEARER_PREFIX)[1]
             val session = findSessionBySessionId(sessionId)
 
             val bossAccount = bossAccountRepository.findBossAccountById(session.getAttribute(BOSS_ACCOUNT_ID))
-                ?: throw UnAuthorizedException("잘못된 세션 id(${sessionId})입니다 다시 로그인해주세요")
+                ?: throw UnAuthorizedException("잘못된 세션 (${sessionId} 입니다 다시 로그인해주세요")
 
             request.setAttribute(BOSS_ACCOUNT_ID, bossAccount.id)
             return true
         }
-        throw UnAuthorizedException("잘못된 토큰(${header})입니다 다시 로그인해주세요.")
+        throw UnAuthorizedException("잘못된 헤더(${header})입니다 다시 로그인해주세요.")
     }
 
     private fun findSessionBySessionId(sessionId: String): Session {
@@ -39,7 +39,7 @@ class AuthInterceptor(
     }
 
     companion object {
-        const val TOKEN_PREFIX = "Bearer "
+        const val HEADER_BEARER_PREFIX = "Bearer "
     }
 
 }
