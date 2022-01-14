@@ -7,5 +7,5 @@ class BossStoreAppearanceDay(
     val day: DayOfTheWeek,
     val startTime: LocalTime,
     val endTime: LocalTime,
-    val address: String
+    val address: String = ""
 )

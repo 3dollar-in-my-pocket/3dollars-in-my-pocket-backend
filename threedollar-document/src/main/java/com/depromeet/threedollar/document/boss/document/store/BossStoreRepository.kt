@@ -1,5 +1,5 @@
 package com.depromeet.threedollar.document.boss.document.store
 
-import org.springframework.data.repository.CrudRepository
+import org.springframework.data.mongodb.repository.MongoRepository
 
-interface BossStoreRepository : CrudRepository<BossStore, String>
+interface BossStoreRepository : MongoRepository<BossStore, String>

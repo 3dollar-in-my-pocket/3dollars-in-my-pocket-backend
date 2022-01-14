@@ -1,15 +1,19 @@
 package com.depromeet.threedollar.document.common.document
 
 import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.LastModifiedDate
 import java.time.LocalDateTime
 
-abstract class AuditingTimeDocument {
+abstract class BaseDocument {
+
+    @Id
+    lateinit var id: String
 
     @CreatedDate
-    var createdDateTime: LocalDateTime? = null
+    lateinit var createdDateTime: LocalDateTime
 
     @LastModifiedDate
-    var updatedDateTime: LocalDateTime? = null
+    lateinit var updatedDateTime: LocalDateTime
 
 }

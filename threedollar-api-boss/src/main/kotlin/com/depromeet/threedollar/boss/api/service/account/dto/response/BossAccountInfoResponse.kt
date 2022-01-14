@@ -4,7 +4,7 @@ import com.depromeet.threedollar.document.boss.document.account.BossAccount
 import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
 
 data class BossAccountInfoResponse(
-    val bossAccountId: String,
+    val bossId: String,
     val socialType: BossAccountSocialType,
     val name: String
 ) {
@@ -12,7 +12,7 @@ data class BossAccountInfoResponse(
     companion object {
         fun of(bossAccount: BossAccount): BossAccountInfoResponse {
             return BossAccountInfoResponse(
-                bossAccountId = bossAccount.id,
+                bossId = bossAccount.id,
                 socialType = bossAccount.socialInfo.socialType,
                 name = bossAccount.name
             )

@@ -13,14 +13,14 @@ class BossAccountService(
 ) {
 
     @Transactional(readOnly = true)
-    fun getBossAccountInfo(bossAccountId: String): BossAccountInfoResponse {
-        val bossAccount = findBossAccountById(bossAccountRepository, bossAccountId)
+    fun getBossAccountInfo(bossId: String): BossAccountInfoResponse {
+        val bossAccount = findBossAccountById(bossAccountRepository, bossId)
         return BossAccountInfoResponse.of(bossAccount)
     }
 
 }
 
-fun findBossAccountById(bossAccountRepository: BossAccountRepository, bossAccountId: String): BossAccount {
-    return bossAccountRepository.findBossAccountById(bossAccountId)
-        ?: throw NotFoundException("해당하는 id($bossAccountId)를 가진 사장님은 존재하지 않습니다")
+fun findBossAccountById(bossAccountRepository: BossAccountRepository, bossId: String): BossAccount {
+    return bossAccountRepository.findBossAccountById(bossId)
+        ?: throw NotFoundException("해당하는 id($bossId)를 가진 사장님은 존재하지 않습니다")
 }
