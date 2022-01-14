@@ -8,14 +8,15 @@ import java.time.DayOfWeek;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum DayOfTheWeek {
 
-    MONDAY(DayOfWeek.MONDAY),
-    TUESDAY(DayOfWeek.TUESDAY),
-    WEDNESDAY(DayOfWeek.WEDNESDAY),
-    THURSDAY(DayOfWeek.THURSDAY),
-    FRIDAY(DayOfWeek.FRIDAY),
-    SATURDAY(DayOfWeek.SATURDAY),
-    SUNDAY(DayOfWeek.SUNDAY);
+    MONDAY(DayOfWeek.MONDAY, false),
+    TUESDAY(DayOfWeek.TUESDAY, false),
+    WEDNESDAY(DayOfWeek.WEDNESDAY, false),
+    THURSDAY(DayOfWeek.THURSDAY, false),
+    FRIDAY(DayOfWeek.FRIDAY, false),
+    SATURDAY(DayOfWeek.SATURDAY, true),
+    SUNDAY(DayOfWeek.SUNDAY, true);
 
     private final DayOfWeek dayOfWeek;
+    private final boolean isWeekend;
 
 }

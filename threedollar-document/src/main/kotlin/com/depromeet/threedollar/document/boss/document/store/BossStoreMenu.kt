@@ -5,5 +5,6 @@ import com.depromeet.threedollar.document.common.document.BaseDocument
 class BossStoreMenu(
     val name: String,
     val price: Int,
-    val menuCategory: String
+    val imageUrl: String,
+    val tag: String
 ) : BaseDocument()

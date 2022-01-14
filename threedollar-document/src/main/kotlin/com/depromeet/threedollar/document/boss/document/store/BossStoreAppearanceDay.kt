@@ -1,11 +1,10 @@
 package com.depromeet.threedollar.document.boss.document.store
 
 import com.depromeet.threedollar.common.type.DayOfTheWeek
-import java.time.LocalTime
+import com.depromeet.threedollar.document.common.document.TimeInterval
 
 class BossStoreAppearanceDay(
     val day: DayOfTheWeek,
-    val startTime: LocalTime,
-    val endTime: LocalTime,
-    val address: String = ""
+    val openTime: TimeInterval,
+    val locationDescription: String = ""
 )

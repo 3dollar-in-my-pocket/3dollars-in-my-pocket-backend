@@ -5,7 +5,9 @@ import com.depromeet.threedollar.document.boss.document.account.BossAccountSocia
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
+import org.springframework.stereotype.Repository
 
+@Repository
 class BossAccountRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : BossAccountRepositoryCustom {

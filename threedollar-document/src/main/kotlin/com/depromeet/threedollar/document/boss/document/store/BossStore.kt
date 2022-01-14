@@ -9,9 +9,11 @@ class BossStore(
     val bossId: String,
     val name: String,
     val coordinate: Coordinate,
+    val imageUrl: String = "",
     val introduction: String = "",
     val openInfo: BossStoreOpenInfo,
     val menus: List<BossStoreMenu> = mutableListOf(),
     val appearanceDays: List<BossStoreAppearanceDay> = mutableListOf(),
-    val categories: List<String> = mutableListOf()
+    val categories: List<String> = mutableListOf(),
+    val status: BossStoreStatus
 ) : BaseDocument()
