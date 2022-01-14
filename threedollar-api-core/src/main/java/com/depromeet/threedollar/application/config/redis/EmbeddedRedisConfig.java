@@ -48,7 +48,7 @@ public class EmbeddedRedisConfig {
 
     @PreDestroy
     public void stopRedis() {
-        if (redisServer != null) {
+        if (redisServer != null && redisServer.isActive()) {
             redisServer.stop();
             log.info("임베디드 레디스 서버가 종료됩니다");
         }
