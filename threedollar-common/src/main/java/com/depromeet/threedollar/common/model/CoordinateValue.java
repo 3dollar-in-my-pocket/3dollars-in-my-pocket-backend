@@ -5,12 +5,16 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 @Getter
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class CoordinateValue {
 
     private final double latitude;
 
     private final double longitude;
+
+    private CoordinateValue(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 
     public static CoordinateValue of(double latitude, double longitude) {
         return new CoordinateValue(latitude, longitude);

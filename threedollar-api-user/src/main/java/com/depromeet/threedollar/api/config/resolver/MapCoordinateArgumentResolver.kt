@@ -16,7 +16,7 @@ import org.springframework.web.method.support.ModelAndViewContainer
 class MapCoordinateArgumentResolver : HandlerMethodArgumentResolver {
 
     override fun supportsParameter(parameter: MethodParameter): Boolean {
-        return parameter.getParameterAnnotation(MapCoordinate::class.java) != null
+        return parameter.hasParameterAnnotation(MapCoordinate::class.java)
             && CoordinateValue::class.java == parameter.parameterType
     }
 
