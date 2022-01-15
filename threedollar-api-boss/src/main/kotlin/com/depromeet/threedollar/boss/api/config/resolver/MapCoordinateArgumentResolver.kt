@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.config.resolver
+package com.depromeet.threedollar.boss.api.config.resolver
 
 import com.depromeet.threedollar.common.exception.type.ErrorCode.VALIDATION_MAP_LATITUDE_EXCEPTION
 import com.depromeet.threedollar.common.exception.type.ErrorCode.VALIDATION_MAP_LONGITUDE_EXCEPTION
@@ -16,8 +16,7 @@ import org.springframework.web.method.support.ModelAndViewContainer
 class MapCoordinateArgumentResolver : HandlerMethodArgumentResolver {
 
     override fun supportsParameter(parameter: MethodParameter): Boolean {
-        return parameter.hasParameterAnnotation(MapCoordinate::class.java)
-            && CoordinateValue::class.java == parameter.parameterType
+        return parameter.hasParameterAnnotation(MapCoordinate::class.java) && CoordinateValue::class.java == parameter.parameterType
     }
 
     override fun resolveArgument(

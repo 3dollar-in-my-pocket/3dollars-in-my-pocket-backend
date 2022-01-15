@@ -3,7 +3,7 @@ spring:
     mongodb:
       host: localhost
       port: 0
-      database: threedollar
+      database: test
   config:
     activate:
       on-profile: local
@@ -16,5 +16,5 @@ spring:
       database: threedollar
   config:
     activate:
-      on-profile: local-will
+      on-profile: local-docker
 ---
