@@ -3,11 +3,9 @@ package com.depromeet.threedollar.document.boss.document.account.repository
 import com.depromeet.threedollar.document.boss.document.account.BossAccount
 import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
 import org.springframework.data.mongodb.core.MongoTemplate
-import org.springframework.data.mongodb.core.query.Criteria
-import org.springframework.data.mongodb.core.query.Query
-import org.springframework.stereotype.Repository
+import org.springframework.data.mongodb.core.query.Criteria.where
+import org.springframework.data.mongodb.core.query.Query.query
 
-@Repository
 class BossAccountRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : BossAccountRepositoryCustom {
@@ -18,7 +16,11 @@ class BossAccountRepositoryCustomImpl(
 
     override fun findBossAccountBySocialInfo(socialId: String, socialType: BossAccountSocialType): BossAccount? {
         return mongoTemplate.findOne(
-            Query.query(Criteria.where("socialId").`is`(socialId)),
+            query(
+                where("socialId").`is`(socialId)
+            ).addCriteria(
+                where("socialType").`is`(socialType)
+            ),
             BossAccount::class.java
         )
     }

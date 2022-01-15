@@ -14,11 +14,14 @@ import org.springframework.validation.BindException
 import org.springframework.web.HttpMediaTypeException
 import org.springframework.web.HttpMediaTypeNotAcceptableException
 import org.springframework.web.HttpRequestMethodNotSupportedException
+import org.springframework.web.bind.MissingPathVariableException
 import org.springframework.web.bind.MissingRequestValueException
+import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.ServletRequestBindingException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import org.springframework.web.multipart.support.MissingServletRequestPartException
 
 @RestControllerAdvice
 class ControllerExceptionAdvice {
@@ -51,15 +54,35 @@ class ControllerExceptionAdvice {
 
     /**
      * 400 BadRequest
-     * RequestParam, RequestPath, RequestPart 등의 필드가 입력되지 않은 경우 발생하는 Exception
+     * RequestParam 필드가 입력되지 않은 경우 발생하는 Exception
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(
-        MissingRequestValueException::class
-    )
-    protected fun handle(e: MissingRequestValueException): ApiResponse<Nothing> {
+    @ExceptionHandler(MissingServletRequestParameterException::class)
+    protected fun handleMissingServletRequestParameterException(e: MissingServletRequestParameterException): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(VALIDATION_REQUEST_MISSING_EXCEPTION)
+        return ApiResponse.error(VALIDATION_REQUEST_MISSING_EXCEPTION, "Parameter (${e.parameterName})을 입력해주세요")
+    }
+
+    /**
+     * 400 BadRequest
+     * RequestPart 필드가 입력되지 않은 경우 발생하는 Exception
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MissingServletRequestPartException::class)
+    protected fun handleMissingServletRequestPartException(e: MissingServletRequestPartException): ApiResponse<Nothing> {
+        log.warn(e.message)
+        return ApiResponse.error(VALIDATION_REQUEST_MISSING_EXCEPTION, "Multipart (${e.requestPartName})을 입력해주세요")
+    }
+
+    /**
+     * 400 BadRequest
+     * RequestPart 필수 Path Variable 가 입력되지 않은 경우 발생하는 Exception
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MissingPathVariableException::class)
+    protected fun handleMissingPathVariableException(e: MissingPathVariableException): ApiResponse<Nothing> {
+        log.warn(e.message)
+        return ApiResponse.error(VALIDATION_REQUEST_MISSING_EXCEPTION, "Path (${e.variableName})를 입력해주세요")
     }
 
     /**
