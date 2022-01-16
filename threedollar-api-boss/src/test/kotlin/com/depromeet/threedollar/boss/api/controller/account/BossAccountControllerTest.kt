@@ -15,11 +15,11 @@ internal class BossAccountControllerTest : ControllerTestUtils() {
         super.cleanup()
     }
 
-    @DisplayName("GET /api/v1/boss/account/me 200 OK")
+    @DisplayName("GET /boss/v1/account/me 200 OK")
     @Test
     fun 사장님의_자신의_계정_정보를_조회한다() {
         // when & then
-        mockMvc.get("/api/v1/boss/account/me") {
+        mockMvc.get("/boss/v1/account/me") {
             header(HttpHeaders.AUTHORIZATION, "Bearer $token")
         }.andDo {
             print()
@@ -32,11 +32,11 @@ internal class BossAccountControllerTest : ControllerTestUtils() {
         }
     }
 
-    @DisplayName("GET /api/v1/boss/account/me 401")
+    @DisplayName("GET /boss/v1/account/me 401")
     @Test
     fun 잘못된_토큰이면_401_에러_발생() {
         // when & then
-        mockMvc.get("/api/v1/boss/account/me") {
+        mockMvc.get("/boss/v1/account/me") {
             header(HttpHeaders.AUTHORIZATION, "Wrong Token")
         }.andDo {
             print()

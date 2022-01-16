@@ -85,11 +85,17 @@ subprojects {
 }
 
 def testProjects = [
+    // API Layer
     project(":threedollar-api-user"),
     project(":threedollar-api-boss"),
     project(":threedollar-admin"),
     project(":threedollar-api-core"),
+
+    // Domain Layer
     project(":threedollar-domain"),
+    project(":threedollar-document"),
+
+    // Common Layer
     project(":threedollar-common")
 ]
 
