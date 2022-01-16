@@ -21,11 +21,14 @@ services:
     ports:
       - "4001:4000"
     environment:
-      - "SPRING_PROFILES_ACTIVE=local"
+      - "SPRING_PROFILES_ACTIVE=dev"
     links:
       - "redis:redis"
+      - "mongo:mongo"
     volumes:
       - ~/logs:/logs
+    env_file:
+      - ~/env/boss-api-dev.env
     stop_signal: SIGTERM
     stop_grace_period: 1m
     restart: unless-stopped
@@ -34,3 +37,9 @@ services:
     command: redis-server --port 6379
     volumes:
       - ~/db/data:/data
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - ~/db/mongo:/data/db

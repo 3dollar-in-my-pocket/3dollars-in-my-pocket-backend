@@ -13,6 +13,7 @@ spring:
       - domain
       - redis
       - mongo
+      - secret
   servlet:
     multipart:
       max-file-size: 10MB

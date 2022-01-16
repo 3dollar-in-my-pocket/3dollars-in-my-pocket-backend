@@ -18,3 +18,13 @@ spring:
     activate:
       on-profile: local-docker
 ---
+spring:
+  data:
+    mongodb:
+      host: mongo
+      port: 27017
+      database: threedollar
+  config:
+    activate:
+      on-profile: dev
+---
