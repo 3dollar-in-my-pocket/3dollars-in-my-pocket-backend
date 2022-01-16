@@ -35,6 +35,8 @@ services:
   redis:
     image: redis:6.2.6
     command: redis-server --port 6379
+    ports:
+      - "6379"
     volumes:
       - ~/db/data:/data
     stop_signal: SIGTERM
@@ -42,6 +44,8 @@ services:
     restart: unless-stopped
   mongo:
     image: mongo:4.4.11
+    ports:
+      - "27017"
     volumes:
       - ~/db/mongo:/data/db
     stop_signal: SIGTERM
