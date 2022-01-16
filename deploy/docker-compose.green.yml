@@ -37,7 +37,7 @@ services:
     command: redis-server --port 6379
     volumes:
       - ~/db/data:/data
-  mongodb:
+  mongo:
     image: mongo
     ports:
       - 27017:27017
