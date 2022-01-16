@@ -92,7 +92,7 @@ class LocalTestController(
     companion object {
         private val BOSS = BossAccount(
             name = "테스트 계정",
-            socialInfo = BossAccountSocialInfo("test-social-id", BossAccountSocialType.NAVER)
+            socialInfo = BossAccountSocialInfo("test-social-id", BossAccountSocialType.KAKAO)
         )
     }
 

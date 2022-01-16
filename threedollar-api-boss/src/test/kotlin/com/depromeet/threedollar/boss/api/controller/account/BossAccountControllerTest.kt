@@ -26,7 +26,7 @@ internal class BossAccountControllerTest : ControllerTestUtils() {
         }.andExpect {
             status { isOk() }
             content {
-                jsonPath("$.data.socialType") { value(BossAccountSocialType.NAVER.toString()) }
+                jsonPath("$.data.socialType") { value(BossAccountSocialType.KAKAO.toString()) }
                 jsonPath("$.data.name") { value("테스트 계정") }
             }
         }

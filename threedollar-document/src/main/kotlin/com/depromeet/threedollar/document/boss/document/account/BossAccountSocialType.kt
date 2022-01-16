@@ -4,6 +4,6 @@ enum class BossAccountSocialType {
 
     KAKAO,
     APPLE,
-    NAVER,
+    GOOGLE,
 
 }
