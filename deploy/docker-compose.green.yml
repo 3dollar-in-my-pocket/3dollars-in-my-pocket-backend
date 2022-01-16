@@ -21,10 +21,9 @@ services:
     ports:
       - "4002:4000"
     environment:
-      - "SPRING_PROFILES_ACTIVE=dev"
+      - "SPRING_PROFILES_ACTIVE=local"
     links:
       - "redis:redis"
-      - "mongo:mongo"
     volumes:
       - ~/logs:/logs
     env_file:
@@ -39,15 +38,6 @@ services:
       - "6379"
     volumes:
       - ~/db/data:/data
-    stop_signal: SIGTERM
-    stop_grace_period: 1m
-    restart: unless-stopped
-  mongo:
-    image: mongo:4.4.11
-    expose:
-      - "27017"
-    volumes:
-      - ~/db/mongo:/data/db
     stop_signal: SIGTERM
     stop_grace_period: 1m
     restart: unless-stopped
