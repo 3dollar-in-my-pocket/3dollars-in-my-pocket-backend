@@ -18,8 +18,8 @@ class AuthController(
     private val authServiceProvider: AuthServiceProvider
 ) {
 
-    @ApiOperation("로그인을 요청합니다.")
-    @PostMapping("/api/v1/auth/login")
+    @ApiOperation("사장님 계정으로 로그인을 요청합니다.")
+    @PostMapping("/boss/v1/auth/login")
     fun login(
         @Valid @RequestBody request: LoginRequest
     ): ApiResponse<LoginResponse> {

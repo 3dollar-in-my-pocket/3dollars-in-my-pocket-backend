@@ -13,8 +13,8 @@ class BossAccountController(
     private val bossAccountService: BossAccountService
 ) {
 
-    @ApiOperation("사장님 자신의 계정 정보를 조회합니다")
-    @GetMapping("/api/v1/boss/account/me")
+    @ApiOperation("[인증] 사장님 자신의 계정 정보를 조회합니다")
+    @GetMapping("/boss/v1/account/me")
     fun getMyAccountInfo(
         @BossId bossId: String
     ): ApiResponse<BossAccountInfoResponse> {

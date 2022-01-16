@@ -15,7 +15,7 @@ class BossStoreController(
 ) {
 
     @ApiOperation("거리 내의 주변 가게 목록을 조회합니다.")
-    @GetMapping("/api/v1/boss/stores/near")
+    @GetMapping("/boss/v1/stores/near")
     fun getNearStores(
         @MapCoordinate mapCoordinate: CoordinateValue,
         @RequestParam distanceKm: Double

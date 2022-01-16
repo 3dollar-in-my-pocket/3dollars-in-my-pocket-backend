@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 class GoogleAuthService(
     private val bossAccountRepository: BossAccountRepository,
     private val googleAuthApiClient: GoogleAuthApiClient
-): AuthService {
+) : AuthService {
 
     override fun login(request: LoginRequest): String {
         val googleProfile = googleAuthApiClient.getProfileInfo(request.token)

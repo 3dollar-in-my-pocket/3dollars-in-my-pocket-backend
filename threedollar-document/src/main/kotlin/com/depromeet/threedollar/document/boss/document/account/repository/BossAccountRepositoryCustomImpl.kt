@@ -17,9 +17,9 @@ class BossAccountRepositoryCustomImpl(
     override fun findBossAccountBySocialInfo(socialId: String, socialType: BossAccountSocialType): BossAccount? {
         return mongoTemplate.findOne(
             query(
-                where("socialId").`is`(socialId)
+                where("socialInfo.socialId").`is`(socialId)
             ).addCriteria(
-                where("socialType").`is`(socialType)
+                where("socialInfo.socialType").`is`(socialType)
             ),
             BossAccount::class.java
         )
