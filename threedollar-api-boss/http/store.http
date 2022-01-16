@@ -1,3 +1,3 @@
 ### 주변 가게 목록 조회
-GET {{host_boss_api}}/api/v1/stores/near?mapLatitude=38&mapLongitude=127.01&distanceKm=1
+GET {{host_boss_api}}/api/v1/boss/stores/near?mapLatitude=38&mapLongitude=127.01&distanceKm=1
 Authorization: Bearer {{BOSS_AUTHORIZATION}}

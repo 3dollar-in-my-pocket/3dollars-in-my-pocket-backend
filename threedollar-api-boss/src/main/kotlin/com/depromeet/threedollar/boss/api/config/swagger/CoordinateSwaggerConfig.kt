@@ -1,5 +1,6 @@
-package com.depromeet.threedollar.boss.api.config.resolver
+package com.depromeet.threedollar.boss.api.config.swagger
 
+import com.depromeet.threedollar.boss.api.config.resolver.MapCoordinate
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 import springfox.documentation.builders.RequestParameterBuilder
