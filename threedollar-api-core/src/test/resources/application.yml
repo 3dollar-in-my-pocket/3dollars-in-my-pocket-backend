@@ -1,9 +1,9 @@
 logging:
-  level:
-    com.amazonaws.util.EC2MetadataUtils: error
-    com.amazonaws.internal.InstanceMetadataServiceResourceFetcher: error
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type: trace
+level:
+  com.amazonaws.util.EC2MetadataUtils: error
+  com.amazonaws.internal.InstanceMetadataServiceResourceFetcher: error
+  org.hibernate.SQL: DEBUG
+  org.hibernate.type: trace
 
 spring:
   output:
@@ -24,3 +24,6 @@ spring:
       jdbc-url: jdbc:h2:mem:testdb;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
   flyway:
     enabled: false
+  redis:
+    host: localhost
+    port: 6379
