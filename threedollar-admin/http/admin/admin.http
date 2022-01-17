@@ -1,14 +1,3 @@
-### 테스트를 위한 세션을 받아옵니다.
-GET {{host_admin}}/test-token
-
-> {%
-client.global.set("ADMIN_AUTHORIZATION", response.body["data"])
-client.test("200 OK", function() {
-    client.assert(response.status === 200, "응답 실패");
-});
-%}
-
-
 ### [인증] 자신의 관리자 정보를 불러옵니다.
 GET {{host_admin}}/admin/v1/admin/me
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}

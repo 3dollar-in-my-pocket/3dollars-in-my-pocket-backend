@@ -1,6 +1,6 @@
-package com.depromeet.threedollar.api.provider.upload;
+package com.depromeet.threedollar.application.provider.upload;
 
-import com.depromeet.threedollar.api.provider.upload.dto.request.ImageUploadFileRequest;
+import com.depromeet.threedollar.application.provider.upload.dto.request.ImageUploadFileRequest;
 import com.depromeet.threedollar.common.type.ImageType;
 import com.depromeet.threedollar.external.client.s3.S3Client;
 import org.junit.jupiter.api.Test;

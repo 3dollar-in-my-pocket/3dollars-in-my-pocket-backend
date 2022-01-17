@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.provider.upload.dto.request;
+package com.depromeet.threedollar.application.provider.upload.dto.request;
 
 import org.jetbrains.annotations.Nullable;
 

@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.boss.api.controller.store
 
+import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.boss.api.config.resolver.MapCoordinate
 import com.depromeet.threedollar.boss.api.service.store.BossStoreService
 import com.depromeet.threedollar.boss.api.service.store.dto.response.BossStoreInfoResponse
@@ -19,11 +20,11 @@ class BossStoreController(
     fun getNearStores(
         @MapCoordinate mapCoordinate: CoordinateValue,
         @RequestParam distanceKm: Double
-    ): List<BossStoreInfoResponse> {
-        return bossStoreService.getNearBossStores(
+    ): ApiResponse<List<BossStoreInfoResponse>> {
+        return ApiResponse.success(bossStoreService.getNearBossStores(
             mapCoordinate = mapCoordinate,
             distanceKm = distanceKm
-        )
+        ))
     }
 
 }

@@ -26,4 +26,21 @@ spring:
     enabled: false
   redis:
     host: localhost
-    port: 6379
+    port: ${random.int[10000,19999]}
+cloud:
+  aws:
+    s3:
+      bucket: test_s3_bucket
+      mock:
+        port: ${random.int[20000,29999]}
+    cloudfront:
+      url: test_cloudfront_url_test
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+apple:
+  client_id: test_apple_client_id
+  issuer: test_apple_issuer
+slack:
+  token: test_slack_token
