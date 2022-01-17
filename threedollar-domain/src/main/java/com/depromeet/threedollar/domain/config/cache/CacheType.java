@@ -16,6 +16,7 @@ public enum CacheType {
     USER_REVIEWS_COUNTS(CacheKey.USER_REVIEWS_COUNTS, Duration.ofMinutes(15)),
     MEDALS(CacheKey.MEDALS, Duration.ofHours(1)),
     USER_MEDALS(CacheKey.USER_MEDALS, Duration.ofMinutes(15)),
+    DISPLAY_MENU_CATEGOREIS(CacheKey.DISPLAY_MENU_CATGORIES, Duration.ofHours(1)),
     ;
 
     private final String key;
@@ -29,6 +30,7 @@ public enum CacheType {
         public static final String USER_REVIEWS_COUNTS = "USER_REVIEWS_COUNTS";
         public static final String MEDALS = "MEDALS";
         public static final String USER_MEDALS = "USER_MEDALS";
+        public static final String DISPLAY_MENU_CATGORIES = "DISPLAY_MENU_CATEGORIES";
 
     }
 
