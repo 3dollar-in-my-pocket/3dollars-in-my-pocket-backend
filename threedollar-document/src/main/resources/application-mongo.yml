@@ -21,9 +21,7 @@ spring:
 spring:
   data:
     mongodb:
-      host: mongo
-      port: 27017
-      database: threedollar
+      uri: ${secret.mongodb.uri}
   config:
     activate:
       on-profile: dev
