@@ -21,7 +21,7 @@ services:
     ports:
       - "4002:4000"
     environment:
-      - "SPRING_PROFILES_ACTIVE=local"
+      - "SPRING_PROFILES_ACTIVE=dev"
     links:
       - "redis:redis"
     volumes:
