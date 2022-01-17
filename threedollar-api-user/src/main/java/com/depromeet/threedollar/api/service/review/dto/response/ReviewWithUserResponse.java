@@ -15,6 +15,8 @@ public class ReviewWithUserResponse extends AuditingTimeResponse {
 
     private Long reviewId;
     private int rating;
+
+    @Nullable
     private String contents;
 
     private UserInfoResponse user;
