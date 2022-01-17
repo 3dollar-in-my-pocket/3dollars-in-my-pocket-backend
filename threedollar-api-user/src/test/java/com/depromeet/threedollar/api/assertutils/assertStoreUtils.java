@@ -137,4 +137,15 @@ public final class assertStoreUtils {
         );
     }
 
+    /**
+     * StorePromotion
+     */
+    public static void assertStorePromotionResponse(StorePromotionResponse response, String promotionTitle, String promotionIntroduction, String promotionImageUrl) {
+        assertAll(
+            () -> assertThat(response.getTitle()).isEqualTo(promotionTitle),
+            () -> assertThat(response.getIntroduction()).isEqualTo(promotionIntroduction),
+            () -> assertThat(response.getImageUrl()).isEqualTo(promotionImageUrl)
+        );
+    }
+
 }

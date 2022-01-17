@@ -37,6 +37,10 @@ public class StoreCreator {
         return createWithDefaultMenu(userId, storeName, latitude, longitude, 3);
     }
 
+    public static Store createWithDefaultMenuAndPromotion(Long userId, String storeName, double latitude, double longitude, StorePromotion promotion) {
+        return createWithDefaultMenuWithPromotion(userId, storeName, StoreType.CONVENIENCE_STORE, latitude, longitude, 3, promotion);
+    }
+
     public static Store createWithDefaultMenu(Long userId, String storeName, double latitude, double longitude, double rating) {
         return createWithDefaultMenu(userId, storeName, StoreType.STORE, latitude, longitude, rating);
     }
@@ -53,6 +57,20 @@ public class StoreCreator {
             .latitude(latitude)
             .longitude(longitude)
             .rating(rating)
+            .build();
+        store.addMenus(List.of(MenuCreator.create(store, "메뉴 이름", "메뉴 가격", MenuCategoryType.BUNGEOPPANG)));
+        return store;
+    }
+
+    private static Store createWithDefaultMenuWithPromotion(Long userId, String storeName, StoreType storeType, double latitude, double longitude, double rating, StorePromotion promotion) {
+        Store store = Store.builder()
+            .userId(userId)
+            .name(storeName)
+            .type(storeType)
+            .latitude(latitude)
+            .longitude(longitude)
+            .rating(rating)
+            .promotion(promotion)
             .build();
         store.addMenus(List.of(MenuCreator.create(store, "메뉴 이름", "메뉴 가격", MenuCategoryType.BUNGEOPPANG)));
         return store;
