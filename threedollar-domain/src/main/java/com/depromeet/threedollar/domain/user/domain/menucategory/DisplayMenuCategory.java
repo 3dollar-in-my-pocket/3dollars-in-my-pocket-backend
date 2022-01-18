@@ -12,6 +12,11 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Table(
+    uniqueConstraints = {
+        @UniqueConstraint(name = "uni_display_menu_category_1", columnNames = {"categoryType"})
+    }
+)
 public class DisplayMenuCategory extends AuditingTimeEntity {
 
     @Id

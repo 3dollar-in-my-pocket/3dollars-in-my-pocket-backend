@@ -10,5 +10,6 @@ CREATE TABLE `display_menu_category`
     `status`        VARCHAR(30)  NOT NULL,
     `created_at`    DATETIME(6) DEFAULT NULL,
     `updated_at`    DATETIME(6) DEFAULT NULL,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uni_display_menu_category_1` (`category_type`)
 ) ENGINE = InnoDB;
