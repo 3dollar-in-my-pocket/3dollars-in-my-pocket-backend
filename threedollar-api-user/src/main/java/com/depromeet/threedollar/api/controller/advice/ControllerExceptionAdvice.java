@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.controller.advice;
 
-import com.depromeet.threedollar.domain.common.event.UnExpectedErrorOccurredEvent;
+import com.depromeet.threedollar.domain.common.event.ServerExceptionOccurredEvent;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.common.exception.type.ErrorCode;
 import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseException;
@@ -185,8 +185,8 @@ public class ControllerExceptionAdvice {
         return ApiResponse.error(INTERNAL_SERVER_EXCEPTION);
     }
 
-    private UnExpectedErrorOccurredEvent createUnExpectedErrorOccurredEvent(ErrorCode errorCode, Exception exception) {
-        return UnExpectedErrorOccurredEvent.error(errorCode, exception, LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+    private ServerExceptionOccurredEvent createUnExpectedErrorOccurredEvent(ErrorCode errorCode, Exception exception) {
+        return ServerExceptionOccurredEvent.error(errorCode, exception, LocalDateTime.now(ZoneId.of("Asia/Seoul")));
     }
 
 }

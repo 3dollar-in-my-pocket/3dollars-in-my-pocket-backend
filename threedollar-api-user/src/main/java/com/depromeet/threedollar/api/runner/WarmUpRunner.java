@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api;
+package com.depromeet.threedollar.api.runner;
 
 import com.depromeet.threedollar.common.type.RecommendedPlace;
 import com.depromeet.threedollar.domain.user.domain.popup.PopupPlatformType;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Profile({"dev", "stage", "prod"})
 @RequiredArgsConstructor
 @Component
-public class WarmingUpApplication implements CommandLineRunner {
+public class WarmUpRunner implements CommandLineRunner {
 
     private static final int API_CALL_COUNT = 10;
 

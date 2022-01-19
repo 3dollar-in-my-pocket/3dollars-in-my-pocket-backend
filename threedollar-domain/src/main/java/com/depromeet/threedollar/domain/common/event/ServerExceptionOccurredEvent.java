@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.domain.common.event;
 
 import com.depromeet.threedollar.common.exception.type.ErrorCode;
-import com.depromeet.threedollar.common.type.NotificationType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -10,9 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class UnExpectedErrorOccurredEvent {
-
-    private final NotificationType type;
+public class ServerExceptionOccurredEvent {
 
     private final ErrorCode errorCode;
 
@@ -20,8 +17,8 @@ public class UnExpectedErrorOccurredEvent {
 
     private final LocalDateTime timeStamp;
 
-    public static UnExpectedErrorOccurredEvent error(ErrorCode errorCode, Exception exception, LocalDateTime timeStamp) {
-        return new UnExpectedErrorOccurredEvent(NotificationType.ERROR, errorCode, exception, timeStamp);
+    public static ServerExceptionOccurredEvent error(ErrorCode errorCode, Exception exception, LocalDateTime timeStamp) {
+        return new ServerExceptionOccurredEvent(errorCode, exception, timeStamp);
     }
 
 }
