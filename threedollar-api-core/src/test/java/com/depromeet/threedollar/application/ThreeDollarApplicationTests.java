@@ -1,16 +1,13 @@
 package com.depromeet.threedollar.application;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@EnableAutoConfiguration
-@SpringBootConfiguration
+@SpringBootApplication(scanBasePackageClasses = {ThreeDollarApplicationRoot.class})
 class ThreeDollarApplicationTests {
 
     @Test
     void contextsLoads() {
-
     }
 
 }

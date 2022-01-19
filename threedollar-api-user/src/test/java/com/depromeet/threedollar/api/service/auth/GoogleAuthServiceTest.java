@@ -25,8 +25,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest
 class GoogleAuthServiceTest {
 
-    private static final String socialId = "google-social-id";
-    private static final UserSocialType socialType = UserSocialType.GOOGLE;
+    private static final String SOCIAL_ID = "google-social-id";
+    private static final UserSocialType SOCIAL_TYPE = UserSocialType.GOOGLE;
 
     private AuthService authService;
 
@@ -56,10 +56,10 @@ class GoogleAuthServiceTest {
         @Test
         void 구글_로그인_성공시_ID가_반환된다() {
             // given
-            User user = UserCreator.create(socialId, socialType, "닉네임");
+            User user = UserCreator.create(SOCIAL_ID, SOCIAL_TYPE, "닉네임");
             userRepository.save(user);
 
-            LoginRequest request = LoginRequest.testInstance("token", socialType);
+            LoginRequest request = LoginRequest.testInstance("token", SOCIAL_TYPE);
 
             // when
             Long userId = authService.login(request);
@@ -71,7 +71,7 @@ class GoogleAuthServiceTest {
         @Test
         void 구글_로그인시_가입한_유저가_아니면_NotFound_에러가_발생한다() {
             // given
-            LoginRequest request = LoginRequest.testInstance("token", socialType);
+            LoginRequest request = LoginRequest.testInstance("token", SOCIAL_TYPE);
 
             // when & then
             assertThatThrownBy(() -> authService.login(request)).isInstanceOf(NotFoundException.class);
@@ -85,7 +85,7 @@ class GoogleAuthServiceTest {
         @Test
         void 구글_회원가입_성공시_새로운_유저정보가_저장된다() {
             // given
-            SignUpRequest request = SignUpRequest.testInstance("token", "가슴속 삼천원", socialType);
+            SignUpRequest request = SignUpRequest.testInstance("token", "가슴속 삼천원", SOCIAL_TYPE);
 
             // when
             authService.signUp(request);
@@ -93,15 +93,15 @@ class GoogleAuthServiceTest {
             // then
             List<User> users = userRepository.findAll();
             assertThat(users).hasSize(1);
-            assertUser(users.get(0), socialId, request.getSocialType(), request.getName());
+            assertUser(users.get(0), SOCIAL_ID, request.getSocialType(), request.getName());
         }
 
         @Test
         void 구글_회원가입시_이미_가입한_유저면_Conflict_에러_발생() {
             // given
-            userRepository.save(UserCreator.create(socialId, socialType, "헬로우"));
+            userRepository.save(UserCreator.create(SOCIAL_ID, SOCIAL_TYPE, "헬로우"));
 
-            SignUpRequest request = SignUpRequest.testInstance("token", "가슴속 삼천원", socialType);
+            SignUpRequest request = SignUpRequest.testInstance("token", "가슴속 삼천원", SOCIAL_TYPE);
 
             // when & then
             assertThatThrownBy(() -> authService.signUp(request)).isInstanceOf(ConflictException.class);
@@ -113,7 +113,7 @@ class GoogleAuthServiceTest {
 
         @Override
         public GoogleProfileInfoResponse getProfileInfo(String accessToken) {
-            return GoogleProfileInfoResponse.testInstance(socialId);
+            return GoogleProfileInfoResponse.testInstance(SOCIAL_ID);
         }
 
     }

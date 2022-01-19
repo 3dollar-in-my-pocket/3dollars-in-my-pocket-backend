@@ -1,0 +1,46 @@
+logging:
+level:
+  com.amazonaws.util.EC2MetadataUtils: error
+  com.amazonaws.internal.InstanceMetadataServiceResourceFetcher: error
+  org.hibernate.SQL: DEBUG
+  org.hibernate.type: trace
+
+spring:
+  output:
+    ansi:
+      enabled: always
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    hikari:
+      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:h2:mem:testdb;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
+  flyway:
+    enabled: false
+  redis:
+    host: localhost
+    port: ${random.int[10000,19999]}
+cloud:
+  aws:
+    s3:
+      bucket: test_s3_bucket
+      mock:
+        port: ${random.int[20000,29999]}
+    cloudfront:
+      url: test_cloudfront_url_test
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+apple:
+  client_id: test_apple_client_id
+  issuer: test_apple_issuer
+slack:
+  token: test_slack_token

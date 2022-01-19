@@ -6,9 +6,9 @@ import org.springframework.session.data.redis.config.ConfigureRedisAction
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession
 
 /**
- * 만료시간: 7일
+ * 만료시간: 30일
  */
-@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 60 * 60 * 24 * 7)
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 60 * 60 * 24 * 30)
 @Configuration
 class RedisSessionConfig {
 

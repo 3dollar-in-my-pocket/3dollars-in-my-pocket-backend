@@ -6,3 +6,14 @@ client.test("200 OK", function() {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
+
+
+### 테스트를 위한 세션을 받아옵니다.
+GET {{host_admin}}/test-token
+
+> {%
+client.global.set("ADMIN_AUTHORIZATION", response.body["data"])
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}

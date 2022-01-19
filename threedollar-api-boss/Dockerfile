@@ -10,7 +10,7 @@ RUN ./gradlew clean :threedollar-api-boss:bootJar \
 
 FROM adoptopenjdk/openjdk11:alpine-jre
 ENV HOME=/usr/app
-COPY --from=BUILD  $HOME/threedollar-boss-api/build/libs/threedollar-api-boss.jar /threedollar-api-boss.jar
+COPY --from=BUILD  $HOME/threedollar-api-boss/build/libs/threedollar-api-boss.jar /threedollar-api-boss.jar
 EXPOSE 4000
 
 ENTRYPOINT ["java", "-jar", "-Duser.timezone=Asia/Seoul", "/threedollar-api-boss.jar"]

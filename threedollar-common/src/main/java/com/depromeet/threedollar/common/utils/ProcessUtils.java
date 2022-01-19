@@ -8,12 +8,10 @@ import org.springframework.util.StringUtils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.ServerSocket;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ProcessUtils {
-
-    private static final int LOWEST_PORT = 10000;
-    private static final int HIGHEST_PORT = 65535;
 
     private static final String OS = System.getProperty("os.name").toLowerCase();
 
@@ -21,14 +19,13 @@ public final class ProcessUtils {
         return isRunning(executeGrepProcessCommand(port));
     }
 
-    public static int findAvailableRandomPort() throws IOException {
-        for (int port = LOWEST_PORT; port <= HIGHEST_PORT; port++) {
-            Process process = executeGrepProcessCommand(port);
-            if (!isRunning(process)) {
-                return port;
-            }
+    public static int findAvailableRandomPort() {
+        try (ServerSocket server = new ServerSocket(0)) {
+            server.setReuseAddress(true);
+            return server.getLocalPort();
+        } catch (IOException e) {
+            throw new InternalServerException(String.format("사용 가능한 랜덤 포트를 찾는 중 에러가 발생했습니다. message: (%s)", e.getMessage()));
         }
-        throw new InternalServerException(String.format("사용가능한 포트를 찾을 수 없습니다. (%s ~ %s)", LOWEST_PORT, HIGHEST_PORT));
     }
 
     private static Process executeGrepProcessCommand(int port) throws IOException {

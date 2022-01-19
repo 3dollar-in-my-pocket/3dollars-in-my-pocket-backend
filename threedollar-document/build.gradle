@@ -1,0 +1,13 @@
+dependencies {
+    api project(":threedollar-common")
+
+    // MongoDB
+    api 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+    // Embedded MongoDB
+    implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+}
+
+bootJar { enabled = false }
+jar { enabled = true }
+

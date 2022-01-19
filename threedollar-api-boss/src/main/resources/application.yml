@@ -12,6 +12,12 @@ spring:
     include:
       - domain
       - redis
+      - mongo
+      - secret
+      - swagger
+      - thirdparty
+      - feign
+      - cloud
   servlet:
     multipart:
       max-file-size: 10MB

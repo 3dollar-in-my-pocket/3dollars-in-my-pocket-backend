@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.service.storeimage;
 
-import com.depromeet.threedollar.api.provider.upload.UploadProvider;
 import com.depromeet.threedollar.api.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.service.storeimage.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.api.service.storeimage.dto.response.StoreImageResponse;
+import com.depromeet.threedollar.application.provider.upload.UploadProvider;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.user.domain.storeimage.StoreImage;
 import com.depromeet.threedollar.domain.user.domain.storeimage.StoreImageRepository;

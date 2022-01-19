@@ -3,6 +3,7 @@ ext {
 }
 
 dependencies {
+    api project(":threedollar-external")
     api project(":threedollar-domain")
 
     // Jackson

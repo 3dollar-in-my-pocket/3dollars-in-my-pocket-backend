@@ -1,10 +1,13 @@
 package com.depromeet.threedollar.domain.user.domain.store;
 
+import com.depromeet.threedollar.common.model.EnumModel;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+@Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public enum StoreType {
+public enum StoreType implements EnumModel {
 
     ROAD("길거리"),
     STORE("매장"),
@@ -12,5 +15,10 @@ public enum StoreType {
     ;
 
     private final String description;
+
+    @Override
+    public String getKey() {
+        return name();
+    }
 
 }

@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = "2.5.7"
+        springBootVersion = "2.5.8"
         kotlinVersion = "1.5.32"
         springCloudVersion = "2020.0.4"
     }
@@ -13,9 +13,6 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
     }
 }
-
-// log4j2 Vulnerability (스프링 부트 기본 버전 올라가면 제거)
-ext['log4j2.version'] = '2.15.0'
 
 allprojects {
     group = "com.depromeet.threedollar"
@@ -85,11 +82,17 @@ subprojects {
 }
 
 def testProjects = [
+    // API Layer
     project(":threedollar-api-user"),
     project(":threedollar-api-boss"),
     project(":threedollar-admin"),
     project(":threedollar-api-core"),
+
+    // Domain Layer
     project(":threedollar-domain"),
+    project(":threedollar-document"),
+
+    // Common Layer
     project(":threedollar-common")
 ]
 
