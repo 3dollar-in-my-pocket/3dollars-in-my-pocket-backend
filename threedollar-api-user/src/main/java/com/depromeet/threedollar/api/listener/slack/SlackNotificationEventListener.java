@@ -1,19 +1,21 @@
-package com.depromeet.threedollar.api.listener.error;
+package com.depromeet.threedollar.api.listener.slack;
 
 import com.depromeet.threedollar.domain.common.event.ApplicationStateChangedEvent;
 import com.depromeet.threedollar.domain.common.event.ServerExceptionOccurredEvent;
 import com.depromeet.threedollar.external.client.slack.SlackApiClient;
 import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest;
 import io.sentry.Sentry;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import static com.depromeet.threedollar.external.client.slack.type.SlackNotificationMessageType.ERROR_MESSAGE;
+import static com.depromeet.threedollar.external.client.slack.type.SlackNotificationMessageType.INFO_MESSAGE;
+
 @RequiredArgsConstructor
 @Component
-public class ServerExceptionEventListener {
+public class SlackNotificationEventListener {
 
     private final SlackApiClient slackApiCaller;
 
@@ -21,7 +23,8 @@ public class ServerExceptionEventListener {
     @EventListener
     public void sendErrorNotification(ServerExceptionOccurredEvent event) {
         Sentry.captureException(event.getException());
-        slackApiCaller.postMessage(PostSlackMessageRequest.of(String.format(NotificationMessageFormat.ERROR_MESSAGE.format,
+
+        slackApiCaller.postMessage(PostSlackMessageRequest.of(ERROR_MESSAGE.generateMessage(
             event.getErrorCode().getCode(),
             event.getTimeStamp(),
             event.getErrorCode().getMessage(),
@@ -32,21 +35,10 @@ public class ServerExceptionEventListener {
     @Async
     @EventListener
     public void sendInfoNotification(ApplicationStateChangedEvent event) {
-        slackApiCaller.postMessage(PostSlackMessageRequest.of(String.format(NotificationMessageFormat.INFO_MESSAGE.format,
+        slackApiCaller.postMessage(PostSlackMessageRequest.of(INFO_MESSAGE.generateMessage(
             event.getTimeStamp(),
             event.getMessage()
         )));
-    }
-
-    @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-    private enum NotificationMessageFormat {
-
-        ERROR_MESSAGE("[Error : %s]\nTimestamps: %s\nMessage: %s\nException: %s"),
-        INFO_MESSAGE("[Info]\nTimestamps: %s\nMessage: %s"),
-        ;
-
-        private final String format;
-
     }
 
 }

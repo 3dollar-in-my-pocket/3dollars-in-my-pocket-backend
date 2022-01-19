@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.runner;
 
-import com.depromeet.threedollar.common.type.RecommendedPlace;
+import com.depromeet.threedollar.common.type.FamousPlace;
 import com.depromeet.threedollar.domain.user.domain.popup.PopupPlatformType;
 import com.depromeet.threedollar.external.client.LocalWarmUpApiClient;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class WarmUpRunner implements CommandLineRunner {
     public void run(String... args) {
         try {
             for (int i = 0; i < API_CALL_COUNT; i++) {
-                for (RecommendedPlace place : RecommendedPlace.values()) {
+                for (FamousPlace place : FamousPlace.values()) {
                     apiClient.retrieveNearStores(place.getLatitude(), place.getLongitude(), place.getLatitude(), place.getLongitude(), 2000);
                 }
                 apiClient.getMedals();

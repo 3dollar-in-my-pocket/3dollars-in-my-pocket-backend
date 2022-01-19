@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public enum RecommendedPlace {
+public enum FamousPlace {
 
     GANGNAM("강남역", 37.498095, 127.02761),
     PANGYO("판교역", 37.394230, 127.110945),
