@@ -1,12 +1,13 @@
 package com.depromeet.threedollar.domain.user.domain.faq;
 
+import com.depromeet.threedollar.common.model.EnumModel;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public enum FaqCategory {
+public enum FaqCategory implements EnumModel {
 
     STORE("가게", 1),
     REVIEW_MENU("리뷰 및 메뉴", 2),
@@ -18,5 +19,10 @@ public enum FaqCategory {
 
     private final String description;
     private final int displayOrder;
+
+    @Override
+    public String getKey() {
+        return name();
+    }
 
 }

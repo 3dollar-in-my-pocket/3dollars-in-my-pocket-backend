@@ -1,10 +1,13 @@
 package com.depromeet.threedollar.domain.user.domain.storedelete;
 
+import com.depromeet.threedollar.common.model.EnumModel;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+@Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public enum DeleteReasonType {
+public enum DeleteReasonType implements EnumModel {
 
     NOSTORE("없어진 가게에요"),
     WRONGNOPOSITION("위치가 잘못됐어요"),
@@ -13,5 +16,10 @@ public enum DeleteReasonType {
     ;
 
     private final String description;
+
+    @Override
+    public String getKey() {
+        return name();
+    }
 
 }
