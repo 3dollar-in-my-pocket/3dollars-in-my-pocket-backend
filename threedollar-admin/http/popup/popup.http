@@ -1,0 +1,63 @@
+### 팝업 저장
+POST {{host_admin}}/admin/v1/popup
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+Content-Type: application/json
+
+{
+    "positionType": "SPLASH",
+    "platformType": "AOS",
+    "imageUrl": "https://image.png",
+    "linkUrl": "https://link.com",
+    "priority": 10,
+    "startDateTime": "2022-01-01T00:00:00",
+    "endDateTime": "2022-01-01T00:00:00"
+}
+
+> {%
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+### 팝업 조회
+GET {{host_admin}}/admin/v1/popups?page=1&size=3
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 팝업 수정
+PUT {{host_admin}}/admin/v1/popup/1
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+Content-Type: application/json
+
+{
+    "positionType": "SPLASH",
+    "platformType": "AOS",
+    "imageUrl": "https://image1.png",
+    "linkUrl": "https://link1.com",
+    "priority": 1,
+    "startDateTime": "2022-03-01T00:00:00",
+    "endDateTime": "2022-03-01T00:00:00"
+}
+
+> {%
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 팝업 삭제
+DELETE {{host_admin}}/admin/v1/popup/1
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}

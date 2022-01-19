@@ -3,6 +3,7 @@ package com.depromeet.threedollar.admin.controller.popup
 import com.depromeet.threedollar.admin.service.popup.PopupAdminService
 import com.depromeet.threedollar.admin.service.popup.dto.request.AddPopupRequest
 import com.depromeet.threedollar.admin.service.popup.dto.request.UpdatePopupRequest
+import com.depromeet.threedollar.admin.service.popup.dto.response.PopupsWithPagingResponse
 import com.depromeet.threedollar.application.common.dto.ApiResponse
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
@@ -37,6 +38,15 @@ class PopupController(
         return ApiResponse.SUCCESS
     }
 
-    // TODO: 페이지네이션으로 팝업 목록을 조회하는 API 추가
+    @GetMapping("/admin/v1/popups")
+    fun getPopups(
+        @RequestParam size: Long,
+        @RequestParam page: Int
+    ): ApiResponse<PopupsWithPagingResponse> {
+        return ApiResponse.success(popupAdminService.getPopups(
+            size = size,
+            page = page
+        ))
+    }
 
 }

@@ -29,4 +29,20 @@ public class PopupRepositoryCustomImpl implements PopupRepositoryCustom {
             .fetch();
     }
 
+    @Override
+    public List<Popup> findAllWithPage(long size, int page) {
+        return queryFactory.selectFrom(popup)
+            .orderBy(popup.id.desc())
+            .offset(page * size)
+            .limit(size)
+            .fetch();
+    }
+
+    // TDOO: 총 개수 캐싱
+    @Override
+    public long findAllCounts() {
+        return queryFactory.selectFrom(popup)
+            .fetchCount();
+    }
+
 }

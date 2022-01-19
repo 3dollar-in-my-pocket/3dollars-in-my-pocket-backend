@@ -11,4 +11,8 @@ public interface PopupRepositoryCustom {
 
     List<Popup> findActivatedPopupsByPositionAndPlatform(PopupPositionType positionType, PopupPlatformType platformType, LocalDateTime dateTime);
 
+    List<Popup> findAllWithPage(long size, int page);
+
+    long findAllCounts();
+
 }

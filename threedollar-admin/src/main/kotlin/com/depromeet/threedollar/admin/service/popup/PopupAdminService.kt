@@ -2,6 +2,7 @@ package com.depromeet.threedollar.admin.service.popup
 
 import com.depromeet.threedollar.admin.service.popup.dto.request.AddPopupRequest
 import com.depromeet.threedollar.admin.service.popup.dto.request.UpdatePopupRequest
+import com.depromeet.threedollar.admin.service.popup.dto.response.PopupsWithPagingResponse
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.user.domain.popup.Popup
 import com.depromeet.threedollar.domain.user.domain.popup.PopupRepository
@@ -31,6 +32,14 @@ class PopupAdminService(
     fun deletePopup(popupId: Long) {
         val popup = findPopupById(popupRepository, popupId)
         popupRepository.delete(popup)
+    }
+
+    @Transactional(readOnly = true)
+    fun getPopups(size: Long, page: Int): PopupsWithPagingResponse {
+        return PopupsWithPagingResponse.of(
+            popups = popupRepository.findAllWithPage(size, page - 1),
+            totalCounts = popupRepository.findAllCounts()
+        )
     }
 
 }
