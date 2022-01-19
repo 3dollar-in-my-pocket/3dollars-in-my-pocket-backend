@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.runner;
 
+import com.depromeet.threedollar.common.type.ApplicationType;
 import com.depromeet.threedollar.domain.common.event.ApplicationStateChangedEvent;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-@Profile({"dev", "prod"})
+@Profile({"prod"})
 @RequiredArgsConstructor
 @Component
 public class ApplicationRunner implements CommandLineRunner, ApplicationListener<ContextClosedEvent> {
@@ -22,12 +23,12 @@ public class ApplicationRunner implements CommandLineRunner, ApplicationListener
 
     @Override
     public void run(String... args) {
-        eventPublisher.publishEvent(ApplicationStateChangedEvent.start(LocalDateTime.now(ZoneId.of("Asia/Seoul"))));
+        eventPublisher.publishEvent(ApplicationStateChangedEvent.start(ApplicationType.USER_API, LocalDateTime.now(ZoneId.of("Asia/Seoul"))));
     }
 
     @Override
     public void onApplicationEvent(@NotNull ContextClosedEvent event) {
-        eventPublisher.publishEvent(ApplicationStateChangedEvent.stop(LocalDateTime.now(ZoneId.of("Asia/Seoul"))));
+        eventPublisher.publishEvent(ApplicationStateChangedEvent.stop(ApplicationType.USER_API, LocalDateTime.now(ZoneId.of("Asia/Seoul"))));
     }
 
 }

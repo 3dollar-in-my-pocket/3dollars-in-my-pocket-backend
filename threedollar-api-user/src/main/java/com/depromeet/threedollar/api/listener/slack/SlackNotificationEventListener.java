@@ -25,6 +25,7 @@ public class SlackNotificationEventListener {
         Sentry.captureException(event.getException());
 
         slackApiCaller.postMessage(PostSlackMessageRequest.of(ERROR_MESSAGE.generateMessage(
+            event.getApplicationType().getDescription(),
             event.getErrorCode().getCode(),
             event.getTimeStamp(),
             event.getErrorCode().getMessage(),
@@ -36,6 +37,7 @@ public class SlackNotificationEventListener {
     @EventListener
     public void sendInfoNotification(ApplicationStateChangedEvent event) {
         slackApiCaller.postMessage(PostSlackMessageRequest.of(INFO_MESSAGE.generateMessage(
+            event.getApplicationType().getDescription(),
             event.getTimeStamp(),
             event.getMessage()
         )));

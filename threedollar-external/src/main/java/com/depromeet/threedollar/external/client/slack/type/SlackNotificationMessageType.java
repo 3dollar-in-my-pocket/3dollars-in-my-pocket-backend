@@ -6,8 +6,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum SlackNotificationMessageType {
 
-    ERROR_MESSAGE("[Error : %s]\nTimestamps: %s\nMessage: %s\nException: %s"),
-    INFO_MESSAGE("[Info]\nTimestamps: %s\nMessage: %s"),
+    ERROR_MESSAGE("[%s - Error : %s]\nTimestamps: %s\nMessage: %s\nException: %s"),
+    INFO_MESSAGE("[%s - Info]\nTimestamps: %s\nMessage: %s"),
     ;
 
     private final String template;
