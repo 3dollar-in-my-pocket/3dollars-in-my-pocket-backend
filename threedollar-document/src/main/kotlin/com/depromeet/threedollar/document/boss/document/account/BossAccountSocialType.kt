@@ -1,9 +1,22 @@
 package com.depromeet.threedollar.document.boss.document.account
 
-enum class BossAccountSocialType {
+import com.depromeet.threedollar.common.model.EnumModel
 
-    KAKAO,
-    APPLE,
-    GOOGLE,
+enum class BossAccountSocialType(
+    private val description: String
+) : EnumModel {
+
+    KAKAO("카카오"),
+    APPLE("애플"),
+    GOOGLE("구글"),
+    ;
+
+    override fun getKey(): String {
+        return name
+    }
+
+    override fun getDescription(): String {
+        return description
+    }
 
 }
