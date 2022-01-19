@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -46,13 +47,38 @@ public class Popup extends AuditingTimeEntity {
     private DateTimeInterval dateTimeInterval;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private Popup(PopupPositionType positionType, PopupPlatformType platformType, String imageUrl, String linkUrl, LocalDateTime startDateTime, LocalDateTime endDateTime, int priority) {
+    private Popup(PopupPositionType positionType, PopupPlatformType platformType, String imageUrl, String linkUrl,
+                  LocalDateTime startDateTime, LocalDateTime endDateTime, int priority) {
         this.positionType = positionType;
         this.platformType = platformType;
         this.imageUrl = imageUrl;
         this.linkUrl = linkUrl;
         this.dateTimeInterval = DateTimeInterval.of(startDateTime, endDateTime);
         this.priority = priority;
+    }
+
+    public static Popup newInstance(PopupPositionType positionType, PopupPlatformType platformType, String imageUrl, String linkUrl,
+                                    LocalDateTime startDateTime, LocalDateTime endDateTime, int priority) {
+        return Popup.builder()
+            .positionType(positionType)
+            .platformType(platformType)
+            .imageUrl(imageUrl)
+            .linkUrl(linkUrl)
+            .startDateTime(startDateTime)
+            .endDateTime(endDateTime)
+            .priority(priority)
+            .build();
+    }
+
+    public void update(@NotNull PopupPositionType positionType, @NotNull PopupPlatformType platformType,
+                       @NotNull String imageUrl, @Nullable String linkUrl, int priority,
+                       @NotNull LocalDateTime startDateTime, @NotNull LocalDateTime endDateTime) {
+        this.positionType = positionType;
+        this.platformType = platformType;
+        this.imageUrl = imageUrl;
+        this.linkUrl = linkUrl;
+        this.priority = priority;
+        this.dateTimeInterval = DateTimeInterval.of(startDateTime, endDateTime);
     }
 
     @NotNull
