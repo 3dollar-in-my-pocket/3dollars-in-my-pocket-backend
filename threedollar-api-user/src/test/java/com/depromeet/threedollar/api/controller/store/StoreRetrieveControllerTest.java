@@ -68,6 +68,9 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
     @Autowired
     private StoreImageRepository storeImageRepository;
 
+    @Autowired
+    private StorePromotionRepository storePromotionRepository;
+
     @AfterEach
     void cleanUp() {
         super.cleanup();
@@ -78,6 +81,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         menuRepository.deleteAllInBatch();
         visitHistoryRepository.deleteAllInBatch();
         storeRepository.deleteAllInBatch();
+        storePromotionRepository.deleteAllInBatch();
     }
 
     @DisplayName("GET /api/v2/stores/near")
@@ -254,6 +258,33 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertThat(response.getData()).hasSize(2);
             assertThat(response.getData().get(0).getStoreId()).isEqualTo(store1.getId());
             assertThat(response.getData().get(1).getStoreId()).isEqualTo(store2.getId());
+        }
+
+        @Test
+        void 프로모션이_추가된_가게인경우_프로모션_정보도_함께_반환된다() throws Exception {
+            // given
+            String introduction = "프로모션 설명";
+            String iconUrl = "https://promotion.png";
+            boolean isDisplayOnMarker = true;
+            boolean isDisplayOnTheDetail = false;
+
+            StorePromotion storePromotion = StorePromotionCreator.create(introduction, iconUrl, isDisplayOnMarker, isDisplayOnTheDetail);
+            storePromotionRepository.save(storePromotion);
+
+            Store store = StoreCreator.createWithDefaultMenuAndPromotion(testUser.getId(), "가게 이름 1", 34, 126, storePromotion);
+            storeRepository.save(store);
+
+            RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
+                .distance(1000)
+                .build();
+
+            // when
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, CoordinateValue.of(34.0, 126.0), CoordinateValue.of(34.0, 126.0), 200);
+
+            // then
+            assertThat(response.getData()).hasSize(1);
+            assertStoreWithVisitsAndDistanceResponse(response.getData().get(0), store.getId(), store.getLatitude(), store.getLongitude(), store.getName(), store.getRating());
+            assertStorePromotionResponse(response.getData().get(0).getPromotion(), introduction, iconUrl, isDisplayOnMarker, isDisplayOnTheDetail);
         }
 
     }
@@ -511,6 +542,36 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(0), todayHistory, testUser),
                 () -> assertVisitHistoryWithUserResponse(response.getData().getVisitHistories().get(1), lastWeekHistory, testUser)
             );
+        }
+
+        @Test
+        void 가게_상세_조회시_프로모션이_추가된_가게인경우_프로모션_정보도_함께_반환된다() throws Exception {
+            // given
+            String introduction = "프로모션 설명";
+            String iconUrl = "https://promotion.png";
+            boolean isDisplayOnMarker = false;
+            boolean isDisplayOnTheDetail = true;
+
+            StorePromotion storePromotion = StorePromotionCreator.create(introduction, iconUrl, isDisplayOnMarker, isDisplayOnTheDetail);
+            storePromotionRepository.save(storePromotion);
+
+            Store store = StoreCreator.createWithDefaultMenuAndPromotion(testUser.getId(), "가게 이름", 34.0, 126.0, storePromotion);
+            DayOfTheWeek day = DayOfTheWeek.FRIDAY;
+            store.addAppearanceDays(Set.of(day));
+
+            PaymentMethodType paymentMethodType = PaymentMethodType.CASH;
+            store.addPaymentMethods(Set.of(paymentMethodType));
+
+            storeRepository.save(store);
+
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId());
+
+            // when
+            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, CoordinateValue.of(34.0, 126.0), 200);
+
+            // then
+            assertStoreDetailInfoResponse(response.getData(), store, testUser);
+            assertStorePromotionResponse(response.getData().getPromotion(), introduction, iconUrl, isDisplayOnMarker, isDisplayOnTheDetail);
         }
 
     }

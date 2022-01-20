@@ -15,6 +15,7 @@ import com.depromeet.threedollar.domain.user.collection.user.UserDictionary;
 import com.depromeet.threedollar.domain.user.collection.visit.VisitHistoryCounter;
 import com.depromeet.threedollar.domain.user.domain.visit.projection.VisitHistoryWithUserProjection;
 import lombok.*;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,9 +30,16 @@ public class StoreDetailResponse extends AuditingTimeResponse {
     private double latitude;
     private double longitude;
     private String storeName;
+
+    @Nullable
     private StoreType storeType;
+
     private double rating;
     private int distance;
+
+    @Nullable
+    private StorePromotionResponse promotion;
+
     private final List<MenuCategoryType> categories = new ArrayList<>();
     private final Set<DayOfTheWeek> appearanceDays = new HashSet<>();
     private final Set<PaymentMethodType> paymentMethods = new HashSet<>();
@@ -51,8 +59,8 @@ public class StoreDetailResponse extends AuditingTimeResponse {
     private final List<VisitHistoryWithUserResponse> visitHistories = new ArrayList<>();
 
     @Builder(access = AccessLevel.PRIVATE)
-    private StoreDetailResponse(Long storeId, double latitude, double longitude, String storeName, StoreType storeType,
-                                double rating, int distance, UserInfoResponse user, VisitHistoryCountsResponse visitHistory) {
+    private StoreDetailResponse(Long storeId, double latitude, double longitude, String storeName, @Nullable StoreType storeType,
+                                double rating, int distance, StorePromotionResponse promotion, UserInfoResponse user, VisitHistoryCountsResponse visitHistory) {
         this.storeId = storeId;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -60,6 +68,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
         this.storeType = storeType;
         this.rating = rating;
         this.distance = distance;
+        this.promotion = promotion;
         this.user = user;
         this.visitHistory = visitHistory;
     }
@@ -74,6 +83,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
             .storeType(store.getType())
             .rating(store.getRating())
             .distance(LocationDistanceUtils.getDistance(store.getLatitude(), store.getLongitude(), latitude, longitude))
+            .promotion(StorePromotionResponse.of(store.getPromotion()))
             .user(UserInfoResponse.of(userDictionary.getUser(store.getUserId())))
             .visitHistory(VisitHistoryCountsResponse.of(visitHistoriesCollection.getStoreExistsVisitsCount(store.getId()), visitHistoriesCollection.getStoreNotExistsVisitsCount(store.getId())))
             .build();

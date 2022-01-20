@@ -4,6 +4,7 @@ import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.domain.user.domain.review.Review;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @ToString
 @Getter
@@ -12,6 +13,7 @@ public class ReviewInfoResponse extends AuditingTimeResponse {
 
     private Long reviewId;
     private Long storeId;
+    @Nullable
     private String contents;
     private int rating;
 
