@@ -263,11 +263,12 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 프로모션이_추가된_가게인경우_프로모션_정보도_함께_반환된다() throws Exception {
             // given
-            String promotionTitle = "프로모션 제목";
-            String promotionIntroduction = "프로모션 설명";
-            String promotionImageUrl = "https://promotion.png";
+            String introduction = "프로모션 설명";
+            String iconUrl = "https://promotion.png";
+            boolean isDisplayOnMarker = true;
+            boolean isDisplayOnTheDetail = false;
 
-            StorePromotion storePromotion = StorePromotionCreator.create(promotionTitle, promotionIntroduction, promotionImageUrl);
+            StorePromotion storePromotion = StorePromotionCreator.create(introduction, iconUrl, isDisplayOnMarker, isDisplayOnTheDetail);
             storePromotionRepository.save(storePromotion);
 
             Store store = StoreCreator.createWithDefaultMenuAndPromotion(testUser.getId(), "가게 이름 1", 34, 126, storePromotion);
@@ -283,7 +284,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // then
             assertThat(response.getData()).hasSize(1);
             assertStoreWithVisitsAndDistanceResponse(response.getData().get(0), store.getId(), store.getLatitude(), store.getLongitude(), store.getName(), store.getRating());
-            assertStorePromotionResponse(response.getData().get(0).getPromotion(), promotionTitle, promotionIntroduction, promotionImageUrl);
+            assertStorePromotionResponse(response.getData().get(0).getPromotion(), introduction, iconUrl, isDisplayOnMarker, isDisplayOnTheDetail);
         }
 
     }
@@ -546,11 +547,12 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 가게_상세_조회시_프로모션이_추가된_가게인경우_프로모션_정보도_함께_반환된다() throws Exception {
             // given
-            String promotionTitle = "프로모션 제목";
-            String promotionIntroduction = "프로모션 설명";
-            String promotionImageUrl = "https://promotion.png";
+            String introduction = "프로모션 설명";
+            String iconUrl = "https://promotion.png";
+            boolean isDisplayOnMarker = false;
+            boolean isDisplayOnTheDetail = true;
 
-            StorePromotion storePromotion = StorePromotionCreator.create(promotionTitle, promotionIntroduction, promotionImageUrl);
+            StorePromotion storePromotion = StorePromotionCreator.create(introduction, iconUrl, isDisplayOnMarker, isDisplayOnTheDetail);
             storePromotionRepository.save(storePromotion);
 
             Store store = StoreCreator.createWithDefaultMenuAndPromotion(testUser.getId(), "가게 이름", 34.0, 126.0, storePromotion);
@@ -569,7 +571,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             // then
             assertStoreDetailInfoResponse(response.getData(), store, testUser);
-            assertStorePromotionResponse(response.getData().getPromotion(), promotionTitle, promotionIntroduction, promotionImageUrl);
+            assertStorePromotionResponse(response.getData().getPromotion(), introduction, iconUrl, isDisplayOnMarker, isDisplayOnTheDetail);
         }
 
     }

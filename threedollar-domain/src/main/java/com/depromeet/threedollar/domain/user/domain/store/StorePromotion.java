@@ -5,7 +5,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.*;
 
@@ -18,20 +17,20 @@ public class StorePromotion extends AuditingTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 30)
-    private String title;
-
     @Column(nullable = false, length = 2048)
     private String introduction;
 
-    @Column(length = 2048)
-    private String imageUrl;
+    @Column(nullable = false, length = 2048)
+    private String iconUrl;
+
+    @Embedded
+    private StorePromotionOption option;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private StorePromotion(String title, String introduction, @Nullable String imageUrl) {
-        this.title = title;
+    private StorePromotion(String introduction, String iconUrl, boolean isDisplayOnMarker, boolean isDisplayOnTheDetail) {
         this.introduction = introduction;
-        this.imageUrl = imageUrl;
+        this.iconUrl = iconUrl;
+        this.option = StorePromotionOption.of(isDisplayOnMarker, isDisplayOnTheDetail);
     }
 
 }

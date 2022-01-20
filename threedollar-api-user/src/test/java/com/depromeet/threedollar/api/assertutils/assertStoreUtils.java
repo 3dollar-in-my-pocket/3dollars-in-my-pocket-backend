@@ -140,11 +140,12 @@ public final class assertStoreUtils {
     /**
      * StorePromotion
      */
-    public static void assertStorePromotionResponse(StorePromotionResponse response, String promotionTitle, String promotionIntroduction, String promotionImageUrl) {
+    public static void assertStorePromotionResponse(StorePromotionResponse response, String introduction, String iconUrl, boolean isDisplayOnMarker, boolean isDisplayOnTheDetail) {
         assertAll(
-            () -> assertThat(response.getTitle()).isEqualTo(promotionTitle),
-            () -> assertThat(response.getIntroduction()).isEqualTo(promotionIntroduction),
-            () -> assertThat(response.getImageUrl()).isEqualTo(promotionImageUrl)
+            () -> assertThat(response.getIntroduction()).isEqualTo(introduction),
+            () -> assertThat(response.getIconUrl()).isEqualTo(iconUrl),
+            () -> assertThat(response.getOptions().isMarker()).isEqualTo(isDisplayOnMarker),
+            () -> assertThat(response.getOptions().isDetail()).isEqualTo(isDisplayOnTheDetail)
         );
     }
 
