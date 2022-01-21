@@ -86,6 +86,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         );
     }
 
+    @Deprecated
     ApiResponse<StoresCursorV2Response> retrieveMyReportedStoreHistoriesV2(RetrieveMyStoresV2Request request, CoordinateValue coordinate, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/api/v2/stores/me")
             .header(HttpHeaders.AUTHORIZATION, token)
