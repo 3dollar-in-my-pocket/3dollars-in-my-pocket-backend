@@ -19,7 +19,7 @@ class AuthController(
 ) {
 
     @ApiOperation("사장님 계정으로 로그인을 요청합니다.")
-    @PostMapping("/boss/v1/auth/login")
+    @PostMapping("/boss/v1/login")
     fun login(
         @Valid @RequestBody request: LoginRequest
     ): ApiResponse<LoginResponse> {
@@ -27,6 +27,13 @@ class AuthController(
         val accountId = authService.login(request)
         httpSession.setAttribute(BOSS_ACCOUNT_ID, accountId)
         return ApiResponse.success(LoginResponse(httpSession.id, accountId))
+    }
+
+    @ApiOperation("사장님 계정으로 로그아웃을 요청합니다.")
+    @PostMapping("/boss/v1/logout")
+    fun logout(): ApiResponse<String> {
+        httpSession.removeAttribute(BOSS_ACCOUNT_ID)
+        return ApiResponse.SUCCESS
     }
 
 }
