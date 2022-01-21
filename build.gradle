@@ -79,6 +79,29 @@ subprojects {
     test {
         useJUnitPlatform()
     }
+
+    sourceSets {
+        integrationTest {
+            java.srcDir "$projectDir/src/integrationTest/java" + "$projectDir/src/integrationTest/kotlin"
+            resources.srcDir "$projectDir/src/integrationTest/resources"
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+        }
+    }
+
+    configurations {
+        integrationTestImplementation.extendsFrom implementation
+        integrationTestImplementation.extendsFrom testImplementation
+        integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+    }
+
+    task integrationTest(type: Test) {
+        testClassesDirs = sourceSets.integrationTest.output.classesDirs
+        classpath = sourceSets.integrationTest.runtimeClasspath
+        useJUnitPlatform()
+    }
+
+    check.dependsOn integrationTest
 }
 
 def testProjects = [
