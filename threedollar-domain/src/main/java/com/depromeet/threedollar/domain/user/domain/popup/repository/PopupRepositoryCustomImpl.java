@@ -21,7 +21,7 @@ public class PopupRepositoryCustomImpl implements PopupRepositoryCustom {
         return queryFactory.selectFrom(popup)
             .where(
                 popup.positionType.eq(positionType),
-                popup.platformType.eq(platformType),
+                popup.platformType.in(platformType, PopupPlatformType.ALL),
                 popup.dateTimeInterval.startDateTime.loe(dateTime),
                 popup.dateTimeInterval.endDateTime.goe(dateTime)
             )

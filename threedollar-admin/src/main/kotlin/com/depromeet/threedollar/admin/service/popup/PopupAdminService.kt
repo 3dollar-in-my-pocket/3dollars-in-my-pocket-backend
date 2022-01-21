@@ -24,7 +24,8 @@ class PopupAdminService(
     fun updatePopup(popupId: Long, request: UpdatePopupRequest) {
         val popup = findPopupById(popupRepository, popupId)
         request.let {
-            popup.update(it.positionType, it.platformType, it.imageUrl, it.linkUrl, it.priority, it.startDateTime, it.endDateTime)
+            popup.update(it.positionType, it.platformType, it.title, it.subTitle, it.imageUrl,
+                it.linkUrl, it.bgColor, it.fontColor, it.startDateTime, it.endDateTime)
         }
     }
 

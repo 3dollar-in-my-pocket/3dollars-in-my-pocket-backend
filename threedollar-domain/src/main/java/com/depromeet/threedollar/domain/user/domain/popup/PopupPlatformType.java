@@ -11,6 +11,7 @@ public enum PopupPlatformType implements EnumModel {
 
     AOS("안드로이드"),
     IOS("iOS"),
+    ALL("모든 플랫폼"),
     ;
 
     private final String description;

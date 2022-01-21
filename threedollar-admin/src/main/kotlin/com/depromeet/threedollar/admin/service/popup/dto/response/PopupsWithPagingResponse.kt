@@ -25,9 +25,10 @@ data class PopupResponse(
     val popupId: Long,
     val positionType: PopupPositionType,
     val platformType: PopupPlatformType,
+    val title: String?,
+    val subTitle: String?,
     val imageUrl: String,
     val linkUrl: String?,
-    val priority: Int,
     val startDateTime: LocalDateTime,
     val endDateTime: LocalDateTime
 ) {
@@ -38,9 +39,10 @@ data class PopupResponse(
                 popupId = popup.id,
                 positionType = popup.positionType,
                 platformType = popup.platformType,
-                imageUrl = popup.imageUrl,
-                linkUrl = popup.linkUrl,
-                priority = popup.priority,
+                title = popup.detail.title,
+                subTitle = popup.detail.subTitle,
+                imageUrl = popup.detail.imageUrl,
+                linkUrl = popup.detail.linkUrl,
                 startDateTime = popup.startDateTime,
                 endDateTime = popup.endDateTime
             )
