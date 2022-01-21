@@ -1,34 +1,55 @@
+spring.config:
+  activate:
+    on-profile: integration-test
+
 spring:
-  config:
-    activate:
-      on-profile: local
+  redis:
+    host: localhost
+    port: 9998
+  cache:
+    type: none
+
+---
+spring.config:
+  activate:
+    on-profile: local
+
+spring:
   redis:
     host: localhost
     port: 6379
+
+
 ---
+spring.config:
+  activate:
+    on-profile: local-docker
+
 spring:
-  config:
-    activate:
-      on-profile: local-docker
   redis:
     host: localhost
     port: 6380
+
+
 ---
+spring.config:
+  activate:
+    on-profile: dev
+
 spring:
-  config:
-    activate:
-      on-profile: dev
   redis:
     host: redis
     port: 6379
+
+
 ---
+spring.config:
+  activate:
+    on-profile:
+      - prod
+      - stage
+
 spring:
-  config:
-    activate:
-      on-profile:
-        - prod
-        - stage
   redis:
     host: threedollar-api-redis-prod.tqy2kj.0001.apn2.cache.amazonaws.com
     port: 6379
----

@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 
 import static com.depromeet.threedollar.api.config.session.SessionConstants.USER_ID;
 
-@Profile({"local", "local-docker", "dev"})
+@Profile({"local", "local-docker", "dev", "integration-test"})
 @RequiredArgsConstructor
 @RestController
 public class LocalTestController {

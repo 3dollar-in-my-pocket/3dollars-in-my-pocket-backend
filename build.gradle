@@ -84,7 +84,9 @@ subprojects {
         integrationTest {
             compileClasspath += main.output + test.output
             runtimeClasspath += main.output + test.output
-            resources.srcDir "$projectDir/src/integrationTest/resources"
+            resources {
+                "src/integrationTest/resources"
+            }
         }
     }
 

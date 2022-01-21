@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.user.domain;
+package com.depromeet.threedollar;
 
 import com.depromeet.threedollar.domain.ThreeDollarDomainRoot;
 import org.junit.jupiter.api.Test;

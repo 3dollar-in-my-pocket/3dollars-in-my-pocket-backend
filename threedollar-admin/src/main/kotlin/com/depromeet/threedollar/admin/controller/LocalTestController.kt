@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpSession
 
-@Profile("local", "local-docker")
+@Profile("local", "local-docker", "integration-test")
 @RestController
 class LocalTestController(
     private val adminRepository: AdminRepository,

@@ -8,6 +8,6 @@ import org.springframework.context.annotation.Profile
 @EnableAutoConfiguration(exclude = [
     EmbeddedMongoAutoConfiguration::class
 ])
-@Profile("!local")
+@Profile("local-docker", "dev", "stage", "prod")
 @Configuration
-class EmbeddedMongoConfig
+class DisableEmbeddedMongoConfig

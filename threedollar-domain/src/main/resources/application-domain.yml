@@ -1,30 +1,52 @@
 spring:
   jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        default_batch_fetch_size: 1000
+        query.in_clause_parameter_padding: true
+    open-in-view: false # OSIV off
+
+
+---
+spring.config:
+  activate:
+    on-profile: integration-test
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+  datasource:
+    hikari:
+      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:h2:mem:testdb;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
+  flyway:
+    enabled: false
+
+
+---
+spring.config:
+  activate:
+    on-profile: local
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true
         format_sql: true
         use_sql_comments: true
         dialect: org.hibernate.dialect.MariaDB102Dialect
-        dialect.storage_engine: innodb
-        default_batch_fetch_size: 1000
-        query.in_clause_parameter_padding: true
         connection.provider_disables_autocommit: true
-    open-in-view: false
-    hibernate:
-      ddl-auto: none
-  datasource:
-    hikari:
-      auto-commit: false
-      driver-class-name: org.mariadb.jdbc.Driver
-      jdbc-url: ${secret.jdbc.uri}
-      username: ${secret.jdbc.username}
-      password: ${secret.jdbc.password}
----
-spring:
-  config:
-    activate:
-      on-profile: local
   h2:
     console:
       enabled: true
@@ -37,19 +59,26 @@ spring:
       jdbc-url: jdbc:h2:mem:threedollar;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
       username: sa
       password:
-  jpa:
-    hibernate:
-      ddl-auto: update
   flyway:
     enabled: false
+
+
 ---
+spring.config:
+  activate:
+    on-profile: local-docker
+
 spring:
-  config:
-    activate:
-      on-profile: local-docker
   jpa:
     hibernate:
       ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        dialect: org.hibernate.dialect.MariaDB102Dialect
+        connection.provider_disables_autocommit: true
   datasource:
     hikari:
       auto-commit: false
@@ -57,35 +86,60 @@ spring:
       jdbc-url: jdbc:mariadb://localhost:3309/threedollar_test
       username: root
       password: 3dollar
+  flyway:
+    enabled: true
+
+
 ---
+spring.config:
+  activate:
+    on-profile: dev
+
 spring:
-  config:
-    activate:
-      on-profile: dev
   jpa:
-    properties:
-      hibernate:
-        show_sql: false
-        format_sql: false
-        use_sql_comments: false
     hibernate:
       ddl-auto: none
----
-spring:
-  config:
-    activate:
-      on-profile:
-        - prod
-        - stage
-  jpa:
     properties:
       hibernate:
-        show_sql: false
-        format_sql: false
-        use_sql_comments: false
-    hibernate:
-      ddl-auto: none
+        dialect: org.hibernate.dialect.MariaDB102Dialect
+        connection.provider_disables_autocommit: true
   datasource:
     hikari:
+      auto-commit: false
+      driver-class-name: org.mariadb.jdbc.Driver
+      jdbc-url: ${secret.jdbc.uri}
+      username: ${secret.jdbc.username}
+      password: ${secret.jdbc.password}
+      maximum-pool-size: 10
+  flyway:
+    enabled: true
+
+
+---
+spring.config:
+  activate:
+    on-profile:
+      - prod
+      - stage
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDB102Dialect
+        connection.provider_disables_autocommit: true
+  datasource:
+    hikari:
+      auto-commit: false
+      driver-class-name: org.mariadb.jdbc.Driver
+      jdbc-url: ${secret.jdbc.uri}
+      username: ${secret.jdbc.username}
+      password: ${secret.jdbc.password}
       maximum-pool-size: 25
+  flyway:
+    enabled: true
+
+
 ---

@@ -1,5 +1,27 @@
+spring.config:
+  activate:
+    on-profile:
+      - dev
+      - stage
+      - prod
+
 apple:
   client_id: ${secret.apple.client_id}
   issuer: https://appleid.apple.com
 slack:
   token: ${secret.slack.token}
+
+
+---
+spring.config:
+  activate:
+    on-profile:
+      - integration-test
+      - local
+      - local-docker
+
+apple:
+  client_id: test-apple-client-id
+  issuer: test-apple-issue
+slack:
+  token: test-slack-token
