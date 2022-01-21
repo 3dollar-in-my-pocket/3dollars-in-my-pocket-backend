@@ -14,7 +14,7 @@ data class ApplyRegistrationRequest(
     val socialType: BossAccountSocialType,
     val businessNumber: String,
     val storeName: String,
-    val storeCategories: List<String>,
+    val storeCategoriesIds: List<String>,
     val contactsNumber: String,
     val certificationPhotoUrl: String
 ) {

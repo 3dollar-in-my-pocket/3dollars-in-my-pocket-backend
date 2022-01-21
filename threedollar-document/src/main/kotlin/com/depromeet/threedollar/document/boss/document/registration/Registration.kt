@@ -29,13 +29,13 @@ data class RegistrationBossForm(
 
 data class RegistrationStoreForm(
     val name: String,
-    val categories: MutableList<String> = mutableListOf(),
+    val categoriesIds: MutableList<String> = mutableListOf(),
     val contactsNumber: ContactsNumber,
     val certificationPhotoUrl: String
 ) {
 
     fun addCategories(categories: List<String>) {
-        this.categories.addAll(categories)
+        this.categoriesIds.addAll(categories)
     }
 
 }
