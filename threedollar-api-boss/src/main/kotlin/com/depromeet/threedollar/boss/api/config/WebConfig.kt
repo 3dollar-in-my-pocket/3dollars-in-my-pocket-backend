@@ -18,7 +18,8 @@ class WebConfig(
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(authInterceptor)
             .addPathPatterns("/boss/**")
-            .excludePathPatterns("/boss/**/auth/login")
+            .excludePathPatterns("/boss/**/login")
+            .excludePathPatterns("/boss/**/registration")
     }
 
     override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {
