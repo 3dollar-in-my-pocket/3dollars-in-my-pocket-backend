@@ -15,4 +15,7 @@ client.test("200 OK", function() {
 
 ### Add Mock Store data
 POST {{host_boss_api}}/test-store?latitude=38&longitude=127
-Content-Type: application/json
+
+
+### Add Mock Store data
+POST {{host_boss_api}}/test-category?title=중식&priority=1
