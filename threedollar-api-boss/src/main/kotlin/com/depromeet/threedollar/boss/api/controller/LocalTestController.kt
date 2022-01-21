@@ -4,11 +4,9 @@ import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.boss.api.config.session.SessionConstants
 import com.depromeet.threedollar.boss.api.service.auth.dto.response.LoginResponse
 import com.depromeet.threedollar.common.type.DayOfTheWeek
-import com.depromeet.threedollar.document.boss.document.account.BossAccount
-import com.depromeet.threedollar.document.boss.document.account.BossAccountRepository
-import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
-import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialInfo
+import com.depromeet.threedollar.document.boss.document.account.*
 import com.depromeet.threedollar.document.boss.document.store.*
+import com.depromeet.threedollar.document.common.document.ContactsNumber
 import com.depromeet.threedollar.document.common.document.TimeInterval
 import io.swagger.annotations.ApiOperation
 import org.springframework.data.geo.Point
@@ -47,6 +45,8 @@ class LocalTestController(
             location = Point(longitude, latitude),
             imageUrl = "https://image.com",
             introduction = "소개",
+            contactsNumber = ContactsNumber.of("010-1234-1234"),
+            snsUrl = "https://sns.example.com",
             openInfo = BossStoreOpenInfo(
                 openStatus = BossStoreOpenType.OPEN,
                 LocalDateTime.now(),
