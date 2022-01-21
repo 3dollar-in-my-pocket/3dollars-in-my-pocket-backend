@@ -26,7 +26,7 @@ jobs:
         uses: gradle/wrapper-validation-action@v1
 
       - name: Build with Gradle
-        run: ./gradlew build jacocoTestReport
+        run: ./gradlew clean bootJar test integrationTest jacocoTestReport
 
       - name: Upload CodeCoverage
         uses: codecov/codecov-action@v1
