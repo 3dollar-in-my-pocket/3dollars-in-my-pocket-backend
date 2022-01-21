@@ -26,6 +26,7 @@ subprojects {
         plugin("io.spring.dependency-management")
         plugin("kotlin")
         plugin("kotlin-spring")
+        plugin("jacoco")
     }
 
     java {
@@ -37,26 +38,6 @@ subprojects {
         kotlinOptions {
             jvmTarget = "11"
             freeCompilerArgs = ["-Xjsr305=strict"]
-        }
-    }
-
-    configurations {
-        compileOnly {
-            extendsFrom annotationProcessor
-        }
-        integrationTestImplementation {
-            extendsFrom implementation, testImplementation
-        }
-        integrationTestRuntimeOnly {
-            extendsFrom testRuntimeOnly
-        }
-    }
-
-    sourceSets {
-        integrationTest {
-            compileClasspath += main.output + test.output
-            runtimeClasspath += main.output + test.output
-            resources.srcDir "$projectDir/src/integrationTest/resources"
         }
     }
 
@@ -87,51 +68,71 @@ subprojects {
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     }
 
-    task unitTest(type: Test, group: 'verification', description: 'Unit Tests') {
-        useJUnitPlatform()
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+        integrationTestImplementation {
+            extendsFrom implementation, testImplementation
+        }
+        integrationTestRuntimeOnly {
+            extendsFrom testRuntimeOnly
+        }
+    }
+
+    sourceSets {
+        integrationTest {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            resources.srcDir "$projectDir/src/integrationTest/resources"
+        }
     }
 
     task integrationTest(type: Test, group: 'verification', description: 'Integration Tests') {
         testClassesDirs = sourceSets.integrationTest.output.classesDirs
         classpath = sourceSets.integrationTest.runtimeClasspath
         useJUnitPlatform()
+        jacoco {
+            destinationFile = file("$buildDir/jacoco/integrationTest.exec")
+        }
+    }
+
+    task unitTest(type: Test, group: 'verification', description: 'Unit Tests') {
+        useJUnitPlatform()
+        jacoco {
+            destinationFile = file("$buildDir/jacoco/unitTest.exec")
+        }
     }
 
     test {
-        testClassesDirs += sourceSets.integrationTest.output.classesDirs
-        classpath += sourceSets.integrationTest.runtimeClasspath
-        useJUnitPlatform()
+        dependsOn unitTest
+        dependsOn integrationTest
+        finalizedBy jacocoTestReport
     }
 }
 
-def testProjects = [
-    project(":threedollar-api-user"),
-    project(":threedollar-api-core"),
-    project(":threedollar-domain"),
-    project(":threedollar-document"),
-    project(":threedollar-common")
-]
+repositories {
+    mavenCentral()
+}
 
-configure(testProjects) {
-    apply {
-        plugin("jacoco")
+apply {
+    plugin("jacoco")
+}
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+task testCoverage(type: JacocoReport, group: 'verification', description: 'Report Test Coverage') {
+    executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
+
+    subprojects.forEach {
+        sourceSets(it.sourceSets.main as SourceSet)
     }
 
-    jacoco {
-        toolVersion = "0.8.7"
-    }
-
-    jacocoTestReport {
-        executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
-
-        reports {
-            html.enabled true
-            xml.enabled true
-            csv.enabled false
-        }
-
-        testProjects.forEach {
-            sourceSets(it.sourceSets.main as SourceSet)
-        }
+    reports {
+        html.enabled true
+        xml.enabled true
+        csv.enabled false
     }
 }

@@ -35,13 +35,14 @@ jobs:
         uses: gradle/wrapper-validation-action@v1
 
       - name: Build with Gradle
-        run: ./gradlew clean bootJar test jacocoTestReport
+        run: ./gradlew clean bootJar test testCoverage
 
       - name: Upload CodeCoverage
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODE_COV_TOKEN }}
-          file: threedollar-api-user/build/reports/jacoco/test/jacocoTestReport.xml
+          file: ./build/reports/jacoco/testCoverage/testCoverage.xml
+          verbose: true
 
       - name: Cleanup Gradle Cache
         run: |
