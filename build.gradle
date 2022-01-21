@@ -29,26 +29,20 @@ subprojects {
         plugin("jacoco")
     }
 
-    repositories {
-        mavenCentral()
+    java {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
-
-    configurations {
-        compileOnly {
-            extendsFrom annotationProcessor
-        }
-        integrationTestImplementation.extendsFrom implementation
-        integrationTestImplementation.extendsFrom testImplementation
-        integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
-    }
-
-    sourceCompatibility = "11"
 
     compileKotlin {
         kotlinOptions {
             jvmTarget = "11"
             freeCompilerArgs = ["-Xjsr305=strict"]
         }
+    }
+
+    repositories {
+        mavenCentral()
     }
 
     dependencyManagement {
@@ -74,6 +68,18 @@ subprojects {
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     }
 
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+        integrationTestImplementation {
+            extendsFrom implementation, testImplementation
+        }
+        integrationTestRuntimeOnly {
+            extendsFrom testRuntimeOnly
+        }
+    }
+
     sourceSets {
         integrationTest {
             compileClasspath += main.output + test.output
@@ -82,33 +88,51 @@ subprojects {
         }
     }
 
-    test {
-        testClassesDirs += sourceSets.integrationTest.output.classesDirs
-        classpath += sourceSets.integrationTest.runtimeClasspath
-        useJUnitPlatform()
-    }
-
-    task unitTest(type: Test, group: 'verification', description: 'Unit Tests') {
-        useJUnitPlatform()
-    }
-
     task integrationTest(type: Test, group: 'verification', description: 'Integration Tests') {
         testClassesDirs = sourceSets.integrationTest.output.classesDirs
         classpath = sourceSets.integrationTest.runtimeClasspath
         useJUnitPlatform()
+        jacoco {
+            destinationFile = file("$buildDir/jacoco/integrationTest.exec")
+        }
     }
 
-    task testCodeCoverageReport(type: JacocoReport, group: 'verification', description: "Jacoco Report") {
-        executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
-
-        subprojects.forEach {
-            project -> project.sourceSets.main
+    task unitTest(type: Test, group: 'verification', description: 'Unit Tests') {
+        useJUnitPlatform()
+        jacoco {
+            destinationFile = file("$buildDir/jacoco/unitTest.exec")
         }
+    }
 
-        reports {
-            xml.enabled true
-            html.enabled true
-            csv.enabled false
-        }
+    test {
+        dependsOn unitTest
+        dependsOn integrationTest
+        finalizedBy jacocoTestReport
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply {
+    plugin("jacoco")
+}
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+task testCoverage(type: JacocoReport, group: 'verification', description: 'Report Test Coverage') {
+    executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
+
+    subprojects.forEach {
+        sourceSets(it.sourceSets.main as SourceSet)
+    }
+
+    reports {
+        html.enabled true
+        xml.enabled true
+        csv.enabled false
     }
 }
