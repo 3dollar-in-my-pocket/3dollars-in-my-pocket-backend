@@ -27,12 +27,16 @@ class PopupRepositoryTest {
         // given
         PopupPositionType positionType = PopupPositionType.SPLASH;
         PopupPlatformType platformType = PopupPlatformType.AOS;
+        String title = "광고 제목";
+        String subTitle = "광고 내용\n광고 내용";
         LocalDateTime startDateTime = LocalDateTime.of(2021, 11, 25, 0, 0);
         LocalDateTime endDateTime = LocalDateTime.of(2021, 11, 26, 0, 0);
         String imageUrl = "https://image.url";
         String linkUrl = "https://link.com";
+        String bgColor = "#ffffff";
+        String fontColor = "#000000";
 
-        popupRepository.save(PopupCreator.create(positionType, platformType, imageUrl, linkUrl, startDateTime, endDateTime));
+        popupRepository.save(PopupCreator.create(positionType, platformType, title, subTitle, imageUrl, linkUrl, bgColor, fontColor, startDateTime, endDateTime));
 
         // when
         List<Popup> findPopups = popupRepository.findActivatedPopupsByPositionAndPlatform(positionType, platformType, startDateTime.plusMinutes(1));
@@ -40,8 +44,12 @@ class PopupRepositoryTest {
         // then
         assertAll(
             () -> assertThat(findPopups).hasSize(1),
-            () -> assertThat(findPopups.get(0).getImageUrl()).isEqualTo(imageUrl),
-            () -> assertThat(findPopups.get(0).getLinkUrl()).isEqualTo(linkUrl),
+            () -> assertThat(findPopups.get(0).getDetail().getTitle()).isEqualTo(title),
+            () -> assertThat(findPopups.get(0).getDetail().getSubTitle()).isEqualTo(subTitle),
+            () -> assertThat(findPopups.get(0).getDetail().getImageUrl()).isEqualTo(imageUrl),
+            () -> assertThat(findPopups.get(0).getDetail().getLinkUrl()).isEqualTo(linkUrl),
+            () -> assertThat(findPopups.get(0).getDetail().getBgColor()).isEqualTo(bgColor),
+            () -> assertThat(findPopups.get(0).getDetail().getFontColor()).isEqualTo(fontColor),
             () -> assertThat(findPopups.get(0).getStartDateTime()).isEqualTo(startDateTime),
             () -> assertThat(findPopups.get(0).getEndDateTime()).isEqualTo(endDateTime),
             () -> assertThat(findPopups.get(0).getPlatformType()).isEqualTo(platformType)
@@ -53,12 +61,16 @@ class PopupRepositoryTest {
         // given
         PopupPositionType positionType = PopupPositionType.SPLASH;
         PopupPlatformType platformType = PopupPlatformType.IOS;
+        String title = "광고 제목";
+        String subTitle = "광고 내용\n광고 내용";
         LocalDateTime startDateTime = LocalDateTime.of(2021, 11, 24, 0, 0);
         LocalDateTime endDateTime = LocalDateTime.of(2021, 11, 25, 0, 0);
         String imageUrl = "https://image.url";
         String linkUrl = "https://link.com";
+        String bgColor = "#ffffff";
+        String fontColor = "#000000";
 
-        popupRepository.save(PopupCreator.create(positionType, platformType, imageUrl, linkUrl, startDateTime, endDateTime));
+        popupRepository.save(PopupCreator.create(positionType, platformType, title, subTitle, imageUrl, linkUrl, bgColor, fontColor, startDateTime, endDateTime));
 
         // when
         List<Popup> findPopups = popupRepository.findActivatedPopupsByPositionAndPlatform(positionType, platformType, endDateTime.minusMinutes(1));
@@ -66,8 +78,12 @@ class PopupRepositoryTest {
         // then
         assertAll(
             () -> assertThat(findPopups).hasSize(1),
-            () -> assertThat(findPopups.get(0).getImageUrl()).isEqualTo(imageUrl),
-            () -> assertThat(findPopups.get(0).getLinkUrl()).isEqualTo(linkUrl),
+            () -> assertThat(findPopups.get(0).getDetail().getTitle()).isEqualTo(title),
+            () -> assertThat(findPopups.get(0).getDetail().getSubTitle()).isEqualTo(subTitle),
+            () -> assertThat(findPopups.get(0).getDetail().getImageUrl()).isEqualTo(imageUrl),
+            () -> assertThat(findPopups.get(0).getDetail().getLinkUrl()).isEqualTo(linkUrl),
+            () -> assertThat(findPopups.get(0).getDetail().getBgColor()).isEqualTo(bgColor),
+            () -> assertThat(findPopups.get(0).getDetail().getFontColor()).isEqualTo(fontColor),
             () -> assertThat(findPopups.get(0).getStartDateTime()).isEqualTo(startDateTime),
             () -> assertThat(findPopups.get(0).getEndDateTime()).isEqualTo(endDateTime),
             () -> assertThat(findPopups.get(0).getPlatformType()).isEqualTo(platformType)

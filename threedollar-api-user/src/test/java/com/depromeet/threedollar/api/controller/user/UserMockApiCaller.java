@@ -6,7 +6,6 @@ import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.nio.charset.StandardCharsets;
 
@@ -20,10 +19,8 @@ public class UserMockApiCaller extends MockMvcUtils {
     }
 
     public ApiResponse<LoginResponse> getTestToken() throws Exception {
-        MockHttpServletRequestBuilder builder = get("/test-token");
-
         return objectMapper.readValue(
-            mockMvc.perform(builder)
+            mockMvc.perform(get("/test-token"))
                 .andDo(print())
                 .andReturn()
                 .getResponse()

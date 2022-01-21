@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -38,12 +37,9 @@ class StoreMenuControllerTest {
     @DisplayName("GET /api/v2/store/menu/categories")
     @Test
     void 활성화된_메뉴_카테고리의_정보들을_조회한다() throws Exception {
-        // given
-        MockHttpServletRequestBuilder builder = get("/api/v2/store/menu/categories");
-
-        // when
+        // when & then
         ApiResponse<List<MenuCategoryResponse>> response = objectMapper.readValue(
-            mockMvc.perform(builder)
+            mockMvc.perform(get("/api/v2/store/menu/categories"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn()

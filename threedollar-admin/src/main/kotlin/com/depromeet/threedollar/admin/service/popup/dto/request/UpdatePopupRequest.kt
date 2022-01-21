@@ -7,9 +7,12 @@ import java.time.LocalDateTime
 data class UpdatePopupRequest(
     val positionType: PopupPositionType,
     val platformType: PopupPlatformType,
+    val title: String?,
+    val subTitle: String?,
     val imageUrl: String,
     val linkUrl: String?,
-    val priority: Int,
+    val bgColor: String?,
+    val fontColor: String?,
     val startDateTime: LocalDateTime,
     val endDateTime: LocalDateTime
 )

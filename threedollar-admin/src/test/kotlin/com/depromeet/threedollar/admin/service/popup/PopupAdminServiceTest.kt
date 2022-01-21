@@ -3,10 +3,7 @@ package com.depromeet.threedollar.admin.service.popup
 import com.depromeet.threedollar.admin.service.popup.dto.request.AddPopupRequest
 import com.depromeet.threedollar.admin.service.popup.dto.request.UpdatePopupRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.domain.user.domain.popup.Popup
-import com.depromeet.threedollar.domain.user.domain.popup.PopupPlatformType
-import com.depromeet.threedollar.domain.user.domain.popup.PopupPositionType
-import com.depromeet.threedollar.domain.user.domain.popup.PopupRepository
+import com.depromeet.threedollar.domain.user.domain.popup.*
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
@@ -32,18 +29,24 @@ internal class PopupAdminServiceTest(
         // given
         val positionType = PopupPositionType.SPLASH
         val platformType = PopupPlatformType.IOS
+        val title = "title"
+        val subTitle = "subTitle"
         val imageUrl = "https://image-png"
         val linkUrl = "https://link.com"
-        val priority = 1
+        val bgColor = "#ffffff"
+        val fontColor = "#000000"
         val startDateTime = LocalDateTime.of(2022, 1, 1, 0, 0)
         val endDateTime = LocalDateTime.of(2022, 1, 7, 0, 0)
 
         val request = AddPopupRequest(
             positionType = positionType,
             platformType = platformType,
+            title = title,
+            subTitle = subTitle,
             imageUrl = imageUrl,
             linkUrl = linkUrl,
-            priority = priority,
+            bgColor = bgColor,
+            fontColor = fontColor,
             startDateTime = startDateTime,
             endDateTime = endDateTime
         )
@@ -57,9 +60,12 @@ internal class PopupAdminServiceTest(
         popups[0].let {
             assertThat(it.positionType).isEqualTo(positionType)
             assertThat(it.platformType).isEqualTo(platformType)
-            assertThat(it.imageUrl).isEqualTo(imageUrl)
-            assertThat(it.linkUrl).isEqualTo(linkUrl)
-            assertThat(it.priority).isEqualTo(priority)
+            assertThat(it.detail.title).isEqualTo(title)
+            assertThat(it.detail.subTitle).isEqualTo(subTitle)
+            assertThat(it.detail.imageUrl).isEqualTo(imageUrl)
+            assertThat(it.detail.linkUrl).isEqualTo(linkUrl)
+            assertThat(it.detail.bgColor).isEqualTo(bgColor)
+            assertThat(it.detail.fontColor).isEqualTo(fontColor)
             assertThat(it.startDateTime).isEqualTo(startDateTime)
             assertThat(it.endDateTime).isEqualTo(endDateTime)
         }
@@ -73,18 +79,24 @@ internal class PopupAdminServiceTest(
 
         val positionType = PopupPositionType.SPLASH
         val platformType = PopupPlatformType.IOS
+        val title = "title"
+        val subTitle = "subTitle"
         val imageUrl = "https://image-png"
         val linkUrl = "https://link.com"
-        val priority = 1
+        val bgColor = "#ffffff"
+        val fontColor = "#000000"
         val startDateTime = LocalDateTime.of(2022, 1, 1, 0, 0)
         val endDateTime = LocalDateTime.of(2022, 1, 7, 0, 0)
 
         val request = UpdatePopupRequest(
             positionType = positionType,
             platformType = platformType,
+            title = title,
+            subTitle = subTitle,
             imageUrl = imageUrl,
             linkUrl = linkUrl,
-            priority = priority,
+            bgColor = bgColor,
+            fontColor = fontColor,
             startDateTime = startDateTime,
             endDateTime = endDateTime
         )
@@ -98,9 +110,12 @@ internal class PopupAdminServiceTest(
         popups[0].let {
             assertThat(it.positionType).isEqualTo(positionType)
             assertThat(it.platformType).isEqualTo(platformType)
-            assertThat(it.imageUrl).isEqualTo(imageUrl)
-            assertThat(it.linkUrl).isEqualTo(linkUrl)
-            assertThat(it.priority).isEqualTo(priority)
+            assertThat(it.detail.title).isEqualTo(title)
+            assertThat(it.detail.subTitle).isEqualTo(subTitle)
+            assertThat(it.detail.imageUrl).isEqualTo(imageUrl)
+            assertThat(it.detail.linkUrl).isEqualTo(linkUrl)
+            assertThat(it.detail.bgColor).isEqualTo(bgColor)
+            assertThat(it.detail.fontColor).isEqualTo(fontColor)
             assertThat(it.startDateTime).isEqualTo(startDateTime)
             assertThat(it.endDateTime).isEqualTo(endDateTime)
         }
@@ -112,9 +127,12 @@ internal class PopupAdminServiceTest(
         val request = UpdatePopupRequest(
             positionType = PopupPositionType.SPLASH,
             platformType = PopupPlatformType.AOS,
+            title = "title",
+            subTitle = "",
             imageUrl = "imageUrl",
             linkUrl = "linkUrl",
-            priority = 10,
+            bgColor = "#ffffff",
+            fontColor = "#000000",
             startDateTime = LocalDateTime.of(2022, 1, 1, 0, 0),
             endDateTime = LocalDateTime.of(2022, 1, 3, 0, 0),
         )
@@ -144,14 +162,17 @@ internal class PopupAdminServiceTest(
     }
 
     private fun createPopup(): Popup {
-        return Popup.newInstance(
+        return PopupCreator.create(
             PopupPositionType.SPLASH,
             PopupPlatformType.AOS,
+            "제목",
+            "서브 타이틀",
             "imageUrl",
             "linkUrl",
+            "#ffffff",
+            "#000000",
             LocalDateTime.of(2022, 3, 1, 0, 0),
-            LocalDateTime.of(2022, 3, 7, 0, 0),
-            10)
+            LocalDateTime.of(2022, 3, 7, 0, 0))
     }
 
 }

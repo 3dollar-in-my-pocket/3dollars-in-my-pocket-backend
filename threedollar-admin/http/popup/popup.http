@@ -5,12 +5,15 @@ Content-Type: application/json
 
 {
     "positionType": "SPLASH",
-    "platformType": "AOS",
+    "platformType": "ALL",
     "imageUrl": "https://image.png",
     "linkUrl": "https://link.com",
-    "priority": 10,
+    "title": "광고 제목",
+    "subTitle": "광고 내용\n광고 내용을 입력해주세요",
+    "bgColor": "#ffffff",
+    "fontColor": "#2e2e2e",
     "startDateTime": "2022-01-01T00:00:00",
-    "endDateTime": "2022-01-01T00:00:00"
+    "endDateTime": "2023-01-01T00:00:00"
 }
 
 > {%
@@ -40,9 +43,12 @@ Content-Type: application/json
     "platformType": "AOS",
     "imageUrl": "https://image1.png",
     "linkUrl": "https://link1.com",
-    "priority": 1,
-    "startDateTime": "2022-03-01T00:00:00",
-    "endDateTime": "2022-03-01T00:00:00"
+    "title": "광고 제목",
+    "subTitle": "광고 내용\n광고 내용을 입력해주세요",
+    "bgColor": "#ffffff",
+    "fontColor": "#2e2e2e",
+    "startDateTime": "2022-01-01T00:00:00",
+    "endDateTime": "2023-03-01T00:00:00"
 }
 
 > {%
