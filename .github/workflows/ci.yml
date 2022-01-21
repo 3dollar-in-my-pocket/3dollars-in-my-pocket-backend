@@ -35,7 +35,7 @@ jobs:
         uses: gradle/wrapper-validation-action@v1
 
       - name: Build with Gradle
-        run: ./gradlew clean bootJar test testCoverage
+        run: ./gradlew clean test testCoverage
 
       - name: Upload CodeCoverage
         uses: codecov/codecov-action@v1
