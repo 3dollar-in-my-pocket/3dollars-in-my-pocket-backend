@@ -29,6 +29,19 @@ subprojects {
         plugin("jacoco")
     }
 
+    repositories {
+        mavenCentral()
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+        integrationTestImplementation.extendsFrom implementation
+        integrationTestImplementation.extendsFrom testImplementation
+        integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+    }
+
     sourceCompatibility = "11"
 
     compileKotlin {
@@ -36,10 +49,6 @@ subprojects {
             jvmTarget = "11"
             freeCompilerArgs = ["-Xjsr305=strict"]
         }
-    }
-
-    repositories {
-        mavenCentral()
     }
 
     dependencyManagement {
@@ -71,15 +80,6 @@ subprojects {
             runtimeClasspath += main.output + test.output
             resources.srcDir "$projectDir/src/integrationTest/resources"
         }
-    }
-
-    configurations {
-        compileOnly {
-            extendsFrom annotationProcessor
-        }
-        integrationTestImplementation.extendsFrom implementation
-        integrationTestImplementation.extendsFrom testImplementation
-        integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
     }
 
     test {
