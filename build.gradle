@@ -95,7 +95,7 @@ subprojects {
         integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
     }
 
-    task integrationTest(type: Test) {
+    task integrationTest(type: Test, group: 'verification') {
         testClassesDirs = sourceSets.integrationTest.output.classesDirs
         classpath = sourceSets.integrationTest.runtimeClasspath
         useJUnitPlatform()
