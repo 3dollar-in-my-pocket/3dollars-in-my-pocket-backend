@@ -18,7 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.depromeet.threedollar.api.assertutils.assertVisitHistoryUtils.assertVisitHistory;
+import static com.depromeet.threedollar.testhelper.assertion.VisitHistoryAssertionHelper.assertVisitHistory;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;

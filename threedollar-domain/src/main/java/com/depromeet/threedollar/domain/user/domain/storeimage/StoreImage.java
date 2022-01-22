@@ -44,7 +44,11 @@ public class StoreImage extends AuditingTimeEntity {
     }
 
     public static StoreImage newInstance(Store store, Long userId, String imageUrl) {
-        return new StoreImage(store, userId, imageUrl);
+        return StoreImage.builder()
+            .store(store)
+            .userId(userId)
+            .url(imageUrl)
+            .build();
     }
 
     public void delete() {

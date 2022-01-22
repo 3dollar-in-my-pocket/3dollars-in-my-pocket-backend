@@ -24,8 +24,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
 
-import static com.depromeet.threedollar.api.assertutils.assertReviewUtils.assertReviewDetailInfoResponse;
-import static com.depromeet.threedollar.api.assertutils.assertReviewUtils.assertReviewInfoResponse;
+import static com.depromeet.threedollar.testhelper.assertion.ReviewAssertionHelper.assertReviewDetailInfoResponse;
+import static com.depromeet.threedollar.testhelper.assertion.ReviewAssertionHelper.assertReviewInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;

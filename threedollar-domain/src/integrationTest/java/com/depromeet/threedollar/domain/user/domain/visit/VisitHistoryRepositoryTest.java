@@ -29,7 +29,7 @@ class VisitHistoryRepositoryTest {
     @Test
     void 해당_카테고리를_판매중인_가게에_방문한_횟수를_센다() {
         // given
-        Long userId = 200000L;
+        long userId = 200000L;
         Store bungeoppangStore = StoreCreator.create(100000L, "붕어빵 가게");
         bungeoppangStore.addMenus(List.of(MenuCreator.create(bungeoppangStore, "팥 붕어빵", "천원", MenuCategoryType.BUNGEOPPANG)));
 
@@ -52,7 +52,7 @@ class VisitHistoryRepositoryTest {
     @Test
     void 카테고리를_따로_넘기지_않으면_모든_카테고리에_대한_가게_방문_횟수를_센다() {
         // given
-        Long userId = 200000L;
+        long userId = 200000L;
         Store bungeoppangStore = StoreCreator.create(100000L, "붕어빵 가게");
         bungeoppangStore.addMenus(List.of(MenuCreator.create(bungeoppangStore, "팥 붕어빵", "천원", MenuCategoryType.BUNGEOPPANG)));
 

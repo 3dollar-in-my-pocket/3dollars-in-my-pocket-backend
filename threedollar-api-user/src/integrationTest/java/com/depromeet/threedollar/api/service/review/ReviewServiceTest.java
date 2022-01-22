@@ -16,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static com.depromeet.threedollar.api.assertutils.assertReviewUtils.assertReview;
+import static com.depromeet.threedollar.testhelper.assertion.ReviewAssertionHelper.assertReview;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

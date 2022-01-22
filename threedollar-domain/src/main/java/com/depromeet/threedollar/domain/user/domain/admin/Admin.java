@@ -2,6 +2,7 @@ package com.depromeet.threedollar.domain.user.domain.admin;
 
 import com.depromeet.threedollar.domain.common.domain.AuditingTimeEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,6 +23,7 @@ public class Admin extends AuditingTimeEntity {
     @Column(nullable = false, length = 30)
     private String name;
 
+    @Builder(access = AccessLevel.PACKAGE)
     private Admin(String email, String name) {
         this.email = email;
         this.name = name;

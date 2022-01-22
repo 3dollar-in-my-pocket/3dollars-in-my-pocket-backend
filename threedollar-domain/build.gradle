@@ -19,6 +19,9 @@ dependencies {
 
     // flyway
     implementation("org.flywaydb:flyway-core")
+
+    // textFixtures
+    testImplementation(testFixtures(project(":threedollar-domain")))
 }
 
 bootJar { enabled = false }

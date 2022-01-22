@@ -3,6 +3,7 @@ package com.depromeet.threedollar.domain.user.domain.storedelete;
 import com.depromeet.threedollar.domain.common.domain.AuditingTimeEntity;
 import com.depromeet.threedollar.domain.user.domain.store.Store;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -37,6 +38,7 @@ public class StoreDeleteRequest extends AuditingTimeEntity {
     @Enumerated(value = EnumType.STRING)
     private DeleteReasonType reason;
 
+    @Builder(access = AccessLevel.PACKAGE)
     private StoreDeleteRequest(Store store, Long userId, DeleteReasonType reason) {
         this.store = store;
         this.userId = userId;
@@ -44,7 +46,11 @@ public class StoreDeleteRequest extends AuditingTimeEntity {
     }
 
     public static StoreDeleteRequest of(Store store, Long userId, DeleteReasonType reason) {
-        return new StoreDeleteRequest(store, userId, reason);
+        return StoreDeleteRequest.builder()
+            .store(store)
+            .userId(userId)
+            .reason(reason)
+            .build();
     }
 
 }

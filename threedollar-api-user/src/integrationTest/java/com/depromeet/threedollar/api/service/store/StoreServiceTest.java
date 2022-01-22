@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.depromeet.threedollar.api.assertutils.assertStoreUtils.*;
+import static com.depromeet.threedollar.testhelper.assertion.StoreAssertionHelper.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

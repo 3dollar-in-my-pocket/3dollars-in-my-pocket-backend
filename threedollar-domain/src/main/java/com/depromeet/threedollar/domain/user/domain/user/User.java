@@ -5,6 +5,7 @@ import com.depromeet.threedollar.domain.common.domain.AuditingTimeEntity;
 import com.depromeet.threedollar.domain.user.domain.medal.Medal;
 import com.depromeet.threedollar.domain.user.domain.medal.UserMedal;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -42,13 +43,18 @@ public class User extends AuditingTimeEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<UserMedal> userMedals = new ArrayList<>();
 
+    @Builder(access = AccessLevel.PACKAGE)
     private User(String socialId, UserSocialType socialType, String name) {
         this.socialInfo = SocialInfo.of(socialId, socialType);
         this.name = name;
     }
 
     public static User newInstance(String socialId, UserSocialType socialType, String name) {
-        return new User(socialId, socialType, name);
+        return User.builder()
+            .socialId(socialId)
+            .socialType(socialType)
+            .name(name)
+            .build();
     }
 
     public void updateName(String name) {
