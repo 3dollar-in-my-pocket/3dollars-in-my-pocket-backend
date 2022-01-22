@@ -35,7 +35,7 @@ class StoreTest {
         }
 
         @Test
-        void 개시일을_모두_삭제하는_경우() {
+        void 개시일을_모두_삭제하는_경우_빈_배열이_된다() {
             // given
             Store store = StoreCreator.createWithDefaultMenu(100L, "가게");
             store.addAppearanceDays(Set.of(DayOfTheWeek.MONDAY));
@@ -91,7 +91,7 @@ class StoreTest {
     class HasMenuCategory {
 
         @Test
-        void 가게에_해당하는_메뉴_카테고리_존재하면_true를_반환한다() {
+        void 가게에_해당_카테고리를판매중인지_여부_확인시_메뉴_카테고리_존재하면_true를_반환한다() {
             // given
             Store store = StoreCreator.create(100L, "가게");
             store.addMenus(List.of(MenuCreator.create(store, "name", "price", MenuCategoryType.BUNGEOPPANG)));
@@ -104,7 +104,7 @@ class StoreTest {
         }
 
         @Test
-        void 가게에_해당하는_메뉴_카테고리가_존재하지_않으면_false를_반환한다() {
+        void 게에_해당_카테고리를판매중인지_여부_확인시_해당하는_메뉴_카테고리가_존재하지_않으면_false를_반환한다() {
             // given
             Store store = StoreCreator.create(100L, "가게");
             store.addMenus(List.of(MenuCreator.create(store, "name", "price", MenuCategoryType.BUNGEOPPANG)));
@@ -122,7 +122,7 @@ class StoreTest {
     class GetMenuCategoriesSortedByCounts {
 
         @Test
-        void 가게의_카테고리_조회시_가게_메뉴_카테고리의_수로_정렬해서_반환한다() {
+        void 가게의_카테고리_조회시_가게_메뉴의_수가_많은것부터_정렬해서_반환한다() {
             // given
             Store store = StoreCreator.create(100L, "가게");
             store.addMenus(List.of(

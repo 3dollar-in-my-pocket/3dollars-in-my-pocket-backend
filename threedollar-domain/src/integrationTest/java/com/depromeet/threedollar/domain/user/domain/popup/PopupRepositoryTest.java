@@ -42,18 +42,7 @@ class PopupRepositoryTest {
         List<Popup> findPopups = popupRepository.findActivatedPopupsByPositionAndPlatform(positionType, platformType, startDateTime.plusMinutes(1));
 
         // then
-        assertAll(
-            () -> assertThat(findPopups).hasSize(1),
-            () -> assertThat(findPopups.get(0).getDetail().getTitle()).isEqualTo(title),
-            () -> assertThat(findPopups.get(0).getDetail().getSubTitle()).isEqualTo(subTitle),
-            () -> assertThat(findPopups.get(0).getDetail().getImageUrl()).isEqualTo(imageUrl),
-            () -> assertThat(findPopups.get(0).getDetail().getLinkUrl()).isEqualTo(linkUrl),
-            () -> assertThat(findPopups.get(0).getDetail().getBgColor()).isEqualTo(bgColor),
-            () -> assertThat(findPopups.get(0).getDetail().getFontColor()).isEqualTo(fontColor),
-            () -> assertThat(findPopups.get(0).getStartDateTime()).isEqualTo(startDateTime),
-            () -> assertThat(findPopups.get(0).getEndDateTime()).isEqualTo(endDateTime),
-            () -> assertThat(findPopups.get(0).getPlatformType()).isEqualTo(platformType)
-        );
+        assertPopup(platformType, title, subTitle, startDateTime, endDateTime, imageUrl, linkUrl, bgColor, fontColor, findPopups);
     }
 
     @Test
@@ -76,6 +65,10 @@ class PopupRepositoryTest {
         List<Popup> findPopups = popupRepository.findActivatedPopupsByPositionAndPlatform(positionType, platformType, endDateTime.minusMinutes(1));
 
         // then
+        assertPopup(platformType, title, subTitle, startDateTime, endDateTime, imageUrl, linkUrl, bgColor, fontColor, findPopups);
+    }
+
+    private void assertPopup(PopupPlatformType platformType, String title, String subTitle, LocalDateTime startDateTime, LocalDateTime endDateTime, String imageUrl, String linkUrl, String bgColor, String fontColor, List<Popup> findPopups) {
         assertAll(
             () -> assertThat(findPopups).hasSize(1),
             () -> assertThat(findPopups.get(0).getDetail().getTitle()).isEqualTo(title),

@@ -54,19 +54,6 @@ class StoreRepositoryTest {
             assertThat(stores).isEmpty();
         }
 
-        @Test
-        void abc() {
-            // given
-            Store store = StoreCreator.createWithDefaultMenu(10000L, "storeName", 37.328431, 126.91674);
-            storeRepository.save(store);
-
-            // when
-            boolean isExists = storeRepository.existsStoreAroundInDistance(37.358086, 126.933012, 2.0);
-
-            // then
-            assertThat(isExists).isFalse();
-        }
-
     }
 
     @DisplayName("내가 제보한 가게 수를 카운트한다")
@@ -76,7 +63,7 @@ class StoreRepositoryTest {
         @Test
         void 메뉴가_없는_가게는_포함되지_않는다() {
             // given
-            Long userId = 10000L;
+            long userId = 10000L;
             storeRepository.save(StoreCreator.create(userId, "2번 가게"));
 
             // when
@@ -89,7 +76,7 @@ class StoreRepositoryTest {
         @Test
         void 삭제된_가게도_포함된다() {
             // given
-            Long userId = 10000L;
+            long userId = 10000L;
             Store deletedStore = StoreCreator.createDeletedWithDefaultMenu(userId, "2번 가게");
             storeRepository.save(deletedStore);
 
@@ -110,7 +97,7 @@ class StoreRepositoryTest {
         @Test
         void 사용자가_등록한_가게_첫페이지를_조회한다() {
             // given
-            Long userId = 100L;
+            long userId = 100L;
 
             Store store1 = StoreCreator.createWithDefaultMenu(userId, "1번 가게");
             Store store2 = StoreCreator.createWithDefaultMenu(userId, "2번 가게");
@@ -130,7 +117,7 @@ class StoreRepositoryTest {
         @Test
         void 사용자가_등록한_가게_두번째_페이지를_조회한다() {
             // given
-            Long userId = 100L;
+            long userId = 100L;
 
             Store store1 = StoreCreator.createWithDefaultMenu(userId, "1번 가게");
             Store store2 = StoreCreator.createWithDefaultMenu(userId, "2번 가게");

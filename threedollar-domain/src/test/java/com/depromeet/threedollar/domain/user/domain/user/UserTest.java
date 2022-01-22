@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class UserTest {
 
     @Test
-    void 유저에게_보유한_메달을_추가한다() {
+    void 유저가_메달을_획득한다() {
         // given
         String medalName = "리뷰왕";
         String description = "리뷰 5번 작성시 획득하는 메달";
@@ -43,7 +43,7 @@ class UserTest {
     }
 
     @Test
-    void 유저에게_메달이_추가되면_기본적으로_비활성화_상태이다() {
+    void 유저가_메달을_획득하면_비활성화_상태로_보관된다() {
         // given
         User user = UserCreator.create("social-id", UserSocialType.KAKAO, "닉네임");
         Medal medalA = MedalCreator.create("메달 A");
@@ -59,7 +59,7 @@ class UserTest {
     }
 
     @Test
-    void 유저에게_활성화중인_메달이_없는경우_예외가_아닌_null_을_반환한다() {
+    void 유저가_장착한_메달을_조회할때_장착한_메달이_없는경우_예외가_아닌_null_을_반환한다() {
         // given
         User user = UserCreator.create("social-id", UserSocialType.KAKAO, "닉네임");
         Medal medalA = MedalCreator.create("메달 A");

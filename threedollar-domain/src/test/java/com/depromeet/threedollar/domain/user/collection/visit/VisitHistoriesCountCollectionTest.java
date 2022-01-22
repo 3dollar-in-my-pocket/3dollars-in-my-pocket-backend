@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class VisitHistoriesCountCollectionTest {
 
     @Test
-    void 가게별로_방문_성공_실패_카운트를_저장하는_컬렉션() {
+    void 가게별로_방문_성공및_실패_횟수를_보관한다() {
         // given
         Long storeOneId = 333333L;
         Long storeTwoId = 777777L;

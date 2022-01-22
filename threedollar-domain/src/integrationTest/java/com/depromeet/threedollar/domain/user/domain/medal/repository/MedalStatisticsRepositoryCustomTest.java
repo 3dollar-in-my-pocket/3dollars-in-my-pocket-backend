@@ -28,7 +28,7 @@ class MedalStatisticsRepositoryCustomTest {
     private UserRepository userRepository;
 
     @Test
-    void 통계용_유저가_보유한_메달의_갯수를_조회한다() {
+    void 통계용으로_유저가_보유한_메달의_갯수를_조회한다() {
         // given
         Medal medalOne = MedalCreator.create("붕어빵 챌린지");
         Medal medalTwo = MedalCreator.create("달고나 토끼");
