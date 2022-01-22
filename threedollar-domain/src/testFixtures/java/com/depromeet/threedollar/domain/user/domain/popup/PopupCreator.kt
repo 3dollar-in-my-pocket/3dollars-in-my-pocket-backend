@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.domain.user.domain.popup
 
-import com.depromeet.threedollar.domain.user.domain.ObjectMother
+import com.depromeet.threedollar.domain.user.domain.TestFixture
 import java.time.LocalDateTime
 
-@ObjectMother
+@TestFixture
 object PopupCreator {
 
     @JvmStatic

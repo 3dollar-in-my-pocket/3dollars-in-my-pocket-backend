@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.domain.user.domain.medal
 
-import com.depromeet.threedollar.domain.user.domain.ObjectMother
+import com.depromeet.threedollar.domain.user.domain.TestFixture
 
-@ObjectMother
+@TestFixture
 object MedalCreator {
 
     @JvmOverloads

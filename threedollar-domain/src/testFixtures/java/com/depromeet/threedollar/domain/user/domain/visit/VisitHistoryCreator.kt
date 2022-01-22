@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.domain.user.domain.visit
 
-import com.depromeet.threedollar.domain.user.domain.ObjectMother
+import com.depromeet.threedollar.domain.user.domain.TestFixture
 import com.depromeet.threedollar.domain.user.domain.store.Store
 import java.time.LocalDate
 
-@ObjectMother
+@TestFixture
 object VisitHistoryCreator {
 
     @JvmStatic

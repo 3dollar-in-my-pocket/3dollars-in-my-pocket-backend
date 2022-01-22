@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.domain.user.domain.storeimage
 
-import com.depromeet.threedollar.domain.user.domain.ObjectMother
+import com.depromeet.threedollar.domain.user.domain.TestFixture
 import com.depromeet.threedollar.domain.user.domain.store.Store
 
-@ObjectMother
+@TestFixture
 object StoreImageCreator {
 
     @JvmStatic
