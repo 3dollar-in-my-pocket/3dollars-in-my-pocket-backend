@@ -5,4 +5,4 @@ package com.depromeet.threedollar.document
  * - TextFixture (Object Mother)
  * - An object mother is a kind of class used in testing to help create example objects that you use for testing.
  */
-annotation class TextFixture
+annotation class TestFixture

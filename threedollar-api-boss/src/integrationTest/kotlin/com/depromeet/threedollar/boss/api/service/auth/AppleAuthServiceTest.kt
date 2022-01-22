@@ -2,10 +2,7 @@ package com.depromeet.threedollar.boss.api.service.auth
 
 import com.depromeet.threedollar.boss.api.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.document.boss.document.account.BossAccount
-import com.depromeet.threedollar.document.boss.document.account.BossAccountRepository
-import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialInfo
-import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
+import com.depromeet.threedollar.document.boss.document.account.*
 import com.depromeet.threedollar.external.client.apple.AppleTokenProvider
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
@@ -36,9 +33,10 @@ internal class AppleAuthServiceTest(
     @Test
     fun `애플 로그인이 성공하면 ID가 반환된다`() {
         // given
-        val bossAccount = BossAccount(
+        val bossAccount = BossAccountCreator.create(
             name = "사장님",
-            socialInfo = BossAccountSocialInfo(SOCIAL_ID, SOCIAL_TYPE),
+            socialId = SOCIAL_ID,
+            socialType = SOCIAL_TYPE,
         )
         bossAccountRepository.save(bossAccount)
 

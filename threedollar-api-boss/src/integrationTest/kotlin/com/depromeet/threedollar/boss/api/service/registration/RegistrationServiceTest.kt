@@ -5,11 +5,9 @@ import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.document.boss.document.account.*
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategory
+import com.depromeet.threedollar.document.boss.document.category.BossStoreCategoryCreator
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategoryRepository
-import com.depromeet.threedollar.document.boss.document.registration.Registration
-import com.depromeet.threedollar.document.boss.document.registration.RegistrationBossForm
-import com.depromeet.threedollar.document.boss.document.registration.RegistrationRepository
-import com.depromeet.threedollar.document.boss.document.registration.RegistrationStoreForm
+import com.depromeet.threedollar.document.boss.document.registration.*
 import com.depromeet.threedollar.document.common.document.ContactsNumber
 import com.depromeet.threedollar.document.common.document.BusinessNumber
 import org.assertj.core.api.Assertions.assertThat
@@ -90,7 +88,10 @@ internal class RegistrationServiceTest(
         val contactsNumber = "010-1234-1234"
         val certificationPhotoUrl = "https://example-photo.png"
 
-        registrationRepository.save(createRegistration(socialId, socialType))
+        registrationRepository.save(RegistrationCreator.create(
+            socialId = socialId,
+            socialType = socialType
+        ))
 
         val request = ApplyRegistrationRequest(
             bossName = bossName,
@@ -114,7 +115,10 @@ internal class RegistrationServiceTest(
 
         val socialId = "social-id"
         val socialType = BossAccountSocialType.APPLE
-        bossAccountRepository.save(createBossAccount(socialId, socialType))
+        bossAccountRepository.save(BossAccountCreator.create(
+            socialId = socialId,
+            socialType = socialType
+        ))
 
         val request = ApplyRegistrationRequest(
             bossName = "사장님 이름",
@@ -153,31 +157,8 @@ internal class RegistrationServiceTest(
 
 }
 
-private fun createBossAccount(socialId: String, socialType: BossAccountSocialType): BossAccount {
-    return BossAccount(
-        name = "사장님 성함",
-        socialInfo = BossAccountSocialInfo(socialId, socialType)
-    )
-}
-
-private fun createRegistration(socialId: String, socialType: BossAccountSocialType): Registration {
-    return Registration(
-        boss = RegistrationBossForm(
-            socialInfo = BossAccountSocialInfo(socialId, socialType),
-            name = "name",
-            businessNumber = BusinessNumber.of("123-01-1234")
-        ),
-        store = RegistrationStoreForm(
-            name = "가게 이름",
-            categoriesIds = mutableListOf("1", "3"),
-            contactsNumber = ContactsNumber.of("010-1234-1234"),
-            certificationPhotoUrl = "https://sample.png"
-        )
-    )
-}
-
 private fun createCategory(bossStoreCategoryRepository: BossStoreCategoryRepository, vararg titles: String): List<String> {
     return titles.map {
-        bossStoreCategoryRepository.save(BossStoreCategory(it, 10)).id
+        bossStoreCategoryRepository.save(BossStoreCategoryCreator.create(it)).id
     }
 }
