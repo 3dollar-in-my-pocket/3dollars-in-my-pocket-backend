@@ -2,6 +2,7 @@ package com.depromeet.threedollar.domain.user.domain.review;
 
 import com.depromeet.threedollar.domain.common.domain.AuditingTimeEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -37,6 +38,7 @@ public class Review extends AuditingTimeEntity {
     @Enumerated(EnumType.STRING)
     private ReviewStatus status;
 
+    @Builder(access = AccessLevel.PACKAGE)
     private Review(Long storeId, Long userId, String contents, int rating) {
         this.storeId = storeId;
         this.userId = userId;
@@ -46,7 +48,12 @@ public class Review extends AuditingTimeEntity {
     }
 
     public static Review of(Long storeId, Long userId, String contents, int rating) {
-        return new Review(storeId, userId, contents, rating);
+        return Review.builder()
+            .storeId(storeId)
+            .userId(userId)
+            .contents(contents)
+            .rating(rating)
+            .build();
     }
 
     public void update(String contents, int rating) {

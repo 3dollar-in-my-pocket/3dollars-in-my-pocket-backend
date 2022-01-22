@@ -25,5 +25,8 @@ dependencies {
     // sentry
     implementation("io.sentry:sentry-spring-boot-starter:${sentryVersion}")
     implementation("io.sentry:sentry-logback:${sentryVersion}")
+
+    // textFixtures
+    testImplementation(testFixtures(project(":threedollar-domain")))
 }
 

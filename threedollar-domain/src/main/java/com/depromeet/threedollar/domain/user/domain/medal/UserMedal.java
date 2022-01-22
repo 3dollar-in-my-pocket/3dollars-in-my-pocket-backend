@@ -3,6 +3,7 @@ package com.depromeet.threedollar.domain.user.domain.medal;
 import com.depromeet.threedollar.domain.common.domain.AuditingTimeEntity;
 import com.depromeet.threedollar.domain.user.domain.user.User;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -37,7 +38,8 @@ public class UserMedal extends AuditingTimeEntity {
     @Enumerated(EnumType.STRING)
     private UserMedalStatus status;
 
-    UserMedal(Medal medal, User user, UserMedalStatus status) {
+    @Builder(access = AccessLevel.PACKAGE)
+    private UserMedal(Medal medal, User user, UserMedalStatus status) {
         this.medal = medal;
         this.user = user;
         this.status = status;

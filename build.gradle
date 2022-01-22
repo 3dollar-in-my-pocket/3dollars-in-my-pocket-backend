@@ -27,6 +27,7 @@ subprojects {
         plugin("kotlin")
         plugin("kotlin-spring")
         plugin("jacoco")
+        plugin("java-test-fixtures")
     }
 
     java {
