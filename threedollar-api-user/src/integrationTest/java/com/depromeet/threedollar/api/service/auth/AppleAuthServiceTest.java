@@ -7,7 +7,7 @@ import com.depromeet.threedollar.api.service.user.UserService;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.user.domain.user.*;
-import com.depromeet.threedollar.external.client.apple.AppleTokenProvider;
+import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,7 +41,7 @@ class AppleAuthServiceTest {
 
     @BeforeEach
     void setUp() {
-        authService = new AppleAuthService(new StubAppleTokenProvider(), userRepository, userService);
+        authService = new AppleAuthService(new StubAppleTokenDecoder(), userRepository, userService);
     }
 
     @AfterEach
@@ -108,7 +108,7 @@ class AppleAuthServiceTest {
 
     }
 
-    private static class StubAppleTokenProvider implements AppleTokenProvider {
+    private static class StubAppleTokenDecoder implements AppleTokenDecoder {
 
         @Override
         public String getSocialIdFromIdToken(@NotNull String idToken) {

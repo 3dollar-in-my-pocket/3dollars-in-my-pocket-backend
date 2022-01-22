@@ -1,9 +1,9 @@
-package com.depromeet.threedollar.external.client.s3;
+package com.depromeet.threedollar.external.client.filestorage;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.multipart.MultipartFile;
 
-public interface S3Client {
+public interface FileStorageClient {
 
     void uploadFile(@NotNull MultipartFile file, @NotNull String fileName);
 

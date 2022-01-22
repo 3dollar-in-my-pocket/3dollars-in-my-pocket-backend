@@ -1,12 +1,12 @@
-package com.depromeet.threedollar.external.client.s3;
+package com.depromeet.threedollar.external.client.filestorage;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
-import com.depromeet.threedollar.external.client.s3.dto.properties.AmazonCloudFrontProperties;
-import com.depromeet.threedollar.external.client.s3.dto.properties.AmazonS3Properties;
+import com.depromeet.threedollar.external.client.filestorage.properties.AmazonCloudFrontProperties;
+import com.depromeet.threedollar.external.client.filestorage.properties.AmazonS3Properties;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ import java.io.InputStream;
 
 @RequiredArgsConstructor
 @Component
-public class S3ClientImpl implements S3Client {
+public class S3FileStorageClient implements FileStorageClient {
 
     private final AmazonS3 amazonS3;
 

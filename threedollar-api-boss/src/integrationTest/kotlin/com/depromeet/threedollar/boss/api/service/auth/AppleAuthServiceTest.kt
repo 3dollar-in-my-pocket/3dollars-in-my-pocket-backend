@@ -3,7 +3,7 @@ package com.depromeet.threedollar.boss.api.service.auth
 import com.depromeet.threedollar.boss.api.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.document.boss.document.account.*
-import com.depromeet.threedollar.external.client.apple.AppleTokenProvider
+import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
@@ -22,7 +22,7 @@ internal class AppleAuthServiceTest(
 
     @BeforeEach
     fun setUp() {
-        authService = AppleAuthService(bossAccountRepository, StubAppleTokenProvider())
+        authService = AppleAuthService(bossAccountRepository, StubAppleTokenDecoder())
     }
 
     @AfterEach
@@ -53,7 +53,7 @@ internal class AppleAuthServiceTest(
         Assertions.assertThatThrownBy { authService.login(LoginRequest("token", SOCIAL_TYPE)) }.isInstanceOf(NotFoundException::class.java)
     }
 
-    private class StubAppleTokenProvider : AppleTokenProvider {
+    private class StubAppleTokenDecoder : AppleTokenDecoder {
         override fun getSocialIdFromIdToken(idToken: String): String {
             return SOCIAL_ID
         }

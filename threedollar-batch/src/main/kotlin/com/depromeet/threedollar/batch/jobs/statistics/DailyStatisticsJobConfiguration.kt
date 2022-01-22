@@ -8,7 +8,7 @@ import com.depromeet.threedollar.domain.user.domain.review.ReviewRepository
 import com.depromeet.threedollar.domain.user.domain.store.StoreRepository
 import com.depromeet.threedollar.domain.user.domain.user.UserRepository
 import com.depromeet.threedollar.domain.user.domain.visit.VisitHistoryRepository
-import com.depromeet.threedollar.external.client.slack.SlackApiClient
+import com.depromeet.threedollar.external.client.slack.SlackNotificationApiClient
 import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
@@ -34,7 +34,7 @@ class DailyStatisticsJobConfiguration(
     private val visitHistoryRepository: VisitHistoryRepository,
     private val medalRepository: MedalRepository,
 
-    private val slackApiClient: SlackApiClient
+    private val slackNotificationApiClient: SlackNotificationApiClient
 ) {
 
     @Bean
@@ -58,7 +58,7 @@ class DailyStatisticsJobConfiguration(
         return stepBuilderFactory["notificationStatisticsInfo"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
-                slackApiClient.postMessage(
+                slackNotificationApiClient.postMessage(
                     PostSlackMessageRequest.of(DAILY_STATISTICS_INFO.messageFormat.format(yesterday))
                 )
                 RepeatStatus.FINISHED
@@ -104,7 +104,7 @@ class DailyStatisticsJobConfiguration(
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 val todayDeletedCounts = storeRepository.findDeletedStoresCountsByDate(yesterday, yesterday)
-                slackApiClient.postMessage(
+                slackNotificationApiClient.postMessage(
                     PostSlackMessageRequest.of(COUNTS_DELETED_STORE.messageFormat.format(todayDeletedCounts))
                 )
                 RepeatStatus.FINISHED
@@ -123,7 +123,7 @@ class DailyStatisticsJobConfiguration(
                         COUNTS_MENU.messageFormat.format(it.category.categoryName, it.counts)
                     }
 
-                slackApiClient.postMessage(PostSlackMessageRequest.of(COUNTS_MENUS.messageFormat.format(message)))
+                slackNotificationApiClient.postMessage(PostSlackMessageRequest.of(COUNTS_MENUS.messageFormat.format(message)))
                 RepeatStatus.FINISHED
             }
             .build()
@@ -171,7 +171,7 @@ class DailyStatisticsJobConfiguration(
                     .joinToString(separator = "\n") {
                         COUNTS_MEDAL.messageFormat.format(it.medalName, it.counts)
                     }
-                slackApiClient.postMessage(PostSlackMessageRequest.of(COUNTS_MEDALS.messageFormat.format(message)))
+                slackNotificationApiClient.postMessage(PostSlackMessageRequest.of(COUNTS_MEDALS.messageFormat.format(message)))
                 RepeatStatus.FINISHED
             }
             .build()
@@ -187,7 +187,7 @@ class DailyStatisticsJobConfiguration(
                     .joinToString(separator = "\n") {
                         COUNTS_ACTIVE_MEDAL.messageFormat.format(it.medalName, it.counts)
                     }
-                slackApiClient.postMessage(PostSlackMessageRequest.of(COUNTS_ACTIVE_MEDALS.messageFormat.format(message)))
+                slackNotificationApiClient.postMessage(PostSlackMessageRequest.of(COUNTS_ACTIVE_MEDALS.messageFormat.format(message)))
                 RepeatStatus.FINISHED
             }
             .build()
@@ -199,7 +199,7 @@ class DailyStatisticsJobConfiguration(
         todayCounts: Long,
         weekendCounts: Long
     ) {
-        slackApiClient.postMessage(
+        slackNotificationApiClient.postMessage(
             PostSlackMessageRequest.of(
                 messageType.messageFormat.format(totalCounts, todayCounts, weekendCounts)
             )

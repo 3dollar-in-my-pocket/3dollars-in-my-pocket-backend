@@ -28,7 +28,7 @@ import static com.depromeet.threedollar.common.exception.type.ErrorCode.*;
  */
 @RequiredArgsConstructor
 @Component
-public class AppleTokenProviderImpl implements AppleTokenProvider {
+public class AppleTokenDecoderImpl implements AppleTokenDecoder {
 
     private final AppleAuthApiClient appleApiCaller;
     private final AppleAuthProperties appleAuthProperties;

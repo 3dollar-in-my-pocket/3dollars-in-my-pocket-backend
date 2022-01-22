@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Primary
 @Profile({"local", "local-docker", "integration-test"})
 @Component
-public class DummySlackApiClient implements SlackApiClient {
+public class DummySlackNotificationApiClient implements SlackNotificationApiClient {
 
     @Override
     public void postMessage(PostSlackMessageRequest request) {

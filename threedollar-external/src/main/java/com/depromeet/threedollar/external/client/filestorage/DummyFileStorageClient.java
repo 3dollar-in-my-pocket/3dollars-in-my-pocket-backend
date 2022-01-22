@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.external.client.s3;
+package com.depromeet.threedollar.external.client.filestorage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Primary
 @Profile({"local", "local-docker", "integration-test"})
 @Component
-public class DummyS3ClientImpl implements S3Client {
+public class DummyFileStorageClient implements FileStorageClient {
 
     @Override
     public void uploadFile(@NotNull MultipartFile file, @NotNull String fileName) {

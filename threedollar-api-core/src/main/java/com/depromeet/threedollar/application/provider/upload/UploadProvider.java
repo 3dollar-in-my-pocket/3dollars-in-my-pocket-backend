@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.application.provider.upload;
 
 import com.depromeet.threedollar.application.provider.upload.dto.request.UploadFileRequest;
-import com.depromeet.threedollar.external.client.s3.S3Client;
+import com.depromeet.threedollar.external.client.filestorage.FileStorageClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,13 +10,13 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class UploadProvider {
 
-    private final S3Client s3Client;
+    private final FileStorageClient fileStorageClient;
 
     public String uploadFile(UploadFileRequest request, MultipartFile file) {
         request.validateAvailableFileType(file.getContentType());
         String fileName = request.createFileName(file.getOriginalFilename());
-        s3Client.uploadFile(file, fileName);
-        return s3Client.getFileUrl(fileName);
+        fileStorageClient.uploadFile(file, fileName);
+        return fileStorageClient.getFileUrl(fileName);
     }
 
 }

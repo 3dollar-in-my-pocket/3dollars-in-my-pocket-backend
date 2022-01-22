@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.external.client.s3.dto.properties;
+package com.depromeet.threedollar.external.client.filestorage.properties;
 
 import lombok.AccessLevel;
 import lombok.Getter;
