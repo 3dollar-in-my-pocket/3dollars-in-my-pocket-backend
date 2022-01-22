@@ -18,8 +18,8 @@ import org.springframework.mock.web.MockMultipartFile;
 
 import java.util.List;
 
-import static com.depromeet.threedollar.api.assertutils.assertStoreImageUtils.assertStoreImage;
-import static com.depromeet.threedollar.api.assertutils.assertStoreImageUtils.assertStoreImageResponse;
+import static com.depromeet.threedollar.testhelper.assertion.StoreImageAssertionHelper.assertStoreImage;
+import static com.depromeet.threedollar.testhelper.assertion.StoreImageAssertionHelper.assertStoreImageResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;

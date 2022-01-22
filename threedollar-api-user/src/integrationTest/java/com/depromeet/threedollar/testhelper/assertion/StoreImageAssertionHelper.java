@@ -1,13 +1,15 @@
-package com.depromeet.threedollar.api.assertutils;
+package com.depromeet.threedollar.testhelper.assertion;
 
 import com.depromeet.threedollar.api.service.storeimage.dto.response.StoreImageResponse;
+import com.depromeet.threedollar.domain.user.domain.TestHelper;
 import com.depromeet.threedollar.domain.user.domain.storeimage.StoreImage;
 import com.depromeet.threedollar.domain.user.domain.storeimage.StoreImageStatus;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public final class assertStoreImageUtils {
+@TestHelper
+public final class StoreImageAssertionHelper {
 
     public static void assertStoreImage(StoreImage storeImage, Long storeId, Long userId, String imageUrl, StoreImageStatus status) {
         assertAll(

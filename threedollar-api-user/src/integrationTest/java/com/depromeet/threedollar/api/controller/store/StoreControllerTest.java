@@ -23,7 +23,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.List;
 import java.util.Set;
 
-import static com.depromeet.threedollar.api.assertutils.assertStoreUtils.assertStoreInfoResponse;
+import static com.depromeet.threedollar.testhelper.assertion.StoreAssertionHelper.assertStoreInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;

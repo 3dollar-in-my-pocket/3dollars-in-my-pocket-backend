@@ -39,12 +39,12 @@ public class Review extends AuditingTimeEntity {
     private ReviewStatus status;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private Review(Long storeId, Long userId, String contents, int rating) {
+    private Review(Long storeId, Long userId, String contents, int rating, ReviewStatus status) {
         this.storeId = storeId;
         this.userId = userId;
         this.contents = contents;
         this.rating = Rating.of(rating);
-        this.status = ReviewStatus.POSTED;
+        this.status = status;
     }
 
     public static Review of(Long storeId, Long userId, String contents, int rating) {
@@ -53,6 +53,7 @@ public class Review extends AuditingTimeEntity {
             .userId(userId)
             .contents(contents)
             .rating(rating)
+            .status(ReviewStatus.POSTED)
             .build();
     }
 

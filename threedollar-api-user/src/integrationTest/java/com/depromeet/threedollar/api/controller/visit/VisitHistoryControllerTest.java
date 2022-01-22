@@ -20,8 +20,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.depromeet.threedollar.api.assertutils.assertStoreUtils.assertStoreInfoResponse;
-import static com.depromeet.threedollar.api.assertutils.assertVisitHistoryUtils.assertVisitHistoryWithStoreResponse;
+import static com.depromeet.threedollar.testhelper.assertion.StoreAssertionHelper.assertStoreInfoResponse;
+import static com.depromeet.threedollar.testhelper.assertion.VisitHistoryAssertionHelper.assertVisitHistoryWithStoreResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;

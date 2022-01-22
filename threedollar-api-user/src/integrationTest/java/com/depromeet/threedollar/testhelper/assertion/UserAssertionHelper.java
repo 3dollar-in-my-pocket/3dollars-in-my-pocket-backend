@@ -1,6 +1,7 @@
-package com.depromeet.threedollar.api.assertutils;
+package com.depromeet.threedollar.testhelper.assertion;
 
 import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
+import com.depromeet.threedollar.domain.user.domain.TestHelper;
 import com.depromeet.threedollar.domain.user.domain.medal.UserMedal;
 import com.depromeet.threedollar.domain.user.domain.medal.UserMedalStatus;
 import com.depromeet.threedollar.domain.user.domain.user.SocialInfo;
@@ -11,7 +12,8 @@ import com.depromeet.threedollar.domain.user.domain.user.WithdrawalUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public final class assertUserUtils {
+@TestHelper
+public final class UserAssertionHelper {
 
     public static void assertWithdrawalUser(WithdrawalUser withdrawalUser, User user) {
         assertAll(

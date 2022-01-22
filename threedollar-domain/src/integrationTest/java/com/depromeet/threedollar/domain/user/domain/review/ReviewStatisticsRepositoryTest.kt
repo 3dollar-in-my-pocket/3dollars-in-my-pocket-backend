@@ -18,8 +18,18 @@ class ReviewStatisticsRepositoryTest(
         @Test
         fun 활성화된_전체_리뷰수를_조회한다() {
             // given
-            val review1 = ReviewCreator.create(1L, 100L, "리뷰 1", 5)
-            val review2 = ReviewCreator.create(2L, 101L, "리뷰 2", 4)
+            val review1 = ReviewCreator.create(
+                storeId = 1L,
+                userId = 100L,
+                contents = "리뷰 1",
+                rating = 5
+            )
+            val review2 = ReviewCreator.create(
+                storeId = 2L,
+                userId = 10L,
+                contents = "리뷰 2",
+                rating = 4
+            )
             reviewRepository.saveAll(listOf(review1, review2))
 
             // when
@@ -32,7 +42,12 @@ class ReviewStatisticsRepositoryTest(
         @Test
         fun 삭제된_리뷰는_전체_리뷰수에서_제외된다() {
             // given
-            val review = ReviewCreator.createDeleted(1L, 100L, "리뷰 1", 5)
+            val review = ReviewCreator.createDeleted(
+                storeId = 1L,
+                userId = 100L,
+                contents = "리뷰 1",
+                rating = 5
+            )
             reviewRepository.save(review)
 
             // when

@@ -29,12 +29,12 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-import static com.depromeet.threedollar.api.assertutils.assertReviewUtils.assertReviewWithWriterResponse;
-import static com.depromeet.threedollar.api.assertutils.assertStoreImageUtils.assertStoreImageResponse;
-import static com.depromeet.threedollar.api.assertutils.assertStoreUtils.*;
-import static com.depromeet.threedollar.api.assertutils.assertUserUtils.assertUserInfoResponse;
-import static com.depromeet.threedollar.api.assertutils.assertVisitHistoryUtils.assertVisitHistoryInfoResponse;
-import static com.depromeet.threedollar.api.assertutils.assertVisitHistoryUtils.assertVisitHistoryWithUserResponse;
+import static com.depromeet.threedollar.testhelper.assertion.ReviewAssertionHelper.assertReviewWithWriterResponse;
+import static com.depromeet.threedollar.testhelper.assertion.StoreImageAssertionHelper.assertStoreImageResponse;
+import static com.depromeet.threedollar.testhelper.assertion.StoreAssertionHelper.*;
+import static com.depromeet.threedollar.testhelper.assertion.UserAssertionHelper.assertUserInfoResponse;
+import static com.depromeet.threedollar.testhelper.assertion.VisitHistoryAssertionHelper.assertVisitHistoryInfoResponse;
+import static com.depromeet.threedollar.testhelper.assertion.VisitHistoryAssertionHelper.assertVisitHistoryWithUserResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 

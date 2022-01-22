@@ -17,7 +17,8 @@ object ReviewCreator {
             .userId(userId)
             .contents(contents)
             .rating(rating)
-            .build();
+            .status(ReviewStatus.POSTED)
+            .build()
     }
 
     @JvmStatic
@@ -32,6 +33,7 @@ object ReviewCreator {
             .userId(userId)
             .contents(contents)
             .rating(rating)
+            .status(ReviewStatus.DELETED)
             .build();
         review.delete()
         return review

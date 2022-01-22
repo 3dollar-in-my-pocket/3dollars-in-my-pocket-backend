@@ -1,7 +1,8 @@
-package com.depromeet.threedollar.api.assertutils;
+package com.depromeet.threedollar.testhelper.assertion;
 
 import com.depromeet.threedollar.api.service.store.dto.response.*;
 import com.depromeet.threedollar.domain.common.domain.Location;
+import com.depromeet.threedollar.domain.user.domain.TestHelper;
 import com.depromeet.threedollar.domain.user.domain.store.Menu;
 import com.depromeet.threedollar.domain.user.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.user.domain.store.Store;
@@ -12,11 +13,12 @@ import com.depromeet.threedollar.domain.user.domain.user.User;
 
 import java.util.List;
 
-import static com.depromeet.threedollar.api.assertutils.assertUserUtils.assertUserInfoResponse;
+import static com.depromeet.threedollar.testhelper.assertion.UserAssertionHelper.assertUserInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public final class assertStoreUtils {
+@TestHelper
+public final class StoreAssertionHelper {
 
     /**
      * Store

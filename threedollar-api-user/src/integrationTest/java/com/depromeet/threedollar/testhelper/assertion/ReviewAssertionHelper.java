@@ -1,19 +1,21 @@
-package com.depromeet.threedollar.api.assertutils;
+package com.depromeet.threedollar.testhelper.assertion;
 
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewDetailResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewWithUserResponse;
+import com.depromeet.threedollar.domain.user.domain.TestHelper;
 import com.depromeet.threedollar.domain.user.domain.review.Review;
 import com.depromeet.threedollar.domain.user.domain.review.ReviewStatus;
 import com.depromeet.threedollar.domain.user.domain.store.Store;
 import com.depromeet.threedollar.domain.user.domain.user.User;
 
-import static com.depromeet.threedollar.api.assertutils.assertStoreUtils.assertStoreInfoResponse;
-import static com.depromeet.threedollar.api.assertutils.assertUserUtils.assertUserInfoResponse;
+import static com.depromeet.threedollar.testhelper.assertion.StoreAssertionHelper.assertStoreInfoResponse;
+import static com.depromeet.threedollar.testhelper.assertion.UserAssertionHelper.assertUserInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public final class assertReviewUtils {
+@TestHelper
+public final class ReviewAssertionHelper {
 
     public static void assertReview(Review review, Long storeId, String contents, int rating, Long userId, ReviewStatus status) {
         assertAll(

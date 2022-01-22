@@ -21,7 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.depromeet.threedollar.api.assertutils.assertUserUtils.assertUserMedal;
+import static com.depromeet.threedollar.testhelper.assertion.UserAssertionHelper.assertUserMedal;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
