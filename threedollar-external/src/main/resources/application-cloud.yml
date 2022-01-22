@@ -20,8 +20,6 @@ cloud:
   aws:
     s3:
       bucket: integration-test
-      mock:
-        port: 9999
     cloudfront:
       url: integration-test
 
@@ -36,11 +34,9 @@ spring.config:
 cloud:
   aws:
     s3:
-      bucket: 3dollar-local-embedded-bucket
-      mock:
-        port: 10000
+      bucket: local-test
     cloudfront:
-      url: http://localhost:${cloud.aws.s3.mock.port}/${cloud.aws.s3.bucket}/
+      url: local-test
 
 
 ---

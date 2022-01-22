@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Primary
-@Profile({"local", "local-docker"})
+@Profile({"local", "local-docker", "integration-test"})
 @Component
-public class LocalSlackApiClient implements SlackApiClient {
+public class DummySlackApiClient implements SlackApiClient {
 
     @Override
     public void postMessage(PostSlackMessageRequest request) {
-        log.info(String.valueOf(request));
+        log.info("Dummy Slack API를 호출합니다. {}", request.toString());
     }
 
 }
