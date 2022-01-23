@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class StoreEventListener {
+public class StoreRatingEventListener {
 
     private final StoreRatingService storeRatingService;
 

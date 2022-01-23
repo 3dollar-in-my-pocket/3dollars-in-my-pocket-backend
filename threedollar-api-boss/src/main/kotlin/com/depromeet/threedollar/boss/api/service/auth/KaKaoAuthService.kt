@@ -18,6 +18,10 @@ class KaKaoAuthService(
         return findBossAccountBySocialIdAndSocialType(bossAccountRepository, kaKaoProfile.id, SOCIAL_TYPE).id
     }
 
+    override fun findSocialId(request: LoginRequest): String {
+        return kaKaoAuthApiClient.getProfileInfo(request.token).id
+    }
+
     companion object {
         private val SOCIAL_TYPE = BossAccountSocialType.KAKAO
     }

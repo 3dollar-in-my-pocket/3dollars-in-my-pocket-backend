@@ -8,6 +8,7 @@ import com.depromeet.threedollar.document.boss.document.account.BossAccountRepos
 import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.document.boss.document.registration.RegistrationRepository
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -15,19 +16,21 @@ import org.springframework.transaction.annotation.Transactional
 class RegistrationService(
     private val bossAccountRepository: BossAccountRepository,
     private val registrationRepository: RegistrationRepository,
-    private val bossStoreCategoryRepository: BossStoreCategoryRepository
+    private val bossStoreCategoryRepository: BossStoreCategoryRepository,
+    private val eventPublisher: ApplicationEventPublisher
 ) {
 
     @Transactional
     fun applyRegistration(
-        request: ApplyRegistrationRequest
+        request: ApplyRegistrationRequest,
+        socialId: String
     ) {
-        validateDuplicateRegistration(request.socialId, request.socialType)
+        validateDuplicateRegistration(socialId, request.socialType)
         validateExistsCategories(bossStoreCategoryRepository, request.storeCategoriesIds)
-        val registration = request.toEntity()
-        registration.addCategories(request.storeCategoriesIds)
+        val registration = request.toEntity(socialId)
         registrationRepository.save(registration)
-        // TODO: 비동기적으로 가슴속 삼천원 슬랙에 알림을 보내는 로직 추가
+
+        eventPublisher.publishEvent(registration)
     }
 
     private fun validateDuplicateRegistration(socialId: String, socialType: BossAccountSocialType) {

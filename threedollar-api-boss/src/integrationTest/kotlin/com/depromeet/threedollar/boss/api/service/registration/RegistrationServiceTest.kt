@@ -47,7 +47,7 @@ internal class RegistrationServiceTest(
 
         val request = ApplyRegistrationRequest(
             bossName = bossName,
-            socialId = socialId,
+            token = "Dummy Access Token",
             socialType = socialType,
             businessNumber = businessNumber,
             storeName = storeName,
@@ -57,7 +57,7 @@ internal class RegistrationServiceTest(
         )
 
         // when
-        registrationService.applyRegistration(request)
+        registrationService.applyRegistration(request, socialId)
 
         // then
         val registrations = registrationRepository.findAll()
@@ -95,7 +95,7 @@ internal class RegistrationServiceTest(
 
         val request = ApplyRegistrationRequest(
             bossName = bossName,
-            socialId = socialId,
+            token = "Dummy Access Token",
             socialType = socialType,
             businessNumber = businessNumber,
             storeName = storeName,
@@ -105,7 +105,7 @@ internal class RegistrationServiceTest(
         )
 
         // when & then
-        assertThatThrownBy { registrationService.applyRegistration(request) }.isInstanceOf(ConflictException::class.java)
+        assertThatThrownBy { registrationService.applyRegistration(request, socialId) }.isInstanceOf(ConflictException::class.java)
     }
 
     @Test
@@ -122,7 +122,7 @@ internal class RegistrationServiceTest(
 
         val request = ApplyRegistrationRequest(
             bossName = "사장님 이름",
-            socialId = socialId,
+            token = "Dummy Access Token",
             socialType = socialType,
             businessNumber = "123-82-1134",
             storeName = "사장님 가게 이름",
@@ -132,7 +132,7 @@ internal class RegistrationServiceTest(
         )
 
         // when & then
-        assertThatThrownBy { registrationService.applyRegistration(request) }.isInstanceOf(ConflictException::class.java)
+        assertThatThrownBy { registrationService.applyRegistration(request, socialId) }.isInstanceOf(ConflictException::class.java)
     }
 
     @Test
@@ -142,7 +142,7 @@ internal class RegistrationServiceTest(
 
         val request = ApplyRegistrationRequest(
             bossName = "will",
-            socialId = "social-id",
+            token = "Dummy Access Token",
             socialType = BossAccountSocialType.APPLE,
             businessNumber = "210-10-1234",
             storeName = "가슴속 3천원",
@@ -152,13 +152,13 @@ internal class RegistrationServiceTest(
         )
 
         // when & then
-        assertThatThrownBy { registrationService.applyRegistration(request) }.isInstanceOf(NotFoundException::class.java)
+        assertThatThrownBy { registrationService.applyRegistration(request, socialId = "socialId") }.isInstanceOf(NotFoundException::class.java)
     }
 
 }
 
-private fun createCategory(bossStoreCategoryRepository: BossStoreCategoryRepository, vararg titles: String): List<String> {
+private fun createCategory(bossStoreCategoryRepository: BossStoreCategoryRepository, vararg titles: String): Set<String> {
     return titles.map {
         bossStoreCategoryRepository.save(BossStoreCategoryCreator.create(it)).id
-    }
+    }.toSet()
 }

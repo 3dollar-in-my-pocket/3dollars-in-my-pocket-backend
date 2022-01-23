@@ -11,14 +11,7 @@ class Registration(
     val boss: RegistrationBossForm,
     val store: RegistrationStoreForm,
     val status: RegistrationStatus = RegistrationStatus.WAITING
-) : BaseDocument() {
-
-    fun addCategories(categories: List<String>) {
-        this.store.addCategories(categories)
-    }
-
-}
-
+) : BaseDocument()
 
 data class RegistrationBossForm(
     val socialInfo: BossAccountSocialInfo,
@@ -29,13 +22,7 @@ data class RegistrationBossForm(
 
 data class RegistrationStoreForm(
     val name: String,
-    val categoriesIds: MutableList<String> = mutableListOf(),
+    val categoriesIds: MutableSet<String> = mutableSetOf(),
     val contactsNumber: ContactsNumber,
     val certificationPhotoUrl: String
-) {
-
-    fun addCategories(categories: List<String>) {
-        this.categoriesIds.addAll(categories)
-    }
-
-}
+)

@@ -14,8 +14,12 @@ class AppleAuthService(
 ) : AuthService {
 
     override fun login(request: LoginRequest): String {
-        val appleSocialId = appleTokenDecoder.getSocialIdFromIdToken(request.token)
+        val appleSocialId = findSocialId(request)
         return findBossAccountBySocialIdAndSocialType(bossAccountRepository, appleSocialId, SOCIAL_TYPE).id
+    }
+
+    override fun findSocialId(request: LoginRequest): String {
+        return appleTokenDecoder.getSocialIdFromIdToken(request.token)
     }
 
     companion object {

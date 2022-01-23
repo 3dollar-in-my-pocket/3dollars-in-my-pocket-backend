@@ -9,17 +9,19 @@ import com.depromeet.threedollar.document.boss.document.registration.Registratio
 import com.depromeet.threedollar.document.boss.document.registration.RegistrationStoreForm
 
 data class ApplyRegistrationRequest(
-    val bossName: String,
-    val socialId: String,
+    val token: String,
     val socialType: BossAccountSocialType,
+
+    val bossName: String,
     val businessNumber: String,
+
     val storeName: String,
-    val storeCategoriesIds: List<String>,
+    val storeCategoriesIds: Set<String>,
     val contactsNumber: String,
     val certificationPhotoUrl: String
 ) {
 
-    fun toEntity(): Registration {
+    fun toEntity(socialId: String): Registration {
         return Registration(
             boss = RegistrationBossForm(
                 socialInfo = BossAccountSocialInfo(socialId, socialType),
@@ -28,6 +30,7 @@ data class ApplyRegistrationRequest(
             ),
             store = RegistrationStoreForm(
                 name = storeName,
+                categoriesIds = storeCategoriesIds as MutableSet<String>,
                 contactsNumber = ContactsNumber.of(contactsNumber),
                 certificationPhotoUrl = certificationPhotoUrl
             )

@@ -18,6 +18,10 @@ class GoogleAuthService(
         return findBossAccountBySocialIdAndSocialType(bossAccountRepository, googleProfile.id, SOCIAL_TYPE).id
     }
 
+    override fun findSocialId(request: LoginRequest): String {
+        return googleAuthApiClient.getProfileInfo(request.token).id
+    }
+
     companion object {
         private val SOCIAL_TYPE = BossAccountSocialType.GOOGLE
     }

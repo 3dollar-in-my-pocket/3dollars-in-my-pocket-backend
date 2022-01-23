@@ -6,4 +6,6 @@ interface AuthService {
 
     fun login(request: LoginRequest): String
 
+    fun findSocialId(request: LoginRequest): String
+
 }

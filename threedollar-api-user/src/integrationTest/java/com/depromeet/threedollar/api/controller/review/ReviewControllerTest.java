@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.controller.review;
 
 import com.depromeet.threedollar.api.controller.SetupStoreControllerTest;
 import com.depromeet.threedollar.api.listener.medal.AddUserMedalEventListener;
-import com.depromeet.threedollar.api.listener.store.StoreEventListener;
+import com.depromeet.threedollar.api.listener.store.StoreRatingEventListener;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.deprecated.RetrieveMyReviewsV2Request;
@@ -47,7 +47,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
     private AddUserMedalEventListener addUserMedalEventListener;
 
     @MockBean
-    private StoreEventListener storeEventListener;
+    private StoreRatingEventListener storeRatingEventListener;
 
     @AfterEach
     void cleanUp() {
@@ -117,7 +117,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             reviewMockApiCaller.updateReview(review.getId(), request, token, 200);
 
             // then
-            verify(storeEventListener, times(1)).renewStoreRating(any(ReviewChangedEvent.class));
+            verify(storeRatingEventListener, times(1)).renewStoreRating(any(ReviewChangedEvent.class));
         }
 
     }
@@ -149,7 +149,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             reviewMockApiCaller.deleteReview(review.getId(), token, 200);
 
             // then
-            verify(storeEventListener, times(1)).renewStoreRating(any(ReviewChangedEvent.class));
+            verify(storeRatingEventListener, times(1)).renewStoreRating(any(ReviewChangedEvent.class));
         }
 
     }
