@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.application.config.validator
+package com.depromeet.threedollar.api.config.vadlidator
 
 import javax.validation.Constraint
 import javax.validation.Payload

@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.application.config.validator
+package com.depromeet.threedollar.api.config.vadlidator
 
 import org.springframework.stereotype.Component
 import java.util.regex.Pattern
