@@ -15,10 +15,8 @@ public class KaKaoProfileResponse {
 
     private String id;
 
-    private KaKaoAccountResponse kakaoAccount;
-
     public static KaKaoProfileResponse testInstance(String socialId) {
-        return new KaKaoProfileResponse(socialId, KaKaoAccountResponse.testInstance("test@kakao.com"));
+        return new KaKaoProfileResponse(socialId);
     }
 
 }
