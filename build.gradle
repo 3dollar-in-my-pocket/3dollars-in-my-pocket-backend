@@ -1,16 +1,28 @@
-buildscript {
-    ext {
-        springBootVersion = "2.5.8"
-        kotlinVersion = "1.5.32"
-        springCloudVersion = "2020.0.4"
-    }
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
-        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+plugins {
+    id 'org.springframework.boot' version '2.5.8'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.jetbrains.kotlin.jvm' version '1.5.32'
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.5.32'
+    id 'jacoco'
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    springCloudVersion = "2020.0.4"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "11"
+        freeCompilerArgs = ["-Xjsr305=strict"]
     }
 }
 
@@ -21,25 +33,13 @@ allprojects {
 subprojects {
     apply {
         plugin("java-library")
-        plugin("eclipse")
+        plugin("kotlin")
         plugin("org.springframework.boot")
         plugin("io.spring.dependency-management")
-        plugin("kotlin")
-        plugin("kotlin-spring")
+        plugin("org.jetbrains.kotlin.jvm")
+        plugin("org.jetbrains.kotlin.plugin.spring")
         plugin("jacoco")
         plugin("java-test-fixtures")
-    }
-
-    java {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    compileKotlin {
-        kotlinOptions {
-            jvmTarget = "11"
-            freeCompilerArgs = ["-Xjsr305=strict"]
-        }
     }
 
     repositories {
@@ -57,7 +57,7 @@ subprojects {
         annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
         // Test
-        testImplementation('org.springframework.boot:spring-boot-starter-test')
+        testImplementation("org.springframework.boot:spring-boot-starter-test")
 
         // Lombok
         compileOnly("org.projectlombok:lombok")
@@ -112,18 +112,6 @@ subprojects {
         dependsOn integrationTest
         finalizedBy jacocoTestReport
     }
-}
-
-repositories {
-    mavenCentral()
-}
-
-apply {
-    plugin("jacoco")
-}
-
-jacoco {
-    toolVersion = "0.8.7"
 }
 
 task testCoverage(type: JacocoReport, group: 'verification', description: 'Report Test Coverage') {
