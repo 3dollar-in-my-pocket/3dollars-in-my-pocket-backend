@@ -1,7 +1,11 @@
 package com.depromeet.threedollar.common.type;
 
 import com.depromeet.threedollar.common.exception.model.ForbiddenException;
+import com.depromeet.threedollar.common.exception.model.ValidationException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -39,6 +43,36 @@ class FileTypeTest {
 
         // when & then
         assertThatThrownBy(() -> fileType.validateAvailableUploadInModule(targetApplication)).isInstanceOf(ForbiddenException.class);
+    }
+
+    @ValueSource(strings = {"image", "video/mp4"})
+    @ParameterizedTest
+    void 허용되지_ContentType_경우_VALIDATION_FILE_TYPE_EXCEPTION(String contentType) {
+        // given
+        FileType imageFileType = FileType.STORE_IMAGE;
+
+        // when & then
+        assertThatThrownBy(() -> imageFileType.validateAvailableContentType(contentType)).isInstanceOf(ValidationException.class);
+    }
+
+    @NullAndEmptySource
+    @ParameterizedTest
+    void ContentType이_널이거나_빈문자열일경우_VALIDATION_FILE_TYPE_EXCEPTION(String contentType) {
+        // given
+        FileType imageFileType = FileType.STORE_IMAGE;
+
+        // when & then
+        assertThatThrownBy(() -> imageFileType.validateAvailableContentType(contentType)).isInstanceOf(ValidationException.class);
+    }
+
+    @ValueSource(strings = {"image/jpeg", "image/png"})
+    @ParameterizedTest
+    void 허용된_ContentType_경우_정상적으로_반환된다(String contentType) {
+        // given
+        FileType imageFileType = FileType.STORE_IMAGE;
+
+        // when & then
+        imageFileType.validateAvailableContentType(contentType);
     }
 
 }

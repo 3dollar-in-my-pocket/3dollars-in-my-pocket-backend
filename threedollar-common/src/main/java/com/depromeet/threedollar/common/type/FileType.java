@@ -36,13 +36,14 @@ public enum FileType implements EnumModel {
         }
     }
 
-    public boolean isAvailableContentTypePrefix(@NotNull String contentTypePrefix) {
-        return this.contentType.getPrefix().equals(contentTypePrefix);
+    public void validateAvailableContentType(@Nullable String contentType) {
+        this.contentType.validateAvailableContentType(contentType);
     }
 
     /**
      * 파일의 기존의 확장자를 유지한 채, 유니크한 파일의 이름을 반환합니다.
      */
+    @NotNull
     public String createUniqueFileNameWithExtension(@Nullable String originalFileName) {
         if (originalFileName == null) {
             throw new ValidationException("잘못된 파일의 originFilename 입니다", FORBIDDEN_FILE_NAME_EXCEPTION);
@@ -51,6 +52,7 @@ public enum FileType implements EnumModel {
         return getFileNameWithDirectory(UuidUtils.generate().concat(extension));
     }
 
+    @NotNull
     private String getFileNameWithDirectory(@NotNull String fileName) {
         return this.directory.concat(fileName);
     }
