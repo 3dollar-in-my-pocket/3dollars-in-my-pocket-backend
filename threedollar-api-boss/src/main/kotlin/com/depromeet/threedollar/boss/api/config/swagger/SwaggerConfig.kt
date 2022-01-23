@@ -1,11 +1,14 @@
 package com.depromeet.threedollar.boss.api.config.swagger
 
+import org.springframework.beans.factory.config.BeanPostProcessor
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
+import org.springframework.util.ReflectionUtils
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration
 import springfox.documentation.builders.ApiInfoBuilder
 import springfox.documentation.builders.PathSelectors
@@ -17,6 +20,8 @@ import springfox.documentation.service.Response
 import springfox.documentation.service.SecurityScheme
 import springfox.documentation.spi.DocumentationType
 import springfox.documentation.spring.web.plugins.Docket
+import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider
+import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider
 import springfox.documentation.swagger.web.DocExpansion
 import springfox.documentation.swagger.web.UiConfiguration
 import springfox.documentation.swagger.web.UiConfigurationBuilder
@@ -83,6 +88,38 @@ class SwaggerConfig {
 
     private fun authorization(): List<SecurityScheme> {
         return listOf(ApiKey("Authorization", "Authorization", "header"))
+    }
+
+    @Bean
+    fun springfoxHandlerProviderBeanPostProcessor(): BeanPostProcessor {
+        return object : BeanPostProcessor {
+            override fun postProcessAfterInitialization(bean: Any, beanName: String): Any {
+                if (bean is WebMvcRequestHandlerProvider || bean is WebFluxRequestHandlerProvider) {
+                    customizeSpringfoxHandlerMappings(getHandlerMappings(bean))
+                }
+                return bean
+            }
+
+            private fun <T : RequestMappingInfoHandlerMapping?> customizeSpringfoxHandlerMappings(mappings: MutableList<T>) {
+                val copy = mappings.stream()
+                    .filter { mapping: T -> mapping!!.patternParser == null }
+                    .collect(Collectors.toList())
+                mappings.clear()
+                mappings.addAll(copy)
+            }
+
+            private fun getHandlerMappings(bean: Any): MutableList<RequestMappingInfoHandlerMapping> {
+                return try {
+                    val field = ReflectionUtils.findField(bean.javaClass, "handlerMappings")
+                    field!!.isAccessible = true
+                    field[bean] as MutableList<RequestMappingInfoHandlerMapping>
+                } catch (e: IllegalArgumentException) {
+                    throw IllegalStateException(e)
+                } catch (e: IllegalAccessException) {
+                    throw IllegalStateException(e)
+                }
+            }
+        }
     }
 
 }
