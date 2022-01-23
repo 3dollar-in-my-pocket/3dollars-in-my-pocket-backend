@@ -28,6 +28,7 @@ public class SlackNotificationEventListener {
             event.getApplicationType().getDescription(),
             event.getErrorCode().getCode(),
             event.getTimeStamp(),
+            event.getUserMetaValue(),
             event.getErrorCode().getMessage(),
             event.getException()
         )));
