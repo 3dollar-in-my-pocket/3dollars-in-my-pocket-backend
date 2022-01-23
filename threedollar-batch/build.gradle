@@ -4,3 +4,7 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-batch")
 }
+
+application {
+    mainClass.set("com.depromeet.threedollar.batch.ThreeDollarBatchApplicationKt")
+}

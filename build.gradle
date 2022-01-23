@@ -3,6 +3,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'org.jetbrains.kotlin.jvm' version '1.5.32'
     id 'org.jetbrains.kotlin.plugin.spring' version '1.5.32'
+    id 'application'
     id 'jacoco'
 }
 
@@ -32,6 +33,7 @@ allprojects {
 
 subprojects {
     apply {
+        plugin("idea")
         plugin("java-library")
         plugin("kotlin")
         plugin("org.springframework.boot")
@@ -112,6 +114,10 @@ subprojects {
         dependsOn integrationTest
         finalizedBy jacocoTestReport
     }
+}
+
+jacoco {
+    toolVersion = "0.8.7"
 }
 
 task testCoverage(type: JacocoReport, group: 'verification', description: 'Report Test Coverage') {

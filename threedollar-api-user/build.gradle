@@ -30,3 +30,6 @@ dependencies {
     testImplementation(testFixtures(project(":threedollar-domain")))
 }
 
+application {
+    mainClass.set("com.depromeet.threedollar.api.ThreeDollarApiApplication")
+}

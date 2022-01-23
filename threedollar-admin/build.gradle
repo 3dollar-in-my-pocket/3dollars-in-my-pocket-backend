@@ -10,3 +10,7 @@ dependencies {
     // textFixtures
     testImplementation(testFixtures(project(":threedollar-domain")))
 }
+
+application {
+    mainClass.set("com.depromeet.threedollar.admin.ThreeDollarAdminApplicationKt")
+}
