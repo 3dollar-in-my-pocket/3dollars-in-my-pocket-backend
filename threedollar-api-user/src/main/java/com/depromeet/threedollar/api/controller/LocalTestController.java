@@ -5,6 +5,7 @@ import com.depromeet.threedollar.api.service.store.StoreServiceUtils;
 import com.depromeet.threedollar.api.service.user.UserService;
 import com.depromeet.threedollar.api.service.user.dto.request.CreateUserRequest;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
+import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import com.depromeet.threedollar.domain.user.domain.store.Store;
 import com.depromeet.threedollar.domain.user.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.user.domain.user.User;
@@ -59,6 +60,12 @@ public class LocalTestController {
         store.delete();
         storeRepository.save(store);
         return ApiResponse.SUCCESS;
+    }
+
+    @ApiOperation("[개발 서버용] 서버 에러를 발생시킵니다.")
+    @GetMapping("/test-error")
+    public ApiResponse<String> throwServerException() {
+        throw new InternalServerException("[개발환경 에러 테스트용] 서버 에러가 발생하였습니다");
     }
 
 }
