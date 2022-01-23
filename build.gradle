@@ -15,25 +15,12 @@ ext {
     springCloudVersion = "2020.0.4"
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-}
-
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = "11"
-        freeCompilerArgs = ["-Xjsr305=strict"]
-    }
-}
-
 allprojects {
     group = "com.depromeet.threedollar"
 }
 
 subprojects {
     apply {
-        plugin("idea")
         plugin("java-library")
         plugin("kotlin")
         plugin("org.springframework.boot")
@@ -42,6 +29,18 @@ subprojects {
         plugin("org.jetbrains.kotlin.plugin.spring")
         plugin("jacoco")
         plugin("java-test-fixtures")
+    }
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    compileKotlin {
+        kotlinOptions {
+            jvmTarget = "11"
+            freeCompilerArgs = ["-Xjsr305=strict"]
+        }
     }
 
     repositories {
