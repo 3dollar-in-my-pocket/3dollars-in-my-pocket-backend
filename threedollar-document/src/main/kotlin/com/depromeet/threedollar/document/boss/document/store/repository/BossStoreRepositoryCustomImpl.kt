@@ -28,4 +28,10 @@ class BossStoreRepositoryCustomImpl(
             ), BossStore::class.java)
     }
 
+    override fun findBossStoreByBossId(bossId: String): BossStore? {
+        return mongoTemplate.findOne(Query(
+            where("bossId").`is`(bossId)
+        ), BossStore::class.java)
+    }
+
 }

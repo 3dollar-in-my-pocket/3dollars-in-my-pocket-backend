@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.boss.api.controller.store
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse
+import com.depromeet.threedollar.boss.api.config.resolver.BossId
 import com.depromeet.threedollar.boss.api.config.resolver.Auth
 import com.depromeet.threedollar.boss.api.config.resolver.MapCoordinate
 import com.depromeet.threedollar.boss.api.config.resolver.Role.STORE_OWNER
@@ -37,6 +38,15 @@ class BossStoreController(
     ): ApiResponse<String> {
         bossStoreOpenService.renewBossStoreOpen(storeId)
         return ApiResponse.SUCCESS
+    }
+
+    @ApiOperation("사장님 자신이 운영중인 가게를 조회합니다.")
+    @Auth
+    @GetMapping("/boss/v1/store/me")
+    fun getMyBossStore(
+        @BossId bossId: String
+    ): ApiResponse<BossStoreInfoResponse> {
+        return ApiResponse.success(bossStoreService.getMyBossStore(bossId))
     }
 
 }

@@ -3,6 +3,7 @@ package com.depromeet.threedollar.boss.api.service.store
 import com.depromeet.threedollar.boss.api.service.store.dto.response.BossStoreInfoResponse
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.model.CoordinateValue
+import com.depromeet.threedollar.document.boss.document.store.BossStore
 import com.depromeet.threedollar.document.boss.document.store.BossStoreRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -25,6 +26,18 @@ class BossStoreService(
         ).map { BossStoreInfoResponse.of(it) }
     }
 
+    @Transactional(readOnly = true)
+    fun getMyBossStore(
+        bossId: String
+    ): BossStoreInfoResponse {
+        return BossStoreInfoResponse.of(findBossStoreByBossId(bossStoreRepository, bossId))
+    }
+
+}
+
+fun findBossStoreByBossId(bossStoreRepository: BossStoreRepository, bossId: String): BossStore {
+    return bossStoreRepository.findBossStoreByBossId(bossId)
+        ?: throw NotFoundException("사장님 (${bossId})이 운영중인 가게가 존재하지 않습니다")
 }
 
 fun validateExistsBossStore(bossStoreRepository: BossStoreRepository, bossStoreId: String) {
