@@ -1,5 +1,6 @@
-package com.depromeet.threedollar.application.config.redis;
+package com.depromeet.threedollar.redis.config;
 
+import com.depromeet.threedollar.common.utils.ProcessUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,9 +14,6 @@ import redis.embedded.RedisServer;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.io.IOException;
-
-import static com.depromeet.threedollar.common.utils.ProcessUtils.findAvailableRandomPort;
-import static com.depromeet.threedollar.common.utils.ProcessUtils.isRunningPort;
 
 /**
  * 로컬 및 테스트용 임베디드 Redis Server 설정.
@@ -36,7 +34,7 @@ public class EmbeddedRedisConfig {
     @PostConstruct
     public void startRedis() throws IOException {
         if (redisServer == null || !redisServer.isActive()) {
-            port = isRunningPort(port) ? findAvailableRandomPort() : port;
+            port = ProcessUtils.isRunningPort(port) ? ProcessUtils.findAvailableRandomPort() : port;
             redisServer = RedisServer.builder()
                 .port(port)
                 .setting("maxmemory 128M")

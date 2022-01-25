@@ -14,7 +14,7 @@ import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 
-import static com.depromeet.threedollar.domain.config.cache.CacheType.CacheKey.USER_STORES_COUNTS;
+import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_STORES_COUNTS;
 import static com.depromeet.threedollar.domain.user.domain.store.QMenu.menu;
 import static com.depromeet.threedollar.domain.user.domain.store.QStore.store;
 import static com.depromeet.threedollar.domain.user.domain.store.QStorePromotion.storePromotion;

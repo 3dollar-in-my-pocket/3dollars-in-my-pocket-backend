@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.function.Supplier;
 
-import static com.depromeet.threedollar.domain.config.cache.CacheType.CacheKey.USER_MEDALS;
+import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_MEDALS;
 import static com.depromeet.threedollar.domain.user.domain.medal.MedalAcquisitionConditionType.NO_CONDITION;
 
 @RequiredArgsConstructor
