@@ -16,7 +16,7 @@ class BossStoreOpenService(
     fun renewBossStoreOpen(
         bossStoreId: String
     ) {
-        validateExistsBossStore(bossStoreRepository, bossStoreId)
+        BossStoreServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
         val bossStoreOpenInfo = bossStoreOpenInfoRepository.findByIdOrNull(bossStoreId)
             ?: BossStoreOpenInfo.of(bossStoreId, LocalDateTime.now())
         bossStoreOpenInfoRepository.save(bossStoreOpenInfo);

@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.boss.api.service.registration
 
-import com.depromeet.threedollar.boss.api.service.account.validateNotExistsBossAccount
-import com.depromeet.threedollar.boss.api.service.category.validateExistsCategories
+import com.depromeet.threedollar.boss.api.service.account.BossAccountServiceUtils
+import com.depromeet.threedollar.boss.api.service.category.BossStoreCategoryServiceUtils
 import com.depromeet.threedollar.boss.api.service.registration.dto.request.ApplyRegistrationRequest
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.document.boss.document.account.BossAccountRepository
@@ -26,7 +26,7 @@ class RegistrationService(
         socialId: String
     ) {
         validateDuplicateRegistration(socialId, request.socialType)
-        validateExistsCategories(bossStoreCategoryRepository, request.storeCategoriesIds)
+        BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, request.storeCategoriesIds)
         val registration = request.toEntity(socialId)
         registrationRepository.save(registration)
 
@@ -34,7 +34,7 @@ class RegistrationService(
     }
 
     private fun validateDuplicateRegistration(socialId: String, socialType: BossAccountSocialType) {
-        validateNotExistsBossAccount(bossAccountRepository, socialId, socialType)
+        BossAccountServiceUtils.validateNotExistsBossAccount(bossAccountRepository, socialId, socialType)
 
         if (registrationRepository.findRegistrationBySocialInfo(socialId, socialType) != null) {
             throw ConflictException("이미 가입 신청한 사장님 (${socialId} - (${socialType}) 입니다.")
