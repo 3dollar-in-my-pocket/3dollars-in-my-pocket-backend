@@ -6,4 +6,6 @@ interface BossStoreRepositoryCustom {
 
     fun findNearBossStores(latitude: Double, longitude: Double, maxDistance: Double): List<BossStore>
 
+    fun findByIdAndBossId(bossStoreId: String, bossId: String): BossStore?
+
 }

@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.boss.api.controller.account
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse
+import com.depromeet.threedollar.boss.api.config.resolver.Auth
 import com.depromeet.threedollar.boss.api.config.resolver.BossId
 import com.depromeet.threedollar.boss.api.service.account.BossAccountService
 import com.depromeet.threedollar.boss.api.service.account.dto.response.BossAccountInfoResponse
@@ -14,6 +15,7 @@ class BossAccountController(
 ) {
 
     @ApiOperation("[인증] 사장님 자신의 계정 정보를 조회합니다")
+    @Auth
     @GetMapping("/boss/v1/account/me")
     fun getMyAccountInfo(
         @BossId bossId: String

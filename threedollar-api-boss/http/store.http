@@ -4,5 +4,5 @@ Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 
 ### 가게 오픈 여부 갱신
-PUT {{host_boss_api}}/boss/v1/store/renew/open/61efaa6a30520d21dac06561
+PUT {{host_boss_api}}/boss/v1/store/renew/open/{{BOSS_STORE_ID}}
 Authorization: Bearer {{BOSS_AUTHORIZATION}}

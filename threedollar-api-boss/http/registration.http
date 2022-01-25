@@ -3,6 +3,7 @@ POST {{host_boss_api}}/boss/v1/registration
 Content-Type: application/json
 
 {
+    "token": "token",
     "bossName": "will",
     "socialId": "social-id",
     "socialType": "APPLE",

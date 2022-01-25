@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.boss.api.controller.auth
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse
+import com.depromeet.threedollar.boss.api.config.resolver.Auth
 import com.depromeet.threedollar.boss.api.config.session.SessionConstants.BOSS_ACCOUNT_ID
 import com.depromeet.threedollar.boss.api.service.auth.AuthServiceProvider
 import com.depromeet.threedollar.boss.api.service.auth.dto.request.LoginRequest
@@ -29,7 +30,8 @@ class AuthController(
         return ApiResponse.success(LoginResponse(httpSession.id, accountId))
     }
 
-    @ApiOperation("사장님 계정으로 로그아웃을 요청합니다.")
+    @ApiOperation("[인증] 사장님 계정으로 로그아웃을 요청합니다.")
+    @Auth
     @PostMapping("/boss/v1/logout")
     fun logout(): ApiResponse<String> {
         httpSession.removeAttribute(BOSS_ACCOUNT_ID)

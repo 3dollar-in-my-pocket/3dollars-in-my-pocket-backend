@@ -1,7 +1,9 @@
 package com.depromeet.threedollar.boss.api.controller.store
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse
+import com.depromeet.threedollar.boss.api.config.resolver.Auth
 import com.depromeet.threedollar.boss.api.config.resolver.MapCoordinate
+import com.depromeet.threedollar.boss.api.config.resolver.Role.STORE_OWNER
 import com.depromeet.threedollar.boss.api.service.store.BossStoreOpenService
 import com.depromeet.threedollar.boss.api.service.store.BossStoreService
 import com.depromeet.threedollar.boss.api.service.store.dto.response.BossStoreInfoResponse
@@ -27,12 +29,12 @@ class BossStoreController(
         ))
     }
 
-    @ApiOperation("가게의 오픈 정보를 갱신한다")
+    @ApiOperation("[인증] 가게의 오픈 정보를 갱신한다")
+    @Auth(role = STORE_OWNER)
     @PutMapping("/boss/v1/store/renew/open/{storeId}")
     fun renewBossStoreOpenInfo(
         @PathVariable storeId: String
     ): ApiResponse<String> {
-        // TODO: 가게의 사장님인지 확인하는 권한 체크 추가해야 함.
         bossStoreOpenService.renewBossStoreOpen(storeId)
         return ApiResponse.SUCCESS
     }

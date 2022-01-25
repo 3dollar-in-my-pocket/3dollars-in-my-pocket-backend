@@ -7,14 +7,17 @@ GET {{host_boss_api}}/test-token
 
 > {%
 client.global.set("BOSS_AUTHORIZATION", response.body["data"]["token"])
-client.test("200 OK", function() {
-    client.assert(response.status === 200, "응답 실패");
-});
 %}
 
 
 ### Add Mock Store data
 POST {{host_boss_api}}/test-store?latitude=38&longitude=127
+Content-Type: application/json
+Authorization: Bearer {{BOSS_AUTHORIZATION}}
+
+> {%
+client.global.set("BOSS_STORE_ID", response.body["id"])
+%}
 
 
 ### Add Mock Store data

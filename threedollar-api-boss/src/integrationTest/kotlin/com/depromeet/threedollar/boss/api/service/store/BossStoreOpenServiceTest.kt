@@ -46,7 +46,7 @@ class BossStoreOpenServiceTest(
     }
 
     @Test
-    fun `기존의 오픈 정보가 있는경우 만료시간이 갱신된다`() {
+    fun `가게 오픈 갱신시 오픈 정보가 있는 경우 정보가 유지된채 만료시간만 연장된다`() {
         // given
         val bossStore = BossStoreCreator.create(
             bossId = "bossId",
@@ -67,7 +67,7 @@ class BossStoreOpenServiceTest(
     }
 
     @Test
-    fun `존재하지 않는 가게인 경우 NotFound Exception`() {
+    fun `가게 오픈 정보 갱신시 존재하지 않는 가게인 경우 NotFound Exception`() {
         // when & then
         assertThatThrownBy { bossStoreOpenService.renewBossStoreOpen("Not Found Boss StoreId") }.isInstanceOf(NotFoundException::class.java)
     }

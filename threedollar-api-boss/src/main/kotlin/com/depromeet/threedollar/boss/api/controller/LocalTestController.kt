@@ -1,6 +1,8 @@
 package com.depromeet.threedollar.boss.api.controller
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse
+import com.depromeet.threedollar.boss.api.config.resolver.Auth
+import com.depromeet.threedollar.boss.api.config.resolver.BossId
 import com.depromeet.threedollar.boss.api.config.session.SessionConstants
 import com.depromeet.threedollar.boss.api.service.auth.dto.response.LoginResponse
 import com.depromeet.threedollar.common.type.DayOfTheWeek
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import java.time.LocalDateTime
 import java.time.LocalTime
 import javax.servlet.http.HttpSession
 
@@ -37,13 +38,15 @@ class LocalTestController(
         return ApiResponse.success(LoginResponse(httpSession.id, bossAccount.id))
     }
 
+    @Auth
     @PostMapping("/test-store")
     fun addMockStoreData(
+        @BossId bossId: String,
         @RequestParam latitude: Double,
         @RequestParam longitude: Double
     ): BossStore {
         return bossStoreRepository.save(BossStore(
-            bossId = "123",
+            bossId = bossId,
             name = "행복한 붕어빵",
             location = Point(longitude, latitude),
             imageUrl = "https://image.com",
