@@ -2,7 +2,7 @@ package com.depromeet.threedollar.boss.api.service.category.dto.response
 
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategory
 
-class BossStoreCategoryResponse private constructor(
+data class BossStoreCategoryResponse(
     val categoryId: String,
     val title: String
 ) {

@@ -16,12 +16,15 @@ class SlackNotificationEventListener(
     @Async
     @EventListener
     fun sendRegistrationNotification(event: NewBossAppliedRegistrationEvent) {
-        slackNotificationApiClient.postMessage(PostSlackMessageRequest.of(
-            NEW_BOSS_REGISTRATION_MESSAGE.generateMessage(
-                event.registration.boss.name,
-                event.registration.store.name,
-                event.registration.store.contactsNumber)
-        ))
+        slackNotificationApiClient.postMessage(
+            PostSlackMessageRequest.of(
+                NEW_BOSS_REGISTRATION_MESSAGE.generateMessage(
+                    event.registration.boss.name,
+                    event.registration.store.name,
+                    event.registration.store.contactsNumber
+                )
+            )
+        )
     }
 
 }

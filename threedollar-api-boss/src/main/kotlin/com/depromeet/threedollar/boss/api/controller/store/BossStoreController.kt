@@ -24,10 +24,12 @@ class BossStoreController(
         @MapCoordinate mapCoordinate: CoordinateValue,
         @RequestParam distanceKm: Double
     ): ApiResponse<List<BossStoreInfoResponse>> {
-        return ApiResponse.success(bossStoreService.getNearBossStores(
-            mapCoordinate = mapCoordinate,
-            distanceKm = distanceKm
-        ))
+        return ApiResponse.success(
+            bossStoreService.getNearBossStores(
+                mapCoordinate = mapCoordinate,
+                distanceKm = distanceKm
+            )
+        )
     }
 
     @ApiOperation("[인증] 가게의 오픈 정보를 갱신한다")

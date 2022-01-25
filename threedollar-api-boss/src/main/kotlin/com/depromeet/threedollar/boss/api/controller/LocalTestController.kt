@@ -32,8 +32,9 @@ class LocalTestController(
     @ApiOperation("[개발용] 사장님 서버용 테스트 토큰을 발급 받습니다.")
     @GetMapping("/test-token")
     fun getTestBossAccountToken(): ApiResponse<LoginResponse> {
-        val bossAccount = bossAccountRepository.findBossAccountBySocialInfo(BOSS.socialInfo.socialId, BOSS.socialInfo.socialType)
-            ?: bossAccountRepository.save(BOSS)
+        val bossAccount =
+            bossAccountRepository.findBossAccountBySocialInfo(BOSS.socialInfo.socialId, BOSS.socialInfo.socialType)
+                ?: bossAccountRepository.save(BOSS)
         httpSession.setAttribute(SessionConstants.BOSS_ACCOUNT_ID, bossAccount.id)
         return ApiResponse.success(LoginResponse(httpSession.id, bossAccount.id))
     }
@@ -45,49 +46,51 @@ class LocalTestController(
         @RequestParam latitude: Double,
         @RequestParam longitude: Double
     ): BossStore {
-        return bossStoreRepository.save(BossStore(
-            bossId = bossId,
-            name = "행복한 붕어빵",
-            location = Point(longitude, latitude),
-            imageUrl = "https://image.com",
-            introduction = "소개",
-            contactsNumber = ContactsNumber.of("010-1234-1234"),
-            snsUrl = "https://sns.example.com",
-            menus = listOf(
-                BossStoreMenu(
-                    name = "팥붕 3개",
-                    price = 1000,
-                    imageUrl = "menu.img",
-                    tag = "붕어빵"
-                ),
-                BossStoreMenu(
-                    name = "슈붕 3개",
-                    price = 1000,
-                    imageUrl = "menu.img",
-                    tag = "붕어빵"
-                ),
-            ),
-            appearanceDays = listOf(
-                BossStoreAppearanceDay(
-                    day = DayOfTheWeek.MONDAY,
-                    openTime = TimeInterval(
-                        startTime = LocalTime.of(10, 0),
-                        endTime = LocalTime.of(20, 0)
+        return bossStoreRepository.save(
+            BossStore(
+                bossId = bossId,
+                name = "행복한 붕어빵",
+                location = Point(longitude, latitude),
+                imageUrl = "https://image.com",
+                introduction = "소개",
+                contactsNumber = ContactsNumber.of("010-1234-1234"),
+                snsUrl = "https://sns.example.com",
+                menus = listOf(
+                    BossStoreMenu(
+                        name = "팥붕 3개",
+                        price = 1000,
+                        imageUrl = "menu.img",
+                        tag = "붕어빵"
                     ),
-                    locationDescription = "강남역 주변"
-                ),
-                BossStoreAppearanceDay(
-                    day = DayOfTheWeek.WEDNESDAY,
-                    openTime = TimeInterval(
-                        startTime = LocalTime.of(10, 0),
-                        endTime = LocalTime.of(20, 0)
+                    BossStoreMenu(
+                        name = "슈붕 3개",
+                        price = 1000,
+                        imageUrl = "menu.img",
+                        tag = "붕어빵"
                     ),
-                    locationDescription = "강남역 주변"
-                )
-            ),
-            categories = listOf("1", "2"),
-            status = BossStoreStatus.ACTIVE
-        ))
+                ),
+                appearanceDays = listOf(
+                    BossStoreAppearanceDay(
+                        day = DayOfTheWeek.MONDAY,
+                        openTime = TimeInterval(
+                            startTime = LocalTime.of(10, 0),
+                            endTime = LocalTime.of(20, 0)
+                        ),
+                        locationDescription = "강남역 주변"
+                    ),
+                    BossStoreAppearanceDay(
+                        day = DayOfTheWeek.WEDNESDAY,
+                        openTime = TimeInterval(
+                            startTime = LocalTime.of(10, 0),
+                            endTime = LocalTime.of(20, 0)
+                        ),
+                        locationDescription = "강남역 주변"
+                    )
+                ),
+                categories = listOf("1", "2"),
+                status = BossStoreStatus.ACTIVE
+            )
+        )
     }
 
     @PostMapping("/test-category")

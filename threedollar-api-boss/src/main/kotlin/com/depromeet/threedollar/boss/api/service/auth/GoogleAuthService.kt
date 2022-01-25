@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.boss.api.service.auth
 
-import com.depromeet.threedollar.boss.api.service.account.findBossAccountBySocialIdAndSocialType
+import com.depromeet.threedollar.boss.api.service.account.BossAccountServiceUtils
 import com.depromeet.threedollar.boss.api.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.document.boss.document.account.BossAccountRepository
 import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
@@ -15,7 +15,11 @@ class GoogleAuthService(
 
     override fun login(request: LoginRequest): String {
         val googleProfile = googleAuthApiClient.getProfileInfo(request.token)
-        return findBossAccountBySocialIdAndSocialType(bossAccountRepository, googleProfile.id, SOCIAL_TYPE).id
+        return BossAccountServiceUtils.findBossAccountBySocialIdAndSocialType(
+            bossAccountRepository,
+            googleProfile.id,
+            SOCIAL_TYPE
+        ).id
     }
 
     override fun findSocialId(request: LoginRequest): String {
