@@ -50,11 +50,6 @@ class LocalTestController(
             introduction = "소개",
             contactsNumber = ContactsNumber.of("010-1234-1234"),
             snsUrl = "https://sns.example.com",
-            openInfo = BossStoreOpenInfo(
-                openStatus = BossStoreOpenType.OPEN,
-                LocalDateTime.now(),
-                lastOpenDateTime = LocalDateTime.now()
-            ),
             menus = listOf(
                 BossStoreMenu(
                     name = "팥붕 3개",

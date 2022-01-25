@@ -18,6 +18,7 @@ dependencies {
 
     // textFixtures
     testImplementation(testFixtures(project(":threedollar-document")))
+    testImplementation(testFixtures(project(":threedollar-redis")))
 }
 
 application {

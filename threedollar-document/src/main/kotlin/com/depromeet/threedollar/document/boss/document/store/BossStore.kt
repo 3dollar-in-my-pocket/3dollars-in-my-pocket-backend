@@ -15,7 +15,6 @@ class BossStore(
     val introduction: String = "",
     val contactsNumber: ContactsNumber?,
     val snsUrl: String?,
-    val openInfo: BossStoreOpenInfo,
     val menus: List<BossStoreMenu> = mutableListOf(),
     val appearanceDays: List<BossStoreAppearanceDay> = mutableListOf(),
     val categories: List<String> = mutableListOf(),

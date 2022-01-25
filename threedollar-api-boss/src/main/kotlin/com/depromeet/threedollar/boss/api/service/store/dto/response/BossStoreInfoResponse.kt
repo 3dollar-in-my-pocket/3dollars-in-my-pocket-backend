@@ -11,7 +11,6 @@ data class BossStoreInfoResponse(
     val location: LocationResponse,
     val imageUrl: String,
     val introduction: String,
-    val openInfo: BossStoreOpenInfoResponse,
     val menus: List<BossStoreMenuResponse>,
     val appearanceDays: List<BossStoreAppearanceDayResponse>,
     val categories: List<String>
@@ -24,7 +23,6 @@ data class BossStoreInfoResponse(
                 location = LocationResponse.of(bossStore.location),
                 imageUrl = bossStore.imageUrl,
                 introduction = bossStore.introduction,
-                openInfo = BossStoreOpenInfoResponse.of(bossStore.openInfo),
                 menus = bossStore.menus.map { BossStoreMenuResponse.of(it) },
                 appearanceDays = bossStore.appearanceDays.map { BossStoreAppearanceDayResponse.of(it) },
                 categories = bossStore.categories // TODO 카테고리로 변환
@@ -46,20 +44,6 @@ data class LocationResponse(
                 latitude = location.y,
                 longitude = location.x
             )
-        }
-    }
-
-}
-
-
-data class BossStoreOpenInfoResponse(
-    val openStatus: BossStoreOpenType,
-    val firstOpenDateTme: LocalDateTime?
-) {
-
-    companion object {
-        fun of(bossStoreOpenInfo: BossStoreOpenInfo): BossStoreOpenInfoResponse {
-            return BossStoreOpenInfoResponse(bossStoreOpenInfo.openStatus, bossStoreOpenInfo.firstOpenDateTime)
         }
     }
 
