@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.validation.BindException
+import org.springframework.validation.FieldError
 import org.springframework.web.HttpMediaTypeException
 import org.springframework.web.HttpMediaTypeNotAcceptableException
 import org.springframework.web.HttpRequestMethodNotSupportedException
@@ -19,6 +20,7 @@ import org.springframework.web.bind.ServletRequestBindingException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import java.util.stream.Collectors
 
 @RestControllerAdvice
 class ControllerExceptionAdvice {
@@ -28,22 +30,20 @@ class ControllerExceptionAdvice {
      * Spring Validation
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(
-        BindException::class
-    )
+    @ExceptionHandler(BindException::class)
     protected fun handleBadRequest(e: BindException): ApiResponse<Nothing> {
-        log.error(e.message)
-        val fieldError = e.fieldError
-        return ApiResponse.error(VALIDATION_EXCEPTION, "${fieldError?.defaultMessage} (${fieldError?.field})")
+        val errorMessage = e.bindingResult.fieldErrors.stream()
+            .map { obj: FieldError -> obj.defaultMessage }
+            .collect(Collectors.joining("\n"))
+        log.error("BindException: {}", errorMessage)
+        return ApiResponse.error(VALIDATION_EXCEPTION, errorMessage)
     }
 
     /**
      * 400 BadRequest
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(
-        HttpMessageNotReadableException::class
-    )
+    @ExceptionHandler(HttpMessageNotReadableException::class)
     protected fun handleHttpMessageNotReadableException(e: HttpMessageNotReadableException): ApiResponse<Nothing> {
         log.warn(e.message)
         return ApiResponse.error(VALIDATION_EXCEPTION)
@@ -54,9 +54,7 @@ class ControllerExceptionAdvice {
      * RequestParam, RequestPath, RequestPart 등의 필드가 입력되지 않은 경우 발생하는 Exception
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(
-        MissingRequestValueException::class
-    )
+    @ExceptionHandler(MissingRequestValueException::class)
     protected fun handle(e: MissingRequestValueException): ApiResponse<Nothing> {
         log.warn(e.message)
         return ApiResponse.error(VALIDATION_REQUEST_MISSING_EXCEPTION)
@@ -67,9 +65,7 @@ class ControllerExceptionAdvice {
      * 잘못된 타입이 입력된 경우 발생하는 Exception
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(
-        TypeMismatchException::class
-    )
+    @ExceptionHandler(TypeMismatchException::class)
     protected fun handleTypeMismatchException(e: TypeMismatchException): ApiResponse<Nothing> {
         log.warn(e.message)
         val errorCode = VALIDATION_WRONG_TYPE_EXCEPTION
@@ -101,9 +97,7 @@ class ControllerExceptionAdvice {
      * 406 Not Acceptable
      */
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-    @ExceptionHandler(
-        HttpMediaTypeNotAcceptableException::class
-    )
+    @ExceptionHandler(HttpMediaTypeNotAcceptableException::class)
     protected fun handleHttpMediaTypeNotAcceptableException(e: HttpMediaTypeNotAcceptableException): ApiResponse<Nothing> {
         log.warn(e.message)
         return ApiResponse.error(NOT_ACCEPTABLE_EXCEPTION)

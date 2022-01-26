@@ -11,11 +11,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
-import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeException;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -30,9 +30,9 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Objects;
 
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.*;
+import static java.util.stream.Collectors.joining;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -48,9 +48,11 @@ public class ControllerExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException.class)
     protected ApiResponse<Object> handleBadRequest(BindException e) {
-        log.error(e.getMessage());
-        FieldError fieldError = Objects.requireNonNull(e.getFieldError());
-        return ApiResponse.error(VALIDATION_EXCEPTION, String.format("%s (%s)", fieldError.getDefaultMessage(), fieldError.getField()));
+        String errorMessage = e.getBindingResult().getFieldErrors().stream()
+            .map(DefaultMessageSourceResolvable::getDefaultMessage)
+            .collect(joining("\n"));
+        log.error("BindException: {}", errorMessage);
+        return ApiResponse.error(VALIDATION_EXCEPTION, errorMessage);
     }
 
     /**
