@@ -4,7 +4,6 @@ import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.document.boss.document.store.*
 import com.depromeet.threedollar.document.common.document.TimeInterval
 import org.springframework.data.geo.Point
-import java.time.LocalDateTime
 
 data class BossStoreInfoResponse(
     val name: String,
@@ -17,7 +16,7 @@ data class BossStoreInfoResponse(
 ) {
 
     companion object {
-        fun of(bossStore: BossStore): BossStoreInfoResponse {
+        fun of(bossStore: BossStore, categories: List<String>): BossStoreInfoResponse {
             return BossStoreInfoResponse(
                 name = bossStore.name,
                 location = LocationResponse.of(bossStore.location),
@@ -25,7 +24,7 @@ data class BossStoreInfoResponse(
                 introduction = bossStore.introduction,
                 menus = bossStore.menus.map { BossStoreMenuResponse.of(it) },
                 appearanceDays = bossStore.appearanceDays.map { BossStoreAppearanceDayResponse.of(it) },
-                categories = bossStore.categories // TODO 카테고리로 변환
+                categories = categories
             )
         }
     }

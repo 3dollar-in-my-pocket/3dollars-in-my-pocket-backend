@@ -16,7 +16,7 @@ data class ApplyRegistrationRequest(
     val businessNumber: String,
 
     val storeName: String,
-    val storeCategoriesIds: Set<String>,
+    val storeCategoriesIds: List<String>,
     val contactsNumber: String,
     val certificationPhotoUrl: String
 ) {
@@ -30,7 +30,7 @@ data class ApplyRegistrationRequest(
             ),
             store = RegistrationStoreForm(
                 name = storeName,
-                categoriesIds = storeCategoriesIds as MutableSet<String>,
+                categoriesIds = storeCategoriesIds.distinct().toMutableList(),
                 contactsNumber = ContactsNumber.of(contactsNumber),
                 certificationPhotoUrl = certificationPhotoUrl
             )

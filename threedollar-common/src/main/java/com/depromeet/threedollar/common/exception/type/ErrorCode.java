@@ -34,6 +34,7 @@ public enum ErrorCode {
     FORBIDDEN_FILE_NAME_EXCEPTION(BAD_REQUEST, OFF, "FB005", "허용되지 않은 파일 이름입니다"), // TODO 차후 403에러로 변경
     FORBIDDEN_FILE_TYPE_EXCEPTION(BAD_REQUEST, OFF, "FB006", "허용되지 않은 파일 형식입니다"), // TODO 차후 403에러로 변경
     FORBIDDEN_UPLOAD_SIZE_EXCEPTION(BAD_REQUEST, ON, "FB007", "업로드 가능한 최대 파일의 크기를 초과했습니다"), // TODO 차후 403에러로 변경
+    FORBIDDEN_BOSS_STORE_OWNER_EXCEPTION(FORBIDDEN, OFF, "FB008", "가게의 사장님만이 할 수 있습니다"),
 
     // 404 Not Found
     NOT_FOUND_EXCEPTION(NOT_FOUND, OFF, "NF001", "존재하지 않습니다"),
@@ -43,32 +44,43 @@ public enum ErrorCode {
     NOT_FOUND_STORE_IMAGE_EXCEPTION(NOT_FOUND, OFF, "NF005", "삭제되거나 존재하지 않는 가게 이미지입니다"),
     NOT_FOUND_FAQ_EXCEPTION(NOT_FOUND, OFF, "NF006", "삭제되거나 존재하지 않는 FAQ입니다"),
     NOT_FOUND_MEDAL_EXCEPTION(NOT_FOUND, OFF, "N007", "보유하지 않는 메달입니다"),
+    NOT_FOUND_CATEGORY_EXCEPTION(NOT_FOUND, OFF, "N009", "존재하지 않는 카테고리 입니다"),
+    NOT_FOUND_BOSS_EXCEPTION(NOT_FOUND, OFF, "N010", "존재하지 않는 사장님입니다"),
+
 
     // 405 Method Not Allowed
-    METHOD_NOT_ALLOWED_EXCEPTION(METHOD_NOT_ALLOWED, OFF, "MN001", "지원하지 않는 메소드 입니다"),
+    METHOD_NOT_ALLOWED_EXCEPTION(METHOD_NOT_ALLOWED, OFF, "MN001","지원하지 않는 메소드 입니다"),
 
     // 406 Not Acceptable
-    NOT_ACCEPTABLE_EXCEPTION(NOT_ACCEPTABLE, OFF, "NA001", "Not Acceptable"),
+    NOT_ACCEPTABLE_EXCEPTION(NOT_ACCEPTABLE, OFF, "NA001","Not Acceptable"),
 
     // 409 Conflict
-    CONFLICT_EXCEPTION(CONFLICT, OFF, "CF001", "이미 존재합니다"),
-    CONFLICT_NICKNAME_EXCEPTION(CONFLICT, OFF, "CF002", "이미 사용중인 닉네임입니다.\n다른 닉네임을 이용해주세요"),
-    CONFLICT_USER_EXCEPTION(CONFLICT, OFF, "CF003", "이미 해당 계정으로 회원가입하셨습니다.\n로그인 해주세요"),
-    CONFLICT_DELETE_REQUEST_STORE_EXCEPTION(CONFLICT, OFF, "CF004", "이미 해당 가게에 삭제요청 하였습니다."),
-    CONFLICT_VISIT_HISTORY_EXCEPTION(CONFLICT, OFF, "CF005", "오늘 이미 방문 인증한 가게입니다.\n다음에 다시 인증해주세요"),
+    CONFLICT_EXCEPTION(CONFLICT, OFF, "CF001","이미 존재합니다"),
+
+    CONFLICT_NICKNAME_EXCEPTION(CONFLICT, OFF, "CF002","이미 사용중인 닉네임입니다.\n다른 닉네임을 이용해주세요"),
+
+    CONFLICT_USER_EXCEPTION(CONFLICT, OFF, "CF003","이미 해당 계정으로 회원가입하셨습니다.\n로그인 해주세요"),
+
+    CONFLICT_DELETE_REQUEST_STORE_EXCEPTION(CONFLICT, OFF, "CF004","이미 해당 가게에 삭제요청 하였습니다."),
+
+    CONFLICT_VISIT_HISTORY_EXCEPTION(CONFLICT, OFF, "CF005","오늘 이미 방문 인증한 가게입니다.\n다음에 다시 인증해주세요"),
+
+    CONFLICT_BOSS_ACCOUNT(CONFLICT, OFF, "CF006","이미 회원가입한 사장님입니다"),
+    CONFLICT_REGISTER_BOSS(CONFLICT, OFF, "CF006","이미 가입 신청하셨습니다"),
 
     // 415 Unsupported Media Type
-    UNSUPPORTED_MEDIA_TYPE_EXCEPTION(UNSUPPORTED_MEDIA_TYPE, OFF, "UM001", "해당하는 미디어 타입을 지원하지 않습니다."),
+    UNSUPPORTED_MEDIA_TYPE_EXCEPTION(UNSUPPORTED_MEDIA_TYPE, OFF, "UM001","해당하는 미디어 타입을 지원하지 않습니다."),
 
     // 500 Internal Server Exception
-    INTERNAL_SERVER_EXCEPTION(INTERNAL_SERVER, ON, "IS001", "예상치 못한 에러가 발생하였습니다.\n잠시 후 다시 시도해주세요!"),
-    INTERNAL_SERVER_UPDATE_STORE_OPTIMISTIC_LOCK_FAILED_EXCEPTION(INTERNAL_SERVER, ON, "IS002", "일시적으로 다른 사용자와 동시에 가게 수정 요청을 하였습니다ㅠㅠ\n잠시 후 다시 시도해주세요!"),
+    INTERNAL_SERVER_EXCEPTION(INTERNAL_SERVER, ON, "IS001","예상치 못한 에러가 발생하였습니다.\n잠시 후 다시 시도해주세요!"),
+
+    INTERNAL_SERVER_UPDATE_STORE_OPTIMISTIC_LOCK_FAILED_EXCEPTION(INTERNAL_SERVER, ON, "IS002","일시적으로 다른 사용자와 동시에 가게 수정 요청을 하였습니다ㅠㅠ\n잠시 후 다시 시도해주세요!"),
 
     // 502 Bad Gateway
-    BAD_GATEWAY_EXCEPTION(BAD_GATEWAY, ON, "BG001", "일시적인 에러가 발생하였습니다.\n잠시 후 다시 시도해주세요!"),
+    BAD_GATEWAY_EXCEPTION(BAD_GATEWAY, ON, "BG001","일시적인 에러가 발생하였습니다.\n잠시 후 다시 시도해주세요!"),
 
     // 503 Service UnAvailable
-    SERVICE_UNAVAILABLE_EXCEPTION(SERVICE_UNAVAILABLE, OFF, "SU001", "현재 점검 중입니다.\n잠시 후 다시 시도해주세요!"),
+    SERVICE_UNAVAILABLE_EXCEPTION(SERVICE_UNAVAILABLE, OFF, "SU001","현재 점검 중입니다.\n잠시 후 다시 시도해주세요!"),
     ;
 
     private final HttpStatusCode statusCode;

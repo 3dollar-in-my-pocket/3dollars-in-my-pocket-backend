@@ -18,7 +18,7 @@ object BossStoreCreator {
         snsUrl: String? = null,
         menus: List<BossStoreMenu> = mutableListOf(),
         appearanceDays: List<BossStoreAppearanceDay> = mutableListOf(),
-        categories: List<String> = mutableListOf(),
+        categoriesIds: List<String> = mutableListOf(),
         status: BossStoreStatus = BossStoreStatus.ACTIVE
     ): BossStore {
         return BossStore(
@@ -31,7 +31,7 @@ object BossStoreCreator {
             snsUrl = snsUrl,
             menus = menus,
             appearanceDays = appearanceDays,
-            categories = categories,
+            categoriesIds = categoriesIds,
             status = status
         )
     }

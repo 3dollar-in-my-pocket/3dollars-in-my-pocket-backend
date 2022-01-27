@@ -22,7 +22,7 @@ data class RegistrationBossForm(
 
 data class RegistrationStoreForm(
     val name: String,
-    val categoriesIds: MutableSet<String> = mutableSetOf(),
+    val categoriesIds: MutableList<String> = mutableListOf(),
     val contactsNumber: ContactsNumber,
     val certificationPhotoUrl: String
 )

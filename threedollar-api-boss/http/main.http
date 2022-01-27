@@ -11,7 +11,7 @@ client.global.set("BOSS_AUTHORIZATION", response.body["data"]["token"])
 
 
 ### Add Mock Store data
-POST {{host_boss_api}}/test-store?latitude=38&longitude=127
+POST {{host_boss_api}}/test-store?latitude=38&longitude=127&categoriesIds=61f29cdea82b8f1c21309259
 Content-Type: application/json
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 

@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.boss.api.service.auth
 
-import com.depromeet.threedollar.common.exception.model.ServiceUnAvailableException
+import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
 import org.springframework.stereotype.Component
 import java.util.*
@@ -21,7 +21,7 @@ class AuthServiceProvider(
     }
 
     fun getAuthService(socialType: BossAccountSocialType): AuthService {
-        return authServiceMap[socialType] ?: throw ServiceUnAvailableException("아직 ($socialType) 로직이 구현되지 않았습니다")
+        return authServiceMap[socialType] ?: throw InternalServerException("아직 ($socialType) 로직이 구현되지 않았습니다")
     }
 
     companion object {

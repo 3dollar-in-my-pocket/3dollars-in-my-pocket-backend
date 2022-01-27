@@ -5,6 +5,7 @@ import com.depromeet.threedollar.boss.api.config.resolver.Auth
 import com.depromeet.threedollar.boss.api.config.resolver.BossId
 import com.depromeet.threedollar.boss.api.config.session.SessionConstants
 import com.depromeet.threedollar.boss.api.service.auth.dto.response.LoginResponse
+import com.depromeet.threedollar.boss.api.service.category.BossStoreCategoryServiceUtils
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.document.boss.document.account.*
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategory
@@ -44,8 +45,10 @@ class LocalTestController(
     fun addMockStoreData(
         @BossId bossId: String,
         @RequestParam latitude: Double,
-        @RequestParam longitude: Double
+        @RequestParam longitude: Double,
+        @RequestParam categoriesIds: List<String>
     ): BossStore {
+        BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, categoriesIds)
         return bossStoreRepository.save(
             BossStore(
                 bossId = bossId,
@@ -87,7 +90,7 @@ class LocalTestController(
                         locationDescription = "강남역 주변"
                     )
                 ),
-                categories = listOf("1", "2"),
+                categoriesIds = categoriesIds.toList(),
                 status = BossStoreStatus.ACTIVE
             )
         )

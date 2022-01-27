@@ -17,7 +17,7 @@ class BossStore(
     val snsUrl: String?,
     val menus: List<BossStoreMenu> = mutableListOf(),
     val appearanceDays: List<BossStoreAppearanceDay> = mutableListOf(),
-    val categories: List<String> = mutableListOf(),
+    val categoriesIds: List<String> = mutableListOf(),
     val status: BossStoreStatus = BossStoreStatus.ACTIVE
 ) : BaseDocument() {
 

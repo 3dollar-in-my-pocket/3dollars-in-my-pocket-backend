@@ -4,6 +4,7 @@ import com.depromeet.threedollar.boss.api.service.account.BossAccountServiceUtil
 import com.depromeet.threedollar.boss.api.service.category.BossStoreCategoryServiceUtils
 import com.depromeet.threedollar.boss.api.service.registration.dto.request.ApplyRegistrationRequest
 import com.depromeet.threedollar.common.exception.model.ConflictException
+import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.document.boss.document.account.BossAccountRepository
 import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategoryRepository
@@ -37,7 +38,7 @@ class RegistrationService(
         BossAccountServiceUtils.validateNotExistsBossAccount(bossAccountRepository, socialId, socialType)
 
         if (registrationRepository.findRegistrationBySocialInfo(socialId, socialType) != null) {
-            throw ConflictException("이미 가입 신청한 사장님 (${socialId} - (${socialType}) 입니다.")
+            throw ConflictException("이미 가입 신청한 사장님 (${socialId} - (${socialType}) 입니다.", ErrorCode.CONFLICT_REGISTER_BOSS)
         }
     }
 

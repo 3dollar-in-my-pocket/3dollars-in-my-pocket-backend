@@ -1,17 +1,16 @@
 package com.depromeet.threedollar.boss.api.service.store
 
 import com.depromeet.threedollar.boss.api.service.store.dto.response.BossStoreInfoResponse
-import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.model.CoordinateValue
-import com.depromeet.threedollar.document.boss.document.store.BossStore
+import com.depromeet.threedollar.document.boss.document.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.document.boss.document.store.BossStoreRepository
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class BossStoreService(
-    private val bossStoreRepository: BossStoreRepository
+    private val bossStoreRepository: BossStoreRepository,
+    private val bossStoreCategoryRepository: BossStoreCategoryRepository,
 ) {
 
     @Transactional(readOnly = true)
@@ -19,18 +18,32 @@ class BossStoreService(
         mapCoordinate: CoordinateValue,
         distanceKm: Double
     ): List<BossStoreInfoResponse> {
-        return bossStoreRepository.findNearBossStores(
+        val bossStores = bossStoreRepository.findNearBossStores(
             latitude = mapCoordinate.latitude,
             longitude = mapCoordinate.longitude,
             maxDistance = distanceKm
-        ).map { BossStoreInfoResponse.of(it) }
+        )
+        val categoriesMap = bossStoreCategoryRepository.findAll()
+            .map { it.id to it.title }
+            .toMap()
+
+        return bossStores.map { it ->
+            BossStoreInfoResponse.of(it, it.categoriesIds.asSequence()
+                .filter { categoriesMap.containsKey(it) }
+                .map { categoriesMap[it] ?: "" }
+                .toList()
+            )
+        }
     }
 
     @Transactional(readOnly = true)
     fun getMyBossStore(
         bossId: String
     ): BossStoreInfoResponse {
-        return BossStoreInfoResponse.of(BossStoreServiceUtils.findBossStoreByBossId(bossStoreRepository, bossId))
+        val bossStore = BossStoreServiceUtils.findBossStoreByBossId(bossStoreRepository, bossId)
+        val categories = bossStoreCategoryRepository.findAllById(bossStore.categoriesIds)
+            .map { it.title }
+        return BossStoreInfoResponse.of(bossStore, categories)
     }
 
 }
