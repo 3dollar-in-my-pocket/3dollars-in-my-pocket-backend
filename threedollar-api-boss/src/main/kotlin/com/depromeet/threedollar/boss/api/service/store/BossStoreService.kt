@@ -24,13 +24,13 @@ class BossStoreService(
             maxDistance = distanceKm
         )
         val categoriesMap = bossStoreCategoryRepository.findAll()
-            .map { it.id to it.title }
+            .map { it.id to it }
             .toMap()
 
         return bossStores.map { it ->
             BossStoreInfoResponse.of(it, it.categoriesIds.asSequence()
                 .filter { categoriesMap.containsKey(it) }
-                .map { categoriesMap[it] ?: "" }
+                .map { categoriesMap[it]!! }
                 .toList()
             )
         }
@@ -41,9 +41,7 @@ class BossStoreService(
         bossId: String
     ): BossStoreInfoResponse {
         val bossStore = BossStoreServiceUtils.findBossStoreByBossId(bossStoreRepository, bossId)
-        val categories = bossStoreCategoryRepository.findAllById(bossStore.categoriesIds)
-            .map { it.title }
-        return BossStoreInfoResponse.of(bossStore, categories)
+        return BossStoreInfoResponse.of(bossStore, bossStoreCategoryRepository.findCategoriesByIds(bossStore.categoriesIds))
     }
 
 }

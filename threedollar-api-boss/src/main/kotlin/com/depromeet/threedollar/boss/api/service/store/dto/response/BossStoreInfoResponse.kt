@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.boss.api.service.store.dto.response
 
 import com.depromeet.threedollar.common.type.DayOfTheWeek
+import com.depromeet.threedollar.document.boss.document.category.BossStoreCategory
 import com.depromeet.threedollar.document.boss.document.store.*
 import com.depromeet.threedollar.document.common.document.TimeInterval
 import org.springframework.data.geo.Point
@@ -12,11 +13,11 @@ data class BossStoreInfoResponse(
     val introduction: String,
     val menus: List<BossStoreMenuResponse>,
     val appearanceDays: List<BossStoreAppearanceDayResponse>,
-    val categories: List<String>
+    val categories: List<BossStoreCategoryResponse>
 ) {
 
     companion object {
-        fun of(bossStore: BossStore, categories: List<String>): BossStoreInfoResponse {
+        fun of(bossStore: BossStore, categories: List<BossStoreCategory>): BossStoreInfoResponse {
             return BossStoreInfoResponse(
                 name = bossStore.name,
                 location = LocationResponse.of(bossStore.location),
@@ -24,7 +25,21 @@ data class BossStoreInfoResponse(
                 introduction = bossStore.introduction,
                 menus = bossStore.menus.map { BossStoreMenuResponse.of(it) },
                 appearanceDays = bossStore.appearanceDays.map { BossStoreAppearanceDayResponse.of(it) },
-                categories = categories
+                categories = categories.map { BossStoreCategoryResponse.of(it) }
+            )
+        }
+    }
+
+}
+
+data class BossStoreCategoryResponse(
+    val title: String
+) {
+
+    companion object {
+        fun of(bossStoreCategory: BossStoreCategory): BossStoreCategoryResponse {
+            return BossStoreCategoryResponse(
+                title = bossStoreCategory.title
             )
         }
     }

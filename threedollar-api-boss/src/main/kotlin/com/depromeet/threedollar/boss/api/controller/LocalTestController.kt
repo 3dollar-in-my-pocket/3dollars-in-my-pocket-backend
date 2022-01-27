@@ -11,6 +11,7 @@ import com.depromeet.threedollar.document.boss.document.account.*
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategory
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.document.boss.document.store.*
+import com.depromeet.threedollar.document.common.document.BusinessNumber
 import com.depromeet.threedollar.document.common.document.ContactsNumber
 import com.depromeet.threedollar.document.common.document.TimeInterval
 import io.swagger.annotations.ApiOperation
@@ -112,7 +113,8 @@ class LocalTestController(
     companion object {
         private val BOSS = BossAccount(
             name = "테스트 계정",
-            socialInfo = BossAccountSocialInfo("test-social-id", BossAccountSocialType.KAKAO)
+            socialInfo = BossAccountSocialInfo("test-social-id", BossAccountSocialType.KAKAO),
+            businessNumber = BusinessNumber.of("01-123-1234")
         )
     }
 

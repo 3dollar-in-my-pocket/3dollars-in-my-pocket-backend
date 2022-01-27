@@ -6,8 +6,14 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @Document("boss_account_v1")
 class BossAccount(
-    val name: String,
+    var name: String,
     val socialInfo: BossAccountSocialInfo,
-    val businessNumber: BusinessNumber? = null,
+    val businessNumber: BusinessNumber,
     val pushSettingsStatus: PushSettingsStatus = PushSettingsStatus.OFF,
-) : BaseDocument()
+) : BaseDocument() {
+
+    fun update(name: String) {
+        this.name = name
+    }
+
+}
