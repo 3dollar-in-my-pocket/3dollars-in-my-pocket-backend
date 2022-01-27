@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.boss.api.config.swagger
 
+import com.depromeet.threedollar.boss.api.config.resolver.Auth
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 import springfox.documentation.builders.RequestParameterBuilder
@@ -17,13 +18,15 @@ import springfox.documentation.swagger.common.SwaggerPluginSupport
 class AuthorizationSwaggerConfig : OperationBuilderPlugin {
 
     override fun apply(context: OperationContext) {
-        context.operationBuilder()
-            .requestParameters(listOf(authorizationHeader()))
-            .authorizations(listOf(SecurityReference.builder()
-                .reference("Bearer")
-                .scopes(authorizationScopes())
-                .build()))
-            .build()
+        if (context.findAnnotation(Auth::class.java).isPresent) {
+            context.operationBuilder()
+                .requestParameters(listOf(authorizationHeader()))
+                .authorizations(listOf(SecurityReference.builder()
+                    .reference("Bearer")
+                    .scopes(authorizationScopes())
+                    .build()))
+                .build()
+        }
     }
 
     private fun authorizationHeader(): RequestParameter {
@@ -34,10 +37,8 @@ class AuthorizationSwaggerConfig : OperationBuilderPlugin {
             .build()
     }
 
-    private fun authorizationScopes(): Array<AuthorizationScope?> {
-        val authorizationScopes = arrayOfNulls<AuthorizationScope>(1)
-        authorizationScopes[0] = AuthorizationScope("", "")
-        return authorizationScopes
+    private fun authorizationScopes(): Array<AuthorizationScope> {
+        return arrayOf(AuthorizationScope("", ""))
     }
 
     override fun supports(delimiter: DocumentationType): Boolean {

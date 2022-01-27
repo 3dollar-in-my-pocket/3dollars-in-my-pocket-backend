@@ -1,5 +1,7 @@
 package com.depromeet.threedollar.boss.api.config.swagger
 
+import com.depromeet.threedollar.boss.api.config.resolver.BossId
+import com.depromeet.threedollar.common.model.CoordinateValue
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
@@ -41,6 +43,7 @@ class SwaggerConfig {
         return Docket(DocumentationType.SWAGGER_2)
             .apiInfo(apiInfo())
             .securitySchemes(authorization())
+            .ignoredParameterTypes(BossId::class.java, CoordinateValue::class.java)
             .select()
             .apis(RequestHandlerSelectors.withClassAnnotation(RestController::class.java))
             .paths(PathSelectors.ant("/**"))
@@ -82,7 +85,7 @@ class SwaggerConfig {
     }
 
     private fun authorization(): List<SecurityScheme> {
-        return listOf(ApiKey("Authorization", "Authorization", "header"))
+        return listOf(ApiKey("Bearer", "Authorization", "header"))
     }
 
 }
