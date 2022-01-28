@@ -22,7 +22,9 @@ import static com.depromeet.threedollar.common.type.ApplicationType.USER_API;
 public enum FileType implements EnumModel {
 
     STORE_IMAGE("(유저) 가게 이미지", "store/v2/", FileContentType.IMAGE, List.of(USER_API)),
-    STORE_CERTIFICATION_IMAGE("(사장님) 가게 인증 이미지", "boss/certification-store/v1/", FileContentType.IMAGE, List.of(BOSS_API)),
+    BOSS_STORE_CERTIFICATION_IMAGE("가게 인증용 이미지", "boss/store-certification/v1/", FileContentType.IMAGE, List.of(BOSS_API)),
+    BOSS_STORE_IMAGE("사장님 가게 이미지", "boss/store/v1/", FileContentType.IMAGE, List.of(BOSS_API)),
+    BOSS_STORE_MENU_IMAGE("사장님 가게 메뉴 이미지", "boss/store-menu/v1/", FileContentType.IMAGE, List.of(BOSS_API)),
     ;
 
     private final String description;

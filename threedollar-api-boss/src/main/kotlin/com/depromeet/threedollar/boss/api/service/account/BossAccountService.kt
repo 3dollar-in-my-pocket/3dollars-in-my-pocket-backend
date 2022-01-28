@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.boss.api.service.account
 
-import com.depromeet.threedollar.boss.api.service.account.dto.request.UpdateBossInfoRequest
+import com.depromeet.threedollar.boss.api.service.account.dto.request.UpdateBossAccountInfoRequest
 import com.depromeet.threedollar.boss.api.service.account.dto.response.BossAccountInfoResponse
 import com.depromeet.threedollar.document.boss.document.account.BossAccountRepository
 import org.springframework.stereotype.Service
@@ -18,7 +18,7 @@ class BossAccountService(
     }
 
     @Transactional
-    fun updateBossAccountInfo(bossId: String, request: UpdateBossInfoRequest) {
+    fun updateBossAccountInfo(bossId: String, request: UpdateBossAccountInfoRequest) {
         val bossAccount = BossAccountServiceUtils.findBossAccountById(bossAccountRepository, bossId)
         request.let {
             bossAccount.update(it.name)

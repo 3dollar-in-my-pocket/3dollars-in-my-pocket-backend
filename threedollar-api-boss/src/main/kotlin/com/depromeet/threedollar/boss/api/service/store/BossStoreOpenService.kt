@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.boss.api.service.store
 
+import com.depromeet.threedollar.common.model.CoordinateValue
 import com.depromeet.threedollar.document.boss.document.store.BossStoreRepository
 import com.depromeet.threedollar.redis.boss.domain.store.BossStoreOpenInfo
 import com.depromeet.threedollar.redis.boss.domain.store.BossStoreOpenInfoRepository
@@ -13,13 +14,21 @@ class BossStoreOpenService(
     private val bossStoreRepository: BossStoreRepository
 ) {
 
-    fun renewBossStoreOpen(
-        bossStoreId: String
-    ) {
-        BossStoreServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
+    fun openBossStore(bossStoreId: String, bossId: String, mapCoordinate: CoordinateValue) {
+        val bossStore = BossStoreServiceUtils.findBossStoreByIdAndBossId(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
+        if (bossStore.hasChangedLocation(latitude = mapCoordinate.latitude, longitude = mapCoordinate.longitude)) {
+            bossStore.updateLocation(mapCoordinate.latitude, mapCoordinate.longitude)
+            bossStoreRepository.save(bossStore)
+        }
+
         val bossStoreOpenInfo = bossStoreOpenInfoRepository.findByIdOrNull(bossStoreId)
             ?: BossStoreOpenInfo.of(bossStoreId, LocalDateTime.now())
         bossStoreOpenInfoRepository.save(bossStoreOpenInfo);
+    }
+
+    fun closeBossStore(bossStoreId: String, bossId: String) {
+        BossStoreServiceUtils.validateExistsBossStoreByBoss(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
+        bossStoreOpenInfoRepository.deleteById(bossStoreId)
     }
 
 }
