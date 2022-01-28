@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class ApplicationStateChangedEvent {
 
-    private static final String START_MESSAGE = "애플리케이션 서버가 시작합니다";
-    private static final String END_MESSAGE = "애플리케이션 서버가 종료합니다";
+    private static final String START_MESSAGE = "애플리케이션 서버가 시작됩니다";
+    private static final String END_MESSAGE = "애플리케이션 서버가 종료됩니다";
 
     private final ApplicationType applicationType;
 
