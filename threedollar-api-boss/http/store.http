@@ -3,8 +3,12 @@ GET {{host_boss_api}}/boss/v1/stores/near?mapLatitude=38&mapLongitude=127.01&dis
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 
-### 가게 오픈 여부 갱신
-PUT {{host_boss_api}}/boss/v1/store/renew/open/{{BOSS_STORE_ID}}
+### 가게 영업 갱신
+PUT {{host_boss_api}}/boss/v1/store/open/{{BOSS_STORE_ID}}
+Authorization: Bearer {{BOSS_AUTHORIZATION}}
+
+### 가게 영업 종료
+DELETE {{host_boss_api}}/boss/v1/store/open/{{BOSS_STORE_ID}}
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 

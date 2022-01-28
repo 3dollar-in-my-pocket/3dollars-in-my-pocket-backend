@@ -32,13 +32,23 @@ class BossStoreController(
         )
     }
 
-    @ApiOperation("[인증] 가게의 오픈 정보를 갱신한다")
+    @ApiOperation("[인증] 가게를 영업 정보를 시작/갱신합니다. (30분간 갱신하지 않으면 자동 종료되며, 주기적으로 갱신해야 합니다.)")
     @Auth(role = STORE_OWNER)
-    @PutMapping("/boss/v1/store/renew/open/{storeId}")
-    fun renewBossStoreOpenInfo(
+    @PutMapping("/boss/v1/store/open/{storeId}")
+    fun openBossStore(
         @PathVariable storeId: String
     ): ApiResponse<String> {
-        bossStoreOpenService.renewBossStoreOpen(storeId)
+        bossStoreOpenService.openStore(storeId)
+        return ApiResponse.SUCCESS
+    }
+
+    @ApiOperation("[인증] 가게를 강제로 영업 종료합니다")
+    @Auth(role = STORE_OWNER)
+    @DeleteMapping("/boss/v1/store/close/{storeId}")
+    fun closeBossStore(
+        @PathVariable storeId: String
+    ): ApiResponse<String> {
+        bossStoreOpenService.closeStore(storeId)
         return ApiResponse.SUCCESS
     }
 

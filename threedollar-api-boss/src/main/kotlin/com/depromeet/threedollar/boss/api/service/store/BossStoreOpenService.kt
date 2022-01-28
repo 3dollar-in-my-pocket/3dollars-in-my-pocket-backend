@@ -13,13 +13,20 @@ class BossStoreOpenService(
     private val bossStoreRepository: BossStoreRepository
 ) {
 
-    fun renewBossStoreOpen(
+    fun openStore(
         bossStoreId: String
     ) {
         BossStoreServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
         val bossStoreOpenInfo = bossStoreOpenInfoRepository.findByIdOrNull(bossStoreId)
             ?: BossStoreOpenInfo.of(bossStoreId, LocalDateTime.now())
         bossStoreOpenInfoRepository.save(bossStoreOpenInfo);
+    }
+
+    fun closeStore(
+        bossStoreId: String
+    ) {
+        BossStoreServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
+        bossStoreOpenInfoRepository.deleteById(bossStoreId)
     }
 
 }
