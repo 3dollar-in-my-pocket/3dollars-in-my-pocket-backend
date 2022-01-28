@@ -112,21 +112,21 @@ data class BossStoreAppearanceDayResponse(
 
 
 data class BossStoreOpenStatusResponse(
-    val isOpen: Boolean,
+    val status: BossStoreOpenType,
     val startDateTime: LocalDateTime?
 ) {
 
     companion object {
         fun of(bossStoreOpenInfo: BossStoreOpenInfo): BossStoreOpenStatusResponse {
             return BossStoreOpenStatusResponse(
-                isOpen = true,
+                status = BossStoreOpenType.OPEN,
                 startDateTime = bossStoreOpenInfo.startDateTime
             )
         }
 
         fun close(): BossStoreOpenStatusResponse {
             return BossStoreOpenStatusResponse(
-                isOpen = false,
+                status = BossStoreOpenType.CLOSED,
                 startDateTime = null
             )
         }
