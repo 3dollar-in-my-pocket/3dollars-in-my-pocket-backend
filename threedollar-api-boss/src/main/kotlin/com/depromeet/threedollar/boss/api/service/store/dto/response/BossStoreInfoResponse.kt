@@ -1,33 +1,50 @@
 package com.depromeet.threedollar.boss.api.service.store.dto.response
 
 import com.depromeet.threedollar.common.type.DayOfTheWeek
+import com.depromeet.threedollar.document.boss.document.category.BossStoreCategory
 import com.depromeet.threedollar.document.boss.document.store.*
 import com.depromeet.threedollar.document.common.document.TimeInterval
+import com.depromeet.threedollar.redis.boss.domain.store.BossStoreOpenInfo
 import org.springframework.data.geo.Point
 import java.time.LocalDateTime
 
 data class BossStoreInfoResponse(
     val name: String,
-    val location: LocationResponse,
-    val imageUrl: String,
-    val introduction: String,
-    val openInfo: BossStoreOpenInfoResponse,
+    val location: LocationResponse?,
+    val imageUrl: String?,
+    val introduction: String?,
     val menus: List<BossStoreMenuResponse>,
     val appearanceDays: List<BossStoreAppearanceDayResponse>,
-    val categories: List<String>
+    val categories: List<BossStoreCategoryResponse>,
+    val openStatus: BossStoreOpenStatusResponse
 ) {
 
     companion object {
-        fun of(bossStore: BossStore): BossStoreInfoResponse {
+        fun of(bossStore: BossStore, categories: List<BossStoreCategory>, bossStoreOpenInfo: BossStoreOpenInfo?): BossStoreInfoResponse {
             return BossStoreInfoResponse(
                 name = bossStore.name,
-                location = LocationResponse.of(bossStore.location),
+                location = bossStore.location?.let { LocationResponse.of(it) },
                 imageUrl = bossStore.imageUrl,
                 introduction = bossStore.introduction,
-                openInfo = BossStoreOpenInfoResponse.of(bossStore.openInfo),
                 menus = bossStore.menus.map { BossStoreMenuResponse.of(it) },
                 appearanceDays = bossStore.appearanceDays.map { BossStoreAppearanceDayResponse.of(it) },
-                categories = bossStore.categories // TODO 카테고리로 변환
+                categories = categories.map { BossStoreCategoryResponse.of(it) },
+                openStatus = bossStoreOpenInfo?.let { BossStoreOpenStatusResponse.of(it) }
+                    ?: BossStoreOpenStatusResponse.close()
+            )
+        }
+    }
+
+}
+
+data class BossStoreCategoryResponse(
+    val title: String
+) {
+
+    companion object {
+        fun of(bossStoreCategory: BossStoreCategory): BossStoreCategoryResponse {
+            return BossStoreCategoryResponse(
+                title = bossStoreCategory.title
             )
         }
     }
@@ -46,20 +63,6 @@ data class LocationResponse(
                 latitude = location.y,
                 longitude = location.x
             )
-        }
-    }
-
-}
-
-
-data class BossStoreOpenInfoResponse(
-    val openStatus: BossStoreOpenType,
-    val firstOpenDateTme: LocalDateTime?
-) {
-
-    companion object {
-        fun of(bossStoreOpenInfo: BossStoreOpenInfo): BossStoreOpenInfoResponse {
-            return BossStoreOpenInfoResponse(bossStoreOpenInfo.openStatus, bossStoreOpenInfo.firstOpenDateTime)
         }
     }
 
@@ -101,6 +104,30 @@ data class BossStoreAppearanceDayResponse(
                 day = appearanceDay.day,
                 openTime = appearanceDay.openTime,
                 locationDescription = appearanceDay.locationDescription
+            )
+        }
+    }
+
+}
+
+
+data class BossStoreOpenStatusResponse(
+    val status: BossStoreOpenType,
+    val startDateTime: LocalDateTime?
+) {
+
+    companion object {
+        fun of(bossStoreOpenInfo: BossStoreOpenInfo): BossStoreOpenStatusResponse {
+            return BossStoreOpenStatusResponse(
+                status = BossStoreOpenType.OPEN,
+                startDateTime = bossStoreOpenInfo.startDateTime
+            )
+        }
+
+        fun close(): BossStoreOpenStatusResponse {
+            return BossStoreOpenStatusResponse(
+                status = BossStoreOpenType.CLOSED,
+                startDateTime = null
             )
         }
     }

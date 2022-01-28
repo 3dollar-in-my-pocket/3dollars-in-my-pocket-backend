@@ -21,12 +21,28 @@ public class PopupRepositoryCustomImpl implements PopupRepositoryCustom {
         return queryFactory.selectFrom(popup)
             .where(
                 popup.positionType.eq(positionType),
-                popup.platformType.eq(platformType),
+                popup.platformType.in(platformType, PopupPlatformType.ALL),
                 popup.dateTimeInterval.startDateTime.loe(dateTime),
                 popup.dateTimeInterval.endDateTime.goe(dateTime)
             )
             .orderBy(popup.id.desc())
             .fetch();
+    }
+
+    @Override
+    public List<Popup> findAllWithPage(long size, int page) {
+        return queryFactory.selectFrom(popup)
+            .orderBy(popup.id.desc())
+            .offset(page * size)
+            .limit(size)
+            .fetch();
+    }
+
+    // TDOO: 총 개수 캐싱
+    @Override
+    public long findAllCounts() {
+        return queryFactory.selectFrom(popup)
+            .fetchCount();
     }
 
 }

@@ -2,6 +2,7 @@ package com.depromeet.threedollar.domain.user.domain.store;
 
 import com.depromeet.threedollar.domain.common.domain.AuditingTimeEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,6 +32,7 @@ public class Menu extends AuditingTimeEntity {
     @Enumerated(EnumType.STRING)
     private MenuCategoryType category;
 
+    @Builder(access = AccessLevel.PACKAGE)
     private Menu(Store store, String name, String price, MenuCategoryType category) {
         this.store = store;
         this.name = name;
@@ -39,7 +41,12 @@ public class Menu extends AuditingTimeEntity {
     }
 
     public static Menu of(Store store, String name, String price, MenuCategoryType category) {
-        return new Menu(store, name, price, category);
+        return Menu.builder()
+            .store(store)
+            .name(name)
+            .price(price)
+            .category(category)
+            .build();
     }
 
     boolean isCategory(MenuCategoryType category) {

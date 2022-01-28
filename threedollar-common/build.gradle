@@ -1,5 +1,9 @@
+ext {
+    commonsLang3Version = "3.12.0"
+}
+
 dependencies {
-    implementation("org.apache.commons:commons-lang3:3.12.0")
+    implementation("org.apache.commons:commons-lang3:${commonsLang3Version}")
 }
 
 bootJar { enabled = false }

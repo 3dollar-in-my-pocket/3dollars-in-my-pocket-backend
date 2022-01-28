@@ -1,0 +1,27 @@
+spring:
+  config:
+    import:
+      - classpath:/application-domain.yml
+      - classpath:/application-cloud.yml
+      - classpath:/application-redis.yml
+      - classpath:/application-mongo.yml
+  profiles:
+    active: integration-test
+
+
+---
+spring.config:
+  activate:
+    on-profile: integration-test
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+spring:
+  mvc:
+    format:
+      date: yyyy-MM-dd
+      date-time: yyyy-MM-dd'T'HH:mm:ss
+      time: HH:mm:ss

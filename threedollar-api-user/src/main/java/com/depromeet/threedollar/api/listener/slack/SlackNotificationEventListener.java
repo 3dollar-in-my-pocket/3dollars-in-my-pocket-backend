@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.listener.slack;
 
 import com.depromeet.threedollar.domain.common.event.ApplicationStateChangedEvent;
 import com.depromeet.threedollar.domain.common.event.ServerExceptionOccurredEvent;
-import com.depromeet.threedollar.external.client.slack.SlackApiClient;
+import com.depromeet.threedollar.external.client.slack.SlackNotificationApiClient;
 import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest;
 import io.sentry.Sentry;
 import lombok.RequiredArgsConstructor;
@@ -17,17 +17,18 @@ import static com.depromeet.threedollar.external.client.slack.type.SlackNotifica
 @Component
 public class SlackNotificationEventListener {
 
-    private final SlackApiClient slackApiCaller;
+    private final SlackNotificationApiClient slackNotificationApiClient;
 
     @Async
     @EventListener
     public void sendErrorNotification(ServerExceptionOccurredEvent event) {
         Sentry.captureException(event.getException());
 
-        slackApiCaller.postMessage(PostSlackMessageRequest.of(ERROR_MESSAGE.generateMessage(
+        slackNotificationApiClient.postMessage(PostSlackMessageRequest.of(ERROR_MESSAGE.generateMessage(
             event.getApplicationType().getDescription(),
             event.getErrorCode().getCode(),
             event.getTimeStamp(),
+            event.getUserMetaValue(),
             event.getErrorCode().getMessage(),
             event.getException()
         )));
@@ -36,7 +37,7 @@ public class SlackNotificationEventListener {
     @Async
     @EventListener
     public void sendInfoNotification(ApplicationStateChangedEvent event) {
-        slackApiCaller.postMessage(PostSlackMessageRequest.of(INFO_MESSAGE.generateMessage(
+        slackNotificationApiClient.postMessage(PostSlackMessageRequest.of(INFO_MESSAGE.generateMessage(
             event.getApplicationType().getDescription(),
             event.getTimeStamp(),
             event.getMessage()

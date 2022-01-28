@@ -2,7 +2,7 @@ package com.depromeet.threedollar.application.service.faq
 
 import com.depromeet.threedollar.application.service.faq.dto.request.RetrieveFaqsRequest
 import com.depromeet.threedollar.application.service.faq.dto.response.FaqResponse
-import com.depromeet.threedollar.domain.config.cache.CacheType.CacheKey.FAQS
+import com.depromeet.threedollar.common.type.CacheType.CacheKey.FAQS
 import com.depromeet.threedollar.domain.user.domain.faq.FaqRepository
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service

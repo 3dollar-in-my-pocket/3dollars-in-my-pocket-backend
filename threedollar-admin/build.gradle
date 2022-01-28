@@ -6,4 +6,11 @@ dependencies {
 
     // Spring Session Redis
     implementation("org.springframework.session:spring-session-data-redis")
+
+    // textFixtures
+    testImplementation(testFixtures(project(":threedollar-domain")))
+}
+
+application {
+    mainClass.set("com.depromeet.threedollar.admin.ThreeDollarAdminApplicationKt")
 }

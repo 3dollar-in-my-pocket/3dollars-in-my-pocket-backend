@@ -12,7 +12,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.depromeet.threedollar.domain.config.cache.CacheType.CacheKey.USER_REVIEWS_COUNTS;
+import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_REVIEWS_COUNTS;
 
 @RequiredArgsConstructor
 @Service

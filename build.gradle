@@ -1,17 +1,18 @@
-buildscript {
-    ext {
-        springBootVersion = "2.5.8"
-        kotlinVersion = "1.5.32"
-        springCloudVersion = "2020.0.4"
-    }
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
-        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
-    }
+plugins {
+    id 'org.springframework.boot' version '2.5.8'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.jetbrains.kotlin.jvm' version '1.5.32'
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.5.32'
+    id 'application'
+    id 'jacoco'
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    springCloudVersion = "2020.0.4"
 }
 
 allprojects {
@@ -21,35 +22,34 @@ allprojects {
 subprojects {
     apply {
         plugin("java-library")
-        plugin("eclipse")
+        plugin("kotlin")
         plugin("org.springframework.boot")
         plugin("io.spring.dependency-management")
-        plugin("kotlin")
-        plugin("kotlin-spring")
+        plugin("org.jetbrains.kotlin.jvm")
+        plugin("org.jetbrains.kotlin.plugin.spring")
+        plugin("jacoco")
+        plugin("java-test-fixtures")
+    }
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    compileKotlin {
+        kotlinOptions {
+            jvmTarget = JavaVersion.VERSION_11
+            freeCompilerArgs = ["-Xjsr305=strict"]
+        }
     }
 
     repositories {
         mavenCentral()
     }
 
-    configurations {
-        compileOnly {
-            extendsFrom annotationProcessor
-        }
-    }
-
-    sourceCompatibility = "11"
-
-    compileKotlin {
-        kotlinOptions {
-            jvmTarget = "11"
-            freeCompilerArgs = ["-Xjsr305=strict"]
-        }
-    }
-    compileTestKotlin {
-        kotlinOptions {
-            jvmTarget = "11"
-            freeCompilerArgs = ["-Xjsr305=strict"]
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
         }
     }
 
@@ -58,7 +58,7 @@ subprojects {
         annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
         // Test
-        testImplementation('org.springframework.boot:spring-boot-starter-test')
+        testImplementation("org.springframework.boot:spring-boot-starter-test")
 
         // Lombok
         compileOnly("org.projectlombok:lombok")
@@ -70,53 +70,65 @@ subprojects {
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     }
 
-    dependencyManagement {
-        imports {
-            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+        integrationTestImplementation {
+            extendsFrom implementation, testImplementation
+        }
+        integrationTestRuntimeOnly {
+            extendsFrom testRuntimeOnly
+        }
+    }
+
+    sourceSets {
+        integrationTest {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            resources {
+                "src/integrationTest/resources"
+            }
+        }
+    }
+
+    task integrationTest(type: Test, group: 'verification', description: 'Integration Tests') {
+        testClassesDirs = sourceSets.integrationTest.output.classesDirs
+        classpath = sourceSets.integrationTest.runtimeClasspath
+        useJUnitPlatform()
+        jacoco {
+            destinationFile = file("$buildDir/jacoco/integrationTest.exec")
+        }
+    }
+
+    task unitTest(type: Test, group: 'verification', description: 'Unit Tests') {
+        useJUnitPlatform()
+        jacoco {
+            destinationFile = file("$buildDir/jacoco/unitTest.exec")
         }
     }
 
     test {
-        useJUnitPlatform()
+        dependsOn unitTest
+        dependsOn integrationTest
+        finalizedBy jacocoTestReport
     }
 }
 
-def testProjects = [
-    // API Layer
-    project(":threedollar-api-user"),
-    project(":threedollar-api-boss"),
-    project(":threedollar-admin"),
-    project(":threedollar-api-core"),
+jacoco {
+    toolVersion = "0.8.7"
+}
 
-    // Domain Layer
-    project(":threedollar-domain"),
-    project(":threedollar-document"),
+task testCoverage(type: JacocoReport, group: 'verification', description: 'Report Test Coverage') {
+    executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
 
-    // Common Layer
-    project(":threedollar-common")
-]
-
-configure(testProjects) {
-    apply {
-        plugin("jacoco")
+    subprojects.forEach {
+        sourceSets(it.sourceSets.main as SourceSet)
     }
 
-    jacoco {
-        toolVersion = "0.8.7"
+    reports {
+        html.enabled true
+        xml.enabled true
+        csv.enabled false
     }
-
-    jacocoTestReport {
-        executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
-
-        reports {
-            html.enabled true
-            xml.enabled true
-            csv.enabled false
-        }
-
-        for (testProject in testProjects) {
-            sourceSets(testProject.sourceSets["main"] as SourceSet)
-        }
-    }
-
 }

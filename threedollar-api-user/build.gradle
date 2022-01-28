@@ -1,6 +1,7 @@
 ext {
     swaggerVersion = "3.0.0"
     sentryVersion = "5.4.3"
+    springRetryVersion = "1.3.1"
 }
 
 dependencies {
@@ -18,6 +19,9 @@ dependencies {
     // Spring Session Redis
     implementation("org.springframework.session:spring-session-data-redis")
 
+    // Spring Retry
+    implementation("org.springframework.retry:spring-retry:${springRetryVersion}")
+
     // swagger
     implementation("io.springfox:springfox-boot-starter:${swaggerVersion}")
     implementation("io.springfox:springfox-swagger-ui:${swaggerVersion}")
@@ -25,5 +29,11 @@ dependencies {
     // sentry
     implementation("io.sentry:sentry-spring-boot-starter:${sentryVersion}")
     implementation("io.sentry:sentry-logback:${sentryVersion}")
+
+    // textFixtures
+    testImplementation(testFixtures(project(":threedollar-domain")))
 }
 
+application {
+    mainClass.set("com.depromeet.threedollar.api.ThreeDollarApiApplication")
+}

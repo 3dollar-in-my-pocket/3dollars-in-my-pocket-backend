@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -33,26 +34,44 @@ public class Popup extends AuditingTimeEntity {
     @Enumerated(EnumType.STRING)
     private PopupPlatformType platformType;
 
-    @Column(nullable = false, length = 2048)
-    private String imageUrl;
-
-    @Column(length = 2048)
-    private String linkUrl;
-
-    @Column(nullable = false)
-    private int priority;
-
     @Embedded
     private DateTimeInterval dateTimeInterval;
 
+    @Embedded
+    private PopupDetail detail;
+
     @Builder(access = AccessLevel.PACKAGE)
-    private Popup(PopupPositionType positionType, PopupPlatformType platformType, String imageUrl, String linkUrl, LocalDateTime startDateTime, LocalDateTime endDateTime, int priority) {
+    private Popup(PopupPositionType positionType, PopupPlatformType platformType, @Nullable String title, @Nullable String subTitle,
+                  String imageUrl, String linkUrl, @Nullable String bgColor, @Nullable String fontColor, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         this.positionType = positionType;
         this.platformType = platformType;
-        this.imageUrl = imageUrl;
-        this.linkUrl = linkUrl;
         this.dateTimeInterval = DateTimeInterval.of(startDateTime, endDateTime);
-        this.priority = priority;
+        this.detail = PopupDetail.of(title, subTitle, imageUrl, linkUrl, bgColor, fontColor);
+    }
+
+    public static Popup newInstance(PopupPositionType positionType, PopupPlatformType platformType, @Nullable String title,
+                                    @Nullable String subTitle, @Nullable String imageUrl, @Nullable String linkUrl,
+                                    @Nullable String bgColor, @Nullable String fontColor, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        return Popup.builder()
+            .positionType(positionType)
+            .platformType(platformType)
+            .startDateTime(startDateTime)
+            .endDateTime(endDateTime)
+            .title(title)
+            .subTitle(subTitle)
+            .bgColor(bgColor)
+            .fontColor(fontColor)
+            .imageUrl(imageUrl)
+            .linkUrl(linkUrl)
+            .build();
+    }
+
+    public void update(PopupPositionType positionType, PopupPlatformType platformType, @Nullable String title, @Nullable String subTitle,
+                       String imageUrl, @Nullable String linkUrl, @Nullable String bgColor, @Nullable String fontColor, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        this.positionType = positionType;
+        this.platformType = platformType;
+        this.dateTimeInterval = DateTimeInterval.of(startDateTime, endDateTime);
+        this.detail = PopupDetail.of(title, subTitle, imageUrl, linkUrl, bgColor, fontColor);
     }
 
     @NotNull

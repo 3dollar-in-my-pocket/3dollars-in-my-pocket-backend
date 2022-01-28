@@ -5,5 +5,7 @@
 ## 하위 모듈
 - threedollar-domain
     - threedollar-common
+- threedollar-redis
+    - threedollar-common
 - threedollar-external
     - threedollar-common

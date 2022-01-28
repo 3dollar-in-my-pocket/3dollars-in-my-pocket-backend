@@ -1,11 +1,17 @@
 package com.depromeet.threedollar.application.provider.upload.dto.request;
 
-import org.jetbrains.annotations.Nullable;
+import com.depromeet.threedollar.common.type.FileType;
 
 public interface UploadFileRequest {
 
-    void validateAvailableFileType(@Nullable String contentType);
+    FileType getType();
 
-    String createFileName(@Nullable String originalFileName);
+    default void validateAvailableContentType(String contentType) {
+        getType().validateAvailableContentType(contentType);
+    }
+
+    default String getFileNameWithBucketDirectory(String originalFileName) {
+        return getType().createUniqueFileNameWithExtension(originalFileName);
+    }
 
 }

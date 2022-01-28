@@ -10,7 +10,9 @@ import com.depromeet.threedollar.domain.user.domain.user.WithdrawalUser;
 import com.depromeet.threedollar.domain.user.domain.user.WithdrawalUserRepository;
 import com.depromeet.threedollar.domain.user.event.user.NewUserCreatedEvent;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.exception.LockAcquisitionException;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +24,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final WithdrawalUserRepository withdrawalUserRepository;
 
+    @Retryable(maxAttempts = 2, value = LockAcquisitionException.class)
     @Transactional
     public Long registerUser(CreateUserRequest request) {
         UserServiceUtils.validateNotExistsUser(userRepository, request.getSocialId(), request.getSocialType());

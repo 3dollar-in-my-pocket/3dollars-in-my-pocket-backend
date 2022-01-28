@@ -7,7 +7,7 @@ import com.depromeet.threedollar.api.service.user.UserService;
 import com.depromeet.threedollar.api.service.user.UserServiceUtils;
 import com.depromeet.threedollar.domain.user.domain.user.UserRepository;
 import com.depromeet.threedollar.domain.user.domain.user.UserSocialType;
-import com.depromeet.threedollar.external.client.apple.AppleTokenProvider;
+import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class AppleAuthService implements AuthService {
 
     private static final UserSocialType socialType = UserSocialType.APPLE;
 
-    private final AppleTokenProvider appleTokenDecoder;
+    private final AppleTokenDecoder appleTokenDecoder;
 
     private final UserRepository userRepository;
     private final UserService userService;

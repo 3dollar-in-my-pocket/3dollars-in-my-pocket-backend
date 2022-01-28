@@ -12,7 +12,7 @@ import org.springframework.cache.annotation.Cacheable;
 import javax.persistence.LockModeType;
 import java.util.List;
 
-import static com.depromeet.threedollar.domain.config.cache.CacheType.CacheKey.USER_REVIEWS_COUNTS;
+import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_REVIEWS_COUNTS;
 import static com.depromeet.threedollar.domain.user.domain.review.QReview.review;
 import static com.depromeet.threedollar.domain.user.domain.store.QStore.store;
 import static com.depromeet.threedollar.domain.user.domain.user.QUser.user;

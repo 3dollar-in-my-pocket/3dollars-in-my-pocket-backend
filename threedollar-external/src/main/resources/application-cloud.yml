@@ -2,58 +2,70 @@ logging:
   level:
     com.amazonaws.util.EC2MetadataUtils: error
     com.amazonaws.internal.InstanceMetadataServiceResourceFetcher: error
----
+
 cloud:
   aws:
-    s3:
-      bucket: 3dollar-local-embedded-bucket
-      mock:
-        port: 10000
-    cloudfront:
-      url: http://localhost:${cloud.aws.s3.mock.port}/${cloud.aws.s3.bucket}/
     region:
       static: ap-northeast-2
     stack:
       auto: false
-spring:
-  config:
-    activate:
-      on-profile:
-        - local
-        - local-docker
+
+
 ---
+spring.config:
+  activate:
+    on-profile: integration-test
+
+cloud:
+  aws:
+    s3:
+      bucket: integration-test
+    cloudfront:
+      url: integration-test
+
+
+---
+spring.config:
+  activate:
+    on-profile:
+      - local
+      - local-docker
+
+cloud:
+  aws:
+    s3:
+      bucket: local-test
+    cloudfront:
+      url: local-test
+
+
+---
+spring.config:
+  activate:
+    on-profile: dev
+
 cloud:
   aws:
     s3:
       bucket: 3dollar-api-bucket
     cloudfront:
       url: ${secret.aws.cloudfront.url}
-    region:
-      static: ap-northeast-2
-    stack:
-      auto: false
     credentials:
       instance-profile: true
-spring:
-  config:
-    activate:
-      on-profile: dev
+
+
 ---
+spring.config:
+  activate:
+    on-profile:
+      - prod
+      - stage
+
 cloud:
   aws:
     s3:
       bucket: 3dollar-api-bucket-prod
     cloudfront:
       url: ${secret.aws.cloudfront.url}
-    region:
-      static: ap-northeast-2
-    stack:
-      auto: false
     credentials:
       instance-profile: true
-spring:
-  config:
-    activate:
-      on-profile:
-        - prod
-        - stage

@@ -1,0 +1,18 @@
+### 사장님 계정의 회원가입을 요청합니다.
+POST {{host_boss_api}}/boss/v1/signup
+Content-Type: application/json
+
+{
+    "token": "token",
+    "bossName": "will",
+    "socialId": "social-id",
+    "socialType": "APPLE",
+    "businessNumber": "123-45-1234",
+    "storeName": "가슴속 3천원",
+    "storeCategories": [
+        "1",
+        "2"
+    ],
+    "contactsNumber": "010-1234-1234",
+    "certificationPhotoUrl": "https://example.png"
+}
