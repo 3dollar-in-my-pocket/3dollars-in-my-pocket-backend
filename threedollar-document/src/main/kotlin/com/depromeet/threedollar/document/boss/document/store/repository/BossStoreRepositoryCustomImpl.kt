@@ -26,18 +26,16 @@ class BossStoreRepositoryCustomImpl(
         )
     }
 
-    override fun findBossStoreByIdAndBossId(bossStoreId: String, bossId: String): BossStore? {
+    override fun findBossStoreByBossId(bossId: String): BossStore? {
         return mongoTemplate.findOne(
-            query(
-                where("_id").`is`(bossStoreId)
-            ).addCriteria(
+            Query(
                 where("bossId").`is`(bossId)
             ), BossStore::class.java
         )
     }
 
-    override fun findBossStoreByBossId(bossId: String): BossStore? {
-        return mongoTemplate.findOne(
+    override fun existsBossStoreByIdAndBossId(bossStoreId: String, bossId: String): Boolean {
+        return mongoTemplate.exists(
             Query(
                 where("bossId").`is`(bossId)
             ), BossStore::class.java

@@ -25,4 +25,14 @@ class BossAccountRepositoryCustomImpl(
         )
     }
 
+    override fun existsBossAccountBySocialInfo(socialId: String, socialType: BossAccountSocialType): Boolean {
+        return mongoTemplate.exists(
+            query(
+                where("socialInfo.socialId").`is`(socialId)
+            ).addCriteria(
+                where("socialInfo.socialType").`is`(socialType)
+            ),
+            BossAccount::class.java
+        )
+    }
 }

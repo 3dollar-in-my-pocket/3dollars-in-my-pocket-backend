@@ -9,11 +9,12 @@ class BossAccount(
     var name: String,
     val socialInfo: BossAccountSocialInfo,
     val businessNumber: BusinessNumber,
-    val pushSettingsStatus: PushSettingsStatus = PushSettingsStatus.OFF,
+    var pushSettingsStatus: PushSettingsStatus = PushSettingsStatus.OFF,
 ) : BaseDocument() {
 
-    fun update(name: String) {
+    fun update(name: String, pushSettingsStatus: PushSettingsStatus) {
         this.name = name
+        this.pushSettingsStatus = pushSettingsStatus
     }
 
 }

@@ -8,6 +8,6 @@ interface BossStoreRepositoryCustom {
 
     fun findBossStoreByBossId(bossId: String): BossStore?
 
-    fun findBossStoreByIdAndBossId(bossStoreId: String, bossId: String): BossStore?
+    fun existsBossStoreByIdAndBossId(bossStoreId: String, bossId: String): Boolean
 
 }

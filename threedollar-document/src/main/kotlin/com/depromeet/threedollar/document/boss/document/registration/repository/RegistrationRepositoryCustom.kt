@@ -5,6 +5,6 @@ import com.depromeet.threedollar.document.boss.document.registration.Registratio
 
 interface RegistrationRepositoryCustom {
 
-    fun findRegistrationBySocialInfo(socialId: String, socialType: BossAccountSocialType): Registration?
+    fun existsRegistrationBySocialInfo(socialId: String, socialType: BossAccountSocialType): Boolean
 
 }

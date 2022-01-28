@@ -34,7 +34,7 @@ class SignupService(
     private fun validateDuplicateRegistration(socialId: String, socialType: BossAccountSocialType) {
         BossAccountServiceUtils.validateNotExistsBossAccount(bossAccountRepository, socialId, socialType)
 
-        if (registrationRepository.findRegistrationBySocialInfo(socialId, socialType) != null) {
+        if (registrationRepository.existsRegistrationBySocialInfo(socialId, socialType)) {
             throw ConflictException("이미 가입 신청한 사장님 (${socialId} - (${socialType}) 입니다.", ErrorCode.CONFLICT_REGISTER_BOSS)
         }
     }
