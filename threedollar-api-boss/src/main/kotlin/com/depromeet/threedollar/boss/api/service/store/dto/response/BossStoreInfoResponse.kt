@@ -20,10 +20,15 @@ data class BossStoreInfoResponse(
 ) {
 
     companion object {
-        fun of(bossStore: BossStore, categories: List<BossStoreCategory>, bossStoreOpenInfo: BossStoreOpenInfo?): BossStoreInfoResponse {
+        fun of(
+            bossStore: BossStore,
+            location: Point?,
+            categories: List<BossStoreCategory>,
+            bossStoreOpenInfo: BossStoreOpenInfo?
+        ): BossStoreInfoResponse {
             return BossStoreInfoResponse(
                 name = bossStore.name,
-                location = bossStore.location?.let { LocationResponse.of(it) },
+                location = location?.let { LocationResponse.of(it) },
                 imageUrl = bossStore.imageUrl,
                 introduction = bossStore.introduction,
                 menus = bossStore.menus.map { BossStoreMenuResponse.of(it) },

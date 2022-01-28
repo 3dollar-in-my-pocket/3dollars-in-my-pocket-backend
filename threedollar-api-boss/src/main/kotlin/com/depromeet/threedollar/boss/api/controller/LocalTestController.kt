@@ -28,6 +28,7 @@ class LocalTestController(
     private val bossAccountRepository: BossAccountRepository,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
+    private val bossStoreLocationRepository: BossStoreLocationRepository,
     private val httpSession: HttpSession
 ) {
 
@@ -50,11 +51,10 @@ class LocalTestController(
         @RequestParam categoriesIds: List<String>
     ): BossStore {
         BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, categoriesIds)
-        return bossStoreRepository.save(
+        val bossStore = bossStoreRepository.save(
             BossStore(
                 bossId = bossId,
                 name = "행복한 붕어빵",
-                location = Point(longitude, latitude),
                 imageUrl = "https://image.com",
                 introduction = "소개",
                 contactsNumber = ContactsNumber.of("010-1234-1234"),
@@ -95,6 +95,12 @@ class LocalTestController(
                 status = BossStoreStatus.ACTIVE
             )
         )
+
+        bossStoreLocationRepository.save(BossStoreLocation(
+            bossStoreId = bossStore.id,
+            location = Point(longitude, latitude),
+        ))
+        return bossStore
     }
 
     @PostMapping("/test-category")

@@ -4,7 +4,7 @@ Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 
 ### 가게의 영업을 시작/갱신 합니다.
-PUT {{host_boss_api}}/boss/v1/boss-store/{{BOSS_STORE_ID}}/open
+PUT {{host_boss_api}}/boss/v1/boss-store/{{BOSS_STORE_ID}}/open?mapLatitude=38&mapLongitude=127.01
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 
