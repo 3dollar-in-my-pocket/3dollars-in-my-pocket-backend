@@ -36,9 +36,10 @@ class BossStoreController(
     @PutMapping("/boss/v1/boss-store/{bossStoreId}/open")
     fun openBossStore(
         @PathVariable bossStoreId: String,
-        @BossId bossId: String
+        @BossId bossId: String,
+        @MapCoordinate mapCoordinate: CoordinateValue
     ): ApiResponse<String> {
-        bossStoreOpenService.openBossStore(bossStoreId, bossId)
+        bossStoreOpenService.openBossStore(bossStoreId, bossId, mapCoordinate)
         return ApiResponse.SUCCESS
     }
 

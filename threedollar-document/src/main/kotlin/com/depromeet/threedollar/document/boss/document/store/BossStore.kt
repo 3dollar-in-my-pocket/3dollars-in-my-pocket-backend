@@ -10,9 +10,9 @@ import org.springframework.data.mongodb.core.mapping.Document
 class BossStore(
     val bossId: String,
     val name: String,
-    val location: Point,
-    val imageUrl: String = "",
-    val introduction: String = "",
+    var location: Point?,
+    val imageUrl: String?,
+    val introduction: String?,
     val contactsNumber: ContactsNumber?,
     val snsUrl: String?,
     val menus: List<BossStoreMenu> = mutableListOf(),
@@ -22,7 +22,20 @@ class BossStore(
 ) : BaseDocument() {
 
     init {
-        LocationValidator.validate(latitude = location.y, longitude = location.x)
+        LocationValidator.validate(latitude = location?.y, longitude = location?.x)
+    }
+
+    fun hasChangedLocation(latitude: Double, longitude: Double): Boolean {
+        return !hasSameLocation(latitude = latitude, longitude = longitude)
+    }
+
+    private fun hasSameLocation(latitude: Double, longitude: Double): Boolean {
+        return this.location?.x == longitude && location?.y == latitude
+
+    }
+
+    fun updateLocation(latitude: Double, longitude: Double) {
+        this.location = Point(longitude, latitude)
     }
 
 }

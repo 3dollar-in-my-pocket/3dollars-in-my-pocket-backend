@@ -10,9 +10,9 @@ import java.time.LocalDateTime
 
 data class BossStoreInfoResponse(
     val name: String,
-    val location: LocationResponse,
-    val imageUrl: String,
-    val introduction: String,
+    val location: LocationResponse?,
+    val imageUrl: String?,
+    val introduction: String?,
     val menus: List<BossStoreMenuResponse>,
     val appearanceDays: List<BossStoreAppearanceDayResponse>,
     val categories: List<BossStoreCategoryResponse>,
@@ -23,7 +23,7 @@ data class BossStoreInfoResponse(
         fun of(bossStore: BossStore, categories: List<BossStoreCategory>, bossStoreOpenInfo: BossStoreOpenInfo?): BossStoreInfoResponse {
             return BossStoreInfoResponse(
                 name = bossStore.name,
-                location = LocationResponse.of(bossStore.location),
+                location = bossStore.location?.let { LocationResponse.of(it) },
                 imageUrl = bossStore.imageUrl,
                 introduction = bossStore.introduction,
                 menus = bossStore.menus.map { BossStoreMenuResponse.of(it) },

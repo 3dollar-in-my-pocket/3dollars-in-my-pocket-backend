@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.boss.api.service.store
 
 import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.common.model.CoordinateValue
 import com.depromeet.threedollar.document.boss.document.store.BossStoreCreator
 import com.depromeet.threedollar.document.boss.document.store.BossStoreRepository
 import com.depromeet.threedollar.redis.boss.domain.store.BossStoreOpenInfoCreator
@@ -10,6 +11,7 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.data.geo.Point
 import org.springframework.test.context.TestConstructor
 import java.time.LocalDateTime
 
@@ -37,7 +39,7 @@ class BossStoreOpenServiceTest(
         bossStoreRepository.save(bossStore)
 
         // when
-        bossStoreOpenService.openBossStore(bossStore.id, bossStore.bossId)
+        bossStoreOpenService.openBossStore(bossStore.id, bossStore.bossId, CoordinateValue.of(38.0, 127.0))
 
         // then
         val bossStoreOpenInfos = bossStoreOpenInfoRepository.findAll()
@@ -57,7 +59,7 @@ class BossStoreOpenServiceTest(
         bossStoreOpenInfoRepository.save(BossStoreOpenInfoCreator.create(bossStore.id, startDateTime))
 
         // when
-        bossStoreOpenService.openBossStore(bossStore.id, bossStore.bossId)
+        bossStoreOpenService.openBossStore(bossStore.id, bossStore.bossId, CoordinateValue.of(38.0, 127.0))
 
         // then
         val bossStoreOpenInfos = bossStoreOpenInfoRepository.findAll()
@@ -67,9 +69,35 @@ class BossStoreOpenServiceTest(
     }
 
     @Test
+    fun `가게 오픈 갱신시 가게 위치가 변경되었을 경우 수정된다`() {
+        // given
+        val latitude = 37.3
+        val longitude = 129.2
+
+        val bossStore = BossStoreCreator.create(
+            bossId = "bossId",
+            name = "가게",
+            latitude = 36.0,
+            longitude = 131.0
+        )
+        bossStoreRepository.save(bossStore)
+
+        val startDateTime = LocalDateTime.of(2022, 1, 1, 0, 0)
+        bossStoreOpenInfoRepository.save(BossStoreOpenInfoCreator.create(bossStore.id, startDateTime))
+
+        // when
+        bossStoreOpenService.openBossStore(bossStore.id, bossStore.bossId, CoordinateValue.of(latitude, longitude))
+
+        // then
+        val bossStores = bossStoreRepository.findAll()
+        assertThat(bossStores).hasSize(1)
+        assertThat(bossStores[0].location).isEqualTo(Point(longitude, latitude))
+    }
+
+    @Test
     fun `가게 오픈 정보 갱신시 존재하지 않는 가게인 경우 NotFound Exception`() {
         // when & then
-        assertThatThrownBy { bossStoreOpenService.openBossStore("Not Found Boss StoreId", "bossId") }.isInstanceOf(NotFoundException::class.java)
+        assertThatThrownBy { bossStoreOpenService.openBossStore("Not Found Boss StoreId", "bossId", CoordinateValue.of(38.0, 128.0)) }.isInstanceOf(NotFoundException::class.java)
     }
 
     @Test
@@ -82,7 +110,7 @@ class BossStoreOpenServiceTest(
         bossStoreRepository.save(bossStore)
 
         // when & then
-        assertThatThrownBy { bossStoreOpenService.openBossStore(bossStore.id, "Not Owner BossId") }.isInstanceOf(NotFoundException::class.java)
+        assertThatThrownBy { bossStoreOpenService.openBossStore(bossStore.id, "Not Owner BossId", CoordinateValue.of(38.0, 128.0)) }.isInstanceOf(NotFoundException::class.java)
     }
 
     @Test

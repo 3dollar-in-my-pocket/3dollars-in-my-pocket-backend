@@ -13,6 +13,10 @@ class BossStoreRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : BossStoreRepositoryCustom {
 
+    /**
+     * latitude, longitude 하나 이상 null일 경우 (오픈을 한번도 한적이 없는 가게인경우)
+     * - 실행계획에서 아예 필터링 되는지 체크할 필요가 있음.
+     */
     override fun findNearBossStores(latitude: Double, longitude: Double, maxDistance: Double): List<BossStore> {
         return mongoTemplate.find(
             query(
