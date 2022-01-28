@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.boss.api.service.registration.dto.request
+package com.depromeet.threedollar.boss.api.service.auth.dto.request
 
 import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialInfo
 import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
@@ -8,7 +8,7 @@ import com.depromeet.threedollar.document.boss.document.registration.Registratio
 import com.depromeet.threedollar.document.boss.document.registration.RegistrationBossForm
 import com.depromeet.threedollar.document.boss.document.registration.RegistrationStoreForm
 
-data class ApplyRegistrationRequest(
+data class SignupRequest(
     val token: String,
     val socialType: BossAccountSocialType,
 

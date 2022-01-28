@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.boss.api.service.registration
 
-import com.depromeet.threedollar.boss.api.service.registration.dto.request.ApplyRegistrationRequest
+import com.depromeet.threedollar.boss.api.service.auth.SignupService
+import com.depromeet.threedollar.boss.api.service.auth.dto.request.SignupRequest
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.document.boss.document.account.*
@@ -16,8 +17,8 @@ import org.springframework.test.context.TestConstructor
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
-internal class RegistrationServiceTest(
-    private val registrationService: RegistrationService,
+internal class SignupServiceTest(
+    private val signupService: SignupService,
     private val registrationRepository: RegistrationRepository,
     private val bossAccountRepository: BossAccountRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository
@@ -42,7 +43,7 @@ internal class RegistrationServiceTest(
         val contactsNumber = "010-1234-1234"
         val certificationPhotoUrl = "https://example-photo.png"
 
-        val request = ApplyRegistrationRequest(
+        val request = SignupRequest(
             bossName = bossName,
             token = "Dummy Access Token",
             socialType = socialType,
@@ -54,7 +55,7 @@ internal class RegistrationServiceTest(
         )
 
         // when
-        registrationService.applyRegistration(request, socialId)
+        signupService.signup(request, socialId)
 
         // then
         val registrations = registrationRepository.findAll()
@@ -90,7 +91,7 @@ internal class RegistrationServiceTest(
             socialType = socialType
         ))
 
-        val request = ApplyRegistrationRequest(
+        val request = SignupRequest(
             bossName = bossName,
             token = "Dummy Access Token",
             socialType = socialType,
@@ -102,7 +103,7 @@ internal class RegistrationServiceTest(
         )
 
         // when & then
-        assertThatThrownBy { registrationService.applyRegistration(request, socialId) }.isInstanceOf(ConflictException::class.java)
+        assertThatThrownBy { signupService.signup(request, socialId) }.isInstanceOf(ConflictException::class.java)
     }
 
     @Test
@@ -117,7 +118,7 @@ internal class RegistrationServiceTest(
             socialType = socialType
         ))
 
-        val request = ApplyRegistrationRequest(
+        val request = SignupRequest(
             bossName = "사장님 이름",
             token = "Dummy Access Token",
             socialType = socialType,
@@ -129,7 +130,7 @@ internal class RegistrationServiceTest(
         )
 
         // when & then
-        assertThatThrownBy { registrationService.applyRegistration(request, socialId) }.isInstanceOf(ConflictException::class.java)
+        assertThatThrownBy { signupService.signup(request, socialId) }.isInstanceOf(ConflictException::class.java)
     }
 
     @Test
@@ -137,7 +138,7 @@ internal class RegistrationServiceTest(
         // given
         val categoriesIds = createCategory(bossStoreCategoryRepository, "한식")
 
-        val request = ApplyRegistrationRequest(
+        val request = SignupRequest(
             bossName = "will",
             token = "Dummy Access Token",
             socialType = BossAccountSocialType.APPLE,
@@ -149,7 +150,7 @@ internal class RegistrationServiceTest(
         )
 
         // when & then
-        assertThatThrownBy { registrationService.applyRegistration(request, socialId = "socialId") }.isInstanceOf(NotFoundException::class.java)
+        assertThatThrownBy { signupService.signup(request, socialId = "socialId") }.isInstanceOf(NotFoundException::class.java)
     }
 
 }

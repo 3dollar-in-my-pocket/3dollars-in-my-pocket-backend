@@ -1,8 +1,21 @@
 package com.depromeet.threedollar.document.boss.document.account
 
-enum class PushSettingsStatus {
+import com.depromeet.threedollar.common.model.EnumModel
 
-    ON,
-    OFF
+enum class PushSettingsStatus(
+    private val description: String
+) : EnumModel {
+
+    ON("ON"),
+    OFF("OFF"),
+    ;
+
+    override fun getKey(): String {
+        return name
+    }
+
+    override fun getDescription(): String {
+        return description
+    }
 
 }

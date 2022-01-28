@@ -20,7 +20,7 @@ class BossStoreOwnerChecker(
     }
 
     companion object {
-        private const val PATH_STORE_ID = "storeId"
+        private const val PATH_STORE_ID = "bossStoreId"
     }
 
 }

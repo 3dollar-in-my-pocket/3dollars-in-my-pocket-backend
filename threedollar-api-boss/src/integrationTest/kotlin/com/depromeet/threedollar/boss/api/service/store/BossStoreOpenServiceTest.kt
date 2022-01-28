@@ -37,7 +37,7 @@ class BossStoreOpenServiceTest(
         bossStoreRepository.save(bossStore)
 
         // when
-        bossStoreOpenService.openStore(bossStore.id)
+        bossStoreOpenService.openBossStore(bossStore.id)
 
         // then
         val bossStoreOpenInfos = bossStoreOpenInfoRepository.findAll()
@@ -57,7 +57,7 @@ class BossStoreOpenServiceTest(
         bossStoreOpenInfoRepository.save(BossStoreOpenInfoCreator.create(bossStore.id, startDateTime))
 
         // when
-        bossStoreOpenService.openStore(bossStore.id)
+        bossStoreOpenService.openBossStore(bossStore.id)
 
         // then
         val bossStoreOpenInfos = bossStoreOpenInfoRepository.findAll()
@@ -69,7 +69,7 @@ class BossStoreOpenServiceTest(
     @Test
     fun `가게 오픈 정보 갱신시 존재하지 않는 가게인 경우 NotFound Exception`() {
         // when & then
-        assertThatThrownBy { bossStoreOpenService.openStore("Not Found Boss StoreId") }.isInstanceOf(NotFoundException::class.java)
+        assertThatThrownBy { bossStoreOpenService.openBossStore("Not Found Boss StoreId") }.isInstanceOf(NotFoundException::class.java)
     }
 
     @Test
@@ -84,7 +84,7 @@ class BossStoreOpenServiceTest(
         bossStoreOpenInfoRepository.save(BossStoreOpenInfoCreator.create(bossStore.id, startDateTime))
 
         // when
-        bossStoreOpenService.closeStore(bossStore.id)
+        bossStoreOpenService.closeBossStore(bossStore.id)
 
         // then
         val bossStoreOpenInfos = bossStoreOpenInfoRepository.findAll()

@@ -1,5 +1,5 @@
-### 신규 가입 신청을 합니다
-POST {{host_boss_api}}/boss/v1/registration
+### 사장님 계정의 회원가입을 요청합니다.
+POST {{host_boss_api}}/boss/v1/signup
 Content-Type: application/json
 
 {

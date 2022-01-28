@@ -44,4 +44,12 @@ class BossStoreService(
         return BossStoreInfoResponse.of(bossStore, bossStoreCategoryRepository.findCategoriesByIds(bossStore.categoriesIds))
     }
 
+    @Transactional(readOnly = true)
+    fun getBossStore(
+        storeId: String
+    ): BossStoreInfoResponse {
+        val bossStore = BossStoreServiceUtils.findBossStoreById(bossStoreRepository, storeId)
+        return BossStoreInfoResponse.of(bossStore, bossStoreCategoryRepository.findCategoriesByIds(bossStore.categoriesIds))
+    }
+
 }

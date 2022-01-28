@@ -1,5 +1,8 @@
 package com.depromeet.threedollar.boss.api.service.auth
 
+import com.depromeet.threedollar.boss.api.service.auth.policy.AppleAuthService
+import com.depromeet.threedollar.boss.api.service.auth.policy.GoogleAuthService
+import com.depromeet.threedollar.boss.api.service.auth.policy.KaKaoAuthService
 import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
 import org.springframework.stereotype.Component

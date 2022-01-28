@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.boss.api.service.account
 
-import com.depromeet.threedollar.boss.api.service.account.dto.request.UpdateBossInfoRequest
+import com.depromeet.threedollar.boss.api.service.account.dto.request.UpdateBossAccountInfoRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.document.boss.document.account.BossAccountCreator
 import com.depromeet.threedollar.document.boss.document.account.BossAccountRepository
@@ -38,7 +38,7 @@ internal class BossAccountServiceTest(
         bossAccountRepository.save(bossAccount)
 
         // when
-        bossAccountService.updateBossAccountInfo(bossAccount.id, UpdateBossInfoRequest(name))
+        bossAccountService.updateBossAccountInfo(bossAccount.id, UpdateBossAccountInfoRequest(name))
 
         // then
         val bossAccounts = bossAccountRepository.findAll()
@@ -57,7 +57,7 @@ internal class BossAccountServiceTest(
         val name = "새로운 이름"
 
         // when & then
-        assertThatThrownBy { bossAccountService.updateBossAccountInfo("Not Found Boss Id", UpdateBossInfoRequest(name)) }.isInstanceOf(NotFoundException::class.java)
+        assertThatThrownBy { bossAccountService.updateBossAccountInfo("Not Found Boss Id", UpdateBossAccountInfoRequest(name)) }.isInstanceOf(NotFoundException::class.java)
     }
 
 }

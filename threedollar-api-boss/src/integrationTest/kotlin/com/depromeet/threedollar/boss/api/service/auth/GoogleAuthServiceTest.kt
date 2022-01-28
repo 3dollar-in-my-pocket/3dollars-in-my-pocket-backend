@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.boss.api.service.auth
 
 import com.depromeet.threedollar.boss.api.service.auth.dto.request.LoginRequest
+import com.depromeet.threedollar.boss.api.service.auth.policy.GoogleAuthService
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.document.boss.document.account.*
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient

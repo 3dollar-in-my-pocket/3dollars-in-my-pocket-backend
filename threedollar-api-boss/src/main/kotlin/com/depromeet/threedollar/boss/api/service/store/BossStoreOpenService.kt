@@ -13,7 +13,7 @@ class BossStoreOpenService(
     private val bossStoreRepository: BossStoreRepository
 ) {
 
-    fun openStore(
+    fun openBossStore(
         bossStoreId: String
     ) {
         BossStoreServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
@@ -22,7 +22,7 @@ class BossStoreOpenService(
         bossStoreOpenInfoRepository.save(bossStoreOpenInfo);
     }
 
-    fun closeStore(
+    fun closeBossStore(
         bossStoreId: String
     ) {
         BossStoreServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)

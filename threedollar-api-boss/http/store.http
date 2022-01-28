@@ -1,17 +1,23 @@
-### 주변 가게 목록 조회
-GET {{host_boss_api}}/boss/v1/stores/near?mapLatitude=38&mapLongitude=127.01&distanceKm=1
+### 특정 거리 안에 위치한 가게 목록을 조회합니다.
+GET {{host_boss_api}}/boss/v1/boss-stores/near?mapLatitude=38&mapLongitude=127.01&distanceKm=1
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 
-### 가게 영업 갱신
-PUT {{host_boss_api}}/boss/v1/store/open/{{BOSS_STORE_ID}}
-Authorization: Bearer {{BOSS_AUTHORIZATION}}
-
-### 가게 영업 종료
-DELETE {{host_boss_api}}/boss/v1/store/open/{{BOSS_STORE_ID}}
+### 가게의 영업을 시작/갱신 합니다.
+PUT {{host_boss_api}}/boss/v1/boss-store/{{BOSS_STORE_ID}}/open
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 
-### 사장님의 가게를 조회합니다
-GET {{host_boss_api}}/boss/v1/store/me
+### 가게 영업을 종료합니다.
+DELETE {{host_boss_api}}/boss/v1/boss-store/{{BOSS_STORE_ID}}/close
+Authorization: Bearer {{BOSS_AUTHORIZATION}}
+
+
+### 사장님 자신이 운영 중인 가게를 조회합니다
+GET {{host_boss_api}}/boss/v1/boss-store/me
+Authorization: Bearer {{BOSS_AUTHORIZATION}}
+
+
+### 특정 가게의 정보를 상세 조회합니다
+GET {{host_boss_api}}/boss/v1/boss-store/{{BOSS_STORE_ID}}
 Authorization: Bearer {{BOSS_AUTHORIZATION}}

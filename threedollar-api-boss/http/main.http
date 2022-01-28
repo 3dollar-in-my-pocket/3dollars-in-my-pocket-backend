@@ -2,7 +2,7 @@
 GET {{host_boss_api}}/ping
 
 
-### 테스트 토큰 발급
+### [테스트용] 테스트 토큰 발급
 GET {{host_boss_api}}/test-token
 
 > {%
@@ -10,7 +10,7 @@ client.global.set("BOSS_AUTHORIZATION", response.body["data"]["token"])
 %}
 
 
-### Add Mock Store data
+### [테스트용] Mock 가게 데이터를 추가합니다.
 POST {{host_boss_api}}/test-store?latitude=38&longitude=127&categoriesIds=61f29cdea82b8f1c21309259
 Content-Type: application/json
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
@@ -20,5 +20,5 @@ client.global.set("BOSS_STORE_ID", response.body["id"])
 %}
 
 
-### Add Mock Store data
+### [테스트용] Mock 가게 카테고리 데이터를 추가합니다.
 POST {{host_boss_api}}/test-category?title=중식&priority=1
