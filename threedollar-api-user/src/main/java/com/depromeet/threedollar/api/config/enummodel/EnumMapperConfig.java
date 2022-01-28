@@ -6,6 +6,7 @@ import com.depromeet.threedollar.common.utils.EnumMapper;
 import com.depromeet.threedollar.domain.user.domain.faq.FaqCategory;
 import com.depromeet.threedollar.domain.user.domain.popup.PopupPlatformType;
 import com.depromeet.threedollar.domain.user.domain.popup.PopupPositionType;
+import com.depromeet.threedollar.domain.user.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.user.domain.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.user.domain.store.StoreType;
 import com.depromeet.threedollar.domain.user.domain.storedelete.DeleteReasonType;
@@ -31,6 +32,7 @@ public class EnumMapperConfig {
         enumMapper.put("StoreType", StoreType.class);
         enumMapper.put("DeleteReasonType", DeleteReasonType.class);
         enumMapper.put("StoreOrderType", StoreOrderType.class);
+        enumMapper.put("MenuCategoryType", MenuCategoryType.class);
 
         // faq
         enumMapper.put("FaqCategory", FaqCategory.class);
