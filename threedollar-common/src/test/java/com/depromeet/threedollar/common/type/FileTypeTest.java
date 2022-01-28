@@ -15,7 +15,7 @@ class FileTypeTest {
     @Test
     void 해당_파일을_사용할수_있는_모듈인지_확인한다_아닌경우_ForbidenException() {
         // given
-        FileType fileType = FileType.STORE_CERTIFICATION_IMAGE;
+        FileType fileType = FileType.BOSS_STORE_CERTIFICATION_IMAGE;
 
         // when & then
         assertThatThrownBy(() -> fileType.validateAvailableUploadInModule(ApplicationType.USER_API)).isInstanceOf(ForbiddenException.class);
