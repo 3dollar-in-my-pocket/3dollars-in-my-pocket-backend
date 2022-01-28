@@ -4,7 +4,9 @@ import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategory
 import com.depromeet.threedollar.document.boss.document.store.*
 import com.depromeet.threedollar.document.common.document.TimeInterval
+import com.depromeet.threedollar.redis.boss.domain.store.BossStoreOpenInfo
 import org.springframework.data.geo.Point
+import java.time.LocalDateTime
 
 data class BossStoreInfoResponse(
     val name: String,
@@ -13,11 +15,12 @@ data class BossStoreInfoResponse(
     val introduction: String,
     val menus: List<BossStoreMenuResponse>,
     val appearanceDays: List<BossStoreAppearanceDayResponse>,
-    val categories: List<BossStoreCategoryResponse>
+    val categories: List<BossStoreCategoryResponse>,
+    val openStatus: BossStoreOpenStatusResponse
 ) {
 
     companion object {
-        fun of(bossStore: BossStore, categories: List<BossStoreCategory>): BossStoreInfoResponse {
+        fun of(bossStore: BossStore, categories: List<BossStoreCategory>, bossStoreOpenInfo: BossStoreOpenInfo?): BossStoreInfoResponse {
             return BossStoreInfoResponse(
                 name = bossStore.name,
                 location = LocationResponse.of(bossStore.location),
@@ -25,7 +28,9 @@ data class BossStoreInfoResponse(
                 introduction = bossStore.introduction,
                 menus = bossStore.menus.map { BossStoreMenuResponse.of(it) },
                 appearanceDays = bossStore.appearanceDays.map { BossStoreAppearanceDayResponse.of(it) },
-                categories = categories.map { BossStoreCategoryResponse.of(it) }
+                categories = categories.map { BossStoreCategoryResponse.of(it) },
+                openStatus = bossStoreOpenInfo?.let { BossStoreOpenStatusResponse.of(it) }
+                    ?: BossStoreOpenStatusResponse.close()
             )
         }
     }
@@ -99,6 +104,30 @@ data class BossStoreAppearanceDayResponse(
                 day = appearanceDay.day,
                 openTime = appearanceDay.openTime,
                 locationDescription = appearanceDay.locationDescription
+            )
+        }
+    }
+
+}
+
+
+data class BossStoreOpenStatusResponse(
+    val isOpen: Boolean,
+    val startDateTime: LocalDateTime?
+) {
+
+    companion object {
+        fun of(bossStoreOpenInfo: BossStoreOpenInfo): BossStoreOpenStatusResponse {
+            return BossStoreOpenStatusResponse(
+                isOpen = true,
+                startDateTime = bossStoreOpenInfo.startDateTime
+            )
+        }
+
+        fun close(): BossStoreOpenStatusResponse {
+            return BossStoreOpenStatusResponse(
+                isOpen = false,
+                startDateTime = null
             )
         }
     }

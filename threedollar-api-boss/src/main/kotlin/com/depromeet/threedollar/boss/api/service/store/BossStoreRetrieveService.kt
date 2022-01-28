@@ -4,13 +4,16 @@ import com.depromeet.threedollar.boss.api.service.store.dto.response.BossStoreIn
 import com.depromeet.threedollar.common.model.CoordinateValue
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.document.boss.document.store.BossStoreRepository
+import com.depromeet.threedollar.redis.boss.domain.store.BossStoreOpenInfoRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class BossStoreService(
+class BossStoreRetrieveService(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
+    private val bossStoreOpenInfoRepository: BossStoreOpenInfoRepository
 ) {
 
     @Transactional(readOnly = true)
@@ -27,11 +30,18 @@ class BossStoreService(
             .map { it.id to it }
             .toMap()
 
+        val openStatusMap = bossStoreOpenInfoRepository.findAllById(bossStores.map { it.id })
+            .map { it.bossStoreId to it }
+            .toMap()
+
         return bossStores.map { it ->
-            BossStoreInfoResponse.of(it, it.categoriesIds.asSequence()
-                .filter { categoriesMap.containsKey(it) }
-                .map { categoriesMap[it]!! }
-                .toList()
+            BossStoreInfoResponse.of(
+                bossStore = it,
+                categories = it.categoriesIds.asSequence()
+                    .filter { categoriesMap.containsKey(it) }
+                    .map { categoriesMap[it]!! }
+                    .toList(),
+                bossStoreOpenInfo = openStatusMap[it.id]
             )
         }
     }
@@ -41,7 +51,11 @@ class BossStoreService(
         bossId: String
     ): BossStoreInfoResponse {
         val bossStore = BossStoreServiceUtils.findBossStoreByBossId(bossStoreRepository, bossId)
-        return BossStoreInfoResponse.of(bossStore, bossStoreCategoryRepository.findCategoriesByIds(bossStore.categoriesIds))
+        return BossStoreInfoResponse.of(
+            bossStore = bossStore,
+            categories = bossStoreCategoryRepository.findCategoriesByIds(bossStore.categoriesIds),
+            bossStoreOpenInfo = bossStoreOpenInfoRepository.findByIdOrNull(bossStore.id)
+        )
     }
 
     @Transactional(readOnly = true)
@@ -49,7 +63,11 @@ class BossStoreService(
         storeId: String
     ): BossStoreInfoResponse {
         val bossStore = BossStoreServiceUtils.findBossStoreById(bossStoreRepository, storeId)
-        return BossStoreInfoResponse.of(bossStore, bossStoreCategoryRepository.findCategoriesByIds(bossStore.categoriesIds))
+        return BossStoreInfoResponse.of(
+            bossStore = bossStore,
+            categories = bossStoreCategoryRepository.findCategoriesByIds(bossStore.categoriesIds),
+            bossStoreOpenInfo = bossStoreOpenInfoRepository.findByIdOrNull(bossStore.id)
+        )
     }
 
 }
