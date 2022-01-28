@@ -19,11 +19,11 @@ class BossStoreOpenService(
 
     fun openBossStore(bossStoreId: String, bossId: String, mapCoordinate: CoordinateValue) {
         BossStoreServiceUtils.validateExistsBossStoreByBoss(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
-        changeCurrentLocation(bossStoreId, mapCoordinate.latitude, mapCoordinate.longitude)
+        updateStoreLocation(bossStoreId, latitude = mapCoordinate.latitude, longitude = mapCoordinate.longitude)
         upsertStoreOpenInfo(bossStoreId)
     }
 
-    private fun changeCurrentLocation(bossStoreId: String, latitude: Double, longitude: Double) {
+    private fun updateStoreLocation(bossStoreId: String, latitude: Double, longitude: Double) {
         val bossStoreLocation = bossStoreLocationRepository.findBossStoreLocationByBossStoreId(bossStoreId)
         bossStoreLocation?.let {
             if (it.hasChangedLocation(latitude = latitude, longitude = longitude)) {
