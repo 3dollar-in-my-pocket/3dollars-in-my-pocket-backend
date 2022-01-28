@@ -17,10 +17,7 @@ class BossStoreRetrieveService(
 ) {
 
     @Transactional(readOnly = true)
-    fun getNearBossStores(
-        mapCoordinate: CoordinateValue,
-        distanceKm: Double
-    ): List<BossStoreInfoResponse> {
+    fun getNearBossStores(mapCoordinate: CoordinateValue, distanceKm: Double): List<BossStoreInfoResponse> {
         val bossStores = bossStoreRepository.findNearBossStores(
             latitude = mapCoordinate.latitude,
             longitude = mapCoordinate.longitude,
@@ -47,9 +44,7 @@ class BossStoreRetrieveService(
     }
 
     @Transactional(readOnly = true)
-    fun getMyBossStore(
-        bossId: String
-    ): BossStoreInfoResponse {
+    fun getMyBossStore(bossId: String): BossStoreInfoResponse {
         val bossStore = BossStoreServiceUtils.findBossStoreByBossId(bossStoreRepository, bossId)
         return BossStoreInfoResponse.of(
             bossStore = bossStore,
@@ -59,9 +54,7 @@ class BossStoreRetrieveService(
     }
 
     @Transactional(readOnly = true)
-    fun getBossStore(
-        storeId: String
-    ): BossStoreInfoResponse {
+    fun getBossStore(storeId: String): BossStoreInfoResponse {
         val bossStore = BossStoreServiceUtils.findBossStoreById(bossStoreRepository, storeId)
         return BossStoreInfoResponse.of(
             bossStore = bossStore,

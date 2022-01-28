@@ -22,10 +22,7 @@ class SignupService(
 ) {
 
     @Transactional
-    fun signup(
-        request: SignupRequest,
-        socialId: String
-    ) {
+    fun signup(request: SignupRequest, socialId: String) {
         validateDuplicateRegistration(socialId, request.socialType)
         BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, request.storeCategoriesIds)
         val registration = request.toEntity(socialId)
