@@ -36,7 +36,6 @@ public enum ErrorCode {
     FORBIDDEN_FILE_NAME_EXCEPTION(BAD_REQUEST, OFF, "FB005", "허용되지 않은 파일 이름입니다"), // TODO 차후 403에러로 변경
     FORBIDDEN_FILE_TYPE_EXCEPTION(BAD_REQUEST, OFF, "FB006", "허용되지 않은 파일 형식입니다"), // TODO 차후 403에러로 변경
     FORBIDDEN_UPLOAD_SIZE_EXCEPTION(BAD_REQUEST, ON, "FB007", "업로드 가능한 최대 파일 크기를 초과했습니다"), // TODO 차후 403에러로 변경
-    FORBIDDEN_BOSS_STORE_OWNER_EXCEPTION(FORBIDDEN, OFF, "FB008", "해당 가게의 사장님만이 접근할 수 있습니다"),
 
 
     // 404 Not Found

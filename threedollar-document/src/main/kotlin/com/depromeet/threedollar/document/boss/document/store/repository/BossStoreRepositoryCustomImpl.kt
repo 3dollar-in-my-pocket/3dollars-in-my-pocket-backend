@@ -22,7 +22,7 @@ class BossStoreRepositoryCustomImpl(
         )
     }
 
-    override fun findByIdAndBossId(bossStoreId: String, bossId: String): BossStore? {
+    override fun findBossStoreByIdAndBossId(bossStoreId: String, bossId: String): BossStore? {
         return mongoTemplate.findOne(
             query(
                 where("_id").`is`(bossStoreId)

@@ -4,7 +4,6 @@ import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.boss.api.config.resolver.BossId
 import com.depromeet.threedollar.boss.api.config.resolver.Auth
 import com.depromeet.threedollar.boss.api.config.resolver.MapCoordinate
-import com.depromeet.threedollar.boss.api.config.resolver.Role.STORE_OWNER
 import com.depromeet.threedollar.boss.api.service.store.BossStoreOpenService
 import com.depromeet.threedollar.boss.api.service.store.BossStoreService
 import com.depromeet.threedollar.boss.api.service.store.dto.response.BossStoreInfoResponse
@@ -33,22 +32,24 @@ class BossStoreController(
     }
 
     @ApiOperation("[인증] 가게를 영업 정보를 시작/갱신합니다. (30분간 갱신하지 않으면 자동 종료되며, 주기적으로 갱신해야 합니다.)")
-    @Auth(role = STORE_OWNER)
+    @Auth
     @PutMapping("/boss/v1/boss-store/{bossStoreId}/open")
     fun openBossStore(
-        @PathVariable bossStoreId: String
+        @PathVariable bossStoreId: String,
+        @BossId bossId: String
     ): ApiResponse<String> {
-        bossStoreOpenService.openBossStore(bossStoreId)
+        bossStoreOpenService.openBossStore(bossStoreId, bossId)
         return ApiResponse.SUCCESS
     }
 
     @ApiOperation("[인증] 가게를 강제로 영업 종료합니다")
-    @Auth(role = STORE_OWNER)
+    @Auth
     @DeleteMapping("/boss/v1/boss-store/{bossStoreId}/close")
     fun closeBossStore(
-        @PathVariable bossStoreId: String
+        @PathVariable bossStoreId: String,
+        @BossId bossId: String
     ): ApiResponse<String> {
-        bossStoreOpenService.closeBossStore(bossStoreId)
+        bossStoreOpenService.closeBossStore(bossStoreId, bossId)
         return ApiResponse.SUCCESS
     }
 
