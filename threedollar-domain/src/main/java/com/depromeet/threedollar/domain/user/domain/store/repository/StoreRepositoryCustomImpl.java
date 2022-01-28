@@ -202,7 +202,13 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
     public boolean existsStoreAroundInDistance(double latitude, double longitude, double distance) {
         return queryFactory.selectOne()
             .from(store)
-            .where(Expressions.predicate(Ops.LOE, Expressions.asNumber(getDistanceExpression(latitude, longitude)), Expressions.asNumber(distance)))
+            .where(
+                store.location.latitude.goe(latitude - distance / 100),
+                store.location.latitude.loe(latitude + distance / 100),
+                store.location.longitude.goe(longitude - distance / 80),
+                store.location.longitude.loe(longitude + distance / 80),
+                Expressions.predicate(Ops.LOE, Expressions.asNumber(getDistanceExpression(latitude, longitude)), Expressions.asNumber(distance))
+            )
             .groupBy(store.id, store.location.latitude, store.location.longitude)
             .orderBy(OrderByNull.DEFAULT)
             .fetchFirst() != null;
