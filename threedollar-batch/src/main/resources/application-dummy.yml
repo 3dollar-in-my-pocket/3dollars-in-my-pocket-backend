@@ -1,11 +1,11 @@
 apple:
-  client_id: test
+  client_id: dummy-client-id
 cloud:
   aws:
     s3:
-      bucket: test
-      mock:
-        port: 9000
+      bucket: dummy-s3-bucket
+    cloudfront:
+      url: dummy-cloudfront
     region:
       static: ap-northeast-2
     stack:
