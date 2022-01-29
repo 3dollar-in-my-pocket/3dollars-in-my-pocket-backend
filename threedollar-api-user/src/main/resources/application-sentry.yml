@@ -1,36 +1,37 @@
-spring:
-  config:
-    activate:
-      on-profile:
-        - local
-        - local-docker
+spring.config:
+  activate:
+    on-profile:
+      - local
+      - local-docker
+      - stage
+
 sentry:
   logging:
     enabled: false
+
+
 ---
-spring:
-  config:
-    activate:
-      on-profile: dev
+spring.config:
+  activate:
+    on-profile:
+      - dev
+
 sentry:
   environment: dev
   traces-sample-rate: 0.05
   dsn: ${secret.sentry.dsn}
+
+
 ---
-spring:
-  config:
-    activate:
-      on-profile: prod
+spring.config:
+  activate:
+    on-profile:
+      - prod
+
 sentry:
   environment: prod
   traces-sample-rate: 0.05
   dsn: ${secret.sentry.dsn}
----
-spring:
-  config:
-    activate:
-      on-profile: stage
-sentry:
-  logging:
-    enabled: false
+
+
 ---

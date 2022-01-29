@@ -10,18 +10,13 @@ cloud:
     stack:
       auto: false
 
-
----
-spring.config:
-  activate:
-    on-profile: integration-test
-
-cloud:
-  aws:
-    s3:
-      bucket: integration-test
-    cloudfront:
-      url: integration-test
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 3000
+        readTimeout: 3000
+        loggerLevel: BASIC
 
 
 ---
@@ -30,13 +25,21 @@ spring.config:
     on-profile:
       - local
       - local-docker
+      - integration-test
 
 cloud:
   aws:
     s3:
-      bucket: local-test
+      bucket: dummy-s3-bucket
     cloudfront:
-      url: local-test
+      url: dummy-cloudfront
+
+apple:
+  client_id: dummy-apple-client-id
+  issuer: dummy-apple-issue
+
+slack:
+  token: dummy-slack-token
 
 
 ---
@@ -52,6 +55,13 @@ cloud:
       url: ${secret.aws.cloudfront.url}
     credentials:
       instance-profile: true
+
+apple:
+  client_id: ${secret.apple.client_id}
+  issuer: https://appleid.apple.com
+
+slack:
+  token: ${secret.slack.token}
 
 
 ---
@@ -69,3 +79,13 @@ cloud:
       url: ${secret.aws.cloudfront.url}
     credentials:
       instance-profile: true
+
+apple:
+  client_id: ${secret.apple.client_id}
+  issuer: https://appleid.apple.com
+
+slack:
+  token: ${secret.slack.token}
+
+
+---

@@ -2,7 +2,7 @@ spring:
   config:
     import:
       - classpath:/application-domain.yml
-      - classpath:/application-cloud.yml
+      - classpath:/application-external.yml
       - classpath:/application-redis.yml
   profiles:
     active: integration-test
