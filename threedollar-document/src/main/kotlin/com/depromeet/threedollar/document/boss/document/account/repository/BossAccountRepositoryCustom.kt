@@ -9,4 +9,6 @@ interface BossAccountRepositoryCustom {
 
     fun findBossAccountBySocialInfo(socialId: String, socialType: BossAccountSocialType): BossAccount?
 
+    fun existsBossAccountBySocialInfo(socialId: String, socialType: BossAccountSocialType): Boolean
+
 }

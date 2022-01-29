@@ -5,11 +5,14 @@ spring:
     include:
       - domain
       - secret
-      - feign
-      - logging
+      - external
       - dummy
   batch:
     job:
       names: ${job.name:NONE}
   main:
     web-application-type: none
+
+logging:
+  level:
+    org.springframework.batch: DEBUG

@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.domain.user.domain.store;
 
+import com.depromeet.threedollar.common.model.EnumModel;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +9,7 @@ import static com.depromeet.threedollar.domain.user.domain.store.MenuCategoryTyp
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public enum MenuCategoryType {
+public enum MenuCategoryType implements EnumModel {
 
     BUNGEOPPANG("붕어빵", "붕어빵 만나기 30초 전", false, ACTIVE, 1),
     HOTTEOK("호떡", "호떡아 기다려", false, ACTIVE, 2),
@@ -35,6 +36,11 @@ public enum MenuCategoryType {
 
     public boolean isVisible() {
         return this.status.isVisible;
+    }
+
+    @Override
+    public String getKey() {
+        return name();
     }
 
     @RequiredArgsConstructor(access = AccessLevel.PRIVATE)

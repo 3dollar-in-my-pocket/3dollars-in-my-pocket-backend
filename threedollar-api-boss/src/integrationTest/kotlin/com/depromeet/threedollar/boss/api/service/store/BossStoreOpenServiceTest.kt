@@ -2,8 +2,7 @@ package com.depromeet.threedollar.boss.api.service.store
 
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.model.CoordinateValue
-import com.depromeet.threedollar.document.boss.document.store.BossStoreCreator
-import com.depromeet.threedollar.document.boss.document.store.BossStoreRepository
+import com.depromeet.threedollar.document.boss.document.store.*
 import com.depromeet.threedollar.redis.boss.domain.store.BossStoreOpenInfoCreator
 import com.depromeet.threedollar.redis.boss.domain.store.BossStoreOpenInfoRepository
 import org.assertj.core.api.Assertions.assertThat
@@ -20,6 +19,7 @@ import java.time.LocalDateTime
 class BossStoreOpenServiceTest(
     private val bossStoreOpenService: BossStoreOpenService,
     private val bossStoreRepository: BossStoreRepository,
+    private val bossStoreLocationRepository: BossStoreLocationRepository,
     private val bossStoreOpenInfoRepository: BossStoreOpenInfoRepository
 ) {
 
@@ -27,6 +27,7 @@ class BossStoreOpenServiceTest(
     fun cleanUp() {
         bossStoreRepository.deleteAll()
         bossStoreOpenInfoRepository.deleteAll()
+        bossStoreLocationRepository.deleteAll()
     }
 
     @Test
@@ -55,6 +56,7 @@ class BossStoreOpenServiceTest(
             name = "가게"
         )
         bossStoreRepository.save(bossStore)
+
         val startDateTime = LocalDateTime.of(2022, 1, 1, 0, 0)
         bossStoreOpenInfoRepository.save(BossStoreOpenInfoCreator.create(bossStore.id, startDateTime))
 
@@ -69,29 +71,50 @@ class BossStoreOpenServiceTest(
     }
 
     @Test
-    fun `가게 오픈 갱신시 가게 위치가 변경되었을 경우 수정된다`() {
+    fun `가게 오픈시 아직 위치 정보가 없는경우 위치 정보가 생성된다`() {
         // given
         val latitude = 37.3
         val longitude = 129.2
 
         val bossStore = BossStoreCreator.create(
             bossId = "bossId",
-            name = "가게",
-            latitude = 36.0,
-            longitude = 131.0
+            name = "가게"
         )
         bossStoreRepository.save(bossStore)
-
-        val startDateTime = LocalDateTime.of(2022, 1, 1, 0, 0)
-        bossStoreOpenInfoRepository.save(BossStoreOpenInfoCreator.create(bossStore.id, startDateTime))
 
         // when
         bossStoreOpenService.openBossStore(bossStore.id, bossStore.bossId, CoordinateValue.of(latitude, longitude))
 
         // then
-        val bossStores = bossStoreRepository.findAll()
-        assertThat(bossStores).hasSize(1)
-        assertThat(bossStores[0].location).isEqualTo(Point(longitude, latitude))
+        val bossStoreLocations = bossStoreLocationRepository.findAll()
+        assertThat(bossStoreLocations).hasSize(1)
+        assertThat(bossStoreLocations[0].location).isEqualTo(Point(longitude, latitude))
+    }
+
+    @Test
+    fun `가게 오픈 갱신시 가게 위치가 변경되었을 경우 수정된다`() {
+        // given
+        val latitude = 37.3
+        val longitude = 129.2
+
+        val bossStore = bossStoreRepository.save(BossStoreCreator.create(
+            bossId = "bossId",
+            name = "가게"
+        ))
+
+        bossStoreLocationRepository.save(BossStoreLocationCreator.create(
+            bossStoreId = bossStore.id,
+            latitude = 36.0,
+            longitude = 128.0
+        ))
+
+        // when
+        bossStoreOpenService.openBossStore(bossStore.id, bossStore.bossId, CoordinateValue.of(latitude, longitude))
+
+        // then
+        val bossStoreLocations = bossStoreLocationRepository.findAll()
+        assertThat(bossStoreLocations).hasSize(1)
+        assertThat(bossStoreLocations[0].location).isEqualTo(Point(longitude, latitude))
     }
 
     @Test

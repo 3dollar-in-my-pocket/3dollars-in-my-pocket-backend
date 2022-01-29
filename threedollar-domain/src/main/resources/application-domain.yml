@@ -93,32 +93,8 @@ spring:
 ---
 spring.config:
   activate:
-    on-profile: dev
-
-spring:
-  jpa:
-    hibernate:
-      ddl-auto: none
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MariaDB102Dialect
-        connection.provider_disables_autocommit: true
-  datasource:
-    hikari:
-      auto-commit: false
-      driver-class-name: org.mariadb.jdbc.Driver
-      jdbc-url: ${secret.jdbc.uri}
-      username: ${secret.jdbc.username}
-      password: ${secret.jdbc.password}
-      maximum-pool-size: 10
-  flyway:
-    enabled: true
-
-
----
-spring.config:
-  activate:
     on-profile:
+      - dev
       - prod
       - stage
 
@@ -137,7 +113,6 @@ spring:
       jdbc-url: ${secret.jdbc.uri}
       username: ${secret.jdbc.username}
       password: ${secret.jdbc.password}
-      maximum-pool-size: 25
   flyway:
     enabled: true
 

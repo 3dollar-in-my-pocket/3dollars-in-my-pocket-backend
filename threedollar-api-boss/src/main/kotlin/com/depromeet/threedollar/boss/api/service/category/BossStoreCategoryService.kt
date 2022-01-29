@@ -14,9 +14,8 @@ class BossStoreCategoryService(
     fun getBossStoreCategories(): List<BossStoreCategoryResponse> {
         return bossStoreCategoryRepository.findAll().asSequence()
             .sortedBy { it.sequencePriority }
-            .map {
-                BossStoreCategoryResponse.of(it)
-            }.toList()
+            .map { BossStoreCategoryResponse.of(it) }
+            .toList()
     }
 
 }

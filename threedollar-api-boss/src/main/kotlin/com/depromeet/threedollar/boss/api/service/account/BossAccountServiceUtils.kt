@@ -28,7 +28,7 @@ object BossAccountServiceUtils {
         socialId: String,
         socialType: BossAccountSocialType
     ) {
-        if (bossAccountRepository.findBossAccountBySocialInfo(socialId, socialType) != null) {
+        if (bossAccountRepository.existsBossAccountBySocialInfo(socialId, socialType)) {
             throw ConflictException("이미 가입한 사장님 (${socialId} - $socialType 입니다.", ErrorCode.CONFLICT_USER_EXCEPTION)
         }
     }

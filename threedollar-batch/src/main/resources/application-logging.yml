@@ -1,5 +1,0 @@
-logging:
-  level:
-    org.springframework.batch: DEBUG
-    com.amazonaws.util.EC2MetadataUtils: error
-    com.amazonaws.internal.InstanceMetadataServiceResourceFetcher: error
