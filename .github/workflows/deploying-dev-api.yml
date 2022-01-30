@@ -1,0 +1,87 @@
+name: 개발환경 API 서버 배포 (v2)
+
+on:
+  push:
+    branches:
+      - develop
+      - feature/dev-server-v2
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - name: checkout@v2
+        uses: actions/checkout@v2
+
+      - name: Get Semantic Versioning
+        id: dev-version
+        run: |
+          VERSION=`cat ./version.txt`-${{ github.run_id }}
+          echo "::set-output name=version::$VERSION"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build API
+        id: build-api
+        env:
+          DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          DOCKER_REPOSITORY: 3dollar-api-dev
+          IMAGE_TAG: ${{ steps.dev-version.outputs.version }}
+        run: |
+          docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG -f ./threedollar-api-user/Dockerfile .
+          docker tag $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
+          docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG
+          docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
+          echo "::set-output name=image::$DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG"
+          echo -e "API_IMAGE=$DOCKER_REGISTRY/$DOCKER_REPOSITORY\nTAG=$IMAGE_TAG" >> deploy/.env
+
+          echo "🐇 Build User API Image >> $DOCKER_REPOSITORY$IMAGE_TAG"
+
+      - name: Build Boss API
+        id: build-boss-api
+        env:
+          DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          DOCKER_REPOSITORY: 3dollar-boss-api-dev
+          IMAGE_TAG: ${{ steps.dev-version.outputs.version }}
+        run: |
+          docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG -f ./threedollar-api-boss/Dockerfile .
+          docker tag $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
+          docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG
+          docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
+          echo "::set-output name=image::$DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG"
+          echo -e "BOSS_API_IMAGE=$DOCKER_REGISTRY/$DOCKER_REPOSITORY\nTAG=$IMAGE_TAG" >> deploy/.env
+
+          echo "🐇 Build Boss API Image >> $DOCKER_REPOSITORY$IMAGE_TAG"
+
+      - name: Zip deploy.zip
+        run: zip -r deploy.zip deploy
+
+      - name: Upload deploy.zip
+        uses: actions/upload-artifact@v2
+        with:
+          name: deploy.zip
+          path: deploy.zip
+  deploy:
+    needs:
+      - build
+    runs-on: 3dollar-dev
+    steps:
+      - name: Download deploy.zip
+        uses: actions/download-artifact@v2
+        with:
+          name: deploy.zip
+
+      - name: run server
+        run: |
+          unzip -o ./deploy.zip
+          cd deploy
+          sh ./deploy.sh
