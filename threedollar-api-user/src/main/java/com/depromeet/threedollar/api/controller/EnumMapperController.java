@@ -18,7 +18,7 @@ public class EnumMapperController {
     private final EnumMapper enumMapper;
 
     @ApiOperation("클라이언트에서 사용되는 Enum 목록을 조회합니다.")
-    @GetMapping("/enums")
+    @GetMapping("/api/enums")
     public ApiResponse<Map<String, List<EnumValue>>> getEnum() {
         return ApiResponse.success(enumMapper.getAll());
     }

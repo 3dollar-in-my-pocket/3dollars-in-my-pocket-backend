@@ -38,7 +38,7 @@ public class LocalTestController {
     private final UserService userService;
 
     @ApiOperation("[개발 서버용] 테스트를 위한 토큰을 받아옵니다")
-    @GetMapping("/test-token")
+    @GetMapping("/api/test-token")
     public ApiResponse<LoginResponse> getTestSession() {
         User user = userRepository.findUserBySocialIdAndSocialType(testUser.getSocialId(), testUser.getSocialType());
         if (user == null) {
@@ -52,7 +52,7 @@ public class LocalTestController {
     }
 
     @ApiOperation("[개발 서버용] 가게를 강제 삭제 합니다")
-    @DeleteMapping("/test-store")
+    @DeleteMapping("/api/test-store")
     public ApiResponse<String> deleteStoreByForce(
         @RequestParam Long storeId
     ) {
@@ -63,7 +63,7 @@ public class LocalTestController {
     }
 
     @ApiOperation("[개발 서버용] 서버 에러를 발생시킵니다.")
-    @GetMapping("/test-error")
+    @GetMapping("/api/test-error")
     public ApiResponse<String> throwServerException() {
         throw new InternalServerException("[개발환경 에러 테스트용] 서버 에러가 발생하였습니다");
     }
