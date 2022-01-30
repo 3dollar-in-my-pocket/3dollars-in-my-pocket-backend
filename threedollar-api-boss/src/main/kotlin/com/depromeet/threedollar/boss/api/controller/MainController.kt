@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController
 class MainController {
 
     @ApiOperation("Health Check")
-    @GetMapping("/ping")
+    @GetMapping("/", "/ping")
     fun ping(): ApiResponse<String> {
-        return ApiResponse.SUCCESS
+        return ApiResponse.success("가슴속 3천원 사장님 API 서버")
     }
 
 }

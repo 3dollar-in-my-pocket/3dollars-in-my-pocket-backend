@@ -11,7 +11,7 @@ class HealthController {
     @ApiOperation("Health Check")
     @GetMapping(value = ["/", "/ping"])
     fun healthCheck(): ApiResponse<String> {
-        return ApiResponse.SUCCESS
+        return ApiResponse.success("가슴속 3천원 유저 API 서버")
     }
 
 }
