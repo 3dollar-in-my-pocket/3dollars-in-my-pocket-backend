@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DOCKER_APP_NAME=3dollar-api
-ECR_REGISTRY=332063489256.dkr.ecr.ap-northeast-2.amazonaws.com
+ECR_REGISTRY=944383730615.dkr.ecr.ap-northeast-2.amazonaws.com
 ECR_REGION=ap-northeast-2
 
 aws ecr get-login-password --region ${ECR_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}

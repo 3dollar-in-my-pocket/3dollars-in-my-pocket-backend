@@ -5,6 +5,7 @@ server:
     encoding:
       charset: UTF-8
       force: true
+    context-path: /boss
 spring:
   profiles:
     active: local

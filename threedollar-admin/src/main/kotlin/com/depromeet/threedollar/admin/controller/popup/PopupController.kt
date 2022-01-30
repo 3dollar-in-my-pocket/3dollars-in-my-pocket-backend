@@ -13,7 +13,7 @@ class PopupController(
     private val popupAdminService: PopupAdminService
 ) {
 
-    @PostMapping("/admin/v1/popup")
+    @PostMapping("/v1/popup")
     fun addPopup(
         @Valid @RequestBody request: AddPopupRequest
     ): ApiResponse<String> {
@@ -21,7 +21,7 @@ class PopupController(
         return ApiResponse.SUCCESS
     }
 
-    @PutMapping("/admin/v1/popup/{popupId}")
+    @PutMapping("/v1/popup/{popupId}")
     fun updatePopup(
         @PathVariable popupId: Long,
         @Valid @RequestBody request: UpdatePopupRequest
@@ -30,7 +30,7 @@ class PopupController(
         return ApiResponse.SUCCESS
     }
 
-    @DeleteMapping("/admin/v1/popup/{popupId}")
+    @DeleteMapping("/v1/popup/{popupId}")
     fun deletePopup(
         @PathVariable popupId: Long
     ): ApiResponse<String> {
@@ -38,7 +38,7 @@ class PopupController(
         return ApiResponse.SUCCESS
     }
 
-    @GetMapping("/admin/v1/popups")
+    @GetMapping("/v1/popups")
     fun getPopups(
         @RequestParam size: Long,
         @RequestParam page: Int

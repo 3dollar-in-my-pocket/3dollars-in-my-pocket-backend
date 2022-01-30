@@ -15,14 +15,14 @@ class StoreAdminController(
     private val storeAdminService: StoreAdminService
 ) {
 
-    @GetMapping("/admin/v1/stores/reported")
+    @GetMapping("/v1/stores/reported")
     fun retrieveReportedStores(
         @Valid request: RetrieveReportedStoresRequest
     ): ApiResponse<List<ReportedStoresResponse>> {
         return ApiResponse.success(storeAdminService.retrieveReportedStores(request))
     }
 
-    @GetMapping("/admin/v1/stores/latest")
+    @GetMapping("/v1/stores/latest")
     fun retrieveLatestStores(
         @Valid request: RetrieveLatestStoresRequest
     ): ApiResponse<StoresCursorResponse> {

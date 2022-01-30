@@ -13,7 +13,7 @@ class BossStoreCategoryController(
 ) {
 
     @ApiOperation("사장님 가게의 카테고리 목록을 조회합니다")
-    @GetMapping("/boss/v1/boss-store/categories")
+    @GetMapping("/v1/boss-store/categories")
     fun getBossCategories(): ApiResponse<List<BossStoreCategoryResponse>> {
         return ApiResponse.success(bossStoreCategoryService.getBossStoreCategories())
     }

@@ -19,7 +19,7 @@ internal class BossAccountControllerTest : ControllerTestUtils() {
     @Test
     fun 사장님의_자신의_계정_정보를_조회한다() {
         // when & then
-        mockMvc.get("/boss/v1/boss-account/me") {
+        mockMvc.get("/v1/boss-account/me") {
             header(HttpHeaders.AUTHORIZATION, "Bearer $token")
         }.andDo {
             print()
@@ -36,7 +36,7 @@ internal class BossAccountControllerTest : ControllerTestUtils() {
     @Test
     fun 잘못된_토큰이면_401_에러_발생() {
         // when & then
-        mockMvc.get("/boss/v1/boss-account/me") {
+        mockMvc.get("/v1/boss-account/me") {
             header(HttpHeaders.AUTHORIZATION, "Wrong Token")
         }.andDo {
             print()

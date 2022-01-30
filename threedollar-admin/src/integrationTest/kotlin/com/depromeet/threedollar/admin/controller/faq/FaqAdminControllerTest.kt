@@ -45,7 +45,7 @@ internal class FaqAdminControllerTest(
             val request = AddFaqRequest("카테고리 질문", "카테고리 답변", FaqCategory.CATEGORY)
 
             // when & then
-            mockMvc.post("/admin/v1/faq") {
+            mockMvc.post("/v1/faq") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
@@ -78,7 +78,7 @@ internal class FaqAdminControllerTest(
             val request = UpdateFaqRequest("카테고리 질문", "카테고리 답변", FaqCategory.CATEGORY)
 
             // when & then
-            mockMvc.put("/admin/v1/faq/${faq.id}") {
+            mockMvc.put("/v1/faq/${faq.id}") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
@@ -109,7 +109,7 @@ internal class FaqAdminControllerTest(
             val faq = faqRepository.save(FaqCreator.create("question", "answer", FaqCategory.BOARD))
 
             // when & then
-            mockMvc.delete("/admin/v1/faq/${faq.id}") {
+            mockMvc.delete("/v1/faq/${faq.id}") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             }
                 .andDo {
@@ -137,7 +137,7 @@ internal class FaqAdminControllerTest(
             faqRepository.saveAll(listOf(faq1, faq2))
 
             // when & then
-            mockMvc.get("/admin/v1/faqs") {
+            mockMvc.get("/v1/faqs") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             }
                 .andDo {
@@ -171,7 +171,7 @@ internal class FaqAdminControllerTest(
             val request = RetrieveFaqsRequest(FaqCategory.CATEGORY)
 
             // when & then
-            mockMvc.get("/admin/v1/faqs?category=${request.category}") {
+            mockMvc.get("/v1/faqs?category=${request.category}") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             }
                 .andDo {
@@ -198,7 +198,7 @@ internal class FaqAdminControllerTest(
         @Test
         fun FAQ_카테고리_리스트를_조회한다() {
             // when & then
-            mockMvc.get("/admin/v1/faq/categories") {
+            mockMvc.get("/v1/faq/categories") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             }
                 .andDo {

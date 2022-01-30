@@ -12,7 +12,7 @@ class AdminController(
     private val adminService: AdminService
 ) {
 
-    @GetMapping("/admin/v1/admin/me")
+    @GetMapping("/v1/admin/me")
     fun getMyAdminInfo(
         @AdminId adminId: Long
     ): ApiResponse<AdminInfoResponse> {
