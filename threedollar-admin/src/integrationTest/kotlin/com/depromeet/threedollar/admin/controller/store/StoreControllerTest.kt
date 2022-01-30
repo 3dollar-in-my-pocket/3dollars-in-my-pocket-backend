@@ -63,7 +63,7 @@ internal class StoreControllerTest(
         val page = 1
 
         // when
-        val response = objectMapper.readValue(mockMvc.get("/admin/v1/stores/reported") {
+        val response = objectMapper.readValue(mockMvc.get("/v1/stores/reported") {
             header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             param("minCount", minCount.toString())
             param("size", size.toString())
@@ -116,7 +116,7 @@ internal class StoreControllerTest(
         val page = 2
 
         // when
-        val response = objectMapper.readValue(mockMvc.get("/admin/v1/stores/reported") {
+        val response = objectMapper.readValue(mockMvc.get("/v1/stores/reported") {
             header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             param("minCount", minCount.toString())
             param("size", size.toString())
@@ -147,7 +147,7 @@ internal class StoreControllerTest(
         val page = 1
 
         // when
-        val response = objectMapper.readValue(mockMvc.get("/admin/v1/stores/reported") {
+        val response = objectMapper.readValue(mockMvc.get("/v1/stores/reported") {
             header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             param("minCount", minCount.toString())
             param("size", size.toString())
@@ -185,7 +185,7 @@ internal class StoreControllerTest(
         val size = 2
 
         // when
-        val response = objectMapper.readValue(mockMvc.get("/admin/v1/stores/latest") {
+        val response = objectMapper.readValue(mockMvc.get("/v1/stores/latest") {
             header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             param("size", size.toString())
         }.andExpect {
@@ -217,7 +217,7 @@ internal class StoreControllerTest(
         val cursor = store3.id
 
         // when
-        val response = objectMapper.readValue(mockMvc.get("/admin/v1/stores/latest") {
+        val response = objectMapper.readValue(mockMvc.get("/v1/stores/latest") {
             header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             param("size", size.toString())
             param("cursor", cursor.toString())

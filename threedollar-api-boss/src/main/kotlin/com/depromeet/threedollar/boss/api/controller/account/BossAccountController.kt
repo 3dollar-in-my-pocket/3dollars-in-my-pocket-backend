@@ -20,7 +20,7 @@ class BossAccountController(
 
     @ApiOperation("[인증] 사장님 자신의 회원 정보를 조회합니다")
     @Auth
-    @GetMapping("/boss/v1/boss-account/me")
+    @GetMapping("/v1/boss-account/me")
     fun getMyAccountInfo(
         @BossId bossId: String
     ): ApiResponse<BossAccountInfoResponse> {
@@ -29,7 +29,7 @@ class BossAccountController(
 
     @ApiOperation("[인증] 사장님 자신의 회원 정보를 수정합니다")
     @Auth
-    @PutMapping("/boss/v1/boss-account/me")
+    @PutMapping("/v1/boss-account/me")
     fun updateMyAccountInfo(
         @BossId bossId: String,
         @Valid @RequestBody request: UpdateBossAccountInfoRequest

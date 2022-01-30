@@ -5,6 +5,7 @@ server:
     encoding:
       charset: UTF-8
       force: true
+    context-path: /admin
 spring:
   profiles:
     active: local

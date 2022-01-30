@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class HealthController {
 
-    @GetMapping("/", "/ping")
+    @GetMapping("/ping")
     fun healthCheck(): ApiResponse<String> {
         return ApiResponse.SUCCESS
     }
