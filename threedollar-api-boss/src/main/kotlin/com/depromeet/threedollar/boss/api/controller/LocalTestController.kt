@@ -33,7 +33,7 @@ class LocalTestController(
 ) {
 
     @ApiOperation("[개발용] 사장님 서버용 테스트 토큰을 발급 받습니다.")
-    @GetMapping("/test-token")
+    @GetMapping("/boss/test-token")
     fun getTestBossAccountToken(): ApiResponse<LoginResponse> {
         val bossAccount =
             bossAccountRepository.findBossAccountBySocialInfo(BOSS.socialInfo.socialId, BOSS.socialInfo.socialType)
@@ -43,7 +43,7 @@ class LocalTestController(
     }
 
     @Auth
-    @PostMapping("/test-store")
+    @PostMapping("/boss/test-store")
     fun addMockStoreData(
         @BossId bossId: String,
         @RequestParam latitude: Double,
@@ -103,7 +103,7 @@ class LocalTestController(
         return bossStore
     }
 
-    @PostMapping("/test-category")
+    @PostMapping("/boss/test-category")
     fun addMockStoreCategory(
         @RequestParam title: String,
         @RequestParam priority: Int
