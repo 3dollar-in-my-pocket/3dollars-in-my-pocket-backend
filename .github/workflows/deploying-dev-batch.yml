@@ -1,10 +1,9 @@
-name: 개발 환경 배치 잡 배포 (v2)
+name: 개발 환경 배치 잡 배포
 
 on:
   push:
     branches:
       - develop
-      - feature/dev-server-v2
 jobs:
   build:
     runs-on: ubuntu-latest
