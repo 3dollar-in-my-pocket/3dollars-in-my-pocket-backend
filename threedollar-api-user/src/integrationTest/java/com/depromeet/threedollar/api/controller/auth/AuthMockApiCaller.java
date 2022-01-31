@@ -26,7 +26,7 @@ class AuthMockApiCaller extends MockMvcUtils {
 
     ApiResponse<LoginResponse> signUp(SignUpRequest request, int expectedStatus) throws Exception {
         return objectMapper.readValue(
-            mockMvc.perform(post("/api/v2/signup")
+            mockMvc.perform(post("/v2/signup")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andDo(print())
@@ -40,7 +40,7 @@ class AuthMockApiCaller extends MockMvcUtils {
 
     ApiResponse<LoginResponse> login(LoginRequest request, int expectedStatus) throws Exception {
         return objectMapper.readValue(
-            mockMvc.perform(post("/api/v2/login")
+            mockMvc.perform(post("/v2/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andDo(print())
@@ -54,7 +54,7 @@ class AuthMockApiCaller extends MockMvcUtils {
 
     ApiResponse<String> signOut(String token, int expectedStatus) throws Exception {
         return objectMapper.readValue(
-            mockMvc.perform(delete("/api/v2/signout")
+            mockMvc.perform(delete("/v2/signout")
                 .header(HttpHeaders.AUTHORIZATION, token))
                 .andDo(print())
                 .andExpect(status().is(expectedStatus))
@@ -67,7 +67,7 @@ class AuthMockApiCaller extends MockMvcUtils {
 
     ApiResponse<String> logout(String token, int expectedStatus) throws Exception {
         return objectMapper.readValue(
-            mockMvc.perform(post("/api/v2/logout")
+            mockMvc.perform(post("/v2/logout")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, token))
                 .andDo(print())

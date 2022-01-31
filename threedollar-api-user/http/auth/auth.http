@@ -7,7 +7,7 @@ client.global.set("AUTHORIZATION", response.body["data"]["token"])
 
 
 ### [인증] 회원탈퇴를 요청합니다
-DELETE {{host_api}}/api/v2/signout
+DELETE {{host_api}}/v2/signout
 Authorization: {{AUTHORIZATION}}
 
 > {%
@@ -26,7 +26,7 @@ client.global.set("AUTHORIZATION", response.body["data"]["token"])
 
 
 ### [인증] 로그아웃
-POST {{host_api}}/api/v2/logout
+POST {{host_api}}/v2/logout
 Content-Type: application/json
 Authorization: {{AUTHORIZATION}}
 

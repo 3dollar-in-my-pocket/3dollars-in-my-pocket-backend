@@ -27,7 +27,7 @@ class StoreMockApiCaller extends MockMvcUtils {
     }
 
     ApiResponse<StoreInfoResponse> registerStore(RegisterStoreRequest request, String token, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = post("/api/v2/store")
+        MockHttpServletRequestBuilder builder = post("/v2/store")
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(request));
@@ -44,7 +44,7 @@ class StoreMockApiCaller extends MockMvcUtils {
     }
 
     ApiResponse<StoreInfoResponse> updateStore(Long storeId, UpdateStoreRequest request, String token, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = put("/api/v2/store/".concat(String.valueOf(storeId)))
+        MockHttpServletRequestBuilder builder = put("/v2/store/".concat(String.valueOf(storeId)))
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(request));
@@ -61,7 +61,7 @@ class StoreMockApiCaller extends MockMvcUtils {
     }
 
     ApiResponse<StoreDeleteResponse> deleteStore(Long storeId, DeleteStoreRequest request, String token, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = delete("/api/v2/store/".concat(String.valueOf(storeId)))
+        MockHttpServletRequestBuilder builder = delete("/v2/store/".concat(String.valueOf(storeId)))
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("deleteReasonType", String.valueOf(request.getDeleteReasonType()));
 

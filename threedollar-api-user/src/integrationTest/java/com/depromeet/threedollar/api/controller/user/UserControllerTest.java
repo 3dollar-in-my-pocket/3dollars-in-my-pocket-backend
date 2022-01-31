@@ -83,7 +83,7 @@ class UserControllerTest extends SetupUserControllerTest {
         }
 
         private ResultActions getUserInfoApi(String token) throws Exception {
-            return mockMvc.perform(get("/api/v2/user/me")
+            return mockMvc.perform(get("/v2/user/me")
                 .header(HttpHeaders.AUTHORIZATION, token));
         }
 
@@ -109,7 +109,7 @@ class UserControllerTest extends SetupUserControllerTest {
         }
 
         private ResultActions updateUserInfoApi(String token, UpdateUserInfoRequest request) throws Exception {
-            return mockMvc.perform(put("/api/v2/user/me")
+            return mockMvc.perform(put("/v2/user/me")
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)));
@@ -167,7 +167,7 @@ class UserControllerTest extends SetupUserControllerTest {
         }
 
         private ResultActions checkAvailableNickNameApi(CheckAvailableNameRequest request) throws Exception {
-            return mockMvc.perform(get("/api/v2/user/name/check")
+            return mockMvc.perform(get("/v2/user/name/check")
                 .param("name", request.getName()));
         }
 

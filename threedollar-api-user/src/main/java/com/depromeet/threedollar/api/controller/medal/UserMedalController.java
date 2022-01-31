@@ -25,7 +25,7 @@ public class UserMedalController {
 
     @ApiOperation("[인증] 마이페이지 - 사용자가 보유중인 메달들을 조회한다")
     @Auth
-    @GetMapping("/api/v1/user/medals")
+    @GetMapping("/v1/user/medals")
     public ApiResponse<List<UserMedalResponse>> getMyObtainedMedals(
         @UserId Long userId
     ) {
@@ -34,7 +34,7 @@ public class UserMedalController {
 
     @ApiOperation("[인증] 마이페이지 - 사용자의 장착중인 메달을 수정한다")
     @Auth
-    @PutMapping("/api/v1/user/medal")
+    @PutMapping("/v1/user/medal")
     public ApiResponse<UserInfoResponse> changeRepresentativeMedal(
         @Valid @RequestBody ChangeRepresentativeMedalRequest request,
         @UserId Long userId

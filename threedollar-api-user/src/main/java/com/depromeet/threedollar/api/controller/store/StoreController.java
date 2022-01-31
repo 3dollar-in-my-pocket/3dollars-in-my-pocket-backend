@@ -31,7 +31,7 @@ public class StoreController {
 
     @ApiOperation("[인증] 가게 등록 페이지 - 새로운 가게를 제보합니다")
     @Auth
-    @PostMapping("/api/v2/store")
+    @PostMapping("/v2/store")
     public ApiResponse<StoreInfoResponse> registerStore(
         @Valid @RequestBody RegisterStoreRequest request,
         @UserId Long userId
@@ -43,7 +43,7 @@ public class StoreController {
 
     @ApiOperation("[인증] 가게 상세 페이지 - 특정 가게의 정보를 수정합니다")
     @Auth
-    @PutMapping("/api/v2/store/{storeId}")
+    @PutMapping("/v2/store/{storeId}")
     public ApiResponse<StoreInfoResponse> updateStore(
         @PathVariable Long storeId,
         @Valid @RequestBody UpdateStoreRequest request
@@ -58,7 +58,7 @@ public class StoreController {
 
     @ApiOperation("[인증] 가게 상세 페이지 - 특정 가게의 정보를 삭제 요청합니다")
     @Auth
-    @DeleteMapping("/api/v2/store/{storeId}")
+    @DeleteMapping("/v2/store/{storeId}")
     public ApiResponse<StoreDeleteResponse> deleteStore(
         @Valid DeleteStoreRequest request,
         @PathVariable Long storeId,

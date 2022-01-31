@@ -17,7 +17,7 @@ class FaqController(
 ) {
 
     @ApiOperation("FAQ 페이지 - 특정 카테고리의 FAQ 목록을 조회합니다")
-    @GetMapping("/api/v2/faqs")
+    @GetMapping("/v2/faqs")
     fun retrieveFaqsByCategory(
         @Valid request: RetrieveFaqsRequest
     ): ApiResponse<List<FaqResponse>> {
@@ -25,7 +25,7 @@ class FaqController(
     }
 
     @ApiOperation("FAQ 페이지 - 모든 FAQ 카테고리 목록을 조회합니다")
-    @GetMapping("/api/v2/faq/categories")
+    @GetMapping("/v2/faq/categories")
     fun retrieveFaqCategories(): ApiResponse<List<FaqCategoryResponse>> {
         return ApiResponse.success(FaqCategoryMapper.retrieveFaqCategories())
     }

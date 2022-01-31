@@ -45,7 +45,7 @@ class PopupControllerTest(
         popupRepository.save(popup)
 
         // when & then
-        mockMvc.get("/api/v1/popups") {
+        mockMvc.get("/v1/popups") {
             param("platform", platform.toString())
         }.andExpect {
             status { isOk() }

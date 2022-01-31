@@ -29,7 +29,7 @@ public class StoreRetrieveController {
     private final StoreRetrieveService storeRetrieveService;
 
     @ApiOperation(value = "메인 페이지 - 위도, 경도 기준 내 주위의 가게 목록을 조회합니다", notes = "orderType: 정렬이 필요한 경우 category: 카테고리 필터링이 필요한 경우")
-    @GetMapping("/api/v2/stores/near")
+    @GetMapping("/v2/stores/near")
     public ApiResponse<List<StoreWithVisitsAndDistanceResponse>> getNearStores(
         @Valid RetrieveNearStoresRequest request,
         @GeoCoordinate(required = false) CoordinateValue geoCoordinate,
@@ -39,7 +39,7 @@ public class StoreRetrieveController {
     }
 
     @ApiOperation("가게 상세 페이지 - 특정 가게의 정보를 상세 조회합니다")
-    @GetMapping("/api/v2/store")
+    @GetMapping("/v2/store")
     public ApiResponse<StoreDetailResponse> getDetailStoreInfo(
         @Valid RetrieveStoreDetailRequest request,
         @GeoCoordinate CoordinateValue geoCoordinate
@@ -49,7 +49,7 @@ public class StoreRetrieveController {
 
     @ApiOperation("[인증] 마이페이지 - 내가 제보한 가게 목록들을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 O)")
     @Auth
-    @GetMapping("/api/v3/stores/me")
+    @GetMapping("/v3/stores/me")
     public ApiResponse<StoresCursorResponse> retrieveMyReportedStoreHistories(
         @Valid RetrieveMyStoresRequest request,
         @UserId Long userId
@@ -65,7 +65,7 @@ public class StoreRetrieveController {
     @Deprecated
     @ApiOperation("[인증] 마이페이지 - 내가 제보한 가게 목록들을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 X)")
     @Auth
-    @GetMapping("/api/v2/stores/me")
+    @GetMapping("/v2/stores/me")
     public ApiResponse<StoresCursorV2Response> retrieveMyReportedStoreHistoriesV2(
         @Valid RetrieveMyStoresV2Request request,
         @GeoCoordinate(required = false) CoordinateValue geoCoordinate,
@@ -80,7 +80,7 @@ public class StoreRetrieveController {
      */
     @Deprecated
     @ApiOperation("[Deprecated] 가게 카테고리별 조회 페이지 - 거리순으로 특정 메뉴를 판매하는 가게 목록을 조회합니다")
-    @GetMapping("/api/v2/stores/distance")
+    @GetMapping("/v2/stores/distance")
     public ApiResponse<StoresGroupByDistanceV2Response> getStoresGroupByDistance(
         @Valid RetrieveStoreGroupByCategoryV2Request request,
         @GeoCoordinate CoordinateValue geoCoordinate,
@@ -95,7 +95,7 @@ public class StoreRetrieveController {
      */
     @Deprecated
     @ApiOperation("[Deprecated] 가게 카테고리별 조회 페이지 - 리뷰순으로 특정 메뉴를 판매하는 가게 목록을 조회합니다")
-    @GetMapping("/api/v2/stores/review")
+    @GetMapping("/v2/stores/review")
     public ApiResponse<StoresGroupByReviewV2Response> getStoresGroupByReview(
         @Valid RetrieveStoreGroupByCategoryV2Request request,
         @GeoCoordinate CoordinateValue coordinate,
@@ -105,7 +105,7 @@ public class StoreRetrieveController {
     }
 
     @ApiOperation("주변에 가게가 존재하는지 확인하는 API")
-    @GetMapping("/api/v1/stores/near/exists")
+    @GetMapping("/v1/stores/near/exists")
     public ApiResponse<CheckExistStoresNearbyResponse> checkExistStoresNearby(
         @Valid CheckExistsStoresNearbyRequest request,
         @MapCoordinate CoordinateValue mapCoordinate

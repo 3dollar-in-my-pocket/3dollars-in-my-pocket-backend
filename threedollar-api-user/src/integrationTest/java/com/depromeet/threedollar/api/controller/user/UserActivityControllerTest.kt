@@ -33,7 +33,7 @@ internal class UserActivityControllerTest(
     @Test
     fun `유저의 회원 정보를 조회한다`() {
         // when & then
-        mockMvc.get("/api/v1/user/activity") {
+        mockMvc.get("/v1/user/activity") {
             header(HttpHeaders.AUTHORIZATION, token)
         }
             .andDo { print() }
@@ -60,7 +60,7 @@ internal class UserActivityControllerTest(
         userMedalRepository.save(UserMedalCreator.createActive(medal, testUser))
 
         // when & then
-        mockMvc.get("/api/v1/user/activity") {
+        mockMvc.get("/v1/user/activity") {
             header(HttpHeaders.AUTHORIZATION, token)
         }
             .andDo { print() }
@@ -85,7 +85,7 @@ internal class UserActivityControllerTest(
         )
 
         // when & then
-        mockMvc.get("/api/v1/user/activity") {
+        mockMvc.get("/v1/user/activity") {
             header(HttpHeaders.AUTHORIZATION, token)
         }
             .andDo { print() }
@@ -112,7 +112,7 @@ internal class UserActivityControllerTest(
         )
 
         // when & then
-        mockMvc.get("/api/v1/user/activity") {
+        mockMvc.get("/v1/user/activity") {
             header(HttpHeaders.AUTHORIZATION, token)
         }
             .andDo { print() }
@@ -149,7 +149,7 @@ internal class UserActivityControllerTest(
         )
 
         // when & then
-        mockMvc.get("/api/v1/user/activity") {
+        mockMvc.get("/v1/user/activity") {
             header(HttpHeaders.AUTHORIZATION, token)
         }
             .andDo { print() }

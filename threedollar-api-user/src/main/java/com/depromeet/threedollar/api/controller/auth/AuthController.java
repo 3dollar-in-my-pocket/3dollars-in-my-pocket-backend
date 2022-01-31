@@ -30,7 +30,7 @@ public class AuthController {
     private final AuthServiceProvider authServiceProvider;
 
     @ApiOperation("회원가입 페이지 - 회원가입을 요청합니다")
-    @PostMapping("/api/v2/signup")
+    @PostMapping("/v2/signup")
     public ApiResponse<LoginResponse> signUp(
         @Valid @RequestBody SignUpRequest request
     ) {
@@ -41,7 +41,7 @@ public class AuthController {
     }
 
     @ApiOperation("로그인 페이지 - 로그인을 요청합니다")
-    @PostMapping("/api/v2/login")
+    @PostMapping("/v2/login")
     public ApiResponse<LoginResponse> login(
         @Valid @RequestBody LoginRequest request
     ) {
@@ -53,7 +53,7 @@ public class AuthController {
 
     @ApiOperation("[인증] 마이페이지 - 회원탈퇴를 요청합니다")
     @Auth
-    @DeleteMapping("/api/v2/signout")
+    @DeleteMapping("/v2/signout")
     public ApiResponse<String> signOut(
         @UserId Long userId
     ) {
@@ -64,7 +64,7 @@ public class AuthController {
 
     @ApiOperation("[인증] 마이페이지 - 로그아웃을 요청합니다.")
     @Auth
-    @PostMapping("/api/v2/logout")
+    @PostMapping("/v2/logout")
     public ApiResponse<String> logout() {
         httpSession.removeAttribute(USER_ID);
         return ApiResponse.SUCCESS;
