@@ -1,5 +1,5 @@
 ### (Deprecated) 특정 가게의 정보를 조회합니다. (v2.0)
-GET {{host_api}}/api/v2/store/?storeId={{STORE_ID}}&latitude=34&longitude=126
+GET {{host_api}}/v2/store/?storeId={{STORE_ID}}&latitude=34&longitude=126
 
 > {%
 client.test("200 OK", function() {
@@ -9,7 +9,7 @@ client.test("200 OK", function() {
 
 
 ### (Deprecated) [인증] 사용자가 작성한 가게의 정보를 조회합니다. (첫 스크롤)
-GET {{host_api}}/api/v2/stores/me?size=10
+GET {{host_api}}/v2/stores/me?size=10
 Authorization: {{AUTHORIZATION}}
 
 > {%
@@ -21,7 +21,7 @@ client.test("200 OK", function() {
 
 
 ### (Deprecated) 거리순으로 특정 카테고리의 가게 정보를 조회합니다.
-GET {{host_api}}/api/v2/stores/distance?size=5&page=0&latitude=34&longitude=126&mapLatitude=34&mapLongitude=126&category=BUNGEOPPANG
+GET {{host_api}}/v2/stores/distance?size=5&page=0&latitude=34&longitude=126&mapLatitude=34&mapLongitude=126&category=BUNGEOPPANG
 
 > {%
 client.test("200 OK", function() {
@@ -31,7 +31,7 @@ client.test("200 OK", function() {
 
 
 ### (Deprecated) 리뷰순으로 특정 카테고리의 가게 정보를 조회합니다.
-GET {{host_api}}/api/v2/stores/review?size=5&page=0&latitude=34&longitude=126&mapLatitude=34&mapLongitude=126&category=BUNGEOPPANG
+GET {{host_api}}/v2/stores/review?size=5&page=0&latitude=34&longitude=126&mapLatitude=34&mapLongitude=126&category=BUNGEOPPANG
 
 > {%
 client.test("200 OK", function() {

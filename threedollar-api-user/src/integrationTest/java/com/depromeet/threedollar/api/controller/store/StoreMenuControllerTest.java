@@ -39,7 +39,7 @@ class StoreMenuControllerTest {
     void 활성화된_메뉴_카테고리의_정보들을_조회한다() throws Exception {
         // when & then
         ApiResponse<List<MenuCategoryResponse>> response = objectMapper.readValue(
-            mockMvc.perform(get("/api/v2/store/menu/categories"))
+            mockMvc.perform(get("/v2/store/menu/categories"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn()

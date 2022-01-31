@@ -36,7 +36,7 @@ class MedalControllerTest(
         medalRepository.saveAll(listOf(medalOne, medalTwo))
 
         // when & then
-        mockMvc.get("/api/v1/medals")
+        mockMvc.get("/v1/medals")
             .andDo {
                 print()
             }

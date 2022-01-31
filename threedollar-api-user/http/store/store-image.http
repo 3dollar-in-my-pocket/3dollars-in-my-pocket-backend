@@ -1,5 +1,5 @@
 ### [인증] 가게의 이미지를 삭제합니다.
-DELETE {{host_api}}/api/v2/store/image/1
+DELETE {{host_api}}/v2/store/image/1
 Authorization: {{AUTHORIZATION}}
 
 > {%

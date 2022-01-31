@@ -1,5 +1,5 @@
 ### [인증] 나의 회원의 활동 정보를 조회합니다.
-GET {{host_api}}/api/v1/user/activity
+GET {{host_api}}/v1/user/activity
 Authorization: {{AUTHORIZATION}}
 
 > {%

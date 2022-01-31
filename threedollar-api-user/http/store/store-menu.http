@@ -1,5 +1,5 @@
 ### 활성화중인 가게 메뉴 카테고리 목록을 조회합니다
-GET {{host_api}}/api/v2/store/menu/categories
+GET {{host_api}}/v2/store/menu/categories
 
 > {%
 client.test("200 OK", function() {

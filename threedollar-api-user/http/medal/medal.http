@@ -1,5 +1,5 @@
 ### 전체 메달 목록을 조회합니다
-GET {{host_api}}/api/v1/medals
+GET {{host_api}}/v1/medals
 
 > {%
 client.test("200 OK", function() {

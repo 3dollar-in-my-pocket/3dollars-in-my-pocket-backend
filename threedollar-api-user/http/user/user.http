@@ -1,5 +1,5 @@
 ### [인증] 나의 회원 정보를 조회합니다.
-GET {{host_api}}/api/v2/user/me
+GET {{host_api}}/v2/user/me
 Authorization: {{AUTHORIZATION}}
 
 > {%
@@ -10,7 +10,7 @@ client.test("200 OK", function() {
 
 
 ### [인증] 나의 회원 정보를 수정합니다.
-PUT {{host_api}}/api/v2/user/me
+PUT {{host_api}}/v2/user/me
 Content-Type: application/json
 Authorization: {{AUTHORIZATION}}
 
@@ -26,7 +26,7 @@ client.test("200 OK or 409 Conflict", function() {
 
 
 ### 닉네임 중복 여부를 체크 요청합니다.
-GET {{host_api}}/api/v2/user/name/check?name=wi_ll
+GET {{host_api}}/v2/user/name/check?name=wi_ll
 
 > {%
 client.test("200 OK or 409 Conflict", function() {
@@ -36,7 +36,7 @@ client.test("200 OK or 409 Conflict", function() {
 
 
 ### 허용하지 않는 닉네임일경우 400 에러를 처리합니다.
-GET {{host_api}}/api/v2/user/name/check?name=-11-
+GET {{host_api}}/v2/user/name/check?name=-11-
 
 > {%
 client.test("200 OK or 409 Conflict", function() {

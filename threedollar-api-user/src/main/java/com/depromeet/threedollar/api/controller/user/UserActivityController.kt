@@ -16,7 +16,7 @@ class UserActivityController(
 
     @ApiOperation("[인증] 마이페이지 - 유저의 활동 정보를 조회합니다")
     @Auth
-    @GetMapping("/api/v1/user/activity")
+    @GetMapping("/v1/user/activity")
     fun getUserActivity(
         @UserId userId: Long?
     ): ApiResponse<UserWithActivityResponse> {

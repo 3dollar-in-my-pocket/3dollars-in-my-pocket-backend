@@ -24,7 +24,7 @@ class FaqMockApiCaller extends MockMvcUtils {
     }
 
     ApiResponse<List<FaqResponse>> retrieveFaqsByCategory(int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = get("/api/v2/faqs");
+        MockHttpServletRequestBuilder builder = get("/v2/faqs");
 
         return objectMapper.readValue(
             mockMvc.perform(builder)
@@ -38,7 +38,7 @@ class FaqMockApiCaller extends MockMvcUtils {
     }
 
     ApiResponse<List<FaqResponse>> retrieveFaqsByCategory(FaqCategory category, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = get("/api/v2/faqs")
+        MockHttpServletRequestBuilder builder = get("/v2/faqs")
             .param("category", category.toString());
 
         return objectMapper.readValue(
@@ -53,7 +53,7 @@ class FaqMockApiCaller extends MockMvcUtils {
     }
 
     ApiResponse<List<FaqCategoryResponse>> retrieveFaqCategories(int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = get("/api/v2/faq/categories");
+        MockHttpServletRequestBuilder builder = get("/v2/faq/categories");
 
         return objectMapper.readValue(
             mockMvc.perform(builder)

@@ -29,7 +29,7 @@ class ReviewMockApiCaller extends MockMvcUtils {
     }
 
     ApiResponse<ReviewInfoResponse> addReview(AddReviewRequest request, String token, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = post("/api/v2/store/review")
+        MockHttpServletRequestBuilder builder = post("/v2/store/review")
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(request));
@@ -46,7 +46,7 @@ class ReviewMockApiCaller extends MockMvcUtils {
     }
 
     ApiResponse<ReviewInfoResponse> updateReview(Long reviewId, UpdateReviewRequest request, String token, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = put("/api/v2/store/review/".concat(String.valueOf(reviewId)))
+        MockHttpServletRequestBuilder builder = put("/v2/store/review/".concat(String.valueOf(reviewId)))
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(request));
@@ -63,7 +63,7 @@ class ReviewMockApiCaller extends MockMvcUtils {
     }
 
     ApiResponse<String> deleteReview(Long reviewId, String token, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = delete("/api/v2/store/review/".concat(String.valueOf(reviewId)))
+        MockHttpServletRequestBuilder builder = delete("/v2/store/review/".concat(String.valueOf(reviewId)))
             .header(HttpHeaders.AUTHORIZATION, token);
 
         return objectMapper.readValue(
@@ -78,7 +78,7 @@ class ReviewMockApiCaller extends MockMvcUtils {
     }
 
     ApiResponse<ReviewsCursorResponse> retrieveMyReviewHistories(RetrieveMyReviewsRequest request, String token, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = get("/api/v3/store/reviews/me")
+        MockHttpServletRequestBuilder builder = get("/v3/store/reviews/me")
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))
             .param("cursor", request.getCursor() == null ? null : String.valueOf(request.getCursor()));
@@ -96,7 +96,7 @@ class ReviewMockApiCaller extends MockMvcUtils {
 
     @Deprecated
     ApiResponse<ReviewsCursorV2Response> retrieveMyReviewHistoriesV2(RetrieveMyReviewsV2Request request, String token, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = get("/api/v2/store/reviews/me")
+        MockHttpServletRequestBuilder builder = get("/v2/store/reviews/me")
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))
             .param("cursor", request.getCursor() == null ? null : String.valueOf(request.getCursor()))

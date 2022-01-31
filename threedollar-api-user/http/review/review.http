@@ -1,5 +1,5 @@
 ### [인증] 가게에 새로운 리뷰를 등록합니다.
-POST {{host_api}}/api/v2/store/review
+POST {{host_api}}/v2/store/review
 Content-Type: application/json
 Authorization: {{AUTHORIZATION}}
 
@@ -18,7 +18,7 @@ client.test("200 OK", function() {
 
 
 ### [인증] 사용자가 작성한 리뷰를 수정합니다.
-PUT {{host_api}}/api/v2/store/review/{{REVIEW_ID}}
+PUT {{host_api}}/v2/store/review/{{REVIEW_ID}}
 Content-Type: application/json
 Authorization: {{AUTHORIZATION}}
 
@@ -35,7 +35,7 @@ client.test("200 OK", function() {
 
 
 ### [인증] 사용자가 작성한 리뷰를 삭제합니다.
-DELETE {{host_api}}/api/v2/store/review/{{REVIEW_ID}}
+DELETE {{host_api}}/v2/store/review/{{REVIEW_ID}}
 Authorization: {{AUTHORIZATION}}
 
 > {%
@@ -46,7 +46,7 @@ client.test("200 OK", function() {
 
 
 ### [인증] 사용자가 작성한 리뷰를 전체 조회합니다. (페이지네이션)
-GET {{host_api}}/api/v3/store/reviews/me?size=30
+GET {{host_api}}/v3/store/reviews/me?size=30
 Authorization: {{AUTHORIZATION}}
 
 > {%
@@ -58,7 +58,7 @@ client.test("200 OK", function() {
 
 
 ### (Deprecated) [인증] 사용자가 작성한 리뷰를 전체 조회합니다. (페이지네이션)
-GET {{host_api}}/api/v2/store/reviews/me?size=30
+GET {{host_api}}/v2/store/reviews/me?size=30
 Authorization: {{AUTHORIZATION}}
 
 > {%

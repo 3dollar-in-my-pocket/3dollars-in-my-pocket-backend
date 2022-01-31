@@ -62,7 +62,7 @@ class UserMedalControllerTest extends SetupUserControllerTest {
         }
 
         private ResultActions getMyObtainedMedals(String token) throws Exception {
-            return mockMvc.perform(get("/api/v1/user/medals")
+            return mockMvc.perform(get("/v1/user/medals")
                 .header(HttpHeaders.AUTHORIZATION, token));
         }
 
@@ -90,7 +90,7 @@ class UserMedalControllerTest extends SetupUserControllerTest {
         }
 
         private ResultActions changeRepresentativeMedal(ChangeRepresentativeMedalRequest request, String token) throws Exception {
-            return mockMvc.perform(put("/api/v1/user/medal")
+            return mockMvc.perform(put("/v1/user/medal")
                 .header(HttpHeaders.AUTHORIZATION, token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)));

@@ -15,7 +15,7 @@ class PopupController(
 ) {
 
     @ApiOperation("팝업 위치별로 활성화중인 팝업 목록을 조회합니다")
-    @GetMapping("/api/v1/popups")
+    @GetMapping("/v1/popups")
     fun getActivatedPopups(
         @Valid request: GetActivatedPopupsRequest
     ): ApiResponse<List<PopupResponse>> {

@@ -13,7 +13,7 @@ class MedalController(
 ) {
 
     @ApiOperation("마이페이지 - 전체 메달 목록을 조회합니다.")
-    @GetMapping("/api/v1/medals")
+    @GetMapping("/v1/medals")
     fun getAllMedals(): ApiResponse<List<MedalResponse>> {
         return ApiResponse.success(medalService.getAllMedals())
     }

@@ -18,6 +18,8 @@ server:
     encoding:
       charset: UTF-8
       force: true
+    context-path: /api
+
 spring:
   mvc:
     format:

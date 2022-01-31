@@ -26,7 +26,7 @@ class VisitHistoryApiCaller extends MockMvcUtils {
     }
 
     ApiResponse<String> addVisitHistory(AddVisitHistoryRequest request, String token, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = post("/api/v2/store/visit")
+        MockHttpServletRequestBuilder builder = post("/v2/store/visit")
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(request));
@@ -43,7 +43,7 @@ class VisitHistoryApiCaller extends MockMvcUtils {
     }
 
     ApiResponse<VisitHistoriesCursorResponse> retrieveMyVisitHistories(RetrieveMyVisitHistoriesRequest request, String token, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = get("/api/v2/store/visits/me")
+        MockHttpServletRequestBuilder builder = get("/v2/store/visits/me")
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))
             .param("cursor", request.getCursor() == null ? null : String.valueOf(request.getCursor()));
