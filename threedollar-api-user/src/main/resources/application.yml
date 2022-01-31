@@ -29,6 +29,8 @@ spring:
       date: yyyy-MM-dd
       date-time: yyyy-MM-dd'T'HH:mm:ss
       time: HH:mm:ss
+    servlet:
+      load-on-startup: 1
 
   security:
     user:
