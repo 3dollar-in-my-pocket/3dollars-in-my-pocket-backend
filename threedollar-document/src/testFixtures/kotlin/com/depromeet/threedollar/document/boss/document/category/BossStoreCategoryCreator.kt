@@ -5,10 +5,13 @@ import com.depromeet.threedollar.document.TestFixture
 @TestFixture
 object BossStoreCategoryCreator {
 
-    fun create(title: String): BossStoreCategory {
+    fun create(
+        title: String,
+        sequencePriority: Int = 0
+    ): BossStoreCategory {
         return BossStoreCategory(
             title = title,
-            sequencePriority = 0
+            sequencePriority = sequencePriority
         )
     }
 

@@ -1,14 +1,12 @@
-version: "3.9"
+version: "3.7"
 services:
-  api:
+  user-api:
     image: ${API_IMAGE}:${TAG}
     ports:
       - "5002:5000"
     environment:
       - "SPRING_PROFILES_ACTIVE=dev"
       - "NEW_RELIC_APP_NAME=3dollars-api-dev"
-    links:
-      - "redis:redis"
     volumes:
       - ~/logs:/logs
     env_file:
@@ -22,22 +20,10 @@ services:
       - "4002:4000"
     environment:
       - "SPRING_PROFILES_ACTIVE=dev"
-    links:
-      - "redis:redis"
     volumes:
       - ~/logs:/logs
     env_file:
       - ~/env/boss-api-dev.env
-    stop_signal: SIGTERM
-    stop_grace_period: 1m
-    restart: unless-stopped
-  redis:
-    image: redis:6.2.6
-    command: redis-server --port 6379
-    expose:
-      - "6379"
-    volumes:
-      - ~/db/data:/data
     stop_signal: SIGTERM
     stop_grace_period: 1m
     restart: unless-stopped

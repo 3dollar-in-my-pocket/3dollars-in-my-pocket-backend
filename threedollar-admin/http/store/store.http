@@ -1,5 +1,5 @@
 ### 신고가 기준치 이상 요청된 가게들을 조회한다.
-GET {{host_admin}}/admin/v1/stores/reported?minCount=2&page=1&size=3
+GET {{host_admin}}/v1/stores/reported?minCount=2&page=1&size=3
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%
@@ -10,7 +10,7 @@ client.test("200 OK", function() {
 
 
 ### 등록된 최신순으로 스크롤 기반 페이지네이션으로 가게를 조회한다
-GET {{host_admin}}/admin/v1/stores/latest?size=3
+GET {{host_admin}}/v1/stores/latest?size=3
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%

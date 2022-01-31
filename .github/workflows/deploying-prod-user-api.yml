@@ -1,4 +1,4 @@
-name: 운영환경 API 서버 배포
+name: 운영 환경 유저 API 서버 배포
 
 on:
   push:

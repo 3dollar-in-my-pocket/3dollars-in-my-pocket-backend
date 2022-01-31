@@ -25,7 +25,7 @@ internal class AdminControllerTest(
     @Test
     fun 관리자가_자신의_관리자_정보를_조회한다() {
         // when
-        val response = objectMapper.readValue(mockMvc.get("/admin/v1/admin/me") {
+        val response = objectMapper.readValue(mockMvc.get("/v1/admin/me") {
             header(HttpHeaders.AUTHORIZATION, "Bearer $token")
         }.andExpect {
             status { isOk() }
@@ -43,7 +43,7 @@ internal class AdminControllerTest(
     @Test
     fun 잘못된_토큰인경우_401_에러가_발생한다() {
         // when
-        val response = objectMapper.readValue(mockMvc.get("/admin/v1/admin/me") {
+        val response = objectMapper.readValue(mockMvc.get("/v1/admin/me") {
             header(HttpHeaders.AUTHORIZATION, "Wrong Token")
         }.andExpect {
             status { isUnauthorized() }
@@ -62,7 +62,7 @@ internal class AdminControllerTest(
     @Test
     fun 토큰을_넘기지_않은경우_401_에러가_발생한다() {
         // when
-        val response = objectMapper.readValue(mockMvc.get("/admin/v1/admin/me")
+        val response = objectMapper.readValue(mockMvc.get("/v1/admin/me")
             .andExpect {
                 status { isUnauthorized() }
             }.andDo {

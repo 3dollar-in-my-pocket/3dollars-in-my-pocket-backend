@@ -18,14 +18,14 @@ class FaqAdminController(
     private val faqService: FaqService
 ) {
 
-    @PostMapping("/admin/v1/faq")
+    @PostMapping("/v1/faq")
     fun addFaq(
         @Valid @RequestBody request: AddFaqRequest
     ): ApiResponse<FaqResponse> {
         return ApiResponse.success(faqAdminService.addFaq(request))
     }
 
-    @PutMapping("/admin/v1/faq/{faqId}")
+    @PutMapping("/v1/faq/{faqId}")
     fun updateFaq(
         @PathVariable faqId: Long,
         @Valid @RequestBody request: UpdateFaqRequest
@@ -33,7 +33,7 @@ class FaqAdminController(
         return ApiResponse.success(faqAdminService.updateFaq(faqId, request))
     }
 
-    @DeleteMapping("/admin/v1/faq/{faqId}")
+    @DeleteMapping("/v1/faq/{faqId}")
     fun deleteFaq(
         @PathVariable faqId: Long
     ): ApiResponse<String> {
@@ -41,14 +41,14 @@ class FaqAdminController(
         return ApiResponse.SUCCESS
     }
 
-    @GetMapping("/admin/v1/faqs")
+    @GetMapping("/v1/faqs")
     fun retrieveFaqs(
         @Valid request: RetrieveFaqsRequest
     ): ApiResponse<List<FaqResponse>> {
         return ApiResponse.success(faqService.retrieveFaqsByCategory(request))
     }
 
-    @GetMapping("/admin/v1/faq/categories")
+    @GetMapping("/v1/faq/categories")
     fun retrieveFaqCategories(): ApiResponse<List<FaqCategoryResponse>> {
         return ApiResponse.success(FaqCategoryMapper.retrieveFaqCategories())
     }

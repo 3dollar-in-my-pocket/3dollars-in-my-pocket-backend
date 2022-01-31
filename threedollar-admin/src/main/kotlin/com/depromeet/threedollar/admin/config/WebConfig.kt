@@ -20,7 +20,8 @@ class WebConfig(
 
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(authInterceptor)
-            .addPathPatterns("/admin/**")
+            .addPathPatterns("/**")
+            .excludePathPatterns("/test-token", "/ping", "/enums")
     }
 
     override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {

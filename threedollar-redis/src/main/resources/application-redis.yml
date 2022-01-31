@@ -38,7 +38,7 @@ spring.config:
 
 spring:
   redis:
-    host: redis
+    host: threedollar-dev-redis.xbz0jn.0001.apn2.cache.amazonaws.com
     port: 6379
 
 
