@@ -20,7 +20,7 @@ import java.util.Map;
 @Slf4j
 class RequestLoggingFilter implements Filter {
 
-    private static final List<String> EXCLUDE_LOGGING_RESPONSE_URLS = List.of("/v2/stores/near");
+    private static final List<String> EXCLUDE_LOGGING_RESPONSE_URLS = List.of("/api/v2/stores/near");
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
