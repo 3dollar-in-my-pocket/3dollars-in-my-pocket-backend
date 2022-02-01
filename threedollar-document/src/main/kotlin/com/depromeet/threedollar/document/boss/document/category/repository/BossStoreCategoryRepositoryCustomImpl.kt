@@ -2,19 +2,17 @@ package com.depromeet.threedollar.document.boss.document.category.repository
 
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategory
 import org.springframework.data.mongodb.core.MongoTemplate
-import org.springframework.data.mongodb.core.query.Criteria.where
-import org.springframework.data.mongodb.core.query.Query.query
+import org.springframework.data.mongodb.core.find
+import org.springframework.data.mongodb.core.query.Query
+import org.springframework.data.mongodb.core.query.inValues
 
 class BossStoreCategoryRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
-): BossStoreCategoryRepositoryCustom {
+) : BossStoreCategoryRepositoryCustom {
 
     override fun findCategoriesByIds(categoriesIds: Set<String>): List<BossStoreCategory> {
-        return mongoTemplate.find(
-            query(
-                where("_id").`in`(categoriesIds)
-            ),
-            BossStoreCategory::class.java
+        return mongoTemplate.find(Query()
+            .addCriteria(BossStoreCategory::id inValues categoriesIds)
         )
     }
 
