@@ -39,13 +39,13 @@ Authorization: Bearer {{BOSS_AUTHORIZATION}}
             "name": "메뉴 변경 이후",
             "price": 2000,
             "imageUrl": "https://image.png",
-            "tag": "태그"
+            "groupName": "태그"
         },
         {
             "name": "메뉴 변경 이후2",
             "price": 4000,
             "imageUrl": "https://image.png",
-            "tag": "태그"
+            "groupName": "태그"
         }
     ],
     "appearanceDays": [

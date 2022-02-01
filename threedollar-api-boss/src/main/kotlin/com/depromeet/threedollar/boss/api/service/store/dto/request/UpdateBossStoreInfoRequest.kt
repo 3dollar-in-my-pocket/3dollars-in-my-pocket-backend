@@ -36,7 +36,7 @@ data class MenuRequest(
     val name: String,
     val price: Int,
     val imageUrl: String?,
-    val tag: String
+    val groupName: String
 ) {
 
     fun toMenu(): BossStoreMenu {
@@ -44,7 +44,7 @@ data class MenuRequest(
             name = name,
             price = price,
             imageUrl = imageUrl,
-            tag = tag
+            groupName = groupName
         )
     }
 

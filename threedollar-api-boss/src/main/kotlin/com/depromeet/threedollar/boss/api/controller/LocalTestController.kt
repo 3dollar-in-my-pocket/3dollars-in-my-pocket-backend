@@ -61,16 +61,22 @@ class LocalTestController(
                 snsUrl = "https://sns.example.com",
                 menus = listOf(
                     BossStoreMenu(
-                        name = "팥붕 3개",
-                        price = 1000,
+                        name = "아저씨 못난이 핫도그",
+                        price = 5000,
                         imageUrl = "menu.img",
-                        tag = "붕어빵"
+                        groupName = "아저씨 핫도그"
                     ),
                     BossStoreMenu(
-                        name = "슈붕 3개",
+                        name = "팥 붕어빵 2개",
                         price = 1000,
                         imageUrl = "menu.img",
-                        tag = "붕어빵"
+                        groupName = "붕어빵"
+                    ),
+                    BossStoreMenu(
+                        name = "슈크림 붕어빵 2개",
+                        price = 1000,
+                        imageUrl = "menu.img",
+                        groupName = "붕어빵"
                     ),
                 ),
                 appearanceDays = setOf(
@@ -80,7 +86,7 @@ class LocalTestController(
                             startTime = LocalTime.of(10, 0),
                             endTime = LocalTime.of(20, 0)
                         ),
-                        locationDescription = "강남역 주변"
+                        locationDescription = "서울특별시 강남역 0번 출구"
                     ),
                     BossStoreAppearanceDay(
                         day = DayOfTheWeek.WEDNESDAY,
@@ -88,7 +94,7 @@ class LocalTestController(
                             startTime = LocalTime.of(10, 0),
                             endTime = LocalTime.of(20, 0)
                         ),
-                        locationDescription = "강남역 주변"
+                        locationDescription = "서울특별시 강남역 0번 출구"
                     )
                 ),
                 categoriesIds = categoriesIds,
@@ -120,7 +126,7 @@ class LocalTestController(
         private val BOSS = BossAccount(
             name = "테스트 계정",
             socialInfo = BossAccountSocialInfo("test-social-id", BossAccountSocialType.KAKAO),
-            businessNumber = BusinessNumber.of("01-123-1234")
+            businessNumber = BusinessNumber.of("000-12-12345")
         )
     }
 

@@ -13,6 +13,7 @@ class Registration(
     val status: RegistrationStatus = RegistrationStatus.WAITING
 ) : BaseDocument()
 
+
 data class RegistrationBossForm(
     val socialInfo: BossAccountSocialInfo,
     val name: String,

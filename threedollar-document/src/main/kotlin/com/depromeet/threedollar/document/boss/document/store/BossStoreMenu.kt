@@ -4,5 +4,5 @@ data class BossStoreMenu(
     val name: String,
     val price: Int,
     val imageUrl: String?,
-    val tag: String
+    val groupName: String
 )

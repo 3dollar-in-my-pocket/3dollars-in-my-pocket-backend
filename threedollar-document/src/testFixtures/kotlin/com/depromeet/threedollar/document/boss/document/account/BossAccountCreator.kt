@@ -10,7 +10,7 @@ object BossAccountCreator {
         socialId: String,
         socialType: BossAccountSocialType,
         name: String = "사장님 성함",
-        businessNumber: BusinessNumber = BusinessNumber.of("01-123-1234"),
+        businessNumber: BusinessNumber = BusinessNumber.of("012-12-12345"),
         pushSettingsStatus: PushSettingsStatus = PushSettingsStatus.OFF
     ): BossAccount {
         return BossAccount(
