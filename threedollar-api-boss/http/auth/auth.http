@@ -3,15 +3,13 @@ POST {{host_boss_api}}/v1/signup
 Content-Type: application/json
 
 {
-    "token": "token",
+    "token": "token12313131",
     "bossName": "will",
-    "socialId": "social-id",
     "socialType": "APPLE",
     "businessNumber": "123-45-1234",
     "storeName": "가슴속 3천원",
-    "storeCategories": [
-        "1",
-        "2"
+    "storeCategoriesIds": [
+        "{{BOSS_CATEGORY_ID}}"
     ],
     "contactsNumber": "010-1234-1234",
     "certificationPhotoUrl": "https://example.png"

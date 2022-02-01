@@ -49,7 +49,7 @@ class LocalTestController(
         @RequestParam latitude: Double,
         @RequestParam longitude: Double,
         @RequestParam categoriesIds: Set<String>
-    ): BossStore {
+    ): ApiResponse<String> {
         BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, categoriesIds)
         val bossStore = bossStoreRepository.save(
             BossStore(
@@ -100,7 +100,7 @@ class LocalTestController(
             bossStoreId = bossStore.id,
             location = Point(longitude, latitude),
         ))
-        return bossStore
+        return ApiResponse.success(bossStore.id)
     }
 
     @PostMapping("/test-category")
@@ -113,7 +113,7 @@ class LocalTestController(
             sequencePriority = priority
         )
         bossStoreCategoryRepository.save(category)
-        return ApiResponse.SUCCESS
+        return ApiResponse.success(category.id)
     }
 
     companion object {

@@ -9,6 +9,7 @@ import org.springframework.data.geo.Point
 import java.time.LocalDateTime
 
 data class BossStoreInfoResponse(
+    val bossStoreId: String,
     val name: String,
     val location: LocationResponse?,
     val imageUrl: String?,
@@ -27,6 +28,7 @@ data class BossStoreInfoResponse(
             bossStoreOpenInfo: BossStoreOpenInfo?
         ): BossStoreInfoResponse {
             return BossStoreInfoResponse(
+                bossStoreId = bossStore.id,
                 name = bossStore.name,
                 location = location?.let { LocationResponse.of(it) },
                 imageUrl = bossStore.imageUrl,
