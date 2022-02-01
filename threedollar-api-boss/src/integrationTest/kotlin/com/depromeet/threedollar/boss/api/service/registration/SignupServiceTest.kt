@@ -155,8 +155,8 @@ internal class SignupServiceTest(
 
 }
 
-private fun createCategory(bossStoreCategoryRepository: BossStoreCategoryRepository, vararg titles: String): List<String> {
+private fun createCategory(bossStoreCategoryRepository: BossStoreCategoryRepository, vararg titles: String): Set<String> {
     return titles.map {
         bossStoreCategoryRepository.save(BossStoreCategoryCreator.create(it)).id
-    }.toList()
+    }.toSet()
 }

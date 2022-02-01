@@ -4,6 +4,6 @@ import com.depromeet.threedollar.document.boss.document.category.BossStoreCatego
 
 interface BossStoreCategoryRepositoryCustom {
 
-    fun findCategoriesByIds(categoriesIds: List<String>): List<BossStoreCategory>
+    fun findCategoriesByIds(categoriesIds: Set<String>): List<BossStoreCategory>
 
 }

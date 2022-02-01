@@ -48,7 +48,7 @@ class LocalTestController(
         @BossId bossId: String,
         @RequestParam latitude: Double,
         @RequestParam longitude: Double,
-        @RequestParam categoriesIds: List<String>
+        @RequestParam categoriesIds: Set<String>
     ): BossStore {
         BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, categoriesIds)
         val bossStore = bossStoreRepository.save(
@@ -73,7 +73,7 @@ class LocalTestController(
                         tag = "붕어빵"
                     ),
                 ),
-                appearanceDays = listOf(
+                appearanceDays = setOf(
                     BossStoreAppearanceDay(
                         day = DayOfTheWeek.MONDAY,
                         openTime = TimeInterval(
@@ -91,7 +91,7 @@ class LocalTestController(
                         locationDescription = "강남역 주변"
                     )
                 ),
-                categoriesIds = categoriesIds.toList(),
+                categoriesIds = categoriesIds,
                 status = BossStoreStatus.ACTIVE
             )
         )

@@ -16,7 +16,7 @@ data class SignupRequest(
     val businessNumber: String,
 
     val storeName: String,
-    val storeCategoriesIds: List<String>,
+    val storeCategoriesIds: Set<String>,
     val contactsNumber: String,
     val certificationPhotoUrl: String
 ) {

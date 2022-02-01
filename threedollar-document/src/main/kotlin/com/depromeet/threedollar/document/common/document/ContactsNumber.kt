@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.document.common.document
 
-class ContactsNumber private constructor(
+data class ContactsNumber(
     private val first: String,
     private val second: String,
     private val third: String

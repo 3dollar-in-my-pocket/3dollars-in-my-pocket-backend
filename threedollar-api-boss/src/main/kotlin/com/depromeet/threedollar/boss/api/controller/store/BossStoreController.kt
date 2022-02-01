@@ -6,15 +6,19 @@ import com.depromeet.threedollar.boss.api.config.resolver.Auth
 import com.depromeet.threedollar.boss.api.config.resolver.MapCoordinate
 import com.depromeet.threedollar.boss.api.service.store.BossStoreOpenService
 import com.depromeet.threedollar.boss.api.service.store.BossStoreRetrieveService
+import com.depromeet.threedollar.boss.api.service.store.BossStoreService
+import com.depromeet.threedollar.boss.api.service.store.dto.request.UpdateBossStoreInfoRequest
 import com.depromeet.threedollar.boss.api.service.store.dto.response.BossStoreInfoResponse
 import com.depromeet.threedollar.common.model.CoordinateValue
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 class BossStoreController(
     private val bossStoreRetrieveService: BossStoreRetrieveService,
-    private val bossStoreOpenService: BossStoreOpenService
+    private val bossStoreOpenService: BossStoreOpenService,
+    private val bossStoreService: BossStoreService
 ) {
 
     @ApiOperation("특정 거리 안에 위치한 가게 목록을 조회합니다.")
@@ -70,6 +74,18 @@ class BossStoreController(
         @PathVariable bossStoreId: String
     ): ApiResponse<BossStoreInfoResponse> {
         return ApiResponse.success(bossStoreRetrieveService.getBossStore(bossStoreId))
+    }
+
+    @ApiOperation("[인증] 사장님 자신의 가게의 정보를 수정합니다")
+    @Auth
+    @PutMapping("/v1/boss-store/{bossStoreId}")
+    fun updateBossStoreInfo(
+        @PathVariable bossStoreId: String,
+        @Valid @RequestBody request: UpdateBossStoreInfoRequest,
+        @BossId bossId: String
+    ): ApiResponse<String> {
+        bossStoreService.updateBossStoreInfo(bossStoreId, request, bossId)
+        return ApiResponse.SUCCESS
     }
 
 }

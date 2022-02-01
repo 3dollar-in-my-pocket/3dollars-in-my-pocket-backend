@@ -7,13 +7,41 @@ import org.springframework.data.mongodb.core.mapping.Document
 @Document("boss_store_v1")
 class BossStore(
     val bossId: String,
-    val name: String,
-    val imageUrl: String?,
-    val introduction: String?,
-    val contactsNumber: ContactsNumber?,
-    val snsUrl: String?,
-    val menus: List<BossStoreMenu> = mutableListOf(),
-    val appearanceDays: List<BossStoreAppearanceDay> = mutableListOf(),
-    val categoriesIds: List<String> = mutableListOf(),
+    var name: String,
+    var imageUrl: String?,
+    var introduction: String?,
+    var contactsNumber: ContactsNumber?,
+    var snsUrl: String?,
+    var menus: List<BossStoreMenu> = listOf(),
+    var appearanceDays: Set<BossStoreAppearanceDay> = setOf(),
+    var categoriesIds: Set<String> = setOf(),
     val status: BossStoreStatus = BossStoreStatus.ACTIVE
-) : BaseDocument()
+) : BaseDocument() {
+
+    fun updateInfo(
+        name: String,
+        imageUrl: String?,
+        introduction: String?,
+        contactsNumber: String?,
+        snsUrl: String?
+    ) {
+        this.name = name
+        this.imageUrl = imageUrl
+        this.introduction = introduction
+        this.contactsNumber = contactsNumber?.let { ContactsNumber.of(it) }
+        this.snsUrl = snsUrl
+    }
+
+    fun updateMenus(menus: List<BossStoreMenu>) {
+        this.menus = menus
+    }
+
+    fun updateAppearanceDays(appearanceDays: Set<BossStoreAppearanceDay>) {
+        this.appearanceDays = appearanceDays
+    }
+
+    fun updateCategoriesIds(categoriesIds: Set<String>) {
+        this.categoriesIds = categoriesIds
+    }
+
+}

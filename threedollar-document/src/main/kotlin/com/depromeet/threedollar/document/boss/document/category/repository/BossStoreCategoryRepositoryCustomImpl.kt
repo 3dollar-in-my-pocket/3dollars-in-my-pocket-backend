@@ -9,7 +9,7 @@ class BossStoreCategoryRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ): BossStoreCategoryRepositoryCustom {
 
-    override fun findCategoriesByIds(categoriesIds: List<String>): List<BossStoreCategory> {
+    override fun findCategoriesByIds(categoriesIds: Set<String>): List<BossStoreCategory> {
         return mongoTemplate.find(
             query(
                 where("_id").`in`(categoriesIds)

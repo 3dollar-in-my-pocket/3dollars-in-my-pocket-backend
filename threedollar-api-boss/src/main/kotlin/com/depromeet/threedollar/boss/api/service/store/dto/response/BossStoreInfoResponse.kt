@@ -14,8 +14,8 @@ data class BossStoreInfoResponse(
     val imageUrl: String?,
     val introduction: String?,
     val menus: List<BossStoreMenuResponse>,
-    val appearanceDays: List<BossStoreAppearanceDayResponse>,
-    val categories: List<BossStoreCategoryResponse>,
+    val appearanceDays: Set<BossStoreAppearanceDayResponse>,
+    val categories: Set<BossStoreCategoryResponse>,
     val openStatus: BossStoreOpenStatusResponse
 ) {
 
@@ -32,8 +32,8 @@ data class BossStoreInfoResponse(
                 imageUrl = bossStore.imageUrl,
                 introduction = bossStore.introduction,
                 menus = bossStore.menus.map { BossStoreMenuResponse.of(it) },
-                appearanceDays = bossStore.appearanceDays.map { BossStoreAppearanceDayResponse.of(it) },
-                categories = categories.map { BossStoreCategoryResponse.of(it) },
+                appearanceDays = bossStore.appearanceDays.map { BossStoreAppearanceDayResponse.of(it) }.toSet(),
+                categories = categories.map { BossStoreCategoryResponse.of(it) }.toSet(),
                 openStatus = bossStoreOpenInfo?.let { BossStoreOpenStatusResponse.of(it) }
                     ?: BossStoreOpenStatusResponse.close()
             )
@@ -75,17 +75,15 @@ data class LocationResponse(
 
 
 data class BossStoreMenuResponse(
-    val menuId: String,
     val name: String,
     val price: Int,
-    val imageUrl: String,
+    val imageUrl: String?,
     val tag: String
 ) {
 
     companion object {
         fun of(menu: BossStoreMenu): BossStoreMenuResponse {
             return BossStoreMenuResponse(
-                menuId = menu.menuId,
                 name = menu.name,
                 price = menu.price,
                 imageUrl = menu.imageUrl,
