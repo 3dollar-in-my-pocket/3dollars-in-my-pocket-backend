@@ -6,7 +6,7 @@ import com.depromeet.threedollar.document.boss.document.category.BossStoreCatego
 
 object BossStoreCategoryServiceUtils {
 
-    fun validateExistsCategories(bossStoreCategoryRepository: BossStoreCategoryRepository, categoriesIds: List<String>) {
+    fun validateExistsCategories(bossStoreCategoryRepository: BossStoreCategoryRepository, categoriesIds: Set<String>) {
         val categories = bossStoreCategoryRepository.findCategoriesByIds(categoriesIds)
         if (categories.size != categoriesIds.size) {
             val notExistsCategoriesIds = categoriesIds.subtract(categories.map { it.id })

@@ -4,8 +4,6 @@ import com.depromeet.threedollar.document.boss.document.store.BossStore
 
 interface BossStoreRepositoryCustom {
 
-    fun findNearBossStores(latitude: Double, longitude: Double, maxDistance: Double): List<BossStore>
-
     fun findBossStoreByBossId(bossId: String): BossStore?
 
     fun existsBossStoreByIdAndBossId(bossStoreId: String, bossId: String): Boolean

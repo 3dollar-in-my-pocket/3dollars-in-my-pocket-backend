@@ -9,13 +9,14 @@ import org.springframework.data.geo.Point
 import java.time.LocalDateTime
 
 data class BossStoreInfoResponse(
+    val bossStoreId: String,
     val name: String,
     val location: LocationResponse?,
     val imageUrl: String?,
     val introduction: String?,
     val menus: List<BossStoreMenuResponse>,
-    val appearanceDays: List<BossStoreAppearanceDayResponse>,
-    val categories: List<BossStoreCategoryResponse>,
+    val appearanceDays: Set<BossStoreAppearanceDayResponse>,
+    val categories: Set<BossStoreCategoryResponse>,
     val openStatus: BossStoreOpenStatusResponse
 ) {
 
@@ -27,13 +28,14 @@ data class BossStoreInfoResponse(
             bossStoreOpenInfo: BossStoreOpenInfo?
         ): BossStoreInfoResponse {
             return BossStoreInfoResponse(
+                bossStoreId = bossStore.id,
                 name = bossStore.name,
                 location = location?.let { LocationResponse.of(it) },
                 imageUrl = bossStore.imageUrl,
                 introduction = bossStore.introduction,
                 menus = bossStore.menus.map { BossStoreMenuResponse.of(it) },
-                appearanceDays = bossStore.appearanceDays.map { BossStoreAppearanceDayResponse.of(it) },
-                categories = categories.map { BossStoreCategoryResponse.of(it) },
+                appearanceDays = bossStore.appearanceDays.map { BossStoreAppearanceDayResponse.of(it) }.toSet(),
+                categories = categories.map { BossStoreCategoryResponse.of(it) }.toSet(),
                 openStatus = bossStoreOpenInfo?.let { BossStoreOpenStatusResponse.of(it) }
                     ?: BossStoreOpenStatusResponse.close()
             )
@@ -75,21 +77,19 @@ data class LocationResponse(
 
 
 data class BossStoreMenuResponse(
-    val menuId: String,
     val name: String,
     val price: Int,
-    val imageUrl: String,
-    val tag: String
+    val imageUrl: String?,
+    val groupName: String
 ) {
 
     companion object {
         fun of(menu: BossStoreMenu): BossStoreMenuResponse {
             return BossStoreMenuResponse(
-                menuId = menu.menuId,
                 name = menu.name,
                 price = menu.price,
                 imageUrl = menu.imageUrl,
-                tag = menu.tag
+                groupName = menu.groupName
             )
         }
     }

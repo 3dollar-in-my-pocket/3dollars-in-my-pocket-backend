@@ -49,10 +49,10 @@ public class AppleTokenDecoderImpl implements AppleTokenDecoder {
                 .parseClaimsJws(idToken)
                 .getBody();
             return claims.getSubject();
-        } catch (JsonProcessingException | InvalidKeySpecException | InvalidClaimException | NoSuchAlgorithmException e) {
-            throw new ValidationException(String.format("잘못된 애플 idToken (%s) 입니다 (reason: %s)", idToken, e.getMessage()), VALIDATION_APPLE_TOKEN_EXCEPTION);
         } catch (ExpiredJwtException e) {
             throw new ValidationException(String.format("만료된 애플 idToken (%s) 입니다 (reason: %s)", idToken, e.getMessage()), VALIDATION_APPLE_TOKEN_EXPIRED_EXCEPTION);
+        } catch (JsonProcessingException | InvalidKeySpecException | InvalidClaimException | NoSuchAlgorithmException | IllegalArgumentException e) {
+            throw new ValidationException(String.format("잘못된 애플 idToken (%s) 입니다 (reason: %s)", idToken, e.getMessage()), VALIDATION_APPLE_TOKEN_EXCEPTION);
         }
     }
 

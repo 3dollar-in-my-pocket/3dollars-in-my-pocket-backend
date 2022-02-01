@@ -13,9 +13,9 @@ object BossStoreCreator {
         introduction: String = "introduction",
         contactsNumber: ContactsNumber? = null,
         snsUrl: String? = null,
-        menus: List<BossStoreMenu> = mutableListOf(),
-        appearanceDays: List<BossStoreAppearanceDay> = mutableListOf(),
-        categoriesIds: List<String> = mutableListOf(),
+        menus: List<BossStoreMenu> = listOf(),
+        appearanceDays: Set<BossStoreAppearanceDay> = setOf(),
+        categoriesIds: Set<String> = setOf(),
         status: BossStoreStatus = BossStoreStatus.ACTIVE
     ): BossStore {
         return BossStore(

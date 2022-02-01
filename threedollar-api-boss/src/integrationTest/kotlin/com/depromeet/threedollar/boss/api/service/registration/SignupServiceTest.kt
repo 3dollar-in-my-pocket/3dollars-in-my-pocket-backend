@@ -64,12 +64,12 @@ internal class SignupServiceTest(
             assertThat(it.name).isEqualTo(bossName)
             assertThat(it.socialInfo.socialId).isEqualTo(socialId)
             assertThat(it.socialInfo.socialType).isEqualTo(socialType)
-            assertThat(it.businessNumber.getNumber()).isEqualTo(businessNumber)
+            assertThat(it.businessNumber.getNumberWithSeparator()).isEqualTo(businessNumber)
         }
         registrations[0].store.let {
             assertThat(it.name).isEqualTo(storeName)
             assertThat(it.categoriesIds).containsExactlyInAnyOrderElementsOf(categoriesIds)
-            assertThat(it.contactsNumber.getNumber()).isEqualTo(contactsNumber)
+            assertThat(it.contactsNumber.getNumberWithSeparator()).isEqualTo(contactsNumber)
             assertThat(it.certificationPhotoUrl).isEqualTo(certificationPhotoUrl)
         }
     }
@@ -155,8 +155,8 @@ internal class SignupServiceTest(
 
 }
 
-private fun createCategory(bossStoreCategoryRepository: BossStoreCategoryRepository, vararg titles: String): List<String> {
+private fun createCategory(bossStoreCategoryRepository: BossStoreCategoryRepository, vararg titles: String): Set<String> {
     return titles.map {
         bossStoreCategoryRepository.save(BossStoreCategoryCreator.create(it)).id
-    }.toList()
+    }.toSet()
 }

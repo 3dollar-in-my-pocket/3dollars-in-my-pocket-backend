@@ -4,19 +4,17 @@ import com.depromeet.threedollar.document.boss.document.account.BossAccountSocia
 import com.depromeet.threedollar.document.boss.document.registration.Registration
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria.where
-import org.springframework.data.mongodb.core.query.Query.query
+import org.springframework.data.mongodb.core.query.Query
+import org.springframework.data.mongodb.core.query.isEqualTo
 
 class RegistrationRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : RegistrationRepositoryCustom {
 
     override fun existsRegistrationBySocialInfo(socialId: String, socialType: BossAccountSocialType): Boolean {
-        return mongoTemplate.exists(
-            query(
-                where("boss.socialInfo.socialId").`is`(socialId)
-            ).addCriteria(
-                where("boss.socialInfo.socialType").`is`(socialType)
-            ), Registration::class.java
+        return mongoTemplate.exists(Query()
+            .addCriteria(where("boss.socialInfo.socialId").isEqualTo(socialId))
+            .addCriteria(where("boss.socialInfo.socialType").isEqualTo(socialType)), Registration::class.java
         )
     }
 

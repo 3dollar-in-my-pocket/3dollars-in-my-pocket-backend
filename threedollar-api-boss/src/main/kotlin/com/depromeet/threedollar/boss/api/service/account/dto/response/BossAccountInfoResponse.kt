@@ -18,7 +18,7 @@ data class BossAccountInfoResponse(
                 bossId = bossAccount.id,
                 socialType = bossAccount.socialInfo.socialType,
                 name = bossAccount.name,
-                businessNumber = bossAccount.businessNumber.getNumber(),
+                businessNumber = bossAccount.businessNumber.getNumberWithSeparator(),
                 pushSettingsStatus = bossAccount.pushSettingsStatus
             )
         }

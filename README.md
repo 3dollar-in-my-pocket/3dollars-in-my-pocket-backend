@@ -2,7 +2,6 @@
 
 ![Version](https://img.shields.io/github/v/release/depromeet/3dollars-in-my-pocket-backend?include_prereleases)
 [![codecov](https://codecov.io/gh/3dollar-in-my-pocket/3dollars-in-my-pocket-backend/branch/develop/graph/badge.svg?token=QZPVF6VGHA)](https://codecov.io/gh/3dollar-in-my-pocket/3dollars-in-my-pocket-backend)
-![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://threedollars.co.kr/ping)
 
 ![img.png](images/logo.png)
 

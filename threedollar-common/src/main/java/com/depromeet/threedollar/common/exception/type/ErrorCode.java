@@ -22,6 +22,8 @@ public enum ErrorCode {
     VALIDATION_LONGITUDE_EXCEPTION(BAD_REQUEST, OFF, "BR008", "현재 위치의 경도를 입력해주세요 (longitude)"),
     VALIDATION_MAP_LATITUDE_EXCEPTION(BAD_REQUEST, OFF, "BR009", "현재 지도상 위도를 입력해주세요 (mapLatitude)"),
     VALIDATION_MAP_LONGITUDE_EXCEPTION(BAD_REQUEST, OFF, "BR010", "현재 지도상 경도를 입력해주세요 (mapLongitude)"),
+    VALIDATION_WRONG_CONTACTS_NUMBER_FORMAT_EXCEPTION(BAD_REQUEST, OFF, "BR011", "잘못된 연락처 번호입니다."),
+    VALIDATION_WRONG_BUSINESS_NUMBER_FORMAT_EXCEPTION(BAD_REQUEST, OFF, "BR012", "잘못된 사업자 번호입니다"),
 
 
     // 401 UnAuthorized
