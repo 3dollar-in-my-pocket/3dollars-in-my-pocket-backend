@@ -46,19 +46,18 @@ spring:
         format_sql: true
         use_sql_comments: true
         dialect: org.hibernate.dialect.MariaDB102Dialect
-        connection.provider_disables_autocommit: true
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-      settings:
-        web-allow-others: true
   datasource:
     hikari:
       driver-class-name: org.h2.Driver
       jdbc-url: jdbc:h2:mem:threedollar;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
       username: sa
       password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
   flyway:
     enabled: false
 
