@@ -6,6 +6,11 @@ server:
       charset: UTF-8
       force: true
     context-path: /admin
+  tomcat:
+    threads:
+      max: 200
+    connection-timeout: 5s
+
 spring:
   profiles:
     active: local
