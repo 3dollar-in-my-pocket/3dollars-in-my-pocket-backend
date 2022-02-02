@@ -6,6 +6,8 @@ spring:
   redis:
     host: localhost
     port: 9998
+    timeout: 3000
+    connect-timeout: 3000
   cache:
     type: none
 
@@ -18,6 +20,8 @@ spring:
   redis:
     host: localhost
     port: 6379
+    timeout: 3000
+    connect-timeout: 3000
 
 
 ---
@@ -29,6 +33,8 @@ spring:
   redis:
     host: localhost
     port: 6380
+    timeout: 3000
+    connect-timeout: 3000
 
 
 ---
@@ -40,6 +46,8 @@ spring:
   redis:
     host: threedollar-dev-redis.xbz0jn.0001.apn2.cache.amazonaws.com
     port: 6379
+    timeout: 3000
+    connect-timeout: 3000
 
 
 ---
@@ -53,6 +61,8 @@ spring:
   redis:
     host: threedollar-api-redis-prod.tqy2kj.0001.apn2.cache.amazonaws.com
     port: 6379
+    timeout: 3000
+    connect-timeout: 3000
 
 
 ---
