@@ -111,11 +111,11 @@ class LocalTestController(
 
     @PostMapping("/test-category")
     fun addMockStoreCategory(
-        @RequestParam title: String,
+        @RequestParam name: String,
         @RequestParam priority: Int
     ): ApiResponse<String> {
         val category = BossStoreCategory(
-            name = title,
+            name = name,
             sequencePriority = priority
         )
         bossStoreCategoryRepository.save(category)
