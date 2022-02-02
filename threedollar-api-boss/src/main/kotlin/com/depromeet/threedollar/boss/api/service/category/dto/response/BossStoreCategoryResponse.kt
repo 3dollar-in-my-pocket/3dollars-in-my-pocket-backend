@@ -4,14 +4,14 @@ import com.depromeet.threedollar.document.boss.document.category.BossStoreCatego
 
 data class BossStoreCategoryResponse(
     val categoryId: String,
-    val title: String
+    val name: String
 ) {
 
     companion object {
         fun of(bossStoreCategory: BossStoreCategory): BossStoreCategoryResponse {
             return BossStoreCategoryResponse(
                 categoryId = bossStoreCategory.id,
-                title = bossStoreCategory.title
+                name = bossStoreCategory.name
             )
         }
     }

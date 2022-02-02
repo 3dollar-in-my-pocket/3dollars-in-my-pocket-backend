@@ -9,14 +9,14 @@ import java.time.LocalDateTime
 data class BossStoreOpenInfo(
     @Id
     val bossStoreId: String,
-    val startDateTime: LocalDateTime
+    val openStartDateTime: LocalDateTime
 ) : Serializable {
 
     companion object {
         fun of(bossStoreId: String, startDateTime: LocalDateTime): BossStoreOpenInfo {
             return BossStoreOpenInfo(
                 bossStoreId = bossStoreId,
-                startDateTime = startDateTime
+                openStartDateTime = startDateTime
             )
         }
     }

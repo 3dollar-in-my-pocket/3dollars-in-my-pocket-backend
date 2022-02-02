@@ -5,6 +5,6 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @Document("boss_store_category_v1")
 class BossStoreCategory(
-    val title: String,
+    val name: String,
     val sequencePriority: Int
 ) : BaseDocument()

@@ -67,7 +67,7 @@ class BossStoreOpenServiceTest(
         val bossStoreOpenInfos = bossStoreOpenInfoRepository.findAll()
         assertThat(bossStoreOpenInfos).hasSize(1)
         assertThat(bossStoreOpenInfos[0].bossStoreId).isEqualTo(bossStore.id)
-        assertThat(bossStoreOpenInfos[0].startDateTime).isEqualTo(startDateTime)
+        assertThat(bossStoreOpenInfos[0].openStartDateTime).isEqualTo(startDateTime)
     }
 
     @Test

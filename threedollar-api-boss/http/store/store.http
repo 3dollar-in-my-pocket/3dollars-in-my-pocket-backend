@@ -50,7 +50,7 @@ Authorization: Bearer {{BOSS_AUTHORIZATION}}
     ],
     "appearanceDays": [
         {
-            "day": "MONDAY",
+            "dayOfTheWeek": "MONDAY",
             "startTime": "08:00",
             "endTime": "16:00",
             "locationDescription": "산본역"

@@ -52,7 +52,7 @@ internal class BossStoreServiceTest(
                 MenuRequest(name = "팥 붕어빵", price = 1000, imageUrl = "https://menu.png", groupName = "붕어빵")
             ),
             appearanceDays = setOf(
-                AppearanceDayRequest(day = DayOfTheWeek.WEDNESDAY, startTime = LocalTime.of(8, 0), endTime = LocalTime.of(10, 0), locationDescription = "강남역")
+                AppearanceDayRequest(dayOfTheWeek = DayOfTheWeek.WEDNESDAY, startTime = LocalTime.of(8, 0), endTime = LocalTime.of(10, 0), locationDescription = "강남역")
             ),
             categoriesIds = categoriesIds
         )
@@ -70,7 +70,7 @@ internal class BossStoreServiceTest(
             assertThat(it.contactsNumber).isEqualTo(ContactsNumber.of("010-1234-1234"))
             assertThat(it.snsUrl).isEqualTo(request.snsUrl)
             assertThat(it.menus).containsExactlyInAnyOrder(BossStoreMenu(name = "팥 붕어빵", price = 1000, imageUrl = "https://menu.png", groupName = "붕어빵"))
-            assertThat(it.appearanceDays).containsExactlyInAnyOrder(BossStoreAppearanceDay(day = DayOfTheWeek.WEDNESDAY, openTime = TimeInterval(LocalTime.of(8, 0), endTime = LocalTime.of(10, 0)), locationDescription = "강남역"))
+            assertThat(it.appearanceDays).containsExactlyInAnyOrder(BossStoreAppearanceDay(dayOfTheWeek = DayOfTheWeek.WEDNESDAY, openingHours = TimeInterval(LocalTime.of(8, 0), endTime = LocalTime.of(10, 0)), locationDescription = "강남역"))
             assertThat(it.categoriesIds).containsExactlyInAnyOrderElementsOf(categoriesIds)
         }
     }
