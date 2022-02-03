@@ -5,11 +5,9 @@ import com.depromeet.threedollar.api.listener.medal.AddUserMedalEventListener;
 import com.depromeet.threedollar.api.listener.store.StoreRatingEventListener;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsRequest;
-import com.depromeet.threedollar.api.service.review.dto.request.deprecated.RetrieveMyReviewsV2Request;
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewsCursorResponse;
-import com.depromeet.threedollar.api.service.review.dto.response.deprecated.ReviewsCursorV2Response;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.user.domain.review.Review;
 import com.depromeet.threedollar.domain.user.domain.review.ReviewCreator;
@@ -302,27 +300,6 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertThat(response.getData().getContents()).hasSize(1);
 
             assertReviewDetailInfoResponse(response.getData().getContents().get(0), review, deletedStore, testUser);
-        }
-
-        @Deprecated
-        @Test
-        void V2버전에서는_삭제된_가게인경우_해당_리뷰는_조회되지_않는다() throws Exception {
-            // given
-            Store deletedStore = StoreCreator.createDeletedWithDefaultMenu(testUser.getId(), "원래 가게 이름");
-            storeRepository.save(deletedStore);
-
-            Review review = ReviewCreator.create(deletedStore.getId(), testUser.getId(), "너무 맛있어요", 5);
-            reviewRepository.save(review);
-
-            RetrieveMyReviewsV2Request request = RetrieveMyReviewsV2Request.testInstance(2, null, null);
-
-            // when
-            ApiResponse<ReviewsCursorV2Response> response = reviewMockApiCaller.retrieveMyReviewHistoriesV2(request, token, 200);
-
-            // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(0);
-            assertThat(response.getData().getNextCursor()).isEqualTo(-1);
-            assertThat(response.getData().getContents()).isEmpty();
         }
 
     }

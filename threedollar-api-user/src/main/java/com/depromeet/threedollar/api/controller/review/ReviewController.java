@@ -7,10 +7,8 @@ import com.depromeet.threedollar.api.service.review.ReviewService;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
-import com.depromeet.threedollar.api.service.review.dto.request.deprecated.RetrieveMyReviewsV2Request;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewsCursorResponse;
-import com.depromeet.threedollar.api.service.review.dto.response.deprecated.ReviewsCursorV2Response;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.domain.user.event.review.ReviewChangedEvent;
 import com.depromeet.threedollar.domain.user.event.review.ReviewCreatedEvent;
@@ -75,22 +73,6 @@ public class ReviewController {
         @UserId Long userId
     ) {
         return ApiResponse.success(reviewRetrieveService.retrieveMyReviewHistories(request, userId));
-    }
-
-    /**
-     * v2.1.1 부터 Deprecated (앱 기준 최소 지원 버전 v2.4.0 이상인 경우 삭제)
-     * 내가 작성한 리뷰 조회시, 삭제된 가게들을 반환하되, 삭제된 가게라고 표기해줘야하는 이슈에 대응하기 위함. (호환성을 유지하기 위한 API)
-     * use GET /api/v3/store/reviews/me
-     */
-    @Deprecated
-    @ApiOperation("[인증] 마이 페이지 - 내가 작성한 리뷰 목록을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 X)")
-    @Auth
-    @GetMapping("/v2/store/reviews/me")
-    public ApiResponse<ReviewsCursorV2Response> retrieveMyReviewHistoriesV2(
-        @Valid RetrieveMyReviewsV2Request request,
-        @UserId Long userId
-    ) {
-        return ApiResponse.success(reviewRetrieveService.retrieveMyReviewHistoriesV2(request, userId));
     }
 
 }

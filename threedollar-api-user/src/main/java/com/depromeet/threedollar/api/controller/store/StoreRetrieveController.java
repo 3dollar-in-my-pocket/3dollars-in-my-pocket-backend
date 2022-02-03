@@ -7,12 +7,7 @@ import com.depromeet.threedollar.api.config.resolver.MapCoordinate;
 import com.depromeet.threedollar.api.config.resolver.UserId;
 import com.depromeet.threedollar.api.service.store.StoreRetrieveService;
 import com.depromeet.threedollar.api.service.store.dto.request.*;
-import com.depromeet.threedollar.api.service.store.dto.request.deprecated.RetrieveMyStoresV2Request;
-import com.depromeet.threedollar.api.service.store.dto.request.deprecated.RetrieveStoreGroupByCategoryV2Request;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
-import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByDistanceV2Response;
-import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByReviewV2Response;
-import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresCursorV2Response;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -55,53 +50,6 @@ public class StoreRetrieveController {
         @UserId Long userId
     ) {
         return ApiResponse.success(storeRetrieveService.retrieveMyReportedStoreHistories(request, userId));
-    }
-
-    /**
-     * v2.1.1 부터 Deprecated (앱 기준 최소 지원 버전 v2.4.0 이상인 경우 삭제)
-     * 내가 제보한 가게 조회시, 삭제된 가게들을 반환하되, 삭제된 가게라고 표기해줘야하는 이슈에 대응하기 위함. (호환성을 유지하기 위한 API)
-     * use GET /api/v3/stores/me
-     */
-    @Deprecated
-    @ApiOperation("[인증] 마이페이지 - 내가 제보한 가게 목록들을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 X)")
-    @Auth
-    @GetMapping("/v2/stores/me")
-    public ApiResponse<StoresCursorV2Response> retrieveMyReportedStoreHistoriesV2(
-        @Valid RetrieveMyStoresV2Request request,
-        @GeoCoordinate(required = false) CoordinateValue geoCoordinate,
-        @UserId Long userId
-    ) {
-        return ApiResponse.success(storeRetrieveService.retrieveMyReportedStoreHistoriesV2(request, geoCoordinate, userId));
-    }
-
-    /**
-     * v2.1.0부터 Deprecated (앱 기준 최소 지원 버전 v2.4.0 이상인 경우 삭제)
-     * GET /api/v2/stores/near로 통합 관리
-     */
-    @Deprecated
-    @ApiOperation("[Deprecated] 가게 카테고리별 조회 페이지 - 거리순으로 특정 메뉴를 판매하는 가게 목록을 조회합니다")
-    @GetMapping("/v2/stores/distance")
-    public ApiResponse<StoresGroupByDistanceV2Response> getStoresGroupByDistance(
-        @Valid RetrieveStoreGroupByCategoryV2Request request,
-        @GeoCoordinate CoordinateValue geoCoordinate,
-        @MapCoordinate CoordinateValue mapCoordinate
-    ) {
-        return ApiResponse.success(storeRetrieveService.getNearStoresGroupByDistance(request, geoCoordinate, mapCoordinate));
-    }
-
-    /**
-     * v2.1.0부터 Deprecated (앱 기준 최소 지원 버전 v2.4.0 이상인 경우 삭제)
-     * GET /api/v2/stores/near로 통합 관리
-     */
-    @Deprecated
-    @ApiOperation("[Deprecated] 가게 카테고리별 조회 페이지 - 리뷰순으로 특정 메뉴를 판매하는 가게 목록을 조회합니다")
-    @GetMapping("/v2/stores/review")
-    public ApiResponse<StoresGroupByReviewV2Response> getStoresGroupByReview(
-        @Valid RetrieveStoreGroupByCategoryV2Request request,
-        @GeoCoordinate CoordinateValue coordinate,
-        @MapCoordinate CoordinateValue mapCoordinate
-    ) {
-        return ApiResponse.success(storeRetrieveService.getNearStoresGroupByReview(request, coordinate, mapCoordinate));
     }
 
     @ApiOperation("주변에 가게가 존재하는지 확인하는 API")
