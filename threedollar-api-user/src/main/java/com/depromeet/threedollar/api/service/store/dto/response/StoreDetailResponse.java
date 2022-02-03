@@ -6,6 +6,7 @@ import com.depromeet.threedollar.api.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryCountsResponse;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoryWithUserResponse;
 import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
+import com.depromeet.threedollar.common.model.CoordinateValue;
 import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
 import com.depromeet.threedollar.domain.user.domain.review.Review;
@@ -58,9 +59,9 @@ public class StoreDetailResponse extends AuditingTimeResponse {
     private VisitHistoryCountsResponse visitHistory;
     private final List<VisitHistoryWithUserResponse> visitHistories = new ArrayList<>();
 
-    @Builder(access = AccessLevel.PRIVATE)
+    @Builder
     private StoreDetailResponse(Long storeId, double latitude, double longitude, String storeName, @Nullable StoreType storeType,
-                                double rating, int distance, StorePromotionResponse promotion, UserInfoResponse user, VisitHistoryCountsResponse visitHistory) {
+                                double rating, int distance, @Nullable StorePromotionResponse promotion, UserInfoResponse user, VisitHistoryCountsResponse visitHistory) {
         this.storeId = storeId;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -73,7 +74,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
         this.visitHistory = visitHistory;
     }
 
-    public static StoreDetailResponse of(Store store, double latitude, double longitude, List<StoreImage> storeImages, UserDictionary userDictionary,
+    public static StoreDetailResponse of(Store store, CoordinateValue geoCoordinate, List<StoreImage> storeImages, UserDictionary userDictionary,
                                          List<Review> reviews, VisitHistoryCounter visitHistoriesCollection, List<VisitHistoryWithUserProjection> visitHistories) {
         StoreDetailResponse response = StoreDetailResponse.builder()
             .storeId(store.getId())
@@ -82,7 +83,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
             .storeName(store.getName())
             .storeType(store.getType())
             .rating(store.getRating())
-            .distance(LocationDistanceUtils.getDistance(store.getLatitude(), store.getLongitude(), latitude, longitude))
+            .distance(LocationDistanceUtils.getDistance(store.getLatitude(), store.getLongitude(), geoCoordinate.getLatitude(), geoCoordinate.getLongitude()))
             .promotion(StorePromotionResponse.of(store.getPromotion()))
             .user(UserInfoResponse.of(userDictionary.getUser(store.getUserId())))
             .visitHistory(VisitHistoryCountsResponse.of(visitHistoriesCollection.getStoreExistsVisitsCount(store.getId()), visitHistoriesCollection.getStoreNotExistsVisitsCount(store.getId())))

@@ -68,12 +68,12 @@ public class StoreRetrieveService {
         List<Review> reviews = reviewRepository.findAllByStoreId(request.getStoreId());
         List<StoreImage> storeImages = storeImageRepository.findAllByStoreId(request.getStoreId());
         List<VisitHistoryWithUserProjection> visitHistories = visitHistoryRepository.findAllVisitWithUserByStoreIdAfterDate(request.getStoreId(), request.getStartDate());
-        UserDictionary userDictionary = UserDictionary.of(userRepository.findAllByUserId(assembleUserIds(reviews, visitHistories, store)));
+        UserDictionary userDictionary = UserDictionary.of(userRepository.findAllByUserId(concatUserIds(reviews, visitHistories, store)));
         VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(Collections.singletonList(store));
-        return StoreDetailResponse.of(store, geoCoordinate.getLatitude(), geoCoordinate.getLongitude(), storeImages, userDictionary, reviews, visitHistoriesCounter, visitHistories);
+        return StoreDetailResponse.of(store, geoCoordinate, storeImages, userDictionary, reviews, visitHistoriesCounter, visitHistories);
     }
 
-    private List<Long> assembleUserIds(List<Review> reviews, List<VisitHistoryWithUserProjection> visitHistories, Store store) {
+    private List<Long> concatUserIds(List<Review> reviews, List<VisitHistoryWithUserProjection> visitHistories, Store store) {
         return Stream.of(reviews.stream()
                 .map(Review::getUserId)
                 .collect(Collectors.toList()),
