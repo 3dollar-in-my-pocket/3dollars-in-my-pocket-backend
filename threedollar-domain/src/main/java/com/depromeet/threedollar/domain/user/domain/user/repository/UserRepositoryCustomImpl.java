@@ -25,7 +25,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
     public boolean existsByName(String name) {
         return queryFactory.selectOne()
             .setLockMode(LockModeType.PESSIMISTIC_WRITE)
-            .setHint("javax.persistence.lock.timeout", 2000)
+            .setHint("javax.persistence.lock.timeout", 3000)
             .from(user)
             .where(user.name.eq(name))
             .fetchFirst() != null;

@@ -47,7 +47,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
     public List<Review> findAllByStoreIdWithLock(Long storeId) {
         return queryFactory.selectFrom(review)
             .setLockMode(LockModeType.PESSIMISTIC_WRITE)
-            .setHint("javax.persistence.lock.timeout", 2000)
+            .setHint("javax.persistence.lock.timeout", 3000)
             .where(
                 review.storeId.eq(storeId),
                 review.status.eq(ReviewStatus.POSTED)
