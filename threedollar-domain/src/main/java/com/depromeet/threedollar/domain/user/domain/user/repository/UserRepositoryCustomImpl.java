@@ -20,7 +20,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
-    // TODO 호환상, name이 유니크 키로 잡혀있지 않아서, Locking Read 처리 중 -> 차후 마이그레이션 이후 유니크 키로 잡도록 고려.
+    // 호환상 name이 유니크 키로 잡혀있지 않아서, lost update 방지를 위해 Locking Read 처리 중 -> 차후 마이그레이션 이후 유니크 키로 잡도록 고려.
     @Override
     public boolean existsByName(String name) {
         return queryFactory.selectOne()

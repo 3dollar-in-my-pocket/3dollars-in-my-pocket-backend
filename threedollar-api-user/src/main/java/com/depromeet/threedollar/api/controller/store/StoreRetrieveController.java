@@ -52,7 +52,7 @@ public class StoreRetrieveController {
         return ApiResponse.success(storeRetrieveService.retrieveMyReportedStoreHistories(request, userId));
     }
 
-    @ApiOperation("주변에 가게가 존재하는지 확인하는 API")
+    @ApiOperation("가게 등록 페이지 - 주변에 가게가 존재하는지 확인하는 API")
     @GetMapping("/v1/stores/near/exists")
     public ApiResponse<CheckExistStoresNearbyResponse> checkExistStoresNearby(
         @Valid CheckExistsStoresNearbyRequest request,
