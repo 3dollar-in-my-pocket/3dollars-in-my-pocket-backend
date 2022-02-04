@@ -3,6 +3,7 @@ package com.depromeet.threedollar.boss.api.service.auth.policy
 import com.depromeet.threedollar.boss.api.service.account.BossAccountServiceUtils
 import com.depromeet.threedollar.boss.api.service.auth.AuthService
 import com.depromeet.threedollar.boss.api.service.auth.dto.request.LoginRequest
+import com.depromeet.threedollar.common.utils.HttpHeaderUtils
 import com.depromeet.threedollar.document.boss.document.account.BossAccountRepository
 import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
@@ -23,7 +24,7 @@ class GoogleAuthService(
     }
 
     override fun findSocialId(request: LoginRequest): String {
-        return googleAuthApiClient.getProfileInfo(request.token).id
+        return googleAuthApiClient.getProfileInfo(HttpHeaderUtils.withBearerToken(request.token)).id
     }
 
     companion object {
