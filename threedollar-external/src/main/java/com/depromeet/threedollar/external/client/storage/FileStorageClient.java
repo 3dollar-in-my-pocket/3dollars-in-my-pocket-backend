@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.external.client.filestorage;
+package com.depromeet.threedollar.external.client.storage;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.multipart.MultipartFile;

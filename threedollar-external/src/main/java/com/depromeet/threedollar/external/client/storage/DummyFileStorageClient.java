@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.external.client.filestorage;
+package com.depromeet.threedollar.external.client.storage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;

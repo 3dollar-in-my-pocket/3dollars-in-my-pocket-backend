@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.external.client;
+package com.depromeet.threedollar.external.client.local;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

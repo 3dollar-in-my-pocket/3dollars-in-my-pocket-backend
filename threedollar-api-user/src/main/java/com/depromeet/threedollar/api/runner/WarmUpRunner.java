@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.runner;
 
 import com.depromeet.threedollar.common.type.FamousPlace;
 import com.depromeet.threedollar.domain.user.domain.popup.PopupPlatformType;
-import com.depromeet.threedollar.external.client.LocalWarmUpApiClient;
+import com.depromeet.threedollar.external.client.local.LocalWarmUpApiClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
