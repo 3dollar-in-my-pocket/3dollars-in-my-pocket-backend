@@ -4,6 +4,7 @@ import com.depromeet.threedollar.domain.user.domain.store.Menu;
 import com.depromeet.threedollar.domain.user.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.user.domain.store.Store;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
 
@@ -14,9 +15,11 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MenuRequest {
 
+    @Length(max = 50, message = "{menu.name.length}")
     @NotNull(message = "{menu.name.notNull}")
     private String name;
 
+    @Length(max = 100, message = "{menu.price.length}")
     @NotNull(message = "{menu.price.notNull}")
     private String price;
 
