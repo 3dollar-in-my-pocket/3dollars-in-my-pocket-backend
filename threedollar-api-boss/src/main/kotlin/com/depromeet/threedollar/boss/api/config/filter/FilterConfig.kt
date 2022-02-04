@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Profile
 @Configuration
 class FilterConfig {
 
-    @Profile("local", "local-docker", "dev", "prod")
+    @Profile("dev", "prod")
     @Bean
     fun requestLoggingFilter(): FilterRegistrationBean<RequestLoggingFilter> {
         val filter: FilterRegistrationBean<RequestLoggingFilter> = FilterRegistrationBean(RequestLoggingFilter())

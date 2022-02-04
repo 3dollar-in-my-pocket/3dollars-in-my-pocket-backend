@@ -15,7 +15,7 @@
         <property name="LOG_DIR" value="logs/threedollar-api"/>
         <property name="LOG_INFO_FILE" value="${LOG_DIR}/info.log"/>
         <property name="LOG_WARN_FILE" value="${LOG_DIR}/warn.log"/>
-        <property name="LaOG_ERROR_FILE" value="${LOG_DIR}/error.log"/>
+        <property name="LOG_ERROR_FILE" value="${LOG_DIR}/error.log"/>
 
         <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <filter class="ch.qos.logback.classic.filter.ThresholdFilter">

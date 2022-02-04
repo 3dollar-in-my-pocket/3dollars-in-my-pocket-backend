@@ -16,7 +16,6 @@ spring:
     active: local
     default: local
     include:
-      - core
       - domain
       - redis
       - mongo
