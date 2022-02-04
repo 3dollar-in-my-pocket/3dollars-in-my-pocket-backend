@@ -15,11 +15,10 @@ class GoogleAuthService(
 ) : AuthService {
 
     override fun login(request: LoginRequest): String {
-        val googleProfile = googleAuthApiClient.getProfileInfo(request.token)
         return BossAccountServiceUtils.findBossAccountBySocialIdAndSocialType(
-            bossAccountRepository,
-            googleProfile.id,
-            SOCIAL_TYPE
+            bossAccountRepository = bossAccountRepository,
+            socialId = findSocialId(request),
+            socialType = SOCIAL_TYPE
         ).id
     }
 

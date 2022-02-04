@@ -8,6 +8,7 @@ import com.depromeet.threedollar.boss.api.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.boss.api.service.auth.dto.response.LoginResponse
 import com.depromeet.threedollar.boss.api.service.auth.SignupService
 import com.depromeet.threedollar.boss.api.service.auth.dto.request.SignupRequest
+import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody

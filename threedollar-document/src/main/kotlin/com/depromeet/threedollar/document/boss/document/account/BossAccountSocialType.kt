@@ -9,6 +9,7 @@ enum class BossAccountSocialType(
     KAKAO("카카오"),
     APPLE("애플"),
     GOOGLE("구글"),
+    NAVER("네이버"),
     ;
 
     override fun getKey(): String {
