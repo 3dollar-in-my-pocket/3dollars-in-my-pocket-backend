@@ -6,7 +6,7 @@
 ![img.png](images/logo.png)
 
 ### 프로젝트 설명
-전국 붕어빵파는 곳을 알려주는 **"가슴속 3천원"**
+전국 붕어빵파는 곳을 알려주는 [**가슴속 3천원**](https://intro.threedollars.co.kr/)
 
 **"가슴 속 3천원"** 은 겨울철 우리 가슴속에 지니고 다니는 3천원을 털어가는 붕어빵, 문어빵, 계란빵, 호떡 등을 파는 곳을 포함해 길거리 음식점들을 알려드립니다.
 
@@ -45,6 +45,11 @@
 - 오류 수집 & 알림: Sentry, Slack
 - APM 도구: NewRelic
 - 부하 테스트: locust
+
+| 서비스        | 운영 환경                                                                                                                           | 개발 환경                                                                                                                                |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| 유저 서비스   | ![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://threedollars.co.kr/api/ping) | ![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://dev.threedollars.co.kr/api/ping)  |
+| 사장님 서비스 | 개발 중                                                                                                                             | ![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://dev.threedollars.co.kr/boss/ping) |
 
 ## Contacts
 - 3dollarinmypocket@gmail.com (가슴속 삼천원 대표 메일)

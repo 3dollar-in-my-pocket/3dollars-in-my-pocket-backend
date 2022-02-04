@@ -31,7 +31,7 @@ class UserMedalControllerTest extends SetupUserControllerTest {
 
     @DisplayName("GET /api/v1/user/medals")
     @Nested
-    class 보유중인_훈장을_조회한다 {
+    class GetMyObtainedMedals {
 
         @Test
         void 보유중인_칭호들을_모두_조회한다() throws Exception {
@@ -70,7 +70,7 @@ class UserMedalControllerTest extends SetupUserControllerTest {
 
     @DisplayName("PUT /api/v1/user/medal")
     @Nested
-    class 장착중인_훈장을_변경한다 {
+    class ChangeRepresentaiveMedal {
 
         @Test
         void 장착중인_훈장을_변경한다() throws Exception {

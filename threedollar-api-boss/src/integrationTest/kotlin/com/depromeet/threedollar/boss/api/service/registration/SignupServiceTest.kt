@@ -12,6 +12,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
 
@@ -32,7 +33,7 @@ internal class SignupServiceTest(
     }
 
     @Test
-    fun `신규 가입을 신청하면 Registration 데이터가 추가된다`() {
+    fun `신규 가입을 신청하면 Registration 데이터가 WAITING 상태로 추가된다`() {
         // given
         val categoriesIds = createCategory(bossStoreCategoryRepository, "한식", "일식")
         val bossName = "will"
@@ -59,19 +60,22 @@ internal class SignupServiceTest(
 
         // then
         val registrations = registrationRepository.findAll()
-        assertThat(registrations).hasSize(1)
-        registrations[0].boss.let {
-            assertThat(it.name).isEqualTo(bossName)
-            assertThat(it.socialInfo.socialId).isEqualTo(socialId)
-            assertThat(it.socialInfo.socialType).isEqualTo(socialType)
-            assertThat(it.businessNumber.getNumberWithSeparator()).isEqualTo(businessNumber)
-        }
-        registrations[0].store.let {
-            assertThat(it.name).isEqualTo(storeName)
-            assertThat(it.categoriesIds).containsExactlyInAnyOrderElementsOf(categoriesIds)
-            assertThat(it.contactsNumber.getNumberWithSeparator()).isEqualTo(contactsNumber)
-            assertThat(it.certificationPhotoUrl).isEqualTo(certificationPhotoUrl)
-        }
+        assertAll({
+            assertThat(registrations).hasSize(1)
+            assertThat(registrations[0].status).isEqualTo(RegistrationStatus.WAITING)
+            registrations[0].boss.let {
+                assertThat(it.name).isEqualTo(bossName)
+                assertThat(it.socialInfo.socialId).isEqualTo(socialId)
+                assertThat(it.socialInfo.socialType).isEqualTo(socialType)
+                assertThat(it.businessNumber.getNumberWithSeparator()).isEqualTo(businessNumber)
+            }
+            registrations[0].store.let {
+                assertThat(it.name).isEqualTo(storeName)
+                assertThat(it.categoriesIds).containsExactlyInAnyOrderElementsOf(categoriesIds)
+                assertThat(it.contactsNumber.getNumberWithSeparator()).isEqualTo(contactsNumber)
+                assertThat(it.certificationPhotoUrl).isEqualTo(certificationPhotoUrl)
+            }
+        })
     }
 
     @Test

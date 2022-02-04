@@ -9,6 +9,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.geo.Point
 import org.springframework.test.context.TestConstructor
@@ -65,9 +66,11 @@ class BossStoreOpenServiceTest(
 
         // then
         val bossStoreOpenInfos = bossStoreOpenInfoRepository.findAll()
-        assertThat(bossStoreOpenInfos).hasSize(1)
-        assertThat(bossStoreOpenInfos[0].bossStoreId).isEqualTo(bossStore.id)
-        assertThat(bossStoreOpenInfos[0].openStartDateTime).isEqualTo(startDateTime)
+        assertAll({
+            assertThat(bossStoreOpenInfos).hasSize(1)
+            assertThat(bossStoreOpenInfos[0].bossStoreId).isEqualTo(bossStore.id)
+            assertThat(bossStoreOpenInfos[0].openStartDateTime).isEqualTo(startDateTime)
+        })
     }
 
     @Test
@@ -87,8 +90,10 @@ class BossStoreOpenServiceTest(
 
         // then
         val bossStoreLocations = bossStoreLocationRepository.findAll()
-        assertThat(bossStoreLocations).hasSize(1)
-        assertThat(bossStoreLocations[0].location).isEqualTo(Point(longitude, latitude))
+        assertAll({
+            assertThat(bossStoreLocations).hasSize(1)
+            assertThat(bossStoreLocations[0].location).isEqualTo(Point(longitude, latitude))
+        })
     }
 
     @Test
@@ -113,8 +118,10 @@ class BossStoreOpenServiceTest(
 
         // then
         val bossStoreLocations = bossStoreLocationRepository.findAll()
-        assertThat(bossStoreLocations).hasSize(1)
-        assertThat(bossStoreLocations[0].location).isEqualTo(Point(longitude, latitude))
+        assertAll({
+            assertThat(bossStoreLocations).hasSize(1)
+            assertThat(bossStoreLocations[0].location).isEqualTo(Point(longitude, latitude))
+        })
     }
 
     @Test

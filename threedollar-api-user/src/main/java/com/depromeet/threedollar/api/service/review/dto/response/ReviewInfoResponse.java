@@ -12,13 +12,16 @@ import org.jetbrains.annotations.Nullable;
 public class ReviewInfoResponse extends AuditingTimeResponse {
 
     private Long reviewId;
+
     private Long storeId;
+
     @Nullable
     private String contents;
+
     private int rating;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private ReviewInfoResponse(Long reviewId, Long storeId, String contents, int rating) {
+    private ReviewInfoResponse(Long reviewId, Long storeId, @Nullable String contents, int rating) {
         this.reviewId = reviewId;
         this.storeId = storeId;
         this.contents = contents;

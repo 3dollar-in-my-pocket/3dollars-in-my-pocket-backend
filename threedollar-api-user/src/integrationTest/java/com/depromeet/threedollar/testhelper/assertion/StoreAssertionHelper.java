@@ -35,13 +35,10 @@ public final class StoreAssertionHelper {
     }
 
     public static void assertStoreInfoResponse(StoreInfoResponse response, Store store) {
+        assertStoreInfoResponse(response, store.getLatitude(), store.getLongitude(), store.getName(), store.getMenuCategoriesSortedByCounts());
         assertAll(
             () -> assertThat(response.getStoreId()).isEqualTo(store.getId()),
-            () -> assertThat(response.getStoreName()).isEqualTo(store.getName()),
-            () -> assertThat(response.getLatitude()).isEqualTo(store.getLatitude()),
-            () -> assertThat(response.getLongitude()).isEqualTo(store.getLongitude()),
             () -> assertThat(response.getRating()).isEqualTo(store.getRating()),
-            () -> assertThat(response.getCategories()).isEqualTo(store.getMenuCategoriesSortedByCounts()),
             () -> assertThat(response.getIsDeleted()).isEqualTo(store.isDeleted())
         );
     }

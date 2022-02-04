@@ -10,7 +10,6 @@ public class LocationDistanceUtils {
 
     /**
      * 두 위도/경도간의 거리를 계산해주는 유틸성 메소드.
-     * 일단 기존의 프로젝트의 방법 적용하였음.
      */
     public static int getDistance(double sourceLatitude, double sourceLongitude, double targetLatitude, double targetLongitude) {
         if (sourceLatitude == 0 || sourceLongitude == 0 || targetLatitude == 0 || targetLongitude == 0) {

@@ -378,7 +378,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         @Test
         void 존재하지_않는_가게를_수정시_NOT_FOUND_STORE_EXCEPTION() {
             // given
-            Long notFoundStoreId = -1L;
+            long notFoundStoreId = -1L;
 
             UpdateStoreRequest request = UpdateStoreRequest.testBuilder()
                 .latitude(34.0)
@@ -397,7 +397,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         @Test
         void 내가_등록하지_않은_가게도_수정할수있다_단_제보자는_최초_제보자로_유지된다() {
             // given
-            Long creatorUserId = 100L;
+            long creatorUserId = 100L;
 
             Store store = StoreCreator.createWithDefaultMenu(creatorUserId, "storeName");
             storeRepository.save(store);

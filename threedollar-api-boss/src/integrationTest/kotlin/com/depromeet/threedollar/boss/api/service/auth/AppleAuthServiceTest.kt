@@ -5,8 +5,8 @@ import com.depromeet.threedollar.boss.api.service.auth.policy.AppleAuthService
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.document.boss.document.account.*
 import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -51,7 +51,7 @@ internal class AppleAuthServiceTest(
     @Test
     fun `애플 로그인시 가입한 유저가 아니면 404 에러 발생`() {
         // when & then
-        Assertions.assertThatThrownBy { authService.login(LoginRequest("token", SOCIAL_TYPE)) }.isInstanceOf(NotFoundException::class.java)
+        assertThatThrownBy { authService.login(LoginRequest("token", SOCIAL_TYPE)) }.isInstanceOf(NotFoundException::class.java)
     }
 
     private class StubAppleTokenDecoder : AppleTokenDecoder {

@@ -14,10 +14,6 @@ public class StoreRadiusDistance {
         return new StoreRadiusDistance(distance);
     }
 
-    public static StoreRadiusDistance max() {
-        return new StoreRadiusDistance(MAX_RADIUS_DISTANCE);
-    }
-
     public double getAvailableDistance() {
         return Math.min(distance, MAX_RADIUS_DISTANCE);
     }

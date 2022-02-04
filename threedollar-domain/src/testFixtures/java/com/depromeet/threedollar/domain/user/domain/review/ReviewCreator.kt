@@ -34,7 +34,7 @@ object ReviewCreator {
             .contents(contents)
             .rating(rating)
             .status(ReviewStatus.DELETED)
-            .build();
+            .build()
         review.delete()
         return review
     }

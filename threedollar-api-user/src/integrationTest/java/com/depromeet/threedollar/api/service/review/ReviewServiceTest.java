@@ -92,7 +92,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
         @Test
         void 없는_리뷰에_수정하려하면_NOT_FOUND_REVIEW_EXCEPTION() {
             // given
-            Long notFoundReviewId = -1L;
+            long notFoundReviewId = -1L;
             UpdateReviewRequest request = UpdateReviewRequest.testInstance("content", 5);
 
             // when & then
@@ -102,7 +102,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
         @Test
         void 내가_작성하지_않은_리뷰를_수정하려하면_NOT_FOUND_REVIEW_EXCEPTION() {
             // given
-            Long creatorId = 10000L;
+            long creatorId = 10000L;
             Review review = ReviewCreator.create(store.getId(), creatorId, "너무 맛있어요", 3);
             reviewRepository.save(review);
 
