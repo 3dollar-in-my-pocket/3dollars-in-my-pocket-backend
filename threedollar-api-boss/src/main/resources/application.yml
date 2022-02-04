@@ -49,9 +49,17 @@ management:
       exposure:
         include:
           - health
+          - metrics
+          - threaddump
+          - heapdump
+          - loggers
+          - scheduledtasks
+          - configprops
   endpoint:
     health:
       show-details: always
+    logfile:
+      external-file: /logs/threedollar-api-boss/info.log
 
 
 ---

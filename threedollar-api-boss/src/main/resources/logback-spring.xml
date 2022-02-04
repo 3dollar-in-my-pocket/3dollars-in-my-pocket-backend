@@ -12,7 +12,7 @@
     </springProfile>
 
     <springProfile name="dev">
-        <property name="LOG_DIR" value="logs/threedollar-boss-api"/>
+        <property name="LOG_DIR" value="logs/threedollar-api-boss"/>
         <property name="LOG_INFO_FILE" value="${LOG_DIR}/info.log"/>
         <property name="LOG_WARN_FILE" value="${LOG_DIR}/warn.log"/>
         <property name="LOG_ERROR_FILE" value="${LOG_DIR}/error.log"/>
@@ -87,7 +87,7 @@
     </springProfile>
 
     <springProfile name="prod">
-        <property name="LOG_DIR" value="logs/threedollar-api"/>
+        <property name="LOG_DIR" value="logs/threedollar-api-boss"/>
         <property name="LOG_INFO_FILE" value="${LOG_DIR}/info.log"/>
         <property name="LOG_WARN_FILE" value="${LOG_DIR}/warn.log"/>
         <property name="LOG_ERROR_FILE" value="${LOG_DIR}/error.log"/>
