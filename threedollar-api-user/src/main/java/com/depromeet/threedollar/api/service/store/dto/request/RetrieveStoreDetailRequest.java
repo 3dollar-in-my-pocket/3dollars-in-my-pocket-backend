@@ -23,8 +23,4 @@ public class RetrieveStoreDetailRequest {
         return new RetrieveStoreDetailRequest(storeId, startDate);
     }
 
-    public static RetrieveStoreDetailRequest testInstance(Long storeId) {
-        return new RetrieveStoreDetailRequest(storeId, null);
-    }
-
 }
