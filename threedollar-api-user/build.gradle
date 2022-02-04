@@ -1,7 +1,6 @@
 ext {
     swaggerVersion = "3.0.0"
     sentryVersion = "5.4.3"
-    springRetryVersion = "1.3.1"
 }
 
 dependencies {
@@ -10,27 +9,18 @@ dependencies {
     // Spring MVC
     implementation("org.springframework.boot:spring-boot-starter-web")
 
-    // Spring actuator
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-
-    // Spring Security
-    implementation("org.springframework.boot:spring-boot-starter-security")
-
     // Spring Session Redis
     implementation("org.springframework.session:spring-session-data-redis")
 
-    // Spring Retry
-    implementation("org.springframework.retry:spring-retry:${springRetryVersion}")
-
-    // swagger
+    // Swagger
     implementation("io.springfox:springfox-boot-starter:${swaggerVersion}")
     implementation("io.springfox:springfox-swagger-ui:${swaggerVersion}")
 
-    // sentry
+    // Sentry
     implementation("io.sentry:sentry-spring-boot-starter:${sentryVersion}")
     implementation("io.sentry:sentry-logback:${sentryVersion}")
 
-    // textFixtures
+    // TestFixtures
     testImplementation(testFixtures(project(":threedollar-domain")))
 }
 

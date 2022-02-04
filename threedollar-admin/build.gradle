@@ -7,7 +7,7 @@ dependencies {
     // Spring Session Redis
     implementation("org.springframework.session:spring-session-data-redis")
 
-    // textFixtures
+    // TestFixtures
     testImplementation(testFixtures(project(":threedollar-domain")))
 }
 

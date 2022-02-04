@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.config.benchmark;
+package com.depromeet.threedollar.application.config.benchmark;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class BenchMarkAspect {
 
-    @Around("@annotation(com.depromeet.threedollar.api.config.benchmark.BenchMark)")
+    @Around("@annotation(com.depromeet.threedollar.application.config.benchmark.BenchMark)")
     public Object calculatePerformance(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
         try {

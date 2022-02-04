@@ -16,7 +16,7 @@ dependencies {
     implementation("io.springfox:springfox-boot-starter:${swaggerVersion}")
     implementation("io.springfox:springfox-swagger-ui:${swaggerVersion}")
 
-    // textFixtures
+    // TestFixtures
     testImplementation(testFixtures(project(":threedollar-document")))
     testImplementation(testFixtures(project(":threedollar-redis")))
 }
