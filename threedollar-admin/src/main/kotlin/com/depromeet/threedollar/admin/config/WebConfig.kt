@@ -39,7 +39,7 @@ class WebConfig(
         val messageSource = ReloadableResourceBundleMessageSource()
         messageSource.setBasename("classpath:/messages/validation")
         messageSource.setDefaultEncoding("UTF-8")
-        messageSource.setCacheSeconds(10)
+        messageSource.setCacheSeconds(60)
         return messageSource
     }
 

@@ -1,7 +1,3 @@
-ext {
-    swaggerVersion = "3.0.0"
-}
-
 dependencies {
     implementation project(':threedollar-api-core')
     implementation project(':threedollar-document')
@@ -15,6 +11,10 @@ dependencies {
     // Swagger
     implementation("io.springfox:springfox-boot-starter:${swaggerVersion}")
     implementation("io.springfox:springfox-swagger-ui:${swaggerVersion}")
+
+    // Sentry
+    implementation("io.sentry:sentry-spring-boot-starter:${sentryVersion}")
+    implementation("io.sentry:sentry-logback:${sentryVersion}")
 
     // TestFixtures
     testImplementation(testFixtures(project(":threedollar-document")))

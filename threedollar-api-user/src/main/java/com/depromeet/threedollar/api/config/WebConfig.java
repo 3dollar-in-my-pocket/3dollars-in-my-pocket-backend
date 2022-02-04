@@ -52,7 +52,7 @@ public class WebConfig implements WebMvcConfigurer {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:/messages/validation");
         messageSource.setDefaultEncoding("UTF-8");
-        messageSource.setCacheSeconds(10);
+        messageSource.setCacheSeconds(60);
         return messageSource;
     }
 

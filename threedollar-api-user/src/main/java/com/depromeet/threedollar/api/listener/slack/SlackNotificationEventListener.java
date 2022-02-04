@@ -4,7 +4,6 @@ import com.depromeet.threedollar.domain.common.event.ApplicationStateChangedEven
 import com.depromeet.threedollar.domain.common.event.ServerExceptionOccurredEvent;
 import com.depromeet.threedollar.external.client.slack.SlackNotificationApiClient;
 import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest;
-import io.sentry.Sentry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
@@ -22,8 +21,6 @@ public class SlackNotificationEventListener {
     @Async
     @EventListener
     public void sendErrorNotification(ServerExceptionOccurredEvent event) {
-        Sentry.captureException(event.getException());
-
         slackNotificationApiClient.postMessage(PostSlackMessageRequest.of(ERROR_MESSAGE.generateMessage(
             event.getApplicationType().getDescription(),
             event.getErrorCode().getCode(),

@@ -16,6 +16,7 @@ spring:
     active: local
     default: local
     include:
+      - core
       - domain
       - redis
       - sentry
@@ -35,24 +36,6 @@ spring:
       time: HH:mm
     servlet:
       load-on-startup: 1
-
-  security:
-    user:
-      name: ${secret.security.user.name}
-      password: ${secret.security.user.password}
-
-# actuator
-management:
-  endpoints:
-    web:
-      base-path: /monitoring
-      exposure:
-        include:
-          - health
-  endpoint:
-    health:
-      show-details: always
-
 
 ---
 spring.config:
