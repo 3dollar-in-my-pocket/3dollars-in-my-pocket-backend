@@ -52,7 +52,6 @@ management:
           - threaddump
           - heapdump
           - loggers
-          - scheduledtasks
           - configprops
   endpoint:
     health:
