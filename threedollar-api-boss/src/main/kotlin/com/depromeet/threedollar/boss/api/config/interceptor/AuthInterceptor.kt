@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.boss.api.config.interceptor
 
-import com.depromeet.threedollar.boss.api.config.resolver.Auth
 import com.depromeet.threedollar.common.exception.model.UnAuthorizedException
 import com.depromeet.threedollar.boss.api.config.session.SessionConstants.BOSS_ACCOUNT_ID
 import com.depromeet.threedollar.document.boss.document.account.BossAccountRepository

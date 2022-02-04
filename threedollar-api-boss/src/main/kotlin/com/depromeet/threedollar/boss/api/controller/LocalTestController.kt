@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.boss.api.controller
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse
-import com.depromeet.threedollar.boss.api.config.resolver.Auth
+import com.depromeet.threedollar.boss.api.config.interceptor.Auth
 import com.depromeet.threedollar.boss.api.config.resolver.BossId
 import com.depromeet.threedollar.boss.api.config.session.SessionConstants
 import com.depromeet.threedollar.boss.api.service.auth.dto.response.LoginResponse

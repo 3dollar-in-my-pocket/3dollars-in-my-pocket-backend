@@ -4,8 +4,14 @@ dependencies {
     // Spring MVC
     implementation("org.springframework.boot:spring-boot-starter-web")
 
+    // Spring Security
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
     // Spring Session Redis
     implementation("org.springframework.session:spring-session-data-redis")
+
+    // Spring actuator
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     // Swagger
     implementation("io.springfox:springfox-boot-starter:${swaggerVersion}")

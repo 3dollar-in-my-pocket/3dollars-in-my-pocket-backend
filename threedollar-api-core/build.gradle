@@ -10,12 +10,6 @@ dependencies {
     // Jackson
     implementation("org.springframework.boot:spring-boot-starter-json")
 
-    // Spring actuator
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-
-    // Spring Security
-    api("org.springframework.boot:spring-boot-starter-security")
-
     // Spring Retry
     api("org.springframework.retry:spring-retry:${springRetryVersion}")
 }

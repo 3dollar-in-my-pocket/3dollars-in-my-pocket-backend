@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.application.config.security;
+package com.depromeet.threedollar.api.config.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,8 +13,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring()
-            .antMatchers(
+        web.ignoring().antMatchers(
                 "/h2-console/**",
                 "/swagger-resources/**",
                 "swagger-ui/**",
