@@ -43,7 +43,7 @@ class BossStoreRetrieveService(
             .map { it.bossStoreId to it }
             .toMap()
 
-        return bossStores.map { it ->
+        return bossStores.map {
             BossStoreInfoResponse.of(
                 bossStore = it,
                 categories = getCategory(it, categoriesDictionary),

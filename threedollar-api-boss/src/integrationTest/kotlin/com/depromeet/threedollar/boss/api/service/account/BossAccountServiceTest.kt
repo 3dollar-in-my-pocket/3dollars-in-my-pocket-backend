@@ -6,7 +6,7 @@ import com.depromeet.threedollar.document.boss.document.account.BossAccountCreat
 import com.depromeet.threedollar.document.boss.document.account.BossAccountRepository
 import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
 import com.depromeet.threedollar.document.boss.document.account.PushSettingsStatus
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
@@ -46,12 +46,12 @@ internal class BossAccountServiceTest(
         // then
         val bossAccounts = bossAccountRepository.findAll()
         assertAll({
-            Assertions.assertThat(bossAccounts).hasSize(1)
-            Assertions.assertThat(bossAccounts[0].name).isEqualTo(name)
-            Assertions.assertThat(bossAccounts[0].pushSettingsStatus).isEqualTo(pushSettingsStatus)
-            Assertions.assertThat(bossAccounts[0].id).isEqualTo(bossAccount.id)
-            Assertions.assertThat(bossAccounts[0].socialInfo).isEqualTo(bossAccount.socialInfo)
-            Assertions.assertThat(bossAccounts[0].businessNumber).isEqualTo(bossAccount.businessNumber)
+            assertThat(bossAccounts).hasSize(1)
+            assertThat(bossAccounts[0].name).isEqualTo(name)
+            assertThat(bossAccounts[0].pushSettingsStatus).isEqualTo(pushSettingsStatus)
+            assertThat(bossAccounts[0].id).isEqualTo(bossAccount.id)
+            assertThat(bossAccounts[0].socialInfo).isEqualTo(bossAccount.socialInfo)
+            assertThat(bossAccounts[0].businessNumber).isEqualTo(bossAccount.businessNumber)
         })
     }
 

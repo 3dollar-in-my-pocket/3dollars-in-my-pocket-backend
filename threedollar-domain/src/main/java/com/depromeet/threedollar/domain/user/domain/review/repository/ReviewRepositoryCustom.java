@@ -16,12 +16,6 @@ public interface ReviewRepositoryCustom {
 
     long findCountsByUserId(Long userId);
 
-    @Deprecated
-    long findActiveCountsByUserId(Long userId);
-
     List<Review> findAllByUserIdUsingCursor(Long userId, Long lastStoreId, int size);
-
-    @Deprecated
-    List<Review> findAllActiveByUserIdUsingCursor(Long userId, Long lastStoreId, int size);
 
 }

@@ -52,13 +52,6 @@ public class StoreWithVisitsAndDistanceResponse extends AuditingTimeResponse {
         this.isDeleted = isDeleted;
     }
 
-    public static StoreWithVisitsAndDistanceResponse testInstance(int distance, double rating) {
-        return StoreWithVisitsAndDistanceResponse.builder()
-            .distance(distance)
-            .rating(rating)
-            .build();
-    }
-
     public static StoreWithVisitsAndDistanceResponse of(@NotNull Store store, double latitude, double longitude, VisitHistoryCounter visitsCounter) {
         StoreWithVisitsAndDistanceResponse response = StoreWithVisitsAndDistanceResponse.builder()
             .storeId(store.getId())

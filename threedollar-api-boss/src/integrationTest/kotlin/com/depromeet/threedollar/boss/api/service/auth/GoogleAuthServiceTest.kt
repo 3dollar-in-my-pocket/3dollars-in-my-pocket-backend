@@ -6,7 +6,8 @@ import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.document.boss.document.account.*
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
 import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -45,13 +46,13 @@ internal class GoogleAuthServiceTest(
         val accountId = authService.login(LoginRequest("token", SOCIAL_TYPE))
 
         // then
-        Assertions.assertThat(accountId).isEqualTo(bossAccount.id)
+        assertThat(accountId).isEqualTo(bossAccount.id)
     }
 
     @Test
     fun `구글 로그인시 가입한 유저가 아니면 404 에러 발생`() {
         // when & then
-        Assertions.assertThatThrownBy { authService.login(LoginRequest("token", SOCIAL_TYPE)) }.isInstanceOf(NotFoundException::class.java)
+        assertThatThrownBy { authService.login(LoginRequest("token", SOCIAL_TYPE)) }.isInstanceOf(NotFoundException::class.java)
     }
 
     private class StubGoogleAuthApiClient : GoogleAuthApiClient {

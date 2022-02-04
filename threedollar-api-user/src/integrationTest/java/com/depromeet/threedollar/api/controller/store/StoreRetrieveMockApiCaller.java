@@ -3,12 +3,7 @@ package com.depromeet.threedollar.api.controller.store;
 import com.depromeet.threedollar.common.model.CoordinateValue;
 import com.depromeet.threedollar.api.controller.MockMvcUtils;
 import com.depromeet.threedollar.api.service.store.dto.request.*;
-import com.depromeet.threedollar.api.service.store.dto.request.deprecated.RetrieveMyStoresV2Request;
-import com.depromeet.threedollar.api.service.store.dto.request.deprecated.RetrieveStoreGroupByCategoryV2Request;
 import com.depromeet.threedollar.api.service.store.dto.response.*;
-import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByDistanceV2Response;
-import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresGroupByReviewV2Response;
-import com.depromeet.threedollar.api.service.store.dto.response.deprecated.StoresCursorV2Response;
 import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -74,67 +69,6 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))
             .param("cursor", request.getCursor() == null ? null : String.valueOf(request.getCursor()));
-
-        return objectMapper.readValue(
-            mockMvc.perform(builder)
-                .andExpect(status().is(expectedStatus))
-                .andDo(print())
-                .andReturn()
-                .getResponse()
-                .getContentAsString(StandardCharsets.UTF_8), new TypeReference<>() {
-            }
-        );
-    }
-
-    @Deprecated
-    ApiResponse<StoresCursorV2Response> retrieveMyReportedStoreHistoriesV2(RetrieveMyStoresV2Request request, CoordinateValue coordinate, String token, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = get("/v2/stores/me")
-            .header(HttpHeaders.AUTHORIZATION, token)
-            .param("size", String.valueOf(request.getSize()))
-            .param("cursor", request.getCursor() == null ? null : String.valueOf(request.getCursor()))
-            .param("cachingTotalElements", request.getCachingTotalElements() == null ? null : String.valueOf(request.getCachingTotalElements()))
-            .param("latitude", String.valueOf(coordinate.getLatitude()))
-            .param("longitude", String.valueOf(coordinate.getLongitude()));
-
-        return objectMapper.readValue(
-            mockMvc.perform(builder)
-                .andExpect(status().is(expectedStatus))
-                .andDo(print())
-                .andReturn()
-                .getResponse()
-                .getContentAsString(StandardCharsets.UTF_8), new TypeReference<>() {
-            }
-        );
-    }
-
-    @Deprecated
-    ApiResponse<StoresGroupByDistanceV2Response> getStoresGroupByDistance(RetrieveStoreGroupByCategoryV2Request request, CoordinateValue coordinate, CoordinateValue mapCoordinate, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = get("/v2/stores/distance")
-            .param("latitude", String.valueOf(coordinate.getLatitude()))
-            .param("longitude", String.valueOf(coordinate.getLongitude()))
-            .param("mapLatitude", String.valueOf(mapCoordinate.getLatitude()))
-            .param("mapLongitude", String.valueOf(mapCoordinate.getLongitude()))
-            .param("category", String.valueOf(request.getCategory()));
-
-        return objectMapper.readValue(
-            mockMvc.perform(builder)
-                .andExpect(status().is(expectedStatus))
-                .andDo(print())
-                .andReturn()
-                .getResponse()
-                .getContentAsString(StandardCharsets.UTF_8), new TypeReference<>() {
-            }
-        );
-    }
-
-    @Deprecated
-    ApiResponse<StoresGroupByReviewV2Response> getStoresGroupByReview(RetrieveStoreGroupByCategoryV2Request request, CoordinateValue coordinate, CoordinateValue mapCoordinate, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = get("/v2/stores/review")
-            .param("latitude", String.valueOf(coordinate.getLatitude()))
-            .param("longitude", String.valueOf(coordinate.getLongitude()))
-            .param("mapLatitude", String.valueOf(mapCoordinate.getLatitude()))
-            .param("mapLongitude", String.valueOf(mapCoordinate.getLongitude()))
-            .param("category", String.valueOf(request.getCategory()));
 
         return objectMapper.readValue(
             mockMvc.perform(builder)

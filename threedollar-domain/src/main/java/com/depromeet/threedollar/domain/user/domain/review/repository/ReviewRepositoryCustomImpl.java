@@ -2,7 +2,6 @@ package com.depromeet.threedollar.domain.user.domain.review.repository;
 
 import com.depromeet.threedollar.domain.user.domain.review.Review;
 import com.depromeet.threedollar.domain.user.domain.review.ReviewStatus;
-import com.depromeet.threedollar.domain.user.domain.store.StoreStatus;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import java.util.List;
 import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_REVIEWS_COUNTS;
 import static com.depromeet.threedollar.domain.user.domain.review.QReview.review;
 import static com.depromeet.threedollar.domain.user.domain.store.QStore.store;
-import static com.depromeet.threedollar.domain.user.domain.user.QUser.user;
 
 @RequiredArgsConstructor
 public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
@@ -47,7 +45,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
     public List<Review> findAllByStoreIdWithLock(Long storeId) {
         return queryFactory.selectFrom(review)
             .setLockMode(LockModeType.PESSIMISTIC_WRITE)
-            .setHint("javax.persistence.lock.timeout", 2000)
+            .setHint("javax.persistence.lock.timeout", 3000)
             .where(
                 review.storeId.eq(storeId),
                 review.status.eq(ReviewStatus.POSTED)
@@ -68,21 +66,6 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
             .fetchCount();
     }
 
-    @Deprecated
-    @Override
-    public long findActiveCountsByUserId(Long userId) {
-        return queryFactory.select(review.id)
-            .from(review)
-            .innerJoin(user).on(review.userId.eq(user.id))
-            .innerJoin(store).on(review.storeId.eq(store.id))
-            .where(
-                review.userId.eq(userId),
-                review.status.eq(ReviewStatus.POSTED),
-                store.status.eq(StoreStatus.ACTIVE)
-            )
-            .fetchCount();
-    }
-
     @Override
     public List<Review> findAllByUserIdUsingCursor(Long userId, Long lastStoreId, int size) {
         return queryFactory.selectFrom(review)
@@ -93,29 +76,6 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
             )
             .orderBy(review.id.desc())
             .limit(size)
-            .fetch();
-    }
-
-    @Deprecated
-    @Override
-    public List<Review> findAllActiveByUserIdUsingCursor(Long userId, Long lastStoreId, int size) {
-        List<Long> reviewIds = queryFactory.select(review.id)
-            .from(review)
-            .innerJoin(store).on(review.storeId.eq(store.id))
-            .where(
-                review.userId.eq(userId),
-                review.status.eq(ReviewStatus.POSTED),
-                store.status.eq(StoreStatus.ACTIVE),
-                lessThanId(lastStoreId)
-            )
-            .orderBy(review.id.desc())
-            .limit(size)
-            .fetch();
-        return queryFactory.selectFrom(review)
-            .where(
-                review.id.in(reviewIds)
-            )
-            .orderBy(review.id.desc())
             .fetch();
     }
 

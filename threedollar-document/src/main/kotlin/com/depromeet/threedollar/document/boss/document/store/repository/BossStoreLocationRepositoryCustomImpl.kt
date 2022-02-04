@@ -17,7 +17,7 @@ class BossStoreLocationRepositoryCustomImpl(
     override fun findNearBossStoreLocations(latitude: Double, longitude: Double, maxDistance: Double): List<BossStoreLocation> {
         return mongoTemplate.find(Query()
             .addCriteria(
-                where(BossStoreLocation::location.toString())
+                where("location")
                     .nearSphere(Point(longitude, latitude))
                     .maxDistance(Distance(maxDistance, Metrics.KILOMETERS).normalizedValue)), BossStoreLocation::class.java
         )

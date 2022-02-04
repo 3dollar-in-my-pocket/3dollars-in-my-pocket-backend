@@ -6,6 +6,7 @@ import com.depromeet.threedollar.domain.user.domain.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.user.domain.store.Store;
 import com.depromeet.threedollar.domain.user.domain.store.StoreType;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 import org.jetbrains.annotations.Nullable;
 
 import javax.validation.Valid;
@@ -27,6 +28,7 @@ public class UpdateStoreRequest {
     @NotNull(message = "{store.longitude.notNull}")
     private Double longitude;
 
+    @Length(max = 300, message = "{store.name.length}")
     @NotBlank(message = "{store.name.notBlank}")
     private String storeName;
 

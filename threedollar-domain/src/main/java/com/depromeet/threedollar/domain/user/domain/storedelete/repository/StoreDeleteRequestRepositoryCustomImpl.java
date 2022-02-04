@@ -17,7 +17,7 @@ public class StoreDeleteRequestRepositoryCustomImpl implements StoreDeleteReques
     public List<Long> findAllUserIdByStoreIdWithLock(Long storeId) {
         return queryFactory.select(storeDeleteRequest.userId)
             .setLockMode(LockModeType.PESSIMISTIC_WRITE)
-            .setHint("javax.persistence.lock.timeout", 2000)
+            .setHint("javax.persistence.lock.timeout", 3000)
             .from(storeDeleteRequest)
             .where(
                 storeDeleteRequest.store.id.eq(storeId)

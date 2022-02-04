@@ -6,6 +6,11 @@ server:
       charset: UTF-8
       force: true
     context-path: /admin
+  tomcat:
+    threads:
+      max: 200
+    connection-timeout: 30s
+
 spring:
   profiles:
     active: local
@@ -25,7 +30,7 @@ spring:
     format:
       date: yyyy-MM-dd
       date-time: yyyy-MM-dd'T'HH:mm:ss
-      time: HH:mm:ss
+      time: HH:mm
     servlet:
       load-on-startup: 1
 

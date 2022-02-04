@@ -45,13 +45,15 @@ data class BossStoreInfoResponse(
 }
 
 data class BossStoreCategoryResponse(
-    val title: String
+    val categoryId: String,
+    val name: String
 ) {
 
     companion object {
         fun of(bossStoreCategory: BossStoreCategory): BossStoreCategoryResponse {
             return BossStoreCategoryResponse(
-                title = bossStoreCategory.title
+                categoryId = bossStoreCategory.id,
+                name = bossStoreCategory.name
             )
         }
     }
@@ -98,16 +100,16 @@ data class BossStoreMenuResponse(
 
 
 data class BossStoreAppearanceDayResponse(
-    val day: DayOfTheWeek,
-    val openTime: TimeInterval,
+    val dayOfTheWeek: DayOfTheWeek,
+    val openingHours: TimeInterval,
     val locationDescription: String
 ) {
 
     companion object {
         fun of(appearanceDay: BossStoreAppearanceDay): BossStoreAppearanceDayResponse {
             return BossStoreAppearanceDayResponse(
-                day = appearanceDay.day,
-                openTime = appearanceDay.openTime,
+                dayOfTheWeek = appearanceDay.dayOfTheWeek,
+                openingHours = appearanceDay.openingHours,
                 locationDescription = appearanceDay.locationDescription
             )
         }
@@ -118,21 +120,21 @@ data class BossStoreAppearanceDayResponse(
 
 data class BossStoreOpenStatusResponse(
     val status: BossStoreOpenType,
-    val startDateTime: LocalDateTime?
+    val openStartDateTime: LocalDateTime?
 ) {
 
     companion object {
         fun of(bossStoreOpenInfo: BossStoreOpenInfo): BossStoreOpenStatusResponse {
             return BossStoreOpenStatusResponse(
                 status = BossStoreOpenType.OPEN,
-                startDateTime = bossStoreOpenInfo.startDateTime
+                openStartDateTime = bossStoreOpenInfo.openStartDateTime
             )
         }
 
         fun close(): BossStoreOpenStatusResponse {
             return BossStoreOpenStatusResponse(
                 status = BossStoreOpenType.CLOSED,
-                startDateTime = null
+                openStartDateTime = null
             )
         }
     }

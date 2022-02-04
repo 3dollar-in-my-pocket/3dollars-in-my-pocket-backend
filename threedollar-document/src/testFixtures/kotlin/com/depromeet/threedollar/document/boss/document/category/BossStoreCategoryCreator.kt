@@ -10,7 +10,7 @@ object BossStoreCategoryCreator {
         sequencePriority: Int = 0
     ): BossStoreCategory {
         return BossStoreCategory(
-            title = title,
+            name = title,
             sequencePriority = sequencePriority
         )
     }

@@ -9,6 +9,11 @@ spring:
       port: 0
       database: test
 
+logging:
+  level:
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+    org.springframework.data.mongodb.repository.query: DEBUG
+
 
 ---
 spring.config:
@@ -22,6 +27,10 @@ spring:
       port: 0
       database: test
 
+logging:
+  level:
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+    org.springframework.data.mongodb.repository.query: DEBUG
 
 ---
 spring.config:
@@ -34,6 +43,11 @@ spring:
       host: localhost
       port: 27017
       database: threedollar
+
+logging:
+  level:
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+    org.springframework.data.mongodb.repository.query: DEBUG
 
 
 ---

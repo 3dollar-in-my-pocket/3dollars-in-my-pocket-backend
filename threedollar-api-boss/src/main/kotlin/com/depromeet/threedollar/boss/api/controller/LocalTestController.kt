@@ -81,16 +81,16 @@ class LocalTestController(
                 ),
                 appearanceDays = setOf(
                     BossStoreAppearanceDay(
-                        day = DayOfTheWeek.MONDAY,
-                        openTime = TimeInterval(
+                        dayOfTheWeek = DayOfTheWeek.MONDAY,
+                        openingHours = TimeInterval(
                             startTime = LocalTime.of(10, 0),
                             endTime = LocalTime.of(20, 0)
                         ),
                         locationDescription = "서울특별시 강남역 0번 출구"
                     ),
                     BossStoreAppearanceDay(
-                        day = DayOfTheWeek.WEDNESDAY,
-                        openTime = TimeInterval(
+                        dayOfTheWeek = DayOfTheWeek.WEDNESDAY,
+                        openingHours = TimeInterval(
                             startTime = LocalTime.of(10, 0),
                             endTime = LocalTime.of(20, 0)
                         ),
@@ -111,11 +111,11 @@ class LocalTestController(
 
     @PostMapping("/test-category")
     fun addMockStoreCategory(
-        @RequestParam title: String,
+        @RequestParam name: String,
         @RequestParam priority: Int
     ): ApiResponse<String> {
         val category = BossStoreCategory(
-            title = title,
+            name = name,
             sequencePriority = priority
         )
         bossStoreCategoryRepository.save(category)

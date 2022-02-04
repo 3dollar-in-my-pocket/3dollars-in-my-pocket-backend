@@ -52,7 +52,7 @@ data class MenuRequest(
 
 
 data class AppearanceDayRequest(
-    val day: DayOfTheWeek,
+    val dayOfTheWeek: DayOfTheWeek,
     val startTime: LocalTime,
     val endTime: LocalTime,
     val locationDescription: String = ""
@@ -60,8 +60,8 @@ data class AppearanceDayRequest(
 
     fun toAppearanceDay(): BossStoreAppearanceDay {
         return BossStoreAppearanceDay(
-            day = day,
-            openTime = TimeInterval(startTime, endTime),
+            dayOfTheWeek = dayOfTheWeek,
+            openingHours = TimeInterval(startTime, endTime),
             locationDescription = locationDescription
         )
     }

@@ -1,5 +1,5 @@
 ### [테스트용] Mock 가게 카테고리 데이터를 추가합니다.
-POST {{host_boss_api}}/test-category?title=중식&priority=1
+POST {{host_boss_api}}/test-category?name=중식&priority=1
 
 > {%
 client.global.set("BOSS_CATEGORY_ID", response.body["data"])
