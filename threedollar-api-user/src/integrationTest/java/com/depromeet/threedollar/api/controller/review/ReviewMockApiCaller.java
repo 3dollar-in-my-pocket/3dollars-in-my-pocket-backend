@@ -3,11 +3,9 @@ package com.depromeet.threedollar.api.controller.review;
 import com.depromeet.threedollar.api.controller.MockMvcUtils;
 import com.depromeet.threedollar.api.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsRequest;
-import com.depromeet.threedollar.api.service.review.dto.request.deprecated.RetrieveMyReviewsV2Request;
 import com.depromeet.threedollar.api.service.review.dto.request.UpdateReviewRequest;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewsCursorResponse;
-import com.depromeet.threedollar.api.service.review.dto.response.deprecated.ReviewsCursorV2Response;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -82,25 +80,6 @@ class ReviewMockApiCaller extends MockMvcUtils {
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("size", String.valueOf(request.getSize()))
             .param("cursor", request.getCursor() == null ? null : String.valueOf(request.getCursor()));
-
-        return objectMapper.readValue(
-            mockMvc.perform(builder)
-                .andExpect(status().is(expectedStatus))
-                .andDo(print())
-                .andReturn()
-                .getResponse()
-                .getContentAsString(StandardCharsets.UTF_8), new TypeReference<>() {
-            }
-        );
-    }
-
-    @Deprecated
-    ApiResponse<ReviewsCursorV2Response> retrieveMyReviewHistoriesV2(RetrieveMyReviewsV2Request request, String token, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = get("/v2/store/reviews/me")
-            .header(HttpHeaders.AUTHORIZATION, token)
-            .param("size", String.valueOf(request.getSize()))
-            .param("cursor", request.getCursor() == null ? null : String.valueOf(request.getCursor()))
-            .param("cachingTotalElements", request.getCachingTotalElements() == null ? null : String.valueOf(request.getCachingTotalElements()));
 
         return objectMapper.readValue(
             mockMvc.perform(builder)

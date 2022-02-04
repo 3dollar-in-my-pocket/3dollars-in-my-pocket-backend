@@ -17,15 +17,9 @@ public interface StoreRepositoryCustom {
 
     long findCountsByUserId(Long userId);
 
-    @Deprecated
-    long findActiveCountsByUserId(Long userId);
-
     List<Store> findAllUsingCursor(Long lastStoreId, int size);
 
     List<Store> findAllByUserIdUsingCursor(Long userId, Long lastStoreId, int size);
-
-    @Deprecated
-    List<Store> findAllActiveByUserIdUsingCursor(Long userId, Long lastStoreId, int size);
 
     List<Store> findStoresByLocationLessThanDistance(double latitude, double longitude, double distance);
 
