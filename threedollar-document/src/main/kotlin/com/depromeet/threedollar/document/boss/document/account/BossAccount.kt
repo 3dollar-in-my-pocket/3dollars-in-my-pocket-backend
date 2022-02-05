@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 class BossAccount(
     var name: String,
     val socialInfo: BossAccountSocialInfo,
-    val businessNumber: BusinessNumber?,
+    val businessNumber: BusinessNumber,
     var pushSettingsStatus: PushSettingsStatus
 ) : BaseDocument() {
 
