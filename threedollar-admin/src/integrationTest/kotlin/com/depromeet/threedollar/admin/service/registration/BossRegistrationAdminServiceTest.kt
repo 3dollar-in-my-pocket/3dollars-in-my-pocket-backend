@@ -20,8 +20,8 @@ import org.springframework.test.context.TestConstructor
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
-class RegistrationAdminServiceTest(
-    private val registrationAdminService: RegistrationAdminService,
+class BossRegistrationAdminServiceTest(
+    private val bossRegistrationAdminService: BossRegistrationAdminService,
     private val registrationRepository: RegistrationRepository,
     private val bossAccountRepository: BossAccountRepository,
     private val bossStoreRepository: BossStoreRepository
@@ -52,7 +52,7 @@ class RegistrationAdminServiceTest(
         registrationRepository.save(registration)
 
         // when
-        registrationAdminService.applyRegistration(registration.id)
+        bossRegistrationAdminService.applyBossRegistration(registration.id)
 
         // then
         val bossAccounts = bossAccountRepository.findAll()
@@ -84,7 +84,7 @@ class RegistrationAdminServiceTest(
         registrationRepository.save(registration)
 
         // when
-        registrationAdminService.applyRegistration(registration.id)
+        bossRegistrationAdminService.applyBossRegistration(registration.id)
 
         // then
         val bossStores = bossStoreRepository.findAll()
@@ -114,7 +114,7 @@ class RegistrationAdminServiceTest(
         registrationRepository.save(registration)
 
         // when & then
-        assertThatThrownBy { registrationAdminService.applyRegistration(registration.id) }.isInstanceOf(NotFoundException::class.java)
+        assertThatThrownBy { bossRegistrationAdminService.applyBossRegistration(registration.id) }.isInstanceOf(NotFoundException::class.java)
     }
 
     @Test
@@ -127,14 +127,14 @@ class RegistrationAdminServiceTest(
         registrationRepository.save(registration)
 
         // when & then
-        assertThatThrownBy { registrationAdminService.applyRegistration(registration.id) }.isInstanceOf(NotFoundException::class.java)
+        assertThatThrownBy { bossRegistrationAdminService.applyBossRegistration(registration.id) }.isInstanceOf(NotFoundException::class.java)
 
     }
 
     @Test
     fun `해당하는 가입 정보가 없는 경우 NotFoundException`() {
         // when & then
-        assertThatThrownBy { registrationAdminService.applyRegistration("Not Found Registration Id") }.isInstanceOf(NotFoundException::class.java)
+        assertThatThrownBy { bossRegistrationAdminService.applyBossRegistration("Not Found Registration Id") }.isInstanceOf(NotFoundException::class.java)
     }
 
     @Test
@@ -157,7 +157,49 @@ class RegistrationAdminServiceTest(
         registrationRepository.save(registration)
 
         // when & then
-        assertThatThrownBy { registrationAdminService.applyRegistration(registration.id) }.isInstanceOf(ConflictException::class.java)
+        assertThatThrownBy { bossRegistrationAdminService.applyBossRegistration(registration.id) }.isInstanceOf(ConflictException::class.java)
+    }
+
+    @Test
+    fun `사장님 가입 신청이 승인되면 해당 가입 신청은 APPROVE 상태로 변경된다`() {
+        // given
+        val registration = RegistrationCreator.create(
+            socialId = "social-id",
+            socialType = BossAccountSocialType.NAVER,
+            status = RegistrationStatus.WAITING
+        )
+        registrationRepository.save(registration)
+
+        // when
+        bossRegistrationAdminService.applyBossRegistration(registration.id)
+
+        // then
+        val registrations = registrationRepository.findAll()
+        assertAll({
+            assertThat(registrations).hasSize(1)
+            assertThat(registrations[0].status).isEqualTo(RegistrationStatus.APPROVED)
+        })
+    }
+
+    @Test
+    fun `사장님 가입 신청이 거부되면 해당 가입 신청은 APPROVE 상태로 변경된다`() {
+        // given
+        val registration = RegistrationCreator.create(
+            socialId = "social-id",
+            socialType = BossAccountSocialType.NAVER,
+            status = RegistrationStatus.WAITING
+        )
+        registrationRepository.save(registration)
+
+        // when
+        bossRegistrationAdminService.rejectBossRegistration(registration.id)
+
+        // then
+        val registrations = registrationRepository.findAll()
+        assertAll({
+            assertThat(registrations).hasSize(1)
+            assertThat(registrations[0].status).isEqualTo(RegistrationStatus.REJECTED)
+        })
     }
 
 }

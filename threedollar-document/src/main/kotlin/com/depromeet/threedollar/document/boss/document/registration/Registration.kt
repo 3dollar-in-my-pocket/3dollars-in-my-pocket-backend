@@ -27,6 +27,10 @@ class Registration(
         this.status = RegistrationStatus.APPROVED
     }
 
+    fun reject() {
+        this.status = RegistrationStatus.REJECTED
+    }
+
 }
 
 

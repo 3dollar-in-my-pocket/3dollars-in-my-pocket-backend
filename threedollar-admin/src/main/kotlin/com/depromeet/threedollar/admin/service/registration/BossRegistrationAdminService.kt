@@ -11,18 +11,19 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class RegistrationAdminService(
+class BossRegistrationAdminService(
     private val registrationRepository: RegistrationRepository,
     private val bossAccountRepository: BossAccountRepository,
     private val bossStoreRepository: BossStoreRepository
 ) {
 
     @Transactional
-    fun applyRegistration(registrationId: String) {
-        val registration = RegistrationServiceUtils.findWaitingRegistrationById(registrationRepository, registrationId)
+    fun applyBossRegistration(registrationId: String) {
+        val registration = BossRegistrationServiceUtils.findWaitingRegistrationById(registrationRepository, registrationId)
         val bossAccount = registerNewBossAccount(registration)
         bossStoreRepository.save(registration.toBossStore(bossAccount.id))
         registration.approve()
+        registrationRepository.save(registration)
     }
 
     private fun registerNewBossAccount(registration: Registration): BossAccount {
@@ -37,6 +38,13 @@ class RegistrationAdminService(
         ) {
             throw ConflictException("이미 가입한 사장님(${socialInfo.socialId} - ${socialInfo.socialType})입니다")
         }
+    }
+
+    @Transactional
+    fun rejectBossRegistration(registrationId: String) {
+        val registration = BossRegistrationServiceUtils.findWaitingRegistrationById(registrationRepository, registrationId)
+        registration.reject()
+        registrationRepository.save(registration)
     }
 
 }

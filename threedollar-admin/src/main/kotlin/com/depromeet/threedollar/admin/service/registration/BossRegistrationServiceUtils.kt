@@ -5,7 +5,7 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.document.boss.document.registration.Registration
 import com.depromeet.threedollar.document.boss.document.registration.RegistrationRepository
 
-object RegistrationServiceUtils {
+object BossRegistrationServiceUtils {
 
     fun findWaitingRegistrationById(registrationRepository: RegistrationRepository, registrationId: String): Registration {
         return registrationRepository.findWaitingRegistrationById(registrationId)
