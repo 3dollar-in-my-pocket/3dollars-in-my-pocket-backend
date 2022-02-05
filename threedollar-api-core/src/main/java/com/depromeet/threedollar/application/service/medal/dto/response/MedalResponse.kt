@@ -15,12 +15,12 @@ data class MedalResponse(
     companion object {
         fun of(medal: Medal): MedalResponse {
             return MedalResponse(
-                medal.id,
-                medal.name,
-                medal.activationIconUrl,
-                medal.disableIconUrl,
-                medal.introduction,
-                MedalAcquisitionResponse.of(medal.acquisitionCondition)
+                medalId = medal.id,
+                name = medal.name,
+                iconUrl = medal.activationIconUrl,
+                disableIconUrl = medal.disableIconUrl,
+                introduction = medal.introduction,
+                acquisition = MedalAcquisitionResponse.of(medal.acquisitionCondition)
             )
         }
     }

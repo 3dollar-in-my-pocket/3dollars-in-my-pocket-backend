@@ -1,11 +1,8 @@
 package com.depromeet.threedollar.common.type;
 
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum HttpStatusCode {
 
     BAD_REQUEST(400),
@@ -21,5 +18,9 @@ public enum HttpStatusCode {
     SERVICE_UNAVAILABLE(503);
 
     private final int status;
+
+    private HttpStatusCode(int status) {
+        this.status = status;
+    }
 
 }

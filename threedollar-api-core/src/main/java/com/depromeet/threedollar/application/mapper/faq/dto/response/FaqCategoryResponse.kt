@@ -10,7 +10,11 @@ data class FaqCategoryResponse(
 
     companion object {
         fun of(category: FaqCategory): FaqCategoryResponse {
-            return FaqCategoryResponse(category, category.description, category.displayOrder)
+            return FaqCategoryResponse(
+                category = category,
+                description = category.description,
+                displayOrder = category.displayOrder
+            )
         }
     }
 

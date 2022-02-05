@@ -1,13 +1,10 @@
 package com.depromeet.threedollar.common.type;
 
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.time.Duration;
 
 @Getter
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum CacheType {
 
     FAQS(CacheKey.FAQS, Duration.ofHours(1)),
@@ -20,6 +17,11 @@ public enum CacheType {
 
     private final String key;
     private final Duration duration;
+
+    private CacheType(String key, Duration duration) {
+        this.key = key;
+        this.duration = duration;
+    }
 
     public static class CacheKey {
 

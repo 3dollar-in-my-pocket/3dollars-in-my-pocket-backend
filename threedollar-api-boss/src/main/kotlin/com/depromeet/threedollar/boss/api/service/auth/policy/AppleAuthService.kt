@@ -15,14 +15,15 @@ class AppleAuthService(
 ) : AuthService {
 
     override fun login(request: LoginRequest): String {
-        return BossAccountServiceUtils.findBossAccountBySocialIdAndSocialType(
+        val bossAccount = BossAccountServiceUtils.findBossAccountBySocialIdAndSocialType(
             bossAccountRepository = bossAccountRepository,
-            socialId = findSocialId(request),
+            socialId = getSocialId(request),
             socialType = SOCIAL_TYPE
-        ).id
+        )
+        return bossAccount.id
     }
 
-    override fun findSocialId(request: LoginRequest): String {
+    override fun getSocialId(request: LoginRequest): String {
         return appleTokenDecoder.getSocialIdFromIdToken(request.token)
     }
 

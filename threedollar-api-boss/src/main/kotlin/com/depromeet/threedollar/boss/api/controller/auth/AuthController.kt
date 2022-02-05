@@ -28,7 +28,7 @@ class AuthController(
         @Valid @RequestBody request: SignupRequest
     ): ApiResponse<String> {
         val authService = authServiceProvider.getAuthService(request.socialType)
-        val socialId = authService.findSocialId(LoginRequest(request.token, request.socialType))
+        val socialId = authService.getSocialId(LoginRequest(request.token, request.socialType))
         signupService.signup(request, socialId)
         return ApiResponse.SUCCESS
     }

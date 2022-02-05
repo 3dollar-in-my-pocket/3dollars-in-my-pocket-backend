@@ -1,13 +1,10 @@
 package com.depromeet.threedollar.common.type;
 
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum OsPlatformType {
 
     IPHONE(List.of("ios")),
@@ -16,6 +13,10 @@ public enum OsPlatformType {
     ;
 
     private final List<String> keywords;
+
+    private OsPlatformType(List<String> keywords) {
+        this.keywords = keywords;
+    }
 
     private boolean hasKeyword(String userAgent) {
         return this.keywords.stream()

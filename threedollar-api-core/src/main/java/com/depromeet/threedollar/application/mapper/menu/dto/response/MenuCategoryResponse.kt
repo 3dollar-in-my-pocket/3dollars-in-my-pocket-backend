@@ -14,7 +14,12 @@ data class MenuCategoryResponse(
     companion object {
         @JvmStatic
         fun of(category: MenuCategoryType): MenuCategoryResponse {
-            return MenuCategoryResponse(category, category.categoryName, category.description, category.isNew)
+            return MenuCategoryResponse(
+                category = category,
+                name = category.categoryName,
+                description = category.description,
+                isNew = category.isNew
+            )
         }
     }
 
