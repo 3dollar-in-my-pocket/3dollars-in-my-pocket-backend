@@ -126,7 +126,8 @@ class LocalTestController(
         private val BOSS = BossAccount(
             name = "테스트 계정",
             socialInfo = BossAccountSocialInfo("test-social-id", BossAccountSocialType.KAKAO),
-            businessNumber = BusinessNumber.of("000-12-12345")
+            businessNumber = BusinessNumber.of("000-12-12345"),
+            pushSettingsStatus = PushSettingsStatus.OFF
         )
     }
 

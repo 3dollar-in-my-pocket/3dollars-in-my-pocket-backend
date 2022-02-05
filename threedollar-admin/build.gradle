@@ -1,5 +1,6 @@
 dependencies {
     implementation project(":threedollar-api-core")
+    implementation project(':threedollar-document')
 
     // Spring MVC
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -15,6 +16,7 @@ dependencies {
 
     // TestFixtures
     testImplementation(testFixtures(project(":threedollar-domain")))
+    testImplementation(testFixtures(project(":threedollar-document")))
 }
 
 application {

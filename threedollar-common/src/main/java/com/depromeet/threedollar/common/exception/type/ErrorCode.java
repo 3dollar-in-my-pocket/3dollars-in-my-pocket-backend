@@ -48,6 +48,7 @@ public enum ErrorCode {
     NOT_FOUND_CATEGORY_EXCEPTION(NOT_FOUND, OFF, "N009", "존재하지 않는 카테고리 입니다"),
     NOT_FOUND_BOSS_EXCEPTION(NOT_FOUND, OFF, "N010", "존재하지 않는 사장님 계정입니다"),
     NOT_FOUND_BOSS_OWNED_STORE_EXCEPTION(NOT_FOUND, OFF, "NF011", "사장님이 운영하는 가게가 존재하지 않습니다."),
+    NOT_FOUND_SIGNUP_REGISTRATION_EXCEPTION(NOT_FOUND, OFF, "NF012", "해당하는 가입 신청은 존재하지 않습니다"),
 
 
     // 405 Method Not Allowed
