@@ -8,13 +8,30 @@ import org.springframework.data.mongodb.core.mapping.Document
 class BossAccount(
     var name: String,
     val socialInfo: BossAccountSocialInfo,
-    val businessNumber: BusinessNumber,
-    var pushSettingsStatus: PushSettingsStatus = PushSettingsStatus.OFF,
+    val businessNumber: BusinessNumber?,
+    var pushSettingsStatus: PushSettingsStatus
 ) : BaseDocument() {
 
     fun update(name: String, pushSettingsStatus: PushSettingsStatus) {
         this.name = name
         this.pushSettingsStatus = pushSettingsStatus
+    }
+
+    companion object {
+        fun of(
+            name: String,
+            socialId: String,
+            socialType: BossAccountSocialType,
+            businessNumber: BusinessNumber,
+            pushSettingsStatus: PushSettingsStatus = PushSettingsStatus.OFF
+        ): BossAccount {
+            return BossAccount(
+                name = name,
+                socialInfo = BossAccountSocialInfo(socialId, socialType),
+                businessNumber = businessNumber,
+                pushSettingsStatus = pushSettingsStatus
+            )
+        }
     }
 
 }
