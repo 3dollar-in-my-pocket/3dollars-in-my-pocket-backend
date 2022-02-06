@@ -4,8 +4,8 @@ import com.depromeet.threedollar.api.service.store.dto.type.StoreOrderType;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
 import com.depromeet.threedollar.common.utils.EnumMapper;
 import com.depromeet.threedollar.domain.user.domain.faq.FaqCategory;
-import com.depromeet.threedollar.domain.user.domain.popup.PopupPlatformType;
-import com.depromeet.threedollar.domain.user.domain.popup.PopupPositionType;
+import com.depromeet.threedollar.domain.user.domain.advertisement.AdvertisementPlatformType;
+import com.depromeet.threedollar.domain.user.domain.advertisement.AdvertisementPositionType;
 import com.depromeet.threedollar.domain.user.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.user.domain.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.user.domain.store.StoreType;
@@ -37,9 +37,9 @@ public class EnumMapperConfig {
         // faq
         enumMapper.put("FaqCategory", FaqCategory.class);
 
-        // popup
-        enumMapper.put("PopupPositionType", PopupPositionType.class);
-        enumMapper.put("PopupPlatformType", PopupPlatformType.class);
+        // advertisement
+        enumMapper.put("AdvertisementPositionType", AdvertisementPositionType.class);
+        enumMapper.put("AdvertisementPlatformType", AdvertisementPlatformType.class);
 
         // visit
         enumMapper.put("VisitType", VisitType.class);

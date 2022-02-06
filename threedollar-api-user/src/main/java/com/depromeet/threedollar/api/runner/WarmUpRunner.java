@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.runner;
 
 import com.depromeet.threedollar.common.type.FamousPlace;
-import com.depromeet.threedollar.domain.user.domain.popup.PopupPlatformType;
+import com.depromeet.threedollar.domain.user.domain.advertisement.AdvertisementPlatformType;
 import com.depromeet.threedollar.external.client.local.LocalWarmUpApiClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -27,8 +27,8 @@ public class WarmUpRunner implements CommandLineRunner {
                 apiClient.getMedals();
                 apiClient.getStoreMenuCategories();
                 apiClient.getFaqs();
-                for (PopupPlatformType platformType : PopupPlatformType.values()) {
-                    apiClient.getPopups(platformType.name());
+                for (AdvertisementPlatformType platformType : AdvertisementPlatformType.values()) {
+                    apiClient.getAdvertisements(platformType.name());
                 }
             }
         } catch (Exception ignored) {

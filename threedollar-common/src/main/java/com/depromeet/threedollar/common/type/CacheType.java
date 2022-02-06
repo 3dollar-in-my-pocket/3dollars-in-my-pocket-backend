@@ -8,7 +8,7 @@ import java.time.Duration;
 public enum CacheType {
 
     FAQS(CacheKey.FAQS, Duration.ofHours(1)),
-    POPUP(CacheKey.POPUP, Duration.ofHours(1)),
+    ADVERTISEMENT(CacheKey.ADVERTISEMENT, Duration.ofHours(1)),
     USER_STORES_COUNTS(CacheKey.USER_STORES_COUNTS, Duration.ofMinutes(15)),
     USER_REVIEWS_COUNTS(CacheKey.USER_REVIEWS_COUNTS, Duration.ofMinutes(15)),
     MEDALS(CacheKey.MEDALS, Duration.ofHours(1)),
@@ -27,7 +27,7 @@ public enum CacheType {
     public static class CacheKey {
 
         public static final String FAQS = "FAQS";
-        public static final String POPUP = "POPUP";
+        public static final String ADVERTISEMENT = "ADVERTISEMENT";
         public static final String USER_STORES_COUNTS = "USER_STORES_COUNTS";
         public static final String USER_REVIEWS_COUNTS = "USER_REVIEWS_COUNTS";
         public static final String MEDALS = "MEDALS";

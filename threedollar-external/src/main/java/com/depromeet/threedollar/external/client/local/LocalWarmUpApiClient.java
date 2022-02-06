@@ -19,8 +19,8 @@ public interface LocalWarmUpApiClient {
     @GetMapping("/api/v2/faqs")
     void getFaqs();
 
-    @GetMapping("/api/v1/popups")
-    void getPopups(@RequestParam String platform);
+    @GetMapping("/api/v1/advertisements")
+    void getAdvertisements(@RequestParam String platform);
 
     @GetMapping("/api/v1/medals")
     void getMedals();
