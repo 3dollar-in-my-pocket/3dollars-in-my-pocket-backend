@@ -20,7 +20,7 @@ dependencies {
     // flyway
     implementation("org.flywaydb:flyway-core")
 
-    // textFixtures
+    // TestFixtures
     testImplementation(testFixtures(project(":threedollar-domain")))
 }
 

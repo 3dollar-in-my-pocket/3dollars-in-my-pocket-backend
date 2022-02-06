@@ -13,7 +13,12 @@ data class FaqResponse(
 
     companion object {
         fun of(faq: Faq): FaqResponse {
-            val response = FaqResponse(faq.id, faq.question, faq.answer, faq.category)
+            val response = FaqResponse(
+                faqId = faq.id,
+                question = faq.question,
+                answer = faq.answer,
+                category = faq.category
+            )
             response.setBaseTime(faq)
             return response
         }

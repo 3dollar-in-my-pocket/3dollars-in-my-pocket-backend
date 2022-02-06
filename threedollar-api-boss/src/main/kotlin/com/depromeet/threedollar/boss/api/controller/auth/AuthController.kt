@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.boss.api.controller.auth
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse
-import com.depromeet.threedollar.boss.api.config.resolver.Auth
+import com.depromeet.threedollar.boss.api.config.interceptor.Auth
 import com.depromeet.threedollar.boss.api.config.session.SessionConstants.BOSS_ACCOUNT_ID
 import com.depromeet.threedollar.boss.api.service.auth.AuthServiceProvider
 import com.depromeet.threedollar.boss.api.service.auth.dto.request.LoginRequest
@@ -28,7 +28,7 @@ class AuthController(
         @Valid @RequestBody request: SignupRequest
     ): ApiResponse<String> {
         val authService = authServiceProvider.getAuthService(request.socialType)
-        val socialId = authService.findSocialId(LoginRequest(request.token, request.socialType))
+        val socialId = authService.getSocialId(LoginRequest(request.token, request.socialType))
         signupService.signup(request, socialId)
         return ApiResponse.SUCCESS
     }

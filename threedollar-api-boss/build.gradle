@@ -1,7 +1,3 @@
-ext {
-    swaggerVersion = "3.0.0"
-}
-
 dependencies {
     implementation project(':threedollar-api-core')
     implementation project(':threedollar-document')
@@ -9,14 +5,24 @@ dependencies {
     // Spring MVC
     implementation("org.springframework.boot:spring-boot-starter-web")
 
+    // Spring Security
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
     // Redis Session
     implementation("org.springframework.session:spring-session-data-redis")
+
+    // Spring actuator
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     // Swagger
     implementation("io.springfox:springfox-boot-starter:${swaggerVersion}")
     implementation("io.springfox:springfox-swagger-ui:${swaggerVersion}")
 
-    // textFixtures
+    // Sentry
+    implementation("io.sentry:sentry-spring-boot-starter:${sentryVersion}")
+    implementation("io.sentry:sentry-logback:${sentryVersion}")
+
+    // TestFixtures
     testImplementation(testFixtures(project(":threedollar-document")))
     testImplementation(testFixtures(project(":threedollar-redis")))
 }

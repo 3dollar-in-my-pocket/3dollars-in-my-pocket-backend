@@ -1,11 +1,8 @@
 package com.depromeet.threedollar.common.type;
 
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum FamousPlace {
 
     GANGNAM("강남역", 37.498095, 127.02761),
@@ -21,5 +18,11 @@ public enum FamousPlace {
     private final String description;
     private final double latitude;
     private final double longitude;
+
+    private FamousPlace(String description, double latitude, double longitude) {
+        this.description = description;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 
 }

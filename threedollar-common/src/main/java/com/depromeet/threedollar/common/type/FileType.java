@@ -5,9 +5,7 @@ import com.depromeet.threedollar.common.exception.model.ValidationException;
 import com.depromeet.threedollar.common.model.EnumModel;
 import com.depromeet.threedollar.common.utils.FileUtils;
 import com.depromeet.threedollar.common.utils.UuidUtils;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -18,7 +16,6 @@ import static com.depromeet.threedollar.common.type.ApplicationType.BOSS_API;
 import static com.depromeet.threedollar.common.type.ApplicationType.USER_API;
 
 @Getter
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum FileType implements EnumModel {
 
     STORE_IMAGE("(유저) 가게 이미지", "store/v2/", FileContentType.IMAGE, List.of(USER_API)),
@@ -31,6 +28,13 @@ public enum FileType implements EnumModel {
     private final String directory;
     private final FileContentType contentType;
     private final List<ApplicationType> availableModules;
+
+    private FileType(String description, String directory, FileContentType contentType, List<ApplicationType> availableModules) {
+        this.description = description;
+        this.directory = directory;
+        this.contentType = contentType;
+        this.availableModules = availableModules;
+    }
 
     public void validateAvailableUploadInModule(@NotNull ApplicationType applicationType) {
         if (!this.availableModules.contains(applicationType)) {

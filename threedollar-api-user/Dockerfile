@@ -9,8 +9,8 @@ RUN ./gradlew clean :threedollar-api-user:buildNeeded --parallel
 FROM adoptopenjdk/openjdk11:alpine-jre
 ENV HOME=/usr/app
 
-RUN apk add --no-cache curl unzip
-RUN curl -O https://download.newrelic.com/newrelic/java-agent/newrelic-agent/current/newrelic-java.zip \
+RUN apk add --no-cache curl unzip \
+&& curl -O https://download.newrelic.com/newrelic/java-agent/newrelic-agent/current/newrelic-java.zip \
 && unzip newrelic-java.zip -d $HOME/ \
 && rm newrelic-java.zip \
 && rm $HOME/newrelic/newrelic.yml

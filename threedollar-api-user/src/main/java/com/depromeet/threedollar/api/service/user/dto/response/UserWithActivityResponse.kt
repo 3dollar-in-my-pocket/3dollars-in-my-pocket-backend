@@ -18,9 +18,12 @@ data class UserWithActivityResponse(
             reviewsCount: Long
         ): UserWithActivityResponse {
             return UserWithActivityResponse(
-                user.id, user.name, user.socialType,
-                UserMedalResponse.of(user.activatedMedal),
-                ActivityResponse(storesCount, reviewsCount, user.userMedals.size)
+                userId = user.id,
+                name = user.name,
+                socialType = user.socialType,
+                medal = UserMedalResponse.of(user.activatedMedal),
+                activity = ActivityResponse(storesCount, reviewsCount, user.userMedals.size
+                )
             )
         }
     }

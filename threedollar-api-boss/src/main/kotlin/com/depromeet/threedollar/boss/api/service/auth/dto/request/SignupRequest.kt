@@ -30,7 +30,7 @@ data class SignupRequest(
             ),
             store = RegistrationStoreForm(
                 name = storeName,
-                categoriesIds = storeCategoriesIds.distinct().toMutableList(),
+                categoriesIds = storeCategoriesIds,
                 contactsNumber = ContactsNumber.of(contactsNumber),
                 certificationPhotoUrl = certificationPhotoUrl
             )

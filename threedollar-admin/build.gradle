@@ -1,14 +1,22 @@
 dependencies {
     implementation project(":threedollar-api-core")
+    implementation project(':threedollar-document')
 
     // Spring MVC
     implementation("org.springframework.boot:spring-boot-starter-web")
 
+    // Spring Security
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
     // Spring Session Redis
     implementation("org.springframework.session:spring-session-data-redis")
 
-    // textFixtures
+    // Spring actuator
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+
+    // TestFixtures
     testImplementation(testFixtures(project(":threedollar-domain")))
+    testImplementation(testFixtures(project(":threedollar-document")))
 }
 
 application {

@@ -1,6 +1,8 @@
 spring.config:
   activate:
-    on-profile: integration-test
+    on-profile:
+      - integration-test
+      - local
 
 spring:
   data:
@@ -14,23 +16,6 @@ logging:
     org.springframework.data.mongodb.core.MongoTemplate: DEBUG
     org.springframework.data.mongodb.repository.query: DEBUG
 
-
----
-spring.config:
-  activate:
-    on-profile: local
-
-spring:
-  data:
-    mongodb:
-      host: localhost
-      port: 0
-      database: test
-
-logging:
-  level:
-    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
-    org.springframework.data.mongodb.repository.query: DEBUG
 
 ---
 spring.config:
@@ -53,7 +38,10 @@ logging:
 ---
 spring.config:
   activate:
-    on-profile: dev
+    on-profile:
+      - dev
+      - stage
+      - prod
 
 spring:
   data:

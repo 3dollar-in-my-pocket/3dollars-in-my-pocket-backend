@@ -4,7 +4,7 @@ import com.depromeet.threedollar.common.type.OsPlatformType
 
 data class UserMetaValue(
     val osPlatform: OsPlatformType,
-    val userAgent: String?,
-    val sourceIp: String?,
-    val appVersion: String?
+    val userAgent: String? = null,
+    val sourceIp: String? = null,
+    val appVersion: String? = null
 )

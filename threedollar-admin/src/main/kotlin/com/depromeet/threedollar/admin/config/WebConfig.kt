@@ -28,7 +28,7 @@ class WebConfig(
         resolvers.add(adminIdResolver)
     }
 
-    override fun getValidator(): Validator? {
+    override fun getValidator(): Validator {
         val validatorFactoryBean = LocalValidatorFactoryBean()
         validatorFactoryBean.setValidationMessageSource(validationMessageSource())
         return validatorFactoryBean
@@ -39,7 +39,7 @@ class WebConfig(
         val messageSource = ReloadableResourceBundleMessageSource()
         messageSource.setBasename("classpath:/messages/validation")
         messageSource.setDefaultEncoding("UTF-8")
-        messageSource.setCacheSeconds(10)
+        messageSource.setCacheSeconds(60)
         return messageSource
     }
 

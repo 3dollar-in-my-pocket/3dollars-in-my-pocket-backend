@@ -17,6 +17,7 @@ object RegistrationCreator {
         storeName: String = "가슴속 3천원",
         contactsNumber: String = "010-1234-1234",
         certificationPhotoUrl: String = "https://sample-photo.png",
+        categoriesIds: Set<String> = setOf(),
         status: RegistrationStatus = RegistrationStatus.WAITING
     ): Registration {
         return Registration(
@@ -31,6 +32,7 @@ object RegistrationCreator {
             store = RegistrationStoreForm(
                 name = storeName,
                 contactsNumber = ContactsNumber.of(contactsNumber),
+                categoriesIds = categoriesIds,
                 certificationPhotoUrl = certificationPhotoUrl
             ),
             status = status

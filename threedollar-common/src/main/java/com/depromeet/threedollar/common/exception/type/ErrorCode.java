@@ -1,15 +1,12 @@
 package com.depromeet.threedollar.common.exception.type;
 
 import com.depromeet.threedollar.common.type.HttpStatusCode;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import static com.depromeet.threedollar.common.exception.type.ErrorAlarmOptionType.*;
 import static com.depromeet.threedollar.common.type.HttpStatusCode.*;
 
 @Getter
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum ErrorCode {
 
     // 400 Bad Request
@@ -51,46 +48,54 @@ public enum ErrorCode {
     NOT_FOUND_CATEGORY_EXCEPTION(NOT_FOUND, OFF, "N009", "존재하지 않는 카테고리 입니다"),
     NOT_FOUND_BOSS_EXCEPTION(NOT_FOUND, OFF, "N010", "존재하지 않는 사장님 계정입니다"),
     NOT_FOUND_BOSS_OWNED_STORE_EXCEPTION(NOT_FOUND, OFF, "NF011", "사장님이 운영하는 가게가 존재하지 않습니다."),
+    NOT_FOUND_SIGNUP_REGISTRATION_EXCEPTION(NOT_FOUND, OFF, "NF012", "해당하는 가입 신청은 존재하지 않습니다"),
 
 
     // 405 Method Not Allowed
-    METHOD_NOT_ALLOWED_EXCEPTION(METHOD_NOT_ALLOWED, OFF, "MN001","Not Allowed Method"),
+    METHOD_NOT_ALLOWED_EXCEPTION(METHOD_NOT_ALLOWED, OFF, "MN001", "Not Allowed Method"),
 
 
     // 406 Not Acceptable
-    NOT_ACCEPTABLE_EXCEPTION(NOT_ACCEPTABLE, OFF, "NA001","Not Acceptable"),
+    NOT_ACCEPTABLE_EXCEPTION(NOT_ACCEPTABLE, OFF, "NA001", "Not Acceptable"),
 
 
     // 409 Conflict
-    CONFLICT_EXCEPTION(CONFLICT, OFF, "CF001","이미 존재합니다"),
-    CONFLICT_NICKNAME_EXCEPTION(CONFLICT, OFF, "CF002","이미 사용중인 닉네임입니다.\n다른 닉네임을 이용해주세요"),
-    CONFLICT_USER_EXCEPTION(CONFLICT, OFF, "CF003","이미 해당 계정으로 회원가입하셨습니다.\n로그인 해주세요"),
-    CONFLICT_DELETE_REQUEST_STORE_EXCEPTION(CONFLICT, OFF, "CF004","이미 해당하는 가게에 삭제요청 하였습니다."),
-    CONFLICT_VISIT_HISTORY_EXCEPTION(CONFLICT, OFF, "CF005","오늘 이미 방문 인증한 가게입니다.\n다음에 다시 인증해주세요"),
-    CONFLICT_REGISTER_BOSS(CONFLICT, OFF, "CF006","이미 사장님 가입을 신청하셨습니다"),
+    CONFLICT_EXCEPTION(CONFLICT, OFF, "CF001", "이미 존재합니다"),
+    CONFLICT_NICKNAME_EXCEPTION(CONFLICT, OFF, "CF002", "이미 사용중인 닉네임입니다.\n다른 닉네임을 이용해주세요"),
+    CONFLICT_USER_EXCEPTION(CONFLICT, OFF, "CF003", "이미 해당 계정으로 회원가입하셨습니다.\n로그인 해주세요"),
+    CONFLICT_DELETE_REQUEST_STORE_EXCEPTION(CONFLICT, OFF, "CF004", "이미 해당하는 가게에 삭제요청 하였습니다."),
+    CONFLICT_VISIT_HISTORY_EXCEPTION(CONFLICT, OFF, "CF005", "오늘 이미 방문 인증한 가게입니다.\n다음에 다시 인증해주세요"),
+    CONFLICT_REGISTER_BOSS(CONFLICT, OFF, "CF006", "이미 사장님 가입을 신청하셨습니다"),
 
 
     // 415 Unsupported Media Type
-    UNSUPPORTED_MEDIA_TYPE_EXCEPTION(UNSUPPORTED_MEDIA_TYPE, OFF, "UM001","Unsupported Media Type"),
+    UNSUPPORTED_MEDIA_TYPE_EXCEPTION(UNSUPPORTED_MEDIA_TYPE, OFF, "UM001", "Unsupported Media Type"),
 
 
     // 500 Internal Server Exception
-    INTERNAL_SERVER_EXCEPTION(INTERNAL_SERVER, ON, "IS001","예상치 못한 에러가 발생하였습니다.\n잠시 후 다시 시도해주세요!"),
-    INTERNAL_SERVER_UPDATE_STORE_OPTIMISTIC_LOCK_FAILED_EXCEPTION(INTERNAL_SERVER, ON, "IS002","일시적으로 다른 사용자와 동시에 가게 수정 요청을 하였습니다ㅠㅠ\n잠시 후 다시 시도해주세요!"),
+    INTERNAL_SERVER_EXCEPTION(INTERNAL_SERVER, ON, "IS001", "예상치 못한 에러가 발생하였습니다.\n잠시 후 다시 시도해주세요!"),
+    INTERNAL_SERVER_UPDATE_STORE_OPTIMISTIC_LOCK_FAILED_EXCEPTION(INTERNAL_SERVER, ON, "IS002", "일시적으로 다른 사용자와 동시에 가게 수정 요청을 하였습니다ㅠㅠ\n잠시 후 다시 시도해주세요!"),
 
 
     // 502 Bad Gateway
-    BAD_GATEWAY_EXCEPTION(BAD_GATEWAY, ON, "BG001","일시적인 에러가 발생하였습니다.\n잠시 후 다시 시도해주세요!"),
+    BAD_GATEWAY_EXCEPTION(BAD_GATEWAY, ON, "BG001", "일시적인 에러가 발생하였습니다.\n잠시 후 다시 시도해주세요!"),
 
 
     // 503 Service UnAvailable
-    SERVICE_UNAVAILABLE_EXCEPTION(SERVICE_UNAVAILABLE, OFF, "SU001","현재 점검 중입니다.\n잠시 후 다시 시도해주세요!"),
+    SERVICE_UNAVAILABLE_EXCEPTION(SERVICE_UNAVAILABLE, OFF, "SU001", "현재 점검 중입니다.\n잠시 후 다시 시도해주세요!"),
     ;
 
     private final HttpStatusCode statusCode;
     private final ErrorAlarmOptionType alarmOptions;
     private final String code;
     private final String message;
+
+    private ErrorCode(HttpStatusCode statusCode, ErrorAlarmOptionType alarmOptions, String code, String message) {
+        this.statusCode = statusCode;
+        this.alarmOptions = alarmOptions;
+        this.code = code;
+        this.message = message;
+    }
 
     public int getStatus() {
         return statusCode.getStatus();

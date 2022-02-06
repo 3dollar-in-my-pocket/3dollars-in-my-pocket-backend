@@ -15,7 +15,7 @@ class BossStore(
     var menus: List<BossStoreMenu> = listOf(),
     var appearanceDays: Set<BossStoreAppearanceDay> = setOf(),
     var categoriesIds: Set<String> = setOf(),
-    val status: BossStoreStatus = BossStoreStatus.ACTIVE
+    val status: BossStoreStatus
 ) : BaseDocument() {
 
     fun updateInfo(
@@ -42,6 +42,33 @@ class BossStore(
 
     fun updateCategoriesIds(categoriesIds: Set<String>) {
         this.categoriesIds = categoriesIds
+    }
+
+    companion object {
+        fun of(
+            bossId: String,
+            name: String,
+            imageUrl: String? = null,
+            introduction: String? = null,
+            contactsNumber: ContactsNumber? = null,
+            snsUrl: String? = null,
+            menus: List<BossStoreMenu> = listOf(),
+            appearanceDays: Set<BossStoreAppearanceDay> = setOf(),
+            categoriesIds: Set<String> = setOf(),
+        ): BossStore {
+            return BossStore(
+                bossId = bossId,
+                name = name,
+                imageUrl = imageUrl,
+                introduction = introduction,
+                contactsNumber = contactsNumber,
+                snsUrl = snsUrl,
+                menus = menus,
+                appearanceDays = appearanceDays,
+                categoriesIds = categoriesIds,
+                status = BossStoreStatus.ACTIVE
+            )
+        }
     }
 
 }

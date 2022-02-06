@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.application.provider.upload;
 
 import com.depromeet.threedollar.application.provider.upload.dto.request.UploadFileRequest;
-import com.depromeet.threedollar.external.client.filestorage.FileStorageClient;
+import com.depromeet.threedollar.external.client.storage.FileStorageClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
