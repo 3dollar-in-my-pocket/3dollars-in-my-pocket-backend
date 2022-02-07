@@ -4,7 +4,7 @@ services:
     image: mariadb:10.4
     container_name: threedollars-api-mariadb
     ports:
-      - "3309:3306"
+      - 3309:3306
     restart: unless-stopped
     environment:
       - MYSQL_DATABASE=threedollar_test
@@ -17,13 +17,15 @@ services:
     container_name: threedollar-api-redis
     command: redis-server --port 6379
     ports:
-      - "6380:6379"
+      - 6380:6379
     restart: unless-stopped
     volumes:
       - ~/threedollars-api/redis/data:/data
   mongodb:
     image: mongo
+    container_name: threedollar-api-mongo
     ports:
-      - 27017:27017
+      - 27018:27017
+    restart: unless-stopped
     volumes:
       - ~/threedollars-boss/mongo:/data/db
