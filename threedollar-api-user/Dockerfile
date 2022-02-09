@@ -16,7 +16,7 @@ RUN apk add --no-cache curl unzip \
 && rm $HOME/newrelic/newrelic.yml
 
 COPY --from=BUILD  $HOME/threedollar-api-user/build/libs/threedollar-api-user.jar /threedollar-api-user.jar
-COPY ./deploy/newrelic.yml $HOME/newrelic/newrelic.yml
+COPY ./infrastructure/newrelic.yml $HOME/newrelic/newrelic.yml
 
 EXPOSE 5000
 

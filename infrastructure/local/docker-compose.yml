@@ -10,7 +10,7 @@ services:
       - MYSQL_DATABASE=threedollar_test
       - MYSQL_ROOT_PASSWORD=3dollar
     volumes:
-      - ./conf.d:/etc/mysql/conf.d
+      - ./mariadb:/etc/mysql/conf.d
       - ~/threedollars-api/mariadb/data:/var/lib/mysql
   redis:
     image: redis
