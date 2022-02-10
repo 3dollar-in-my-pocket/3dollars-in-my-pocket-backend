@@ -14,7 +14,7 @@ public enum OsPlatformType {
 
     private final List<String> keywords;
 
-    private OsPlatformType(List<String> keywords) {
+    OsPlatformType(List<String> keywords) {
         this.keywords = keywords;
     }
 

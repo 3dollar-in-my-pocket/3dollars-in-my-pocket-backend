@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.external.client.apple;
 
-import com.depromeet.threedollar.common.exception.model.ValidationException;
+import com.depromeet.threedollar.common.exception.model.InvalidException;
 import com.depromeet.threedollar.external.client.apple.dto.properties.AppleAuthProperties;
 import com.depromeet.threedollar.external.client.apple.dto.response.ApplePublicKeyResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -50,9 +50,9 @@ public class AppleTokenDecoderImpl implements AppleTokenDecoder {
                 .getBody();
             return claims.getSubject();
         } catch (ExpiredJwtException e) {
-            throw new ValidationException(String.format("만료된 애플 idToken (%s) 입니다 (reason: %s)", idToken, e.getMessage()), VALIDATION_APPLE_TOKEN_EXPIRED_EXCEPTION);
+            throw new InvalidException(String.format("만료된 애플 idToken (%s) 입니다 (reason: %s)", idToken, e.getMessage()), INVALID_AUTH_TOKEN);
         } catch (JsonProcessingException | InvalidKeySpecException | InvalidClaimException | NoSuchAlgorithmException | IllegalArgumentException e) {
-            throw new ValidationException(String.format("잘못된 애플 idToken (%s) 입니다 (reason: %s)", idToken, e.getMessage()), VALIDATION_APPLE_TOKEN_EXCEPTION);
+            throw new InvalidException(String.format("잘못된 애플 idToken (%s) 입니다 (reason: %s)", idToken, e.getMessage()), INVALID_AUTH_TOKEN);
         }
     }
 

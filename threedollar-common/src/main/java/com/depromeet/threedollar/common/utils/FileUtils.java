@@ -1,11 +1,11 @@
 package com.depromeet.threedollar.common.utils;
 
-import com.depromeet.threedollar.common.exception.model.ValidationException;
+import com.depromeet.threedollar.common.exception.model.InvalidException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.FORBIDDEN_FILE_TYPE_EXCEPTION;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_UPLOAD_FILE_TYPE;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FileUtils {
@@ -21,11 +21,11 @@ public class FileUtils {
         try {
             String extension = fileName.substring(fileName.lastIndexOf("."));
             if (extension.length() < 2) {
-                throw new ValidationException(String.format("잘못된 확장자 형식의 파일 (%s) 입니다", fileName), FORBIDDEN_FILE_TYPE_EXCEPTION);
+                throw new InvalidException(String.format("잘못된 확장자 형식의 파일 (%s) 입니다", fileName), INVALID_UPLOAD_FILE_TYPE);
             }
             return extension;
         } catch (StringIndexOutOfBoundsException e) {
-            throw new ValidationException(String.format("잘못된 확장자 형식의 파일 (%s) 입니다", fileName), FORBIDDEN_FILE_TYPE_EXCEPTION);
+            throw new InvalidException(String.format("잘못된 확장자 형식의 파일 (%s) 입니다", fileName), INVALID_UPLOAD_FILE_TYPE);
         }
     }
 

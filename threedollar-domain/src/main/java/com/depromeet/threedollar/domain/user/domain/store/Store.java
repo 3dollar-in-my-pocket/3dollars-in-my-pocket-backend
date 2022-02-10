@@ -21,8 +21,7 @@ import java.util.stream.Collectors;
 @Table(
     indexes = {
         @Index(name = "idx_store_1", columnList = "userId"),
-        @Index(name = "idx_store_2", columnList = "latitude,longitude"),
-        @Index(name = "idx_store_3", columnList = "store_promotion_id"),
+        @Index(name = "idx_store_2", columnList = "latitude,longitude")
     }
 )
 public class Store extends AuditingTimeEntity {
@@ -46,10 +45,6 @@ public class Store extends AuditingTimeEntity {
     @Enumerated(EnumType.STRING)
     private StoreType type;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "store_promotion_id")
-    private StorePromotion promotion;
-
     @Column(nullable = false)
     private double rating; // 평균 평가 점수
 
@@ -67,13 +62,12 @@ public class Store extends AuditingTimeEntity {
     private StoreStatus status;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private Store(Long userId, double latitude, double longitude, String name, @Nullable StoreType type, double rating, @Nullable StorePromotion promotion) {
+    private Store(Long userId, double latitude, double longitude, String name, @Nullable StoreType type, double rating) {
         this.userId = userId;
         this.location = Location.of(latitude, longitude);
         this.name = name;
         this.type = type;
         this.rating = rating;
-        this.promotion = promotion;
         this.status = StoreStatus.ACTIVE;
     }
 

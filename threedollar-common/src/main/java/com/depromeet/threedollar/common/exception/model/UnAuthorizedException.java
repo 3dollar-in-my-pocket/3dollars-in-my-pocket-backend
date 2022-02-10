@@ -5,7 +5,7 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode;
 public class UnAuthorizedException extends ThreeDollarsBaseException {
 
     public UnAuthorizedException(String message) {
-        super(message, ErrorCode.UNAUTHORIZED_EXCEPTION);
+        super(message, ErrorCode.UNAUTHORIZED);
     }
 
 }

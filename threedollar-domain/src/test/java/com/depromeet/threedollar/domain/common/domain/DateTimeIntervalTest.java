@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.common.domain;
 
-import com.depromeet.threedollar.common.exception.model.ValidationException;
+import com.depromeet.threedollar.common.exception.model.InvalidException;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -17,7 +17,7 @@ class DateTimeIntervalTest {
         LocalDateTime endDateTime = LocalDateTime.of(2021, 11, 25, 0, 0);
 
         // when & then
-        assertThatThrownBy(() -> DateTimeInterval.of(startDateTime, endDateTime)).isInstanceOf(ValidationException.class);
+        assertThatThrownBy(() -> DateTimeInterval.of(startDateTime, endDateTime)).isInstanceOf(InvalidException.class);
     }
 
     @Test

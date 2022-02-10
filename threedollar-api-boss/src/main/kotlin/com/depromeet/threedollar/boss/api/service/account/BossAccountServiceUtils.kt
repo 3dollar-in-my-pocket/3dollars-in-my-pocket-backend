@@ -11,7 +11,7 @@ object BossAccountServiceUtils {
 
     fun findBossAccountById(bossAccountRepository: BossAccountRepository, bossId: String): BossAccount {
         return bossAccountRepository.findBossAccountById(bossId)
-            ?: throw NotFoundException("해당하는 id($bossId)를 가진 사장님은 존재하지 않습니다", ErrorCode.NOT_FOUND_BOSS_EXCEPTION)
+            ?: throw NotFoundException("해당하는 id($bossId)를 가진 사장님은 존재하지 않습니다", ErrorCode.NOTFOUND_BOSS)
     }
 
     fun findBossAccountBySocialIdAndSocialType(
@@ -20,7 +20,7 @@ object BossAccountServiceUtils {
         socialType: BossAccountSocialType
     ): BossAccount {
         return bossAccountRepository.findBossAccountBySocialInfo(socialId, socialType)
-            ?: throw NotFoundException("존재하지 않는 사장님 (${socialId} - $socialType 입니다.", ErrorCode.NOT_FOUND_BOSS_EXCEPTION)
+            ?: throw NotFoundException("존재하지 않는 사장님 (${socialId} - $socialType 입니다.", ErrorCode.NOTFOUND_BOSS)
     }
 
     fun validateNotExistsBossAccount(
@@ -29,7 +29,7 @@ object BossAccountServiceUtils {
         socialType: BossAccountSocialType
     ) {
         if (bossAccountRepository.existsBossAccountBySocialInfo(socialId, socialType)) {
-            throw ConflictException("이미 가입한 사장님 (${socialId} - $socialType 입니다.", ErrorCode.CONFLICT_USER_EXCEPTION)
+            throw ConflictException("이미 가입한 사장님 (${socialId} - $socialType 입니다.", ErrorCode.CONFLICT_USER)
         }
     }
 

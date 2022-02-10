@@ -77,8 +77,8 @@ class UserControllerTest extends SetupUserControllerTest {
             getUserInfoApi(token)
                 .andDo(print())
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.resultCode").value(UNAUTHORIZED_EXCEPTION.getCode()))
-                .andExpect(jsonPath("$.message").value(UNAUTHORIZED_EXCEPTION.getMessage()))
+                .andExpect(jsonPath("$.resultCode").value(UNAUTHORIZED.getCode()))
+                .andExpect(jsonPath("$.message").value(UNAUTHORIZED.getMessage()))
                 .andExpect(jsonPath("$.data").isEmpty());
         }
 
@@ -146,8 +146,8 @@ class UserControllerTest extends SetupUserControllerTest {
             checkAvailableNickNameApi(request)
                 .andDo(print())
                 .andExpect(status().isConflict())
-                .andExpect(jsonPath("$.resultCode").value(CONFLICT_NICKNAME_EXCEPTION.getCode()))
-                .andExpect(jsonPath("$.message").value(CONFLICT_NICKNAME_EXCEPTION.getMessage()))
+                .andExpect(jsonPath("$.resultCode").value(CONFLICT_NICKNAME.getCode()))
+                .andExpect(jsonPath("$.message").value(CONFLICT_NICKNAME.getMessage()))
                 .andExpect(jsonPath("$.data").isEmpty());
         }
 
@@ -162,7 +162,7 @@ class UserControllerTest extends SetupUserControllerTest {
             checkAvailableNickNameApi(request)
                 .andDo(print())
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.resultCode").value(VALIDATION_EXCEPTION.getCode()))
+                .andExpect(jsonPath("$.resultCode").value(INVALID.getCode()))
                 .andExpect(jsonPath("$.data").isEmpty());
         }
 

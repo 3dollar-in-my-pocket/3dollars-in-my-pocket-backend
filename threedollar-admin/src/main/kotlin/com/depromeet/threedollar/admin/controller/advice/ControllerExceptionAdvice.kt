@@ -36,7 +36,7 @@ class ControllerExceptionAdvice {
             .map { obj: FieldError -> obj.defaultMessage }
             .collect(Collectors.joining("\n"))
         log.error("BindException: {}", errorMessage)
-        return ApiResponse.error(VALIDATION_EXCEPTION, errorMessage)
+        return ApiResponse.error(INVALID, errorMessage)
     }
 
     /**
@@ -46,7 +46,7 @@ class ControllerExceptionAdvice {
     @ExceptionHandler(HttpMessageNotReadableException::class)
     protected fun handleHttpMessageNotReadableException(e: HttpMessageNotReadableException): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(VALIDATION_EXCEPTION)
+        return ApiResponse.error(INVALID)
     }
 
     /**
@@ -57,7 +57,7 @@ class ControllerExceptionAdvice {
     @ExceptionHandler(MissingRequestValueException::class)
     protected fun handle(e: MissingRequestValueException): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(VALIDATION_REQUEST_MISSING_EXCEPTION)
+        return ApiResponse.error(INVALID_MISSING_PARAMETER)
     }
 
     /**
@@ -68,7 +68,7 @@ class ControllerExceptionAdvice {
     @ExceptionHandler(TypeMismatchException::class)
     protected fun handleTypeMismatchException(e: TypeMismatchException): ApiResponse<Nothing> {
         log.warn(e.message)
-        val errorCode = VALIDATION_WRONG_TYPE_EXCEPTION
+        val errorCode = INVALID_TYPE
         return ApiResponse.error(errorCode, "${errorCode.message} (${e.value})")
     }
 
@@ -79,7 +79,7 @@ class ControllerExceptionAdvice {
     )
     private fun handleMethodArgumentNotValidException(e: Exception): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(VALIDATION_EXCEPTION)
+        return ApiResponse.error(INVALID)
     }
 
     /**
@@ -90,7 +90,7 @@ class ControllerExceptionAdvice {
     @ExceptionHandler(HttpRequestMethodNotSupportedException::class)
     private fun handleHttpRequestMethodNotSupportedException(e: HttpRequestMethodNotSupportedException): ApiResponse<Nothing> {
         log.warn(e.message, e)
-        return ApiResponse.error(METHOD_NOT_ALLOWED_EXCEPTION)
+        return ApiResponse.error(METHOD_NOT_ALLOWED)
     }
 
     /**
@@ -100,7 +100,7 @@ class ControllerExceptionAdvice {
     @ExceptionHandler(HttpMediaTypeNotAcceptableException::class)
     protected fun handleHttpMediaTypeNotAcceptableException(e: HttpMediaTypeNotAcceptableException): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(NOT_ACCEPTABLE_EXCEPTION)
+        return ApiResponse.error(NOT_ACCEPTABLE)
     }
 
     /**
@@ -111,7 +111,7 @@ class ControllerExceptionAdvice {
     @ExceptionHandler(HttpMediaTypeException::class)
     private fun handleHttpMediaTypeException(e: HttpMediaTypeException): ApiResponse<Nothing> {
         log.warn(e.message, e)
-        return ApiResponse.error(UNSUPPORTED_MEDIA_TYPE_EXCEPTION)
+        return ApiResponse.error(UNSUPPORTED_MEDIA_TYPE)
     }
 
     /**
@@ -131,7 +131,7 @@ class ControllerExceptionAdvice {
     @ExceptionHandler(Exception::class)
     private fun handleInternalServerException(e: Exception): ApiResponse<Nothing> {
         log.error(e.message, e)
-        return ApiResponse.error(INTERNAL_SERVER_EXCEPTION)
+        return ApiResponse.error(INTERNAL_SERVER)
     }
 
     companion object {

@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.document.common.document
 
-import com.depromeet.threedollar.common.exception.model.ValidationException
+import com.depromeet.threedollar.common.exception.model.InvalidException
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalTime
@@ -14,7 +14,7 @@ internal class TimeIntervalTest {
         val endTime = LocalTime.of(7, 59)
 
         // when & then
-        Assertions.assertThatThrownBy { TimeInterval(startTime, endTime) }.isInstanceOf(ValidationException::class.java)
+        Assertions.assertThatThrownBy { TimeInterval(startTime, endTime) }.isInstanceOf(InvalidException::class.java)
     }
 
 }

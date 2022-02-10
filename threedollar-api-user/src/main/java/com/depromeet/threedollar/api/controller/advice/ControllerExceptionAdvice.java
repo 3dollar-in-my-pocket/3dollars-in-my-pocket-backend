@@ -52,7 +52,7 @@ public class ControllerExceptionAdvice {
             .map(DefaultMessageSourceResolvable::getDefaultMessage)
             .collect(joining("\n"));
         log.error("BindException: {}", errorMessage);
-        return ApiResponse.error(VALIDATION_EXCEPTION, errorMessage);
+        return ApiResponse.error(INVALID, errorMessage);
     }
 
     /**
@@ -62,7 +62,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     protected ApiResponse<Object> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         log.warn(e.getMessage());
-        return ApiResponse.error(VALIDATION_EXCEPTION);
+        return ApiResponse.error(INVALID);
     }
 
     /**
@@ -73,7 +73,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     protected ApiResponse<Object> handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
         log.warn(e.getMessage());
-        return ApiResponse.error(VALIDATION_REQUEST_MISSING_EXCEPTION, String.format("Parameter (%s)를 입력해주세요", e.getParameterName()));
+        return ApiResponse.error(INVALID_MISSING_PARAMETER, String.format("Parameter (%s)를 입력해주세요", e.getParameterName()));
     }
 
     /**
@@ -84,7 +84,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(MissingServletRequestPartException.class)
     protected ApiResponse<Object> handleMissingServletRequestParameterException(MissingServletRequestPartException e) {
         log.warn(e.getMessage());
-        return ApiResponse.error(VALIDATION_REQUEST_MISSING_EXCEPTION, String.format("Multipart (%s)를 입력해주세요", e.getRequestPartName()));
+        return ApiResponse.error(INVALID_MISSING_PARAMETER, String.format("Multipart (%s)를 입력해주세요", e.getRequestPartName()));
     }
 
     /**
@@ -95,7 +95,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(MissingPathVariableException.class)
     protected ApiResponse<Object> handleMissingPathVariableException(MissingPathVariableException e) {
         log.warn(e.getMessage());
-        return ApiResponse.error(VALIDATION_REQUEST_MISSING_EXCEPTION, String.format("Path (%s)를 입력해주세요", e.getVariableName()));
+        return ApiResponse.error(INVALID_MISSING_PARAMETER, String.format("Path (%s)를 입력해주세요", e.getVariableName()));
     }
 
     /**
@@ -106,7 +106,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(TypeMismatchException.class)
     protected ApiResponse<Object> handleTypeMismatchException(TypeMismatchException e) {
         log.warn(e.getMessage());
-        return ApiResponse.error(VALIDATION_WRONG_TYPE_EXCEPTION, String.format("%s (%s)", VALIDATION_WRONG_TYPE_EXCEPTION.getMessage(), e.getValue()));
+        return ApiResponse.error(INVALID_TYPE, String.format("%s (%s)", INVALID_TYPE.getMessage(), e.getValue()));
     }
 
     /**
@@ -119,7 +119,7 @@ public class ControllerExceptionAdvice {
     })
     protected ApiResponse<Object> handleInvalidFormatException(Exception e) {
         log.warn(e.getMessage());
-        return ApiResponse.error(VALIDATION_EXCEPTION);
+        return ApiResponse.error(INVALID);
     }
 
     /**
@@ -130,7 +130,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     protected ApiResponse<Object> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         log.warn(e.getMessage());
-        return ApiResponse.error(METHOD_NOT_ALLOWED_EXCEPTION);
+        return ApiResponse.error(METHOD_NOT_ALLOWED);
     }
 
     /**
@@ -140,7 +140,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
     protected ApiResponse<Object> handleHttpMediaTypeNotAcceptableException(HttpMediaTypeNotAcceptableException e) {
         log.warn(e.getMessage());
-        return ApiResponse.error(NOT_ACCEPTABLE_EXCEPTION);
+        return ApiResponse.error(NOT_ACCEPTABLE);
     }
 
     /**
@@ -151,7 +151,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(HttpMediaTypeException.class)
     protected ApiResponse<Object> handleHttpMediaTypeException(HttpMediaTypeException e) {
         log.warn(e.getMessage(), e);
-        return ApiResponse.error(UNSUPPORTED_MEDIA_TYPE_EXCEPTION);
+        return ApiResponse.error(UNSUPPORTED_MEDIA_TYPE);
     }
 
     /**
@@ -161,8 +161,8 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     protected ApiResponse<Object> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException e) {
         log.error(e.getMessage(), e);
-        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(FORBIDDEN_UPLOAD_SIZE_EXCEPTION, e));
-        return ApiResponse.error(FORBIDDEN_UPLOAD_SIZE_EXCEPTION);
+        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(INVALID_UPLOAD_FILE_SIZE, e));
+        return ApiResponse.error(INVALID_UPLOAD_FILE_SIZE);
     }
 
     /**
@@ -185,8 +185,8 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(Exception.class)
     protected ApiResponse<Object> handleException(Exception exception) {
         log.error(exception.getMessage(), exception);
-        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(INTERNAL_SERVER_EXCEPTION, exception));
-        return ApiResponse.error(INTERNAL_SERVER_EXCEPTION);
+        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(INTERNAL_SERVER, exception));
+        return ApiResponse.error(INTERNAL_SERVER);
     }
 
     private ServerExceptionOccurredEvent createUnExpectedErrorOccurredEvent(ErrorCode errorCode, Exception exception) {

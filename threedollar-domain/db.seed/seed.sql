@@ -18,16 +18,13 @@ INSERT INTO medal (id, name, activation_icon_url, created_at, updated_at, disabl
 INSERT INTO medal (id, name, activation_icon_url, created_at, updated_at, disable_icon_url, introduction) VALUES (7, '우리동네 보안관', 'https://storage.prod.threedollars.co.kr/medal/v1-police-default.png', NOW(), NOW(), 'https://storage.prod.threedollars.co.kr/medal/v2-police-disabled.png', '허위 매물 신고에 적극적인 당신, 동네의 보안관이시네요');
 
 
-INSERT INTO medal_acquisition_condition (medal_id, condition_type, count, created_at, updated_at, description) VALUES (1, 'NO_CONDITION', 0, NOW(), NOW(), '2021-12-02 02:08:45.000000', null);
+INSERT INTO medal_acquisition_condition (medal_id, condition_type, count, created_at, updated_at, description) VALUES (1, 'NO_CONDITION', 0, NOW(), NOW(), '2021-12-02 02:08:45.000000');
 INSERT INTO medal_acquisition_condition (medal_id, condition_type, count, created_at, updated_at, description) VALUES (2, 'VISIT_BUNGEOPPANG_STORE', 3, NOW(), NOW(), '붕어빵 가게 인증 3회 누적');
 INSERT INTO medal_acquisition_condition (medal_id, condition_type, count, created_at, updated_at, description) VALUES (3, 'VISIT_BUNGEOPPANG_STORE', 10, NOW(), NOW(), '붕어빵 가게 인증 10회 누적');
 INSERT INTO medal_acquisition_condition (medal_id, condition_type, count, created_at, updated_at, description) VALUES (4, 'VISIT_NOT_EXISTS_STORE', 5, NOW(), NOW(), '인증 실패 5회 누적 ');
 INSERT INTO medal_acquisition_condition (medal_id, condition_type, count, created_at, updated_at, description) VALUES (5, 'ADD_REVIEW', 5, NOW(), NOW(), '별점 or 리뷰 5회 누적');
 INSERT INTO medal_acquisition_condition (medal_id, condition_type, count, created_at, updated_at, description) VALUES (6, 'ADD_STORE', 3, NOW(), NOW(), '동네 가게 제보 3회 누적');
 INSERT INTO medal_acquisition_condition (medal_id, condition_type, count, created_at, updated_at, description) VALUES (7, 'DELETE_STORE', 3, NOW(), NOW(), '삭제 요청 3회 누적');
-
-
-INSERT INTO store_promotion (created_at, updated_at, introduction, icon_url, is_display_on_marker, is_display_on_the_detail) VALUES (NOW(), NOW(), '이 가게는 바삭하고 고소한<br>지니스에서 제조된</br> 반죽을 사용합니다', 'https://storage.prod.threedollars.co.kr/promotion/happy-promotion.png', 1, 1);
 
 
 INSERT INTO advertisement (platform_type, image_url, link_url, start_date_time, end_date_time, created_at, updated_at, position_type, title, sub_title, bg_color, font_color) VALUES ('AOS', 'https://storage.prod.threedollars.co.kr/popup/aos_popup_visit_history_2021_11_25.jpg', 'https://www.instagram.com/p/CWiAfy_PBAe/', '2021-11-25 00:00:00.000000', '2021-12-05 11:57:08.000000', NOW(), NOW(), 'SPLASH', null, null, null, null);

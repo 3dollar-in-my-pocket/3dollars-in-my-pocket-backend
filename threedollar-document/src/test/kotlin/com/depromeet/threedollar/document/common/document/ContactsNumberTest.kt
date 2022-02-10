@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.document.common.document
 
-import com.depromeet.threedollar.common.exception.model.ValidationException
+import com.depromeet.threedollar.common.exception.model.InvalidException
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.params.ParameterizedTest
@@ -22,7 +22,7 @@ internal class ContactsNumberTest {
     @ParameterizedTest
     fun `연락처 번호 유효성 검증 실패하는 케이스`(number: String) {
         // when & then
-        assertThatThrownBy { ContactsNumber.of(number) }.isInstanceOf(ValidationException::class.java)
+        assertThatThrownBy { ContactsNumber.of(number) }.isInstanceOf(InvalidException::class.java)
     }
 
 }

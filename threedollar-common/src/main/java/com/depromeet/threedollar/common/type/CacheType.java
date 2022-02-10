@@ -19,7 +19,7 @@ public enum CacheType {
     private final String key;
     private final Duration duration;
 
-    private CacheType(String key, Duration duration) {
+    CacheType(String key, Duration duration) {
         this.key = key;
         this.duration = duration;
     }

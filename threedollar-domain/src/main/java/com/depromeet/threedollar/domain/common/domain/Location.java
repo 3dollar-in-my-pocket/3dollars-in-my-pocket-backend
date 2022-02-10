@@ -1,13 +1,13 @@
 package com.depromeet.threedollar.domain.common.domain;
 
-import com.depromeet.threedollar.common.exception.model.ValidationException;
+import com.depromeet.threedollar.common.exception.model.InvalidException;
 import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.FORBIDDEN_LATITUDE_EXCEPTION;
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.FORBIDDEN_LONGITUDE_EXCEPTION;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_LATITUDE_RANGE;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_LONGITUDE_RANGE;
 
 /**
  * 대한민국의 위도 / 경도
@@ -40,10 +40,10 @@ public class Location {
 
     private void validateIsScopeOfKorea(double latitude, double longitude) {
         if (latitude < SOUTH_KOREA_MIN_LATITUDE || latitude > SOUTH_KOREA_MAX_LATITUDE) {
-            throw new ValidationException(String.format("허용되지 않는 위도 (%s)가 입력되었습니다. (%s ~ %s) 사이의 위도만 허용됩니다)", latitude, SOUTH_KOREA_MIN_LATITUDE, SOUTH_KOREA_MAX_LATITUDE), FORBIDDEN_LATITUDE_EXCEPTION);
+            throw new InvalidException(String.format("허용되지 않는 위도 (%s)가 입력되었습니다. (%s ~ %s) 사이의 위도만 허용됩니다)", latitude, SOUTH_KOREA_MIN_LATITUDE, SOUTH_KOREA_MAX_LATITUDE), INVALID_LATITUDE_RANGE);
         }
         if (longitude < SOUTH_KOREA_MIN_LONGITUDE || longitude > SOUTH_KOREA_MAX_LONGITUDE) {
-            throw new ValidationException(String.format("허용되지 않는 경도 (%s)가 입력되었습니다. (%s ~ %s) 사이의 경도만 허용됩니다)", longitude, SOUTH_KOREA_MIN_LONGITUDE, SOUTH_KOREA_MAX_LONGITUDE), FORBIDDEN_LONGITUDE_EXCEPTION);
+            throw new InvalidException(String.format("허용되지 않는 경도 (%s)가 입력되었습니다. (%s ~ %s) 사이의 경도만 허용됩니다)", longitude, SOUTH_KOREA_MIN_LONGITUDE, SOUTH_KOREA_MAX_LONGITUDE), INVALID_LONGITUDE_RANGE);
         }
     }
 

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.INTERNAL_SERVER_UPDATE_STORE_OPTIMISTIC_LOCK_FAILED_EXCEPTION;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.INTERNAL_SERVER_UPDATE_STORE_OPTIMISTIC_LOCK_FAILED;
 
 @RequiredArgsConstructor
 @RestController
@@ -52,7 +52,7 @@ public class StoreController {
             return ApiResponse.success(storeService.updateStore(storeId, request));
         } catch (ObjectOptimisticLockingFailureException e) {
             throw new InternalServerException(String.format("가게 (%s)를 수정하는 도중 잠금 충돌이 발생하였습니다. message: (%s)", storeId, e),
-                INTERNAL_SERVER_UPDATE_STORE_OPTIMISTIC_LOCK_FAILED_EXCEPTION);
+					INTERNAL_SERVER_UPDATE_STORE_OPTIMISTIC_LOCK_FAILED);
         }
     }
 

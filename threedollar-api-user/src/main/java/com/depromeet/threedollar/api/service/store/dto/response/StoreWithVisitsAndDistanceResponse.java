@@ -6,7 +6,6 @@ import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
 import com.depromeet.threedollar.domain.user.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.user.domain.store.Store;
 import com.depromeet.threedollar.domain.user.collection.visit.VisitHistoryCounter;
-import com.depromeet.threedollar.domain.user.domain.store.StorePromotion;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -29,9 +28,6 @@ public class StoreWithVisitsAndDistanceResponse extends AuditingTimeResponse {
     @Nullable
     private Boolean isDeleted;
 
-    @Nullable
-    private StorePromotionResponse promotion;
-
     private final List<MenuCategoryType> categories = new ArrayList<>();
 
     private int distance;
@@ -40,14 +36,13 @@ public class StoreWithVisitsAndDistanceResponse extends AuditingTimeResponse {
 
     @Builder(access = AccessLevel.PRIVATE)
     private StoreWithVisitsAndDistanceResponse(Long storeId, double latitude, double longitude, String storeName, double rating, int distance,
-                                               StorePromotion promotion, long existsVisitsCount, long notExistsVisitsCount, boolean isDeleted) {
+                                               long existsVisitsCount, long notExistsVisitsCount, boolean isDeleted) {
         this.storeId = storeId;
         this.latitude = latitude;
         this.longitude = longitude;
         this.storeName = storeName;
         this.rating = rating;
         this.distance = distance;
-        this.promotion = StorePromotionResponse.of(promotion);
         this.visitHistory = VisitHistoryCountsResponse.of(existsVisitsCount, notExistsVisitsCount);
         this.isDeleted = isDeleted;
     }
@@ -59,7 +54,6 @@ public class StoreWithVisitsAndDistanceResponse extends AuditingTimeResponse {
             .longitude(store.getLongitude())
             .storeName(store.getName())
             .rating(store.getRating())
-            .promotion(store.getPromotion())
             .distance(LocationDistanceUtils.getDistance(latitude, longitude, store.getLatitude(), store.getLongitude()))
             .existsVisitsCount(visitsCounter.getStoreExistsVisitsCount(store.getId()))
             .notExistsVisitsCount(visitsCounter.getStoreNotExistsVisitsCount(store.getId()))

@@ -27,8 +27,8 @@ class ErrorControllerTest {
         mockMvc.perform(post("/"))
             .andDo(print())
             .andExpect(status().isMethodNotAllowed())
-            .andExpect(jsonPath("$.resultCode").value(ErrorCode.METHOD_NOT_ALLOWED_EXCEPTION.getCode()))
-            .andExpect(jsonPath("$.message").value(ErrorCode.METHOD_NOT_ALLOWED_EXCEPTION.getMessage()));
+            .andExpect(jsonPath("$.resultCode").value(ErrorCode.METHOD_NOT_ALLOWED.getCode()))
+            .andExpect(jsonPath("$.message").value(ErrorCode.METHOD_NOT_ALLOWED.getMessage()));
     }
 
 }

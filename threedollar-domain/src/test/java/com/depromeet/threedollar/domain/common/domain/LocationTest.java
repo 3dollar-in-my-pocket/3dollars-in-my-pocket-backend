@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.common.domain;
 
-import com.depromeet.threedollar.common.exception.model.ValidationException;
+import com.depromeet.threedollar.common.exception.model.InvalidException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -37,7 +37,7 @@ class LocationTest {
         @ParameterizedTest
         void 허용된_위도_범위_밖인경우_VALIDATION_LATITUDE_EXEPTION(double latitude, double longitude) {
             // when & then
-            assertThatThrownBy(() -> Location.of(latitude, longitude)).isInstanceOf(ValidationException.class);
+            assertThatThrownBy(() -> Location.of(latitude, longitude)).isInstanceOf(InvalidException.class);
         }
 
         @CsvSource({
@@ -47,7 +47,7 @@ class LocationTest {
         @ParameterizedTest
         void 허용된_경도_범위_밖인경우_VALIDATION_LATITUDE_EXEPTION(double latitude, double longitude) {
             // when & then
-            assertThatThrownBy(() -> Location.of(latitude, longitude)).isInstanceOf(ValidationException.class);
+            assertThatThrownBy(() -> Location.of(latitude, longitude)).isInstanceOf(InvalidException.class);
         }
 
     }

@@ -17,7 +17,6 @@ import java.util.List;
 import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_STORES_COUNTS;
 import static com.depromeet.threedollar.domain.user.domain.store.QMenu.menu;
 import static com.depromeet.threedollar.domain.user.domain.store.QStore.store;
-import static com.depromeet.threedollar.domain.user.domain.store.QStorePromotion.storePromotion;
 import static com.querydsl.core.types.dsl.MathExpressions.*;
 
 @RequiredArgsConstructor
@@ -46,7 +45,6 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
     public Store findStoreByIdFetchJoinMenu(Long storeId) {
         return queryFactory.selectFrom(store)
             .innerJoin(store.menus, menu).fetchJoin()
-            .leftJoin(store.promotion, storePromotion).fetchJoin()
             .where(
                 store.id.eq(storeId),
                 store.status.eq(StoreStatus.ACTIVE)
@@ -145,7 +143,6 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
 
         return queryFactory.selectFrom(store).distinct()
             .innerJoin(store.menus, menu).fetchJoin()
-            .leftJoin(store.promotion, storePromotion).fetchJoin()
             .where(
                 store.id.in(storeIds),
                 store.status.eq(StoreStatus.ACTIVE)

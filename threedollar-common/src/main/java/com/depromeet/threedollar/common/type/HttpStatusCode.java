@@ -19,7 +19,7 @@ public enum HttpStatusCode {
 
     private final int status;
 
-    private HttpStatusCode(int status) {
+    HttpStatusCode(int status) {
         this.status = status;
     }
 

@@ -20,7 +20,7 @@ public enum DayOfTheWeek implements EnumModel {
     private final boolean isWeekend;
     private final String description;
 
-    private DayOfTheWeek(DayOfWeek dayOfWeek, boolean isWeekend, String description) {
+    DayOfTheWeek(DayOfWeek dayOfWeek, boolean isWeekend, String description) {
         this.dayOfWeek = dayOfWeek;
         this.isWeekend = isWeekend;
         this.description = description;

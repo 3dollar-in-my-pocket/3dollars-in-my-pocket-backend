@@ -67,8 +67,7 @@ class BossStoreController(
         return ApiResponse.success(bossStoreRetrieveService.getMyBossStore(bossId))
     }
 
-    @ApiOperation("[인증] 특정 가게의 상세 정보를 조회합니다")
-    @Auth
+    @ApiOperation("특정 가게의 상세 정보를 조회합니다")
     @GetMapping("/v1/boss-store/{bossStoreId}")
     fun getBossStoreDetail(
         @PathVariable bossStoreId: String
