@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - develop
-      - feature/dev-cicd-ecs
 jobs:
   build:
     runs-on: ubuntu-latest

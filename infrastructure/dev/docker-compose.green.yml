@@ -1,19 +1,19 @@
 version: "3.7"
 services:
-#  user-api:
-#    image: ${API_IMAGE}:${TAG}
-#    ports:
-#      - 5002:5000
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=dev
-#      - NEW_RELIC_APP_NAME=3dollars-api-dev
-#    volumes:
-#      - ~/logs:/logs
-#    env_file:
-#      - ~/env/user-api-dev.env
-#    stop_signal: SIGTERM
-#    stop_grace_period: 1m
-#    restart: unless-stopped
+  user-api:
+    image: ${API_IMAGE}:${TAG}
+    ports:
+      - 5002:5000
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - NEW_RELIC_APP_NAME=3dollars-api-dev
+    volumes:
+      - ~/logs:/logs
+    env_file:
+      - ~/env/user-api-dev.env
+    stop_signal: SIGTERM
+    stop_grace_period: 1m
+    restart: unless-stopped
   boss-api:
     image: ${BOSS_API_IMAGE}:${TAG}
     ports:
