@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: dev-user
+    environment: dev-boss
     steps:
       - name: checkout@v2
         uses: actions/checkout@v2
