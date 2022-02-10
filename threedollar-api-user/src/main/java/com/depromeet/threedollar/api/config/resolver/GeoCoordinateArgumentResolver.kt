@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.config.resolver
 
-import com.depromeet.threedollar.common.exception.type.ErrorCode.VALIDATION_LATITUDE_EXCEPTION
-import com.depromeet.threedollar.common.exception.type.ErrorCode.VALIDATION_LONGITUDE_EXCEPTION
+import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_MISSING_LATITUDE
+import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_MISSING_LONGITUDE
 import com.depromeet.threedollar.common.exception.model.InternalServerException
-import com.depromeet.threedollar.common.exception.model.ValidationException
+import com.depromeet.threedollar.common.exception.model.InvalidException
 import com.depromeet.threedollar.common.model.CoordinateValue
 import org.springframework.core.MethodParameter
 import org.springframework.stereotype.Component
@@ -33,8 +33,8 @@ class GeoCoordinateArgumentResolver : HandlerMethodArgumentResolver {
             ?: throw InternalServerException("발생할 수 없는 에러가 발생하였습니다. @GeoCoordinate can't be null")
 
         if (annotation.required) {
-            latitude ?: throw ValidationException("${LATITUDE}를 입력해주세요", VALIDATION_LATITUDE_EXCEPTION)
-            longitude ?: throw ValidationException("${LONGITUDE}를 입력해주세요", VALIDATION_LONGITUDE_EXCEPTION)
+            latitude ?: throw InvalidException("${LATITUDE}를 입력해주세요", INVALID_MISSING_LATITUDE)
+            longitude ?: throw InvalidException("${LONGITUDE}를 입력해주세요", INVALID_MISSING_LONGITUDE)
         }
 
         return CoordinateValue.of(latitude ?: 0.0, longitude ?: 0.0)

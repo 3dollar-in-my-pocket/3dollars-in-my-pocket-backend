@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.common.type;
 
 import com.depromeet.threedollar.common.exception.model.ForbiddenException;
-import com.depromeet.threedollar.common.exception.model.ValidationException;
+import com.depromeet.threedollar.common.exception.model.InvalidException;
 import com.depromeet.threedollar.common.model.EnumModel;
 import com.depromeet.threedollar.common.utils.FileUtils;
 import com.depromeet.threedollar.common.utils.UuidUtils;
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.FORBIDDEN_FILE_NAME_EXCEPTION;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_EMPTY_UPLOAD_FILE_NAME;
 import static com.depromeet.threedollar.common.type.ApplicationType.BOSS_API;
 import static com.depromeet.threedollar.common.type.ApplicationType.USER_API;
 
@@ -29,7 +29,7 @@ public enum FileType implements EnumModel {
     private final FileContentType contentType;
     private final List<ApplicationType> availableModules;
 
-    private FileType(String description, String directory, FileContentType contentType, List<ApplicationType> availableModules) {
+    FileType(String description, String directory, FileContentType contentType, List<ApplicationType> availableModules) {
         this.description = description;
         this.directory = directory;
         this.contentType = contentType;
@@ -52,7 +52,7 @@ public enum FileType implements EnumModel {
     @NotNull
     public String createUniqueFileNameWithExtension(@Nullable String originalFileName) {
         if (originalFileName == null) {
-            throw new ValidationException("잘못된 파일의 originFilename 입니다", FORBIDDEN_FILE_NAME_EXCEPTION);
+            throw new InvalidException("파일의 이름이 null 이어서는 안됩니다", INVALID_EMPTY_UPLOAD_FILE_NAME);
         }
         String extension = FileUtils.getFileExtension(originalFileName);
         return getFileNameWithDirectory(UuidUtils.generate().concat(extension));

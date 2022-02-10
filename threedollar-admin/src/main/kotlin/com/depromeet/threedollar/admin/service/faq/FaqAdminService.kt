@@ -42,5 +42,5 @@ class FaqAdminService(
 
 fun findFaqById(faqRepository: FaqRepository, faqId: Long): Faq {
     return faqRepository.findFaqById(faqId)
-        ?: throw NotFoundException("해당하는 Faq ($faqId)를 찾을 수 없습니다", ErrorCode.NOT_FOUND_FAQ_EXCEPTION)
+        ?: throw NotFoundException("해당하는 Faq ($faqId)를 찾을 수 없습니다", ErrorCode.NOTFOUND_FAQ)
 }

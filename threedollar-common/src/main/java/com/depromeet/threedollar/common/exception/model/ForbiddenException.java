@@ -9,7 +9,7 @@ public class ForbiddenException extends ThreeDollarsBaseException {
     }
 
     public ForbiddenException(String message) {
-        super(message, ErrorCode.FORBIDDEN_EXCEPTION);
+        super(message, ErrorCode.FORBIDDEN);
     }
 
 }

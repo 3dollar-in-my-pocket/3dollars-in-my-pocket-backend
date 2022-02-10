@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.config.resolver
 
-import com.depromeet.threedollar.common.exception.type.ErrorCode.VALIDATION_MAP_LATITUDE_EXCEPTION
-import com.depromeet.threedollar.common.exception.type.ErrorCode.VALIDATION_MAP_LONGITUDE_EXCEPTION
+import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_MISSING_MAP_LATITUDE
+import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_MISSING_MAP_LONGITUDE
 import com.depromeet.threedollar.common.exception.model.InternalServerException
-import com.depromeet.threedollar.common.exception.model.ValidationException
+import com.depromeet.threedollar.common.exception.model.InvalidException
 import com.depromeet.threedollar.common.model.CoordinateValue
 import org.springframework.core.MethodParameter
 import org.springframework.stereotype.Component
@@ -33,8 +33,8 @@ class MapCoordinateArgumentResolver : HandlerMethodArgumentResolver {
             ?: throw InternalServerException("발생할 수 없는 에러가 발생하였습니다. @MapCoordinate can't be null")
 
         if (annotation.required) {
-            mapLatitude ?: throw ValidationException("${MAP_LATITUDE}를 입력해주세요", VALIDATION_MAP_LATITUDE_EXCEPTION)
-            mapLongitude ?: throw ValidationException("${MAP_LONGITUDE}를 입력해주세요", VALIDATION_MAP_LONGITUDE_EXCEPTION)
+            mapLatitude ?: throw InvalidException("${MAP_LATITUDE}를 입력해주세요", INVALID_MISSING_MAP_LATITUDE)
+            mapLongitude ?: throw InvalidException("${MAP_LONGITUDE}를 입력해주세요", INVALID_MISSING_MAP_LONGITUDE)
         }
 
         return CoordinateValue.of(mapLatitude ?: 0.0, mapLongitude ?: 0.0)

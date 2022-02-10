@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.common.type;
 
 import com.depromeet.threedollar.common.exception.model.ForbiddenException;
-import com.depromeet.threedollar.common.exception.model.ValidationException;
+import com.depromeet.threedollar.common.exception.model.InvalidException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
@@ -52,7 +52,7 @@ class FileTypeTest {
         FileType imageFileType = FileType.STORE_IMAGE;
 
         // when & then
-        assertThatThrownBy(() -> imageFileType.validateAvailableContentType(contentType)).isInstanceOf(ValidationException.class);
+        assertThatThrownBy(() -> imageFileType.validateAvailableContentType(contentType)).isInstanceOf(InvalidException.class);
     }
 
     @NullAndEmptySource
@@ -62,7 +62,7 @@ class FileTypeTest {
         FileType imageFileType = FileType.STORE_IMAGE;
 
         // when & then
-        assertThatThrownBy(() -> imageFileType.validateAvailableContentType(contentType)).isInstanceOf(ValidationException.class);
+        assertThatThrownBy(() -> imageFileType.validateAvailableContentType(contentType)).isInstanceOf(InvalidException.class);
     }
 
     @ValueSource(strings = {"image/jpeg", "image/png"})

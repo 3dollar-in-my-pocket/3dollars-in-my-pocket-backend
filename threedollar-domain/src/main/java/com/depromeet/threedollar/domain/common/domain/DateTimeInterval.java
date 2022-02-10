@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.common.domain;
 
-import com.depromeet.threedollar.common.exception.model.ValidationException;
+import com.depromeet.threedollar.common.exception.model.InvalidException;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -27,7 +27,7 @@ public class DateTimeInterval {
 
     private static void validateDateTimeInterval(LocalDateTime startDateTime, LocalDateTime endDateTime) {
         if (startDateTime.isAfter(endDateTime)) {
-            throw new ValidationException(String.format("시작 날짜(%s) 가 종료 날짜(%s)보다 느릴 수 없습니", startDateTime, endDateTime));
+            throw new InvalidException(String.format("시작 날짜(%s) 가 종료 날짜(%s)보다 느릴 수 없습니", startDateTime, endDateTime));
         }
     }
 

@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.document.common.document
 
-import com.depromeet.threedollar.common.exception.model.ValidationException
+import com.depromeet.threedollar.common.exception.model.InvalidException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import java.util.regex.Pattern
 
@@ -22,7 +22,7 @@ data class BusinessNumber(
     companion object {
         fun of(number: String): BusinessNumber {
             if (!BUSINESS_NUMBER_REGEX.matcher(number).matches()) {
-                throw ValidationException("잘못된 사업자 번호 (${number}) 입니다. 사업자 번호 형식은 [000-00-00000] 입니다", ErrorCode.VALIDATION_WRONG_BUSINESS_NUMBER_FORMAT_EXCEPTION)
+                throw InvalidException("잘못된 사업자 번호 (${number}) 입니다. 사업자 번호 형식은 [000-00-00000] 입니다", ErrorCode.INVALID_BUSINESS_NUMBER_FORMAT)
             }
             return BusinessNumber(
                 first = number.split(SEPARATOR)[0],

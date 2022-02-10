@@ -53,8 +53,8 @@ internal class AdminControllerTest(
 
         // then
         assertAll({
-            assertThat(response.resultCode).isEqualTo(ErrorCode.UNAUTHORIZED_EXCEPTION.code)
-            assertThat(response.message).isEqualTo(ErrorCode.UNAUTHORIZED_EXCEPTION.message)
+            assertThat(response.resultCode).isEqualTo(ErrorCode.UNAUTHORIZED.code)
+            assertThat(response.message).isEqualTo(ErrorCode.UNAUTHORIZED.message)
         })
     }
 
@@ -71,8 +71,8 @@ internal class AdminControllerTest(
 
         // then
         assertAll({
-            assertThat(response.resultCode).isEqualTo(ErrorCode.UNAUTHORIZED_EXCEPTION.code)
-            assertThat(response.message).isEqualTo(ErrorCode.UNAUTHORIZED_EXCEPTION.message)
+            assertThat(response.resultCode).isEqualTo(ErrorCode.UNAUTHORIZED.code)
+            assertThat(response.message).isEqualTo(ErrorCode.UNAUTHORIZED.message)
         })
     }
 

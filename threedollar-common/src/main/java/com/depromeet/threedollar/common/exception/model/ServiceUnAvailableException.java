@@ -9,7 +9,7 @@ public class ServiceUnAvailableException extends ThreeDollarsBaseException {
     }
 
     public ServiceUnAvailableException(String message) {
-        super(message, ErrorCode.SERVICE_UNAVAILABLE_EXCEPTION);
+        super(message, ErrorCode.SERVICE_UNAVAILABLE);
     }
 
 }
