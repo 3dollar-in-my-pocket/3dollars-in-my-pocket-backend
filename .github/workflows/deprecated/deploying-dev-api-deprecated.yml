@@ -2,8 +2,7 @@ name: 개발환경 API 서버 배포
 
 on:
   push:
-    branches:
-      - develop
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,7 +16,6 @@ jobs:
         run: |
           VERSION=`cat ./version.txt`-${{ github.run_id }}
           echo "::set-output name=version::$VERSION"
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -42,9 +40,7 @@ jobs:
           docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
           echo "::set-output name=image::$DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG"
           echo -e "API_IMAGE=$DOCKER_REGISTRY/$DOCKER_REPOSITORY\nTAG=$IMAGE_TAG" >> infrastructure/dev/.env
-
           echo "🐇 Build User API Image >> $DOCKER_REPOSITORY$IMAGE_TAG"
-
       - name: Build Boss API
         id: build-boss-api
         env:
@@ -58,9 +54,7 @@ jobs:
           docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
           echo "::set-output name=image::$DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG"
           echo -e "BOSS_API_IMAGE=$DOCKER_REGISTRY/$DOCKER_REPOSITORY\nTAG=$IMAGE_TAG" >> infrastructure/dev/.env
-
           echo "🐇 Build Boss API Image >> $DOCKER_REPOSITORY$IMAGE_TAG"
-
       - name: Zip deploy.zip
         run: zip -r deploy.zip infrastructure/dev
 
