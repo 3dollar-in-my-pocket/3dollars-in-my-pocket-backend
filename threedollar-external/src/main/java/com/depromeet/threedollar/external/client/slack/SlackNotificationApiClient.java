@@ -4,7 +4,14 @@ import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMess
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@FeignClient(name = "slackApiClient", url = "https://hooks.slack.com/services", primary = false)
+@FeignClient(
+    name = "slackApiClient",
+    url = "https://hooks.slack.com/services",
+    configuration = {
+        SlackFallbackConfiguration.class
+    },
+    primary = false
+)
 public interface SlackNotificationApiClient {
 
     @PostMapping("${slack.token}")

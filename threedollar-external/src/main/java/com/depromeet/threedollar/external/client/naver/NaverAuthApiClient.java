@@ -5,7 +5,13 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name = "naverAuthApiClient", url = "https://openapi.naver.com")
+@FeignClient(
+    name = "naverAuthApiClient",
+    url = "https://openapi.naver.com",
+    configuration = {
+        NaverFallbackConfiguration.class
+    }
+)
 public interface NaverAuthApiClient {
 
     @GetMapping("/v1/nid/me")

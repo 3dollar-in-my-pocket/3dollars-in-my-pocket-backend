@@ -5,7 +5,13 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name ="kakaoAuthApiClient", url = "https://kapi.kakao.com")
+@FeignClient(
+    name = "kakaoAuthApiClient",
+    url = "https://kapi.kakao.com",
+    configuration = {
+        KaKaoFallbackConfiguration.class
+    }
+)
 public interface KaKaoAuthApiClient {
 
     @GetMapping("/v2/user/me")

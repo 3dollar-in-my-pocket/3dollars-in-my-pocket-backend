@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.external.client.apple.dto.response;
 
-import com.depromeet.threedollar.common.exception.model.ValidationException;
+import com.depromeet.threedollar.common.exception.model.InvalidException;
 import lombok.*;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class ApplePublicKeyResponse {
         return keys.stream()
             .filter(key -> key.getKid().equals(kid) && key.getAlg().equals(alg))
             .findFirst()
-            .orElseThrow(() -> new ValidationException("일치하는 Public Key가 존재하지 않습니다"));
+            .orElseThrow(() -> new InvalidException("일치하는 Public Key가 존재하지 않습니다"));
     }
 
     @ToString
