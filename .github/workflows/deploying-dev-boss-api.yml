@@ -1,19 +1,20 @@
-name: 개발 환경 사장님 API 서버 배포
+name: 개발 환경 유저 API 서버 배포
 
 on:
   push:
     branches:
       - develop
+      - feature/dev-cicd-ecs
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: dev-boss
+    environment: dev-user
     steps:
       - name: checkout@v2
         uses: actions/checkout@v2
 
-      - name: Get Semantic Versioning
-        id: dev-version
+      - name: Version
+        id: version
         run: |
           VERSION=`cat ./version.txt`-${{ github.run_id }}
           echo "::set-output name=version::$VERSION"
@@ -29,42 +30,39 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build Boss API
-        id: build-boss-api
+      - name: Build API
+        id: build
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          DOCKER_REPOSITORY: 3dollar-boss-api-dev
-          IMAGE_TAG: ${{ steps.dev-version.outputs.version }}
+          DOCKER_REPOSITORY: 3dollar-api-dev
+          IMAGE_TAG: ${{ steps.version.outputs.version }}
         run: |
-          docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG -f ./threedollar-api-boss/Dockerfile .
+          docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG -f ./threedollar-api-user/Dockerfile .
           docker tag $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
           docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG
           docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
+
           echo "::set-output name=image::$DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG"
-          echo -e "BOSS_API_IMAGE=$DOCKER_REGISTRY/$DOCKER_REPOSITORY\nTAG=$IMAGE_TAG" >> infrastructure/dev/.env
+          echo "🐇 Build Image >> $DOCKER_REPOSITORY$IMAGE_TAG"
 
-          echo "🐇 Build Boss API Image >> $DOCKER_REPOSITORY$IMAGE_TAG"
-
-      - name: Zip deploy.zip
-        run: zip -r deploy.zip infrastructure/dev
-
-      - name: Upload deploy.zip
-        uses: actions/upload-artifact@v2
-        with:
-          name: deploy.zip
-          path: deploy.zip
-  deploy:
-    needs:
-      - build
-    runs-on: 3dollar-dev
-    steps:
-      - name: Download deploy.zip
-        uses: actions/download-artifact@v2
-        with:
-          name: deploy.zip
-
-      - name: run server
+      - name: Download task definition
+        id: download-task-definition
         run: |
-          unzip -o ./deploy.zip
-          cd infrastructure/dev
-          sh ./deploy.sh
+          aws ecs describe-task-definition --task-definition threedollar-user-api-dev --query taskDefinition > task-definition-user-dev.json
+          echo "::set-output name=task-definition::$GITHUB_WORKSPACE/task-definition-user-dev.json"
+
+      - name: Update Amazon ECS task definition
+        id: render-web-container
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ steps.download-task-definition.outputs.task-definition }}
+          container-name: threedollar-user-api-dev
+          image: ${{ steps.build.outputs.image }}
+
+      - name: Deploy to Amazon ECS service
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-web-container.outputs.task-definition }}
+          cluster: threedollar-dev
+          service: threedollar-user-api-dev
+          wait-for-service-stability: true

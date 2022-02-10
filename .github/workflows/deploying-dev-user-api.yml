@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - develop
-      - feature/dev-cicd-ecs
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -34,7 +33,7 @@ jobs:
         id: build
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          DOCKER_REPOSITORY: 3dollar-api-dev
+          DOCKER_REPOSITORY: 3dollar-boss-api-dev
           IMAGE_TAG: ${{ steps.version.outputs.version }}
         run: |
           docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG -f ./threedollar-api-user/Dockerfile .
@@ -48,15 +47,15 @@ jobs:
       - name: Download task definition
         id: download-task-definition
         run: |
-          aws ecs describe-task-definition --task-definition threedollar-user-api-dev --query taskDefinition > task-definition-dev.json
-          echo "::set-output name=task-definition::$GITHUB_WORKSPACE/task-definition-dev.json"
+          aws ecs describe-task-definition --task-definition threedollar-boss-api-dev --query taskDefinition > task-definition-boss-dev.json
+          echo "::set-output name=task-definition::$GITHUB_WORKSPACE/task-definition-boss-dev.json"
 
       - name: Update Amazon ECS task definition
         id: render-web-container
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: ${{ steps.download-task-definition.outputs.task-definition }}
-          container-name: threedollar-user-api-dev
+          container-name: threedollar-boss-api-dev
           image: ${{ steps.build.outputs.image }}
 
       - name: Deploy to Amazon ECS service
@@ -64,5 +63,5 @@ jobs:
         with:
           task-definition: ${{ steps.render-web-container.outputs.task-definition }}
           cluster: threedollar-dev
-          service: threedollar-user-api-dev
+          service: threedollar-boss-api-dev
           wait-for-service-stability: true
