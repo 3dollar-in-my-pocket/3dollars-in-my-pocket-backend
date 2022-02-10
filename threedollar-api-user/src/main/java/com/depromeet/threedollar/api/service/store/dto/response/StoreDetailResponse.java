@@ -38,9 +38,6 @@ public class StoreDetailResponse extends AuditingTimeResponse {
     private double rating;
     private int distance;
 
-    @Nullable
-    private StorePromotionResponse promotion;
-
     private final List<MenuCategoryType> categories = new ArrayList<>();
     private final Set<DayOfTheWeek> appearanceDays = new HashSet<>();
     private final Set<PaymentMethodType> paymentMethods = new HashSet<>();
@@ -61,7 +58,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
 
     @Builder
     private StoreDetailResponse(Long storeId, double latitude, double longitude, String storeName, @Nullable StoreType storeType,
-                                double rating, int distance, @Nullable StorePromotionResponse promotion, UserInfoResponse user, VisitHistoryCountsResponse visitHistory) {
+                                double rating, int distance, UserInfoResponse user, VisitHistoryCountsResponse visitHistory) {
         this.storeId = storeId;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -69,7 +66,6 @@ public class StoreDetailResponse extends AuditingTimeResponse {
         this.storeType = storeType;
         this.rating = rating;
         this.distance = distance;
-        this.promotion = promotion;
         this.user = user;
         this.visitHistory = visitHistory;
     }
@@ -84,7 +80,6 @@ public class StoreDetailResponse extends AuditingTimeResponse {
             .storeType(store.getType())
             .rating(store.getRating())
             .distance(LocationDistanceUtils.getDistance(store.getLatitude(), store.getLongitude(), geoCoordinate.getLatitude(), geoCoordinate.getLongitude()))
-            .promotion(StorePromotionResponse.of(store.getPromotion()))
             .user(UserInfoResponse.of(userDictionary.getUser(store.getUserId())))
             .visitHistory(VisitHistoryCountsResponse.of(visitHistoriesCollection.getStoreExistsVisitsCount(store.getId()), visitHistoriesCollection.getStoreNotExistsVisitsCount(store.getId())))
             .build();

@@ -73,28 +73,4 @@ object StoreCreator {
         return store
     }
 
-    @JvmOverloads
-    @JvmStatic
-    fun createWithDefaultMenuAndPromotion(
-        userId: Long,
-        storeName: String,
-        latitude: Double,
-        longitude: Double,
-        promotion: StorePromotion,
-        storeType: StoreType = StoreType.CONVENIENCE_STORE,
-        rating: Double = 0.0
-    ): Store {
-        val store = Store.builder()
-            .userId(userId)
-            .name(storeName)
-            .type(storeType)
-            .latitude(latitude)
-            .longitude(longitude)
-            .rating(rating)
-            .promotion(promotion)
-            .build()
-        store.addMenus(listOf(create(store, "메뉴 이름", "메뉴 가격", MenuCategoryType.BUNGEOPPANG)))
-        return store
-    }
-
 }

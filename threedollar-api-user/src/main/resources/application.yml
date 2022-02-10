@@ -67,7 +67,7 @@ spring.config:
 spring:
   datasource:
     hikari:
-      maximum-pool-size: 10
+      maximum-pool-size: 20
 
 
 ---
