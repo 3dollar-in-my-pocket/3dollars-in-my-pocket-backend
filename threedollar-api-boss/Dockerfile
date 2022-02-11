@@ -18,4 +18,4 @@ COPY ./infrastructure/newrelic.yml $HOME/newrelic/newrelic.yml
 
 EXPOSE 4000
 
-ENTRYPOINT ["java", "-XX:CompileThreshold=100", "-XX:+TieredCompilation", "-Duser.timezone=Asia/Seoul", "-jar", "/threedollar-api-boss.jar"]
+ENTRYPOINT ["java", "-XX:CompileThreshold=100", "-XX:+TieredCompilation", "-javaagent:/usr/app/newrelic/newrelic.jar", "-Duser.timezone=Asia/Seoul", "-jar", "/threedollar-api-boss.jar"]
