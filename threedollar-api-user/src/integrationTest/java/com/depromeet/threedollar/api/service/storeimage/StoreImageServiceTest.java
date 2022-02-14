@@ -22,6 +22,7 @@ import static com.depromeet.threedollar.testhelper.assertion.StoreImageAssertion
 import static com.depromeet.threedollar.testhelper.assertion.StoreImageAssertionHelper.assertStoreImageResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -91,8 +92,10 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
 
             // then
             List<StoreImage> storeImageList = storeImageRepository.findAll();
-            assertThat(storeImageList).hasSize(1);
-            assertStoreImage(storeImageList.get(0), store.getId(), userId, imageUrl, StoreImageStatus.INACTIVE);
+            assertAll(
+                () -> assertThat(storeImageList).hasSize(1),
+                () -> assertStoreImage(storeImageList.get(0), store.getId(), userId, imageUrl, StoreImageStatus.INACTIVE)
+            );
         }
 
         @Test
@@ -131,8 +134,10 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
             List<StoreImageResponse> responses = storeImageService.getStoreImages(store.getId());
 
             // then
-            assertThat(responses).hasSize(1);
-            assertStoreImageResponse(responses.get(0), storeImage.getId(), imageUrl);
+            assertAll(
+                () -> assertThat(responses).hasSize(1),
+                () -> assertStoreImageResponse(responses.get(0), storeImage.getId(), imageUrl)
+            );
         }
 
         @Test

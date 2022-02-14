@@ -19,6 +19,7 @@ import java.util.List;
 import static com.depromeet.threedollar.testhelper.assertion.ReviewAssertionHelper.assertReview;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
 class ReviewServiceTest extends SetupStoreServiceTest {
@@ -50,8 +51,10 @@ class ReviewServiceTest extends SetupStoreServiceTest {
 
             // then
             List<Review> reviews = reviewRepository.findAll();
-            assertThat(reviews).hasSize(1);
-            assertReview(reviews.get(0), store.getId(), contents, rating, userId, ReviewStatus.POSTED);
+            assertAll(
+                () -> assertThat(reviews).hasSize(1),
+                () -> assertReview(reviews.get(0), store.getId(), contents, rating, userId, ReviewStatus.POSTED)
+            );
         }
 
         @Test
@@ -85,8 +88,10 @@ class ReviewServiceTest extends SetupStoreServiceTest {
 
             // then
             List<Review> reviews = reviewRepository.findAll();
-            assertThat(reviews).hasSize(1);
-            assertReview(reviews.get(0), store.getId(), contents, rating, userId, ReviewStatus.POSTED);
+            assertAll(
+                () -> assertThat(reviews).hasSize(1),
+                () -> assertReview(reviews.get(0), store.getId(), contents, rating, userId, ReviewStatus.POSTED)
+            );
         }
 
         @Test
@@ -128,8 +133,10 @@ class ReviewServiceTest extends SetupStoreServiceTest {
 
             // then
             List<Review> reviews = reviewRepository.findAll();
-            assertThat(reviews).hasSize(1);
-            assertReview(reviews.get(0), store.getId(), review.getContents(), review.getRating(), userId, ReviewStatus.DELETED);
+            assertAll(
+                () -> assertThat(reviews).hasSize(1),
+                () -> assertReview(reviews.get(0), store.getId(), review.getContents(), review.getRating(), userId, ReviewStatus.DELETED)
+            );
         }
 
         @Test

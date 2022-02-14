@@ -28,7 +28,7 @@ public class WithdrawalUser extends AuditingTimeEntity {
 
     private LocalDateTime userCreatedAt;
 
-    @Builder(access = AccessLevel.PRIVATE)
+    @Builder(access = AccessLevel.PACKAGE)
     private WithdrawalUser(Long userId, String name, SocialInfo socialInfo, LocalDateTime userCreatedAt) {
         this.userId = userId;
         this.name = name;

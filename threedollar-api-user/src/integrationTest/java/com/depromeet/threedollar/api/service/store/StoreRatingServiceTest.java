@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
 class StoreRatingServiceTest extends SetupStoreServiceTest {
@@ -41,8 +42,10 @@ class StoreRatingServiceTest extends SetupStoreServiceTest {
 
         // then
         List<Store> stores = storeRepository.findAll();
-        assertThat(stores).hasSize(1);
-        assertThat(stores.get(0).getRating()).isEqualTo(3.0); // (1 + 5) / 2 = 3
+        assertAll(
+            () -> assertThat(stores).hasSize(1),
+            () -> assertThat(stores.get(0).getRating()).isEqualTo(3.0) // (1 + 5) / 2 = 3
+        );
     }
 
     @Test
@@ -52,8 +55,10 @@ class StoreRatingServiceTest extends SetupStoreServiceTest {
 
         // then
         List<Store> stores = storeRepository.findAll();
-        assertThat(stores).hasSize(1);
-        assertThat(stores.get(0).getRating()).isEqualTo(0);
+        assertAll(
+            () -> assertThat(stores).hasSize(1),
+            () -> assertThat(stores.get(0).getRating()).isEqualTo(0)
+        );
     }
 
 }

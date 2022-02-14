@@ -25,6 +25,7 @@ import java.util.List;
 import static com.depromeet.threedollar.testhelper.assertion.ReviewAssertionHelper.assertReviewDetailInfoResponse;
 import static com.depromeet.threedollar.testhelper.assertion.ReviewAssertionHelper.assertReviewInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -171,11 +172,13 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             ApiResponse<ReviewsCursorResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
-            assertThat(response.getData().getNextCursor()).isEqualTo(review3.getId());
-            assertThat(response.getData().getContents()).hasSize(2);
+            assertAll(
+                () -> assertThat(response.getData().getNextCursor()).isEqualTo(review3.getId()),
+                () -> assertThat(response.getData().getContents()).hasSize(2),
 
-            assertReviewDetailInfoResponse(response.getData().getContents().get(0), review4, store, testUser);
-            assertReviewDetailInfoResponse(response.getData().getContents().get(1), review3, store, testUser);
+                () -> assertReviewDetailInfoResponse(response.getData().getContents().get(0), review4, store, testUser),
+                () -> assertReviewDetailInfoResponse(response.getData().getContents().get(1), review3, store, testUser)
+            );
         }
 
         @Test
@@ -193,11 +196,13 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             ApiResponse<ReviewsCursorResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
-            assertThat(response.getData().getNextCursor()).isEqualTo(review2.getId());
-            assertThat(response.getData().getContents()).hasSize(2);
+            assertAll(
+                () -> assertThat(response.getData().getNextCursor()).isEqualTo(review2.getId()),
+                () -> assertThat(response.getData().getContents()).hasSize(2),
 
-            assertReviewDetailInfoResponse(response.getData().getContents().get(0), review3, store, testUser);
-            assertReviewDetailInfoResponse(response.getData().getContents().get(1), review2, store, testUser);
+                () -> assertReviewDetailInfoResponse(response.getData().getContents().get(0), review3, store, testUser),
+                () -> assertReviewDetailInfoResponse(response.getData().getContents().get(1), review2, store, testUser)
+            );
         }
 
         @Test
@@ -215,11 +220,13 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             ApiResponse<ReviewsCursorResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
-            assertThat(response.getData().getNextCursor()).isEqualTo(review2.getId());
-            assertThat(response.getData().getContents()).hasSize(2);
+            assertAll(
+                () -> assertThat(response.getData().getNextCursor()).isEqualTo(review2.getId()),
+                () -> assertThat(response.getData().getContents()).hasSize(2),
 
-            assertReviewDetailInfoResponse(response.getData().getContents().get(0), review3, store, testUser);
-            assertReviewDetailInfoResponse(response.getData().getContents().get(1), review2, store, testUser);
+                () -> assertReviewDetailInfoResponse(response.getData().getContents().get(0), review3, store, testUser),
+                () -> assertReviewDetailInfoResponse(response.getData().getContents().get(1), review2, store, testUser)
+            );
         }
 
         @Test
@@ -237,11 +244,13 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             ApiResponse<ReviewsCursorResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
-            assertThat(response.getData().getNextCursor()).isEqualTo(-1);
-            assertThat(response.getData().getContents()).hasSize(2);
+            assertAll(
+                () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
+                () -> assertThat(response.getData().getContents()).hasSize(2),
 
-            assertReviewDetailInfoResponse(response.getData().getContents().get(0), review2, store, testUser);
-            assertReviewDetailInfoResponse(response.getData().getContents().get(1), review1, store, testUser);
+                () -> assertReviewDetailInfoResponse(response.getData().getContents().get(0), review2, store, testUser),
+                () -> assertReviewDetailInfoResponse(response.getData().getContents().get(1), review1, store, testUser)
+            );
         }
 
         @Test
@@ -259,10 +268,12 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             ApiResponse<ReviewsCursorResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
-            assertThat(response.getData().getNextCursor()).isEqualTo(-1);
-            assertThat(response.getData().getContents()).hasSize(1);
+            assertAll(
+                () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
+                () -> assertThat(response.getData().getContents()).hasSize(1),
 
-            assertReviewDetailInfoResponse(response.getData().getContents().get(0), review1, store, testUser);
+                () -> assertReviewDetailInfoResponse(response.getData().getContents().get(0), review1, store, testUser)
+            );
         }
 
         @Test
@@ -277,8 +288,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             ApiResponse<ReviewsCursorResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
-            assertThat(response.getData().getNextCursor()).isEqualTo(-1);
-            assertThat(response.getData().getContents()).isEmpty();
+            assertAll(
+                () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
+                () -> assertThat(response.getData().getContents()).isEmpty()
+            );
         }
 
         @Test
@@ -296,10 +309,12 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             ApiResponse<ReviewsCursorResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
 
             // then
-            assertThat(response.getData().getNextCursor()).isEqualTo(-1);
-            assertThat(response.getData().getContents()).hasSize(1);
+            assertAll(
+                () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
+                () -> assertThat(response.getData().getContents()).hasSize(1),
 
-            assertReviewDetailInfoResponse(response.getData().getContents().get(0), review, deletedStore, testUser);
+                () -> assertReviewDetailInfoResponse(response.getData().getContents().get(0), review, deletedStore, testUser)
+            );
         }
 
     }

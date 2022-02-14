@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 import static com.depromeet.threedollar.testhelper.assertion.StoreAssertionHelper.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
 class StoreServiceTest extends SetupUserServiceTest {
@@ -88,8 +89,10 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             // then
             List<Store> stores = storeRepository.findAll();
-            assertThat(stores).hasSize(1);
-            assertStore(stores.get(0), latitude, longitude, storeName, storeType, userId);
+            assertAll(
+                () -> assertThat(stores).hasSize(1),
+                () -> assertStore(stores.get(0), latitude, longitude, storeName, storeType, userId)
+            );
         }
 
         @Test
@@ -112,8 +115,10 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             // then
             List<AppearanceDay> appearanceDayList = appearanceDayRepository.findAll();
-            assertThat(appearanceDayList).hasSize(appearanceDays.size());
-            assertThat(getDayOfTheWeeks(appearanceDayList)).containsExactlyInAnyOrderElementsOf(appearanceDays);
+            assertAll(
+                () -> assertThat(appearanceDayList).hasSize(appearanceDays.size()),
+                () -> assertThat(getDayOfTheWeeks(appearanceDayList)).containsExactlyInAnyOrderElementsOf(appearanceDays)
+            );
         }
 
         @Test
@@ -136,8 +141,10 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             // then
             List<PaymentMethod> paymentMethodsList = paymentMethodRepository.findAll();
-            assertThat(paymentMethodsList).hasSize(paymentMethods.size());
-            assertThat(getPaymentMethodTypes(paymentMethodsList)).containsExactlyInAnyOrderElementsOf(paymentMethods);
+            assertAll(
+                () -> assertThat(paymentMethodsList).hasSize(paymentMethods.size()),
+                () -> assertThat(getPaymentMethodTypes(paymentMethodsList)).containsExactlyInAnyOrderElementsOf(paymentMethods)
+            );
         }
 
         @Test
@@ -164,8 +171,10 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             // then
             List<Menu> menuList = menuRepository.findAll();
-            assertThat(menuList).hasSize(1);
-            assertMenu(menuList.get(0), menuName, price, type);
+            assertAll(
+                () -> assertThat(menuList).hasSize(1),
+                () -> assertMenu(menuList.get(0), menuName, price, type)
+            );
         }
 
         @Test
@@ -195,8 +204,10 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             // then
             List<Menu> menuList = menuRepository.findAll();
-            assertThat(menuList).hasSize(1);
-            assertMenu(menuList.get(0), menuName, price, type);
+            assertAll(
+                () -> assertThat(menuList).hasSize(1),
+                () -> assertMenu(menuList.get(0), menuName, price, type)
+            );
         }
 
     }
@@ -235,11 +246,12 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             // then
             List<Store> stores = storeRepository.findAll();
-            assertThat(stores).hasSize(1);
-
             List<Menu> menus = menuRepository.findAll();
-            assertThat(menus).hasSize(1);
-            assertMenu(menus.get(0), store.getId(), menuName, price, type);
+            assertAll(
+                () -> assertThat(stores).hasSize(1),
+                () -> assertThat(menus).hasSize(1),
+                () -> assertMenu(menus.get(0), store.getId(), menuName, price, type)
+            );
         }
 
         @Test
@@ -266,8 +278,10 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             // then
             List<PaymentMethod> paymentMethodsList = paymentMethodRepository.findAll();
-            assertThat(paymentMethodsList).hasSize(paymentMethodTypes.size());
-            assertThat(getPaymentMethodTypes(paymentMethodsList)).containsExactlyInAnyOrderElementsOf(paymentMethodTypes);
+            assertAll(
+                () -> assertThat(paymentMethodsList).hasSize(paymentMethodTypes.size()),
+                () -> assertThat(getPaymentMethodTypes(paymentMethodsList)).containsExactlyInAnyOrderElementsOf(paymentMethodTypes)
+            );
         }
 
         @Test
@@ -294,8 +308,10 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             // then
             List<AppearanceDay> appearanceDayList = appearanceDayRepository.findAll();
-            assertThat(appearanceDayList).hasSize(appearanceDays.size());
-            assertThat(getDayOfTheWeeks(appearanceDayList)).containsExactlyInAnyOrderElementsOf(appearanceDays);
+            assertAll(
+                () -> assertThat(appearanceDayList).hasSize(appearanceDays.size()),
+                () -> assertThat(getDayOfTheWeeks(appearanceDayList)).containsExactlyInAnyOrderElementsOf(appearanceDays)
+            );
         }
 
         @Test
@@ -336,9 +352,11 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             // then
             List<Menu> findMenus = menuRepository.findAll();
-            assertThat(findMenus).hasSize(2);
-            assertMenu(findMenus.get(0), store.getId(), menuName, price, type);
-            assertMenu(findMenus.get(1), store.getId(), newMenuName, newMenuPrice, newMenuCategory);
+            assertAll(
+                () -> assertThat(findMenus).hasSize(2),
+                () -> assertMenu(findMenus.get(0), store.getId(), menuName, price, type),
+                () -> assertMenu(findMenus.get(1), store.getId(), newMenuName, newMenuPrice, newMenuCategory)
+            );
         }
 
         @Test
@@ -371,8 +389,10 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             // then
             List<Menu> findMenus = menuRepository.findAll();
-            assertThat(findMenus).hasSize(1);
-            assertMenu(findMenus.get(0), store.getId(), menuName, price, type);
+            assertAll(
+                () -> assertThat(findMenus).hasSize(1),
+                () -> assertMenu(findMenus.get(0), store.getId(), menuName, price, type)
+            );
         }
 
         @Test
@@ -422,8 +442,10 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             // then
             List<Store> stores = storeRepository.findAll();
-            assertThat(stores).hasSize(1);
-            assertStore(stores.get(0), latitude, longitude, storeName, storeType, creatorUserId);
+            assertAll(
+                () -> assertThat(stores).hasSize(1),
+                () -> assertStore(stores.get(0), latitude, longitude, storeName, storeType, creatorUserId)
+            );
         }
 
     }
@@ -444,14 +466,15 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             // then
             List<Store> stores = storeRepository.findAll();
-            assertThat(stores).hasSize(1);
-            assertThat(stores.get(0).getStatus()).isEqualTo(StoreStatus.ACTIVE);
-
             List<StoreDeleteRequest> storeDeleteRequestList = storeDeleteRequestRepository.findAll();
-            assertThat(storeDeleteRequestList).hasSize(1);
-            assertStoreDeleteRequest(storeDeleteRequestList.get(0), store.getId(), userId, deleteReasonType);
 
-            assertThat(response.getIsDeleted()).isFalse();
+            assertAll(
+                () -> assertThat(stores).hasSize(1),
+                () -> assertThat(stores.get(0).getStatus()).isEqualTo(StoreStatus.ACTIVE),
+                () -> assertThat(storeDeleteRequestList).hasSize(1),
+                () -> assertStoreDeleteRequest(storeDeleteRequestList.get(0), store.getId(), userId, deleteReasonType),
+                () -> assertThat(response.getIsDeleted()).isFalse()
+            );
         }
 
         @Test
@@ -469,15 +492,18 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             // then
             List<Store> stores = storeRepository.findAll();
-            assertThat(stores).hasSize(1);
-            assertThat(stores.get(0).getStatus()).isEqualTo(StoreStatus.ACTIVE);
-
             List<StoreDeleteRequest> storeDeleteRequestList = storeDeleteRequestRepository.findAll();
-            assertThat(storeDeleteRequestList).hasSize(2);
-            assertStoreDeleteRequest(storeDeleteRequestList.get(0), store.getId(), 90L, DeleteReasonType.WRONG_CONTENT);
-            assertStoreDeleteRequest(storeDeleteRequestList.get(1), store.getId(), userId, deleteReasonType);
 
-            assertThat(response.getIsDeleted()).isFalse();
+            assertAll(
+                () -> assertThat(stores).hasSize(1),
+                () -> assertThat(stores.get(0).getStatus()).isEqualTo(StoreStatus.ACTIVE),
+
+                () -> assertThat(storeDeleteRequestList).hasSize(2),
+                () -> assertStoreDeleteRequest(storeDeleteRequestList.get(0), store.getId(), 90L, DeleteReasonType.WRONG_CONTENT),
+                () -> assertStoreDeleteRequest(storeDeleteRequestList.get(1), store.getId(), userId, deleteReasonType),
+
+                () -> assertThat(response.getIsDeleted()).isFalse()
+            );
         }
 
         @Test
@@ -498,16 +524,19 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             // then
             List<Store> stores = storeRepository.findAll();
-            assertThat(stores).hasSize(1);
-            assertThat(stores.get(0).getStatus()).isEqualTo(StoreStatus.DELETED);
-
             List<StoreDeleteRequest> storeDeleteRequestList = storeDeleteRequestRepository.findAll();
-            assertThat(storeDeleteRequestList).hasSize(3);
-            assertStoreDeleteRequest(storeDeleteRequestList.get(0), store.getId(), 1000L, DeleteReasonType.NOSTORE);
-            assertStoreDeleteRequest(storeDeleteRequestList.get(1), store.getId(), 1001L, DeleteReasonType.NOSTORE);
-            assertStoreDeleteRequest(storeDeleteRequestList.get(2), store.getId(), userId, deleteReasonType);
 
-            assertThat(response.getIsDeleted()).isTrue();
+            assertAll(
+                () -> assertThat(stores).hasSize(1),
+                () -> assertThat(stores.get(0).getStatus()).isEqualTo(StoreStatus.DELETED),
+
+                () -> assertThat(storeDeleteRequestList).hasSize(3),
+                () -> assertStoreDeleteRequest(storeDeleteRequestList.get(0), store.getId(), 1000L, DeleteReasonType.NOSTORE),
+                () -> assertStoreDeleteRequest(storeDeleteRequestList.get(1), store.getId(), 1001L, DeleteReasonType.NOSTORE),
+                () -> assertStoreDeleteRequest(storeDeleteRequestList.get(2), store.getId(), userId, deleteReasonType),
+
+                () -> assertThat(response.getIsDeleted()).isTrue()
+            );
         }
 
         @Test
