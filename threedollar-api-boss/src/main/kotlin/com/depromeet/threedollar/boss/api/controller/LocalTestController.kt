@@ -6,6 +6,7 @@ import com.depromeet.threedollar.boss.api.config.resolver.BossId
 import com.depromeet.threedollar.boss.api.config.session.SessionConstants
 import com.depromeet.threedollar.boss.api.service.auth.dto.response.LoginResponse
 import com.depromeet.threedollar.boss.api.service.category.BossStoreCategoryServiceUtils
+import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.document.boss.document.account.*
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategory
@@ -102,10 +103,12 @@ class LocalTestController(
             )
         )
 
-        bossStoreLocationRepository.save(BossStoreLocation(
-            bossStoreId = bossStore.id,
-            location = Point(longitude, latitude),
-        ))
+        bossStoreLocationRepository.save(
+            BossStoreLocation(
+                bossStoreId = bossStore.id,
+                location = Point(longitude, latitude),
+            )
+        )
         return ApiResponse.success(bossStore.id)
     }
 
@@ -120,6 +123,12 @@ class LocalTestController(
         )
         bossStoreCategoryRepository.save(category)
         return ApiResponse.success(category.id)
+    }
+
+    @ApiOperation("[개발 서버용] 서버 에러를 발생시킵니다.")
+    @GetMapping("/test-error")
+    fun testError() {
+        throw InternalServerException("[개발환경 에러 테스트용] 서버 에러가 발생하였습니다");
     }
 
     companion object {
