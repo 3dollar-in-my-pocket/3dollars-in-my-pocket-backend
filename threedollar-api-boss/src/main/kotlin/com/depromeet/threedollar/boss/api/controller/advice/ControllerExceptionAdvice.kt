@@ -2,11 +2,16 @@ package com.depromeet.threedollar.boss.api.controller.advice
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseException
+import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.exception.type.ErrorCode.*
+import com.depromeet.threedollar.common.type.ApplicationType
+import com.depromeet.threedollar.common.utils.UserMetaSessionUtils
 import com.depromeet.threedollar.common.utils.logger
+import com.depromeet.threedollar.domain.common.event.ServerExceptionOccurredEvent
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import org.slf4j.Logger
 import org.springframework.beans.TypeMismatchException
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
@@ -21,11 +26,16 @@ import org.springframework.web.bind.ServletRequestBindingException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import org.springframework.web.multipart.MaxUploadSizeExceededException
 import org.springframework.web.multipart.support.MissingServletRequestPartException
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.stream.Collectors
 
 @RestControllerAdvice
-class ControllerExceptionAdvice {
+class ControllerExceptionAdvice(
+    private val eventPublisher: ApplicationEventPublisher
+) {
 
     /**
      * 400 BadRequest
@@ -101,7 +111,7 @@ class ControllerExceptionAdvice {
         InvalidFormatException::class,
         ServletRequestBindingException::class
     )
-    private fun handleMethodArgumentNotValidException(e: Exception): ApiResponse<Nothing> {
+    protected fun handleMethodArgumentNotValidException(e: Exception): ApiResponse<Nothing> {
         log.warn(e.message)
         return ApiResponse.error(INVALID)
     }
@@ -112,7 +122,7 @@ class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException::class)
-    private fun handleHttpRequestMethodNotSupportedException(e: HttpRequestMethodNotSupportedException): ApiResponse<Nothing> {
+    protected fun handleHttpRequestMethodNotSupportedException(e: HttpRequestMethodNotSupportedException): ApiResponse<Nothing> {
         log.warn(e.message, e)
         return ApiResponse.error(METHOD_NOT_ALLOWED)
     }
@@ -139,11 +149,28 @@ class ControllerExceptionAdvice {
     }
 
     /**
+     * 최대 허용한 이미지 크기를 넘은 경우 발생하는 Exception
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(
+        MaxUploadSizeExceededException::class
+    )
+    protected fun handleMaxUploadSizeExceededException(e: MaxUploadSizeExceededException): ApiResponse<Nothing> {
+        log.error(e.message, e)
+        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(INVALID_UPLOAD_FILE_SIZE, e))
+        return ApiResponse.error(INVALID_UPLOAD_FILE_SIZE)
+    }
+
+
+    /**
      * ThreeDollars Custom Exception
      */
     @ExceptionHandler(ThreeDollarsBaseException::class)
     protected fun handleBaseException(exception: ThreeDollarsBaseException): ResponseEntity<ApiResponse<Nothing>> {
         log.error(exception.message, exception)
+        if (exception.isSetAlarm) {
+            eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(exception.errorCode, exception));
+        }
         return ResponseEntity.status(exception.status)
             .body(ApiResponse.error(exception.errorCode))
     }
@@ -153,9 +180,23 @@ class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception::class)
-    private fun handleInternalServerException(e: Exception): ApiResponse<Nothing> {
-        log.error(e.message, e)
+    private fun handleInternalServerException(exception: Exception): ApiResponse<Nothing> {
+        log.error(exception.message, exception)
+        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(INTERNAL_SERVER, exception));
         return ApiResponse.error(INTERNAL_SERVER)
+    }
+
+    private fun createUnExpectedErrorOccurredEvent(
+        errorCode: ErrorCode,
+        exception: Exception
+    ): ServerExceptionOccurredEvent {
+        return ServerExceptionOccurredEvent.error(
+            ApplicationType.USER_API,
+            errorCode,
+            exception,
+            UserMetaSessionUtils.get(),
+            LocalDateTime.now(ZoneId.of("Asia/Seoul"))
+        )
     }
 
     companion object {
