@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
     name = "naverAuthApiClient",
     url = "${external.client.naver.profile.base-url}",
     configuration = {
-        NaverFallbackConfiguration.class
+        NaverFeignConfig.class
     }
 )
 public interface NaverAuthApiClient {

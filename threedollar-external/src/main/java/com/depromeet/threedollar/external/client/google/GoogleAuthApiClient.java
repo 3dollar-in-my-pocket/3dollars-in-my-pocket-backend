@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
     name = "googleAuthApiClient",
     url = "${external.client.google.profile.base-url}",
     configuration = {
-        GoogleFallbackConfiguration.class
+        GoogleFeignConfig.class
     }
 )
 public interface GoogleAuthApiClient {

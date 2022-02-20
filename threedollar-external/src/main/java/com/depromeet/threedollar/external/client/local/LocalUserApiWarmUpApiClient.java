@@ -1,18 +1,18 @@
 package com.depromeet.threedollar.external.client.local;
 
-import com.depromeet.threedollar.external.config.feign.FeignErrorDecoder;
+import com.depromeet.threedollar.external.config.feign.FeignDefaultConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(
     name = "localWarmUpApiClient",
-    url = "http://localhost:5000",
+    url = "http://localhost:${server.port}",
     configuration = {
-        FeignErrorDecoder.class
+        FeignDefaultConfig.class
     }
 )
-public interface LocalThreedollarsUserApiWarmUpApiClient {
+public interface LocalUserApiWarmUpApiClient {
 
     @GetMapping("/api/v2/stores/near")
     void retrieveNearStores(

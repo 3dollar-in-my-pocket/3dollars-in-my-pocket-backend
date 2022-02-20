@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
     name = "slackWebhookApiClient",
     url = "${external.client.slack.webhook.base-url}",
     configuration = {
-        SlackFallbackConfiguration.class
+        SlackFeignConfig.class
     },
     primary = false
 )

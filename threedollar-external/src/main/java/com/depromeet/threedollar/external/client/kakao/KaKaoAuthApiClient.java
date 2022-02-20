@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
     name = "kakaoAuthApiClient",
     url = "${external.client.kakao.profile.base-url}",
     configuration = {
-        KaKaoFallbackConfiguration.class
+        KaKaoFeignConfig.class
     }
 )
 public interface KaKaoAuthApiClient {
