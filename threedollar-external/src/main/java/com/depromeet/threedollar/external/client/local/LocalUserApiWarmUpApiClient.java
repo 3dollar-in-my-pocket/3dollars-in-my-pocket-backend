@@ -1,16 +1,12 @@
 package com.depromeet.threedollar.external.client.local;
 
-import com.depromeet.threedollar.external.config.feign.FeignDefaultConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(
     name = "localWarmUpApiClient",
-    url = "http://localhost:${server.port}",
-    configuration = {
-        FeignDefaultConfig.class
-    }
+    url = "http://localhost:${server.port}"
 )
 public interface LocalUserApiWarmUpApiClient {
 
