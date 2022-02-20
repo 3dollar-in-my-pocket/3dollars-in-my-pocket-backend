@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.runner;
 
 import com.depromeet.threedollar.common.type.FamousPlace;
 import com.depromeet.threedollar.domain.user.domain.advertisement.AdvertisementPlatformType;
-import com.depromeet.threedollar.external.client.local.LocalThreedollarsUserApiWarmUpApiClient;
+import com.depromeet.threedollar.external.client.local.LocalUserApiWarmUpApiClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -15,7 +15,7 @@ public class WarmUpRunner implements CommandLineRunner {
 
     private static final int API_CALL_COUNT = 10;
 
-    private final LocalThreedollarsUserApiWarmUpApiClient apiClient;
+    private final LocalUserApiWarmUpApiClient apiClient;
 
     @Override
     public void run(String... args) {
