@@ -19,6 +19,7 @@ import static com.depromeet.threedollar.testhelper.assertion.UserAssertionHelper
 import static com.depromeet.threedollar.testhelper.assertion.UserAssertionHelper.assertWithdrawalUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
 class UserServiceTest {
@@ -55,8 +56,10 @@ class UserServiceTest {
 
             // then
             List<User> users = userRepository.findAll();
-            assertThat(users).hasSize(1);
-            assertUser(users.get(0), socialId, socialType, name);
+            assertAll(
+                () -> assertThat(users).hasSize(1),
+                () -> assertUser(users.get(0), socialId, socialType, name)
+            );
         }
 
         @Test
@@ -150,8 +153,10 @@ class UserServiceTest {
 
             // then
             List<User> users = userRepository.findAll();
-            assertThat(users).hasSize(1);
-            assertUser(users.get(0), socialId, socialType, name);
+            assertAll(
+                () -> assertThat(users).hasSize(1),
+                () -> assertUser(users.get(0), socialId, socialType, name)
+            );
         }
 
         @Test
@@ -183,8 +188,10 @@ class UserServiceTest {
             assertThat(users).isEmpty();
 
             List<WithdrawalUser> withdrawalUsers = withdrawalUserRepository.findAll();
-            assertThat(withdrawalUsers).hasSize(1);
-            assertWithdrawalUser(withdrawalUsers.get(0), user);
+            assertAll(
+                () -> assertThat(withdrawalUsers).hasSize(1),
+                () -> assertWithdrawalUser(withdrawalUsers.get(0), user)
+            );
         }
 
         @DisplayName("회원탈퇴시 다른 유저에게 영향을 주지 않는다")
@@ -201,8 +208,10 @@ class UserServiceTest {
 
             // then
             List<User> users = userRepository.findAll();
-            assertThat(users).hasSize(1);
-            assertUser(users.get(0), user2.getSocialId(), user2.getSocialType(), user2.getName());
+            assertAll(
+                () -> assertThat(users).hasSize(1),
+                () -> assertUser(users.get(0), user2.getSocialId(), user2.getSocialType(), user2.getName())
+            );
         }
 
         @Test
@@ -212,6 +221,30 @@ class UserServiceTest {
 
             // when & then
             assertThatThrownBy(() -> userService.signOut(notFoundUserId)).isInstanceOf(NotFoundException.class);
+        }
+
+        @Test
+        void 이미_회원탈퇴한_정보가_있는_소셜정보가_있는경우라도_회원탈퇴유저_정보가_정상적으로_추가된다() {
+            // given
+            String socialId = "social-id";
+            UserSocialType socialType = UserSocialType.GOOGLE;
+
+            WithdrawalUser withdrawalUser = WithdrawalUserCreator.create(socialId, socialType, 10000L);
+            withdrawalUserRepository.save(withdrawalUser);
+
+            User user = UserCreator.create(socialId, socialType, "기존의 닉네임2");
+            userRepository.save(user);
+
+            // when
+            userService.signOut(user.getId());
+
+            // then
+            List<WithdrawalUser> withdrawalUsers = withdrawalUserRepository.findAll();
+            assertAll(
+                () -> assertThat(withdrawalUsers).hasSize(2),
+                () -> assertWithdrawalUser(withdrawalUsers.get(0), withdrawalUser.getUserId(), withdrawalUser.getName(), withdrawalUser.getSocialInfo()),
+                () -> assertWithdrawalUser(withdrawalUsers.get(1), user.getId(), user.getName(), user.getSocialInfo())
+            );
         }
 
     }

@@ -26,10 +26,15 @@ public class JacksonConfig {
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(javaTimeModule())
-            .registerModule(new ParameterNamesModule())
-            .registerModule(new Jdk8Module()) // Java8 Optional
-            .registerModule(new KotlinModule());
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.configure(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL, true);
+        objectMapper.registerModules(
+            javaTimeModule(),
+            new ParameterNamesModule(),
+            new Jdk8Module(),
+            new KotlinModule()
+        );
         return objectMapper;
     }
 

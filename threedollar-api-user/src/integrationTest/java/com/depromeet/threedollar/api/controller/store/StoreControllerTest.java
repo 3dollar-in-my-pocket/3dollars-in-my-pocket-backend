@@ -25,6 +25,7 @@ import java.util.Set;
 
 import static com.depromeet.threedollar.testhelper.assertion.StoreAssertionHelper.assertStoreInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -151,8 +152,10 @@ class StoreControllerTest extends SetupUserControllerTest {
             ApiResponse<StoreInfoResponse> response = storeMockApiCaller.updateStore(store.getId(), request, token, 200);
 
             // then
-            assertThat(response.getData().getStoreId()).isEqualTo(store.getId());
-            assertStoreInfoResponse(response.getData(), latitude, longitude, storeName, List.of(MenuCategoryType.BUNGEOPPANG));
+            assertAll(
+                () -> assertThat(response.getData().getStoreId()).isEqualTo(store.getId()),
+                () -> assertStoreInfoResponse(response.getData(), latitude, longitude, storeName, List.of(MenuCategoryType.BUNGEOPPANG))
+            );
         }
 
     }

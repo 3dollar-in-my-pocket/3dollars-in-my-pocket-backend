@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient(
     name = "googleAuthApiClient",
-    url = "https://www.googleapis.com",
+    url = "${external.client.google.profile.base-url}",
     configuration = {
-        GoogleFallbackConfiguration.class
+        GoogleFeignConfig.class
     }
 )
 public interface GoogleAuthApiClient {
 
-    @GetMapping("/oauth2/v2/userinfo")
+    @GetMapping("${external.client.google.profile.url}")
     GoogleProfileInfoResponse getProfileInfo(@RequestHeader(HttpHeaders.AUTHORIZATION) String accessToken);
 
 }

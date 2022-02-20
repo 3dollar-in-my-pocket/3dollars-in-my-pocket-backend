@@ -2,6 +2,8 @@ package com.depromeet.threedollar.api.config.interceptor
 
 import com.depromeet.threedollar.common.model.UserMetaValue
 import com.depromeet.threedollar.common.type.OsPlatformType
+import com.depromeet.threedollar.common.utils.ClientIpUtils
+import com.depromeet.threedollar.common.utils.HttpHeaderUtils
 import com.depromeet.threedollar.common.utils.UserMetaSessionUtils
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
@@ -19,7 +21,7 @@ class UserMetadataInterceptor : HandlerInterceptor {
         UserMetaSessionUtils.set(UserMetaValue(
             osPlatform = platform,
             userAgent = userAgent,
-            sourceIp = request.getHeader(SOURCE_IP_HEADER),
+            clientIp = ClientIpUtils.getClientIp(request.remoteAddr, request.getHeader(X_FORWARDED_FOR_HEADER)),
             appVersion = extractAppVersion(platform, request)
         ))
         return true
@@ -39,7 +41,7 @@ class UserMetadataInterceptor : HandlerInterceptor {
 
     companion object {
         private const val USER_AGENT_HEADER = "User-Agent"
-        private const val SOURCE_IP_HEADER = "X-Forwarded-For"
+        private const val X_FORWARDED_FOR_HEADER = "X-Forwarded-For"
         private const val ANDROID_VERSION_HEADER = "X-Android-Service-Version"
 
         private const val IOS_USER_AGENT_POSTFIX = " (com.macgongmon"

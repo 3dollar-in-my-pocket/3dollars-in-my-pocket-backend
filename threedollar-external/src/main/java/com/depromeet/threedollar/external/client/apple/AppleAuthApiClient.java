@@ -4,10 +4,13 @@ import com.depromeet.threedollar.external.client.apple.dto.response.ApplePublicK
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@FeignClient(name = "appleAuthApiClient", url = "https://appleid.apple.com/auth")
+@FeignClient(
+    name = "appleAuthApiClient",
+    url = "${external.client.apple.profile.base-url}"
+)
 public interface AppleAuthApiClient {
 
-    @GetMapping(value = "/keys")
+    @GetMapping("${external.client.apple.profile.url}")
     ApplePublicKeyResponse getAppleAuthPublicKey();
 
 }

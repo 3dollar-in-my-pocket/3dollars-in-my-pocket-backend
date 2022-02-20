@@ -5,14 +5,14 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @FeignClient(
-    name = "slackApiClient",
-    url = "https://hooks.slack.com/services",
+    name = "slackWebhookApiClient",
+    url = "${external.client.slack.webhook.base-url}",
     configuration = {
-        SlackFallbackConfiguration.class
+        SlackFeignConfig.class
     },
     primary = false
 )
-public interface SlackNotificationApiClient {
+public interface SlackWebhookApiClient {
 
     @PostMapping("${slack.token}")
     void postMessage(PostSlackMessageRequest request);

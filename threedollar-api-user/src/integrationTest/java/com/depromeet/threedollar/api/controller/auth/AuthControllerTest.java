@@ -17,6 +17,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -58,9 +59,11 @@ class AuthControllerTest extends SetupUserControllerTest {
             ApiResponse<LoginResponse> response = authMockApiCaller.signUp(request, 200);
 
             // then
-            assertThat(response.getResultCode()).isEmpty();
-            assertThat(response.getMessage()).isEmpty();
-            assertThat(response.getData().getToken()).isNotBlank();
+            assertAll(
+                () -> assertThat(response.getResultCode()).isEmpty(),
+                () -> assertThat(response.getMessage()).isEmpty(),
+                () -> assertThat(response.getData().getToken()).isNotBlank()
+            );
         }
 
         @Test
@@ -74,9 +77,11 @@ class AuthControllerTest extends SetupUserControllerTest {
             ApiResponse<LoginResponse> response = authMockApiCaller.signUp(request, 200);
 
             // then
-            assertThat(response.getResultCode()).isEmpty();
-            assertThat(response.getMessage()).isEmpty();
-            assertThat(response.getData().getToken()).isNotBlank();
+            assertAll(
+                () -> assertThat(response.getResultCode()).isEmpty(),
+                () -> assertThat(response.getMessage()).isEmpty(),
+                () -> assertThat(response.getData().getToken()).isNotBlank()
+            );
         }
 
         @Test
@@ -90,9 +95,11 @@ class AuthControllerTest extends SetupUserControllerTest {
             ApiResponse<LoginResponse> response = authMockApiCaller.signUp(request, 200);
 
             // then
-            assertThat(response.getResultCode()).isEmpty();
-            assertThat(response.getMessage()).isEmpty();
-            assertThat(response.getData().getToken()).isNotBlank();
+            assertAll(
+                () -> assertThat(response.getResultCode()).isEmpty(),
+                () -> assertThat(response.getMessage()).isEmpty(),
+                () -> assertThat(response.getData().getToken()).isNotBlank()
+            );
         }
 
     }
@@ -115,9 +122,11 @@ class AuthControllerTest extends SetupUserControllerTest {
             ApiResponse<LoginResponse> response = authMockApiCaller.login(request, 200);
 
             // then
-            assertThat(response.getResultCode()).isEmpty();
-            assertThat(response.getMessage()).isEmpty();
-            assertThat(response.getData().getToken()).isNotBlank();
+            assertAll(
+                () -> assertThat(response.getResultCode()).isEmpty(),
+                () -> assertThat(response.getMessage()).isEmpty(),
+                () -> assertThat(response.getData().getToken()).isNotBlank()
+            );
         }
 
         @Test
@@ -134,9 +143,11 @@ class AuthControllerTest extends SetupUserControllerTest {
             ApiResponse<LoginResponse> response = authMockApiCaller.login(request, 200);
 
             // then
-            assertThat(response.getResultCode()).isEmpty();
-            assertThat(response.getMessage()).isEmpty();
-            assertThat(response.getData().getToken()).isNotBlank();
+            assertAll(
+                () -> assertThat(response.getResultCode()).isEmpty(),
+                () -> assertThat(response.getMessage()).isEmpty(),
+                () -> assertThat(response.getData().getToken()).isNotBlank()
+            );
         }
 
         @Test
@@ -153,9 +164,11 @@ class AuthControllerTest extends SetupUserControllerTest {
             ApiResponse<LoginResponse> response = authMockApiCaller.login(request, 200);
 
             // then
-            assertThat(response.getResultCode()).isEmpty();
-            assertThat(response.getMessage()).isEmpty();
-            assertThat(response.getData().getToken()).isNotBlank();
+            assertAll(
+                () -> assertThat(response.getResultCode()).isEmpty(),
+                () -> assertThat(response.getMessage()).isEmpty(),
+                () -> assertThat(response.getData().getToken()).isNotBlank()
+            );
         }
 
     }
@@ -170,9 +183,11 @@ class AuthControllerTest extends SetupUserControllerTest {
             ApiResponse<String> response = authMockApiCaller.signOut(token, 200);
 
             // then
-            assertThat(response.getResultCode()).isEmpty();
-            assertThat(response.getMessage()).isEmpty();
-            assertThat(response.getData()).isEqualTo(ApiResponse.SUCCESS.getData());
+            assertAll(
+                () -> assertThat(response.getResultCode()).isEmpty(),
+                () -> assertThat(response.getMessage()).isEmpty(),
+                () -> assertThat(response.getData()).isEqualTo(ApiResponse.SUCCESS.getData())
+            );
         }
 
     }
@@ -187,9 +202,11 @@ class AuthControllerTest extends SetupUserControllerTest {
             ApiResponse<String> response = authMockApiCaller.logout(token, 200);
 
             // then
-            assertThat(response.getResultCode()).isEmpty();
-            assertThat(response.getMessage()).isEmpty();
-            assertThat(response.getData()).isEqualTo(ApiResponse.SUCCESS.getData());
+            assertAll(
+                () -> assertThat(response.getResultCode()).isEmpty(),
+                () -> assertThat(response.getMessage()).isEmpty(),
+                () -> assertThat(response.getData()).isEqualTo(ApiResponse.SUCCESS.getData())
+            );
         }
 
     }

@@ -5,7 +5,6 @@ WORKDIR $HOME
 COPY . $HOME
 RUN ./gradlew clean :threedollar-api-user:buildNeeded --parallel
 
-# Run
 FROM adoptopenjdk/openjdk11:alpine-jre
 ENV HOME=/usr/app
 

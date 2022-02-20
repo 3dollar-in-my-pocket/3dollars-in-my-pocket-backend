@@ -6,6 +6,29 @@ client.global.set("AUTHORIZATION", response.body["data"]["token"])
 %}
 
 
+### 회원가입
+POST {{host_api}}/v2/signup
+Content-Type: application/json
+Authorization: {{AUTHORIZATION}}
+
+{
+    "token": "token",
+    "name": "가슴속 3천원",
+    "socialType": "KAKAO"
+}
+
+
+### 로그인
+POST {{host_api}}/v2/login
+Content-Type: application/json
+Authorization: {{AUTHORIZATION}}
+
+{
+    "token": "token",
+    "socialType": "KAKAO"
+}
+
+
 ### [인증] 회원탈퇴를 요청합니다
 DELETE {{host_api}}/v2/signout
 Authorization: {{AUTHORIZATION}}

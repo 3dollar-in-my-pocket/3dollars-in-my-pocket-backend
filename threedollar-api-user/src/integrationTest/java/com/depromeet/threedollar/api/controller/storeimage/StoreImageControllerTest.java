@@ -72,9 +72,11 @@ class StoreImageControllerTest extends SetupStoreControllerTest {
             ApiResponse<String> response = storeImageMockApiCaller.deleteStoreImage(storeImage.getId(), token, 200);
 
             // then
-            assertThat(response.getResultCode()).isEmpty();
-            assertThat(response.getMessage()).isEmpty();
-            assertThat(response.getData()).isEqualTo(ApiResponse.SUCCESS.getData());
+            assertAll(
+                () -> assertThat(response.getResultCode()).isEmpty(),
+                () -> assertThat(response.getMessage()).isEmpty(),
+                () -> assertThat(response.getData()).isEqualTo(ApiResponse.SUCCESS.getData())
+            );
         }
 
     }

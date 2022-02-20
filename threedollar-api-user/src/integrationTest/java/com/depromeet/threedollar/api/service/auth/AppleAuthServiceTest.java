@@ -21,6 +21,7 @@ import java.util.List;
 import static com.depromeet.threedollar.testhelper.assertion.UserAssertionHelper.assertUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
 class AppleAuthServiceTest {
@@ -91,8 +92,10 @@ class AppleAuthServiceTest {
 
             // then
             List<User> users = userRepository.findAll();
-            assertThat(users).hasSize(1);
-            assertUser(users.get(0), SOCIAL_ID, request.getSocialType(), request.getName());
+            assertAll(
+                () -> assertThat(users).hasSize(1),
+                () -> assertUser(users.get(0), SOCIAL_ID, request.getSocialType(), request.getName())
+            );
         }
 
         @Test

@@ -24,6 +24,14 @@ public final class UserAssertionHelper {
         );
     }
 
+    public static void assertWithdrawalUser(WithdrawalUser withdrawalUser, Long userId, String name, SocialInfo socialInfo) {
+        assertAll(
+            () -> assertThat(withdrawalUser.getUserId()).isEqualTo(userId),
+            () -> assertThat(withdrawalUser.getName()).isEqualTo(name),
+            () -> assertThat(withdrawalUser.getSocialInfo()).isEqualTo(socialInfo)
+        );
+    }
+
     public static void assertUser(User user, String socialId, UserSocialType socialType, String name) {
         assertAll(
             () -> assertThat(user.getSocialInfo()).isEqualTo(SocialInfo.of(socialId, socialType)),

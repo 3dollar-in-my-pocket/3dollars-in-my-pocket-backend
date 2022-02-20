@@ -94,9 +94,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, CoordinateValue.of(34.0, 126.0), CoordinateValue.of(34.0, 126.0), 200);
 
             // then
-            assertThat(response.getData()).hasSize(2);
-            assertStoreWithVisitsAndDistanceResponse(response.getData().get(0), store1.getId(), store1.getLatitude(), store1.getLongitude(), store1.getName(), store1.getRating());
-            assertStoreWithVisitsAndDistanceResponse(response.getData().get(1), store2.getId(), store2.getLatitude(), store2.getLongitude(), store2.getName(), store2.getRating());
+            assertAll(
+                () -> assertThat(response.getData()).hasSize(2),
+                () -> assertStoreWithVisitsAndDistanceResponse(response.getData().get(0), store1.getId(), store1.getLatitude(), store1.getLongitude(), store1.getName(), store1.getRating()),
+                () -> assertStoreWithVisitsAndDistanceResponse(response.getData().get(1), store2.getId(), store2.getLatitude(), store2.getLongitude(), store2.getName(), store2.getRating())
+            );
         }
 
         @Test
@@ -117,10 +119,12 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, CoordinateValue.of(34.0, 126.0), CoordinateValue.of(34.0, 126.0), 200);
 
             // then
-            assertThat(response.getData()).hasSize(1);
+            assertAll(
+                () -> assertThat(response.getData()).hasSize(1),
 
-            assertThat(response.getData().get(0).getCategories()).hasSize(2);
-            assertThat(response.getData().get(0).getCategories()).containsExactlyInAnyOrder(MenuCategoryType.SUNDAE, MenuCategoryType.DALGONA);
+                () -> assertThat(response.getData().get(0).getCategories()).hasSize(2),
+                () -> assertThat(response.getData().get(0).getCategories()).containsExactlyInAnyOrder(MenuCategoryType.SUNDAE, MenuCategoryType.DALGONA)
+            );
         }
 
         @Test
@@ -181,8 +185,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, CoordinateValue.of(34.0, 126.0), CoordinateValue.of(34.0, 126.0), 200);
 
             // then
-            assertThat(response.getData()).hasSize(1);
-            assertVisitHistoryInfoResponse(response.getData().get(0).getVisitHistory(), 0, 0, false);
+            assertAll(
+                () -> assertThat(response.getData()).hasSize(1),
+                () -> assertVisitHistoryInfoResponse(response.getData().get(0).getVisitHistory(), 0, 0, false)
+            );
         }
 
         @Test
@@ -205,8 +211,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, CoordinateValue.of(34.0, 126.0), CoordinateValue.of(34.0, 126.0), 200);
 
             // then
-            assertThat(response.getData()).hasSize(1);
-            assertThat(response.getData().get(0).getStoreId()).isEqualTo(store1.getId());
+            assertAll(
+                () -> assertThat(response.getData()).hasSize(1),
+                () -> assertThat(response.getData().get(0).getStoreId()).isEqualTo(store1.getId())
+            );
         }
 
         @Test
@@ -225,9 +233,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, CoordinateValue.of(34.0, 126.0), CoordinateValue.of(34.0, 126.0), 200);
 
             // then
-            assertThat(response.getData()).hasSize(2);
-            assertThat(response.getData().get(0).getStoreId()).isEqualTo(store2.getId());
-            assertThat(response.getData().get(1).getStoreId()).isEqualTo(store1.getId());
+            assertAll(
+                () -> assertThat(response.getData()).hasSize(2),
+                () -> assertThat(response.getData().get(0).getStoreId()).isEqualTo(store2.getId()),
+                () -> assertThat(response.getData().get(1).getStoreId()).isEqualTo(store1.getId())
+            );
         }
 
         @Test
@@ -246,9 +256,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, CoordinateValue.of(34.0, 126.0), CoordinateValue.of(34.0, 126.0), 200);
 
             // then
-            assertThat(response.getData()).hasSize(2);
-            assertThat(response.getData().get(0).getStoreId()).isEqualTo(store1.getId());
-            assertThat(response.getData().get(1).getStoreId()).isEqualTo(store2.getId());
+            assertAll(
+                () -> assertThat(response.getData()).hasSize(2),
+                () -> assertThat(response.getData().get(0).getStoreId()).isEqualTo(store1.getId()),
+                () -> assertThat(response.getData().get(1).getStoreId()).isEqualTo(store2.getId())
+            );
         }
 
     }
@@ -294,11 +306,12 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, CoordinateValue.of(34.0, 126.0), 200);
 
             // then
-            assertThat(response.getData().getCategories()).containsExactlyInAnyOrderElementsOf(List.of(MenuCategoryType.BUNGEOPPANG, MenuCategoryType.GUKWAPPANG));
-
-            assertThat(response.getData().getMenus()).hasSize(2);
-            assertMenuResponse(response.getData().getMenus().get(0), menu1);
-            assertMenuResponse(response.getData().getMenus().get(1), menu2);
+            assertAll(
+                () -> assertThat(response.getData().getCategories()).containsExactlyInAnyOrderElementsOf(List.of(MenuCategoryType.BUNGEOPPANG, MenuCategoryType.GUKWAPPANG)),
+                () -> assertThat(response.getData().getMenus()).hasSize(2),
+                () -> assertMenuResponse(response.getData().getMenus().get(0), menu1),
+                () -> assertMenuResponse(response.getData().getMenus().get(1), menu2)
+            );
         }
 
         @Test
@@ -330,8 +343,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, CoordinateValue.of(34.0, 126.0), 200);
 
             // then
-            assertThat(response.getData().getAppearanceDays()).hasSize(dayOfTheWeeks.size());
-            assertThat(response.getData().getAppearanceDays()).containsExactlyInAnyOrderElementsOf(dayOfTheWeeks);
+            assertAll(
+                () -> assertThat(response.getData().getAppearanceDays()).hasSize(dayOfTheWeeks.size()),
+                () -> assertThat(response.getData().getAppearanceDays()).containsExactlyInAnyOrderElementsOf(dayOfTheWeeks)
+            );
         }
 
         @Test
@@ -348,8 +363,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, CoordinateValue.of(34.0, 126.0), 200);
 
             // then
-            assertThat(response.getData().getPaymentMethods()).hasSize(paymentMethodTypes.size());
-            assertThat(response.getData().getPaymentMethods()).containsExactlyInAnyOrderElementsOf(paymentMethodTypes);
+            assertAll(
+                () -> assertThat(response.getData().getPaymentMethods()).hasSize(paymentMethodTypes.size()),
+                () -> assertThat(response.getData().getPaymentMethods()).containsExactlyInAnyOrderElementsOf(paymentMethodTypes)
+            );
         }
 
         @Test
@@ -432,12 +449,14 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             // then
             StoreDetailResponse data = response.getData();
-            assertThat(data.getReviews()).hasSize(2);
-            assertReviewWithWriterResponse(data.getReviews().get(0), review2);
-            assertUserInfoResponse(data.getReviews().get(0).getUser(), null, "사라진 제보자", null);
+            assertAll(
+                () -> assertThat(data.getReviews()).hasSize(2),
+                () -> assertReviewWithWriterResponse(data.getReviews().get(0), review2),
+                () -> assertUserInfoResponse(data.getReviews().get(0).getUser(), null, "사라진 제보자", null),
 
-            assertReviewWithWriterResponse(data.getReviews().get(1), review1);
-            assertUserInfoResponse(data.getReviews().get(1).getUser(), testUser);
+                () -> assertReviewWithWriterResponse(data.getReviews().get(1), review1),
+                () -> assertUserInfoResponse(data.getReviews().get(1).getUser(), testUser)
+            );
         }
 
         @Test
@@ -529,12 +548,14 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             ApiResponse<StoresCursorResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(3);
-            assertThat(response.getData().getNextCursor()).isEqualTo(store2.getId());
-            assertThat(response.getData().getContents()).hasSize(2);
+            assertAll(
+                () -> assertThat(response.getData().getTotalElements()).isEqualTo(3),
+                () -> assertThat(response.getData().getNextCursor()).isEqualTo(store2.getId()),
+                () -> assertThat(response.getData().getContents()).hasSize(2),
 
-            assertStoreWithVisitsResponse(response.getData().getContents().get(0), store3);
-            assertStoreWithVisitsResponse(response.getData().getContents().get(1), store2);
+                () -> assertStoreWithVisitsResponse(response.getData().getContents().get(0), store3),
+                () -> assertStoreWithVisitsResponse(response.getData().getContents().get(1), store2)
+            );
         }
 
         @Test
@@ -552,11 +573,13 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             ApiResponse<StoresCursorResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(4);
-            assertThat(response.getData().getNextCursor()).isEqualTo(store2.getId());
-            assertThat(response.getData().getContents()).hasSize(2);
-            assertStoreWithVisitsResponse(response.getData().getContents().get(0), store3);
-            assertStoreWithVisitsResponse(response.getData().getContents().get(1), store2);
+            assertAll(
+                () -> assertThat(response.getData().getTotalElements()).isEqualTo(4),
+                () -> assertThat(response.getData().getNextCursor()).isEqualTo(store2.getId()),
+                () -> assertThat(response.getData().getContents()).hasSize(2),
+                () -> assertStoreWithVisitsResponse(response.getData().getContents().get(0), store3),
+                () -> assertStoreWithVisitsResponse(response.getData().getContents().get(1), store2)
+            );
         }
 
         @DisplayName("마지막 페이지인경우 nextCursor = -1")
@@ -573,9 +596,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             ApiResponse<StoresCursorResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
-            assertThat(response.getData().getNextCursor()).isEqualTo(-1);
-            assertThat(response.getData().getTotalElements()).isEqualTo(2);
-            assertThat(response.getData().getContents()).hasSize(1);
+            assertAll(
+                () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
+                () -> assertThat(response.getData().getTotalElements()).isEqualTo(2),
+                () -> assertThat(response.getData().getContents()).hasSize(1)
+            );
         }
 
         @DisplayName("마지막 페이지인경우 nextCursor = -1")
@@ -593,10 +618,12 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             ApiResponse<StoresCursorResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
-            assertThat(response.getData().getNextCursor()).isEqualTo(-1);
-            assertThat(response.getData().getTotalElements()).isEqualTo(3);
-            assertThat(response.getData().getContents()).hasSize(1);
-            assertStoreWithVisitsResponse(response.getData().getContents().get(0), store1);
+            assertAll(
+                () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
+                () -> assertThat(response.getData().getTotalElements()).isEqualTo(3),
+                () -> assertThat(response.getData().getContents()).hasSize(1),
+                () -> assertStoreWithVisitsResponse(response.getData().getContents().get(0), store1)
+            );
         }
 
         @Test
@@ -611,13 +638,15 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             ApiResponse<StoresCursorResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
-            assertThat(response.getData().getTotalElements()).isEqualTo(1);
-            assertThat(response.getData().getNextCursor()).isEqualTo(-1);
-            assertThat(response.getData().getContents()).hasSize(1);
-            assertStoreWithVisitsResponse(response.getData().getContents().get(0), store.getId(), store.getLatitude(), store.getLongitude(), store.getName(), store.getRating());
+            assertAll(
+                () -> assertThat(response.getData().getTotalElements()).isEqualTo(1),
+                () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
+                () -> assertThat(response.getData().getContents()).hasSize(1),
+                () -> assertStoreWithVisitsResponse(response.getData().getContents().get(0), store.getId(), store.getLatitude(), store.getLongitude(), store.getName(), store.getRating()),
 
-            assertThat(response.getData().getContents().get(0).getCategories()).hasSize(1);
-            assertThat(response.getData().getContents().get(0).getCategories()).containsExactlyInAnyOrder(MenuCategoryType.BUNGEOPPANG);
+                () -> assertThat(response.getData().getContents().get(0).getCategories()).hasSize(1),
+                () -> assertThat(response.getData().getContents().get(0).getCategories()).containsExactlyInAnyOrder(MenuCategoryType.BUNGEOPPANG)
+            );
         }
 
         @Test
@@ -639,8 +668,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             ApiResponse<StoresCursorResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
 
             // then
-            assertThat(response.getData().getContents()).hasSize(1);
-            assertVisitHistoryInfoResponse(response.getData().getContents().get(0).getVisitHistory(), 1, 2, false);
+            assertAll(
+                () -> assertThat(response.getData().getContents()).hasSize(1),
+                () -> assertVisitHistoryInfoResponse(response.getData().getContents().get(0).getVisitHistory(), 1, 2, false)
+            );
         }
 
     }

@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient(
     name = "kakaoAuthApiClient",
-    url = "https://kapi.kakao.com",
+    url = "${external.client.kakao.profile.base-url}",
     configuration = {
-        KaKaoFallbackConfiguration.class
+        KaKaoFeignConfig.class
     }
 )
 public interface KaKaoAuthApiClient {
 
-    @GetMapping("/v2/user/me")
+    @GetMapping("${external.client.kakao.profile.url}")
     KaKaoProfileResponse getProfileInfo(@RequestHeader("Authorization") String accessToken);
 
 }
