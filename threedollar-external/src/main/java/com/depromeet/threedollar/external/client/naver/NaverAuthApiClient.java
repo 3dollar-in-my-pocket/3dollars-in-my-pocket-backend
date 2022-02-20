@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient(
     name = "naverAuthApiClient",
-    url = "https://openapi.naver.com",
+    url = "${external.client.naver.profile.base-url}",
     configuration = {
         NaverFallbackConfiguration.class
     }
 )
 public interface NaverAuthApiClient {
 
-    @GetMapping("/v1/nid/me")
+    @GetMapping("${external.client.naver.profile.url}")
     NaverProfileResponse getProfileInfo(@RequestHeader("Authorization") String accessToken);
 
 }

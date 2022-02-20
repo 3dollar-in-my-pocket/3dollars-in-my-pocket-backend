@@ -8,7 +8,7 @@ import com.depromeet.threedollar.domain.user.domain.review.ReviewRepository
 import com.depromeet.threedollar.domain.user.domain.store.StoreRepository
 import com.depromeet.threedollar.domain.user.domain.user.UserRepository
 import com.depromeet.threedollar.domain.user.domain.visit.VisitHistoryRepository
-import com.depromeet.threedollar.external.client.slack.SlackNotificationApiClient
+import com.depromeet.threedollar.external.client.slack.SlackWebhookApiClient
 import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
@@ -34,7 +34,7 @@ class DailyStatisticsJobConfiguration(
     private val visitHistoryRepository: VisitHistoryRepository,
     private val medalRepository: MedalRepository,
 
-    private val slackNotificationApiClient: SlackNotificationApiClient
+    private val slackNotificationApiClient: SlackWebhookApiClient
 ) {
 
     @Bean

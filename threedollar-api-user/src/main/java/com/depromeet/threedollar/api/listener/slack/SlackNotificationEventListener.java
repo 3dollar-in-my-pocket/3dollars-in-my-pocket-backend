@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.listener.slack;
 
 import com.depromeet.threedollar.domain.common.event.ApplicationStateChangedEvent;
 import com.depromeet.threedollar.domain.common.event.ServerExceptionOccurredEvent;
-import com.depromeet.threedollar.external.client.slack.SlackNotificationApiClient;
+import com.depromeet.threedollar.external.client.slack.SlackWebhookApiClient;
 import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
@@ -16,7 +16,7 @@ import static com.depromeet.threedollar.external.client.slack.type.SlackNotifica
 @Component
 public class SlackNotificationEventListener {
 
-    private final SlackNotificationApiClient slackNotificationApiClient;
+    private final SlackWebhookApiClient slackNotificationApiClient;
 
     @Async
     @EventListener
