@@ -30,6 +30,7 @@ public class JacksonConfig {
             .registerModule(new ParameterNamesModule())
             .registerModule(new Jdk8Module()) // Java8 Optional
             .registerModule(new KotlinModule());
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return objectMapper;
     }
 
