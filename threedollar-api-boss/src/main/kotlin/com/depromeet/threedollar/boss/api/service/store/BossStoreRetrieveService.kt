@@ -29,19 +29,14 @@ class BossStoreRetrieveService(
             maxDistance = min(distanceKm, MAX_DISTANCE_KM)
         )
 
-        val locationsDictionary = storeLocations
-            .map { it.bossStoreId to it }
-            .toMap()
+        val locationsDictionary = storeLocations.associateBy { it.bossStoreId }
 
         val bossStores = bossStoreRepository.findAllById(storeLocations.map { it.bossStoreId })
 
-        val categoriesDictionary = bossStoreCategoryRepository.findAll()
-            .map { it.id to it }
-            .toMap()
+        val categoriesDictionary = bossStoreCategoryRepository.findAll().associateBy { it.id }
 
-        val openInfoDictionary = bossStoreOpenInfoRepository.findAllById(bossStores.map { it.id })
-            .map { it.bossStoreId to it }
-            .toMap()
+        val openInfoDictionary =
+            bossStoreOpenInfoRepository.findAllById(bossStores.map { it.id }).associateBy { it.bossStoreId }
 
         return bossStores.map {
             BossStoreInfoResponse.of(

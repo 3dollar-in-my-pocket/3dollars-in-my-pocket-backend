@@ -2,8 +2,6 @@ package com.depromeet.threedollar.common.utils;
 
 import com.depromeet.threedollar.common.model.EnumModel;
 import com.depromeet.threedollar.common.model.EnumValue;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
 import java.util.Arrays;
 import java.util.HashMap;

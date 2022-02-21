@@ -3,7 +3,7 @@ services:
    user-api:
      image: ${API_IMAGE}:${TAG}
      ports:
-       - 5001:5000
+       - "5001:5000"
      environment:
        - SPRING_PROFILES_ACTIVE=dev
        - NEW_RELIC_APP_NAME=3dollars-api-dev
@@ -17,7 +17,7 @@ services:
   boss-api:
     image: ${BOSS_API_IMAGE}:${TAG}
     ports:
-      - 4001:4000
+      - "4001:4000"
     environment:
       - SPRING_PROFILES_ACTIVE=dev
     volumes:
