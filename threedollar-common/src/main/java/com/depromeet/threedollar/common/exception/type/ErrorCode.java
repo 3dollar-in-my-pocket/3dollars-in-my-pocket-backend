@@ -72,6 +72,9 @@ public enum ErrorCode {
     // 415 Unsupported Media Type
     UNSUPPORTED_MEDIA_TYPE(HttpStatusCode.UNSUPPORTED_MEDIA_TYPE, OFF, "UM000", "Unsupported Media Type"),
 
+    // 429 Too Many Requests
+    TOO_MANY_REQUESTS(HttpStatusCode.TOO_MANY_REQUESTS, OFF, "TM000", "너무 많은 요청이 들어와 일시적으로 제한되었습니다"),
+
 
     // 500 Internal Server Exception
     INTERNAL_SERVER(HttpStatusCode.INTERNAL_SERVER, ON, "IS000", "예상치 못한 에러가 발생하였습니다.\n잠시 후 다시 시도해주세요!"),
