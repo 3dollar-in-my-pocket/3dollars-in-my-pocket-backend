@@ -36,6 +36,7 @@ public enum ErrorCode {
 
     // 403 Forbidden
     FORBIDDEN(HttpStatusCode.FORBIDDEN, OFF, "FB000", "허용하지 않는 요청입니다"),
+    FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT(HttpStatusCode.CONFLICT, OFF, "FB001", "현재 사장님 계정 가입 신청 후 승인 대기 중입니다."),
 
 
     // 404 Not Found
@@ -66,7 +67,6 @@ public enum ErrorCode {
     CONFLICT_USER(HttpStatusCode.CONFLICT, OFF, "CF002", "이미 해당 계정으로 회원가입하셨습니다.\n로그인 해주세요"),
     CONFLICT_DELETE_REQUEST_STORE(HttpStatusCode.CONFLICT, OFF, "CF003", "이미 해당하는 가게에 삭제요청 하였습니다."),
     CONFLICT_VISIT_HISTORY(HttpStatusCode.CONFLICT, OFF, "CF004", "오늘 이미 방문 인증한 가게입니다.\n다음에 다시 인증해주세요"),
-    CONFLICT_REGISTER_BOSS(HttpStatusCode.CONFLICT, OFF, "CF005", "이미 사장님 가입을 신청하셨습니다"),
 
 
     // 415 Unsupported Media Type

@@ -53,7 +53,12 @@ internal class BossStoreServiceTest(
                 MenuRequest(name = "팥 붕어빵", price = 1000, imageUrl = "https://menu.png", groupName = "붕어빵")
             ),
             appearanceDays = setOf(
-                AppearanceDayRequest(dayOfTheWeek = DayOfTheWeek.WEDNESDAY, startTime = LocalTime.of(8, 0), endTime = LocalTime.of(10, 0), locationDescription = "강남역")
+                AppearanceDayRequest(
+                    dayOfTheWeek = DayOfTheWeek.WEDNESDAY,
+                    startTime = LocalTime.of(8, 0),
+                    endTime = LocalTime.of(10, 0),
+                    locationDescription = "강남역"
+                )
             ),
             categoriesIds = categoriesIds
         )
@@ -71,8 +76,21 @@ internal class BossStoreServiceTest(
                 assertThat(it.introduction).isEqualTo(request.introduction)
                 assertThat(it.contactsNumber).isEqualTo(ContactsNumber.of("010-1234-1234"))
                 assertThat(it.snsUrl).isEqualTo(request.snsUrl)
-                assertThat(it.menus).containsExactlyInAnyOrder(BossStoreMenu(name = "팥 붕어빵", price = 1000, imageUrl = "https://menu.png", groupName = "붕어빵"))
-                assertThat(it.appearanceDays).containsExactlyInAnyOrder(BossStoreAppearanceDay(dayOfTheWeek = DayOfTheWeek.WEDNESDAY, openingHours = TimeInterval(LocalTime.of(8, 0), endTime = LocalTime.of(10, 0)), locationDescription = "강남역"))
+                assertThat(it.menus).containsExactlyInAnyOrder(
+                    BossStoreMenu(
+                        name = "팥 붕어빵",
+                        price = 1000,
+                        imageUrl = "https://menu.png",
+                        groupName = "붕어빵"
+                    )
+                )
+                assertThat(it.appearanceDays).containsExactlyInAnyOrder(
+                    BossStoreAppearanceDay(
+                        dayOfTheWeek = DayOfTheWeek.WEDNESDAY,
+                        openingHours = TimeInterval(LocalTime.of(8, 0), endTime = LocalTime.of(10, 0)),
+                        locationDescription = "강남역"
+                    )
+                )
                 assertThat(it.categoriesIds).containsExactlyInAnyOrderElementsOf(categoriesIds)
             }
         })
@@ -80,7 +98,10 @@ internal class BossStoreServiceTest(
 
 }
 
-private fun createCategory(bossStoreCategoryRepository: BossStoreCategoryRepository, vararg titles: String): Set<String> {
+private fun createCategory(
+    bossStoreCategoryRepository: BossStoreCategoryRepository,
+    vararg titles: String
+): Set<String> {
     return titles.map {
         bossStoreCategoryRepository.save(BossStoreCategoryCreator.create(it)).id
     }.toSet()

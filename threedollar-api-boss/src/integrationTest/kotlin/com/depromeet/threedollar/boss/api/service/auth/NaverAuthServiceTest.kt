@@ -2,10 +2,13 @@ package com.depromeet.threedollar.boss.api.service.auth
 
 import com.depromeet.threedollar.boss.api.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.boss.api.service.auth.policy.NaverAuthService
+import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.document.boss.document.account.BossAccountCreator
 import com.depromeet.threedollar.document.boss.document.account.BossAccountRepository
 import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
+import com.depromeet.threedollar.document.boss.document.registration.RegistrationCreator
+import com.depromeet.threedollar.document.boss.document.registration.RegistrationRepository
 import com.depromeet.threedollar.external.client.naver.NaverAuthApiClient
 import com.depromeet.threedollar.external.client.naver.dto.response.NaverProfileInfoResponse
 import com.depromeet.threedollar.external.client.naver.dto.response.NaverProfileResponse
@@ -19,18 +22,20 @@ import org.springframework.test.context.TestConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 class NaverAuthServiceTest(
-    private val bossAccountRepository: BossAccountRepository
+    private val bossAccountRepository: BossAccountRepository,
+    private val registrationRepository: RegistrationRepository
 ) {
 
     private lateinit var authService: AuthService
 
     @BeforeEach
     fun setUp() {
-        authService = NaverAuthService(bossAccountRepository, StubNaverAuthApiClient())
+        authService = NaverAuthService(bossAccountRepository, registrationRepository, StubNaverAuthApiClient())
     }
 
     @AfterEach
     fun cleanUp() {
+        registrationRepository.deleteAll()
         bossAccountRepository.deleteAll()
     }
 
@@ -54,7 +59,22 @@ class NaverAuthServiceTest(
     @Test
     fun `네이버 로그인시 가입한 유저가 아니면 404 에러 발생`() {
         // when & then
-        Assertions.assertThatThrownBy { authService.login(LoginRequest("token", SOCIAL_TYPE)) }.isInstanceOf(NotFoundException::class.java)
+        Assertions.assertThatThrownBy {
+            authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
+        }.isInstanceOf(NotFoundException::class.java)
+    }
+
+    @Test
+    fun `네이버 로그인시 가입 승인 대기중인 유저면 403 Forbidden 에러 발생`() {
+        // given
+        val socialId = "social-id"
+
+        registrationRepository.save(RegistrationCreator.create(socialId, SOCIAL_TYPE))
+
+        // when
+        Assertions.assertThatThrownBy {
+            authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
+        }.isInstanceOf(ForbiddenException::class.java)
     }
 
     private class StubNaverAuthApiClient : NaverAuthApiClient {

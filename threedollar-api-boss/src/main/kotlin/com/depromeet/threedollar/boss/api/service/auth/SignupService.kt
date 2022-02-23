@@ -3,7 +3,7 @@ package com.depromeet.threedollar.boss.api.service.auth
 import com.depromeet.threedollar.boss.api.service.account.BossAccountServiceUtils
 import com.depromeet.threedollar.boss.api.service.category.BossStoreCategoryServiceUtils
 import com.depromeet.threedollar.boss.api.service.auth.dto.request.SignupRequest
-import com.depromeet.threedollar.common.exception.model.ConflictException
+import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.document.boss.document.account.BossAccountRepository
 import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
@@ -33,8 +33,8 @@ class SignupService(
 
     private fun validateDuplicateRegistration(socialId: String, socialType: BossAccountSocialType) {
         BossAccountServiceUtils.validateNotExistsBossAccount(bossAccountRepository, socialId, socialType)
-        if (registrationRepository.existsRegistrationBySocialInfo(socialId, socialType)) {
-            throw ConflictException("이미 가입 신청한 사장님 (${socialId} - (${socialType}) 입니다.", ErrorCode.CONFLICT_REGISTER_BOSS)
+        if (registrationRepository.existsRegistrationBySocialIdAndSocialType(socialId, socialType)) {
+            throw ForbiddenException("가입 신청 후 대기중인 사장님(${socialId} - (${socialType}) 입니다.", ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT)
         }
     }
 

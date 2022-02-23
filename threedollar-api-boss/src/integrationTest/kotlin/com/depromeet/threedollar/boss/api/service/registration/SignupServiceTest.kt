@@ -3,6 +3,7 @@ package com.depromeet.threedollar.boss.api.service.registration
 import com.depromeet.threedollar.boss.api.service.auth.SignupService
 import com.depromeet.threedollar.boss.api.service.auth.dto.request.SignupRequest
 import com.depromeet.threedollar.common.exception.model.ConflictException
+import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.document.boss.document.account.*
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategoryCreator
@@ -79,7 +80,7 @@ internal class SignupServiceTest(
     }
 
     @Test
-    fun `신규 가입 신청시 이미 가입 신청중인 경우 Conflict 예외가 발생한다`() {
+    fun `신규 가입 신청시 이미 가입 신청중인 경우 Forbidden 예외가 발생한다`() {
         // given
         val categoriesIds = createCategory(bossStoreCategoryRepository, "한식")
         val bossName = "will"
@@ -90,10 +91,12 @@ internal class SignupServiceTest(
         val contactsNumber = "010-1234-1234"
         val certificationPhotoUrl = "https://example-photo.png"
 
-        registrationRepository.save(RegistrationCreator.create(
-            socialId = socialId,
-            socialType = socialType
-        ))
+        registrationRepository.save(
+            RegistrationCreator.create(
+                socialId = socialId,
+                socialType = socialType
+            )
+        )
 
         val request = SignupRequest(
             bossName = bossName,
@@ -107,7 +110,7 @@ internal class SignupServiceTest(
         )
 
         // when & then
-        assertThatThrownBy { signupService.signup(request, socialId) }.isInstanceOf(ConflictException::class.java)
+        assertThatThrownBy { signupService.signup(request, socialId) }.isInstanceOf(ForbiddenException::class.java)
     }
 
     @Test
@@ -117,10 +120,12 @@ internal class SignupServiceTest(
 
         val socialId = "social-id"
         val socialType = BossAccountSocialType.APPLE
-        bossAccountRepository.save(BossAccountCreator.create(
-            socialId = socialId,
-            socialType = socialType
-        ))
+        bossAccountRepository.save(
+            BossAccountCreator.create(
+                socialId = socialId,
+                socialType = socialType
+            )
+        )
 
         val request = SignupRequest(
             bossName = "사장님 이름",
@@ -154,12 +159,17 @@ internal class SignupServiceTest(
         )
 
         // when & then
-        assertThatThrownBy { signupService.signup(request, socialId = "socialId") }.isInstanceOf(NotFoundException::class.java)
+        assertThatThrownBy {
+            signupService.signup(request, socialId = "socialId")
+        }.isInstanceOf(NotFoundException::class.java)
     }
 
 }
 
-private fun createCategory(bossStoreCategoryRepository: BossStoreCategoryRepository, vararg titles: String): Set<String> {
+private fun createCategory(
+    bossStoreCategoryRepository: BossStoreCategoryRepository,
+    vararg titles: String
+): Set<String> {
     return titles.map {
         bossStoreCategoryRepository.save(BossStoreCategoryCreator.create(it)).id
     }.toSet()

@@ -13,7 +13,7 @@ class RegistrationRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : RegistrationRepositoryCustom {
 
-    override fun existsRegistrationBySocialInfo(socialId: String, socialType: BossAccountSocialType): Boolean {
+    override fun existsRegistrationBySocialIdAndSocialType(socialId: String, socialType: BossAccountSocialType): Boolean {
         return mongoTemplate.exists(Query()
             .addCriteria(where("boss.socialInfo.socialId").isEqualTo(socialId))
             .addCriteria(where("boss.socialInfo.socialType").isEqualTo(socialType)), Registration::class.java
