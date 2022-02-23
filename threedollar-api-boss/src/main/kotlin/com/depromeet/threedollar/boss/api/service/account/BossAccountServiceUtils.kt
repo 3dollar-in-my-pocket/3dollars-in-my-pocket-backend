@@ -42,10 +42,7 @@ object BossAccountServiceUtils {
         socialType: BossAccountSocialType
     ): BossAccount {
         if (registrationRepository.existsRegistrationBySocialIdAndSocialType(socialId, socialType)) {
-            throw ForbiddenException(
-                "가입 신청 후 대기중인 사장님(${socialId} - (${socialType}) 입니다.",
-                ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT
-            )
+            throw ForbiddenException("가입 신청 후 대기중인 사장님(${socialId} - (${socialType}) 입니다.", ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT)
         }
         throw NotFoundException("존재하지 않는 사장님 (${socialId} - $socialType 입니다.", ErrorCode.NOTFOUND_BOSS)
     }
