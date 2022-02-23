@@ -4,6 +4,5 @@ public enum UserMedalStatus {
 
     ACTIVE,
     IN_ACTIVE,
-    ;
 
 }
