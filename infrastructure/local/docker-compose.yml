@@ -12,6 +12,9 @@ services:
     volumes:
       - ./mariadb:/etc/mysql/conf.d
       - ~/threedollars-api/mariadb/data:/var/lib/mysql
+    networks:
+      - threedollar-network
+
   redis:
     image: redis
     container_name: threedollar-api-redis
@@ -21,6 +24,9 @@ services:
     restart: unless-stopped
     volumes:
       - ~/threedollars-api/redis/data:/data
+    networks:
+      - threedollar-network
+
   mongodb:
     image: mongo
     container_name: threedollar-api-mongo
@@ -29,3 +35,9 @@ services:
     restart: unless-stopped
     volumes:
       - ~/threedollars-boss/mongo:/data/db
+    networks:
+      - threedollar-network
+
+networks:
+  threedollar-network:
+    driver: bridge

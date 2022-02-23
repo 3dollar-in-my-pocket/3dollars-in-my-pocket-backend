@@ -14,6 +14,9 @@ services:
      stop_signal: SIGTERM
      stop_grace_period: 1m
      restart: unless-stopped
+     networks:
+       - threedollar-network
+
   boss-api:
     image: ${BOSS_API_IMAGE}:${TAG}
     ports:
@@ -27,3 +30,9 @@ services:
     stop_signal: SIGTERM
     stop_grace_period: 1m
     restart: unless-stopped
+    networks:
+      - threedollar-network
+
+networks:
+  threedollar-network:
+    driver: bridge
