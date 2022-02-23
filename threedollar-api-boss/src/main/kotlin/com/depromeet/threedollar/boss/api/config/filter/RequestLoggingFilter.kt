@@ -1,32 +1,44 @@
 package com.depromeet.threedollar.boss.api.config.filter
 
 import com.depromeet.threedollar.common.utils.logger
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload
 import org.springframework.util.StringUtils
 import org.springframework.web.util.ContentCachingRequestWrapper
 import org.springframework.web.util.ContentCachingResponseWrapper
 import org.springframework.web.util.WebUtils
 import java.io.UnsupportedEncodingException
-import javax.servlet.*
+import javax.servlet.Filter
+import javax.servlet.FilterChain
+import javax.servlet.ServletRequest
+import javax.servlet.ServletResponse
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import kotlin.collections.HashMap
 
 class RequestLoggingFilter : Filter {
 
     override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
+        if (ServletFileUpload.isMultipartContent(request as HttpServletRequest)) {
+            chain.doFilter(request, response)
+            return
+        }
+
         val requestWrapper = ContentCachingRequestWrapper(request as HttpServletRequest)
         val responseWrapper = ContentCachingResponseWrapper(response as HttpServletResponse)
         val start = System.currentTimeMillis()
+
         chain.doFilter(requestWrapper, responseWrapper)
+
         val end = System.currentTimeMillis()
         val requestURI = request.requestURI
 
-        log.info("""
+        log.info(
+            """
             [REQUEST] ${request.method} - $requestURI ${getQueryString(request)} $requestWrapper.status - ${(end - start) / 1000.0}s
             Headers : ${getHeaders(request)}
             Request: ${getRequestBody(requestWrapper)}
             Response: ${getResponseBody(responseWrapper)}
-            """.trimIndent())
+            """.trimIndent()
+        )
         return
     }
 
