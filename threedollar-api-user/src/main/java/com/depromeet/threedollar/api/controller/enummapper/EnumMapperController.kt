@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.boss.api.controller
+package com.depromeet.threedollar.api.controller.enummapper
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.common.model.EnumValue
@@ -12,8 +12,8 @@ class EnumMapperController(
     private val enumMapper: EnumMapper
 ) {
 
-    @ApiOperation("클라이언트에서 사용되는 Enum 목록을 조회합니다.")
     @GetMapping("/enums")
+    @ApiOperation("클라이언트에서 사용되는 Enum 목록을 조회합니다.")
     fun getEnums(): ApiResponse<Map<String, List<EnumValue>>> {
         return ApiResponse.success(enumMapper.all)
     }
