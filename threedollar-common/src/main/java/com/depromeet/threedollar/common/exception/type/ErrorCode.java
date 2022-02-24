@@ -66,7 +66,8 @@ public enum ErrorCode {
     CONFLICT_NICKNAME(HttpStatusCode.CONFLICT, OFF, "CF001", "이미 사용중인 닉네임입니다.\n다른 닉네임을 이용해주세요"),
     CONFLICT_USER(HttpStatusCode.CONFLICT, OFF, "CF002", "이미 해당 계정으로 회원가입하셨습니다.\n로그인 해주세요"),
     CONFLICT_DELETE_REQUEST_STORE(HttpStatusCode.CONFLICT, OFF, "CF003", "이미 해당하는 가게에 삭제요청 하였습니다."),
-    CONFLICT_VISIT_HISTORY(HttpStatusCode.CONFLICT, OFF, "CF004", "오늘 이미 방문 인증한 가게입니다.\n다음에 다시 인증해주세요"),
+    CONFLICT_VISIT_HISTORY(HttpStatusCode.CONFLICT, OFF, "CF004", "오늘 이미 방문 인증한 가게입니다.\n내일 다시 인증해주세요"),
+    CONFLICT_BOSS_STORE_FEEDBACK(HttpStatusCode.CONFLICT, OFF, "CF005", "오늘 이미 피드백을 추가한 가게입니다.\n내일 다시 인증해주세요"),
 
 
     // 415 Unsupported Media Type

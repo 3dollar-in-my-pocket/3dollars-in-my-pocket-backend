@@ -18,6 +18,12 @@ object BossStoreServiceUtils {
             ?: throw NotFoundException("사장님 (${bossId})이 운영중인 가게가 존재하지 않습니다", ErrorCode.NOTFOUND_BOSS_OWNED_STORE)
     }
 
+    fun validateExistsBossStore(bossStoreRepository: BossStoreRepository, bossStoreId: String) {
+        if (!bossStoreRepository.existsBossStoreById(bossStoreId = bossStoreId)) {
+            throw NotFoundException("해당하는 가게(${bossStoreId})는 존재하지 않습니다", ErrorCode.NOTFOUND_STORE)
+        }
+    }
+
     fun validateExistsBossStoreByBoss(bossStoreRepository: BossStoreRepository, bossStoreId: String, bossId: String) {
         if (!bossStoreRepository.existsBossStoreByIdAndBossId(bossStoreId = bossStoreId, bossId = bossId)) {
             throw NotFoundException("사장님($bossStoreId)이 운영중인 ($bossStoreId) 가게는 존재하지 않습니다", ErrorCode.NOTFOUND_STORE)

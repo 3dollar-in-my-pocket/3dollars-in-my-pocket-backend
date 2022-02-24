@@ -23,4 +23,10 @@ class BossStoreRepositoryCustomImpl(
         )
     }
 
+    override fun existsBossStoreById(bossStoreId: String): Boolean {
+        return mongoTemplate.exists(Query()
+            .addCriteria(BossStore::id isEqualTo bossStoreId), BossStore::class.java
+        )
+    }
+
 }
