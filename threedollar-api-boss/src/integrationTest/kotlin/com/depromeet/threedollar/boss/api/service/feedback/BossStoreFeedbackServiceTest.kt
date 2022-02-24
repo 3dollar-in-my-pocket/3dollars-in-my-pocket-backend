@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.boss.api.service.feedback
 
+import com.depromeet.threedollar.boss.api.redis.BossStoreFeedbackCounter
 import com.depromeet.threedollar.boss.api.service.feedback.dto.request.AddBossStoreFeedbackRequest
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.document.boss.document.feedback.BossStoreFeedback
 import com.depromeet.threedollar.document.boss.document.feedback.BossStoreFeedbackCreator
 import com.depromeet.threedollar.document.boss.document.feedback.BossStoreFeedbackRepository
 import com.depromeet.threedollar.document.boss.document.feedback.BossStoreFeedbackType
@@ -13,9 +13,11 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.assertAll
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.TestConstructor
 import java.time.LocalDate
 
@@ -24,8 +26,11 @@ import java.time.LocalDate
 internal class BossStoreFeedbackServiceTest(
     private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,
     private val bossStoreRepository: BossStoreRepository,
-    private val bossStoreFeedbackService: BossStoreFeedbackService
+    private val bossStoreFeedbackService: BossStoreFeedbackService,
 ) {
+
+    @MockBean
+    private lateinit var bossStoreFeedbackCounter: BossStoreFeedbackCounter
 
     @AfterEach
     fun cleanUp() {
@@ -63,6 +68,28 @@ internal class BossStoreFeedbackServiceTest(
             assertThat(bossStoreFeedbacks[0].date).isEqualTo(date)
             assertThat(bossStoreFeedbacks[0].feedbackType).isEqualTo(feedbackType)
         })
+    }
+
+    @Test
+    fun `가게 등록시 레디스에 해당 피드백에 대한 카운트가 1증가한다`() {
+        // given
+        val feedbackType = BossStoreFeedbackType.BOSS_IS_KIND
+        val bossStore = BossStoreCreator.create(
+            bossId = "bossId",
+            name = "가슴속 3천원 붕어빵 가게"
+        )
+        bossStoreRepository.save(bossStore)
+
+        // when
+        bossStoreFeedbackService.addFeedback(
+            bossStoreId = bossStore.id,
+            request = AddBossStoreFeedbackRequest(feedbackType),
+            userId = 1000000L,
+            date = LocalDate.of(2022, 2, 24)
+        )
+
+        // then
+        verify(bossStoreFeedbackCounter, times(1)).increment(bossStore.id, feedbackType)
     }
 
     @Test
