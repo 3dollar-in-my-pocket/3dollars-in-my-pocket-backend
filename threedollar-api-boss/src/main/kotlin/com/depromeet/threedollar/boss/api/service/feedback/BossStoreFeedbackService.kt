@@ -34,9 +34,18 @@ class BossStoreFeedbackService(
     }
 
     @Transactional(readOnly = true)
-    fun getBossStoreFeedbacksCounts(bossStoreId: String): Map<BossStoreFeedbackType, Long> {
+    fun getBossStoreFeedbacksCounts(bossStoreId: String): Map<BossStoreFeedbackType, Int> {
         BossStoreServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
         return bossStoreFeedbackCountRepository.getAll(bossStoreId)
+    }
+
+    @Transactional(readOnly = true)
+    fun getBossStoreFeedbacksCountsBetweenDate(bossStoreId: String, startDate: LocalDate, endDate: LocalDate): Map<LocalDate, Map<BossStoreFeedbackType, Int>> {
+        BossStoreServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
+        return bossStoreFeedbackRepository.findAllByBossStoreIdAndBetween(bossStoreId, startDate, endDate)
+            .groupBy { it.date }
+            .entries
+            .associate { it -> it.key to it.value.groupingBy { it.feedbackType }.eachCount() }
     }
 
 }

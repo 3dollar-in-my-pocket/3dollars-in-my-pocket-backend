@@ -12,15 +12,15 @@ class BossStoreFeedbackCountRepository(
 ) {
 
     fun increment(bossStoreId: String, feedbackType: BossStoreFeedbackType) {
-        val counter: HashOperations<String, String, Long> = redisTemplate.opsForHash()
+        val counter: HashOperations<String, String, Int> = redisTemplate.opsForHash()
         counter.increment(getKey(bossStoreId), feedbackType.name, 1)
     }
 
-    fun getAll(bossStoreId: String): Map<BossStoreFeedbackType, Long> {
-        val feedbackCounters: HashOperations<String, String, Long> = redisTemplate.opsForHash()
-        val countsMap = feedbackCounters.entries(getKey(bossStoreId))
+    fun getAll(bossStoreId: String): Map<BossStoreFeedbackType, Int> {
+        val feedbackCounters: HashOperations<String, String, Int> = redisTemplate.opsForHash()
+        val countsMap: Map<String, Int> = feedbackCounters.entries(getKey(bossStoreId))
         return BossStoreFeedbackType.values()
-            .associateWith { (countsMap[it.name] ?: 0) }
+            .associateWith { countsMap[it.name] ?: 0 }
     }
 
     private fun getKey(bossStoreId: String): String {
