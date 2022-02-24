@@ -11,7 +11,7 @@ class EnumMapperController(
     private val enumMapper: EnumMapper
 ) {
 
-    @GetMapping("/enums")
+    @GetMapping("/v1/enums")
     fun getEnums(): ApiResponse<Map<String, List<EnumValue>>> {
         return ApiResponse.success(enumMapper.all)
     }

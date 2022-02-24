@@ -1,12 +1,12 @@
 package com.depromeet.threedollar.boss.api.service.feedback
 
-import com.depromeet.threedollar.boss.api.redis.BossStoreFeedbackCounter
+import com.depromeet.threedollar.redis.boss.domain.feedback.BossStoreFeedbackCountRepository
 import com.depromeet.threedollar.boss.api.service.feedback.dto.request.AddBossStoreFeedbackRequest
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.document.boss.document.feedback.BossStoreFeedbackCreator
 import com.depromeet.threedollar.document.boss.document.feedback.BossStoreFeedbackRepository
-import com.depromeet.threedollar.document.boss.document.feedback.BossStoreFeedbackType
+import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.document.boss.document.store.BossStoreCreator
 import com.depromeet.threedollar.document.boss.document.store.BossStoreRepository
 import org.assertj.core.api.Assertions.assertThat
@@ -30,7 +30,7 @@ internal class BossStoreFeedbackServiceTest(
 ) {
 
     @MockBean
-    private lateinit var bossStoreFeedbackCounter: BossStoreFeedbackCounter
+    private lateinit var bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository
 
     @AfterEach
     fun cleanUp() {
@@ -89,7 +89,7 @@ internal class BossStoreFeedbackServiceTest(
         )
 
         // then
-        verify(bossStoreFeedbackCounter, times(1)).increment(bossStore.id, feedbackType)
+        verify(bossStoreFeedbackCountRepository, times(1)).increment(bossStore.id, feedbackType)
     }
 
     @Test

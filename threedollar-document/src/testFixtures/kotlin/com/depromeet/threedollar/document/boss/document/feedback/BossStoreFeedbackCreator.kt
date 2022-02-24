@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.document.boss.document.feedback
 
+import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.document.TestFixture
 import java.time.LocalDate
 

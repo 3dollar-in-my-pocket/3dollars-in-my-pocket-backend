@@ -13,7 +13,7 @@ import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.document.boss.document.account.*
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategory
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategoryRepository
-import com.depromeet.threedollar.document.boss.document.feedback.BossStoreFeedbackType
+import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.document.boss.document.store.*
 import com.depromeet.threedollar.document.common.document.BusinessNumber
 import com.depromeet.threedollar.document.common.document.ContactsNumber

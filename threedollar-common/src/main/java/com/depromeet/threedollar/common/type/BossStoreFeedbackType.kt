@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.document.boss.document.feedback
+package com.depromeet.threedollar.common.type
 
 import com.depromeet.threedollar.common.model.EnumModel
 
@@ -20,6 +20,12 @@ enum class BossStoreFeedbackType(
 
     override fun getDescription(): String {
         return description
+    }
+
+    companion object {
+        fun of(key: String): BossStoreFeedbackType? {
+            return values().find { it.key == key }
+        }
     }
 
 }

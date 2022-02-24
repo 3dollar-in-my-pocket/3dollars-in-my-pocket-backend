@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.boss.api.service.feedback.dto.request
 
 import com.depromeet.threedollar.document.boss.document.feedback.BossStoreFeedback
-import com.depromeet.threedollar.document.boss.document.feedback.BossStoreFeedbackType
+import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import java.time.LocalDate
 
 data class AddBossStoreFeedbackRequest(
