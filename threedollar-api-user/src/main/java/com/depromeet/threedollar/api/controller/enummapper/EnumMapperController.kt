@@ -12,7 +12,7 @@ class EnumMapperController(
     private val enumMapper: EnumMapper
 ) {
 
-    @GetMapping("/enums")
+    @GetMapping("/v1/enums")
     @ApiOperation("클라이언트에서 사용되는 Enum 목록을 조회합니다.")
     fun getEnums(): ApiResponse<Map<String, List<EnumValue>>> {
         return ApiResponse.success(enumMapper.all)

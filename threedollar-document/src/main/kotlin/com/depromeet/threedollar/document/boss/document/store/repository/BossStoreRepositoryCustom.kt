@@ -8,4 +8,6 @@ interface BossStoreRepositoryCustom {
 
     fun existsBossStoreByIdAndBossId(bossStoreId: String, bossId: String): Boolean
 
+    fun existsBossStoreById(bossStoreId: String): Boolean
+
 }

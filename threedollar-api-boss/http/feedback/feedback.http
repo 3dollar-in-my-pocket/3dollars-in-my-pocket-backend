@@ -1,0 +1,7 @@
+### 전체 가간동안 특정 사장님의 가게의 피드백을 조회합니다
+GET {{host_boss_api}}/v1/boss-store/{{BOSS_STORE_ID}}/feedbacks/full
+
+
+
+### 특정 기간동안 특정 사장님의 가게의 피드백을 조회합니다
+GET {{host_boss_api}}/v1/boss-store/{{BOSS_STORE_ID}}/feedbacks/specific?startDate=2022-02-10&endDate=2022-02-28

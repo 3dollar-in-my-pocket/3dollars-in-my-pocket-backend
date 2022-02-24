@@ -6,11 +6,14 @@ import com.depromeet.threedollar.boss.api.config.resolver.BossId
 import com.depromeet.threedollar.boss.api.config.session.SessionConstants
 import com.depromeet.threedollar.boss.api.service.auth.dto.response.LoginResponse
 import com.depromeet.threedollar.boss.api.service.category.BossStoreCategoryServiceUtils
+import com.depromeet.threedollar.boss.api.service.feedback.BossStoreFeedbackService
+import com.depromeet.threedollar.boss.api.service.feedback.dto.request.AddBossStoreFeedbackRequest
 import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.document.boss.document.account.*
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategory
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategoryRepository
+import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.document.boss.document.store.*
 import com.depromeet.threedollar.document.common.document.BusinessNumber
 import com.depromeet.threedollar.document.common.document.ContactsNumber
@@ -18,9 +21,11 @@ import com.depromeet.threedollar.document.common.document.TimeInterval
 import io.swagger.annotations.ApiOperation
 import org.springframework.data.geo.Point
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.time.LocalDate
 import java.time.LocalTime
 import javax.servlet.http.HttpSession
 
@@ -30,6 +35,7 @@ class LocalTestController(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossStoreLocationRepository: BossStoreLocationRepository,
+    private val bossStoreFeedbackService: BossStoreFeedbackService,
     private val httpSession: HttpSession
 ) {
 
@@ -138,6 +144,16 @@ class LocalTestController(
             businessNumber = BusinessNumber.of("000-12-12345"),
             pushSettingsStatus = PushSettingsStatus.OFF
         )
+    }
+
+    @ApiOperation("[개발 서버용] 가게에 피드백을 추가합니다")
+    @GetMapping("/test-feedback/{bossStoreId}")
+    fun addTestFeedback(
+        @PathVariable bossStoreId: String,
+        @RequestParam feedbackType: BossStoreFeedbackType,
+        @RequestParam date: LocalDate
+    ) {
+        bossStoreFeedbackService.addFeedback(bossStoreId, AddBossStoreFeedbackRequest(feedbackType), 0L, date)
     }
 
 }
