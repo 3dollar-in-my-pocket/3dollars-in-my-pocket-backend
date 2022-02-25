@@ -2,6 +2,8 @@ package com.depromeet.threedollar.boss.api.service.feedback
 
 import com.depromeet.threedollar.redis.boss.domain.feedback.BossStoreFeedbackCountRepository
 import com.depromeet.threedollar.boss.api.service.feedback.dto.request.AddBossStoreFeedbackRequest
+import com.depromeet.threedollar.boss.api.service.feedback.dto.response.BossStoreFeedbackCountResponse
+import com.depromeet.threedollar.boss.api.service.feedback.dto.response.BossStoreFeedbackGroupingDateResponse
 import com.depromeet.threedollar.boss.api.service.store.BossStoreServiceUtils
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
@@ -34,18 +36,25 @@ class BossStoreFeedbackService(
     }
 
     @Transactional(readOnly = true)
-    fun getBossStoreFeedbacksCounts(bossStoreId: String): Map<BossStoreFeedbackType, Int> {
+    fun getBossStoreFeedbacksCounts(bossStoreId: String): List<BossStoreFeedbackCountResponse> {
         BossStoreServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
         return bossStoreFeedbackCountRepository.getAll(bossStoreId)
+            .map { BossStoreFeedbackCountResponse.of(it.key, it.value) }
+            .toList()
     }
 
     @Transactional(readOnly = true)
-    fun getBossStoreFeedbacksCountsBetweenDate(bossStoreId: String, startDate: LocalDate, endDate: LocalDate): Map<LocalDate, Map<BossStoreFeedbackType, Int>> {
+    fun getBossStoreFeedbacksCountsBetweenDate(bossStoreId: String, startDate: LocalDate, endDate: LocalDate): List<BossStoreFeedbackGroupingDateResponse> {
         BossStoreServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
-        return bossStoreFeedbackRepository.findAllByBossStoreIdAndBetween(bossStoreId, startDate, endDate)
+        val feedbackGroupingDate: Map<LocalDate, Map<BossStoreFeedbackType, Int>> = bossStoreFeedbackRepository.findAllByBossStoreIdAndBetween(bossStoreId, startDate, endDate)
             .groupBy { it.date }
             .entries
             .associate { it -> it.key to it.value.groupingBy { it.feedbackType }.eachCount() }
+
+        return feedbackGroupingDate.asSequence()
+            .sortedByDescending { it.key }
+            .map { BossStoreFeedbackGroupingDateResponse.of(it.key, it.value) }
+            .toList()
     }
 
 }

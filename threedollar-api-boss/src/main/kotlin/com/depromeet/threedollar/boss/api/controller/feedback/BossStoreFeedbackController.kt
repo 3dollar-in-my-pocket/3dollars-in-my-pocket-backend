@@ -2,7 +2,8 @@ package com.depromeet.threedollar.boss.api.controller.feedback
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.boss.api.service.feedback.BossStoreFeedbackService
-import com.depromeet.threedollar.common.type.BossStoreFeedbackType
+import com.depromeet.threedollar.boss.api.service.feedback.dto.response.BossStoreFeedbackCountResponse
+import com.depromeet.threedollar.boss.api.service.feedback.dto.response.BossStoreFeedbackGroupingDateResponse
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -19,7 +20,7 @@ class BossStoreFeedbackController(
     @GetMapping("/v1/boss-store/{bossStoreId}/feedbacks/full")
     fun getBossStoreFeedbacksCounts(
         @PathVariable bossStoreId: String
-    ): ApiResponse<Map<BossStoreFeedbackType, Int>> {
+    ): ApiResponse<List<BossStoreFeedbackCountResponse>> {
         return ApiResponse.success(bossStoreFeedbackService.getBossStoreFeedbacksCounts(bossStoreId))
     }
 
@@ -29,7 +30,7 @@ class BossStoreFeedbackController(
         @PathVariable bossStoreId: String,
         @RequestParam startDate: LocalDate,
         @RequestParam endDate: LocalDate
-    ): ApiResponse<Map<LocalDate, Map<BossStoreFeedbackType, Int>>> {
+    ): ApiResponse<List<BossStoreFeedbackGroupingDateResponse>> {
         return ApiResponse.success(bossStoreFeedbackService.getBossStoreFeedbacksCountsBetweenDate(bossStoreId, startDate, endDate))
     }
 
