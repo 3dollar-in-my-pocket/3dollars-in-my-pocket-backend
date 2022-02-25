@@ -1,10 +1,10 @@
 ### 사장님 자신의 회원정보를 조회합니다.
-GET {{host_boss_api}}/v1/boss-account/me
+GET {{host_boss_api}}/v1/boss-account/my
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 
 ### 사장님 자신의 회원정보를 수정합니다
-PUT {{host_boss_api}}/v1/boss-account/me
+PUT {{host_boss_api}}/v1/boss-account/my
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 Content-Type: application/json
 

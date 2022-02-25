@@ -23,7 +23,7 @@ class AuthController(
 ) {
 
     @ApiOperation("사장님 계정의 회원가입을 요청합니다. (차후 승인이 필요합니다)")
-    @PostMapping("/v1/signup")
+    @PostMapping("/v1/auth/signup")
     fun signup(
         @Valid @RequestBody request: SignupRequest
     ): ApiResponse<String> {
@@ -34,7 +34,7 @@ class AuthController(
     }
 
     @ApiOperation("사장님 계정으로 로그인을 요청합니다.")
-    @PostMapping("/v1/login")
+    @PostMapping("/v1/auth/login")
     fun login(
         @Valid @RequestBody request: LoginRequest
     ): ApiResponse<LoginResponse> {
@@ -46,7 +46,7 @@ class AuthController(
 
     @ApiOperation("[인증] 사장님 계정으로 로그아웃을 요청합니다.")
     @Auth
-    @PostMapping("/v1/logout")
+    @PostMapping("/v1/auth/logout")
     fun logout(): ApiResponse<String> {
         httpSession.removeAttribute(BOSS_ACCOUNT_ID)
         return ApiResponse.SUCCESS

@@ -22,7 +22,7 @@ class BossStoreRetrieveService(
 ) {
 
     @Transactional(readOnly = true)
-    fun getNearBossStores(mapCoordinate: CoordinateValue, distanceKm: Double): List<BossStoreInfoResponse> {
+    fun getAroundBossStores(mapCoordinate: CoordinateValue, distanceKm: Double): List<BossStoreInfoResponse> {
         val storeLocations = bossStoreLocationRepository.findNearBossStoreLocations(
             latitude = mapCoordinate.latitude,
             longitude = mapCoordinate.longitude,

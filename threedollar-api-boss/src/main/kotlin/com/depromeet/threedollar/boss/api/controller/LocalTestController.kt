@@ -118,6 +118,7 @@ class LocalTestController(
         return ApiResponse.success(bossStore.id)
     }
 
+    @ApiOperation("[개발용] 가게 카테고리를 추가합니다")
     @PostMapping("/test-category")
     fun addMockStoreCategory(
         @RequestParam name: String,
@@ -137,6 +138,16 @@ class LocalTestController(
         throw InternalServerException("[개발환경 에러 테스트용] 서버 에러가 발생하였습니다");
     }
 
+    @ApiOperation("[개발 서버용] 가게에 피드백을 추가합니다")
+    @PostMapping("/test-feedback/{bossStoreId}")
+    fun addTestFeedback(
+        @PathVariable bossStoreId: String,
+        @RequestParam feedbackType: BossStoreFeedbackType,
+        @RequestParam date: LocalDate
+    ) {
+        bossStoreFeedbackService.addFeedback(bossStoreId, AddBossStoreFeedbackRequest(feedbackType), 0L, date)
+    }
+
     companion object {
         private val BOSS = BossAccount(
             name = "테스트 계정",
@@ -144,16 +155,6 @@ class LocalTestController(
             businessNumber = BusinessNumber.of("000-12-12345"),
             pushSettingsStatus = PushSettingsStatus.OFF
         )
-    }
-
-    @ApiOperation("[개발 서버용] 가게에 피드백을 추가합니다")
-    @GetMapping("/test-feedback/{bossStoreId}")
-    fun addTestFeedback(
-        @PathVariable bossStoreId: String,
-        @RequestParam feedbackType: BossStoreFeedbackType,
-        @RequestParam date: LocalDate
-    ) {
-        bossStoreFeedbackService.addFeedback(bossStoreId, AddBossStoreFeedbackRequest(feedbackType), 0L, date)
     }
 
 }
