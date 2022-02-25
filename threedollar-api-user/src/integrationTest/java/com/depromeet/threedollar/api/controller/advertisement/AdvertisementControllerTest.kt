@@ -5,6 +5,7 @@ import com.depromeet.threedollar.domain.user.domain.advertisement.AdvertisementP
 import com.depromeet.threedollar.domain.user.domain.advertisement.AdvertisementPositionType
 import com.depromeet.threedollar.domain.user.domain.advertisement.AdvertisementRepository
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -26,6 +27,7 @@ class AdvertisementControllerTest(
         advertisementRepository.deleteAllInBatch()
     }
 
+    @DisplayName("GET /api/v1/advertisements")
     @Test
     fun `플랫폼에 해당하는 활성화중인 광고 목록을 조회한다`() {
         // given
