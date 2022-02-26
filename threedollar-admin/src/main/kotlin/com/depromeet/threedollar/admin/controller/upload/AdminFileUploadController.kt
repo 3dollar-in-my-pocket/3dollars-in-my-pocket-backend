@@ -1,28 +1,28 @@
-package com.depromeet.threedollar.boss.api.controller.upload
+package com.depromeet.threedollar.admin.controller.upload
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.application.provider.upload.UploadProvider
 import com.depromeet.threedollar.application.provider.upload.dto.request.ImageUploadFileRequest
-import com.depromeet.threedollar.boss.api.controller.upload.dto.response.BossImageUploadResponse
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.common.type.FileType
-import io.swagger.annotations.ApiOperation
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestPart
+import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
 
 @RestController
-class BossImageUploadController(
+class AdminFileUploadController(
     private val uploadProvider: UploadProvider
 ) {
 
-    @ApiOperation("파일을 업로드하고 스토리지의 URL을 받아옵니다.")
     @PostMapping("/v1/upload/{fileType}")
     fun uploadFile(
         @RequestPart file: MultipartFile,
         @PathVariable fileType: FileType
-    ): ApiResponse<BossImageUploadResponse> {
-        val imageUrl = uploadProvider.uploadFile(ImageUploadFileRequest.of(fileType, ApplicationType.BOSS_API), file)
-        return ApiResponse.success(BossImageUploadResponse(imageUrl))
+    ): ApiResponse<String> {
+        val imageUrl = uploadProvider.uploadFile(ImageUploadFileRequest.of(fileType, ApplicationType.ADMIN_API), file)
+        return ApiResponse.success(imageUrl)
     }
 
 }

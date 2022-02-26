@@ -5,6 +5,7 @@ import com.depromeet.threedollar.api.service.storeimage.dto.request.AddStoreImag
 import com.depromeet.threedollar.api.service.storeimage.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.application.provider.upload.UploadProvider;
 import com.depromeet.threedollar.application.provider.upload.dto.request.ImageUploadFileRequest;
+import com.depromeet.threedollar.common.type.ApplicationType;
 import com.depromeet.threedollar.common.type.FileType;
 import com.depromeet.threedollar.domain.user.domain.store.Store;
 import com.depromeet.threedollar.domain.user.domain.store.StoreRepository;
@@ -30,7 +31,7 @@ public class StoreImageService {
     public List<StoreImageResponse> addStoreImages(AddStoreImageRequest request, List<MultipartFile> imageFiles, Long userId) {
         Store store = StoreServiceUtils.findStoreById(storeRepository, request.getStoreId());
         List<StoreImage> storeImages = imageFiles.stream()
-            .map(imageFile -> uploadProvider.uploadFile(ImageUploadFileRequest.of(FileType.STORE_IMAGE), imageFile))
+            .map(imageFile -> uploadProvider.uploadFile(ImageUploadFileRequest.of(FileType.STORE_IMAGE, ApplicationType.USER_API), imageFile))
             .map(imageUrl -> request.toEntity(store, userId, imageUrl))
             .collect(Collectors.toList());
         return storeImageRepository.saveAll(storeImages).stream()
