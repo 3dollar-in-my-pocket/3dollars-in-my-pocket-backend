@@ -7,10 +7,19 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class FileTypeTest {
+
+    @Test
+    void 해당_파일을_업로드할_수_있는_모듈인경우_에러가_발생하지_않는다() {
+        // given
+        FileType fileType = FileType.BOSS_STORE_CERTIFICATION_IMAGE;
+
+        // when & then
+        assertDoesNotThrow(() -> fileType.validateAvailableUploadInModule(ApplicationType.BOSS_API));
+    }
 
     @Test
     void 해당_파일을_사용할수_있는_모듈인지_확인한다_아닌경우_ForbidenException() {
@@ -33,16 +42,6 @@ class FileTypeTest {
         // then
         assertThat(result.startsWith(type.getDirectory())).isTrue();
         assertThat(result.endsWith(".png")).isTrue();
-    }
-
-    @Test
-    void 해당_모듈에서_사용할수_있는지_확인한다_사용할_수없는경우_ForbiddenExcepton_발생() {
-        // given
-        ApplicationType targetApplication = ApplicationType.BOSS_API;
-        FileType fileType = FileType.STORE_IMAGE;
-
-        // when & then
-        assertThatThrownBy(() -> fileType.validateAvailableUploadInModule(targetApplication)).isInstanceOf(ForbiddenException.class);
     }
 
     @ValueSource(strings = {"image", "video/mp4"})
