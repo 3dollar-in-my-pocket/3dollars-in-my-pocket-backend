@@ -21,7 +21,7 @@ class BossImageUploadController(
         @RequestPart file: MultipartFile,
         @PathVariable fileType: FileType
     ): ApiResponse<BossImageUploadResponse> {
-        val imageUrl = uploadProvider.uploadFile(ImageUploadFileRequest.of(fileType, ApplicationType.BOSS_API), file)
+        val imageUrl = uploadProvider.uploadFile(ImageUploadFileRequest.of(file, fileType, ApplicationType.BOSS_API))
         return ApiResponse.success(BossImageUploadResponse(imageUrl))
     }
 

@@ -4,9 +4,10 @@ import com.depromeet.threedollar.common.exception.model.ForbiddenException;
 import com.depromeet.threedollar.common.type.ApplicationType;
 import com.depromeet.threedollar.common.type.FileType;
 import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockMultipartFile;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ImageUploadFileRequestTest {
 
@@ -15,21 +16,21 @@ class ImageUploadFileRequestTest {
         // given
         ApplicationType applicationType = ApplicationType.USER_API;
 
+        ImageUploadFileRequest request = ImageUploadFileRequest.of(new MockMultipartFile("name", "originFileName", "image/jpeg", new byte[]{}), FileType.MEDAL_IMAGE, applicationType);
+
         // when & then
-        assertThatThrownBy(() -> ImageUploadFileRequest.of(FileType.MEDAL_IMAGE, applicationType)).isInstanceOf(ForbiddenException.class);
+        assertThatThrownBy(request::validateAvailableUploadFile).isInstanceOf(ForbiddenException.class);
     }
 
     @Test
-    void 해당_이미지_업로드를_허용하는경우_성공한다() {
+    void 해당_이미지_업로드를_허용하는경우_에러가_발생하지_않는다() {
         // given
         ApplicationType applicationType = ApplicationType.ADMIN_API;
         FileType fileType = FileType.MEDAL_IMAGE;
+        ImageUploadFileRequest request = ImageUploadFileRequest.of(new MockMultipartFile("name", "originFileName", "image/jpeg", new byte[]{}), fileType, applicationType);
 
-        // when
-        ImageUploadFileRequest request = ImageUploadFileRequest.of(fileType, applicationType);
-
-        // then
-        assertThat(request.getType()).isEqualTo(fileType);
+        // when & then
+        assertDoesNotThrow(request::validateAvailableUploadFile);
     }
 
 }

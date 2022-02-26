@@ -21,7 +21,7 @@ class AdminFileUploadController(
         @RequestPart file: MultipartFile,
         @PathVariable fileType: FileType
     ): ApiResponse<String> {
-        val imageUrl = uploadProvider.uploadFile(ImageUploadFileRequest.of(fileType, ApplicationType.ADMIN_API), file)
+        val imageUrl = uploadProvider.uploadFile(ImageUploadFileRequest.of(file, fileType, ApplicationType.ADMIN_API))
         return ApiResponse.success(imageUrl)
     }
 
