@@ -18,7 +18,7 @@ class BossImageUploadController(
     @ApiOperation("파일을 업로드하고 스토리지의 URL을 받아옵니다.")
     @PostMapping("/v1/upload/{fileType}")
     fun uploadFile(
-        @RequestPart(value = "file") file: MultipartFile,
+        @RequestPart file: MultipartFile,
         @PathVariable fileType: FileType
     ): ApiResponse<BossImageUploadResponse> {
         fileType.validateAvailableUploadInModule(ApplicationType.BOSS_API)
