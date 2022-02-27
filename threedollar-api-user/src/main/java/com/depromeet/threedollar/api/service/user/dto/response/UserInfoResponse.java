@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.service.user.dto.response;
 
+import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.domain.user.domain.user.User;
 import com.depromeet.threedollar.domain.user.domain.user.UserSocialType;
 import lombok.*;
@@ -9,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class UserInfoResponse {
+public class UserInfoResponse extends AuditingTimeResponse {
 
     private static final String SIGN_OUT_NICKNAME = "사라진 제보자";
 
@@ -27,7 +28,9 @@ public class UserInfoResponse {
         if (user == null) {
             return signOut();
         }
-        return new UserInfoResponse(user.getId(), user.getName(), user.getSocialType(), UserMedalResponse.of(user.getActivatedMedal()));
+        UserInfoResponse response = new UserInfoResponse(user.getId(), user.getName(), user.getSocialType(), UserMedalResponse.of(user.getActivatedMedal()));
+        response.setBaseTime(user);
+        return response;
     }
 
     private static UserInfoResponse signOut() {

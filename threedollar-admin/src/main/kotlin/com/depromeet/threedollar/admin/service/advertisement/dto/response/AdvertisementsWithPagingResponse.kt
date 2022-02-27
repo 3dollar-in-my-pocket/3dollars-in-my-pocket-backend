@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.admin.service.advertisement.dto.response
 
+import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse
 import com.depromeet.threedollar.domain.user.domain.advertisement.Advertisement
 import com.depromeet.threedollar.domain.user.domain.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.user.domain.advertisement.AdvertisementPositionType
@@ -31,11 +32,11 @@ data class AdvertisementResponse(
     val linkUrl: String?,
     val startDateTime: LocalDateTime,
     val endDateTime: LocalDateTime
-) {
+) : AuditingTimeResponse() {
 
     companion object {
         fun of(advertisement: Advertisement): AdvertisementResponse {
-            return AdvertisementResponse(
+            val response = AdvertisementResponse(
                 advertisementId = advertisement.id,
                 positionType = advertisement.positionType,
                 platformType = advertisement.platformType,
@@ -46,6 +47,8 @@ data class AdvertisementResponse(
                 startDateTime = advertisement.startDateTime,
                 endDateTime = advertisement.endDateTime
             )
+            response.setBaseTime(advertisement)
+            return response
         }
     }
 
