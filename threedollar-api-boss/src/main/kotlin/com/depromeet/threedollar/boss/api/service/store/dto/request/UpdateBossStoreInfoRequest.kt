@@ -6,13 +6,11 @@ import com.depromeet.threedollar.document.boss.document.store.BossStoreMenu
 import com.depromeet.threedollar.document.common.document.TimeInterval
 import org.hibernate.validator.constraints.Length
 import java.time.LocalTime
-import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Size
 
 data class UpdateBossStoreInfoRequest(
     @field:Length(max = 30, message = "{store.name.length}")
-    @field:NotBlank(message = "{store.name.notBlank}")
-    val name: String = "",
+    val name: String,
 
     val imageUrl: String?,
 
@@ -26,7 +24,7 @@ data class UpdateBossStoreInfoRequest(
 
     val appearanceDays: Set<AppearanceDayRequest>,
 
-    @field:Size(max = 3, message = "{store.categoriesIds.size.max}")
+    @field:Size(max = 3, message = "{store.categoriesIds.size}")
     val categoriesIds: Set<String>
 ) {
 
