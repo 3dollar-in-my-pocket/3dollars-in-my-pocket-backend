@@ -33,7 +33,7 @@ internal class RegistrationTest {
         assertAll({
             bossAccount.let {
                 assertThat(it.name).isEqualTo(bossName)
-                assertThat(it.socialInfo).isEqualTo(BossAccountSocialInfo(socialId, socialType))
+                assertThat(it.socialInfo).isEqualTo(BossAccountSocialInfo.of(socialId, socialType))
                 assertThat(it.businessNumber).isEqualTo(BusinessNumber.of(businessNumber))
             }
         })
@@ -64,7 +64,6 @@ internal class RegistrationTest {
                 assertThat(it.name).isEqualTo(storeName)
                 assertThat(it.contactsNumber).isEqualTo(ContactsNumber.of(contactsNumber))
                 assertThat(it.categoriesIds).isEqualTo(categoriesIds)
-                assertThat(it.status).isEqualTo(BossStoreStatus.ACTIVE)
             }
         })
     }

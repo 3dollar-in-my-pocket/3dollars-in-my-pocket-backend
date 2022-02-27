@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.admin.controller
+package com.depromeet.threedollar.admin.controller.enummapper
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.common.model.EnumValue
@@ -11,7 +11,7 @@ class EnumMapperController(
     private val enumMapper: EnumMapper
 ) {
 
-    @GetMapping("/enums")
+    @GetMapping("/v1/enums")
     fun getEnums(): ApiResponse<Map<String, List<EnumValue>>> {
         return ApiResponse.success(enumMapper.all)
     }

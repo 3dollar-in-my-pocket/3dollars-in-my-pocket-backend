@@ -14,21 +14,21 @@ class AdvertisementController(
     private val advertisementService: AdvertisementService
 ) {
 
-    @Deprecated(message = "v2.2.3 부터 Deprecated GET /v1/advertisements로 대체")
-    @ApiOperation("[GET /api/v1/advertisements로 변경] 활성화중인 광고 목록을 조회합니다")
+    @Deprecated(message = "v2.2.3 부터 Deprecated GET /v1/advertisements 로 대체")
+    @ApiOperation("[GET /api/v1/advertisements 로 변경] 활성화중인 광고 목록을 조회합니다")
     @GetMapping("/v1/popups")
-    fun getActivatedPopups(
+    fun getAdvertisementsV1(
         @Valid request: RetrieveAdvertisementsRequest
     ): ApiResponse<List<AdvertisementResponse>> {
-        return ApiResponse.success(advertisementService.retrieveAdvertisements(request))
+        return ApiResponse.success(advertisementService.getAdvertisements(request))
     }
 
     @ApiOperation("활성화중인 광고 목록을 조회합니다")
     @GetMapping("/v1/advertisements")
-    fun getActivateAdvertisement(
+    fun getActivatedAdvertisements(
         @Valid request: RetrieveAdvertisementsRequest
     ): ApiResponse<List<AdvertisementResponse>> {
-        return ApiResponse.success(advertisementService.retrieveAdvertisements(request))
+        return ApiResponse.success(advertisementService.getAdvertisements(request))
     }
 
 }

@@ -1,14 +1,15 @@
 package com.depromeet.threedollar.application.provider.upload.dto.request;
 
 import com.depromeet.threedollar.common.type.FileType;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UploadFileRequest {
 
+    MultipartFile getFile();
+
     FileType getType();
 
-    default void validateAvailableContentType(String contentType) {
-        getType().validateAvailableContentType(contentType);
-    }
+    void validateAvailableUploadFile();
 
     default String getFileNameWithBucketDirectory(String originalFileName) {
         return getType().createUniqueFileNameWithExtension(originalFileName);

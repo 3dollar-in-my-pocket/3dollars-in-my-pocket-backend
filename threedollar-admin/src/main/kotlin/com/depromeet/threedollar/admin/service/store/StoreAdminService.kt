@@ -27,7 +27,7 @@ class StoreAdminService(
 
     @Transactional(readOnly = true)
     fun retrieveLatestStores(request: RetrieveLatestStoresRequest): StoresCursorResponse {
-        val storesWithNextCursor =  storeRepository.findAllUsingCursor(request.cursor, request.size + 1)
+        val storesWithNextCursor = storeRepository.findAllUsingCursor(request.cursor, request.size + 1)
         val storesCursor = CursorSupporter.of(storesWithNextCursor, request.size)
         return StoresCursorResponse.of(storesCursor)
     }

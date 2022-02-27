@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.config.interceptor
 
 import com.depromeet.threedollar.common.model.UserMetaValue
+import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.common.type.OsPlatformType
 import com.depromeet.threedollar.common.utils.ClientIpUtils
-import com.depromeet.threedollar.common.utils.HttpHeaderUtils
 import com.depromeet.threedollar.common.utils.UserMetaSessionUtils
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
@@ -22,7 +22,8 @@ class UserMetadataInterceptor : HandlerInterceptor {
             osPlatform = platform,
             userAgent = userAgent,
             clientIp = ClientIpUtils.getClientIp(request.remoteAddr, request.getHeader(X_FORWARDED_FOR_HEADER)),
-            appVersion = extractAppVersion(platform, request)
+            applicationType = ApplicationType.USER_API,
+            appVersion = extractAppVersion(platform, request),
         ))
         return true
     }

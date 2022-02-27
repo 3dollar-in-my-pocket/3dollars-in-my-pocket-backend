@@ -6,8 +6,8 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 
 class LocationTest {
 
@@ -21,13 +21,9 @@ class LocationTest {
             "38.61, 131.87"
         })
         @ParameterizedTest
-        void 위도와_경도로_위치_객체를_생성한다(double latitude, double longitude) {
-            // when
-            Location location = Location.of(latitude, longitude);
-
-            // then
-            assertThat(location.getLatitude()).isEqualTo(latitude);
-            assertThat(location.getLongitude()).isEqualTo(longitude);
+        void 허용된_위도와_경도_범위인경우_에러가_발생하지_않는다(double latitude, double longitude) {
+            // when & then
+            assertDoesNotThrow(() -> Location.of(latitude, longitude));
         }
 
         @CsvSource({
@@ -35,7 +31,7 @@ class LocationTest {
             "38.62, 130.0"
         })
         @ParameterizedTest
-        void 허용된_위도_범위_밖인경우_VALIDATION_LATITUDE_EXEPTION(double latitude, double longitude) {
+        void 허용된_위도_범위_밖인경우_INVALID_EXCEPTION(double latitude, double longitude) {
             // when & then
             assertThatThrownBy(() -> Location.of(latitude, longitude)).isInstanceOf(InvalidException.class);
         }
@@ -45,7 +41,7 @@ class LocationTest {
             "35.0, 131.88"
         })
         @ParameterizedTest
-        void 허용된_경도_범위_밖인경우_VALIDATION_LATITUDE_EXEPTION(double latitude, double longitude) {
+        void 허용된_경도_범위_밖인경우_INVALID_EXCEPTION(double latitude, double longitude) {
             // when & then
             assertThatThrownBy(() -> Location.of(latitude, longitude)).isInstanceOf(InvalidException.class);
         }

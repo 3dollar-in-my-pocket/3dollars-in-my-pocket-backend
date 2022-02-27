@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.document.boss.document.store.repository
 
 import com.depromeet.threedollar.document.boss.document.store.BossStore
+import com.depromeet.threedollar.document.boss.document.store.BossStoreStatus
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.findOne
 import org.springframework.data.mongodb.core.query.Query
@@ -9,6 +10,19 @@ import org.springframework.data.mongodb.core.query.isEqualTo
 class BossStoreRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : BossStoreRepositoryCustom {
+
+    override fun findBossStoreById(bossStoreId: String): BossStore? {
+        return mongoTemplate.findOne(Query()
+            .addCriteria(BossStore::id isEqualTo bossStoreId)
+        )
+    }
+
+    override fun findBossStoreByIdAndBossId(bossStoreId: String, bossId: String): BossStore? {
+        return mongoTemplate.findOne(Query()
+            .addCriteria(BossStore::id isEqualTo bossStoreId)
+            .addCriteria(BossStore::bossId isEqualTo bossId)
+        )
+    }
 
     override fun findBossStoreByBossId(bossId: String): BossStore? {
         return mongoTemplate.findOne(Query()
@@ -20,6 +34,12 @@ class BossStoreRepositoryCustomImpl(
         return mongoTemplate.exists(Query()
             .addCriteria(BossStore::id isEqualTo bossStoreId)
             .addCriteria(BossStore::bossId isEqualTo bossId), BossStore::class.java
+        )
+    }
+
+    override fun existsBossStoreById(bossStoreId: String): Boolean {
+        return mongoTemplate.exists(Query()
+            .addCriteria(BossStore::id isEqualTo bossStoreId), BossStore::class.java
         )
     }
 

@@ -14,3 +14,11 @@ Authorization: Bearer {{BOSS_AUTHORIZATION}}
 > {%
 client.global.set("BOSS_STORE_ID", response.body["data"])
 %}
+
+
+### [테스트용] 가게에 Mock 피드백 데이터를 추가합니다
+POST {{host_boss_api}}/test-feedback/{{BOSS_STORE_ID}}?feedbackType=FOOD_IS_DELICIOUS&date=2022-02-16
+
+
+### [테스트용] 가입 신청을 수락합니다.
+PUT {{host_boss_api}}/test-registration/{{REGISTRATION_ID}}/apply

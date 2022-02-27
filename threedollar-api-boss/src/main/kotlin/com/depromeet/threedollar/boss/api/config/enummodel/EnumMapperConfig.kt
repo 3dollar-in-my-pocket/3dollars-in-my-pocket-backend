@@ -5,7 +5,7 @@ import com.depromeet.threedollar.common.type.FileType
 import com.depromeet.threedollar.common.utils.EnumMapper
 import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
 import com.depromeet.threedollar.document.boss.document.account.PushSettingsStatus
-import com.depromeet.threedollar.document.boss.document.feedback.BossStoreFeedbackType
+import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.document.boss.document.store.BossStoreOpenType
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

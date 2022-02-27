@@ -1,12 +1,12 @@
 ### 사장님 계정의 회원가입을 요청합니다.
-POST {{host_boss_api}}/v1/signup
+POST {{host_boss_api}}/v1/auth/signup
 Content-Type: application/json
 
 {
-    "token": "token12313131",
+    "token": "clknvTWyTUkIq7R1CzsUr1K1V7A-YiHqGGsmbAo9dJkAAAF_OnJHDw",
     "bossName": "will",
-    "socialType": "APPLE",
-    "businessNumber": "123-45-1234",
+    "socialType": "KAKAO",
+    "businessNumber": "123-45-12341",
     "storeName": "가슴속 3천원",
     "storeCategoriesIds": [
         "{{BOSS_CATEGORY_ID}}"
@@ -14,3 +14,14 @@ Content-Type: application/json
     "contactsNumber": "010-1234-1234",
     "certificationPhotoUrl": "https://example.png"
 }
+
+> {%
+client.global.set("REGISTRATION_ID", response.body["data"]["registrationId"])
+%}
+
+
+### 사장님 계정의 회원탈퇴를 요청합니다.
+DELETE {{host_boss_api}}/v1/auth/sign-out
+Content-Type: application/json
+Authorization: Bearer {{BOSS_AUTHORIZATION}}
+

@@ -14,8 +14,7 @@ class BossStore(
     var snsUrl: String?,
     var menus: List<BossStoreMenu> = listOf(),
     var appearanceDays: Set<BossStoreAppearanceDay> = setOf(),
-    var categoriesIds: Set<String> = setOf(),
-    val status: BossStoreStatus
+    var categoriesIds: Set<String> = setOf()
 ) : BaseDocument() {
 
     fun updateInfo(
@@ -65,8 +64,7 @@ class BossStore(
                 snsUrl = snsUrl,
                 menus = menus,
                 appearanceDays = appearanceDays,
-                categoriesIds = categoriesIds,
-                status = BossStoreStatus.ACTIVE
+                categoriesIds = categoriesIds
             )
         }
     }

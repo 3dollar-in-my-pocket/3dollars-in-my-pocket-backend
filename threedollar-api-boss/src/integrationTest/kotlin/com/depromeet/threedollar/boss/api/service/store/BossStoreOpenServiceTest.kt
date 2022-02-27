@@ -102,16 +102,20 @@ class BossStoreOpenServiceTest(
         val latitude = 37.3
         val longitude = 129.2
 
-        val bossStore = bossStoreRepository.save(BossStoreCreator.create(
-            bossId = "bossId",
-            name = "가게"
-        ))
+        val bossStore = bossStoreRepository.save(
+            BossStoreCreator.create(
+                bossId = "bossId",
+                name = "가게"
+            )
+        )
 
-        bossStoreLocationRepository.save(BossStoreLocationCreator.create(
-            bossStoreId = bossStore.id,
-            latitude = 36.0,
-            longitude = 128.0
-        ))
+        bossStoreLocationRepository.save(
+            BossStoreLocationCreator.create(
+                bossStoreId = bossStore.id,
+                latitude = 36.0,
+                longitude = 128.0
+            )
+        )
 
         // when
         bossStoreOpenService.openBossStore(bossStore.id, bossStore.bossId, CoordinateValue.of(latitude, longitude))
@@ -127,7 +131,9 @@ class BossStoreOpenServiceTest(
     @Test
     fun `가게 오픈 정보 갱신시 존재하지 않는 가게인 경우 NotFound Exception`() {
         // when & then
-        assertThatThrownBy { bossStoreOpenService.openBossStore("Not Found Boss StoreId", "bossId", CoordinateValue.of(38.0, 128.0)) }.isInstanceOf(NotFoundException::class.java)
+        assertThatThrownBy {
+            bossStoreOpenService.openBossStore("Not Found Boss StoreId", "bossId", CoordinateValue.of(38.0, 128.0))
+        }.isInstanceOf(NotFoundException::class.java)
     }
 
     @Test
@@ -140,7 +146,9 @@ class BossStoreOpenServiceTest(
         bossStoreRepository.save(bossStore)
 
         // when & then
-        assertThatThrownBy { bossStoreOpenService.openBossStore(bossStore.id, "Not Owner BossId", CoordinateValue.of(38.0, 128.0)) }.isInstanceOf(NotFoundException::class.java)
+        assertThatThrownBy {
+            bossStoreOpenService.openBossStore(bossStore.id, "Not Owner BossId", CoordinateValue.of(38.0, 128.0))
+        }.isInstanceOf(NotFoundException::class.java)
     }
 
     @Test

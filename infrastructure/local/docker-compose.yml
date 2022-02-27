@@ -11,7 +11,10 @@ services:
       - MYSQL_ROOT_PASSWORD=3dollar
     volumes:
       - ./mariadb:/etc/mysql/conf.d
-      - ~/threedollars-api/mariadb/data:/var/lib/mysql
+      - threedollar-mariadb-volume:/var/lib/mysql
+    networks:
+      - threedollar-network
+
   redis:
     image: redis
     container_name: threedollar-api-redis
@@ -20,7 +23,10 @@ services:
       - "6380:6379"
     restart: unless-stopped
     volumes:
-      - ~/threedollars-api/redis/data:/data
+      - threedollar-redis-volume:/data
+    networks:
+      - threedollar-network
+
   mongodb:
     image: mongo
     container_name: threedollar-api-mongo
@@ -28,4 +34,14 @@ services:
       - "27018:27017"
     restart: unless-stopped
     volumes:
-      - ~/threedollars-boss/mongo:/data/db
+      - threedollar-mongodb-volume:/data/db
+    networks:
+      - threedollar-network
+
+volumes:
+  threedollar-redis-volume:
+  threedollar-mariadb-volume:
+  threedollar-mongodb-volume:
+
+networks:
+  threedollar-network:

@@ -36,6 +36,7 @@ public enum ErrorCode {
 
     // 403 Forbidden
     FORBIDDEN(HttpStatusCode.FORBIDDEN, OFF, "FB000", "허용하지 않는 요청입니다"),
+    FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT(HttpStatusCode.CONFLICT, OFF, "FB001", "현재 사장님 계정 가입 신청 후 승인 대기 중입니다."),
 
 
     // 404 Not Found
@@ -65,12 +66,15 @@ public enum ErrorCode {
     CONFLICT_NICKNAME(HttpStatusCode.CONFLICT, OFF, "CF001", "이미 사용중인 닉네임입니다.\n다른 닉네임을 이용해주세요"),
     CONFLICT_USER(HttpStatusCode.CONFLICT, OFF, "CF002", "이미 해당 계정으로 회원가입하셨습니다.\n로그인 해주세요"),
     CONFLICT_DELETE_REQUEST_STORE(HttpStatusCode.CONFLICT, OFF, "CF003", "이미 해당하는 가게에 삭제요청 하였습니다."),
-    CONFLICT_VISIT_HISTORY(HttpStatusCode.CONFLICT, OFF, "CF004", "오늘 이미 방문 인증한 가게입니다.\n다음에 다시 인증해주세요"),
-    CONFLICT_REGISTER_BOSS(HttpStatusCode.CONFLICT, OFF, "CF005", "이미 사장님 가입을 신청하셨습니다"),
+    CONFLICT_VISIT_HISTORY(HttpStatusCode.CONFLICT, OFF, "CF004", "오늘 이미 방문 인증한 가게입니다.\n내일 다시 인증해주세요"),
+    CONFLICT_BOSS_STORE_FEEDBACK(HttpStatusCode.CONFLICT, OFF, "CF005", "오늘 이미 피드백을 추가한 가게입니다.\n내일 다시 인증해주세요"),
 
 
     // 415 Unsupported Media Type
     UNSUPPORTED_MEDIA_TYPE(HttpStatusCode.UNSUPPORTED_MEDIA_TYPE, OFF, "UM000", "Unsupported Media Type"),
+
+    // 429 Too Many Requests
+    TOO_MANY_REQUESTS(HttpStatusCode.TOO_MANY_REQUESTS, OFF, "TM000", "너무 많은 요청이 들어와 일시적으로 제한되었습니다"),
 
 
     // 500 Internal Server Exception

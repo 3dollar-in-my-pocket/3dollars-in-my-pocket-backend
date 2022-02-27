@@ -5,8 +5,10 @@ import com.depromeet.threedollar.common.model.CoordinateValue
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategory
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.document.boss.document.store.BossStore
+import com.depromeet.threedollar.document.boss.document.store.BossStoreLocation
 import com.depromeet.threedollar.document.boss.document.store.BossStoreLocationRepository
 import com.depromeet.threedollar.document.boss.document.store.BossStoreRepository
+import com.depromeet.threedollar.redis.boss.domain.store.BossStoreOpenInfo
 import com.depromeet.threedollar.redis.boss.domain.store.BossStoreOpenInfoRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -22,21 +24,17 @@ class BossStoreRetrieveService(
 ) {
 
     @Transactional(readOnly = true)
-    fun getNearBossStores(mapCoordinate: CoordinateValue, distanceKm: Double): List<BossStoreInfoResponse> {
-        val storeLocations = bossStoreLocationRepository.findNearBossStoreLocations(
+    fun getAroundBossStores(mapCoordinate: CoordinateValue, distanceKm: Double): List<BossStoreInfoResponse> {
+        val storeLocations: List<BossStoreLocation> = bossStoreLocationRepository.findNearBossStoreLocations(
             latitude = mapCoordinate.latitude,
             longitude = mapCoordinate.longitude,
             maxDistance = min(distanceKm, MAX_DISTANCE_KM)
         )
 
-        val locationsDictionary = storeLocations.associateBy { it.bossStoreId }
-
-        val bossStores = bossStoreRepository.findAllById(storeLocations.map { it.bossStoreId })
-
-        val categoriesDictionary = bossStoreCategoryRepository.findAll().associateBy { it.id }
-
-        val openInfoDictionary =
-            bossStoreOpenInfoRepository.findAllById(bossStores.map { it.id }).associateBy { it.bossStoreId }
+        val locationsDictionary: Map<String, BossStoreLocation> = storeLocations.associateBy { it.bossStoreId }
+        val bossStores: Iterable<BossStore> = bossStoreRepository.findAllById(storeLocations.map { it.bossStoreId })
+        val categoriesDictionary: Map<String, BossStoreCategory> = bossStoreCategoryRepository.findAll().associateBy { it.id }
+        val openInfoDictionary: Map<String, BossStoreOpenInfo> = bossStoreOpenInfoRepository.findAllById(bossStores.map { it.id }).associateBy { it.bossStoreId }
 
         return bossStores.map {
             BossStoreInfoResponse.of(

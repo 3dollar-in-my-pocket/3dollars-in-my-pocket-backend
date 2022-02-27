@@ -15,8 +15,7 @@ object BossStoreCreator {
         snsUrl: String? = null,
         menus: List<BossStoreMenu> = listOf(),
         appearanceDays: Set<BossStoreAppearanceDay> = setOf(),
-        categoriesIds: Set<String> = setOf(),
-        status: BossStoreStatus = BossStoreStatus.ACTIVE
+        categoriesIds: Set<String> = setOf()
     ): BossStore {
         return BossStore(
             bossId = bossId,
@@ -27,8 +26,7 @@ object BossStoreCreator {
             snsUrl = snsUrl,
             menus = menus,
             appearanceDays = appearanceDays,
-            categoriesIds = categoriesIds,
-            status = status
+            categoriesIds = categoriesIds
         )
     }
 

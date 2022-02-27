@@ -22,13 +22,13 @@ class BossStoreController(
 ) {
 
     @ApiOperation("특정 거리 안에 위치한 가게 목록을 조회합니다.")
-    @GetMapping("/v1/boss-stores/near")
-    fun getNearBossStores(
+    @GetMapping("/v1/boss-stores/around")
+    fun getAroundBossStores(
         @MapCoordinate mapCoordinate: CoordinateValue,
         @RequestParam distanceKm: Double
     ): ApiResponse<List<BossStoreInfoResponse>> {
         return ApiResponse.success(
-            bossStoreRetrieveService.getNearBossStores(
+            bossStoreRetrieveService.getAroundBossStores(
                 mapCoordinate = mapCoordinate,
                 distanceKm = distanceKm
             )
@@ -49,7 +49,7 @@ class BossStoreController(
 
     @ApiOperation("[인증] 가게를 강제로 영업 종료합니다")
     @Auth
-    @DeleteMapping("/v1/boss-store/{bossStoreId}/close")
+    @PutMapping("/v1/boss-store/{bossStoreId}/close")
     fun closeBossStore(
         @PathVariable bossStoreId: String,
         @BossId bossId: String
@@ -60,7 +60,7 @@ class BossStoreController(
 
     @ApiOperation("[인증] 사장님 자신이 운영중인 가게를 조회합니다.")
     @Auth
-    @GetMapping("/v1/boss-store/me")
+    @GetMapping("/v1/boss-store/my")
     fun getMyBossStore(
         @BossId bossId: String
     ): ApiResponse<BossStoreInfoResponse> {

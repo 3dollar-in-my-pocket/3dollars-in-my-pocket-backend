@@ -5,6 +5,7 @@ import com.depromeet.threedollar.domain.user.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.user.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.user.domain.store.Store;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,6 +30,7 @@ class StoreRatingServiceTest extends SetupStoreServiceTest {
         reviewRepository.deleteAllInBatch();
     }
 
+    @DisplayName("리뷰 평균 점수 계산: 1점 + 5점 / 2 = 3점")
     @Test
     void 가게에_작성된_리뷰로_가게의_평균점수를_갱신한다() {
         // given
@@ -44,7 +46,7 @@ class StoreRatingServiceTest extends SetupStoreServiceTest {
         List<Store> stores = storeRepository.findAll();
         assertAll(
             () -> assertThat(stores).hasSize(1),
-            () -> assertThat(stores.get(0).getRating()).isEqualTo(3.0) // (1 + 5) / 2 = 3
+            () -> assertThat(stores.get(0).getRating()).isEqualTo(3.0)
         );
     }
 

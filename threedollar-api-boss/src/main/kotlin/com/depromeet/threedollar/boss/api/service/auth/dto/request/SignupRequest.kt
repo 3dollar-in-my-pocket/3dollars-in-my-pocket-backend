@@ -24,7 +24,7 @@ data class SignupRequest(
     fun toEntity(socialId: String): Registration {
         return Registration(
             boss = RegistrationBossForm(
-                socialInfo = BossAccountSocialInfo(socialId, socialType),
+                socialInfo = BossAccountSocialInfo.of(socialId, socialType),
                 name = bossName,
                 businessNumber = BusinessNumber.of(businessNumber)
             ),

@@ -32,7 +32,7 @@ public class StoreImageController {
     @Auth
     @PostMapping("/v2/store/images")
     public ApiResponse<List<StoreImageResponse>> addStoreImage(
-        @RequestPart(value = "images") List<MultipartFile> images,
+        @RequestPart List<MultipartFile> images,
         @Valid AddStoreImageRequest request,
         @UserId Long userId
     ) {

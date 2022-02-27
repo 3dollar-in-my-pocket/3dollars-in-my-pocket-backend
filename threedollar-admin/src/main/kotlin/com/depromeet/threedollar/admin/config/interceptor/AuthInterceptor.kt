@@ -25,9 +25,7 @@ class AuthInterceptor(
             val session = findSessionBySessionId(sessionId)
 
             val admin = adminRepository.findAdminById(session.getAttribute(ADMIN_ID))
-                ?: throw UnAuthorizedException(
-                    "잘못된 세션 id(${sessionId})입니다 다시 로그인해주세요."
-                )
+                ?: throw UnAuthorizedException("잘못된 세션 id(${sessionId})입니다 다시 로그인해주세요.")
 
             request.setAttribute("adminId", admin.id)
             return true

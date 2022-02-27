@@ -52,7 +52,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
         @Test
         void 가게에_새로운_이미지를_등록한다() {
             // given
-            when(uploadProvider.uploadFile(any(), any())).thenReturn(IMAGE_URL);
+            when(uploadProvider.uploadFile(any())).thenReturn(IMAGE_URL);
 
             AddStoreImageRequest request = AddStoreImageRequest.testInstance(store.getId());
 

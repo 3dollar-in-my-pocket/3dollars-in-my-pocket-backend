@@ -4,4 +4,12 @@ import com.depromeet.threedollar.document.boss.document.registration.Registratio
 
 data class NewBossAppliedRegistrationEvent(
     val registration: Registration
-)
+) {
+
+    companion object {
+        fun of(registration: Registration): NewBossAppliedRegistrationEvent {
+            return NewBossAppliedRegistrationEvent(registration)
+        }
+    }
+
+}
