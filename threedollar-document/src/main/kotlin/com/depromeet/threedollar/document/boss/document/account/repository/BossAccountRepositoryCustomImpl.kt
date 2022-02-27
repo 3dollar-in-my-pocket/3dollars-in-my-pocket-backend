@@ -20,13 +20,13 @@ class BossAccountRepositoryCustomImpl(
 
     override fun findBossAccountBySocialInfo(socialId: String, socialType: BossAccountSocialType): BossAccount? {
         return mongoTemplate.findOne(Query()
-            .addCriteria(BossAccount::socialInfo isEqualTo BossAccountSocialInfo(socialId, socialType))
+            .addCriteria(BossAccount::socialInfo isEqualTo BossAccountSocialInfo.of(socialId, socialType))
         )
     }
 
     override fun existsBossAccountBySocialInfo(socialId: String, socialType: BossAccountSocialType): Boolean {
         return mongoTemplate.exists(Query()
-            .addCriteria(BossAccount::socialInfo isEqualTo BossAccountSocialInfo(socialId, socialType)), BossAccount::class.java
+            .addCriteria(BossAccount::socialInfo isEqualTo BossAccountSocialInfo.of(socialId, socialType)), BossAccount::class.java
         )
     }
 

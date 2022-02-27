@@ -59,7 +59,7 @@ class BossRegistrationAdminServiceTest(
         assertAll({
             assertThat(bossAccounts).hasSize(1)
             bossAccounts[0].let {
-                assertThat(it.socialInfo).isEqualTo(BossAccountSocialInfo(socialId, socialType))
+                assertThat(it.socialInfo).isEqualTo(BossAccountSocialInfo.of(socialId, socialType))
                 assertThat(it.name).isEqualTo(bossName)
                 assertThat(it.businessNumber).isEqualTo(BusinessNumber.of(businessNumber))
                 assertThat(it.pushSettingsStatus).isEqualTo(PushSettingsStatus.OFF)
