@@ -5,6 +5,7 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode.*
 import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseException
 import com.depromeet.threedollar.common.utils.logger
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
+import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import org.slf4j.Logger
 import org.springframework.beans.TypeMismatchException
 import org.springframework.http.HttpStatus
@@ -31,7 +32,7 @@ class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException::class)
-    protected fun handleBadRequest(e: BindException): ApiResponse<Nothing> {
+    private fun handleBadRequest(e: BindException): ApiResponse<Nothing> {
         val errorMessage = e.bindingResult.fieldErrors.stream()
             .map { obj: FieldError -> obj.defaultMessage }
             .collect(Collectors.joining("\n"))
@@ -44,8 +45,12 @@ class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException::class)
-    protected fun handleHttpMessageNotReadableException(e: HttpMessageNotReadableException): ApiResponse<Nothing> {
+    private fun handleHttpMessageNotReadableException(e: HttpMessageNotReadableException): ApiResponse<Nothing> {
         log.warn(e.message)
+        if (e.rootCause is MissingKotlinParameterException) {
+            val parameterName = (e.rootCause as MissingKotlinParameterException).parameter.name
+            return ApiResponse.error(INVALID_MISSING_PARAMETER, "필수 파라미터 ($parameterName)을 입력해주세요")
+        }
         return ApiResponse.error(INVALID)
     }
 
@@ -55,7 +60,7 @@ class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MissingRequestValueException::class)
-    protected fun handle(e: MissingRequestValueException): ApiResponse<Nothing> {
+    private fun handle(e: MissingRequestValueException): ApiResponse<Nothing> {
         log.warn(e.message)
         return ApiResponse.error(INVALID_MISSING_PARAMETER)
     }
@@ -66,7 +71,7 @@ class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(TypeMismatchException::class)
-    protected fun handleTypeMismatchException(e: TypeMismatchException): ApiResponse<Nothing> {
+    private fun handleTypeMismatchException(e: TypeMismatchException): ApiResponse<Nothing> {
         log.warn(e.message)
         val errorCode = INVALID_TYPE
         return ApiResponse.error(errorCode, "${errorCode.message} (${e.value})")
@@ -98,7 +103,7 @@ class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     @ExceptionHandler(HttpMediaTypeNotAcceptableException::class)
-    protected fun handleHttpMediaTypeNotAcceptableException(e: HttpMediaTypeNotAcceptableException): ApiResponse<Nothing> {
+    private fun handleHttpMediaTypeNotAcceptableException(e: HttpMediaTypeNotAcceptableException): ApiResponse<Nothing> {
         log.warn(e.message)
         return ApiResponse.error(NOT_ACCEPTABLE)
     }
@@ -118,7 +123,7 @@ class ControllerExceptionAdvice {
      * ThreeDollars Custom Exception
      */
     @ExceptionHandler(ThreeDollarsBaseException::class)
-    protected fun handleBaseException(exception: ThreeDollarsBaseException): ResponseEntity<ApiResponse<Any>> {
+    private fun handleBaseException(exception: ThreeDollarsBaseException): ResponseEntity<ApiResponse<Any>> {
         log.error(exception.message, exception)
         return ResponseEntity.status(exception.status)
             .body(ApiResponse.error(exception.errorCode))

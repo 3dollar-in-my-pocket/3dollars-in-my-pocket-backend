@@ -9,6 +9,7 @@ import com.depromeet.threedollar.common.utils.UserMetaSessionUtils
 import com.depromeet.threedollar.common.utils.logger
 import com.depromeet.threedollar.domain.common.event.ServerExceptionOccurredEvent
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
+import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import org.slf4j.Logger
 import org.springframework.beans.TypeMismatchException
 import org.springframework.context.ApplicationEventPublisher
@@ -43,7 +44,7 @@ class ControllerExceptionAdvice(
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException::class)
-    protected fun handleBadRequest(e: BindException): ApiResponse<Nothing> {
+    private fun handleBadRequest(e: BindException): ApiResponse<Nothing> {
         val errorMessage = e.bindingResult.fieldErrors.stream()
             .map { obj: FieldError -> obj.defaultMessage }
             .collect(Collectors.joining("\n"))
@@ -58,6 +59,10 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(HttpMessageNotReadableException::class)
     protected fun handleHttpMessageNotReadableException(e: HttpMessageNotReadableException): ApiResponse<Nothing> {
         log.warn(e.message)
+        if (e.rootCause is MissingKotlinParameterException) {
+            val parameterName = (e.rootCause as MissingKotlinParameterException).parameter.name
+            return ApiResponse.error(INVALID_MISSING_PARAMETER, "필수 파라미터 ($parameterName)을 입력해주세요")
+        }
         return ApiResponse.error(INVALID)
     }
 
@@ -69,7 +74,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(MissingServletRequestParameterException::class)
     protected fun handleMissingServletRequestParameterException(e: MissingServletRequestParameterException): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(INVALID_MISSING_PARAMETER, "Parameter (${e.parameterName})을 입력해주세요")
+        return ApiResponse.error(INVALID_MISSING_PARAMETER, "필수 파라미터 (${e.parameterName})을 입력해주세요")
     }
 
     /**
@@ -89,7 +94,7 @@ class ControllerExceptionAdvice(
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MissingPathVariableException::class)
-    protected fun handleMissingPathVariableException(e: MissingPathVariableException): ApiResponse<Nothing> {
+    private fun handleMissingPathVariableException(e: MissingPathVariableException): ApiResponse<Nothing> {
         log.warn(e.message)
         return ApiResponse.error(INVALID_MISSING_PARAMETER, "Path (${e.variableName})를 입력해주세요")
     }
@@ -100,7 +105,7 @@ class ControllerExceptionAdvice(
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(TypeMismatchException::class)
-    protected fun handleTypeMismatchException(e: TypeMismatchException): ApiResponse<Nothing> {
+    private fun handleTypeMismatchException(e: TypeMismatchException): ApiResponse<Nothing> {
         log.warn(e.message)
         val errorCode = INVALID_TYPE
         return ApiResponse.error(errorCode, "${errorCode.message} (${e.value})")
@@ -111,7 +116,7 @@ class ControllerExceptionAdvice(
         InvalidFormatException::class,
         ServletRequestBindingException::class
     )
-    protected fun handleMethodArgumentNotValidException(e: Exception): ApiResponse<Nothing> {
+    private fun handleMethodArgumentNotValidException(e: Exception): ApiResponse<Nothing> {
         log.warn(e.message)
         return ApiResponse.error(INVALID)
     }
@@ -122,7 +127,7 @@ class ControllerExceptionAdvice(
      */
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException::class)
-    protected fun handleHttpRequestMethodNotSupportedException(e: HttpRequestMethodNotSupportedException): ApiResponse<Nothing> {
+    private fun handleHttpRequestMethodNotSupportedException(e: HttpRequestMethodNotSupportedException): ApiResponse<Nothing> {
         log.warn(e.message, e)
         return ApiResponse.error(METHOD_NOT_ALLOWED)
     }
@@ -132,7 +137,7 @@ class ControllerExceptionAdvice(
      */
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     @ExceptionHandler(HttpMediaTypeNotAcceptableException::class)
-    protected fun handleHttpMediaTypeNotAcceptableException(e: HttpMediaTypeNotAcceptableException): ApiResponse<Nothing> {
+    private fun handleHttpMediaTypeNotAcceptableException(e: HttpMediaTypeNotAcceptableException): ApiResponse<Nothing> {
         log.warn(e.message)
         return ApiResponse.error(NOT_ACCEPTABLE)
     }
@@ -152,10 +157,8 @@ class ControllerExceptionAdvice(
      * 최대 허용한 이미지 크기를 넘은 경우 발생하는 Exception
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(
-        MaxUploadSizeExceededException::class
-    )
-    protected fun handleMaxUploadSizeExceededException(e: MaxUploadSizeExceededException): ApiResponse<Nothing> {
+    @ExceptionHandler(MaxUploadSizeExceededException::class)
+    private fun handleMaxUploadSizeExceededException(e: MaxUploadSizeExceededException): ApiResponse<Nothing> {
         log.error(e.message, e)
         eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(INVALID_UPLOAD_FILE_SIZE, e))
         return ApiResponse.error(INVALID_UPLOAD_FILE_SIZE)
@@ -166,7 +169,7 @@ class ControllerExceptionAdvice(
      * ThreeDollars Custom Exception
      */
     @ExceptionHandler(ThreeDollarsBaseException::class)
-    protected fun handleBaseException(exception: ThreeDollarsBaseException): ResponseEntity<ApiResponse<Nothing>> {
+    private fun handleBaseException(exception: ThreeDollarsBaseException): ResponseEntity<ApiResponse<Nothing>> {
         log.error(exception.message, exception)
         if (exception.isSetAlarm) {
             eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(exception.errorCode, exception));

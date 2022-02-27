@@ -4,13 +4,13 @@ import javax.validation.constraints.Max
 import javax.validation.constraints.Min
 
 data class RetrieveReportedStoresRequest(
-    @field:Min(value = 1, message = "minCount를 1이상 입력해주세요")
+    @field:Min(value = 1, message = "{store.reported.minCount.min}")
     val minCount: Int = 0,
 
-    @field:Min(value = 1, message = "page를 1이상 입력해주세요")
+    @field:Min(value = 1, message = "{common.page.min}")
     val page: Long = 0,
 
-    @field:Min(value = 1, message = "1이상 size를 입력해주세요")
-    @field:Max(value = 100, message = "size를 100이하 입력해주세요")
+    @field:Min(value = 1, message = "{common.size.min}")
+    @field:Max(value = 100, message = "{common.size.max}")
     val size: Int = 0
 )
