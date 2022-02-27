@@ -4,12 +4,14 @@ import com.depromeet.threedollar.document.boss.document.store.BossStore
 
 interface BossStoreRepositoryCustom {
 
-    fun findActiveBossStoreById(bossStoreId: String): BossStore?
+    fun findBossStoreById(bossStoreId: String): BossStore?
 
-    fun findActiveBossStoreByBossId(bossId: String): BossStore?
+    fun findBossStoreByIdAndBossId(bossStoreId: String, bossId: String): BossStore?
 
-    fun existsActiveBossStoreByIdAndBossId(bossStoreId: String, bossId: String): Boolean
+    fun findBossStoreByBossId(bossId: String): BossStore?
 
-    fun existsActiveBossStoreById(bossStoreId: String): Boolean
+    fun existsBossStoreByIdAndBossId(bossStoreId: String, bossId: String): Boolean
+
+    fun existsBossStoreById(bossStoreId: String): Boolean
 
 }

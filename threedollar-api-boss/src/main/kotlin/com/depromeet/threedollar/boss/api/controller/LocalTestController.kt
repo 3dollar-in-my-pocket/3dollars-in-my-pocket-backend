@@ -104,8 +104,7 @@ class LocalTestController(
                         locationDescription = "서울특별시 강남역 0번 출구"
                     )
                 ),
-                categoriesIds = categoriesIds,
-                status = BossStoreStatus.ACTIVE
+                categoriesIds = categoriesIds
             )
         )
 

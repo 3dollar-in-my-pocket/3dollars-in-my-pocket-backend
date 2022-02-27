@@ -99,7 +99,6 @@ class BossRegistrationAdminServiceTest(
                 assertThat(it.menus).isEmpty()
                 assertThat(it.appearanceDays).isEmpty()
                 assertThat(it.categoriesIds).isEqualTo(categoriesIds)
-                assertThat(it.status).isEqualTo(BossStoreStatus.ACTIVE)
             }
         })
     }

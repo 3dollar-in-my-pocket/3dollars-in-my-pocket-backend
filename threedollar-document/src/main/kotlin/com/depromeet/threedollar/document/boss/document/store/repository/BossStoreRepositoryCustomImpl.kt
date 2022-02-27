@@ -11,32 +11,35 @@ class BossStoreRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : BossStoreRepositoryCustom {
 
-    override fun findActiveBossStoreById(bossStoreId: String): BossStore? {
+    override fun findBossStoreById(bossStoreId: String): BossStore? {
         return mongoTemplate.findOne(Query()
             .addCriteria(BossStore::id isEqualTo bossStoreId)
-            .addCriteria(BossStore::status isEqualTo BossStoreStatus.ACTIVE)
         )
     }
 
-    override fun findActiveBossStoreByBossId(bossId: String): BossStore? {
+    override fun findBossStoreByIdAndBossId(bossStoreId: String, bossId: String): BossStore? {
+        return mongoTemplate.findOne(Query()
+            .addCriteria(BossStore::id isEqualTo bossStoreId)
+            .addCriteria(BossStore::bossId isEqualTo bossId)
+        )
+    }
+
+    override fun findBossStoreByBossId(bossId: String): BossStore? {
         return mongoTemplate.findOne(Query()
             .addCriteria(BossStore::bossId isEqualTo bossId)
-            .addCriteria(BossStore::status isEqualTo BossStoreStatus.ACTIVE)
         )
     }
 
-    override fun existsActiveBossStoreByIdAndBossId(bossStoreId: String, bossId: String): Boolean {
+    override fun existsBossStoreByIdAndBossId(bossStoreId: String, bossId: String): Boolean {
         return mongoTemplate.exists(Query()
             .addCriteria(BossStore::id isEqualTo bossStoreId)
-            .addCriteria(BossStore::bossId isEqualTo bossId)
-            .addCriteria(BossStore::status isEqualTo BossStoreStatus.ACTIVE), BossStore::class.java
+            .addCriteria(BossStore::bossId isEqualTo bossId), BossStore::class.java
         )
     }
 
-    override fun existsActiveBossStoreById(bossStoreId: String): Boolean {
+    override fun existsBossStoreById(bossStoreId: String): Boolean {
         return mongoTemplate.exists(Query()
-            .addCriteria(BossStore::id isEqualTo bossStoreId)
-            .addCriteria(BossStore::status isEqualTo BossStoreStatus.ACTIVE), BossStore::class.java
+            .addCriteria(BossStore::id isEqualTo bossStoreId), BossStore::class.java
         )
     }
 
