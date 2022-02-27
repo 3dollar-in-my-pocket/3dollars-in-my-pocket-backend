@@ -8,8 +8,9 @@ import java.time.LocalDateTime
 import javax.validation.constraints.FutureOrPresent
 
 data class UpdateAdvertisementRequest(
-    val positionType: AdvertisementPositionType,
-    val platformType: AdvertisementPlatformType,
+    val position: AdvertisementPositionType,
+
+    val platform: AdvertisementPlatformType,
 
     @field:Length(max = 50, message = "{advertisement.title.length}")
     val title: String?,

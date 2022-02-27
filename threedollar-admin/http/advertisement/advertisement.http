@@ -4,8 +4,8 @@ Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 Content-Type: application/json
 
 {
-    "positionType": "SPLASH",
-    "platformType": "ALL",
+    "position": "SPLASH",
+    "platform": "ALL",
     "imageUrl": "https://image.png",
     "linkUrl": "https://link.com",
     "title": "광고 제목",
@@ -39,15 +39,15 @@ Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 Content-Type: application/json
 
 {
-    "positionType": "SPLASH",
-    "platformType": "AOS",
+    "position": "SPLASH",
+    "platform": "AOS",
     "imageUrl": "https://image1.png",
     "linkUrl": "https://link1.com",
     "title": "광고 제목",
     "subTitle": "광고 내용\n광고 내용을 입력해주세요",
     "bgColor": "#ffffff",
     "fontColor": "#2e2e2e",
-    "startDateTime": "2022-01-01T00:00:00",
+    "startDateTime": "2023-01-01T00:00:00",
     "endDateTime": "2023-03-01T00:00:00"
 }
 

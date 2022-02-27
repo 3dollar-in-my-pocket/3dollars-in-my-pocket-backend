@@ -7,11 +7,11 @@ import org.hibernate.validator.constraints.Length
 import org.hibernate.validator.constraints.URL
 import java.time.LocalDateTime
 import javax.validation.constraints.FutureOrPresent
-import kotlin.math.max
 
 data class AddAdvertisementRequest(
-    val positionType: AdvertisementPositionType,
-    val platformType: AdvertisementPlatformType,
+    val position: AdvertisementPositionType,
+
+    val platform: AdvertisementPlatformType,
 
     @field:Length(max = 50, message = "{advertisement.title.length}")
     val title: String?,
@@ -41,7 +41,7 @@ data class AddAdvertisementRequest(
 ) {
 
     fun toEntity(): Advertisement {
-        return Advertisement.newInstance(positionType, platformType, title, subTitle, imageUrl, linkUrl, bgColor, fontColor, startDateTime, endDateTime)
+        return Advertisement.newInstance(position, platform, title, subTitle, imageUrl, linkUrl, bgColor, fontColor, startDateTime, endDateTime)
     }
 
 }

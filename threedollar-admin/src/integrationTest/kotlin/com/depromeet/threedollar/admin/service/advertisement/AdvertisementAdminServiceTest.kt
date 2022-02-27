@@ -39,8 +39,8 @@ internal class AdvertisementAdminServiceTest(
         val endDateTime = LocalDateTime.of(2022, 1, 7, 0, 0)
 
         val request = AddAdvertisementRequest(
-            positionType = positionType,
-            platformType = platformType,
+            position = positionType,
+            platform = platformType,
             title = title,
             subTitle = subTitle,
             imageUrl = imageUrl,
@@ -89,8 +89,8 @@ internal class AdvertisementAdminServiceTest(
         val endDateTime = LocalDateTime.of(2022, 1, 7, 0, 0)
 
         val request = UpdateAdvertisementRequest(
-            positionType = positionType,
-            platformType = platformType,
+            position = positionType,
+            platform = platformType,
             title = title,
             subTitle = subTitle,
             imageUrl = imageUrl,
@@ -125,8 +125,8 @@ internal class AdvertisementAdminServiceTest(
     fun `광고 수정시 존재하지 않는 경우 404 에러 발생`() {
         // given
         val request = UpdateAdvertisementRequest(
-            positionType = AdvertisementPositionType.SPLASH,
-            platformType = AdvertisementPlatformType.AOS,
+            position = AdvertisementPositionType.SPLASH,
+            platform = AdvertisementPlatformType.AOS,
             title = "title",
             subTitle = "",
             imageUrl = "imageUrl",

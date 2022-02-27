@@ -2,6 +2,7 @@ package com.depromeet.threedollar.admin.controller.advertisement
 
 import com.depromeet.threedollar.admin.service.advertisement.AdvertisementAdminService
 import com.depromeet.threedollar.admin.service.advertisement.dto.request.AddAdvertisementRequest
+import com.depromeet.threedollar.admin.service.advertisement.dto.request.RetrieveAdvertisementsRequest
 import com.depromeet.threedollar.admin.service.advertisement.dto.request.UpdateAdvertisementRequest
 import com.depromeet.threedollar.admin.service.advertisement.dto.response.AdvertisementsWithPagingResponse
 import com.depromeet.threedollar.application.common.dto.ApiResponse
@@ -40,13 +41,9 @@ class AdvertisementController(
 
     @GetMapping("/v1/advertisements")
     fun retrieveAdvertisements(
-        @RequestParam size: Long,
-        @RequestParam page: Int
+        @Valid request: RetrieveAdvertisementsRequest
     ): ApiResponse<AdvertisementsWithPagingResponse> {
-        return ApiResponse.success(advertisementAdminService.retrieveAdvertisements(
-            size = size,
-            page = page
-        ))
+        return ApiResponse.success(advertisementAdminService.retrieveAdvertisements(request))
     }
 
 }
