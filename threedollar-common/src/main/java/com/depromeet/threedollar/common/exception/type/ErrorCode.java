@@ -46,11 +46,12 @@ public enum ErrorCode {
     NOTFOUND_REVIEW(NOT_FOUND, OFF, "NF003", "삭제되거나 존재하지 않는 리뷰입니다"),
     NOTFOUND_STORE_IMAGE(NOT_FOUND, OFF, "NF004", "삭제되거나 존재하지 않는 가게 이미지입니다"),
     NOTFOUND_FAQ(NOT_FOUND, OFF, "NF005", "삭제되거나 존재하지 않는 FAQ입니다"),
-    NOTFOUND_MEDAL(NOT_FOUND, OFF, "N006", "보유하지 않은 메달입니다"),
-    NOTFOUND_CATEGORY(NOT_FOUND, OFF, "N007", "존재하지 않는 카테고리 입니다"),
-    NOTFOUND_BOSS(NOT_FOUND, OFF, "N008", "존재하지 않는 사장님 계정입니다"),
-    NOTFOUND_BOSS_OWNED_STORE(NOT_FOUND, OFF, "NF009", "현재 사장님이 운영하는 가게는 존재하지 않습니다."),
-    NOTFOUND_SIGNUP_REGISTRATION(NOT_FOUND, OFF, "NF010", "해당하는 가입 신청은 존재하지 않습니다"),
+    NOTFOUND_MEDAL(NOT_FOUND, OFF, "N006", "존재하지 않은 메달입니다"),
+    NOTFOUND_USER_MEDAL(NOT_FOUND, OFF, "N007", "보유하지 않은 메달입니다"),
+    NOTFOUND_CATEGORY(NOT_FOUND, OFF, "N008", "존재하지 않는 카테고리 입니다"),
+    NOTFOUND_BOSS(NOT_FOUND, OFF, "N009", "존재하지 않는 사장님 계정입니다"),
+    NOTFOUND_BOSS_OWNED_STORE(NOT_FOUND, OFF, "NF0010", "현재 사장님이 운영하는 가게는 존재하지 않습니다."),
+    NOTFOUND_SIGNUP_REGISTRATION(NOT_FOUND, OFF, "NF011", "해당하는 가입 신청은 존재하지 않습니다"),
 
 
     // 405 Method Not Allowed
