@@ -64,7 +64,6 @@ internal class RegistrationTest {
                 assertThat(it.name).isEqualTo(storeName)
                 assertThat(it.contactsNumber).isEqualTo(ContactsNumber.of(contactsNumber))
                 assertThat(it.categoriesIds).isEqualTo(categoriesIds)
-                assertThat(it.status).isEqualTo(BossStoreStatus.ACTIVE)
             }
         })
     }

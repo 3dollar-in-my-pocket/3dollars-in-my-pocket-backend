@@ -4,12 +4,16 @@ import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.document.boss.document.store.BossStore
 import com.depromeet.threedollar.document.boss.document.store.BossStoreRepository
-import org.springframework.data.repository.findByIdOrNull
 
 object BossStoreServiceUtils {
 
     fun findBossStoreById(bossStoreRepository: BossStoreRepository, bossStoreId: String): BossStore {
-        return bossStoreRepository.findByIdOrNull(bossStoreId)
+        return bossStoreRepository.findBossStoreById(bossStoreId)
+            ?: throw NotFoundException("해당하는 가게 (${bossStoreId})는 존재하지 않습니다", ErrorCode.NOTFOUND_STORE)
+    }
+
+    fun findBossStoreByIdAndBossId(bossStoreRepository: BossStoreRepository, bossStoreId: String, bossId: String): BossStore {
+        return bossStoreRepository.findBossStoreByIdAndBossId(bossStoreId = bossStoreId, bossId = bossId)
             ?: throw NotFoundException("해당하는 가게 (${bossStoreId})는 존재하지 않습니다", ErrorCode.NOTFOUND_STORE)
     }
 
