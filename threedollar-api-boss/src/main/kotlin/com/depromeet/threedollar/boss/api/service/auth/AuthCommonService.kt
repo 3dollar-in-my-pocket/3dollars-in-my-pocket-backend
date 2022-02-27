@@ -9,8 +9,10 @@ import com.depromeet.threedollar.document.boss.document.account.BossAccountRepos
 import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.document.boss.document.registration.RegistrationRepository
-import com.depromeet.threedollar.document.boss.document.withdrawal.BossWithdrawalAccount
-import com.depromeet.threedollar.document.boss.document.withdrawal.BossWithdrawalAccountRepository
+import com.depromeet.threedollar.document.boss.document.account.BossWithdrawalAccount
+import com.depromeet.threedollar.document.boss.document.account.BossWithdrawalAccountRepository
+import com.depromeet.threedollar.document.boss.event.registration.BossSignOutEvent
+import com.depromeet.threedollar.document.boss.event.registration.NewBossAppliedRegistrationEvent
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -31,7 +33,7 @@ class AuthCommonService(
         val registration = request.toEntity(socialId)
         registrationRepository.save(registration)
 
-        eventPublisher.publishEvent(registration)
+        eventPublisher.publishEvent(NewBossAppliedRegistrationEvent.of(registration))
     }
 
     private fun validateDuplicateRegistration(socialId: String, socialType: BossAccountSocialType) {
@@ -46,6 +48,7 @@ class AuthCommonService(
         val bossAccount = BossAccountServiceUtils.findBossAccountById(bossAccountRepository, bossId)
         bossWithdrawalAccountRepository.save(BossWithdrawalAccount.newInstance(bossAccount))
         bossAccountRepository.delete(bossAccount)
+        eventPublisher.publishEvent(BossSignOutEvent.of(bossId))
     }
 
 }

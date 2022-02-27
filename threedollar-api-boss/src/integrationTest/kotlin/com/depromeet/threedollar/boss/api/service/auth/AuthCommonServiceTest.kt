@@ -8,7 +8,7 @@ import com.depromeet.threedollar.document.boss.document.account.*
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategoryCreator
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.document.boss.document.registration.*
-import com.depromeet.threedollar.document.boss.document.withdrawal.BossWithdrawalAccountRepository
+import com.depromeet.threedollar.document.boss.document.account.BossWithdrawalAccountRepository
 import com.depromeet.threedollar.document.common.document.BusinessNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy

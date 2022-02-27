@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.document.boss.document.withdrawal
+package com.depromeet.threedollar.document.boss.document.account
 
 import org.springframework.data.mongodb.repository.MongoRepository
 
