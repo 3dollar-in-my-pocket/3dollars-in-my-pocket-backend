@@ -7,6 +7,7 @@ import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.common.exception.type.ErrorCode;
 import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
@@ -47,7 +48,7 @@ public class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException.class)
-    protected ApiResponse<Object> handleBadRequest(BindException e) {
+    private ApiResponse<Object> handleBadRequest(BindException e) {
         String errorMessage = e.getBindingResult().getFieldErrors().stream()
             .map(DefaultMessageSourceResolvable::getDefaultMessage)
             .collect(joining("\n"));
@@ -60,8 +61,12 @@ public class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    protected ApiResponse<Object> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+    private ApiResponse<Object> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         log.warn(e.getMessage());
+        if (e.getRootCause() instanceof MissingKotlinParameterException) {
+            String parameterName = ((MissingKotlinParameterException) e.getRootCause()).getParameter().getName();
+            return ApiResponse.error(INVALID, String.format("Parameter (%s)를 입력해주세요", parameterName));
+        }
         return ApiResponse.error(INVALID);
     }
 
@@ -71,7 +76,7 @@ public class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    protected ApiResponse<Object> handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
+    private ApiResponse<Object> handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
         log.warn(e.getMessage());
         return ApiResponse.error(INVALID_MISSING_PARAMETER, String.format("Parameter (%s)를 입력해주세요", e.getParameterName()));
     }
@@ -82,7 +87,7 @@ public class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MissingServletRequestPartException.class)
-    protected ApiResponse<Object> handleMissingServletRequestParameterException(MissingServletRequestPartException e) {
+    private ApiResponse<Object> handleMissingServletRequestParameterException(MissingServletRequestPartException e) {
         log.warn(e.getMessage());
         return ApiResponse.error(INVALID_MISSING_PARAMETER, String.format("Multipart (%s)를 입력해주세요", e.getRequestPartName()));
     }
@@ -93,7 +98,7 @@ public class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MissingPathVariableException.class)
-    protected ApiResponse<Object> handleMissingPathVariableException(MissingPathVariableException e) {
+    private ApiResponse<Object> handleMissingPathVariableException(MissingPathVariableException e) {
         log.warn(e.getMessage());
         return ApiResponse.error(INVALID_MISSING_PARAMETER, String.format("Path (%s)를 입력해주세요", e.getVariableName()));
     }
@@ -104,7 +109,7 @@ public class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(TypeMismatchException.class)
-    protected ApiResponse<Object> handleTypeMismatchException(TypeMismatchException e) {
+    private ApiResponse<Object> handleTypeMismatchException(TypeMismatchException e) {
         log.warn(e.getMessage());
         return ApiResponse.error(INVALID_TYPE, String.format("%s (%s)", INVALID_TYPE.getMessage(), e.getValue()));
     }
@@ -117,7 +122,7 @@ public class ControllerExceptionAdvice {
         InvalidFormatException.class,
         ServletRequestBindingException.class
     })
-    protected ApiResponse<Object> handleInvalidFormatException(Exception e) {
+    private ApiResponse<Object> handleInvalidFormatException(Exception e) {
         log.warn(e.getMessage());
         return ApiResponse.error(INVALID);
     }
@@ -128,7 +133,7 @@ public class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    protected ApiResponse<Object> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+    private ApiResponse<Object> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         log.warn(e.getMessage());
         return ApiResponse.error(METHOD_NOT_ALLOWED);
     }
@@ -138,7 +143,7 @@ public class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
-    protected ApiResponse<Object> handleHttpMediaTypeNotAcceptableException(HttpMediaTypeNotAcceptableException e) {
+    private ApiResponse<Object> handleHttpMediaTypeNotAcceptableException(HttpMediaTypeNotAcceptableException e) {
         log.warn(e.getMessage());
         return ApiResponse.error(NOT_ACCEPTABLE);
     }
@@ -149,7 +154,7 @@ public class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
     @ExceptionHandler(HttpMediaTypeException.class)
-    protected ApiResponse<Object> handleHttpMediaTypeException(HttpMediaTypeException e) {
+    private ApiResponse<Object> handleHttpMediaTypeException(HttpMediaTypeException e) {
         log.warn(e.getMessage(), e);
         return ApiResponse.error(UNSUPPORTED_MEDIA_TYPE);
     }
@@ -159,7 +164,7 @@ public class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MaxUploadSizeExceededException.class)
-    protected ApiResponse<Object> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException e) {
+    private ApiResponse<Object> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException e) {
         log.error(e.getMessage(), e);
         eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(INVALID_UPLOAD_FILE_SIZE, e));
         return ApiResponse.error(INVALID_UPLOAD_FILE_SIZE);
@@ -169,7 +174,7 @@ public class ControllerExceptionAdvice {
      * ThreeDollars Custom Exception
      */
     @ExceptionHandler(ThreeDollarsBaseException.class)
-    protected ResponseEntity<ApiResponse<Object>> handleBaseException(ThreeDollarsBaseException exception) {
+    private ResponseEntity<ApiResponse<Object>> handleBaseException(ThreeDollarsBaseException exception) {
         if (exception.isSetAlarm()) {
             eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(exception.getErrorCode(), exception));
         }
@@ -183,7 +188,7 @@ public class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    protected ApiResponse<Object> handleException(Exception exception) {
+    private ApiResponse<Object> handleException(Exception exception) {
         log.error(exception.getMessage(), exception);
         eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(INTERNAL_SERVER, exception));
         return ApiResponse.error(INTERNAL_SERVER);

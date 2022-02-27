@@ -10,15 +10,12 @@ import com.depromeet.threedollar.document.boss.document.registration.Registratio
 import org.hibernate.validator.constraints.Length
 import org.hibernate.validator.constraints.URL
 import javax.validation.constraints.NotBlank
-import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
-import kotlin.math.max
 
 data class SignupRequest(
     @field:NotBlank(message = "{auth.token.notBlank}")
     val token: String = "",
 
-    @field:NotNull(message = "테스트")
     val socialType: BossAccountSocialType,
 
     @field:NotBlank(message = "{account.name.notBlank}")
