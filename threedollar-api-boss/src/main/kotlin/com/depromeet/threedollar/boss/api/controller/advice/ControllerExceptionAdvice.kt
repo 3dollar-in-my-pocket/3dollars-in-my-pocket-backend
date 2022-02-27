@@ -61,7 +61,7 @@ class ControllerExceptionAdvice(
         log.warn(e.message)
         if (e.rootCause is MissingKotlinParameterException) {
             val parameterName = (e.rootCause as MissingKotlinParameterException).parameter.name
-            return ApiResponse.error(INVALID_MISSING_PARAMETER, "Parameter ($parameterName)을 입력해주세요")
+            return ApiResponse.error(INVALID_MISSING_PARAMETER, "필수 파라미터 ($parameterName)을 입력해주세요")
         }
         return ApiResponse.error(INVALID)
     }
@@ -74,7 +74,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(MissingServletRequestParameterException::class)
     protected fun handleMissingServletRequestParameterException(e: MissingServletRequestParameterException): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(INVALID_MISSING_PARAMETER, "Parameter (${e.parameterName})을 입력해주세요")
+        return ApiResponse.error(INVALID_MISSING_PARAMETER, "필수 파라미터 (${e.parameterName})을 입력해주세요")
     }
 
     /**

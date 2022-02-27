@@ -65,7 +65,7 @@ public class ControllerExceptionAdvice {
         log.warn(e.getMessage());
         if (e.getRootCause() instanceof MissingKotlinParameterException) {
             String parameterName = ((MissingKotlinParameterException) e.getRootCause()).getParameter().getName();
-            return ApiResponse.error(INVALID, String.format("Parameter (%s)를 입력해주세요", parameterName));
+            return ApiResponse.error(INVALID, String.format("필수 파라미터 (%s)를 입력해주세요", parameterName));
         }
         return ApiResponse.error(INVALID);
     }
@@ -78,7 +78,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     private ApiResponse<Object> handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
         log.warn(e.getMessage());
-        return ApiResponse.error(INVALID_MISSING_PARAMETER, String.format("Parameter (%s)를 입력해주세요", e.getParameterName()));
+        return ApiResponse.error(INVALID_MISSING_PARAMETER, String.format("필수 파라미터 (%s)를 입력해주세요", e.getParameterName()));
     }
 
     /**
