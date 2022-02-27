@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.config.interceptor
+package com.depromeet.threedollar.boss.api.config.interceptor
 
 import com.depromeet.threedollar.common.model.UserMetaValue
 import com.depromeet.threedollar.common.type.ApplicationType
@@ -22,7 +22,7 @@ class UserMetadataInterceptor : HandlerInterceptor {
             osPlatform = platform,
             userAgent = userAgent,
             clientIp = ClientIpUtils.getClientIp(request.remoteAddr, request.getHeader(X_FORWARDED_FOR_HEADER)),
-            applicationType = ApplicationType.USER_API,
+            applicationType = ApplicationType.BOSS_API,
             appVersion = extractAppVersion(platform, request),
         ))
         return true

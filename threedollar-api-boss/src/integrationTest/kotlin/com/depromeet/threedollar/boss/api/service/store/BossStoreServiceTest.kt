@@ -211,7 +211,11 @@ internal class BossStoreServiceTest(
             bossStoreRepository.save(bossStore)
 
             // when & then
-            assertThatThrownBy { bossStoreService.deleteBossStoreByBossId("anotherBossId") }.isInstanceOf(NotFoundException::class.java)
+            bossStoreService.deleteBossStoreByBossId("anotherBossId")
+
+            // then
+            val bossStores = bossStoreRepository.findAll()
+            assertThat(bossStores).hasSize(1)
         }
     }
 

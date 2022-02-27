@@ -27,7 +27,6 @@ public class JacksonConfig {
     public ObjectMapper objectMapper() {
         return new ObjectMapper()
             .registerModules(javaTimeModule(), new ParameterNamesModule(), new Jdk8Module(), new KotlinModule())
-            .enable(SerializationFeature.INDENT_OUTPUT)
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
             .configure(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL, true)
             .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);

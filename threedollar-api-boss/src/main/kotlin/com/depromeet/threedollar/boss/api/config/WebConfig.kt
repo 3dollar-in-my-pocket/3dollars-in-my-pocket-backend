@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.boss.api.config
 
 import com.depromeet.threedollar.boss.api.config.interceptor.AuthInterceptor
+import com.depromeet.threedollar.boss.api.config.interceptor.UserMetadataInterceptor
 import com.depromeet.threedollar.boss.api.config.resolver.BossIdResolver
 import com.depromeet.threedollar.boss.api.config.resolver.MapCoordinateArgumentResolver
 import org.springframework.context.MessageSource
@@ -17,11 +18,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 class WebConfig(
     private val authInterceptor: AuthInterceptor,
     private val bossIdResolver: BossIdResolver,
-    private val mapCoordinateArgumentResolver: MapCoordinateArgumentResolver
+    private val mapCoordinateArgumentResolver: MapCoordinateArgumentResolver,
+    private val userMetadataInterceptor: UserMetadataInterceptor
 ) : WebMvcConfigurer {
 
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(authInterceptor)
+        registry.addInterceptor(userMetadataInterceptor)
     }
 
     override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {

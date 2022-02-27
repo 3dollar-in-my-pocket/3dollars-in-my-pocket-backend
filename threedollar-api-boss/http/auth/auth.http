@@ -14,3 +14,10 @@ Content-Type: application/json
     "contactsNumber": "010-1234-1234",
     "certificationPhotoUrl": "https://example.png"
 }
+
+
+### 사장님 계정의 회원탈퇴를 요청합니다.
+DELETE {{host_boss_api}}/v1/auth/sign-out
+Content-Type: application/json
+Authorization: Bearer {{BOSS_AUTHORIZATION}}
+

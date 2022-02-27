@@ -35,9 +35,10 @@ class BossStoreService(
 
     @Transactional
     fun deleteBossStoreByBossId(bossId: String) {
-        val bossStore = BossStoreServiceUtils.findBossStoreByBossId(bossStoreRepository, bossId)
-        bossDeleteBossStoreRepository.save(BossDeletedStore.of(bossStore))
-        bossStoreRepository.delete(bossStore)
+        bossStoreRepository.findBossStoreByBossId(bossId)?.let {
+            bossDeleteBossStoreRepository.save(BossDeletedStore.of(it))
+            bossStoreRepository.delete(it)
+        }
     }
 
 }
