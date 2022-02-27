@@ -7,18 +7,39 @@ import com.depromeet.threedollar.document.common.document.ContactsNumber
 import com.depromeet.threedollar.document.boss.document.registration.Registration
 import com.depromeet.threedollar.document.boss.document.registration.RegistrationBossForm
 import com.depromeet.threedollar.document.boss.document.registration.RegistrationStoreForm
+import org.hibernate.validator.constraints.Length
+import org.hibernate.validator.constraints.URL
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
+import kotlin.math.max
 
 data class SignupRequest(
-    val token: String,
+    @field:NotBlank(message = "{auth.token.notBlank}")
+    val token: String = "",
+
+    @field:NotNull(message = "테스트")
     val socialType: BossAccountSocialType,
 
-    val bossName: String,
-    val businessNumber: String,
+    @field:NotBlank(message = "{account.name.notBlank}")
+    val bossName: String = "",
 
-    val storeName: String,
+    @field:NotBlank(message = "{account.businessNumber.notBlank}")
+    val businessNumber: String = "",
+
+    @field:Length(max = 30, message = "{store.name.length}")
+    @field:NotBlank(message = "{store.name.notBlank}")
+    val storeName: String = "",
+
+    @field:Size(max = 3, message = "{store.categoriesIds.size.max}")
     val storeCategoriesIds: Set<String>,
-    val contactsNumber: String,
-    val certificationPhotoUrl: String
+
+    @field:NotBlank(message = "{store.contactsNumber.notBlank}")
+    val contactsNumber: String = "",
+
+    @field:URL(message = "{store.certificationPhotoUrl.url}")
+    @field:NotBlank(message = "{store.certificationPhotoUrl.notBlank}")
+    val certificationPhotoUrl: String = ""
 ) {
 
     fun toEntity(socialId: String): Registration {

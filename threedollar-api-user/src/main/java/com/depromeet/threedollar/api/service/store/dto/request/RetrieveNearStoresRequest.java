@@ -25,7 +25,7 @@ public class RetrieveNearStoresRequest {
     @NotNull(message = "{store.orderType.notNull}")
     private StoreOrderType orderType = StoreOrderType.DISTANCE_ASC; // 호환성을 위해 기본적으로 거리순으로 정렬한다
 
-    @Builder(builderClassName = "TestBuilder", builderMethodName = "testBuilder")
+    @Builder(builderMethodName = "testBuilder")
     private RetrieveNearStoresRequest(double distance, @Nullable MenuCategoryType category, StoreOrderType orderType) {
         this.distance = distance;
         this.category = category;
