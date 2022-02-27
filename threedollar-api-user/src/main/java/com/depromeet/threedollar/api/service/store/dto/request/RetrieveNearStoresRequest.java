@@ -8,6 +8,7 @@ import lombok.*;
 import org.jetbrains.annotations.Nullable;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Comparator;
 
 @ToString
@@ -16,6 +17,7 @@ import java.util.Comparator;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class RetrieveNearStoresRequest {
 
+    @PositiveOrZero(message = "{store.distance.positiveOrZero}")
     @NotNull(message = "{store.distance.notNull}")
     private Double distance;
 

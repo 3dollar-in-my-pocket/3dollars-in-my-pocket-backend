@@ -4,6 +4,7 @@ import com.depromeet.threedollar.domain.user.domain.store.StoreRadiusDistance;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 @ToString
 @Getter
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CheckExistsStoresNearbyRequest {
 
+    @PositiveOrZero(message = "{store.distance.positiveOrZero}")
     @NotNull(message = "{store.distance.notNull}")
     private Double distance;
 
