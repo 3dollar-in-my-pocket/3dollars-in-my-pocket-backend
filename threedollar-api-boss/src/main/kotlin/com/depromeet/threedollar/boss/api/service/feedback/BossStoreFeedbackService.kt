@@ -2,6 +2,7 @@ package com.depromeet.threedollar.boss.api.service.feedback
 
 import com.depromeet.threedollar.redis.boss.domain.feedback.BossStoreFeedbackCountRepository
 import com.depromeet.threedollar.boss.api.service.feedback.dto.request.AddBossStoreFeedbackRequest
+import com.depromeet.threedollar.boss.api.service.feedback.dto.request.GetBossStoreFeedbacksCountsBetweenDateRequest
 import com.depromeet.threedollar.boss.api.service.feedback.dto.response.BossStoreFeedbackCountResponse
 import com.depromeet.threedollar.boss.api.service.feedback.dto.response.BossStoreFeedbackGroupingDateResponse
 import com.depromeet.threedollar.boss.api.service.store.BossStoreServiceUtils
@@ -31,7 +32,7 @@ class BossStoreFeedbackService(
 
     private fun validateNotExistsFeedbackToday(storeId: String, userId: Long, date: LocalDate) {
         if (bossStoreFeedbackRepository.existsByStoreIdAndUserIdAndDate(storeId, userId, date)) {
-            throw ConflictException("해당 날짜($date)에 유저($userId)는 해당 가게($storeId)에 이미 피드백을 추가하였습니다", ErrorCode.CONFLICT)
+            throw ConflictException("해당 날짜($date)에 유저($userId)는 해당 가게($storeId)에 이미 피드백을 추가하였습니다", ErrorCode.CONFLICT_BOSS_STORE_FEEDBACK)
         }
     }
 
@@ -44,12 +45,13 @@ class BossStoreFeedbackService(
     }
 
     @Transactional(readOnly = true)
-    fun getBossStoreFeedbacksCountsBetweenDate(bossStoreId: String, startDate: LocalDate, endDate: LocalDate): List<BossStoreFeedbackGroupingDateResponse> {
+    fun getBossStoreFeedbacksCountsBetweenDate(bossStoreId: String, request: GetBossStoreFeedbacksCountsBetweenDateRequest): List<BossStoreFeedbackGroupingDateResponse> {
         BossStoreServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
-        val feedbackGroupingDate: Map<LocalDate, Map<BossStoreFeedbackType, Int>> = bossStoreFeedbackRepository.findAllByBossStoreIdAndBetween(bossStoreId, startDate, endDate)
-            .groupBy { it.date }
-            .entries
-            .associate { it -> it.key to it.value.groupingBy { it.feedbackType }.eachCount() }
+        val feedbackGroupingDate: Map<LocalDate, Map<BossStoreFeedbackType, Int>> =
+            bossStoreFeedbackRepository.findAllByBossStoreIdAndBetween(bossStoreId = bossStoreId, startDate = request.startDate, endDate = request.endDate)
+                .groupBy { it.date }
+                .entries
+                .associate { it -> it.key to it.value.groupingBy { it.feedbackType }.eachCount() }
 
         return feedbackGroupingDate.asSequence()
             .sortedByDescending { it.key }
