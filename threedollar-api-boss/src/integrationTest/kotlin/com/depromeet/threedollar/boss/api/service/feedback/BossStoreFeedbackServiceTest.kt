@@ -39,7 +39,7 @@ internal class BossStoreFeedbackServiceTest(
     }
 
     @Test
-    fun `가게에 피드백을 등록한다`() {
+    fun `특정 가게에 피드백을 추가한다`() {
         // given
         val feedbackType = BossStoreFeedbackType.BOSS_IS_KIND
         val userId = 1000000L
@@ -71,7 +71,7 @@ internal class BossStoreFeedbackServiceTest(
     }
 
     @Test
-    fun `가게 등록시 레디스에 해당 피드백에 대한 카운트가 1증가한다`() {
+    fun `피드백을 등록하면 레디스에 해당 피드백 종류의 전체 피드백 갯수가 1증가한다`() {
         // given
         val feedbackType = BossStoreFeedbackType.BOSS_IS_KIND
         val bossStore = BossStoreCreator.create(

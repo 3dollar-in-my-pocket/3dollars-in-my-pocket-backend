@@ -27,7 +27,7 @@ internal class BossAccountServiceTest(
     }
 
     @Test
-    fun `사장님이 계정 정보를 수정한다`() {
+    fun `사장님의 계정 정보를 수정한다`() {
         // given
         val name = "새로운 이름"
         val pushSettingsStatus = PushSettingsStatus.ON
@@ -56,7 +56,7 @@ internal class BossAccountServiceTest(
     }
 
     @Test
-    fun `사장님이 계정 정보를 수정할때 존재하지 않는 사장님이면 NotFoundException`() {
+    fun `사장님의 계정 정보를 수정할때 존재하지 않는 사장님이면 NotFoundException이 발생한다`() {
         // given
         val name = "새로운 이름"
         val request = UpdateBossAccountInfoRequest(name, PushSettingsStatus.OFF)

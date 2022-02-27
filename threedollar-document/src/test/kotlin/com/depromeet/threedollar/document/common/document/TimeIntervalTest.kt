@@ -19,7 +19,7 @@ internal class TimeIntervalTest {
     }
 
     @Test
-    fun 시작시간이_종료시간보다_느릴경우_VALIDATION_EXCEPTION() {
+    fun 시작시간이_종료시간보다_느릴경우_INVALID_EXCEPTION() {
         // given
         val startTime = LocalTime.of(8, 0)
         val endTime = LocalTime.of(7, 59)

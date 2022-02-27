@@ -38,7 +38,7 @@ internal class KaKaoAuthServiceTest(
     }
 
     @Test
-    fun `카카오 로그인이 성공하면 ID가 반환된다`() {
+    fun `카카오 로그인이 성공하면 사장님 계정의 ID가 반환된다`() {
         // given
         val bossAccount = BossAccountCreator.create(
             name = "사장님",

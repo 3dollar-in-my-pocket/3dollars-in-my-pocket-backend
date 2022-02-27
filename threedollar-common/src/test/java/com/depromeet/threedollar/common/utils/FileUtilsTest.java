@@ -25,7 +25,7 @@ class FileUtilsTest {
 
     @ValueSource(strings = {"image", "image."})
     @ParameterizedTest
-    void 잘못된_파일의_확장자인경우_Validation_Exception_에러가_발생한다(String fileName) {
+    void 잘못된_파일의_확장자인경우_INVALID_EXCEPTION_에러가_발생한다(String fileName) {
         // when & then
         assertThatThrownBy(() -> FileUtils.getFileExtension(fileName)).isInstanceOf(InvalidException.class);
     }

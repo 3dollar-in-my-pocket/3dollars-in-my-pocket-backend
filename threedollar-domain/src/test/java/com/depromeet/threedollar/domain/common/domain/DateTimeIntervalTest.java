@@ -21,7 +21,7 @@ class DateTimeIntervalTest {
     }
 
     @Test
-    void 시작날짜가_종료날짜_같은경우는_OK() {
+    void 시작날짜가_종료날짜_같은경우는_에러가_발생하지_않는다() {
         // given
         LocalDateTime dateTime = LocalDateTime.of(2021, 11, 25, 0, 0);
 

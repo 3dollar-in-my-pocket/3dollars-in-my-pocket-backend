@@ -37,7 +37,7 @@ internal class AppleAuthServiceTest(
     }
 
     @Test
-    fun `애플 로그인이 성공하면 ID가 반환된다`() {
+    fun `애플 로그인이 성공하면 사장님 계정의 ID가 반환된다`() {
         // given
         val bossAccount = BossAccountCreator.create(
             name = "사장님",

@@ -5,6 +5,7 @@ import com.depromeet.threedollar.document.boss.document.category.BossStoreCatego
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategoryRepository
 import org.hamcrest.collection.IsCollectionWithSize.hasSize
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -25,6 +26,7 @@ internal class BossStoreCategoryControllerTest(
         bossStoreCategoryRepository.deleteAll()
     }
 
+    @DisplayName("GET /boss/v1/boss-store/categories")
     @Test
     fun `등록된 사장님 가게의 카테고리 목록을 조회한다 priority가 낮은 거부터 조회된다`() {
         // given
