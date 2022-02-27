@@ -6,5 +6,6 @@ import org.hibernate.validator.constraints.Length
 data class UpdateBossAccountInfoRequest(
     @Length(max = 30, message = "{account.name.length}")
     val name: String,
+
     val pushSettingsStatus: PushSettingsStatus
 )

@@ -17,6 +17,7 @@ data class SignupRequest(
 
     @Length(max = 30, message = "{account.name.length}")
     val bossName: String,
+
     val businessNumber: String,
 
     @field:Length(max = 30, message = "{store.name.length}")

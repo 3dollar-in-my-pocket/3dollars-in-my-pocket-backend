@@ -1,4 +1,4 @@
-### 광고 저장
+### 광고를 저장합니다.
 POST {{host_admin}}/v1/advertisement
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 Content-Type: application/json
@@ -12,8 +12,8 @@ Content-Type: application/json
     "subTitle": "광고 내용\n광고 내용을 입력해주세요",
     "bgColor": "#ffffff",
     "fontColor": "#2e2e2e",
-    "startDateTime": "2022-01-01T00:00:00",
-    "endDateTime": "2023-01-01T00:00:00"
+    "startDateTime": "2023-01-01T00:00:00",
+    "endDateTime": "2024-01-01T00:00:00"
 }
 
 > {%
@@ -22,7 +22,7 @@ client.test("200 OK", function() {
 });
 %}
 
-### 광고 조회
+### 전체 광고 목록을 조회합니다.
 GET {{host_admin}}/v1/advertisements?page=1&size=3
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
@@ -33,7 +33,7 @@ client.test("200 OK", function() {
 %}
 
 
-### 광고 수정
+### 특정 광고 정보를 수정합니다
 PUT {{host_admin}}/v1/advertisement/1
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 Content-Type: application/json
@@ -58,7 +58,7 @@ client.test("200 OK", function() {
 %}
 
 
-### 광고 삭제
+### 특정 광고를 삭제한다
 DELETE {{host_admin}}/v1/advertisement/1
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
