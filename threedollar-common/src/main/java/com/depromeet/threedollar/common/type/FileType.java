@@ -20,9 +20,9 @@ public enum FileType implements EnumModel {
     ADVERTISEMENT_IMAGE("(유저) 광고 이미지", "popup/", FileContentType.IMAGE, List.of(ADMIN_API)),
     MEDAL_IMAGE("(유저) 메달 이미지", "medal/", FileContentType.IMAGE, List.of(ADMIN_API)),
     STORE_IMAGE("(유저) 가게 이미지", "store/v2/", FileContentType.IMAGE, List.of(USER_API)),
-    BOSS_STORE_CERTIFICATION_IMAGE("가게 인증용 이미지", "boss/store-certification/v1/", FileContentType.IMAGE, List.of(BOSS_API)),
-    BOSS_STORE_IMAGE("사장님 가게 이미지", "boss/store/v1/", FileContentType.IMAGE, List.of(BOSS_API)),
-    BOSS_STORE_MENU_IMAGE("사장님 가게 메뉴 이미지", "boss/store-menu/v1/", FileContentType.IMAGE, List.of(BOSS_API)),
+    BOSS_STORE_CERTIFICATION_IMAGE("(사장님) 가게 인증용 이미지", "boss/store-certification/v1/", FileContentType.IMAGE, List.of(BOSS_API)),
+    BOSS_STORE_IMAGE("(사장님) 가게 이미지", "boss/store/v1/", FileContentType.IMAGE, List.of(BOSS_API)),
+    BOSS_STORE_MENU_IMAGE("(사장님) 가게 메뉴 이미지", "boss/store-menu/v1/", FileContentType.IMAGE, List.of(BOSS_API)),
     ;
 
     private final String description;

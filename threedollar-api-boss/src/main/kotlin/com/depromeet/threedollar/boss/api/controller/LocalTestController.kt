@@ -8,12 +8,16 @@ import com.depromeet.threedollar.boss.api.service.auth.dto.response.LoginRespons
 import com.depromeet.threedollar.boss.api.service.category.BossStoreCategoryServiceUtils
 import com.depromeet.threedollar.boss.api.service.feedback.BossStoreFeedbackService
 import com.depromeet.threedollar.boss.api.service.feedback.dto.request.AddBossStoreFeedbackRequest
+import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.InternalServerException
+import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.document.boss.document.account.*
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategory
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
+import com.depromeet.threedollar.document.boss.document.registration.Registration
+import com.depromeet.threedollar.document.boss.document.registration.RegistrationRepository
 import com.depromeet.threedollar.document.boss.document.store.*
 import com.depromeet.threedollar.document.common.document.BusinessNumber
 import com.depromeet.threedollar.document.common.document.ContactsNumber
@@ -23,6 +27,7 @@ import org.springframework.data.geo.Point
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDate
@@ -35,6 +40,7 @@ class LocalTestController(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossStoreLocationRepository: BossStoreLocationRepository,
+    private val registrationRepository: RegistrationRepository,
     private val bossStoreFeedbackService: BossStoreFeedbackService,
     private val httpSession: HttpSession
 ) {
@@ -49,6 +55,7 @@ class LocalTestController(
         return ApiResponse.success(LoginResponse(httpSession.id, bossAccount.id))
     }
 
+    @ApiOperation("[개발 서버용] 가게 목 데이터를 추가합니다.")
     @Auth
     @PostMapping("/test-store")
     fun addMockStoreData(
@@ -143,8 +150,34 @@ class LocalTestController(
         @PathVariable bossStoreId: String,
         @RequestParam feedbackType: BossStoreFeedbackType,
         @RequestParam date: LocalDate
-    ) {
+    ): ApiResponse<String> {
         bossStoreFeedbackService.addFeedback(bossStoreId, AddBossStoreFeedbackRequest(feedbackType), 0L, date)
+        return ApiResponse.SUCCESS
+    }
+
+    @ApiOperation("[개발 서버용] 가입 신청을 승인합니다")
+    @PutMapping("/test-registration/{registrationId}/apply")
+    fun applyRegistrationForTest(
+        @PathVariable registrationId: String
+    ): ApiResponse<String> {
+        val registration = registrationRepository.findWaitingRegistrationById(registrationId)
+            ?: throw NotFoundException("존재하지 않는 Registration")
+        val bossAccount = registerNewBossAccount(registration)
+        bossStoreRepository.save(registration.toBossStore(bossAccount.id))
+        registration.approve()
+        registrationRepository.save(registration)
+        return ApiResponse.SUCCESS
+    }
+
+    private fun registerNewBossAccount(registration: Registration): BossAccount {
+        validateDuplicateRegistration(registration.boss.socialInfo)
+        return bossAccountRepository.save(registration.toBossAccount())
+    }
+
+    private fun validateDuplicateRegistration(socialInfo: BossAccountSocialInfo) {
+        if (bossAccountRepository.existsBossAccountBySocialInfo(socialId = socialInfo.socialId, socialType = socialInfo.socialType)) {
+            throw ConflictException("이미 가입한 사장님(${socialInfo.socialId} - ${socialInfo.socialType})입니다")
+        }
     }
 
     companion object {

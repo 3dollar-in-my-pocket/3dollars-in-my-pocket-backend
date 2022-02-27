@@ -11,7 +11,7 @@ class BossRegistrationAdminController(
     private val bossRegistrationAdminService: BossRegistrationAdminService
 ) {
 
-    @PutMapping("/v1/apply/registration/{registrationId}")
+    @PutMapping("/v1/registration/{registrationId}/apply")
     fun applyBossRegistration(
         @PathVariable registrationId: String
     ): ApiResponse<String> {
@@ -19,7 +19,7 @@ class BossRegistrationAdminController(
         return ApiResponse.SUCCESS
     }
 
-    @PutMapping("/v1/reject/registration/{registrationId}")
+    @PutMapping("/v1/registration/{registrationId}/reject")
     fun rejectBossRegistration(
         @PathVariable registrationId: String
     ): ApiResponse<String> {
