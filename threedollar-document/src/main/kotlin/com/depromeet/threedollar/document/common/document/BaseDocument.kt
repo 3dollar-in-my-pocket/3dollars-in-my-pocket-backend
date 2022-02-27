@@ -11,9 +11,9 @@ abstract class BaseDocument {
     lateinit var id: String
 
     @CreatedDate
-    lateinit var createdDateTime: LocalDateTime
+    lateinit var createdAt: LocalDateTime
 
     @LastModifiedDate
-    lateinit var updatedDateTime: LocalDateTime
+    lateinit var updatedAt: LocalDateTime
 
 }

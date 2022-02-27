@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.boss.api.service.store.dto.response
 
+import com.depromeet.threedollar.boss.api.controller.dto.response.BaseTimeResponse
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategory
 import com.depromeet.threedollar.document.boss.document.store.*
@@ -18,7 +19,7 @@ data class BossStoreInfoResponse(
     val appearanceDays: Set<BossStoreAppearanceDayResponse>,
     val categories: Set<BossStoreCategoryResponse>,
     val openStatus: BossStoreOpenStatusResponse
-) {
+) : BaseTimeResponse() {
 
     companion object {
         fun of(
@@ -27,7 +28,7 @@ data class BossStoreInfoResponse(
             categories: List<BossStoreCategory>,
             bossStoreOpenInfo: BossStoreOpenInfo?
         ): BossStoreInfoResponse {
-            return BossStoreInfoResponse(
+            val response = BossStoreInfoResponse(
                 bossStoreId = bossStore.id,
                 name = bossStore.name,
                 location = location?.let { LocationResponse.of(it) },
@@ -39,6 +40,8 @@ data class BossStoreInfoResponse(
                 openStatus = bossStoreOpenInfo?.let { BossStoreOpenStatusResponse.of(it) }
                     ?: BossStoreOpenStatusResponse.close()
             )
+            response.setBaseTime(bossStore)
+            return response
         }
     }
 

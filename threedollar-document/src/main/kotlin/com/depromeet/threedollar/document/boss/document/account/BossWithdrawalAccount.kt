@@ -31,14 +31,14 @@ class BossWithdrawalAccount(
 
 data class BackupBossAccountInfo(
     val bossId: String,
-    val bossCreatedDateTime: LocalDateTime
+    val bossCreatedAt: LocalDateTime
 ) {
 
     companion object {
         fun of(bossAccount: BossAccount): BackupBossAccountInfo {
             return BackupBossAccountInfo(
                 bossId = bossAccount.id,
-                bossCreatedDateTime = bossAccount.createdDateTime
+                bossCreatedAt = bossAccount.createdAt
             )
         }
     }
