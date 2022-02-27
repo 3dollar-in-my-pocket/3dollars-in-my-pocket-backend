@@ -14,11 +14,16 @@ data class UpdateBossStoreInfoRequest(
     val name: String,
 
     @field:URL(message = "{store.imageUrl.url}")
+    @field:Length(max = 2048, message = "{store.imageUrl.length}")
     val imageUrl: String?,
+
+    @field:Length(max = 1024, message = "{store.introduction.length}")
     val introduction: String?,
+
     val contactsNumber: String?,
 
     @field:URL(message = "{store.snsUrl.url}")
+    @field:Length(max = 2048, message = "{store.snsUrl.length}")
     val snsUrl: String?,
 
     val menus: List<MenuRequest>,

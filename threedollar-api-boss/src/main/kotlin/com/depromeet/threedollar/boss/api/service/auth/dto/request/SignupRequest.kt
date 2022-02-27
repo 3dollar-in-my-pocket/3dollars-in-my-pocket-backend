@@ -28,6 +28,7 @@ data class SignupRequest(
 
     val contactsNumber: String,
 
+    @field:Length(max = 2048, message = "{store.certificationPhotoUrl.length}")
     @field:URL(message = "{store.certificationPhotoUrl.url}")
     val certificationPhotoUrl: String,
 ) {
