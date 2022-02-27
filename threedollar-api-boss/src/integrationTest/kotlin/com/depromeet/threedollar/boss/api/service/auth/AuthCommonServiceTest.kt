@@ -225,7 +225,7 @@ internal class SignupServiceTest(
                     assertThat(it.businessNumber).isEqualTo(businessNumber)
 
                     assertThat(it.backupInfo.bossId).isEqualTo(bossAccount.id)
-                    assertThat(it.backupInfo.bossCreatedDateTime).isEqualTo(bossAccount.createdDateTime)
+                    assertThat(it.backupInfo.bossCreatedDateTime).isEqualToIgnoringNanos(bossAccount.createdDateTime)
                 }
             })
         }
