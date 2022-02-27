@@ -5,6 +5,7 @@ import com.depromeet.threedollar.admin.service.advertisement.dto.request.Retriev
 import com.depromeet.threedollar.admin.service.advertisement.dto.request.UpdateAdvertisementRequest
 import com.depromeet.threedollar.admin.service.advertisement.dto.response.AdvertisementsWithPagingResponse
 import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.type.CacheType.CacheKey.ADVERTISEMENT
 import com.depromeet.threedollar.domain.user.domain.advertisement.Advertisement
 import com.depromeet.threedollar.domain.user.domain.advertisement.AdvertisementRepository
@@ -51,7 +52,7 @@ class AdvertisementAdminService(
 
     fun findAdvertisementById(advertisementId: Long): Advertisement {
         return advertisementRepository.findByIdOrNull(advertisementId)
-            ?: throw NotFoundException("해당하는 id (${advertisementId})을 가진 광고는 존재하지 않습니다.")
+            ?: throw NotFoundException("해당하는 id (${advertisementId})을 가진 광고는 존재하지 않습니다.", ErrorCode.NOTFOUND_ADVERTISEMENT)
     }
 
 }

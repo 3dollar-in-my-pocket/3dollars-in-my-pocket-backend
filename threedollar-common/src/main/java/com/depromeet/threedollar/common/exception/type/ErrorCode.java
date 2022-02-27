@@ -29,6 +29,7 @@ public enum ErrorCode {
     INVALID_EMPTY_UPLOAD_FILE_NAME(BAD_REQUEST, OFF, "BR206", "잘못된 파일입니다\n파일의 이름이 없습니다."),
     INVALID_UPLOAD_FILE_TYPE(BAD_REQUEST, OFF, "BR207", "잘못된 파일 확장자입니다"),
     INVALID_UPLOAD_FILE_SIZE(BAD_REQUEST, ON, "BR208", "업로드 가능한 파일 크기를 초과했습니다"),
+    INVALID_DATE_TIME_INTERVAL(BAD_REQUEST, ON, "BR209", "시작 날짜가 종료 날짜보다 이후일 수 없습니다"),
 
     // 401 UnAuthorized
     UNAUTHORIZED(HttpStatusCode.UNAUTHORIZED, OFF, "UA000", "세션이 만료되었습니다. 다시 로그인 해주세요"),
@@ -37,6 +38,7 @@ public enum ErrorCode {
     // 403 Forbidden
     FORBIDDEN(HttpStatusCode.FORBIDDEN, OFF, "FB000", "허용하지 않는 요청입니다"),
     FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT(HttpStatusCode.CONFLICT, OFF, "FB001", "현재 사장님 계정 가입 신청 후 승인 대기 중입니다."),
+    FORBIDDEN_UPLOAD_FILE_IN_MODULE(HttpStatusCode.CONFLICT, OFF, "FB002", "해당 서버에서 업로드할 수 없는 파일 타입 입니다"),
 
 
     // 404 Not Found
@@ -52,6 +54,8 @@ public enum ErrorCode {
     NOTFOUND_BOSS(NOT_FOUND, OFF, "N009", "존재하지 않는 사장님 계정입니다"),
     NOTFOUND_BOSS_OWNED_STORE(NOT_FOUND, OFF, "NF0010", "현재 사장님이 운영하는 가게는 존재하지 않습니다."),
     NOTFOUND_SIGNUP_REGISTRATION(NOT_FOUND, OFF, "NF011", "해당하는 가입 신청은 존재하지 않습니다"),
+    NOTFOUND_ADMIN(NOT_FOUND, OFF, "NF012", "해당하는 관리자는 존재하지 않습니다"),
+    NOTFOUND_ADVERTISEMENT(NOT_FOUND, OFF, "NF013", "해당하는 광고는 존재하지 않습니다"),
 
 
     // 405 Method Not Allowed
@@ -69,6 +73,7 @@ public enum ErrorCode {
     CONFLICT_DELETE_REQUEST_STORE(HttpStatusCode.CONFLICT, OFF, "CF003", "이미 해당 가게를 삭제 요청 하였습니다."),
     CONFLICT_VISIT_HISTORY(HttpStatusCode.CONFLICT, OFF, "CF004", "오늘 이미 방문 인증한 가게입니다.\n내일 다시 방문 인증해주세요 :)"),
     CONFLICT_BOSS_STORE_FEEDBACK(HttpStatusCode.CONFLICT, OFF, "CF005", "오늘 이미 피드백을 추가한 가게입니다.\n내일 다시 인증해주세요 :)"),
+    CONFLICT_EXISTS_BOSS(HttpStatusCode.CONFLICT, OFF, "CF006", "이미 가입 완료한 사장님입니다"),
 
 
     // 415 Unsupported Media Type
