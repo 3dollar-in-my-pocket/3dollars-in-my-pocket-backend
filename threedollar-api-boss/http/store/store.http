@@ -16,6 +16,10 @@ Authorization: Bearer {{BOSS_AUTHORIZATION}}
 GET {{host_boss_api}}/v1/boss-store/my
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
+> {%
+client.global.set("BOSS_STORE_ID", response.body["data"]["bossStoreId"])
+%}
+
 
 ### 특정 가게의 정보를 상세 조회합니다
 GET {{host_boss_api}}/v1/boss-store/{{BOSS_STORE_ID}}

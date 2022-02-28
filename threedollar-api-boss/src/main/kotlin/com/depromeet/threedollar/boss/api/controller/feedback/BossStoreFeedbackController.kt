@@ -4,7 +4,7 @@ import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.boss.api.service.feedback.BossStoreFeedbackService
 import com.depromeet.threedollar.boss.api.service.feedback.dto.request.GetBossStoreFeedbacksCountsBetweenDateRequest
 import com.depromeet.threedollar.boss.api.service.feedback.dto.response.BossStoreFeedbackCountResponse
-import com.depromeet.threedollar.boss.api.service.feedback.dto.response.BossStoreFeedbackGroupingDateResponse
+import com.depromeet.threedollar.boss.api.service.feedback.dto.response.BossStoreFeedbackCursorResponse
 import com.depromeet.threedollar.boss.api.service.feedback.dto.response.BossStoreFeedbackTypeResponse
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import io.swagger.annotations.ApiOperation
@@ -31,7 +31,7 @@ class BossStoreFeedbackController(
     fun getBossStoreFeedbacksCountsBetweenDate(
         @PathVariable bossStoreId: String,
         @Valid request: GetBossStoreFeedbacksCountsBetweenDateRequest
-    ): ApiResponse<List<BossStoreFeedbackGroupingDateResponse>> {
+    ): ApiResponse<BossStoreFeedbackCursorResponse> {
         request.validateRequestDateTimeInterval()
         return ApiResponse.success(bossStoreFeedbackService.getBossStoreFeedbacksCountsBetweenDate(bossStoreId, request))
     }

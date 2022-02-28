@@ -4,7 +4,7 @@ import com.depromeet.threedollar.redis.boss.domain.feedback.BossStoreFeedbackCou
 import com.depromeet.threedollar.boss.api.service.feedback.dto.request.AddBossStoreFeedbackRequest
 import com.depromeet.threedollar.boss.api.service.feedback.dto.request.GetBossStoreFeedbacksCountsBetweenDateRequest
 import com.depromeet.threedollar.boss.api.service.feedback.dto.response.BossStoreFeedbackCountResponse
-import com.depromeet.threedollar.boss.api.service.feedback.dto.response.BossStoreFeedbackGroupingDateResponse
+import com.depromeet.threedollar.boss.api.service.feedback.dto.response.BossStoreFeedbackCursorResponse
 import com.depromeet.threedollar.boss.api.service.store.BossStoreServiceUtils
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
@@ -25,12 +25,12 @@ class BossStoreFeedbackService(
     @Transactional
     fun addFeedback(bossStoreId: String, request: AddBossStoreFeedbackRequest, userId: Long, date: LocalDate) {
         BossStoreServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
-        validateNotExistsFeedbackToday(storeId = bossStoreId, userId = userId, date = date)
+        validateNotExistsFeedbackOnDate(storeId = bossStoreId, userId = userId, date = date)
         bossStoreFeedbackRepository.save(request.toDocument(bossStoreId, userId, date))
         bossStoreFeedbackCountRepository.increment(bossStoreId, request.feedbackType)
     }
 
-    private fun validateNotExistsFeedbackToday(storeId: String, userId: Long, date: LocalDate) {
+    private fun validateNotExistsFeedbackOnDate(storeId: String, userId: Long, date: LocalDate) {
         if (bossStoreFeedbackRepository.existsByStoreIdAndUserIdAndDate(storeId, userId, date)) {
             throw ConflictException("해당 날짜($date)에 유저($userId)는 해당 가게($storeId)에 이미 피드백을 추가하였습니다", ErrorCode.CONFLICT_BOSS_STORE_FEEDBACK)
         }
@@ -45,18 +45,19 @@ class BossStoreFeedbackService(
     }
 
     @Transactional(readOnly = true)
-    fun getBossStoreFeedbacksCountsBetweenDate(bossStoreId: String, request: GetBossStoreFeedbacksCountsBetweenDateRequest): List<BossStoreFeedbackGroupingDateResponse> {
+    fun getBossStoreFeedbacksCountsBetweenDate(bossStoreId: String, request: GetBossStoreFeedbacksCountsBetweenDateRequest): BossStoreFeedbackCursorResponse {
         BossStoreServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
-        val feedbackGroupingDate: Map<LocalDate, Map<BossStoreFeedbackType, Int>> =
-            bossStoreFeedbackRepository.findAllByBossStoreIdAndBetween(bossStoreId = bossStoreId, startDate = request.startDate, endDate = request.endDate)
-                .groupBy { it.date }
-                .entries
-                .associate { it -> it.key to it.value.groupingBy { it.feedbackType }.eachCount() }
+        val feedbacksBetweenDate = bossStoreFeedbackRepository.findAllByBossStoreIdAndBetween(bossStoreId = bossStoreId, startDate = request.startDate, endDate = request.endDate)
 
-        return feedbackGroupingDate.asSequence()
-            .sortedByDescending { it.key }
-            .map { BossStoreFeedbackGroupingDateResponse.of(it.key, it.value) }
-            .toList()
+        val feedbacksGroupingDate: Map<LocalDate, Map<BossStoreFeedbackType, Int>> = feedbacksBetweenDate
+            .groupBy { it.date }
+            .entries
+            .associate { it -> it.key to it.value.groupingBy { it.feedbackType }.eachCount() }
+
+        return BossStoreFeedbackCursorResponse.of(
+            feedbackGroupingDate = feedbacksGroupingDate,
+            nextDate = bossStoreFeedbackRepository.findFirstLessThanDate(feedbacksBetweenDate.minOf { it.date })?.date
+        )
     }
 
 }

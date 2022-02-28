@@ -25,4 +25,10 @@ class BossStoreFeedbackRepositoryCustomImpl(
         )
     }
 
+    override fun findFirstLessThanDate(date: LocalDate): BossStoreFeedback? {
+        return mongoTemplate.findOne(Query()
+            .addCriteria(BossStoreFeedback::date lt date).limit(1), BossStoreFeedback::class.java
+        )
+    }
+
 }
