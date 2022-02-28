@@ -29,8 +29,8 @@ public enum ErrorCode {
     INVALID_EMPTY_UPLOAD_FILE_NAME(BAD_REQUEST, OFF, "BR206", "잘못된 파일입니다\n파일의 이름이 없습니다."),
     INVALID_UPLOAD_FILE_TYPE(BAD_REQUEST, OFF, "BR207", "잘못된 파일 확장자입니다"),
     INVALID_UPLOAD_FILE_SIZE(BAD_REQUEST, ON, "BR208", "업로드 가능한 파일 크기를 초과했습니다"),
-    INVALID_DATE_TIME_INTERVAL(BAD_REQUEST, ON, "BR209", "시작 날짜가 종료 날짜보다 이후일 수 없습니다"),
-    INVALID_EXCESS_MAX_BETWEEN_DAY_DIFFERENCE(BAD_REQUEST, ON, "BR210", "시작 날짜와 종료날짜 간 차이는 최대 15일 이내로 조회해주세요"),
+    INVALID_DATE_TIME_INTERVAL(BAD_REQUEST, OFF, "BR209", "시작 날짜가 종료 날짜보다 이후일 수 없습니다"),
+    INVALID_EXCESS_MAX_BETWEEN_DAY_DIFFERENCE(BAD_REQUEST, OFF, "BR210", "시작 날짜와 종료날짜 간 차이는 최대 15일 이내로 조회해주세요"),
 
 
     // 401 UnAuthorized
@@ -82,7 +82,7 @@ public enum ErrorCode {
     UNSUPPORTED_MEDIA_TYPE(HttpStatusCode.UNSUPPORTED_MEDIA_TYPE, OFF, "UM000", "지원 하지 않는 MediaType 입니다/"),
 
     // 429 Too Many Requests
-    TOO_MANY_REQUESTS(HttpStatusCode.TOO_MANY_REQUESTS, OFF, "TM000", "일시적으로 많은 요청이 들어왔습니다\n잠시후 다시 이용해주세요"),
+    TOO_MANY_REQUESTS(HttpStatusCode.TOO_MANY_REQUESTS, ON, "TM000", "일시적으로 많은 요청이 들어왔습니다\n잠시후 다시 이용해주세요"),
 
 
     // 500 Internal Server Exception
