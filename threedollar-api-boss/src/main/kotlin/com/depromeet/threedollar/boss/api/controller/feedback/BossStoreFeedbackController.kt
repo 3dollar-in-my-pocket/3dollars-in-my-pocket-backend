@@ -38,10 +38,10 @@ class BossStoreFeedbackController(
 
     @ApiOperation("사장님 가게 피드백의 타입 목록을 조회합니다")
     @GetMapping("/v1/boss-store/feedback/types")
-    fun getBossStoreFeedbackTypes(): List<BossStoreFeedbackTypeResponse> {
-        return BossStoreFeedbackType.values().asSequence()
+    fun getBossStoreFeedbackTypes(): ApiResponse<List<BossStoreFeedbackTypeResponse>> {
+        return ApiResponse.success(BossStoreFeedbackType.values().asSequence()
             .map { BossStoreFeedbackTypeResponse.of(it) }
-            .toList()
+            .toList())
     }
 
 }
