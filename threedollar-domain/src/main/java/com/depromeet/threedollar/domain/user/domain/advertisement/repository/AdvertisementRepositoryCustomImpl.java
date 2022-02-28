@@ -17,6 +17,14 @@ public class AdvertisementRepositoryCustomImpl implements AdvertisementRepositor
     private final JPAQueryFactory queryFactory;
 
     @Override
+    public Advertisement findAdvertisementById(long advertisementId) {
+        return queryFactory.selectFrom(advertisement)
+            .where(
+                advertisement.id.eq(advertisementId)
+            ).fetchOne();
+    }
+
+    @Override
     public List<Advertisement> findActivatedAdvertisementsByPositionAndPlatformAfterDate(AdvertisementPositionType positionType, AdvertisementPlatformType platformType, LocalDateTime dateTime) {
         return queryFactory.selectFrom(advertisement)
             .where(

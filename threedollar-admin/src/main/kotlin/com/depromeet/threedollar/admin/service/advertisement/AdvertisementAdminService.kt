@@ -10,7 +10,6 @@ import com.depromeet.threedollar.common.type.CacheType.CacheKey.ADVERTISEMENT
 import com.depromeet.threedollar.domain.user.domain.advertisement.Advertisement
 import com.depromeet.threedollar.domain.user.domain.advertisement.AdvertisementRepository
 import org.springframework.cache.annotation.CacheEvict
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -51,7 +50,7 @@ class AdvertisementAdminService(
     }
 
     fun findAdvertisementById(advertisementId: Long): Advertisement {
-        return advertisementRepository.findByIdOrNull(advertisementId)
+        return advertisementRepository.findAdvertisementById(advertisementId)
             ?: throw NotFoundException("해당하는 id (${advertisementId})을 가진 광고는 존재하지 않습니다.", ErrorCode.NOTFOUND_ADVERTISEMENT)
     }
 

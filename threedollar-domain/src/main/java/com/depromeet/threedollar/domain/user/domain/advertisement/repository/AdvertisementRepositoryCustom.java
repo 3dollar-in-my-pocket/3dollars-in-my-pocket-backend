@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface AdvertisementRepositoryCustom {
 
+    Advertisement findAdvertisementById(long advertisementId);
+
     List<Advertisement> findActivatedAdvertisementsByPositionAndPlatformAfterDate(AdvertisementPositionType positionType, AdvertisementPlatformType platformType, LocalDateTime dateTime);
 
     List<Advertisement> findAllWithPage(long size, int page);

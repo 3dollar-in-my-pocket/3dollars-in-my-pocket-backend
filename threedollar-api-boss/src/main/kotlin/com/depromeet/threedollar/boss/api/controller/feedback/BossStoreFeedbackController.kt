@@ -36,7 +36,7 @@ class BossStoreFeedbackController(
         return ApiResponse.success(bossStoreFeedbackService.getBossStoreFeedbacksCountsBetweenDate(bossStoreId, request))
     }
 
-    @ApiOperation("사장님 가게 피드백의 타입들을 조회합니다")
+    @ApiOperation("사장님 가게 피드백의 타입 목록을 조회합니다")
     @GetMapping("/v1/boss-store/feedback/types")
     fun getBossStoreFeedbackTypes(): List<BossStoreFeedbackTypeResponse> {
         return BossStoreFeedbackType.values().asSequence()
