@@ -27,6 +27,8 @@ abstract class ControllerTestUtils {
 
     protected lateinit var token: String
 
+    protected lateinit var bossId: String
+
     @BeforeEach
     protected fun setupToken() {
         val response = objectMapper.readValue(
@@ -36,6 +38,7 @@ abstract class ControllerTestUtils {
                 .contentAsString, object : TypeReference<ApiResponse<LoginResponse>>() {}
         )
         token = response.data.token
+        bossId = response.data.bossId
     }
 
     protected fun cleanup() {
