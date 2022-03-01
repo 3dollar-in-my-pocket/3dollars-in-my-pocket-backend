@@ -9,6 +9,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.validation.Validator
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
+import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
@@ -21,11 +22,19 @@ class WebConfig(
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(authInterceptor)
             .addPathPatterns("/**")
-            .excludePathPatterns("/test-token", "/ping", "/v1/enums")
+            .excludePathPatterns("/test-token", "/ping", "/v1/enums", "/v1/auth/login")
     }
 
     override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {
         resolvers.add(adminIdResolver)
+    }
+
+    override fun addCorsMappings(registry: CorsRegistry) {
+        registry.addMapping("/**")
+            .allowedOrigins("*") // TODO 변경
+            .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
+            .allowedHeaders("*")
+            .allowCredentials(true)
     }
 
     override fun getValidator(): Validator {
