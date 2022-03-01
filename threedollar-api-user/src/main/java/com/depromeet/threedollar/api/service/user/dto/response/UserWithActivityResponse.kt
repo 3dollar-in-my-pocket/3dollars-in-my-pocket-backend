@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.service.user.dto.response
 
+import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse
 import com.depromeet.threedollar.domain.user.domain.user.User
 import com.depromeet.threedollar.domain.user.domain.user.UserSocialType
 
@@ -9,7 +10,7 @@ data class UserWithActivityResponse(
     val socialType: UserSocialType,
     val medal: UserMedalResponse?,
     val activity: ActivityResponse
-) {
+) : AuditingTimeResponse() {
 
     companion object {
         fun of(
@@ -17,7 +18,7 @@ data class UserWithActivityResponse(
             storesCount: Long,
             reviewsCount: Long
         ): UserWithActivityResponse {
-            return UserWithActivityResponse(
+            val response = UserWithActivityResponse(
                 userId = user.id,
                 name = user.name,
                 socialType = user.socialType,
@@ -25,6 +26,8 @@ data class UserWithActivityResponse(
                 activity = ActivityResponse(storesCount, reviewsCount, user.userMedals.size
                 )
             )
+            response.setBaseTime(user)
+            return response
         }
     }
 

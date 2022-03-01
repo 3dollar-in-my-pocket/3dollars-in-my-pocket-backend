@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.service.user.dto.response;
 
+import com.depromeet.threedollar.application.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.domain.user.domain.medal.Medal;
 import com.depromeet.threedollar.domain.user.domain.medal.UserMedal;
 import lombok.*;
@@ -9,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class UserMedalResponse {
+public class UserMedalResponse extends AuditingTimeResponse {
 
     private static final String SIGN_OUT_MEDAL_NAME = "사무치게 그리운";
 
@@ -36,7 +37,9 @@ public class UserMedalResponse {
         if (userMedal == null) {
             return signOut();
         }
-        return of(userMedal.getMedal());
+        UserMedalResponse response = of(userMedal.getMedal());
+        response.setBaseTime(userMedal);
+        return response;
     }
 
     private static UserMedalResponse of(@NotNull Medal medal) {

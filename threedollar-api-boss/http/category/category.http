@@ -1,2 +1,6 @@
 ### 사장님 가게의 카테고리 목록을 조회합니다
 GET {{host_boss_api}}/v1/boss-store/categories
+
+> {%
+client.global.set("BOSS_CATEGORY_ID", response.body["data"][0]["categoryId"])
+%}

@@ -2,16 +2,16 @@ package com.depromeet.threedollar.boss.api.controller.feedback
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.boss.api.service.feedback.BossStoreFeedbackService
+import com.depromeet.threedollar.boss.api.service.feedback.dto.request.GetBossStoreFeedbacksCountsBetweenDateRequest
 import com.depromeet.threedollar.boss.api.service.feedback.dto.response.BossStoreFeedbackCountResponse
-import com.depromeet.threedollar.boss.api.service.feedback.dto.response.BossStoreFeedbackGroupingDateResponse
+import com.depromeet.threedollar.boss.api.service.feedback.dto.response.BossStoreFeedbackCursorResponse
 import com.depromeet.threedollar.boss.api.service.feedback.dto.response.BossStoreFeedbackTypeResponse
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import java.time.LocalDate
+import javax.validation.Valid
 
 @RestController
 class BossStoreFeedbackController(
@@ -30,18 +30,18 @@ class BossStoreFeedbackController(
     @GetMapping("/v1/boss-store/{bossStoreId}/feedbacks/specific")
     fun getBossStoreFeedbacksCountsBetweenDate(
         @PathVariable bossStoreId: String,
-        @RequestParam startDate: LocalDate,
-        @RequestParam endDate: LocalDate
-    ): ApiResponse<List<BossStoreFeedbackGroupingDateResponse>> {
-        return ApiResponse.success(bossStoreFeedbackService.getBossStoreFeedbacksCountsBetweenDate(bossStoreId, startDate, endDate))
+        @Valid request: GetBossStoreFeedbacksCountsBetweenDateRequest
+    ): ApiResponse<BossStoreFeedbackCursorResponse> {
+        request.validateRequestDateTimeInterval()
+        return ApiResponse.success(bossStoreFeedbackService.getBossStoreFeedbacksCountsBetweenDate(bossStoreId, request))
     }
 
-    @ApiOperation("사장님 가게 피드백의 타입들을 조회합니다")
+    @ApiOperation("사장님 가게 피드백의 타입 목록을 조회합니다")
     @GetMapping("/v1/boss-store/feedback/types")
-    fun getBossStoreFeedbackTypes(): List<BossStoreFeedbackTypeResponse> {
-        return BossStoreFeedbackType.values().asSequence()
+    fun getBossStoreFeedbackTypes(): ApiResponse<List<BossStoreFeedbackTypeResponse>> {
+        return ApiResponse.success(BossStoreFeedbackType.values().asSequence()
             .map { BossStoreFeedbackTypeResponse.of(it) }
-            .toList()
+            .toList())
     }
 
 }

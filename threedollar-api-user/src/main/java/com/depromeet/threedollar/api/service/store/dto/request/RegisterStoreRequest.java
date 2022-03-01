@@ -43,7 +43,7 @@ public class RegisterStoreRequest {
     @NotEmpty(message = "{store.menu.notEmpty}")
     private Set<MenuRequest> menus;
 
-    @Builder(builderClassName = "TestBuilder", builderMethodName = "testBuilder")
+    @Builder(builderMethodName = "testBuilder")
     public RegisterStoreRequest(Double latitude, Double longitude, String storeName, @Nullable StoreType storeType,
                                 Set<DayOfTheWeek> appearanceDays, Set<PaymentMethodType> paymentMethods, Set<MenuRequest> menus) {
         this.latitude = latitude;

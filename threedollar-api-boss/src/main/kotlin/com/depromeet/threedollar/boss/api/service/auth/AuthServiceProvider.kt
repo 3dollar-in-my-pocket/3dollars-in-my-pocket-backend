@@ -27,7 +27,7 @@ class AuthServiceProvider(
     }
 
     fun getAuthService(socialType: BossAccountSocialType): AuthService {
-        return authServiceMap[socialType] ?: throw InternalServerException("아직 ($socialType) 로직이 구현되지 않았습니다")
+        return authServiceMap[socialType] ?: throw InternalServerException("AuthService ($socialType) 로직이 구현되지 않았습니다")
     }
 
     companion object {

@@ -7,6 +7,7 @@ import com.depromeet.threedollar.boss.api.config.resolver.MapCoordinate
 import com.depromeet.threedollar.boss.api.service.store.BossStoreOpenService
 import com.depromeet.threedollar.boss.api.service.store.BossStoreRetrieveService
 import com.depromeet.threedollar.boss.api.service.store.BossStoreService
+import com.depromeet.threedollar.boss.api.service.store.dto.request.GetAroundBossStoresRequest
 import com.depromeet.threedollar.boss.api.service.store.dto.request.UpdateBossStoreInfoRequest
 import com.depromeet.threedollar.boss.api.service.store.dto.response.BossStoreInfoResponse
 import com.depromeet.threedollar.common.model.CoordinateValue
@@ -25,14 +26,9 @@ class BossStoreController(
     @GetMapping("/v1/boss-stores/around")
     fun getAroundBossStores(
         @MapCoordinate mapCoordinate: CoordinateValue,
-        @RequestParam distanceKm: Double
+        @Valid request: GetAroundBossStoresRequest
     ): ApiResponse<List<BossStoreInfoResponse>> {
-        return ApiResponse.success(
-            bossStoreRetrieveService.getAroundBossStores(
-                mapCoordinate = mapCoordinate,
-                distanceKm = distanceKm
-            )
-        )
+        return ApiResponse.success(bossStoreRetrieveService.getAroundBossStores(mapCoordinate, request))
     }
 
     @ApiOperation("[인증] 가게를 영업 정보를 시작/갱신합니다. (30분간 갱신하지 않으면 자동 종료되며, 주기적으로 갱신해야 합니다.)")

@@ -8,6 +8,7 @@ import lombok.*;
 import org.jetbrains.annotations.Nullable;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Comparator;
 
 @ToString
@@ -16,6 +17,7 @@ import java.util.Comparator;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class RetrieveNearStoresRequest {
 
+    @PositiveOrZero(message = "{store.distance.positiveOrZero}")
     @NotNull(message = "{store.distance.notNull}")
     private Double distance;
 
@@ -25,7 +27,7 @@ public class RetrieveNearStoresRequest {
     @NotNull(message = "{store.orderType.notNull}")
     private StoreOrderType orderType = StoreOrderType.DISTANCE_ASC; // 호환성을 위해 기본적으로 거리순으로 정렬한다
 
-    @Builder(builderClassName = "TestBuilder", builderMethodName = "testBuilder")
+    @Builder(builderMethodName = "testBuilder")
     private RetrieveNearStoresRequest(double distance, @Nullable MenuCategoryType category, StoreOrderType orderType) {
         this.distance = distance;
         this.category = category;

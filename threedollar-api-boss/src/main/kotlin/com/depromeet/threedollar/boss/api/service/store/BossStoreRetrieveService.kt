@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.boss.api.service.store
 
+import com.depromeet.threedollar.boss.api.service.store.dto.request.GetAroundBossStoresRequest
 import com.depromeet.threedollar.boss.api.service.store.dto.response.BossStoreInfoResponse
 import com.depromeet.threedollar.common.model.CoordinateValue
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategory
@@ -24,11 +25,11 @@ class BossStoreRetrieveService(
 ) {
 
     @Transactional(readOnly = true)
-    fun getAroundBossStores(mapCoordinate: CoordinateValue, distanceKm: Double): List<BossStoreInfoResponse> {
+    fun getAroundBossStores(mapCoordinate: CoordinateValue, request: GetAroundBossStoresRequest): List<BossStoreInfoResponse> {
         val storeLocations: List<BossStoreLocation> = bossStoreLocationRepository.findNearBossStoreLocations(
             latitude = mapCoordinate.latitude,
             longitude = mapCoordinate.longitude,
-            maxDistance = min(distanceKm, MAX_DISTANCE_KM)
+            maxDistance = min(request.distanceKm, MAX_DISTANCE_KM)
         )
 
         val locationsDictionary: Map<String, BossStoreLocation> = storeLocations.associateBy { it.bossStoreId }

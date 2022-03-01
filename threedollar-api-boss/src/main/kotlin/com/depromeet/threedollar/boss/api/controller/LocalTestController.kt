@@ -8,6 +8,7 @@ import com.depromeet.threedollar.boss.api.service.auth.dto.response.LoginRespons
 import com.depromeet.threedollar.boss.api.service.category.BossStoreCategoryServiceUtils
 import com.depromeet.threedollar.boss.api.service.feedback.BossStoreFeedbackService
 import com.depromeet.threedollar.boss.api.service.feedback.dto.request.AddBossStoreFeedbackRequest
+import com.depromeet.threedollar.boss.api.service.store.BossStoreServiceUtils
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
@@ -65,6 +66,10 @@ class LocalTestController(
         @RequestParam categoriesIds: Set<String>
     ): ApiResponse<String> {
         BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, categoriesIds)
+        if (bossStoreRepository.findBossStoreByBossId(bossId) != null) {
+            throw ConflictException("이미 존재합니다")
+        }
+
         val bossStore = bossStoreRepository.save(
             BossStore(
                 bossId = bossId,

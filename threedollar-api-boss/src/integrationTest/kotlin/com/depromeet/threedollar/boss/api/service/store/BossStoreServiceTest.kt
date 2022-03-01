@@ -196,7 +196,7 @@ internal class BossStoreServiceTest(
                     assertThat(it.categoriesIds).isEqualTo(categoriesIds)
 
                     assertThat(it.backupInfo.bossStoreId).isEqualTo(bossStore.id)
-                    assertThat(it.backupInfo.bossStoreCreatedDateTime).isEqualToIgnoringNanos(bossStore.createdDateTime)
+                    assertThat(it.backupInfo.bossStoreCreatedAt).isEqualToIgnoringNanos(bossStore.createdAt)
                 }
             })
         }

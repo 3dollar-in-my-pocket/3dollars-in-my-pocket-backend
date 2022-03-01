@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.*;
 
@@ -31,11 +32,31 @@ public class Medal extends AuditingTimeEntity {
     private MedalAcquisitionCondition acquisitionCondition;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private Medal(String name, String introduction, String activationIconUrl, String disableIconUrl, MedalAcquisitionConditionType conditionType, int count, String acquisitionDescription) {
+    private Medal(String name, String introduction, String activationIconUrl, String disableIconUrl,
+                  MedalAcquisitionConditionType conditionType, int conditionCount, String acquisitionDescription) {
         this.name = name;
         this.introduction = introduction;
         this.medalImage = MedalImage.of(activationIconUrl, disableIconUrl);
-        this.acquisitionCondition = MedalAcquisitionCondition.of(this, conditionType, count, acquisitionDescription);
+        this.acquisitionCondition = MedalAcquisitionCondition.of(this, conditionType, conditionCount, acquisitionDescription);
+    }
+
+    public static Medal newInstance(String name, String introduction, String activationIconUrl, String disableIconUrl,
+                                    MedalAcquisitionConditionType conditionType, int conditionCount, String acquisitionDescription) {
+        return Medal.builder()
+            .name(name)
+            .introduction(introduction)
+            .activationIconUrl(activationIconUrl)
+            .disableIconUrl(disableIconUrl)
+            .conditionType(conditionType)
+            .conditionCount(conditionCount)
+            .acquisitionDescription(acquisitionDescription)
+            .build();
+    }
+
+    public void update(String name, @Nullable String introduction, String activationIconUrl, String disableIconUrl) {
+        this.name = name;
+        this.introduction = introduction;
+        this.medalImage = MedalImage.of(activationIconUrl, disableIconUrl);
     }
 
     public boolean canObtain(MedalAcquisitionConditionType conditionType, long counts) {

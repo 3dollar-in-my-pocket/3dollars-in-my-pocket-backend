@@ -40,14 +40,14 @@ class BossDeletedStore(
 
 data class BackupBossStoreInfo(
     val bossStoreId: String,
-    val bossStoreCreatedDateTime: LocalDateTime
+    val bossStoreCreatedAt: LocalDateTime
 ) {
 
     companion object {
         fun of(bossStore: BossStore): BackupBossStoreInfo {
             return BackupBossStoreInfo(
                 bossStoreId = bossStore.id,
-                bossStoreCreatedDateTime = bossStore.createdDateTime
+                bossStoreCreatedAt = bossStore.createdAt
             )
         }
     }

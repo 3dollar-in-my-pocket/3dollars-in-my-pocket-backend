@@ -9,4 +9,6 @@ interface BossStoreFeedbackRepositoryCustom {
 
     fun findAllByBossStoreIdAndBetween(bossStoreId: String, startDate: LocalDate, endDate: LocalDate): List<BossStoreFeedback>
 
+    fun findFirstLessThanDate(date: LocalDate): BossStoreFeedback?
+
 }

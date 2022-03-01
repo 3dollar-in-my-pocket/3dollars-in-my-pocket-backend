@@ -10,7 +10,7 @@ import javax.persistence.Embeddable;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
-class MedalImage {
+public class MedalImage {
 
     @Column(nullable = false, length = 2048)
     private String activationIconUrl;

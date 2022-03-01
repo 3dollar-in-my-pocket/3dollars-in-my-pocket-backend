@@ -132,7 +132,7 @@ client.test("200 OK", function() {
 
 
 ### 위도, 경도 주위 가게 목록을 조회합니다.
-GET {{host_api}}/v1/stores/near/exists?mapLatitude=34&mapLongitude=126&distance=100\
+GET {{host_api}}/v1/stores/near/exists?mapLatitude=34&mapLongitude=126&distance=1000
 
 > {%
 client.test("200 OK", function() {

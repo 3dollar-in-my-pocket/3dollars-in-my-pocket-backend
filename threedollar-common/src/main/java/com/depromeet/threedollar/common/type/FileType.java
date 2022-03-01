@@ -2,6 +2,7 @@ package com.depromeet.threedollar.common.type;
 
 import com.depromeet.threedollar.common.exception.model.ForbiddenException;
 import com.depromeet.threedollar.common.exception.model.InvalidException;
+import com.depromeet.threedollar.common.exception.type.ErrorCode;
 import com.depromeet.threedollar.common.model.EnumModel;
 import com.depromeet.threedollar.common.utils.FileUtils;
 import com.depromeet.threedollar.common.utils.UuidUtils;
@@ -39,7 +40,7 @@ public enum FileType implements EnumModel {
 
     public void validateAvailableUploadInModule(@NotNull ApplicationType applicationType) {
         if (!this.availableModules.contains(applicationType)) {
-            throw new ForbiddenException(String.format("해당 서버 (%s) 에서 업로드할 수 없는 파일 타입 (%s) 입니다.", applicationType, this.name()));
+            throw new ForbiddenException(String.format("해당 서버 (%s) 에서 업로드할 수 없는 파일 타입 (%s) 입니다.", applicationType, this.name()), ErrorCode.FORBIDDEN_UPLOAD_FILE_IN_MODULE);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.admin.service.registration
 
 import com.depromeet.threedollar.common.exception.model.ConflictException
+import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.document.boss.document.account.BossAccount
 import com.depromeet.threedollar.document.boss.document.account.BossAccountRepository
 import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialInfo
@@ -33,7 +34,7 @@ class BossRegistrationAdminService(
 
     private fun validateDuplicateRegistration(socialInfo: BossAccountSocialInfo) {
         if (bossAccountRepository.existsBossAccountBySocialInfo(socialId = socialInfo.socialId, socialType = socialInfo.socialType)) {
-            throw ConflictException("이미 가입한 사장님(${socialInfo.socialId} - ${socialInfo.socialType})입니다")
+            throw ConflictException("이미 가입한 사장님(${socialInfo.socialId} - ${socialInfo.socialType})입니다", ErrorCode.CONFLICT_EXISTS_BOSS)
         }
     }
 

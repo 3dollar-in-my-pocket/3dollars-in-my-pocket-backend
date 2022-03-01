@@ -48,6 +48,7 @@ class AuthCommonService(
         val bossAccount = BossAccountServiceUtils.findBossAccountById(bossAccountRepository, bossId)
         bossWithdrawalAccountRepository.save(BossWithdrawalAccount.newInstance(bossAccount))
         bossAccountRepository.delete(bossAccount)
+
         eventPublisher.publishEvent(BossSignOutEvent.of(bossId))
     }
 
