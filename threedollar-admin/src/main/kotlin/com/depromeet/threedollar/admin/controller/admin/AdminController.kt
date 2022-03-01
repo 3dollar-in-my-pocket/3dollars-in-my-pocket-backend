@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.admin.controller.admin
 
+import com.depromeet.threedollar.admin.config.interceptor.Auth
 import com.depromeet.threedollar.admin.config.resolver.AdminId
 import com.depromeet.threedollar.admin.service.admin.AdminService
 import com.depromeet.threedollar.admin.service.admin.dto.response.AdminInfoResponse
@@ -12,6 +13,7 @@ class AdminController(
     private val adminService: AdminService
 ) {
 
+    @Auth
     @GetMapping("/v1/admin/me")
     fun getMyAdminInfo(
         @AdminId adminId: Long

@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.admin.controller.registration
 
+import com.depromeet.threedollar.admin.config.interceptor.Auth
 import com.depromeet.threedollar.admin.service.registration.BossRegistrationAdminService
 import com.depromeet.threedollar.application.common.dto.ApiResponse
 import org.springframework.web.bind.annotation.PathVariable
@@ -11,6 +12,7 @@ class BossRegistrationAdminController(
     private val bossRegistrationAdminService: BossRegistrationAdminService
 ) {
 
+    @Auth
     @PutMapping("/v1/registration/{registrationId}/apply")
     fun applyBossRegistration(
         @PathVariable registrationId: String
@@ -19,6 +21,7 @@ class BossRegistrationAdminController(
         return ApiResponse.SUCCESS
     }
 
+    @Auth
     @PutMapping("/v1/registration/{registrationId}/reject")
     fun rejectBossRegistration(
         @PathVariable registrationId: String

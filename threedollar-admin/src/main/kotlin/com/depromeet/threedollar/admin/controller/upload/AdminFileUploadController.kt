@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.admin.controller.upload
 
+import com.depromeet.threedollar.admin.config.interceptor.Auth
 import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.application.provider.upload.UploadProvider
 import com.depromeet.threedollar.application.provider.upload.dto.request.ImageUploadFileRequest
@@ -16,6 +17,7 @@ class AdminFileUploadController(
     private val uploadProvider: UploadProvider
 ) {
 
+    @Auth
     @PostMapping("/v1/upload/{fileType}")
     fun uploadFile(
         @RequestPart file: MultipartFile,

@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.admin.controller.medal
 
+import com.depromeet.threedollar.admin.config.interceptor.Auth
 import com.depromeet.threedollar.admin.service.medal.AdminMedalService
 import com.depromeet.threedollar.admin.service.medal.dto.request.AddMedalRequest
 import com.depromeet.threedollar.admin.service.medal.dto.request.UpdateMedalRequest
@@ -16,6 +17,7 @@ class AdminMedalController(
     private val adminMedalService: AdminMedalService
 ) {
 
+    @Auth
     @PostMapping("/v1/medal")
     fun addMedal(
         @Valid @RequestBody request: AddMedalRequest
@@ -24,6 +26,7 @@ class AdminMedalController(
         return ApiResponse.SUCCESS
     }
 
+    @Auth
     @PutMapping("/v1/medal/{medalId}")
     fun updateMedal(
         @PathVariable medalId: Long,

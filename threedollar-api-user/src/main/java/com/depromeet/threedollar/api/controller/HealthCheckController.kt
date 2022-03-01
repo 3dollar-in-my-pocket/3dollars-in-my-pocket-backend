@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 class HealthCheckController {
 
     @ApiOperation("Health Check")
-    @GetMapping(value = ["/", "/ping"])
+    @GetMapping("/ping")
     fun healthCheck(): ApiResponse<String> {
         return ApiResponse.success("가슴속 3천원 유저 API 서버")
     }

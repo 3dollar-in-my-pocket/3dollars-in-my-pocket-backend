@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.admin.config.resolver
 
+import com.depromeet.threedollar.admin.config.session.SessionConstants
 import com.depromeet.threedollar.common.exception.model.InternalServerException
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.MethodParameter
@@ -21,7 +22,7 @@ class AccountIdResolver : HandlerMethodArgumentResolver {
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?
     ): Any {
-        return webRequest.getAttribute("adminId", 0)
+        return webRequest.getAttribute(SessionConstants.ADMIN_ID, 0)
             ?: throw InternalServerException("adminId를 받아오지 못했습니다.")
     }
 

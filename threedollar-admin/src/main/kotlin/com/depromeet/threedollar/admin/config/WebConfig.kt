@@ -21,8 +21,6 @@ class WebConfig(
 
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(authInterceptor)
-            .addPathPatterns("/**")
-            .excludePathPatterns("/test-token", "/ping", "/v1/enums", "/v1/auth/login")
     }
 
     override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {
@@ -31,8 +29,8 @@ class WebConfig(
 
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/**")
-            .allowedOrigins("http://localhost:3000", "https://admin.dev.threedollars.co.kr")
-            .allowedMethods("*")
+            .allowedOrigins("https://admin.dev.threedollars.co.kr", "http://localhost:3000", )
+            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD")
             .allowedHeaders("*")
             .allowCredentials(true)
     }

@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.admin.controller.advertisement
 
+import com.depromeet.threedollar.admin.config.interceptor.Auth
 import com.depromeet.threedollar.admin.service.advertisement.AdvertisementAdminService
 import com.depromeet.threedollar.admin.service.advertisement.dto.request.AddAdvertisementRequest
 import com.depromeet.threedollar.admin.service.advertisement.dto.request.RetrieveAdvertisementsRequest
@@ -14,6 +15,7 @@ class AdvertisementController(
     private val advertisementAdminService: AdvertisementAdminService
 ) {
 
+    @Auth
     @PostMapping("/v1/advertisement")
     fun addAdvertisement(
         @Valid @RequestBody request: AddAdvertisementRequest
@@ -22,6 +24,7 @@ class AdvertisementController(
         return ApiResponse.SUCCESS
     }
 
+    @Auth
     @PutMapping("/v1/advertisement/{advertisementId}")
     fun updateAdvertisement(
         @PathVariable advertisementId: Long,
@@ -31,6 +34,7 @@ class AdvertisementController(
         return ApiResponse.SUCCESS
     }
 
+    @Auth
     @DeleteMapping("/v1/advertisement/{advertisementId}")
     fun deleteAdvertisement(
         @PathVariable advertisementId: Long
@@ -39,6 +43,7 @@ class AdvertisementController(
         return ApiResponse.SUCCESS
     }
 
+    @Auth
     @GetMapping("/v1/advertisements")
     fun retrieveAdvertisements(
         @Valid request: RetrieveAdvertisementsRequest
