@@ -106,7 +106,7 @@ internal class BossStoreFeedbackServiceTest(
     }
 
     @Test
-    fun `해당 사용자가 오늘 이미 피드백을 등록한 가게면 ConflictException이 발생한다`() {
+    fun `해당 사용자가 오늘 이미 같은 피드백을 등록한 가게면 ConflictException이 발생한다`() {
         // given
         val feedbackType = BossStoreFeedbackType.FOOD_IS_DELICIOUS
         val userId = 1000000L
@@ -122,7 +122,7 @@ internal class BossStoreFeedbackServiceTest(
             storeId = bossStore.id,
             userId = userId,
             date = date,
-            feedbackType = BossStoreFeedbackType.PLATING_IS_BEAUTIFUL
+            feedbackType = feedbackType
         ))
 
         // when & then
@@ -134,6 +134,54 @@ internal class BossStoreFeedbackServiceTest(
                 date = date
             )
         }.isInstanceOf(ConflictException::class.java)
+    }
+
+    @Test
+    fun `해당 사용자가 오늘 다른 같은 피드백을 등록한 가게면 피드백을 추가할 수 있다`() {
+        // given
+        val feedbackType = BossStoreFeedbackType.FOOD_IS_DELICIOUS
+        val userId = 1000000L
+        val date = LocalDate.of(2022, 2, 24)
+
+        val bossStore = BossStoreCreator.create(
+            bossId = "bossId",
+            name = "가슴속 3천원 붕어빵 가게"
+        )
+        bossStoreRepository.save(bossStore)
+
+        bossStoreFeedbackRepository.save(BossStoreFeedbackCreator.create(
+            storeId = bossStore.id,
+            userId = userId,
+            date = date,
+            feedbackType = BossStoreFeedbackType.BOSS_IS_KIND
+        ))
+
+        // when
+        bossStoreFeedbackService.addFeedback(
+            bossStoreId = bossStore.id,
+            request = AddBossStoreFeedbackRequest(feedbackType),
+            userId = userId,
+            date = date
+        )
+
+        // then
+        val bossStoreFeedbacks = bossStoreFeedbackRepository.findAll()
+        assertAll({
+            assertThat(bossStoreFeedbacks).hasSize(2)
+            bossStoreFeedbacks[0].let {
+                assertThat(it.storeId).isEqualTo(bossStore.id)
+                assertThat(it.userId).isEqualTo(userId)
+                assertThat(it.date).isEqualTo(date)
+                assertThat(it.feedbackType).isEqualTo(BossStoreFeedbackType.BOSS_IS_KIND)
+            }
+
+            bossStoreFeedbacks[1].let {
+                assertThat(it.storeId).isEqualTo(bossStore.id)
+                assertThat(it.userId).isEqualTo(userId)
+                assertThat(it.date).isEqualTo(date)
+                assertThat(it.feedbackType).isEqualTo(feedbackType)
+            }
+        })
     }
 
     @Test
@@ -178,7 +226,7 @@ internal class BossStoreFeedbackServiceTest(
             bossStoreFeedbacks[1].let {
                 assertThat(it.storeId).isEqualTo(bossStore.id)
                 assertThat(it.userId).isEqualTo(userId)
-                assertThat(it.date).isEqualTo(date)
+                assertThat(it.date).isEqualTo(LocalDate.of(2022, 2, 24))
                 assertThat(it.feedbackType).isEqualTo(feedbackType)
             }
         })

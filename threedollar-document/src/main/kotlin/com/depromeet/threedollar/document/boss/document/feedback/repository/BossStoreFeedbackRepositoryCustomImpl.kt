@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.document.boss.document.feedback.repository
 
+import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.document.boss.document.feedback.BossStoreFeedback
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.find
@@ -10,10 +11,11 @@ class BossStoreFeedbackRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : BossStoreFeedbackRepositoryCustom {
 
-    override fun existsByStoreIdAndUserIdAndDate(storeId: String, userId: Long, date: LocalDate): Boolean {
+    override fun existsByStoreIdAndUserIdAndFeedbackTypeAndDate(storeId: String, userId: Long, feedbackType: BossStoreFeedbackType, date: LocalDate): Boolean {
         return mongoTemplate.exists(Query()
             .addCriteria(BossStoreFeedback::storeId isEqualTo storeId)
             .addCriteria(BossStoreFeedback::userId isEqualTo userId)
+            .addCriteria(BossStoreFeedback::feedbackType isEqualTo feedbackType)
             .addCriteria(BossStoreFeedback::date isEqualTo date), BossStoreFeedback::class.java
         )
     }
