@@ -18,6 +18,7 @@ spring:
     include:
       - domain
       - redis
+      - mongo
       - external
       - secret
 
