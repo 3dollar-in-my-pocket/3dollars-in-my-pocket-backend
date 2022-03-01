@@ -194,7 +194,7 @@ class ControllerExceptionAdvice(
         exception: Exception
     ): ServerExceptionOccurredEvent {
         return ServerExceptionOccurredEvent.error(
-            ApplicationType.USER_API,
+            ApplicationType.BOSS_API,
             errorCode,
             exception,
             UserMetaSessionUtils.get(),
