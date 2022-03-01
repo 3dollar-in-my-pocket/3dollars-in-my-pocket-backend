@@ -44,25 +44,25 @@ jobs:
 
           echo "::set-output name=image::$DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG"
           echo "🐇 Build Image >> $DOCKER_REPOSITORY$IMAGE_TAG"
-#
-#      - name: Download task definition
-#        id: download-task-definition
-#        run: |
-#          aws ecs describe-task-definition --task-definition threedollar-admin --query taskDefinition > task-definition-admin-dev.json
-#          echo "::set-output name=task-definition::$GITHUB_WORKSPACE/task-definition-admin-dev.json"
-#
-#      - name: Update Amazon ECS task definition
-#        id: render-web-container
-#        uses: aws-actions/amazon-ecs-render-task-definition@v1
-#        with:
-#          task-definition: ${{ steps.download-task-definition.outputs.task-definition }}
-#          container-name: threedollar-admin-dev
-#          image: ${{ steps.build.outputs.image }}
-#
-#      - name: Deploy to Amazon ECS service
-#        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-#        with:
-#          task-definition: ${{ steps.render-web-container.outputs.task-definition }}
-#          cluster: threedollar-dev
-#          service: threedollar-admin-dev
-#          wait-for-service-stability: true
+
+      - name: Download task definition
+        id: download-task-definition
+        run: |
+          aws ecs describe-task-definition --task-definition threedollar-admin-dev --query taskDefinition > task-definition-admin-dev.json
+          echo "::set-output name=task-definition::$GITHUB_WORKSPACE/task-definition-admin-dev.json"
+
+      - name: Update Amazon ECS task definition
+        id: render-web-container
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ steps.download-task-definition.outputs.task-definition }}
+          container-name: threedollar-admin-dev
+          image: ${{ steps.build.outputs.image }}
+
+      - name: Deploy to Amazon ECS service
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-web-container.outputs.task-definition }}
+          cluster: threedollar-dev
+          service: threedollar-admin-dev
+          wait-for-service-stability: true
