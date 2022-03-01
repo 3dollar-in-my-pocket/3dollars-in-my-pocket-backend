@@ -43,7 +43,10 @@ class AuthController(
         val authService = authServiceProvider.getAuthService(request.socialType)
         val accountId = authService.login(request)
         httpSession.setAttribute(BOSS_ACCOUNT_ID, accountId)
-        return ApiResponse.success(LoginResponse(httpSession.id, accountId))
+        return ApiResponse.success(LoginResponse(
+            token = httpSession.id,
+            bossId = accountId
+        ))
     }
 
     @ApiOperation("[인증] 사장님 계정으로 로그아웃을 요청합니다.")
