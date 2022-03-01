@@ -14,6 +14,10 @@ dependencies {
     // Spring actuator
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
+    // Swagger
+    implementation("io.springfox:springfox-boot-starter:${swaggerVersion}")
+    implementation("io.springfox:springfox-swagger-ui:${swaggerVersion}")
+
     // TestFixtures
     testImplementation(testFixtures(project(":threedollar-domain")))
     testImplementation(testFixtures(project(":threedollar-document")))

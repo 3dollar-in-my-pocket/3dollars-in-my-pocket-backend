@@ -1,0 +1,12 @@
+spring.config:
+  activate:
+    on-profile:
+      - prod
+      - stage
+
+springfox:
+  documentation:
+    enabled: false
+
+
+---
