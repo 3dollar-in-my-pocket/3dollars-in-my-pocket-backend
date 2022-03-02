@@ -199,7 +199,7 @@ internal class StoreControllerTest(
             assertThat(response.data.contents).hasSize(2)
             assertStoreInfoResponse(response.data.contents[0], store4)
             assertStoreInfoResponse(response.data.contents[1], store3)
-            assertThat(response.data.nextCursor).isEqualTo(store3.id)
+            assertThat(response.data.cursor.nextCursor).isEqualTo(store3.id)
         })
     }
 
@@ -232,7 +232,7 @@ internal class StoreControllerTest(
             assertThat(response.data.contents).hasSize(2)
             assertStoreInfoResponse(response.data.contents[0], store2)
             assertStoreInfoResponse(response.data.contents[1], store1)
-            assertThat(response.data.nextCursor).isEqualTo(-1)
+            assertThat(response.data.cursor.nextCursor).isEqualTo(-1)
         })
     }
 

@@ -113,7 +113,8 @@ internal class BossStoreFeedbackControllerTest(
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
-                    jsonPath("$.data.nextDate") { value(null) }
+                    jsonPath("$.data.cursor.nextCursor") { value(null) }
+                    jsonPath("$.data.cursor.hasMore") { value(false) }
                     jsonPath("$.data.contents") { hasSize<BossStoreFeedbackGroupingDateResponse>(1) }
                     jsonPath("$.data.contents[0].date") { value("2022-01-01") }
                     jsonPath("$.data.contents[0].feedbacks") { hasSize<BossStoreFeedbackGroupingDateResponse>(1) }
@@ -155,7 +156,8 @@ internal class BossStoreFeedbackControllerTest(
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
-                    jsonPath("$.data.nextDate") { value("2021-12-31") }
+                    jsonPath("$.data.cursor.nextCursor") { value("2021-12-31") }
+                    jsonPath("$.data.cursor.hasMore") { value(true) }
                     jsonPath("$.data.contents") { hasSize<BossStoreFeedbackGroupingDateResponse>(1) }
                     jsonPath("$.data.contents[0].date") { value("2022-01-01") }
                     jsonPath("$.data.contents[0].feedbacks") { hasSize<BossStoreFeedbackGroupingDateResponse>(1) }
