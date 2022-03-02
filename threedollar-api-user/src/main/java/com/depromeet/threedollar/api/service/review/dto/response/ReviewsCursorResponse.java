@@ -23,10 +23,12 @@ public class ReviewsCursorResponse {
 
     private List<ReviewDetailResponse> contents = new ArrayList<>();
     private long nextCursor;
+    private boolean hasNext;
 
     private ReviewsCursorResponse(List<ReviewDetailResponse> contents, long nextCursor) {
         this.contents = contents;
         this.nextCursor = nextCursor;
+        this.hasNext = LAST_CURSOR != nextCursor;
     }
 
     public static ReviewsCursorResponse of(@NotNull CursorSupporter<Review> reviewsCursor, @NotNull StoreDictionary storeDictionary, @NotNull User user) {

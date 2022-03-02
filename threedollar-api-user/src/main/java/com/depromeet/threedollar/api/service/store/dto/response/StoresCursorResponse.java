@@ -22,11 +22,13 @@ public class StoresCursorResponse {
     private List<StoreWithVisitsResponse> contents = new ArrayList<>();
     private long totalElements;
     private long nextCursor;
+    private boolean hasNext;
 
     private StoresCursorResponse(List<StoreWithVisitsResponse> contents, long totalElements, long nextCursor) {
         this.contents = contents;
         this.totalElements = totalElements;
         this.nextCursor = nextCursor;
+        this.hasNext = LAST_CURSOR != nextCursor;
     }
 
     public static StoresCursorResponse of(CursorSupporter<Store> storesCursor, VisitHistoryCounter visitHistoriesCounts, long totalElements) {

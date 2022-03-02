@@ -20,10 +20,12 @@ public class VisitHistoriesCursorResponse {
 
     private List<VisitHistoryWithStoreResponse> contents = new ArrayList<>();
     private long nextCursor;
+    private boolean hasNext;
 
     private VisitHistoriesCursorResponse(List<VisitHistoryWithStoreResponse> contents, long nextCursor) {
         this.contents = contents;
         this.nextCursor = nextCursor;
+        this.hasNext = LAST_CURSOR != nextCursor;
     }
 
     public static VisitHistoriesCursorResponse of(CursorSupporter<VisitHistory> visitHistoriesCursor) {

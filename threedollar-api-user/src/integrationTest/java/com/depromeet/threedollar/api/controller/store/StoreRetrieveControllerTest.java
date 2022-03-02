@@ -551,6 +551,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertAll(
                 () -> assertThat(response.getData().getTotalElements()).isEqualTo(3),
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(store2.getId()),
+                () -> assertThat(response.getData().isHasNext()).isTrue(),
                 () -> assertThat(response.getData().getContents()).hasSize(2),
 
                 () -> assertStoreWithVisitsResponse(response.getData().getContents().get(0), store3),
@@ -576,6 +577,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertAll(
                 () -> assertThat(response.getData().getTotalElements()).isEqualTo(4),
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(store2.getId()),
+                () -> assertThat(response.getData().isHasNext()).isTrue(),
                 () -> assertThat(response.getData().getContents()).hasSize(2),
                 () -> assertStoreWithVisitsResponse(response.getData().getContents().get(0), store3),
                 () -> assertStoreWithVisitsResponse(response.getData().getContents().get(1), store2)
@@ -598,6 +600,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
+                () -> assertThat(response.getData().isHasNext()).isFalse(),
                 () -> assertThat(response.getData().getTotalElements()).isEqualTo(2),
                 () -> assertThat(response.getData().getContents()).hasSize(1)
             );
@@ -620,6 +623,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
+                () -> assertThat(response.getData().isHasNext()).isFalse(),
                 () -> assertThat(response.getData().getTotalElements()).isEqualTo(3),
                 () -> assertThat(response.getData().getContents()).hasSize(1),
                 () -> assertStoreWithVisitsResponse(response.getData().getContents().get(0), store1)
@@ -641,6 +645,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             assertAll(
                 () -> assertThat(response.getData().getTotalElements()).isEqualTo(1),
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
+                () -> assertThat(response.getData().isHasNext()).isFalse(),
                 () -> assertThat(response.getData().getContents()).hasSize(1),
                 () -> assertStoreWithVisitsResponse(response.getData().getContents().get(0), store.getId(), store.getLatitude(), store.getLongitude(), store.getName(), store.getRating()),
 

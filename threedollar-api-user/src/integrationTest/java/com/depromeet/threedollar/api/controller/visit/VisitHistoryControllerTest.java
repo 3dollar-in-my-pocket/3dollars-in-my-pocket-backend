@@ -101,6 +101,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
+                () -> assertThat(response.getData().isHasNext()).isFalse(),
                 () -> assertThat(response.getData().getContents()).hasSize(2),
                 () -> assertVisitHistoryWithStoreResponse(response.getData().getContents().get(0), visitHistory2, store),
                 () -> assertVisitHistoryWithStoreResponse(response.getData().getContents().get(1), visitHistory1, store)
@@ -123,6 +124,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(visitHistory2.getId()),
+                () -> assertThat(response.getData().isHasNext()).isTrue(),
                 () -> assertThat(response.getData().getContents()).hasSize(1),
                 () -> assertVisitHistoryWithStoreResponse(response.getData().getContents().get(0), visitHistory2, store)
             );
@@ -144,6 +146,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
+                () -> assertThat(response.getData().isHasNext()).isFalse(),
                 () -> assertThat(response.getData().getContents()).hasSize(1),
                 () -> assertVisitHistoryWithStoreResponse(response.getData().getContents().get(0), visitHistory1, store)
             );
@@ -160,6 +163,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
+                () -> assertThat(response.getData().isHasNext()).isFalse(),
                 () -> assertThat(response.getData().getContents()).hasSize(0)
             );
         }
