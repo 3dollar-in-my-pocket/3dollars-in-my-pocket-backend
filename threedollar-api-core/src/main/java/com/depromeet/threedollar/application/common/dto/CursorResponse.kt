@@ -1,21 +1,21 @@
-package com.depromeet.threedollar.common.model
+package com.depromeet.threedollar.application.common.dto
 
-data class CursorPagingResponse<T>(
+data class CursorResponse<T>(
     val nextCursor: T?,
     val hasMore: Boolean
 ) {
 
     companion object {
         private const val LAST_CURSOR = -1L
-        fun <T> of(nextCursor: T?): CursorPagingResponse<T> {
-            return CursorPagingResponse(
+        fun <T> of(nextCursor: T?): CursorResponse<T> {
+            return CursorResponse(
                 nextCursor = nextCursor,
                 hasMore = nextCursor != null
             )
         }
 
-        fun newLastCursor(): CursorPagingResponse<Long> {
-            return CursorPagingResponse(
+        fun newLastCursor(): CursorResponse<Long> {
+            return CursorResponse(
                 nextCursor = LAST_CURSOR,
                 hasMore = false
             )

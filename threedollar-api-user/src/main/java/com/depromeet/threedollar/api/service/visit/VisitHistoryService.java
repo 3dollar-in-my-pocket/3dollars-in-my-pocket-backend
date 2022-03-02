@@ -4,7 +4,7 @@ import com.depromeet.threedollar.api.service.store.StoreServiceUtils;
 import com.depromeet.threedollar.api.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
 import com.depromeet.threedollar.api.service.visit.dto.response.VisitHistoriesCursorResponse;
-import com.depromeet.threedollar.domain.common.collection.CursorSupporter;
+import com.depromeet.threedollar.domain.common.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.user.domain.store.Store;
 import com.depromeet.threedollar.domain.user.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.user.domain.visit.VisitHistory;
@@ -33,7 +33,7 @@ public class VisitHistoryService {
     @Transactional(readOnly = true)
     public VisitHistoriesCursorResponse retrieveMyVisitHistories(RetrieveMyVisitHistoriesRequest request, Long userId) {
         List<VisitHistory> visitHistoriesWithNextCursor = visitHistoryRepository.findAllByUserIdUsingCursor(userId, request.getCursor(), request.getSize() + 1);
-        CursorSupporter<VisitHistory> visitHistoriesCursor = CursorSupporter.of(visitHistoriesWithNextCursor, request.getSize());
+        CursorPagingSupporter<VisitHistory> visitHistoriesCursor = CursorPagingSupporter.of(visitHistoriesWithNextCursor, request.getSize());
         return VisitHistoriesCursorResponse.of(visitHistoriesCursor);
     }
 

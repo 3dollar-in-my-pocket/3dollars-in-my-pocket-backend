@@ -13,7 +13,7 @@ import java.util.List;
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class StoreWithVisitsResponse extends AuditingTimeResponse {
+public class StoreWithVisitCountsResponse extends AuditingTimeResponse {
 
     private Long storeId;
     private double latitude;
@@ -26,7 +26,7 @@ public class StoreWithVisitsResponse extends AuditingTimeResponse {
     private VisitHistoryCountsResponse visitHistory;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private StoreWithVisitsResponse(Long storeId, double latitude, double longitude, String storeName, double rating, Boolean isDeleted, long existsVisitsCount, long notExistsVisitsCount) {
+    private StoreWithVisitCountsResponse(Long storeId, double latitude, double longitude, String storeName, double rating, Boolean isDeleted, long existsVisitsCount, long notExistsVisitsCount) {
         this.storeId = storeId;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -36,8 +36,8 @@ public class StoreWithVisitsResponse extends AuditingTimeResponse {
         this.visitHistory = VisitHistoryCountsResponse.of(existsVisitsCount, notExistsVisitsCount);
     }
 
-    public static StoreWithVisitsResponse of(@NotNull Store store, long existsVisitsCount, long notExistsVisitsCount) {
-        StoreWithVisitsResponse response = StoreWithVisitsResponse.builder()
+    public static StoreWithVisitCountsResponse of(@NotNull Store store, long existsVisitsCount, long notExistsVisitsCount) {
+        StoreWithVisitCountsResponse response = StoreWithVisitCountsResponse.builder()
             .storeId(store.getId())
             .latitude(store.getLatitude())
             .longitude(store.getLongitude())

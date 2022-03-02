@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.visit.dto.response;
 
-import com.depromeet.threedollar.domain.common.collection.CursorSupporter;
+import com.depromeet.threedollar.domain.common.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.user.domain.visit.VisitHistory;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -28,21 +28,18 @@ public class VisitHistoriesCursorResponse {
         this.hasNext = LAST_CURSOR != nextCursor;
     }
 
-    public static VisitHistoriesCursorResponse of(CursorSupporter<VisitHistory> visitHistoriesCursor) {
-        if (visitHistoriesCursor.isLastCursor()) {
-            return newLastCursor(visitHistoriesCursor.getItemsInCurrentCursor());
+    public static VisitHistoriesCursorResponse of(CursorPagingSupporter<VisitHistory> visitHistoriesCursor) {
+        List<VisitHistoryWithStoreResponse> visitHistories = convertToResponse(visitHistoriesCursor);
+        if (visitHistoriesCursor.hasNext()) {
+            return new VisitHistoriesCursorResponse(visitHistories, visitHistoriesCursor.getNextCursor().getId());
         }
-        return newCursorHasNext(visitHistoriesCursor.getItemsInCurrentCursor(), visitHistoriesCursor.getNextCursor().getId());
+        return new VisitHistoriesCursorResponse(visitHistories, LAST_CURSOR);
     }
 
-    private static VisitHistoriesCursorResponse newLastCursor(List<VisitHistory> visitHistories) {
-        return newCursorHasNext(visitHistories, LAST_CURSOR);
-    }
-
-    private static VisitHistoriesCursorResponse newCursorHasNext(List<VisitHistory> visitHistories, long nextCursor) {
-        return new VisitHistoriesCursorResponse(visitHistories.stream()
+    private static List<VisitHistoryWithStoreResponse> convertToResponse(CursorPagingSupporter<VisitHistory> visitHistoriesCursor) {
+        return visitHistoriesCursor.getItemsInCurrentCursor().stream()
             .map(VisitHistoryWithStoreResponse::of)
-            .collect(Collectors.toList()), nextCursor);
+            .collect(Collectors.toList());
     }
 
 }

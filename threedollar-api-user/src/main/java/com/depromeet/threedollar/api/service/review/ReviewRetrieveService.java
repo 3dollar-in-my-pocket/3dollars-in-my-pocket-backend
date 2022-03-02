@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.service.review;
 import com.depromeet.threedollar.api.service.review.dto.request.RetrieveMyReviewsRequest;
 import com.depromeet.threedollar.api.service.review.dto.response.ReviewsCursorResponse;
 import com.depromeet.threedollar.api.service.user.UserServiceUtils;
-import com.depromeet.threedollar.domain.common.collection.CursorSupporter;
+import com.depromeet.threedollar.domain.common.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.user.domain.review.Review;
 import com.depromeet.threedollar.domain.user.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.user.collection.store.StoreDictionary;
@@ -29,7 +29,7 @@ public class ReviewRetrieveService {
     public ReviewsCursorResponse retrieveMyReviewHistories(RetrieveMyReviewsRequest request, Long userId) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
         List<Review> reviewsWithNextCursor = reviewRepository.findAllByUserIdUsingCursor(userId, request.getCursor(), request.getSize() + 1);
-        CursorSupporter<Review> reviewsCursor = CursorSupporter.of(reviewsWithNextCursor, request.getSize());
+        CursorPagingSupporter<Review> reviewsCursor = CursorPagingSupporter.of(reviewsWithNextCursor, request.getSize());
         StoreDictionary storeDictionary = findStoresByReviews(reviewsCursor.getItemsInCurrentCursor());
         return ReviewsCursorResponse.of(reviewsCursor, storeDictionary, user);
     }

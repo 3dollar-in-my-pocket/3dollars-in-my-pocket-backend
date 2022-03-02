@@ -52,7 +52,7 @@ public final class StoreAssertionHelper {
         );
     }
 
-    public static void assertStoreWithVisitsResponse(StoreWithVisitsResponse response, Store store) {
+    public static void assertStoreWithVisitsResponse(StoreWithVisitCountsResponse response, Store store) {
         assertAll(
             () -> assertThat(response.getStoreId()).isEqualTo(store.getId()),
             () -> assertThat(response.getStoreName()).isEqualTo(store.getName()),
@@ -64,7 +64,7 @@ public final class StoreAssertionHelper {
         );
     }
 
-    public static void assertStoreWithVisitsResponse(StoreWithVisitsResponse response, Long storeId, double latitude, double longitude, String name, double rating) {
+    public static void assertStoreWithVisitsResponse(StoreWithVisitCountsResponse response, Long storeId, double latitude, double longitude, String name, double rating) {
         assertAll(
             () -> assertThat(response.getStoreId()).isEqualTo(storeId),
             () -> assertThat(response.getLatitude()).isEqualTo(latitude),
