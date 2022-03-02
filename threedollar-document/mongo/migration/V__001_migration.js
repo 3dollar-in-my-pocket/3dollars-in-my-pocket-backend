@@ -50,7 +50,3 @@ db.boss_store_feedback_v1.createIndex({
     "storeId": 1,
     "date": 1
 });
-
-db.boss_store_feedback_v1.createIndex({
-    "date": 1
-});

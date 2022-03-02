@@ -11,6 +11,7 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.document.boss.document.feedback.BossStoreFeedbackRepository
 import com.depromeet.threedollar.document.boss.document.store.BossStoreRepository
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
+import com.depromeet.threedollar.document.boss.document.feedback.BossStoreFeedback
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
@@ -56,8 +57,15 @@ class BossStoreFeedbackService(
 
         return BossStoreFeedbackCursorResponse.of(
             feedbackGroupingDate = feedbacksGroupingDate,
-            nextDate = bossStoreFeedbackRepository.findFirstLessThanDate(feedbacksBetweenDate.minOf { it.date })?.date
+            nextDate = getNextDate(bossStoreId, feedbacksBetweenDate)
         )
+    }
+
+    private fun getNextDate(bossStoreId: String, feedbacks: List<BossStoreFeedback>): LocalDate? {
+        if (feedbacks.isEmpty()) {
+            return null
+        }
+        return bossStoreFeedbackRepository.findFirstLessThanDate(bossStoreId = bossStoreId, date = feedbacks.minOf { it.date })?.date
     }
 
 }
