@@ -26,7 +26,7 @@ class FaqAdminService(
     @CacheEvict(allEntries = true, value = [FAQS])
     @Transactional
     fun updateFaq(faqId: Long, request: UpdateFaqRequest): FaqResponse {
-        val faq = findFaqById(faqRepository, faqId)
+        val faq = findFaqById(faqId)
         faq.update(request.question, request.answer, request.category)
         return FaqResponse.of(faq)
     }
@@ -34,13 +34,13 @@ class FaqAdminService(
     @CacheEvict(allEntries = true, value = [FAQS])
     @Transactional
     fun deleteFaq(faqId: Long) {
-        val faq = findFaqById(faqRepository, faqId)
+        val faq = findFaqById(faqId)
         faqRepository.delete(faq)
     }
 
-}
+    private fun findFaqById(faqId: Long): Faq {
+        return faqRepository.findFaqById(faqId)
+            ?: throw NotFoundException("해당하는 Faq ($faqId)를 찾을 수 없습니다", ErrorCode.NOTFOUND_FAQ)
+    }
 
-fun findFaqById(faqRepository: FaqRepository, faqId: Long): Faq {
-    return faqRepository.findFaqById(faqId)
-        ?: throw NotFoundException("해당하는 Faq ($faqId)를 찾을 수 없습니다", ErrorCode.NOTFOUND_FAQ)
 }
