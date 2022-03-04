@@ -9,15 +9,11 @@ import com.depromeet.threedollar.domain.user.domain.store.StoreCreator
 import com.depromeet.threedollar.domain.user.domain.store.StoreRepository
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpHeaders
 import org.springframework.test.context.TestConstructor
 import org.springframework.test.web.servlet.get
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@AutoConfigureMockMvc
-@SpringBootTest
 internal class UserActivityControllerTest(
     private val storeRepository: StoreRepository,
     private val reviewRepository: ReviewRepository
@@ -40,9 +36,9 @@ internal class UserActivityControllerTest(
             .andExpect {
                 status { isOk() }
                 content {
-                    jsonPath("$.data.userId") { value(testUser.id) }
-                    jsonPath("$.data.name") { value(testUser.name) }
-                    jsonPath("$.data.socialType") { value(testUser.socialType.toString()) }
+                    jsonPath("$.data.userId") { value(user.id) }
+                    jsonPath("$.data.name") { value(user.name) }
+                    jsonPath("$.data.socialType") { value(user.socialType.toString()) }
                 }
             }
     }
@@ -57,7 +53,7 @@ internal class UserActivityControllerTest(
             "http://medal-image-disable.png"
         )
         medalRepository.save(medal)
-        userMedalRepository.save(UserMedalCreator.createActive(medal, testUser))
+        userMedalRepository.save(UserMedalCreator.createActive(medal, user))
 
         // when & then
         mockMvc.get("/v1/user/activity") {
@@ -79,8 +75,8 @@ internal class UserActivityControllerTest(
         // given
         storeRepository.saveAll(
             listOf(
-                StoreCreator.createWithDefaultMenu(testUser.id, "제보한 가게 1"),
-                StoreCreator.createWithDefaultMenu(testUser.id, "제보한 가게 2")
+                StoreCreator.createWithDefaultMenu(user.id, "제보한 가게 1"),
+                StoreCreator.createWithDefaultMenu(user.id, "제보한 가게 2")
             )
         )
 
@@ -100,14 +96,14 @@ internal class UserActivityControllerTest(
     @Test
     fun `유저가 작성한 리뷰 개수 조회한다`() {
         // given
-        val store = StoreCreator.create(testUser.id, "가게")
+        val store = StoreCreator.create(user.id, "가게")
         storeRepository.save(store)
 
         reviewRepository.saveAll(
             listOf(
-                ReviewCreator.create(store.id, testUser.id, "리뷰 1", 4),
-                ReviewCreator.create(store.id, testUser.id, "리뷰 2", 3),
-                ReviewCreator.create(store.id, testUser.id, "리뷰 3", 2)
+                ReviewCreator.create(store.id, user.id, "리뷰 1", 4),
+                ReviewCreator.create(store.id, user.id, "리뷰 2", 3),
+                ReviewCreator.create(store.id, user.id, "리뷰 3", 2)
             )
         )
 
@@ -143,8 +139,8 @@ internal class UserActivityControllerTest(
 
         userMedalRepository.saveAll(
             listOf(
-                UserMedalCreator.createActive(medalOne, testUser),
-                UserMedalCreator.createInActive(medalTwo, testUser)
+                UserMedalCreator.createActive(medalOne, user),
+                UserMedalCreator.createInActive(medalTwo, user)
             )
         )
 

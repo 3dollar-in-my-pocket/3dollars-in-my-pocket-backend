@@ -132,7 +132,7 @@ class StoreControllerTest extends SetupUserControllerTest {
             Set<DayOfTheWeek> appearanceDays = Set.of(DayOfTheWeek.SATURDAY, DayOfTheWeek.MONDAY);
             Set<PaymentMethodType> paymentMethods = Set.of(PaymentMethodType.CASH, PaymentMethodType.ACCOUNT_TRANSFER);
 
-            Store store = StoreCreator.createWithDefaultMenu(testUser.getId(), "storeName");
+            Store store = StoreCreator.createWithDefaultMenu(user.getId(), "storeName");
             storeRepository.save(store);
 
             double latitude = 34.0;
@@ -167,7 +167,7 @@ class StoreControllerTest extends SetupUserControllerTest {
         @Test
         void 가게_삭제_요청시_실제로_삭제되지_않으면_False를_반환한다() throws Exception {
             // given
-            Store store = StoreCreator.create(testUser.getId(), "storeName");
+            Store store = StoreCreator.create(user.getId(), "storeName");
             storeRepository.save(store);
 
             DeleteStoreRequest request = DeleteStoreRequest.testInstance(DeleteReasonType.OVERLAPSTORE);
@@ -182,7 +182,7 @@ class StoreControllerTest extends SetupUserControllerTest {
         @Test
         void 가게_삭제_요청시_실제로_삭제되면_True를_반환한다() throws Exception {
             // given
-            Store store = StoreCreator.create(testUser.getId(), "storeName");
+            Store store = StoreCreator.create(user.getId(), "storeName");
             storeRepository.save(store);
 
             storeDeleteRequestRepository.saveAll(List.of(
@@ -202,7 +202,7 @@ class StoreControllerTest extends SetupUserControllerTest {
         @Test
         void 가게_삭제_요청시_메달을_획득하는_작업이_수행된다() throws Exception {
             // given
-            Store store = StoreCreator.create(testUser.getId(), "storeName");
+            Store store = StoreCreator.create(user.getId(), "storeName");
             storeRepository.save(store);
 
             // when

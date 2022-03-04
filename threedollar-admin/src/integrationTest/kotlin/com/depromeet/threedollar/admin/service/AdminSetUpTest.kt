@@ -5,7 +5,9 @@ import com.depromeet.threedollar.domain.user.domain.admin.AdminRepository
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.TestConstructor
 
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal abstract class AdminSetUpTest {
 

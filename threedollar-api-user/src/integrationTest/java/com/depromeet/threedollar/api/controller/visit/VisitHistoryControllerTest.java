@@ -88,8 +88,8 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
         @Test
         void 내가_방문_인증한_가게들의_정보와_방문_기록을_조회한다() throws Exception {
             // given
-            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
-            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 22));
+            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, user.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
+            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, user.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 22));
 
             visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
 
@@ -111,8 +111,8 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
         @Test
         void SIZE만큼의_방문_기록을_조회힌다_더_존재하면_마지막_방문기록의_ID가_nextCursor_로_넘어간다() throws Exception {
             // given
-            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
-            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 22));
+            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, user.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
+            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, user.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 22));
 
             visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
 
@@ -133,8 +133,8 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
         @Test
         void 커서로_넘어온_방문기록_이전의_방문_기록들을_SIZE_만큼_조회한다() throws Exception {
             // given
-            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
-            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, testUser.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 22));
+            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, user.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
+            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, user.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 22));
 
             visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
 
@@ -171,10 +171,10 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
         @Test
         void 방문한_가게가_삭제됬을경우_해당_정보를_반환하돼_가게는_삭제표시된다() throws Exception {
             // given
-            Store deletedStore = StoreCreator.createDeletedWithDefaultMenu(testUser.getId(), "가게 이름");
+            Store deletedStore = StoreCreator.createDeletedWithDefaultMenu(user.getId(), "가게 이름");
             storeRepository.save(deletedStore);
 
-            VisitHistory visitHistory = VisitHistoryCreator.create(deletedStore, testUser.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
+            VisitHistory visitHistory = VisitHistoryCreator.create(deletedStore, user.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
             visitHistoryRepository.save(visitHistory);
 
             RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(2, null);

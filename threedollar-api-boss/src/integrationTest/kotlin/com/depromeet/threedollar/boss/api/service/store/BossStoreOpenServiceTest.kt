@@ -17,7 +17,7 @@ import java.time.LocalDateTime
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
-class BossStoreOpenServiceTest(
+internal class BossStoreOpenServiceTest(
     private val bossStoreOpenService: BossStoreOpenService,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreLocationRepository: BossStoreLocationRepository,

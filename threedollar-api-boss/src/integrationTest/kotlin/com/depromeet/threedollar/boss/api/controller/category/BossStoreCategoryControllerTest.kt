@@ -13,8 +13,8 @@ import org.springframework.test.context.TestConstructor
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 
-@AutoConfigureMockMvc
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+@AutoConfigureMockMvc
 @SpringBootTest
 internal class BossStoreCategoryControllerTest(
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,

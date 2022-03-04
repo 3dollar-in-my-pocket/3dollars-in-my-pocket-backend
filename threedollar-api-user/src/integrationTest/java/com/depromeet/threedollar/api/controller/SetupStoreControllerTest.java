@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class SetupStoreControllerTest extends SetupUserControllerTest {
+public abstract class SetupStoreControllerTest extends SetupUserControllerTest {
 
     @Autowired
     protected StoreRepository storeRepository;
@@ -26,7 +26,7 @@ public class SetupStoreControllerTest extends SetupUserControllerTest {
 
     @BeforeEach
     void setUpStore() {
-        store = StoreCreator.create(testUser.getId(), "디프만 붕어빵");
+        store = StoreCreator.create(user.getId(), "디프만 붕어빵");
         store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
         storeRepository.save(store);
         storeId = store.getId();

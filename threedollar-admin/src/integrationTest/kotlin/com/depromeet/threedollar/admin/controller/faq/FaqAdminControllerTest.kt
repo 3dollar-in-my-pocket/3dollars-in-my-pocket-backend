@@ -12,19 +12,13 @@ import com.depromeet.threedollar.domain.user.domain.faq.FaqCreator
 import com.depromeet.threedollar.domain.user.domain.faq.FaqRepository
 import org.hamcrest.collection.IsCollectionWithSize.hasSize
 import org.junit.jupiter.api.*
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
-import org.springframework.test.context.TestConstructor
 import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.put
 
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@AutoConfigureMockMvc
-@SpringBootTest
 internal class FaqAdminControllerTest(
     private val faqRepository: FaqRepository
 ) : ControllerTestUtils() {

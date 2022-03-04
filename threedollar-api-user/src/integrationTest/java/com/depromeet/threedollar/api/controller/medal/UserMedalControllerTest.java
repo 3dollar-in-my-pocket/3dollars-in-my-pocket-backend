@@ -41,8 +41,8 @@ class UserMedalControllerTest extends SetupUserControllerTest {
             medalRepository.saveAll(List.of(medalActive, medalInActive));
 
             userMedalRepository.saveAll(List.of(
-                UserMedalCreator.createActive(medalActive, testUser),
-                UserMedalCreator.createInActive(medalInActive, testUser)
+                UserMedalCreator.createActive(medalActive, user),
+                UserMedalCreator.createInActive(medalInActive, user)
             ));
 
             // when & then
@@ -78,7 +78,7 @@ class UserMedalControllerTest extends SetupUserControllerTest {
             Medal medal = MedalCreator.create("활성화중인 메달", "활성중인 메달 설명", "메달 아이콘 A", "비활성화 아이콘 A");
             medalRepository.save(medal);
 
-            userMedalRepository.save(UserMedalCreator.createInActive(medal, testUser));
+            userMedalRepository.save(UserMedalCreator.createInActive(medal, user));
 
             // when & then
             changeRepresentativeMedal(ChangeRepresentativeMedalRequest.testInstance(medal.getId()), token)

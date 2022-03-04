@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.boss.api.controller.feedback
 
+import com.depromeet.threedollar.boss.api.controller.ControllerTestUtils
 import com.depromeet.threedollar.boss.api.service.feedback.dto.response.BossStoreFeedbackCountResponse
 import com.depromeet.threedollar.boss.api.service.feedback.dto.response.BossStoreFeedbackGroupingDateResponse
 import com.depromeet.threedollar.boss.api.service.feedback.dto.response.BossStoreFeedbackTypeResponse
@@ -14,25 +15,18 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
-import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import java.time.LocalDate
 
-@AutoConfigureMockMvc
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@SpringBootTest
 internal class BossStoreFeedbackControllerTest(
     private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,
     private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository,
     private val bossStoreRepository: BossStoreRepository,
-    private val mockMvc: MockMvc
-) {
+) : ControllerTestUtils() {
 
     @AfterEach
     fun cleanUp() {
+        super.cleanup()
         bossStoreFeedbackRepository.deleteAll()
     }
 

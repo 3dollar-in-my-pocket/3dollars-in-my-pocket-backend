@@ -41,9 +41,9 @@ class UserControllerTest extends SetupUserControllerTest {
             getUserInfoApi(token)
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.userId").value(testUser.getId()))
-                .andExpect(jsonPath("$.data.name").value(testUser.getName()))
-                .andExpect(jsonPath("$.data.socialType").value(testUser.getSocialType().name()));
+                .andExpect(jsonPath("$.data.userId").value(user.getId()))
+                .andExpect(jsonPath("$.data.name").value(user.getName()))
+                .andExpect(jsonPath("$.data.socialType").value(user.getSocialType().name()));
         }
 
         @Test
@@ -56,7 +56,7 @@ class UserControllerTest extends SetupUserControllerTest {
 
             Medal medal = MedalCreator.create(medalName, description, activationIconUrl, disableIconUrl);
             medalRepository.save(medal);
-            userMedalRepository.save(UserMedalCreator.createActive(medal, testUser));
+            userMedalRepository.save(UserMedalCreator.createActive(medal, user));
 
             // when & then
             getUserInfoApi(token)
@@ -103,9 +103,9 @@ class UserControllerTest extends SetupUserControllerTest {
             updateUserInfoApi(token, request)
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.userId").value(testUser.getId()))
+                .andExpect(jsonPath("$.data.userId").value(user.getId()))
                 .andExpect(jsonPath("$.data.name").value(name))
-                .andExpect(jsonPath("$.data.socialType").value(testUser.getSocialType().name()));
+                .andExpect(jsonPath("$.data.socialType").value(user.getSocialType().name()));
         }
 
         private ResultActions updateUserInfoApi(String token, UpdateUserInfoRequest request) throws Exception {

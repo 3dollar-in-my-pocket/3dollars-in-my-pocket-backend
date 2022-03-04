@@ -15,17 +15,11 @@ import org.hamcrest.Matchers.hasSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpHeaders
-import org.springframework.test.context.TestConstructor
 import org.springframework.test.web.servlet.get
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-@AutoConfigureMockMvc
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@SpringBootTest
 internal class BossStoreControllerTest(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,

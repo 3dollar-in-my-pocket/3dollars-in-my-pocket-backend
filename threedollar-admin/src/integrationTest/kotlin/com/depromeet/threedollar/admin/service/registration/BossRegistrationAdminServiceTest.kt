@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.admin.service.registration
 
+import com.depromeet.threedollar.admin.service.AdminSetUpTest
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.document.boss.document.account.*
@@ -7,7 +8,6 @@ import com.depromeet.threedollar.document.boss.document.registration.Registratio
 import com.depromeet.threedollar.document.boss.document.registration.RegistrationRepository
 import com.depromeet.threedollar.document.boss.document.registration.RegistrationStatus
 import com.depromeet.threedollar.document.boss.document.store.BossStoreRepository
-import com.depromeet.threedollar.document.boss.document.store.BossStoreStatus
 import com.depromeet.threedollar.document.common.document.BusinessNumber
 import com.depromeet.threedollar.document.common.document.ContactsNumber
 import org.assertj.core.api.Assertions.assertThat
@@ -15,20 +15,17 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
 
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@SpringBootTest
-class BossRegistrationAdminServiceTest(
+internal class BossRegistrationAdminServiceTest(
     private val bossRegistrationAdminService: BossRegistrationAdminService,
     private val registrationRepository: RegistrationRepository,
     private val bossAccountRepository: BossAccountRepository,
     private val bossStoreRepository: BossStoreRepository
-) {
+) : AdminSetUpTest() {
 
     @AfterEach
     fun cleanUp() {
+        super.cleanup()
         registrationRepository.deleteAll()
         bossAccountRepository.deleteAll()
         bossStoreRepository.deleteAll()
