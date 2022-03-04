@@ -7,19 +7,23 @@ import java.time.Duration;
 @Getter
 public enum CacheType {
 
-    FAQS(CacheKey.FAQS, Duration.ofHours(1)),
-    ADVERTISEMENT(CacheKey.ADVERTISEMENT, Duration.ofHours(1)),
-    USER_STORES_COUNTS(CacheKey.USER_STORES_COUNTS, Duration.ofMinutes(15)),
-    USER_REVIEWS_COUNTS(CacheKey.USER_REVIEWS_COUNTS, Duration.ofMinutes(15)),
-    MEDALS(CacheKey.MEDALS, Duration.ofHours(1)),
-    USER_MEDALS(CacheKey.USER_MEDALS, Duration.ofMinutes(15)),
-    BOSS_STORE_CATEGORIES(CacheKey.BOSS_STORE_CATEGORIES, Duration.ofHours(1)),
+    FAQS("FAQ 목록", CacheKey.FAQS, Duration.ofHours(1)),
+    MEDALS("전체 메달 목록", CacheKey.MEDALS, Duration.ofHours(1)),
+    ADVERTISEMENT("활성화 중인 광고 목록", CacheKey.ADVERTISEMENT, Duration.ofMinutes(10)),
+
+    USER_STORES_COUNTS("유저가 등록한 가게 수", CacheKey.USER_STORES_COUNTS, Duration.ofMinutes(10)),
+    USER_REVIEWS_COUNTS("유저가 작성한 리뷰 수", CacheKey.USER_REVIEWS_COUNTS, Duration.ofMinutes(10)),
+    USER_MEDALS("유저가 보유중인 메달 목록", CacheKey.USER_MEDALS, Duration.ofMinutes(10)),
+
+    BOSS_STORE_CATEGORIES("사장님 가게의 카테고리 목록", CacheKey.BOSS_STORE_CATEGORIES, Duration.ofHours(1)),
     ;
 
+    private final String description;
     private final String key;
     private final Duration duration;
 
-    CacheType(String key, Duration duration) {
+    CacheType(String description, String key, Duration duration) {
+        this.description = description;
         this.key = key;
         this.duration = duration;
     }
@@ -27,11 +31,13 @@ public enum CacheType {
     public static class CacheKey {
 
         public static final String FAQS = "FAQS";
+        public static final String MEDALS = "MEDALS";
         public static final String ADVERTISEMENT = "ADVERTISEMENT";
+
         public static final String USER_STORES_COUNTS = "USER_STORES_COUNTS";
         public static final String USER_REVIEWS_COUNTS = "USER_REVIEWS_COUNTS";
-        public static final String MEDALS = "MEDALS";
         public static final String USER_MEDALS = "USER_MEDALS";
+
         public static final String BOSS_STORE_CATEGORIES = "BOSS_STORE_CATEGORIES";
 
     }
