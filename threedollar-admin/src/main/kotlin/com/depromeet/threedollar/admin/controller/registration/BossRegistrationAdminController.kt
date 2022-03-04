@@ -30,6 +30,4 @@ class BossRegistrationAdminController(
         return ApiResponse.SUCCESS
     }
 
-    // TODO: 사장님 계정 가입 신청 목록을 조회하는 API
-
 }

@@ -5,6 +5,7 @@ import com.depromeet.threedollar.admin.service.auth.AuthService
 import com.depromeet.threedollar.admin.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.admin.service.auth.dto.response.LoginResponse
 import com.depromeet.threedollar.application.common.dto.ApiResponse
+import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -17,6 +18,7 @@ class AuthController(
     private val httpSession: HttpSession
 ) {
 
+    @ApiOperation("관리자 계정으로 로그인을 요청합니다")
     @PostMapping("/v1/auth/login")
     fun login(
         @Valid @RequestBody request: LoginRequest

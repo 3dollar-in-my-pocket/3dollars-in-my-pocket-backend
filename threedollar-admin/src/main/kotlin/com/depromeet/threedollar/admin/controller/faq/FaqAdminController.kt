@@ -10,6 +10,7 @@ import com.depromeet.threedollar.application.mapper.faq.dto.response.FaqCategory
 import com.depromeet.threedollar.application.service.faq.FaqService
 import com.depromeet.threedollar.application.service.faq.dto.request.RetrieveFaqsRequest
 import com.depromeet.threedollar.application.service.faq.dto.response.FaqResponse
+import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
@@ -19,6 +20,7 @@ class FaqAdminController(
     private val faqService: FaqService
 ) {
 
+    @ApiOperation("새로운 FAQ를 등록합니다")
     @Auth
     @PostMapping("/v1/faq")
     fun addFaq(
@@ -27,6 +29,7 @@ class FaqAdminController(
         return ApiResponse.success(faqAdminService.addFaq(request))
     }
 
+    @ApiOperation("특정 FAQ를 수정합니다")
     @Auth
     @PutMapping("/v1/faq/{faqId}")
     fun updateFaq(
@@ -36,6 +39,7 @@ class FaqAdminController(
         return ApiResponse.success(faqAdminService.updateFaq(faqId, request))
     }
 
+    @ApiOperation("특정 FAQ를 삭제합니다")
     @Auth
     @DeleteMapping("/v1/faq/{faqId}")
     fun deleteFaq(
@@ -45,6 +49,7 @@ class FaqAdminController(
         return ApiResponse.SUCCESS
     }
 
+    @ApiOperation("FAQ 목록을 조회합니다")
     @GetMapping("/v1/faqs")
     fun retrieveFaqs(
         @Valid request: RetrieveFaqsRequest
@@ -52,6 +57,7 @@ class FaqAdminController(
         return ApiResponse.success(faqService.retrieveFaqsByCategory(request))
     }
 
+    @ApiOperation("FAQ 카테고리 목록을 조회합니다")
     @GetMapping("/v1/faq/categories")
     fun retrieveFaqCategories(): ApiResponse<List<FaqCategoryResponse>> {
         return ApiResponse.success(FaqCategoryMapper.retrieveFaqCategories())

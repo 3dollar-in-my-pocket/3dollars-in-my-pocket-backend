@@ -5,6 +5,7 @@ import com.depromeet.threedollar.admin.service.medal.AdminMedalService
 import com.depromeet.threedollar.admin.service.medal.dto.request.AddMedalRequest
 import com.depromeet.threedollar.admin.service.medal.dto.request.UpdateMedalRequest
 import com.depromeet.threedollar.application.common.dto.ApiResponse
+import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -17,6 +18,7 @@ class AdminMedalController(
     private val adminMedalService: AdminMedalService
 ) {
 
+    @ApiOperation("새로운 메달을 추가합니다")
     @Auth
     @PostMapping("/v1/medal")
     fun addMedal(
@@ -26,6 +28,7 @@ class AdminMedalController(
         return ApiResponse.SUCCESS
     }
 
+    @ApiOperation("특정 메달의 정보를 수정합니다")
     @Auth
     @PutMapping("/v1/medal/{medalId}")
     fun updateMedal(

@@ -6,6 +6,7 @@ import com.depromeet.threedollar.application.provider.upload.UploadProvider
 import com.depromeet.threedollar.application.provider.upload.dto.request.ImageUploadFileRequest
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.common.type.FileType
+import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestPart
@@ -17,6 +18,7 @@ class AdminFileUploadController(
     private val uploadProvider: UploadProvider
 ) {
 
+    @ApiOperation("파일을 업로드합니다")
     @Auth
     @PostMapping("/v1/upload/{fileType}")
     fun uploadFile(
