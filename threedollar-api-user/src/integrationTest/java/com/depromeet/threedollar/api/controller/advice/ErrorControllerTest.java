@@ -24,7 +24,7 @@ class ErrorControllerTest {
     @Test
     void method_not_allowed_handler_test() throws Exception {
         // given & when
-        mockMvc.perform(post("/"))
+        mockMvc.perform(post("/ping"))
             .andDo(print())
             .andExpect(status().isMethodNotAllowed())
             .andExpect(jsonPath("$.resultCode").value(ErrorCode.METHOD_NOT_ALLOWED.getCode()))

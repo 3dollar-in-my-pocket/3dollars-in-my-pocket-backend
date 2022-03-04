@@ -7,8 +7,6 @@ server:
       force: true
     context-path: /admin
   tomcat:
-    threads:
-      max: 200
     connection-timeout: 30s
 
 spring:
@@ -18,7 +16,9 @@ spring:
     include:
       - domain
       - redis
+      - mongo
       - external
+      - swagger
       - secret
 
   servlet:

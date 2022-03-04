@@ -15,8 +15,16 @@ public class GoogleProfileInfoResponse {
 
     private String id;
 
+    private String email;
+
+    private String name;
+
+    public static GoogleProfileInfoResponse testInstance(String id, String email, String name) {
+        return new GoogleProfileInfoResponse(id, email, name);
+    }
+
     public static GoogleProfileInfoResponse testInstance(String id) {
-        return new GoogleProfileInfoResponse(id);
+        return testInstance(id, "test@gmail.com", "테스트");
     }
 
 }

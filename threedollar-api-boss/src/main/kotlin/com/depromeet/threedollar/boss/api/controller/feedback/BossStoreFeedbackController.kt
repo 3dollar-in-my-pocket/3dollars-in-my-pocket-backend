@@ -10,8 +10,9 @@ import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import javax.validation.Valid
+import java.time.LocalDate
 
 @RestController
 class BossStoreFeedbackController(
@@ -30,9 +31,10 @@ class BossStoreFeedbackController(
     @GetMapping("/v1/boss-store/{bossStoreId}/feedbacks/specific")
     fun getBossStoreFeedbacksCountsBetweenDate(
         @PathVariable bossStoreId: String,
-        @Valid request: GetBossStoreFeedbacksCountsBetweenDateRequest
+        @RequestParam startDate: LocalDate,
+        @RequestParam endDate: LocalDate
     ): ApiResponse<BossStoreFeedbackCursorResponse> {
-        request.validateRequestDateTimeInterval()
+        val request = GetBossStoreFeedbacksCountsBetweenDateRequest(startDate = startDate, endDate = endDate)
         return ApiResponse.success(bossStoreFeedbackService.getBossStoreFeedbacksCountsBetweenDate(bossStoreId, request))
     }
 

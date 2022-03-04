@@ -1,31 +1,22 @@
 package com.depromeet.threedollar.admin.service.store.dto.response
 
-import com.depromeet.threedollar.domain.common.collection.CursorSupporter
+import com.depromeet.threedollar.application.common.dto.CursorResponse
+import com.depromeet.threedollar.domain.common.support.CursorPagingSupporter
 import com.depromeet.threedollar.domain.user.domain.store.Store
 
 data class StoresCursorResponse(
     val contents: List<StoreInfoResponse>,
-    val nextCursor: Long
+    val cursor: CursorResponse<Long>
 ) {
 
     companion object {
-        private const val LAST_CURSOR = -1L
-
-        fun of(stores: CursorSupporter<Store>): StoresCursorResponse {
-            if (stores.isLastCursor) {
-                return newLastCursor(stores.itemsInCurrentCursor)
+        fun of(storesCursor: CursorPagingSupporter<Store>): StoresCursorResponse {
+            val stores = storesCursor.itemsInCurrentCursor.map { StoreInfoResponse.of(it) }
+            if (storesCursor.hasNext()) {
+                return StoresCursorResponse(stores, CursorResponse.of(storesCursor.nextCursor.id))
             }
-            return newCursorHasNext(stores.itemsInCurrentCursor, stores.nextCursor.id)
+            return StoresCursorResponse(stores, CursorResponse.newLastCursor())
         }
-
-        private fun newLastCursor(stores: List<Store>): StoresCursorResponse {
-            return newCursorHasNext(stores, LAST_CURSOR)
-        }
-
-        private fun newCursorHasNext(stores: List<Store>, nextCursor: Long): StoresCursorResponse {
-            return StoresCursorResponse(stores.map { StoreInfoResponse.of(it) }, nextCursor)
-        }
-
     }
 
 }

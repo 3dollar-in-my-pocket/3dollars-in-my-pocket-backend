@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.store.dto.response;
 
-import com.depromeet.threedollar.domain.common.collection.CursorSupporter;
+import com.depromeet.threedollar.domain.common.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.user.domain.store.Store;
 import com.depromeet.threedollar.domain.user.collection.visit.VisitHistoryCounter;
 import lombok.AccessLevel;
@@ -19,35 +19,29 @@ public class StoresCursorResponse {
 
     private static final long LAST_CURSOR = -1L;
 
-    private List<StoreWithVisitsResponse> contents = new ArrayList<>();
+    private List<StoreWithVisitCountsResponse> contents = new ArrayList<>();
     private long totalElements;
     private long nextCursor;
+    private boolean hasNext;
 
-    private StoresCursorResponse(List<StoreWithVisitsResponse> contents, long totalElements, long nextCursor) {
+    private StoresCursorResponse(List<StoreWithVisitCountsResponse> contents, long totalElements, long nextCursor) {
         this.contents = contents;
         this.totalElements = totalElements;
         this.nextCursor = nextCursor;
+        this.hasNext = LAST_CURSOR != nextCursor;
     }
 
-    public static StoresCursorResponse of(CursorSupporter<Store> storesCursor, VisitHistoryCounter visitHistoriesCounts, long totalElements) {
-        if (storesCursor.isLastCursor()) {
-            return StoresCursorResponse.newLastCursor(storesCursor.getItemsInCurrentCursor(), visitHistoriesCounts, totalElements);
+    public static StoresCursorResponse of(CursorPagingSupporter<Store> storesCursor, VisitHistoryCounter visitHistoriesCounts, long totalElements) {
+        List<StoreWithVisitCountsResponse> storesWithVisitCounts = combineStoreWithVisitsResponse(storesCursor.getItemsInCurrentCursor(), visitHistoriesCounts);
+        if (storesCursor.hasNext()) {
+            return new StoresCursorResponse(storesWithVisitCounts, totalElements, storesCursor.getNextCursor().getId());
         }
-        return StoresCursorResponse.newCursorHasNext(storesCursor.getItemsInCurrentCursor(),
-            visitHistoriesCounts, totalElements, storesCursor.getNextCursor().getId());
+        return new StoresCursorResponse(storesWithVisitCounts, totalElements, LAST_CURSOR);
     }
 
-    private static StoresCursorResponse newLastCursor(List<Store> stores, VisitHistoryCounter collection, long totalElements) {
-        return newCursorHasNext(stores, collection, totalElements, LAST_CURSOR);
-    }
-
-    private static StoresCursorResponse newCursorHasNext(List<Store> stores, VisitHistoryCounter collection, long totalElements, long nextCursor) {
-        return new StoresCursorResponse(getContents(stores, collection), totalElements, nextCursor);
-    }
-
-    private static List<StoreWithVisitsResponse> getContents(List<Store> stores, VisitHistoryCounter collection) {
+    private static List<StoreWithVisitCountsResponse> combineStoreWithVisitsResponse(List<Store> stores, VisitHistoryCounter collection) {
         return stores.stream()
-            .map(store -> StoreWithVisitsResponse.of(store, collection.getStoreExistsVisitsCount(store.getId()), collection.getStoreNotExistsVisitsCount(store.getId())))
+            .map(store -> StoreWithVisitCountsResponse.of(store, collection.getStoreExistsVisitsCount(store.getId()), collection.getStoreNotExistsVisitsCount(store.getId())))
             .collect(Collectors.toList());
     }
 

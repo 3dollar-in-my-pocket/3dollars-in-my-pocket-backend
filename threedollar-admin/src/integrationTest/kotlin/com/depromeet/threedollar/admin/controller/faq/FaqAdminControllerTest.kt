@@ -59,7 +59,7 @@ internal class FaqAdminControllerTest(
                         jsonPath("$.data.faqId") { isNotEmpty() }
                         jsonPath("$.data.question") { value(request.question) }
                         jsonPath("$.data.answer") { value(request.answer) }
-                        jsonPath("$.data.category") { value(request.category?.name) }
+                        jsonPath("$.data.category") { value(request.category.name) }
                     }
                 }
         }

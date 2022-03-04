@@ -22,7 +22,7 @@ class RequestLoggingFilter : Filter {
             return
         }
 
-        val requestWrapper = ContentCachingRequestWrapper(request as HttpServletRequest)
+        val requestWrapper = ContentCachingRequestWrapper(request)
         val responseWrapper = ContentCachingResponseWrapper(response as HttpServletResponse)
         val start = System.currentTimeMillis()
 

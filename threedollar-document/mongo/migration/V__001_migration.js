@@ -35,3 +35,18 @@ db.boss_registration_v1.createIndex({
     unique: true
 });
 
+
+// boss_store_feedback_v1
+db.boss_store_feedback_v1.createIndex({
+    "storeId": 1,
+    "userId": 1,
+    "feedbackType": 1,
+    "date": 1
+}, {
+    unique: true
+});
+
+db.boss_store_feedback_v1.createIndex({
+    "storeId": 1,
+    "date": 1
+});

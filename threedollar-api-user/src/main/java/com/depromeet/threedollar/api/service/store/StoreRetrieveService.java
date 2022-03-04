@@ -9,7 +9,7 @@ import com.depromeet.threedollar.api.service.store.dto.response.StoreDetailRespo
 import com.depromeet.threedollar.api.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.api.service.store.dto.response.StoresCursorResponse;
 import com.depromeet.threedollar.api.service.store.dto.response.CheckExistStoresNearbyResponse;
-import com.depromeet.threedollar.domain.common.collection.CursorSupporter;
+import com.depromeet.threedollar.domain.common.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.user.collection.user.UserDictionary;
 import com.depromeet.threedollar.domain.user.collection.visit.VisitHistoryCounter;
 import com.depromeet.threedollar.domain.user.domain.review.Review;
@@ -81,7 +81,7 @@ public class StoreRetrieveService {
     @Transactional(readOnly = true)
     public StoresCursorResponse retrieveMyReportedStoreHistories(RetrieveMyStoresRequest request, Long userId) {
         List<Store> storesWithNextCursor = storeRepository.findAllByUserIdUsingCursor(userId, request.getCursor(), request.getSize() + 1);
-        CursorSupporter<Store> storesCursor = CursorSupporter.of(storesWithNextCursor, request.getSize());
+        CursorPagingSupporter<Store> storesCursor = CursorPagingSupporter.of(storesWithNextCursor, request.getSize());
         VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(storesCursor.getItemsInCurrentCursor());
         return StoresCursorResponse.of(storesCursor, visitHistoriesCounter, storeRepository.findCountsByUserId(userId));
     }

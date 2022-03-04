@@ -9,7 +9,7 @@ data class GetBossStoreFeedbacksCountsBetweenDateRequest(
     val endDate: LocalDate
 ) {
 
-    fun validateRequestDateTimeInterval() {
+    init {
         if (startDate.isAfter(endDate)) {
             throw InvalidException("시작 날짜($startDate)가 종료 날짜($endDate)보다 이후일 수 없습니다", ErrorCode.INVALID_DATE_TIME_INTERVAL)
         }

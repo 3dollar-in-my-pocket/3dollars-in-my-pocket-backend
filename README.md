@@ -46,10 +46,11 @@
 - APM 도구: NewRelic
 - 부하 테스트: locust
 
-| 서비스     | 운영 환경                                                                                                                               | 개발 환경                                                                                                                                    |
-|---------|-------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
-| 유저 서비스  | ![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://threedollars.co.kr/api/ping) | ![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://dev.threedollars.co.kr/api/ping)  |
-| 사장님 서비스 | 개발 중                                                                                                                                | ![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://dev.threedollars.co.kr/boss/ping) |
+| 서비스     | 운영 환경                                                                                                                               | 개발 환경                                                                                                                                     |
+|---------|-------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| 유저 서비스  | ![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://threedollars.co.kr/api/ping) | ![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://dev.threedollars.co.kr/api/ping)   |
+| 사장님 서비스 | 개발 중                                                                                                                                | ![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://dev.threedollars.co.kr/boss/ping)  |
+| 관리자 서비스 | 개발 중                                                                                                                                | ![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://dev.threedollars.co.kr/admin/ping) |
 
 ## Contacts
 - 3dollarinmypocket@gmail.com (가슴속 삼천원 대표 메일)

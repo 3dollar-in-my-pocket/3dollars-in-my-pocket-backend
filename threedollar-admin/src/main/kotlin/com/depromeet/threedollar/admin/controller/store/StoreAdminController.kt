@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.admin.controller.store
 
+import com.depromeet.threedollar.admin.config.interceptor.Auth
 import com.depromeet.threedollar.admin.service.store.StoreAdminService
 import com.depromeet.threedollar.admin.service.store.dto.request.RetrieveLatestStoresRequest
 import com.depromeet.threedollar.admin.service.store.dto.request.RetrieveReportedStoresRequest
@@ -15,6 +16,7 @@ class StoreAdminController(
     private val storeAdminService: StoreAdminService
 ) {
 
+    @Auth
     @GetMapping("/v1/stores/reported")
     fun retrieveReportedStores(
         @Valid request: RetrieveReportedStoresRequest
@@ -22,6 +24,7 @@ class StoreAdminController(
         return ApiResponse.success(storeAdminService.retrieveReportedStores(request))
     }
 
+    @Auth
     @GetMapping("/v1/stores/latest")
     fun retrieveLatestStores(
         @Valid request: RetrieveLatestStoresRequest

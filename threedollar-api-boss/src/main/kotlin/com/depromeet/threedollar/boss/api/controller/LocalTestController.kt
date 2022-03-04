@@ -24,6 +24,7 @@ import com.depromeet.threedollar.document.common.document.BusinessNumber
 import com.depromeet.threedollar.document.common.document.ContactsNumber
 import com.depromeet.threedollar.document.common.document.TimeInterval
 import io.swagger.annotations.ApiOperation
+import org.springframework.context.annotation.Profile
 import org.springframework.data.geo.Point
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -35,6 +36,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 import javax.servlet.http.HttpSession
 
+@Profile("local", "local-docker", "integration-test", "dev")
 @RestController
 class LocalTestController(
     private val bossAccountRepository: BossAccountRepository,

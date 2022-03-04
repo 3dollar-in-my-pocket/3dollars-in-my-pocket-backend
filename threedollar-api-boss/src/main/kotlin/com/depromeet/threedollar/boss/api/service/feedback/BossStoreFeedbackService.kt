@@ -11,6 +11,7 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.document.boss.document.feedback.BossStoreFeedbackRepository
 import com.depromeet.threedollar.document.boss.document.store.BossStoreRepository
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
+import com.depromeet.threedollar.document.boss.document.feedback.BossStoreFeedback
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
@@ -25,14 +26,14 @@ class BossStoreFeedbackService(
     @Transactional
     fun addFeedback(bossStoreId: String, request: AddBossStoreFeedbackRequest, userId: Long, date: LocalDate) {
         BossStoreServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
-        validateNotExistsFeedbackOnDate(storeId = bossStoreId, userId = userId, date = date)
+        validateNotExistsFeedbackOnDate(storeId = bossStoreId, userId = userId, feedbackType = request.feedbackType, date = date)
         bossStoreFeedbackRepository.save(request.toDocument(bossStoreId, userId, date))
         bossStoreFeedbackCountRepository.increment(bossStoreId, request.feedbackType)
     }
 
-    private fun validateNotExistsFeedbackOnDate(storeId: String, userId: Long, date: LocalDate) {
-        if (bossStoreFeedbackRepository.existsByStoreIdAndUserIdAndDate(storeId, userId, date)) {
-            throw ConflictException("해당 날짜($date)에 유저($userId)는 해당 가게($storeId)에 이미 피드백을 추가하였습니다", ErrorCode.CONFLICT_BOSS_STORE_FEEDBACK)
+    private fun validateNotExistsFeedbackOnDate(storeId: String, userId: Long, feedbackType: BossStoreFeedbackType, date: LocalDate) {
+        if (bossStoreFeedbackRepository.existsByStoreIdAndUserIdAndFeedbackTypeAndDate(storeId, userId, feedbackType, date)) {
+            throw ConflictException("해당 날짜($date)에 유저($userId)는 해당 가게($storeId)에 이미 해당 피드백(${feedbackType})을 추가하였습니다", ErrorCode.CONFLICT_BOSS_STORE_FEEDBACK)
         }
     }
 
@@ -56,8 +57,15 @@ class BossStoreFeedbackService(
 
         return BossStoreFeedbackCursorResponse.of(
             feedbackGroupingDate = feedbacksGroupingDate,
-            nextDate = bossStoreFeedbackRepository.findFirstLessThanDate(feedbacksBetweenDate.minOf { it.date })?.date
+            nextDate = getNextDate(bossStoreId, feedbacksBetweenDate)
         )
+    }
+
+    private fun getNextDate(bossStoreId: String, feedbacks: List<BossStoreFeedback>): LocalDate? {
+        if (feedbacks.isEmpty()) {
+            return null
+        }
+        return bossStoreFeedbackRepository.findFirstLessThanDate(bossStoreId = bossStoreId, date = feedbacks.minOf { it.date })?.date
     }
 
 }

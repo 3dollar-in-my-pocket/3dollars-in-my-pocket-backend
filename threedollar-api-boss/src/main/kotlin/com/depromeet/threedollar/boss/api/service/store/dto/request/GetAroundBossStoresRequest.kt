@@ -4,5 +4,5 @@ import javax.validation.constraints.PositiveOrZero
 
 data class GetAroundBossStoresRequest(
     @field:PositiveOrZero(message = "{store.distance.positiveOrZero}")
-    val distanceKm: Double
+    val distanceKm: Double = -0.1
 )

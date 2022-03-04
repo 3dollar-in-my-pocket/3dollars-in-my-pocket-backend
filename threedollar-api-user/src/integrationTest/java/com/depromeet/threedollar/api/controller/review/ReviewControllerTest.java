@@ -174,6 +174,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(review3.getId()),
+                () -> assertThat(response.getData().isHasNext()).isTrue(),
                 () -> assertThat(response.getData().getContents()).hasSize(2),
 
                 () -> assertReviewDetailInfoResponse(response.getData().getContents().get(0), review4, store, testUser),
@@ -198,6 +199,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(review2.getId()),
+                () -> assertThat(response.getData().isHasNext()).isTrue(),
                 () -> assertThat(response.getData().getContents()).hasSize(2),
 
                 () -> assertReviewDetailInfoResponse(response.getData().getContents().get(0), review3, store, testUser),
@@ -222,6 +224,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(review2.getId()),
+                () -> assertThat(response.getData().isHasNext()).isTrue(),
                 () -> assertThat(response.getData().getContents()).hasSize(2),
 
                 () -> assertReviewDetailInfoResponse(response.getData().getContents().get(0), review3, store, testUser),
@@ -246,6 +249,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
+                () -> assertThat(response.getData().isHasNext()).isFalse(),
                 () -> assertThat(response.getData().getContents()).hasSize(2),
 
                 () -> assertReviewDetailInfoResponse(response.getData().getContents().get(0), review2, store, testUser),
@@ -270,6 +274,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
+                () -> assertThat(response.getData().isHasNext()).isFalse(),
                 () -> assertThat(response.getData().getContents()).hasSize(1),
 
                 () -> assertReviewDetailInfoResponse(response.getData().getContents().get(0), review1, store, testUser)
@@ -290,6 +295,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
+                () -> assertThat(response.getData().isHasNext()).isFalse(),
                 () -> assertThat(response.getData().getContents()).isEmpty()
             );
         }
@@ -311,8 +317,8 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
+                () -> assertThat(response.getData().isHasNext()).isFalse(),
                 () -> assertThat(response.getData().getContents()).hasSize(1),
-
                 () -> assertReviewDetailInfoResponse(response.getData().getContents().get(0), review, deletedStore, testUser)
             );
         }

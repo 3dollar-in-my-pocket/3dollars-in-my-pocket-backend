@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.service.review.dto.response;
 
-import com.depromeet.threedollar.domain.common.collection.CursorSupporter;
+import com.depromeet.threedollar.domain.common.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.user.domain.review.Review;
 import com.depromeet.threedollar.domain.user.collection.store.StoreDictionary;
 import com.depromeet.threedollar.domain.user.domain.user.User;
@@ -23,28 +23,26 @@ public class ReviewsCursorResponse {
 
     private List<ReviewDetailResponse> contents = new ArrayList<>();
     private long nextCursor;
+    private boolean hasNext;
 
     private ReviewsCursorResponse(List<ReviewDetailResponse> contents, long nextCursor) {
         this.contents = contents;
         this.nextCursor = nextCursor;
+        this.hasNext = LAST_CURSOR != nextCursor;
     }
 
-    public static ReviewsCursorResponse of(@NotNull CursorSupporter<Review> reviewsCursor, @NotNull StoreDictionary storeDictionary, @NotNull User user) {
-        if (reviewsCursor.isLastCursor()) {
-            return newLastCursor(reviewsCursor.getItemsInCurrentCursor(), storeDictionary, user);
+    public static ReviewsCursorResponse of(@NotNull CursorPagingSupporter<Review> reviewsCursor, @NotNull StoreDictionary storeDictionary, @NotNull User user) {
+        List<ReviewDetailResponse> reviews = combineReviewDetailResponse(reviewsCursor.getItemsInCurrentCursor(), storeDictionary, user);
+        if (reviewsCursor.hasNext()) {
+            return new ReviewsCursorResponse(reviews, reviewsCursor.getNextCursor().getId());
         }
-        return newCursorHasNext(reviewsCursor.getItemsInCurrentCursor(), storeDictionary, user, reviewsCursor.getNextCursor().getId());
+        return new ReviewsCursorResponse(reviews, LAST_CURSOR);
     }
 
-    private static ReviewsCursorResponse newLastCursor(List<Review> reviews, @NotNull StoreDictionary storeDictionary, @NotNull User user) {
-        return newCursorHasNext(reviews, storeDictionary, user, LAST_CURSOR);
-    }
-
-    private static ReviewsCursorResponse newCursorHasNext(List<Review> reviews, @NotNull StoreDictionary storeDictionary, @NotNull User user, long nextCursor) {
-        List<ReviewDetailResponse> contents = reviews.stream()
+    private static List<ReviewDetailResponse> combineReviewDetailResponse(List<Review> reviews, StoreDictionary storeDictionary, User user) {
+        return reviews.stream()
             .map(review -> ReviewDetailResponse.of(review, storeDictionary.getStore(review.getStoreId()), user))
             .collect(Collectors.toList());
-        return new ReviewsCursorResponse(contents, nextCursor);
     }
 
 }

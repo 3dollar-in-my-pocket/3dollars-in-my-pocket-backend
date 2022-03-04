@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.admin.controller.faq
 
+import com.depromeet.threedollar.admin.config.interceptor.Auth
 import com.depromeet.threedollar.admin.service.faq.FaqAdminService
 import com.depromeet.threedollar.admin.service.faq.dto.request.AddFaqRequest
 import com.depromeet.threedollar.admin.service.faq.dto.request.UpdateFaqRequest
@@ -18,6 +19,7 @@ class FaqAdminController(
     private val faqService: FaqService
 ) {
 
+    @Auth
     @PostMapping("/v1/faq")
     fun addFaq(
         @Valid @RequestBody request: AddFaqRequest
@@ -25,6 +27,7 @@ class FaqAdminController(
         return ApiResponse.success(faqAdminService.addFaq(request))
     }
 
+    @Auth
     @PutMapping("/v1/faq/{faqId}")
     fun updateFaq(
         @PathVariable faqId: Long,
@@ -33,6 +36,7 @@ class FaqAdminController(
         return ApiResponse.success(faqAdminService.updateFaq(faqId, request))
     }
 
+    @Auth
     @DeleteMapping("/v1/faq/{faqId}")
     fun deleteFaq(
         @PathVariable faqId: Long
