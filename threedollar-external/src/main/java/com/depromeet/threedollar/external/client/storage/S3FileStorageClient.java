@@ -5,8 +5,8 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
-import com.depromeet.threedollar.external.client.storage.properties.AmazonCloudFrontProperties;
-import com.depromeet.threedollar.external.client.storage.properties.AmazonS3Properties;
+import com.depromeet.threedollar.external.client.storage.property.AmazonCloudFrontProperty;
+import com.depromeet.threedollar.external.client.storage.property.AmazonS3Property;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
@@ -21,13 +21,13 @@ public class S3FileStorageClient implements FileStorageClient {
 
     private final AmazonS3 amazonS3;
 
-    private final AmazonS3Properties s3Properties;
-    private final AmazonCloudFrontProperties cloudFrontProperties;
+    private final AmazonS3Property s3Property;
+    private final AmazonCloudFrontProperty cloudFrontProperty;
 
     @Override
     public void uploadFile(@NotNull MultipartFile file, @NotNull String fileName) {
         try (InputStream inputStream = file.getInputStream()) {
-            amazonS3.putObject(new PutObjectRequest(s3Properties.getBucket(), fileName, inputStream, createObjectMetadata(file))
+            amazonS3.putObject(new PutObjectRequest(s3Property.getBucket(), fileName, inputStream, createObjectMetadata(file))
                 .withCannedAcl(CannedAccessControlList.PublicRead));
         } catch (IOException e) {
             throw new InternalServerException(String.format("파일 (%s) 입력 스트림을 가져오는 중 에러가 발생하였습니다", file.getOriginalFilename()));
@@ -43,7 +43,7 @@ public class S3FileStorageClient implements FileStorageClient {
 
     @Override
     public String getFileUrl(@NotNull String fileName) {
-        return cloudFrontProperties.getFullPathFileUrl(fileName);
+        return cloudFrontProperty.getFullPathFileUrl(fileName);
     }
 
 }

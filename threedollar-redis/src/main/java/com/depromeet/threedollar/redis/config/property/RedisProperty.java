@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.external.client.storage.properties;
+package com.depromeet.threedollar.redis.config.property;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,13 +11,9 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @ConstructorBinding
-@ConfigurationProperties("cloud.aws.cloudfront")
-public class AmazonCloudFrontProperties {
+@ConfigurationProperties("spring.redis")
+public class RedisProperty {
 
-    private final String url;
-
-    public String getFullPathFileUrl(String fileName) {
-        return this.url.concat(fileName);
-    }
+    private final String host;
 
 }

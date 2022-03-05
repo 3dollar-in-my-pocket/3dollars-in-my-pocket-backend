@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.external.client.apple.dto.properties;
+package com.depromeet.threedollar.external.client.apple.dto.property;
 
 import lombok.*;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @ConstructorBinding
 @ConfigurationProperties("apple")
-public class AppleAuthProperties {
+public class AppleAuthProperty {
 
     private final String issuer;
 

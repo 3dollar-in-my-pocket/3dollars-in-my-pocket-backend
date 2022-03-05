@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.redis.config;
 
 import com.depromeet.threedollar.common.utils.ProcessUtils;
+import com.depromeet.threedollar.redis.config.property.RedisProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +25,7 @@ import java.io.IOException;
 @Configuration
 public class EmbeddedRedisConfig {
 
-    private final RedisProperties properties;
+    private final RedisProperty property;
 
     private RedisServer redisServer;
 
@@ -54,7 +55,7 @@ public class EmbeddedRedisConfig {
 
     @Bean
     public RedisConnectionFactory embeddedRedisConnectionFactory() {
-        return new LettuceConnectionFactory(properties.getHost(), port);
+        return new LettuceConnectionFactory(property.getHost(), port);
     }
 
 }
