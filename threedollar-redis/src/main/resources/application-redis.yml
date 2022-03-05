@@ -11,6 +11,7 @@ spring:
   cache:
     type: none
 
+
 ---
 spring.config:
   activate:
