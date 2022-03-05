@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.common.event;
+package com.depromeet.threedollar.common.model.event;
 
 import com.depromeet.threedollar.common.type.ApplicationType;
 import lombok.AccessLevel;

@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.listener.slack;
 
-import com.depromeet.threedollar.domain.common.event.ApplicationStateChangedEvent;
-import com.depromeet.threedollar.domain.common.event.ServerExceptionOccurredEvent;
+import com.depromeet.threedollar.common.model.event.ApplicationStateChangedEvent;
+import com.depromeet.threedollar.common.model.event.ServerExceptionOccurredEvent;
 import com.depromeet.threedollar.external.client.slack.SlackWebhookApiClient;
 import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest;
 import lombok.RequiredArgsConstructor;

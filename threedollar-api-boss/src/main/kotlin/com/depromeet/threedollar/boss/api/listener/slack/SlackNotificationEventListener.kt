@@ -2,7 +2,7 @@ package com.depromeet.threedollar.boss.api.listener.slack
 
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.document.boss.event.registration.NewBossAppliedRegistrationEvent
-import com.depromeet.threedollar.domain.common.event.ServerExceptionOccurredEvent
+import com.depromeet.threedollar.common.model.event.ServerExceptionOccurredEvent
 import com.depromeet.threedollar.external.client.slack.SlackWebhookApiClient
 import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest
 import com.depromeet.threedollar.external.client.slack.type.SlackNotificationMessageType

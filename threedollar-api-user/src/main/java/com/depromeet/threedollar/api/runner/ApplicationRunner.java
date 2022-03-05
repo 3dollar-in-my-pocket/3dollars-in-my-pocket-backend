@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.runner;
 
 import com.depromeet.threedollar.common.type.ApplicationType;
-import com.depromeet.threedollar.domain.common.event.ApplicationStateChangedEvent;
+import com.depromeet.threedollar.common.model.event.ApplicationStateChangedEvent;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.CommandLineRunner;

@@ -7,7 +7,7 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode.*
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.common.utils.UserMetaSessionUtils
 import com.depromeet.threedollar.common.utils.logger
-import com.depromeet.threedollar.domain.common.event.ServerExceptionOccurredEvent
+import com.depromeet.threedollar.common.model.event.ServerExceptionOccurredEvent
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import org.slf4j.Logger

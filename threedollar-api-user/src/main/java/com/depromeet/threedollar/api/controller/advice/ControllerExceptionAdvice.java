@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.controller.advice;
 
 import com.depromeet.threedollar.common.type.ApplicationType;
 import com.depromeet.threedollar.common.utils.UserMetaSessionUtils;
-import com.depromeet.threedollar.domain.common.event.ServerExceptionOccurredEvent;
+import com.depromeet.threedollar.common.model.event.ServerExceptionOccurredEvent;
 import com.depromeet.threedollar.application.common.dto.ApiResponse;
 import com.depromeet.threedollar.common.exception.type.ErrorCode;
 import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseException;

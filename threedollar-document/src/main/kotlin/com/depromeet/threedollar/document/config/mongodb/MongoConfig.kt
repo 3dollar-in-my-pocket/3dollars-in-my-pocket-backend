@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.document.config
+package com.depromeet.threedollar.document.config.mongodb
 
 import com.depromeet.threedollar.document.ThreeDollarDocumentRoot
 import org.springframework.context.annotation.Bean

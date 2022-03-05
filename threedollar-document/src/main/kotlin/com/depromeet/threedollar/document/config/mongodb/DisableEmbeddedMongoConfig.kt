@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.document.config
+package com.depromeet.threedollar.document.config.mongodb
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration
