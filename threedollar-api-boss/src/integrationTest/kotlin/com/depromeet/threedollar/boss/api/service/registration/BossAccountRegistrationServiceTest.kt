@@ -1,50 +1,43 @@
-package com.depromeet.threedollar.boss.api.service.auth
+package com.depromeet.threedollar.boss.api.service.registration
 
 import com.depromeet.threedollar.boss.api.service.auth.dto.request.SignupRequest
-import com.depromeet.threedollar.boss.api.service.store.BossStoreService
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.document.boss.document.account.*
+import com.depromeet.threedollar.document.boss.document.account.BossAccountCreator
+import com.depromeet.threedollar.document.boss.document.account.BossAccountRepository
+import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategoryCreator
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategoryRepository
-import com.depromeet.threedollar.document.boss.document.registration.*
-import com.depromeet.threedollar.document.boss.document.account.BossWithdrawalAccountRepository
-import com.depromeet.threedollar.document.common.document.BusinessNumber
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
+import com.depromeet.threedollar.document.boss.document.registration.RegistrationCreator
+import com.depromeet.threedollar.document.boss.document.registration.RegistrationRepository
+import com.depromeet.threedollar.document.boss.document.registration.RegistrationStatus
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import org.mockito.Mockito.*
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.TestConstructor
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
-internal class SignupServiceTest(
-    private val authCommonService: AuthCommonService,
+internal class BossAccountRegistrationServiceTest(
+    private val bossAccountRegistrationService: BossAccountRegistrationService,
     private val registrationRepository: RegistrationRepository,
-    private val bossWithdrawalAccountRepository: BossWithdrawalAccountRepository,
     private val bossAccountRepository: BossAccountRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository
 ) {
-
-    @MockBean
-    private lateinit var bossStoreService: BossStoreService
 
     @AfterEach
     fun cleanUp() {
         registrationRepository.deleteAll()
         bossAccountRepository.deleteAll()
         bossStoreCategoryRepository.deleteAll()
-        bossWithdrawalAccountRepository.deleteAll()
     }
 
     @Nested
-    inner class SignUp {
+    inner class 계정_신규_가입_신청 {
 
         @Test
         fun `신규 가입을 신청하면 Registration 데이터가 WAITING 상태로 추가된다`() {
@@ -70,24 +63,24 @@ internal class SignupServiceTest(
             )
 
             // when
-            authCommonService.signUp(request, socialId)
+            bossAccountRegistrationService.applyForBossAccountRegistration(request, socialId)
 
             // then
             val registrations = registrationRepository.findAll()
             assertAll({
-                assertThat(registrations).hasSize(1)
-                assertThat(registrations[0].status).isEqualTo(RegistrationStatus.WAITING)
+                Assertions.assertThat(registrations).hasSize(1)
+                Assertions.assertThat(registrations[0].status).isEqualTo(RegistrationStatus.WAITING)
                 registrations[0].boss.let {
-                    assertThat(it.name).isEqualTo(bossName)
-                    assertThat(it.socialInfo.socialId).isEqualTo(socialId)
-                    assertThat(it.socialInfo.socialType).isEqualTo(socialType)
-                    assertThat(it.businessNumber.getNumberWithSeparator()).isEqualTo(businessNumber)
+                    Assertions.assertThat(it.name).isEqualTo(bossName)
+                    Assertions.assertThat(it.socialInfo.socialId).isEqualTo(socialId)
+                    Assertions.assertThat(it.socialInfo.socialType).isEqualTo(socialType)
+                    Assertions.assertThat(it.businessNumber.getNumberWithSeparator()).isEqualTo(businessNumber)
                 }
                 registrations[0].store.let {
-                    assertThat(it.name).isEqualTo(storeName)
-                    assertThat(it.categoriesIds).containsExactlyInAnyOrderElementsOf(categoriesIds)
-                    assertThat(it.contactsNumber.getNumberWithSeparator()).isEqualTo(contactsNumber)
-                    assertThat(it.certificationPhotoUrl).isEqualTo(certificationPhotoUrl)
+                    Assertions.assertThat(it.name).isEqualTo(storeName)
+                    Assertions.assertThat(it.categoriesIds).containsExactlyInAnyOrderElementsOf(categoriesIds)
+                    Assertions.assertThat(it.contactsNumber.getNumberWithSeparator()).isEqualTo(contactsNumber)
+                    Assertions.assertThat(it.certificationPhotoUrl).isEqualTo(certificationPhotoUrl)
                 }
             })
         }
@@ -123,7 +116,7 @@ internal class SignupServiceTest(
             )
 
             // when & then
-            assertThatThrownBy { authCommonService.signUp(request, socialId) }.isInstanceOf(ForbiddenException::class.java)
+            Assertions.assertThatThrownBy { bossAccountRegistrationService.applyForBossAccountRegistration(request, socialId) }.isInstanceOf(ForbiddenException::class.java)
         }
 
         @Test
@@ -152,7 +145,7 @@ internal class SignupServiceTest(
             )
 
             // when & then
-            assertThatThrownBy { authCommonService.signUp(request, socialId) }.isInstanceOf(ConflictException::class.java)
+            Assertions.assertThatThrownBy { bossAccountRegistrationService.applyForBossAccountRegistration(request, socialId) }.isInstanceOf(ConflictException::class.java)
         }
 
         @Test
@@ -172,87 +165,13 @@ internal class SignupServiceTest(
             )
 
             // when & then
-            assertThatThrownBy {
-                authCommonService.signUp(request, socialId = "socialId")
+            Assertions.assertThatThrownBy {
+                bossAccountRegistrationService.applyForBossAccountRegistration(request, socialId = "socialId")
             }.isInstanceOf(NotFoundException::class.java)
         }
 
     }
 
-    @Nested
-    inner class SignOut {
-
-        @Test
-        fun `회원탈퇴시 BossAccount 계정 정보가 삭제된다`() {
-            // given
-            val bossAccount = BossAccountCreator.create(
-                socialId = "socialId",
-                socialType = BossAccountSocialType.APPLE
-            )
-            bossAccountRepository.save(bossAccount)
-
-            // when
-            authCommonService.signOut(bossAccount.id)
-
-            // then
-            val bossAccounts = bossAccountRepository.findAll()
-            assertThat(bossAccounts).isEmpty()
-        }
-
-        @Test
-        fun `회원탈퇴시 계정정보가 BossWithdrawalAccount에 백업된다`() {
-            // given
-            val socialId = "auth-social-id"
-            val socialType = BossAccountSocialType.APPLE
-            val name = "강승호"
-            val pushSettingsStatus = PushSettingsStatus.OFF
-            val businessNumber = BusinessNumber.of("123-12-12345")
-
-            val bossAccount = BossAccountCreator.create(
-                socialId = socialId,
-                socialType = socialType,
-                name = name,
-                businessNumber = businessNumber,
-                pushSettingsStatus = pushSettingsStatus
-            )
-            bossAccountRepository.save(bossAccount)
-
-            // when
-            authCommonService.signOut(bossAccount.id)
-
-            // then
-            val withdrawalAccounts = bossWithdrawalAccountRepository.findAll()
-            assertAll({
-                assertThat(withdrawalAccounts).hasSize(1)
-                withdrawalAccounts[0].let {
-                    assertThat(it.name).isEqualTo(name)
-                    assertThat(it.socialInfo).isEqualTo(BossAccountSocialInfo.of(socialId, socialType))
-                    assertThat(it.pushSettingsStatus).isEqualTo(pushSettingsStatus)
-                    assertThat(it.businessNumber).isEqualTo(businessNumber)
-
-                    assertThat(it.backupInfo.bossId).isEqualTo(bossAccount.id)
-                    assertThat(it.backupInfo.bossCreatedAt).isEqualToIgnoringNanos(bossAccount.createdAt)
-                }
-            })
-        }
-
-        @Test
-        fun `회원탈퇴시 사장님의 가게들도 삭제 처리된다`() {
-            // given
-            val bossAccount = BossAccountCreator.create(
-                socialId = "socialId",
-                socialType = BossAccountSocialType.APPLE
-            )
-            bossAccountRepository.save(bossAccount)
-
-            // when
-            authCommonService.signOut(bossAccount.id)
-
-            // then
-            verify(bossStoreService, times(1)).deleteBossStoreByBossId(bossAccount.id)
-        }
-
-    }
 
 }
 

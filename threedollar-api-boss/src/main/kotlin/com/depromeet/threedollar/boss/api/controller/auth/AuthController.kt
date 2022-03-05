@@ -4,11 +4,12 @@ import com.depromeet.threedollar.application.common.dto.ApiResponse
 import com.depromeet.threedollar.boss.api.config.interceptor.Auth
 import com.depromeet.threedollar.boss.api.config.resolver.BossId
 import com.depromeet.threedollar.boss.api.config.session.SessionConstants.BOSS_ACCOUNT_ID
-import com.depromeet.threedollar.boss.api.service.auth.AuthCommonService
+import com.depromeet.threedollar.boss.api.service.account.BossAccountService
 import com.depromeet.threedollar.boss.api.service.auth.AuthServiceProvider
 import com.depromeet.threedollar.boss.api.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.boss.api.service.auth.dto.request.SignupRequest
 import com.depromeet.threedollar.boss.api.service.auth.dto.response.LoginResponse
+import com.depromeet.threedollar.boss.api.service.registration.BossAccountRegistrationService
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -21,17 +22,18 @@ import javax.validation.Valid
 class AuthController(
     private val httpSession: HttpSession,
     private val authServiceProvider: AuthServiceProvider,
-    private val authCommonService: AuthCommonService
+    private val bossAccountService: BossAccountService,
+    private val bossAccountRegistrationService: BossAccountRegistrationService
 ) {
 
     @ApiOperation("사장님 계정의 회원가입을 요청합니다. (차후 승인이 필요합니다)")
     @PostMapping("/v1/auth/signup")
-    fun signUp(
+    fun applyForBossAccountRegistration(
         @Valid @RequestBody request: SignupRequest
     ): ApiResponse<String> {
         val authService = authServiceProvider.getAuthService(request.socialType)
         val socialId = authService.getSocialId(LoginRequest(request.token, request.socialType))
-        authCommonService.signUp(request, socialId)
+        bossAccountRegistrationService.applyForBossAccountRegistration(request, socialId)
         return ApiResponse.SUCCESS
     }
 
@@ -63,7 +65,7 @@ class AuthController(
     fun signOut(
         @BossId bossId: String
     ): ApiResponse<String> {
-        authCommonService.signOut(bossId)
+        bossAccountService.signOut(bossId)
         httpSession.invalidate()
         return ApiResponse.SUCCESS
     }

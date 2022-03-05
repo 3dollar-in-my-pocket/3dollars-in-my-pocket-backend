@@ -1,68 +1,155 @@
 package com.depromeet.threedollar.boss.api.service.account
 
 import com.depromeet.threedollar.boss.api.service.account.dto.request.UpdateBossAccountInfoRequest
+import com.depromeet.threedollar.boss.api.service.store.BossStoreService
 import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.document.boss.document.account.BossAccountCreator
-import com.depromeet.threedollar.document.boss.document.account.BossAccountRepository
-import com.depromeet.threedollar.document.boss.document.account.BossAccountSocialType
-import com.depromeet.threedollar.document.boss.document.account.PushSettingsStatus
+import com.depromeet.threedollar.document.boss.document.account.*
+import com.depromeet.threedollar.document.common.document.BusinessNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
+import org.mockito.Mockito
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.TestConstructor
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class BossAccountServiceTest(
     private val bossAccountService: BossAccountService,
-    private val bossAccountRepository: BossAccountRepository
+    private val bossAccountRepository: BossAccountRepository,
+    private val bossWithdrawalAccountRepository: BossWithdrawalAccountRepository,
 ) {
+
+    @MockBean
+    private lateinit var bossStoreService: BossStoreService
 
     @AfterEach
     fun cleanUp() {
         bossAccountRepository.deleteAll()
+        bossWithdrawalAccountRepository.deleteAll()
     }
 
-    @Test
-    fun `사장님의 계정 정보를 수정한다`() {
-        // given
-        val name = "새로운 이름"
-        val pushSettingsStatus = PushSettingsStatus.ON
+    @Nested
+    inner class 계정_정보_수정 {
 
-        val bossAccount = BossAccountCreator.create(
-            socialId = "social-id",
-            socialType = BossAccountSocialType.GOOGLE,
-            name = "사장님 이름",
-            pushSettingsStatus = PushSettingsStatus.OFF
-        )
-        bossAccountRepository.save(bossAccount)
+        @Test
+        fun `사장님의 계정 정보를 수정한다`() {
+            // given
+            val name = "새로운 이름"
+            val pushSettingsStatus = PushSettingsStatus.ON
 
-        // when
-        bossAccountService.updateBossAccountInfo(bossAccount.id, UpdateBossAccountInfoRequest(name, pushSettingsStatus))
+            val bossAccount = BossAccountCreator.create(
+                socialId = "social-id",
+                socialType = BossAccountSocialType.GOOGLE,
+                name = "사장님 이름",
+                pushSettingsStatus = PushSettingsStatus.OFF
+            )
+            bossAccountRepository.save(bossAccount)
 
-        // then
-        val bossAccounts = bossAccountRepository.findAll()
-        assertAll({
-            assertThat(bossAccounts).hasSize(1)
-            assertThat(bossAccounts[0].name).isEqualTo(name)
-            assertThat(bossAccounts[0].pushSettingsStatus).isEqualTo(pushSettingsStatus)
-            assertThat(bossAccounts[0].id).isEqualTo(bossAccount.id)
-            assertThat(bossAccounts[0].socialInfo).isEqualTo(bossAccount.socialInfo)
-            assertThat(bossAccounts[0].businessNumber).isEqualTo(bossAccount.businessNumber)
-        })
+            // when
+            bossAccountService.updateBossAccountInfo(bossAccount.id, UpdateBossAccountInfoRequest(name, pushSettingsStatus))
+
+            // then
+            val bossAccounts = bossAccountRepository.findAll()
+            assertAll({
+                assertThat(bossAccounts).hasSize(1)
+                assertThat(bossAccounts[0].name).isEqualTo(name)
+                assertThat(bossAccounts[0].pushSettingsStatus).isEqualTo(pushSettingsStatus)
+                assertThat(bossAccounts[0].id).isEqualTo(bossAccount.id)
+                assertThat(bossAccounts[0].socialInfo).isEqualTo(bossAccount.socialInfo)
+                assertThat(bossAccounts[0].businessNumber).isEqualTo(bossAccount.businessNumber)
+            })
+        }
+
+        @Test
+        fun `사장님의 계정 정보를 수정할때 존재하지 않는 사장님이면 NotFoundException이 발생한다`() {
+            // given
+            val name = "새로운 이름"
+            val request = UpdateBossAccountInfoRequest(name, PushSettingsStatus.OFF)
+
+            // when & then
+            assertThatThrownBy { bossAccountService.updateBossAccountInfo("Not Found Boss Id", request) }.isInstanceOf(NotFoundException::class.java)
+        }
+
     }
 
-    @Test
-    fun `사장님의 계정 정보를 수정할때 존재하지 않는 사장님이면 NotFoundException이 발생한다`() {
-        // given
-        val name = "새로운 이름"
-        val request = UpdateBossAccountInfoRequest(name, PushSettingsStatus.OFF)
+    @Nested
+    inner class SignOut {
 
-        // when & then
-        assertThatThrownBy { bossAccountService.updateBossAccountInfo("Not Found Boss Id", request) }.isInstanceOf(NotFoundException::class.java)
+        @Test
+        fun `회원탈퇴시 BossAccount 계정 정보가 삭제된다`() {
+            // given
+            val bossAccount = BossAccountCreator.create(
+                socialId = "socialId",
+                socialType = BossAccountSocialType.APPLE
+            )
+            bossAccountRepository.save(bossAccount)
+
+            // when
+            bossAccountService.signOut(bossAccount.id)
+
+            // then
+            val bossAccounts = bossAccountRepository.findAll()
+            assertThat(bossAccounts).isEmpty()
+        }
+
+        @Test
+        fun `회원탈퇴시 계정정보가 BossWithdrawalAccount에 백업된다`() {
+            // given
+            val socialId = "auth-social-id"
+            val socialType = BossAccountSocialType.APPLE
+            val name = "강승호"
+            val pushSettingsStatus = PushSettingsStatus.OFF
+            val businessNumber = BusinessNumber.of("123-12-12345")
+
+            val bossAccount = BossAccountCreator.create(
+                socialId = socialId,
+                socialType = socialType,
+                name = name,
+                businessNumber = businessNumber,
+                pushSettingsStatus = pushSettingsStatus
+            )
+            bossAccountRepository.save(bossAccount)
+
+            // when
+            bossAccountService.signOut(bossAccount.id)
+
+            // then
+            val withdrawalAccounts = bossWithdrawalAccountRepository.findAll()
+            assertAll({
+                assertThat(withdrawalAccounts).hasSize(1)
+                withdrawalAccounts[0].let {
+                    assertThat(it.name).isEqualTo(name)
+                    assertThat(it.socialInfo).isEqualTo(BossAccountSocialInfo.of(socialId, socialType))
+                    assertThat(it.pushSettingsStatus).isEqualTo(pushSettingsStatus)
+                    assertThat(it.businessNumber).isEqualTo(businessNumber)
+
+                    assertThat(it.backupInfo.bossId).isEqualTo(bossAccount.id)
+                    assertThat(it.backupInfo.bossCreatedAt).isEqualToIgnoringNanos(bossAccount.createdAt)
+                }
+            })
+        }
+
+        @Test
+        fun `회원탈퇴시 사장님의 가게들도 삭제 처리된다`() {
+            // given
+            val bossAccount = BossAccountCreator.create(
+                socialId = "socialId",
+                socialType = BossAccountSocialType.APPLE
+            )
+            bossAccountRepository.save(bossAccount)
+
+            // when
+            bossAccountService.signOut(bossAccount.id)
+
+            // then
+            Mockito.verify(bossStoreService, Mockito.times(1)).deleteBossStoreByBossId(bossAccount.id)
+        }
+
     }
 
 }
