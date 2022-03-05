@@ -6,7 +6,7 @@
 - threedollar-api-core
     - threedollar-domain
         - threedollar-common
-    - threedollar-redis
+    - threedollar-cache
         - threedollar-common
     - threedollar-external
         - threedollar-common

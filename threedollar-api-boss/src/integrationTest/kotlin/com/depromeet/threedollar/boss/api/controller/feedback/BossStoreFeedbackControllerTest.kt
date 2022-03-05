@@ -9,7 +9,7 @@ import com.depromeet.threedollar.document.boss.document.feedback.BossStoreFeedba
 import com.depromeet.threedollar.document.boss.document.feedback.BossStoreFeedbackRepository
 import com.depromeet.threedollar.document.boss.document.store.BossStoreCreator
 import com.depromeet.threedollar.document.boss.document.store.BossStoreRepository
-import com.depromeet.threedollar.redis.boss.domain.feedback.BossStoreFeedbackCountRepository
+import com.depromeet.threedollar.cache.redis.boss.feedback.BossStoreFeedbackCountRepository
 import org.hamcrest.Matchers.hasSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName

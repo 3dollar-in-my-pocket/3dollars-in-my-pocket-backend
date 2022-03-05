@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.boss.api.service.feedback
 
-import com.depromeet.threedollar.redis.boss.domain.feedback.BossStoreFeedbackCountRepository
+import com.depromeet.threedollar.cache.redis.boss.feedback.BossStoreFeedbackCountRepository
 import com.depromeet.threedollar.boss.api.service.feedback.dto.request.AddBossStoreFeedbackRequest
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException

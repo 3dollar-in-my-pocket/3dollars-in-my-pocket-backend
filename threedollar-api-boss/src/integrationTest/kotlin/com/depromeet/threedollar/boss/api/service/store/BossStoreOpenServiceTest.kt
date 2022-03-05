@@ -3,8 +3,8 @@ package com.depromeet.threedollar.boss.api.service.store
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.model.CoordinateValue
 import com.depromeet.threedollar.document.boss.document.store.*
-import com.depromeet.threedollar.redis.boss.domain.store.BossStoreOpenInfoCreator
-import com.depromeet.threedollar.redis.boss.domain.store.BossStoreOpenInfoRepository
+import com.depromeet.threedollar.cache.boss.domain.store.BossStoreOpenInfoCreator
+import com.depromeet.threedollar.cache.redis.boss.store.BossStoreOpenInfoRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach

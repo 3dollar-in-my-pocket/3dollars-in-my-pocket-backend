@@ -5,7 +5,7 @@ import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategory
 import com.depromeet.threedollar.document.boss.document.store.*
 import com.depromeet.threedollar.document.common.document.TimeInterval
-import com.depromeet.threedollar.redis.boss.domain.store.BossStoreOpenInfo
+import com.depromeet.threedollar.cache.redis.boss.store.BossStoreOpenInfo
 import org.springframework.data.geo.Point
 import java.time.LocalDateTime
 

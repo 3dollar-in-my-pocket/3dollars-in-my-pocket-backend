@@ -9,8 +9,8 @@ import com.depromeet.threedollar.document.boss.document.category.BossStoreCatego
 import com.depromeet.threedollar.document.boss.document.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.document.boss.document.store.*
 import com.depromeet.threedollar.document.common.document.TimeInterval
-import com.depromeet.threedollar.redis.boss.domain.store.BossStoreOpenInfoCreator
-import com.depromeet.threedollar.redis.boss.domain.store.BossStoreOpenInfoRepository
+import com.depromeet.threedollar.cache.boss.domain.store.BossStoreOpenInfoCreator
+import com.depromeet.threedollar.cache.redis.boss.store.BossStoreOpenInfoRepository
 import org.hamcrest.Matchers.hasSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName

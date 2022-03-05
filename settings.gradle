@@ -11,5 +11,5 @@ include 'threedollar-domain'
 include 'threedollar-external'
 include 'threedollar-common'
 include 'threedollar-document'
-include 'threedollar-redis'
+include 'threedollar-cache'
 
