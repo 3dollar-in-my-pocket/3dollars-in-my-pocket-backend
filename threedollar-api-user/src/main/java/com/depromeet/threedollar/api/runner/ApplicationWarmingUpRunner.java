@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Profile({"dev", "stage", "prod"})
 @RequiredArgsConstructor
 @Component
-public class WarmUpRunner implements CommandLineRunner {
+public class ApplicationWarmingUpRunner implements CommandLineRunner {
 
     private static final int API_CALL_COUNT = 10;
 

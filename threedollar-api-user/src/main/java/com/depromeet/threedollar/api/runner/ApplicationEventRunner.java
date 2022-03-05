@@ -17,7 +17,7 @@ import java.time.ZoneId;
 @Profile({"prod"})
 @RequiredArgsConstructor
 @Component
-public class ApplicationRunner implements CommandLineRunner, ApplicationListener<ContextClosedEvent> {
+public class ApplicationEventRunner implements CommandLineRunner, ApplicationListener<ContextClosedEvent> {
 
     private final ApplicationEventPublisher eventPublisher;
 
