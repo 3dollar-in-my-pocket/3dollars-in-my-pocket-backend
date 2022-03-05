@@ -28,11 +28,12 @@ public class JacksonConfig {
         return new ObjectMapper()
             .registerModules(javaTimeModule(), new ParameterNamesModule(), new Jdk8Module(), new KotlinModule())
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
             .configure(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL, true)
             .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
     }
 
-    private JavaTimeModule javaTimeModule() {
+    public JavaTimeModule javaTimeModule() {
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
         javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
