@@ -9,9 +9,6 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-web")
 
-    // Jackson
-    implementation("org.springframework.boot:spring-boot-starter-json")
-
     // Spring Retry
     api("org.springframework.retry:spring-retry:${springRetryVersion}")
 }
