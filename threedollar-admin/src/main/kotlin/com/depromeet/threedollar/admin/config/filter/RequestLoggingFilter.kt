@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.boss.api.config.filter
+package com.depromeet.threedollar.admin.config.filter
 
 import com.depromeet.threedollar.application.utils.HttpServletRequestUtils
 import com.depromeet.threedollar.common.utils.logger
