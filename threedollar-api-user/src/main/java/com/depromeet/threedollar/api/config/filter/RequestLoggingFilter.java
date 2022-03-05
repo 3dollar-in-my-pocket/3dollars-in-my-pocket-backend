@@ -35,20 +35,20 @@ class RequestLoggingFilter implements Filter {
         String requestURI = ((HttpServletRequest) request).getRequestURI();
         if (EXCLUDE_LOGGING_RESPONSE_URLS.contains(requestURI) && responseWrapper.getStatus() == HttpStatus.OK.value()) {
             log.info("\n" +
-                    "[REQUEST] {} - {} {} - {}s\n" +
+                    "[REQUEST] {} {} - {}s\n" +
                     "Headers : {}\n",
-                ((HttpServletRequest) request).getMethod(), HttpServletRequestUtils.getFullUrl(requestWrapper), responseWrapper.getStatus(), (end - start) / 1000.0,
+                HttpServletRequestUtils.getFullUrlWithMethod(requestWrapper), responseWrapper.getStatus(), (end - start) / 1000.0,
                 HttpServletRequestUtils.getHeaders((HttpServletRequest) request));
             responseWrapper.copyBodyToResponse();
             return;
         }
 
         log.info("\n" +
-                "[REQUEST] {} - {} {} - {}s\n" +
+                "[REQUEST] {} - {} - {}s\n" +
                 "Headers : {}\n" +
                 "Request : {}\n" +
                 "Response : {}\n",
-            ((HttpServletRequest) request).getMethod(), HttpServletRequestUtils.getFullUrl(requestWrapper), responseWrapper.getStatus(), (end - start) / 1000.0,
+            HttpServletRequestUtils.getFullUrlWithMethod(requestWrapper), responseWrapper.getStatus(), (end - start) / 1000.0,
             HttpServletRequestUtils.getHeaders((HttpServletRequest) request),
             HttpServletRequestUtils.getRequestBody(requestWrapper),
             HttpServletRequestUtils.getResponseBody(responseWrapper));

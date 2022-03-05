@@ -18,8 +18,8 @@ import java.util.Map;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class HttpServletRequestUtils {
 
-    public static String getFullUrl(HttpServletRequest request) {
-        return request.getRequestURI() + getQuery(request);
+    public static String getFullUrlWithMethod(HttpServletRequest request) {
+        return request.getMethod() + " " + request.getRequestURI() + getQuery(request);
     }
 
     private static String getQuery(HttpServletRequest request) {

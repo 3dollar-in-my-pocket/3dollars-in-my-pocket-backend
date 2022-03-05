@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.boss.api.controller.advice
 
 import com.depromeet.threedollar.application.common.dto.ApiResponse
+import com.depromeet.threedollar.application.utils.HttpServletRequestUtils
 import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.exception.type.ErrorCode.*
@@ -32,6 +33,7 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.stream.Collectors
+import javax.servlet.http.HttpServletRequest
 
 @RestControllerAdvice
 class ControllerExceptionAdvice(
@@ -160,7 +162,6 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(MaxUploadSizeExceededException::class)
     private fun handleMaxUploadSizeExceededException(e: MaxUploadSizeExceededException): ApiResponse<Nothing> {
         log.error(e.message, e)
-        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(INVALID_UPLOAD_FILE_SIZE, e))
         return ApiResponse.error(INVALID_UPLOAD_FILE_SIZE)
     }
 
@@ -169,10 +170,10 @@ class ControllerExceptionAdvice(
      * ThreeDollars Custom Exception
      */
     @ExceptionHandler(ThreeDollarsBaseException::class)
-    private fun handleBaseException(exception: ThreeDollarsBaseException): ResponseEntity<ApiResponse<Nothing>> {
+    private fun handleBaseException(exception: ThreeDollarsBaseException, request: HttpServletRequest): ResponseEntity<ApiResponse<Nothing>> {
         log.error(exception.message, exception)
         if (exception.isSetAlarm) {
-            eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(exception.errorCode, exception));
+            eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(exception.errorCode, exception, request));
         }
         return ResponseEntity.status(exception.status)
             .body(ApiResponse.error(exception.errorCode))
@@ -183,20 +184,18 @@ class ControllerExceptionAdvice(
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception::class)
-    private fun handleInternalServerException(exception: Exception): ApiResponse<Nothing> {
+    private fun handleInternalServerException(exception: Exception, request: HttpServletRequest): ApiResponse<Nothing> {
         log.error(exception.message, exception)
-        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(INTERNAL_SERVER, exception));
+        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(INTERNAL_SERVER, exception, request));
         return ApiResponse.error(INTERNAL_SERVER)
     }
 
-    private fun createUnExpectedErrorOccurredEvent(
-        errorCode: ErrorCode,
-        exception: Exception
-    ): ServerExceptionOccurredEvent {
+    private fun createUnExpectedErrorOccurredEvent(errorCode: ErrorCode, exception: Exception, request: HttpServletRequest): ServerExceptionOccurredEvent {
         return ServerExceptionOccurredEvent.error(
             ApplicationType.BOSS_API,
             errorCode,
             exception,
+            HttpServletRequestUtils.getFullUrlWithMethod(request),
             UserMetaSessionUtils.get(),
             LocalDateTime.now(ZoneId.of("Asia/Seoul"))
         )

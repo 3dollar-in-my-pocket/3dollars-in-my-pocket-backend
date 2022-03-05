@@ -45,6 +45,7 @@ class SlackNotificationEventListener(
                 SlackNotificationMessageType.ERROR_MESSAGE.generateMessage(
                     event.applicationType.description,
                     event.errorCode.code,
+                    event.requestUri,
                     event.exception,
                     event.timeStamp,
                     event.errorCode.message,

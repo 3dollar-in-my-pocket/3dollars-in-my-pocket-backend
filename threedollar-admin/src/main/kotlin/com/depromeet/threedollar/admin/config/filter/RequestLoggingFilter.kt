@@ -30,7 +30,7 @@ class RequestLoggingFilter : Filter {
 
         log.info(
             """
-            [REQUEST] ${request.method} - ${HttpServletRequestUtils.getFullUrl(request)} $requestWrapper.status - ${(end - start) / 1000.0}s
+            [REQUEST] ${HttpServletRequestUtils.getFullUrlWithMethod(request)} $requestWrapper.status - ${(end - start) / 1000.0}s
             Headers : ${HttpServletRequestUtils.getHeaders(request)}
             Request: ${HttpServletRequestUtils.getRequestBody(requestWrapper)}
             Response: ${HttpServletRequestUtils.getResponseBody(responseWrapper)}

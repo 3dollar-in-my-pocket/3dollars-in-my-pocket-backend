@@ -24,6 +24,7 @@ public class SlackNotificationEventListener {
         slackNotificationApiClient.postMessage(PostSlackMessageRequest.of(ERROR_MESSAGE.generateMessage(
             event.getApplicationType().getDescription(),
             event.getErrorCode().getCode(),
+            event.getRequestUri(),
             event.getException(),
             event.getTimeStamp(),
             event.getErrorCode().getMessage(),
