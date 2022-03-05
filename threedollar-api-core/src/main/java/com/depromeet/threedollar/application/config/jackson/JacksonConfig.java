@@ -33,7 +33,7 @@ public class JacksonConfig {
             .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
     }
 
-    public JavaTimeModule javaTimeModule() {
+    private JavaTimeModule javaTimeModule() {
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
         javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
