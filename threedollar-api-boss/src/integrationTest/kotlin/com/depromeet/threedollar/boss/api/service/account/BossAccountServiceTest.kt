@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.boss.api.service.account
 
 import com.depromeet.threedollar.boss.api.service.account.dto.request.UpdateBossAccountInfoRequest
-import com.depromeet.threedollar.boss.api.service.store.BossStoreService
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.document.boss.document.account.*
 import com.depromeet.threedollar.document.common.document.BusinessNumber
@@ -11,9 +10,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import org.mockito.Mockito
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.TestConstructor
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
@@ -23,9 +20,6 @@ internal class BossAccountServiceTest(
     private val bossAccountRepository: BossAccountRepository,
     private val bossWithdrawalAccountRepository: BossWithdrawalAccountRepository,
 ) {
-
-    @MockBean
-    private lateinit var bossStoreService: BossStoreService
 
     @AfterEach
     fun cleanUp() {
@@ -132,22 +126,6 @@ internal class BossAccountServiceTest(
                     assertThat(it.backupInfo.bossCreatedAt).isEqualToIgnoringNanos(bossAccount.createdAt)
                 }
             })
-        }
-
-        @Test
-        fun `회원탈퇴시 사장님의 가게들도 삭제 처리된다`() {
-            // given
-            val bossAccount = BossAccountCreator.create(
-                socialId = "socialId",
-                socialType = BossAccountSocialType.APPLE
-            )
-            bossAccountRepository.save(bossAccount)
-
-            // when
-            bossAccountService.signOut(bossAccount.id)
-
-            // then
-            Mockito.verify(bossStoreService, Mockito.times(1)).deleteBossStoreByBossId(bossAccount.id)
         }
 
     }
