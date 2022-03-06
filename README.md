@@ -48,6 +48,10 @@
 - APM 도구: NewRelic
 - 부하 테스트: locust
 
+
+### 멀티 모듈 구조
+![img.png](images/modulese-20220306.png)
+
 | 서비스     | 운영 환경                                                                                                                               | 개발 환경                                                                                                                                     |
 |---------|-------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
 | 유저 서비스  | ![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://threedollars.co.kr/api/ping) | ![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://dev.threedollars.co.kr/api/ping)   |
