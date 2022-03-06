@@ -1,5 +1,5 @@
 ### 사장님 계정 가입 신청을 승인합니다.
-PUT {{host_admin}}/v1/registration/{{REGISTRATION_ID}}/apply
+PUT {{host_admin}}/v1/boss/account/registration/{{REGISTRATION_ID}}/apply
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%
@@ -10,7 +10,7 @@ client.test("200 OK", function() {
 
 
 ### 사장님 계정 가입 신청을 반려합니다.
-PUT {{host_admin}}/v1/registration/{{REGISTRATION_ID}}/reject
+PUT {{host_admin}}/v1/boss/account/registration/{{REGISTRATION_ID}}/reject
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%

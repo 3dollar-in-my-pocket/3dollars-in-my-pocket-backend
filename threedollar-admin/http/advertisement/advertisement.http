@@ -1,5 +1,5 @@
 ### 광고를 저장합니다.
-POST {{host_admin}}/v1/advertisement
+POST {{host_admin}}/v1/user/advertisement
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 Content-Type: application/json
 
@@ -24,7 +24,7 @@ client.test("200 OK", function() {
 
 
 ### 전체 광고 목록을 조회합니다.
-GET {{host_admin}}/v1/advertisements?page=1&size=3
+GET {{host_admin}}/v1/user/advertisements?page=1&size=3
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%
@@ -35,7 +35,7 @@ client.test("200 OK", function() {
 
 
 ### 특정 광고 정보를 수정합니다
-PUT {{host_admin}}/v1/advertisement/1
+PUT {{host_admin}}/v1/user/advertisement/1
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 Content-Type: application/json
 
@@ -60,7 +60,7 @@ client.test("200 OK", function() {
 
 
 ### 특정 광고를 삭제한다
-DELETE {{host_admin}}/v1/advertisement/1
+DELETE {{host_admin}}/v1/user/advertisement/1
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%

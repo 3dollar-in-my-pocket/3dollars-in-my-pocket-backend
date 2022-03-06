@@ -23,7 +23,7 @@ public class UserMedalController {
 
     private final UserMedalService userMedalService;
 
-    @ApiOperation("[인증] 마이페이지 - 사용자가 보유중인 메달들을 조회한다")
+    @ApiOperation("[인증] 사용자가 보유중인 메달들을 조회한다")
     @Auth
     @GetMapping("/v1/user/medals")
     public ApiResponse<List<UserMedalResponse>> getMyObtainedMedals(
@@ -32,7 +32,7 @@ public class UserMedalController {
         return ApiResponse.success(userMedalService.retrieveObtainedMedals(userId));
     }
 
-    @ApiOperation("[인증] 마이페이지 - 사용자의 장착중인 메달을 수정한다")
+    @ApiOperation("[인증] 사용자의 장착중인 메달을 수정한다")
     @Auth
     @PutMapping("/v1/user/medal")
     public ApiResponse<UserInfoResponse> changeRepresentativeMedal(

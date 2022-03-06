@@ -18,18 +18,18 @@ class BossAccountController(
     private val bossAccountService: BossAccountService
 ) {
 
-    @ApiOperation("[인증] 사장님 자신의 회원 정보를 조회합니다")
+    @ApiOperation("[인증] 사장님 자신의 계정 정보를 조회합니다")
     @Auth
-    @GetMapping("/v1/boss-account/my")
+    @GetMapping("/v1/boss/account/my-info")
     fun getMyAccountInfo(
         @BossId bossId: String
     ): ApiResponse<BossAccountInfoResponse> {
         return ApiResponse.success(bossAccountService.getBossAccountInfo(bossId))
     }
 
-    @ApiOperation("[인증] 사장님 자신의 회원 정보를 수정합니다")
+    @ApiOperation("[인증] 사장님 자신의 계정 정보를 수정합니다")
     @Auth
-    @PutMapping("/v1/boss-account/my")
+    @PutMapping("/v1/boss/account/my-info")
     fun updateMyAccountInfo(
         @BossId bossId: String,
         @Valid @RequestBody request: UpdateBossAccountInfoRequest

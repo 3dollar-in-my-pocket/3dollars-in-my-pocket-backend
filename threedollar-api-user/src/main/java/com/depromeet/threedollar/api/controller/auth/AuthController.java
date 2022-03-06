@@ -29,7 +29,7 @@ public class AuthController {
     private final UserService userService;
     private final AuthServiceProvider authServiceProvider;
 
-    @ApiOperation("회원가입 페이지 - 회원가입을 요청합니다")
+    @ApiOperation("회원가입을 요청합니다")
     @PostMapping("/v2/signup")
     public ApiResponse<LoginResponse> signUp(
         @Valid @RequestBody SignUpRequest request
@@ -40,7 +40,7 @@ public class AuthController {
         return ApiResponse.success(LoginResponse.of(httpSession.getId(), userId));
     }
 
-    @ApiOperation("로그인 페이지 - 로그인을 요청합니다")
+    @ApiOperation("로그인을 요청합니다")
     @PostMapping("/v2/login")
     public ApiResponse<LoginResponse> login(
         @Valid @RequestBody LoginRequest request
@@ -51,7 +51,7 @@ public class AuthController {
         return ApiResponse.success(LoginResponse.of(httpSession.getId(), userId));
     }
 
-    @ApiOperation("[인증] 마이페이지 - 회원탈퇴를 요청합니다")
+    @ApiOperation("[인증] 회원탈퇴를 요청합니다")
     @Auth
     @DeleteMapping("/v2/signout")
     public ApiResponse<String> signOut(
@@ -62,7 +62,7 @@ public class AuthController {
         return ApiResponse.SUCCESS;
     }
 
-    @ApiOperation("[인증] 마이페이지 - 로그아웃을 요청합니다.")
+    @ApiOperation("[인증] 로그아웃을 요청합니다.")
     @Auth
     @PostMapping("/v2/logout")
     public ApiResponse<String> logout() {

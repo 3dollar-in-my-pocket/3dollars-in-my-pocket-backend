@@ -36,7 +36,7 @@ internal class BossStoreControllerTest(
         bossStoreLocationRepository.deleteAll()
     }
 
-    @DisplayName("GET /boss/v1/boss-store/my")
+    @DisplayName("GET /boss/v1/boss/store/my-store")
     @Test
     fun `사장님 자신이 운영중인 가게를 조회합니다 오픈 정보가 레디스에 없으면 영업중이지 않은 가게로 표시된다`() {
         // given
@@ -61,7 +61,7 @@ internal class BossStoreControllerTest(
         ))
 
         // when & then
-        mockMvc.get("/v1/boss-store/my") {
+        mockMvc.get("/v1/boss/store/my-store") {
             header(HttpHeaders.AUTHORIZATION, "Bearer $token")
         }.andDo {
             print()
@@ -99,7 +99,7 @@ internal class BossStoreControllerTest(
         }
     }
 
-    @DisplayName("GET /boss/v1/boss-store/{BOSS_STORE_ID}")
+    @DisplayName("GET /boss/v1/boss/store/{BOSS_STORE_ID}")
     @Test
     fun `특정 가게를 조회합니다 오픈 정보가 레디스에 저장되어 있으면 영업중인 가게로 표시된다`() {
         // given
@@ -126,7 +126,7 @@ internal class BossStoreControllerTest(
         ))
 
         // when & then
-        mockMvc.get("/v1/boss-store/${bossStore.id}")
+        mockMvc.get("/v1/boss/store/${bossStore.id}")
             .andDo {
                 print()
             }.andExpect {

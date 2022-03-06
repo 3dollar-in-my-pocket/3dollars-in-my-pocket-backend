@@ -16,7 +16,7 @@ class AdminController(
 
     @ApiOperation("관리자의 회원 정보를 조회합니다")
     @Auth
-    @GetMapping("/v1/admin/me")
+    @GetMapping("/v1/account/admin/my-info")
     fun getMyAdminInfo(
         @AdminId adminId: Long
     ): ApiResponse<AdminInfoResponse> {

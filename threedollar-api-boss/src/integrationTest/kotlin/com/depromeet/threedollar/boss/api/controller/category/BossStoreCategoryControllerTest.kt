@@ -26,7 +26,7 @@ internal class BossStoreCategoryControllerTest(
         bossStoreCategoryRepository.deleteAll()
     }
 
-    @DisplayName("GET /boss/v1/boss-store/categories")
+    @DisplayName("GET /boss/v1/boss/store/categories")
     @Test
     fun `등록된 사장님 가게의 카테고리 목록을 조회한다 priority가 낮은 거부터 조회된다`() {
         // given
@@ -35,7 +35,7 @@ internal class BossStoreCategoryControllerTest(
         bossStoreCategoryRepository.saveAll(listOf(category1, category2))
 
         // when & then
-        mockMvc.get("/v1/boss-store/categories")
+        mockMvc.get("/v1/boss/store/categories")
             .andDo { print() }
             .andExpect {
                 status { isOk() }

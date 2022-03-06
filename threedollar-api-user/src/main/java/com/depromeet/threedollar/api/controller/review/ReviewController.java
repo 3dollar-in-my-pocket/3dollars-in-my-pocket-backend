@@ -27,7 +27,7 @@ public class ReviewController {
     private final ReviewRetrieveService reviewRetrieveService;
     private final ApplicationEventPublisher eventPublisher;
 
-    @ApiOperation("[인증] 가게 상세 페이지 - 가게에 새로운 리뷰를 등록합니다")
+    @ApiOperation("[인증] 가게에 새로운 리뷰를 등록합니다")
     @Auth
     @PostMapping("/v2/store/review")
     public ApiResponse<ReviewInfoResponse> addReview(
@@ -40,7 +40,7 @@ public class ReviewController {
         return ApiResponse.success(response);
     }
 
-    @ApiOperation("[인증] 가게 상세 페이지 - 내가 작성한 리뷰를 수정합니다")
+    @ApiOperation("[인증] 내가 작성한 리뷰를 수정합니다")
     @Auth
     @PutMapping("/v2/store/review/{reviewId}")
     public ApiResponse<ReviewInfoResponse> updateReview(
@@ -53,7 +53,7 @@ public class ReviewController {
         return ApiResponse.success(response);
     }
 
-    @ApiOperation("[인증] 가게 상세 페이지 - 내가 작성한 리뷰를 삭제합니다")
+    @ApiOperation("[인증] 내가 작성한 리뷰를 삭제합니다")
     @Auth
     @DeleteMapping("/v2/store/review/{reviewId}")
     public ApiResponse<String> deleteReview(
@@ -65,7 +65,7 @@ public class ReviewController {
         return ApiResponse.SUCCESS;
     }
 
-    @ApiOperation("[인증] 마이 페이지 - 내가 작성한 리뷰 목록을 스크롤 페이지네이션으로 조회합니다 (삭제된 가게 포함 O)")
+    @ApiOperation(value = "[인증] 내가 작성한 리뷰 목록을 스크롤 페이지네이션으로 조회합니다", notes = "[스크롤 페이지네이션] 첫 스크롤 조회시 cursor=null 그 이후부터 nextCursor로 응답하는 id를 cursor로 hasNext가 false일때 까지 반복 조회")
     @Auth
     @GetMapping("/v3/store/reviews/me")
     public ApiResponse<ReviewsCursorResponse> retrieveMyReviewHistories(

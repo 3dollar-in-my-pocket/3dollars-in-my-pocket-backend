@@ -29,7 +29,7 @@ public class StoreController {
     private final StoreService storeService;
     private final ApplicationEventPublisher eventPublisher;
 
-    @ApiOperation("[인증] 가게 등록 페이지 - 새로운 가게를 제보합니다")
+    @ApiOperation("[인증] 새로운 가게를 제보합니다")
     @Auth
     @PostMapping("/v2/store")
     public ApiResponse<StoreInfoResponse> registerStore(
@@ -41,7 +41,7 @@ public class StoreController {
         return ApiResponse.success(response);
     }
 
-    @ApiOperation("[인증] 가게 상세 페이지 - 특정 가게의 정보를 수정합니다")
+    @ApiOperation("[인증] 특정 가게의 정보를 수정합니다")
     @Auth
     @PutMapping("/v2/store/{storeId}")
     public ApiResponse<StoreInfoResponse> updateStore(
@@ -55,7 +55,7 @@ public class StoreController {
         }
     }
 
-    @ApiOperation("[인증] 가게 상세 페이지 - 특정 가게의 정보를 삭제 요청합니다")
+    @ApiOperation("[인증] 특정 가게의 정보를 삭제 요청합니다")
     @Auth
     @DeleteMapping("/v2/store/{storeId}")
     public ApiResponse<StoreDeleteResponse> deleteStore(

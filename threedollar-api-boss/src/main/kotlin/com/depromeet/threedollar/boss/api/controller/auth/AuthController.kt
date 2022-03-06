@@ -26,7 +26,7 @@ class AuthController(
     private val bossAccountRegistrationService: BossAccountRegistrationService
 ) {
 
-    @ApiOperation("사장님 계정의 회원가입을 요청합니다. (차후 승인이 필요합니다)")
+    @ApiOperation("사장님 계정의 회원가입을 요청합니다. (차후 승인이 필요합니다)", notes = "https://github.com/3dollar-in-my-pocket/3dollars-in-my-pocket-backend/issues/118")
     @PostMapping("/v1/auth/signup")
     fun applyForBossAccountRegistration(
         @Valid @RequestBody request: SignupRequest
@@ -37,7 +37,7 @@ class AuthController(
         return ApiResponse.SUCCESS
     }
 
-    @ApiOperation("사장님 계정으로 로그인을 요청합니다.")
+    @ApiOperation("사장님 계정으로 로그인을 요청합니다.", notes = "https://github.com/3dollar-in-my-pocket/3dollars-in-my-pocket-backend/issues/118")
     @PostMapping("/v1/auth/login")
     fun login(
         @Valid @RequestBody request: LoginRequest
@@ -51,7 +51,7 @@ class AuthController(
         ))
     }
 
-    @ApiOperation("[인증] 사장님 계정으로 로그아웃을 요청합니다.")
+    @ApiOperation("[인증] 사장님 계정을 로그아웃을 요청합니다.")
     @Auth
     @PostMapping("/v1/auth/logout")
     fun logout(): ApiResponse<String> {

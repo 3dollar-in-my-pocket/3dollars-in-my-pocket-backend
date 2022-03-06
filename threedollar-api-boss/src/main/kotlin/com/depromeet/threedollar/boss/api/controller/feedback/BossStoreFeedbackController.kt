@@ -20,15 +20,15 @@ class BossStoreFeedbackController(
 ) {
 
     @ApiOperation("전체 기간동안의 특정 사장님 가게의 피드백 갯수를 조회합니다.")
-    @GetMapping("/v1/boss-store/{bossStoreId}/feedbacks/full")
+    @GetMapping("/v1/boss/store/{bossStoreId}/feedbacks/full")
     fun getBossStoreFeedbacksCounts(
         @PathVariable bossStoreId: String
     ): ApiResponse<List<BossStoreFeedbackCountResponse>> {
         return ApiResponse.success(bossStoreFeedbackService.getBossStoreFeedbacksCounts(bossStoreId))
     }
 
-    @ApiOperation("특정 기간내의 특정 사장님 가게의 피드백 갯수를 조회합니다.")
-    @GetMapping("/v1/boss-store/{bossStoreId}/feedbacks/specific")
+    @ApiOperation("특정 기간내의 특정 사장님 가게의 피드백 갯수를 조회합니다. (스크롤 페이지네이션)", notes = "https://github.com/3dollar-in-my-pocket/3dollars-in-my-pocket-backend/issues/122")
+    @GetMapping("/v1/boss/store/{bossStoreId}/feedbacks/specific")
     fun getBossStoreFeedbacksCountsBetweenDate(
         @PathVariable bossStoreId: String,
         @RequestParam startDate: LocalDate,
@@ -39,7 +39,7 @@ class BossStoreFeedbackController(
     }
 
     @ApiOperation("사장님 가게 피드백의 타입 목록을 조회합니다")
-    @GetMapping("/v1/boss-store/feedback/types")
+    @GetMapping("/v1/boss/store/feedback/types")
     fun getBossStoreFeedbackTypes(): ApiResponse<List<BossStoreFeedbackTypeResponse>> {
         return ApiResponse.success(BossStoreFeedbackType.values().asSequence()
             .map { BossStoreFeedbackTypeResponse.of(it) }

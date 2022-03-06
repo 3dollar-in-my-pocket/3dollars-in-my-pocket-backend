@@ -1,5 +1,5 @@
 ### [인증] 자신의 관리자 정보를 불러옵니다.
-GET {{host_admin}}/v1/admin/me
+GET {{host_admin}}/v1/account/admin/my-info
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%

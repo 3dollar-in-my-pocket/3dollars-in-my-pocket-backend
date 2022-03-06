@@ -26,7 +26,7 @@ public class VisitHistoryController {
     private final VisitHistoryService visitHistoryService;
     private final ApplicationEventPublisher eventPublisher;
 
-    @ApiOperation("[인증] 가게 방문 인증 페이지 - 특정 가게에 대한 방문 인증을 추가합니다")
+    @ApiOperation("[인증] 특정 가게에 방문 인증을 추가합니다")
     @Auth
     @PostMapping("/v2/store/visit")
     public ApiResponse<String> addVisitHistory(
@@ -38,7 +38,7 @@ public class VisitHistoryController {
         return ApiResponse.SUCCESS;
     }
 
-    @ApiOperation("[인증] 마이페이지 - 내가 추가한 방문 인증 목록을 스크롤 페이지네이션으로 조회합니다.")
+    @ApiOperation("[인증] 내가 방문한 이력을 조회합니다. (스크롤 페이지네이션)")
     @Auth
     @GetMapping("/v2/store/visits/me")
     public ApiResponse<VisitHistoriesCursorResponse> retrieveMyVisitHistories(

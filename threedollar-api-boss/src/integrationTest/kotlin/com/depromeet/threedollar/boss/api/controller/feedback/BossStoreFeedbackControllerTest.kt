@@ -30,7 +30,7 @@ internal class BossStoreFeedbackControllerTest(
         bossStoreFeedbackRepository.deleteAll()
     }
 
-    @DisplayName("GET /boss/v1/boss-store/{{BOSS_STORE_ID}/feedbacks/full")
+    @DisplayName("GET /boss/v1/boss/store/{{BOSS_STORE_ID}/feedbacks/full")
     @Test
     fun `전체 기간동안의 특정 사장님의 가게의 피드백 갯수를 조회한다`() {
         // given
@@ -52,7 +52,7 @@ internal class BossStoreFeedbackControllerTest(
         bossStoreFeedbackRepository.save(bossStoreFeedback)
 
         // when & then
-        mockMvc.get("/v1/boss-store/${bossStore.id}/feedbacks/full")
+        mockMvc.get("/v1/boss/store/${bossStore.id}/feedbacks/full")
             .andDo { print() }
             .andExpect {
                 status { isOk() }
@@ -77,7 +77,7 @@ internal class BossStoreFeedbackControllerTest(
             }
     }
 
-    @DisplayName("GET /boss/v1/boss-store/{{BOSS_STORE_ID}/feedbacks/specific")
+    @DisplayName("GET /boss/v1/boss/store/{{BOSS_STORE_ID}/feedbacks/specific")
     @Nested
     inner class GetBossStoreFeedbacksCountsBetweenDate {
 
@@ -103,7 +103,7 @@ internal class BossStoreFeedbackControllerTest(
             bossStoreFeedbackRepository.save(feedback)
 
             // when & then
-            mockMvc.get("/v1/boss-store/${bossStore.id}/feedbacks/specific?startDate=2022-01-01&endDate=2022-01-02")
+            mockMvc.get("/v1/boss/store/${bossStore.id}/feedbacks/specific?startDate=2022-01-01&endDate=2022-01-02")
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
@@ -146,7 +146,7 @@ internal class BossStoreFeedbackControllerTest(
             bossStoreFeedbackRepository.saveAll(listOf(feedback, feedbackMore))
 
             // when & then
-            mockMvc.get("/v1/boss-store/${bossStore.id}/feedbacks/specific?startDate=2022-01-01&endDate=2022-01-02")
+            mockMvc.get("/v1/boss/store/${bossStore.id}/feedbacks/specific?startDate=2022-01-01&endDate=2022-01-02")
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
@@ -162,11 +162,11 @@ internal class BossStoreFeedbackControllerTest(
 
     }
 
-    @DisplayName("GET /boss/v1/boss-store/feedback/types")
+    @DisplayName("GET /boss/v1/boss/store/feedback/types")
     @Test
     fun `사장님 가게 피드백의 타입 목록을 조회한다`() {
         // when & then
-        mockMvc.get("/v1/boss-store/feedback/types")
+        mockMvc.get("/v1/boss/store/feedback/types")
             .andDo { print() }
             .andExpect {
                 status { isOk() }
