@@ -16,6 +16,9 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
 
+private const val SOCIAL_ID = "social-id"
+private val SOCIAL_TYPE = BossAccountSocialType.APPLE
+
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class AppleAuthServiceTest(
@@ -78,11 +81,6 @@ internal class AppleAuthServiceTest(
         override fun getSocialIdFromIdToken(idToken: String): String {
             return SOCIAL_ID
         }
-    }
-
-    companion object {
-        private const val SOCIAL_ID = "social-id"
-        private val SOCIAL_TYPE = BossAccountSocialType.APPLE
     }
 
 }

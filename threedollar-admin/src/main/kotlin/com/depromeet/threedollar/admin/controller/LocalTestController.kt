@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpSession
 
+private const val TEST_ADMIN_EMAIL = "test.admin@test.com"
+private const val TEST_ADMIN_NAME = "테스트 관리자"
+
 @Profile("local", "local-docker", "dev", "integration-test")
 @RestController
 class LocalTestController(
@@ -22,11 +25,6 @@ class LocalTestController(
             ?: adminRepository.save(Admin.newInstance(TEST_ADMIN_EMAIL, TEST_ADMIN_NAME))
         httpSession.setAttribute(ADMIN_ID, admin.id)
         return ApiResponse.success(httpSession.id)
-    }
-
-    companion object {
-        private const val TEST_ADMIN_EMAIL = "test.admin@test.com"
-        private const val TEST_ADMIN_NAME = "테스트 관리자"
     }
 
 }

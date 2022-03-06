@@ -28,8 +28,8 @@ class BossDeletedStore(
                 introduction = bossStore.introduction,
                 contactsNumber = bossStore.contactsNumber?.copy(),
                 snsUrl = bossStore.snsUrl,
-                menus = bossStore.menus.map { it.copy() }.toList(),
-                appearanceDays = bossStore.appearanceDays.map { it.copy() }.toSet(),
+                menus = bossStore.menus.asSequence().map { it.copy() }.toList(),
+                appearanceDays = bossStore.appearanceDays.asSequence().map { it.copy() }.toSet(),
                 categoriesIds = bossStore.categoriesIds
             )
         }

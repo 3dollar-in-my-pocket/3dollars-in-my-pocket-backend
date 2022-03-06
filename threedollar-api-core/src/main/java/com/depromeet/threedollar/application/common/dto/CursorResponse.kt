@@ -1,12 +1,13 @@
 package com.depromeet.threedollar.application.common.dto
 
+private const val LAST_CURSOR = -1L
+
 data class CursorResponse<T>(
     val nextCursor: T?,
     val hasMore: Boolean
 ) {
 
     companion object {
-        private const val LAST_CURSOR = -1L
         fun <T> of(nextCursor: T?): CursorResponse<T> {
             return CursorResponse(
                 nextCursor = nextCursor,

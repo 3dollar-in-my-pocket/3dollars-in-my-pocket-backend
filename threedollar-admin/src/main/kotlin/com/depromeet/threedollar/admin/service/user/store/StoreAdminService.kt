@@ -20,9 +20,7 @@ class StoreAdminService(
             request.minCount,
             request.page - 1,
             request.size
-        )
-            .map { ReportedStoresResponse.of(it) }
-            .toList()
+        ).map { ReportedStoresResponse.of(it) }
     }
 
     @Transactional(readOnly = true)

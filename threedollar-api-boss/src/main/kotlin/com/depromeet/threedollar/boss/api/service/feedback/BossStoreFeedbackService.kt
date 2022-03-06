@@ -42,7 +42,6 @@ class BossStoreFeedbackService(
         BossStoreServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
         return bossStoreFeedbackCountRepository.getAll(bossStoreId)
             .map { BossStoreFeedbackCountResponse.of(it.key, it.value) }
-            .toList()
     }
 
     @Transactional(readOnly = true)

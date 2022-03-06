@@ -10,6 +10,8 @@ import com.depromeet.threedollar.document.boss.document.registration.Registratio
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
 import org.springframework.stereotype.Service
 
+private val SOCIAL_TYPE = BossAccountSocialType.GOOGLE
+
 @Service
 class GoogleAuthService(
     private val bossAccountRepository: BossAccountRepository,
@@ -29,10 +31,6 @@ class GoogleAuthService(
 
     override fun getSocialId(request: LoginRequest): String {
         return googleAuthApiClient.getProfileInfo(HttpHeaderUtils.withBearerToken(request.token)).id
-    }
-
-    companion object {
-        private val SOCIAL_TYPE = BossAccountSocialType.GOOGLE
     }
 
 }

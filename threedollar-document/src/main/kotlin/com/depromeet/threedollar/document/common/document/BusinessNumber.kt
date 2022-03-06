@@ -9,6 +9,9 @@ import java.util.regex.Pattern
  * 000-00-00000
  * TODO 사업자 번호 유효성 로직 추가
  */
+private val BUSINESS_NUMBER_REGEX = Pattern.compile("(\\d{3})-(\\d{2})-(\\d{5})")
+private const val SEPARATOR = "-"
+
 data class BusinessNumber(
     private val first: String,
     private val second: String,
@@ -24,15 +27,13 @@ data class BusinessNumber(
             if (!BUSINESS_NUMBER_REGEX.matcher(number).matches()) {
                 throw InvalidException("잘못된 사업자 번호 (${number}) 입니다. 사업자 번호 형식은 [000-00-00000] 입니다", ErrorCode.INVALID_BUSINESS_NUMBER_FORMAT)
             }
+            val separatedNumber = number.split(SEPARATOR)
             return BusinessNumber(
-                first = number.split(SEPARATOR)[0],
-                second = number.split(SEPARATOR)[1],
-                third = number.split(SEPARATOR)[2]
+                first = separatedNumber[0],
+                second = separatedNumber[1],
+                third = separatedNumber[2]
             )
         }
-
-        private val BUSINESS_NUMBER_REGEX = Pattern.compile("(\\d{3})-(\\d{2})-(\\d{5})")
-        private const val SEPARATOR = "-"
     }
 
 }

@@ -12,6 +12,8 @@ import org.springframework.web.servlet.HandlerInterceptor
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
+const val HEADER_BEARER_PREFIX = "Bearer "
+
 @Component
 class AuthInterceptor(
     private val sessionRepository: SessionRepository<out Session?>,
@@ -42,10 +44,6 @@ class AuthInterceptor(
     private fun findSessionBySessionId(sessionId: String): Session {
         return sessionRepository.findById(sessionId)
             ?: throw UnAuthorizedException("잘못된 세션 $sessionId 입니다.")
-    }
-
-    companion object {
-        const val HEADER_BEARER_PREFIX = "Bearer "
     }
 
 }

@@ -17,6 +17,9 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
 
+private const val SOCIAL_ID = "social-id"
+private val SOCIAL_TYPE = BossAccountSocialType.GOOGLE
+
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class GoogleAuthServiceTest(
@@ -79,11 +82,6 @@ internal class GoogleAuthServiceTest(
         override fun getProfileInfo(accessToken: String?): GoogleProfileInfoResponse {
             return GoogleProfileInfoResponse.testInstance(SOCIAL_ID)
         }
-    }
-
-    companion object {
-        private const val SOCIAL_ID = "social-id"
-        private val SOCIAL_TYPE = BossAccountSocialType.GOOGLE
     }
 
 }

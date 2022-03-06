@@ -179,7 +179,7 @@ private fun createCategory(
     bossStoreCategoryRepository: BossStoreCategoryRepository,
     vararg titles: String
 ): Set<String> {
-    return titles.map {
-        bossStoreCategoryRepository.save(BossStoreCategoryCreator.create(it)).id
-    }.toSet()
+    return titles.asSequence()
+        .map { bossStoreCategoryRepository.save(BossStoreCategoryCreator.create(it)).id }
+        .toSet()
 }

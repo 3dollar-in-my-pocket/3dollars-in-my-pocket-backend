@@ -20,6 +20,9 @@ import javax.persistence.EntityManagerFactory
 /**
  * 마이그레이션을 위해 모든 유저에게 기본 획득 메달을 제공하는 배치
  */
+private const val JOB_NAME = "giveDefaultMedalsToUsersJob"
+private const val CHUNK_SIZE = 1000
+
 @Configuration
 class GiveDefaultMedalsToAllUserJobConfiguration(
     private val jobBuilderFactory: JobBuilderFactory,
@@ -77,11 +80,6 @@ class GiveDefaultMedalsToAllUserJobConfiguration(
         val itemWriter = JpaItemWriter<User>()
         itemWriter.setEntityManagerFactory(entityManagerFactory)
         return itemWriter
-    }
-
-    companion object {
-        private const val JOB_NAME = "giveDefaultMedalsToUsersJob"
-        private const val CHUNK_SIZE = 1000
     }
 
 }

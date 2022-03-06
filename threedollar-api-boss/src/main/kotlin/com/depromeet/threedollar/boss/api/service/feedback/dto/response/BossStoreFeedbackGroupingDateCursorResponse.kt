@@ -33,9 +33,7 @@ data class BossStoreFeedbackGroupingDateResponse(
         fun of(date: LocalDate, feedbackCountsGroupingType: Map<BossStoreFeedbackType, Int>): BossStoreFeedbackGroupingDateResponse {
             return BossStoreFeedbackGroupingDateResponse(
                 date = date,
-                feedbacks = feedbackCountsGroupingType
-                    .map { BossStoreFeedbackCountResponse.of(it.key, it.value) }
-                    .toList()
+                feedbacks = feedbackCountsGroupingType.map { BossStoreFeedbackCountResponse.of(it.key, it.value) }
             )
         }
     }

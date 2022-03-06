@@ -6,6 +6,8 @@ import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Repository
 import java.util.Objects
 
+private const val BOSS_STORE_FEEDBACK_KEY = "boss:store:feedback"
+
 @Repository
 class BossStoreFeedbackCountRepository(
     private val redisTemplate: RedisTemplate<String, Objects>
@@ -25,10 +27,6 @@ class BossStoreFeedbackCountRepository(
 
     private fun getKey(bossStoreId: String): String {
         return "$BOSS_STORE_FEEDBACK_KEY:${bossStoreId}"
-    }
-
-    companion object {
-        private const val BOSS_STORE_FEEDBACK_KEY = "boss:store:feedback"
     }
 
 }

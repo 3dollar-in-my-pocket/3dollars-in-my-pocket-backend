@@ -41,9 +41,9 @@ data class UpdateBossStoreInfoRequest(
     }
 
     fun toAppearanceDays(): Set<BossStoreAppearanceDay> {
-        return appearanceDays.map {
-            it.toAppearanceDay()
-        }.toSet()
+        return appearanceDays.asSequence()
+            .map { it.toAppearanceDay() }
+            .toSet()
     }
 
 }

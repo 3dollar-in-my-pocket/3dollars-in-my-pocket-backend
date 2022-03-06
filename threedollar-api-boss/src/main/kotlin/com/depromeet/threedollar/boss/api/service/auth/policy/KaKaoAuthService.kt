@@ -10,6 +10,8 @@ import com.depromeet.threedollar.document.boss.document.registration.Registratio
 import com.depromeet.threedollar.external.client.kakao.KaKaoAuthApiClient
 import org.springframework.stereotype.Service
 
+private val SOCIAL_TYPE = BossAccountSocialType.KAKAO
+
 @Service
 class KaKaoAuthService(
     private val bossAccountRepository: BossAccountRepository,
@@ -29,10 +31,6 @@ class KaKaoAuthService(
 
     override fun getSocialId(request: LoginRequest): String {
         return kaKaoAuthApiClient.getProfileInfo(HttpHeaderUtils.withBearerToken(request.token)).id
-    }
-
-    companion object {
-        private val SOCIAL_TYPE = BossAccountSocialType.KAKAO
     }
 
 }

@@ -12,6 +12,9 @@ import org.springframework.web.context.request.NativeWebRequest
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
 
+private const val LATITUDE = "latitude"
+private const val LONGITUDE = "longitude"
+
 @Component
 class GeoCoordinateArgumentResolver : HandlerMethodArgumentResolver {
 
@@ -38,11 +41,6 @@ class GeoCoordinateArgumentResolver : HandlerMethodArgumentResolver {
         }
 
         return CoordinateValue.of(latitude ?: 0.0, longitude ?: 0.0)
-    }
-
-    companion object {
-        private const val LATITUDE = "latitude"
-        private const val LONGITUDE = "longitude"
     }
 
 }

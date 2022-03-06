@@ -35,8 +35,8 @@ data class BossStoreInfoResponse(
                 imageUrl = bossStore.imageUrl,
                 introduction = bossStore.introduction,
                 menus = bossStore.menus.map { BossStoreMenuResponse.of(it) },
-                appearanceDays = bossStore.appearanceDays.map { BossStoreAppearanceDayResponse.of(it) }.toSet(),
-                categories = categories.map { BossStoreCategoryResponse.of(it) }.toSet(),
+                appearanceDays = bossStore.appearanceDays.asSequence().map { BossStoreAppearanceDayResponse.of(it) }.toSet(),
+                categories = categories.asSequence().map { BossStoreCategoryResponse.of(it) }.toSet(),
                 openStatus = bossStoreOpenInfo?.let { BossStoreOpenStatusResponse.of(it) }
                     ?: BossStoreOpenStatusResponse.close()
             )

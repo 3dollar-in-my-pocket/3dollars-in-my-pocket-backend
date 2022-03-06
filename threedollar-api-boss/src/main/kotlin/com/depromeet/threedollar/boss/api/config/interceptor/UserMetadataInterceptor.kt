@@ -11,6 +11,11 @@ import org.springframework.web.servlet.ModelAndView
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
+private const val USER_AGENT_HEADER = "User-Agent"
+private const val X_FORWARDED_FOR_HEADER = "X-Forwarded-For"
+private const val ANDROID_VERSION_HEADER = "X-Android-Service-Version"
+private const val IOS_USER_AGENT_POSTFIX = " (com.macgongmon"
+
 @Component
 class UserMetadataInterceptor : HandlerInterceptor {
 
@@ -38,14 +43,6 @@ class UserMetadataInterceptor : HandlerInterceptor {
 
     override fun postHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any, modelAndView: ModelAndView?) {
         UserMetaSessionUtils.remove()
-    }
-
-    companion object {
-        private const val USER_AGENT_HEADER = "User-Agent"
-        private const val X_FORWARDED_FOR_HEADER = "X-Forwarded-For"
-        private const val ANDROID_VERSION_HEADER = "X-Android-Service-Version"
-
-        private const val IOS_USER_AGENT_POSTFIX = " (com.macgongmon"
     }
 
 }

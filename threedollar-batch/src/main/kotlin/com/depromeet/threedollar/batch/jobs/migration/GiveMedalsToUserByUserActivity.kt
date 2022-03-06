@@ -26,6 +26,9 @@ import javax.persistence.EntityManagerFactory
 /**
  * 마이그레이션을 위해 기존의 유저의 활동 이력을 통해 메달을 제공하는 배치
  */
+private const val JOB_NAME = "giveMedalsToUserByUserActivityJob"
+private const val CHUNK_SIZE = 4
+
 @Configuration
 class GiveMedalsToUserByUserActivity(
     private val jobBuilderFactory: JobBuilderFactory,
@@ -147,11 +150,6 @@ class GiveMedalsToUserByUserActivity(
         val itemWriter = JpaItemWriter<User>()
         itemWriter.setEntityManagerFactory(entityManagerFactory)
         return itemWriter
-    }
-
-    companion object {
-        private const val JOB_NAME = "giveMedalsToUserByUserActivityJob"
-        private const val CHUNK_SIZE = 4
     }
 
 }

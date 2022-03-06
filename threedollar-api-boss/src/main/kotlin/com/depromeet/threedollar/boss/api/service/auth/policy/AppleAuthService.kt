@@ -9,6 +9,8 @@ import com.depromeet.threedollar.document.boss.document.registration.Registratio
 import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder
 import org.springframework.stereotype.Service
 
+private val SOCIAL_TYPE = BossAccountSocialType.APPLE
+
 @Service
 class AppleAuthService(
     private val bossAccountRepository: BossAccountRepository,
@@ -28,10 +30,6 @@ class AppleAuthService(
 
     override fun getSocialId(request: LoginRequest): String {
         return appleTokenDecoder.getSocialIdFromIdToken(request.token)
-    }
-
-    companion object {
-        private val SOCIAL_TYPE = BossAccountSocialType.APPLE
     }
 
 }

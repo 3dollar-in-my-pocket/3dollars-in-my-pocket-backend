@@ -12,6 +12,9 @@ import org.springframework.web.context.request.NativeWebRequest
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
 
+private const val MAP_LATITUDE = "mapLatitude"
+private const val MAP_LONGITUDE = "mapLongitude"
+
 @Component
 class MapCoordinateArgumentResolver : HandlerMethodArgumentResolver {
 
@@ -37,11 +40,6 @@ class MapCoordinateArgumentResolver : HandlerMethodArgumentResolver {
         }
 
         return CoordinateValue.of(mapLatitude ?: 0.0, mapLongitude ?: 0.0)
-    }
-
-    companion object {
-        private const val MAP_LATITUDE = "mapLatitude"
-        private const val MAP_LONGITUDE = "mapLongitude"
     }
 
 }

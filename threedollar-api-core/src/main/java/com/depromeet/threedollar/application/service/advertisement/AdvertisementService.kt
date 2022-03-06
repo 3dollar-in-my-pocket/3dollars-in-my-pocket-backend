@@ -17,10 +17,8 @@ class AdvertisementService(
     @Cacheable(key = "{#request.position, #request.platform}", value = [ADVERTISEMENT])
     @Transactional(readOnly = true)
     fun getAdvertisements(request: RetrieveAdvertisementsRequest): List<AdvertisementResponse> {
-        return advertisementRepository.findActivatedAdvertisementsByPositionAndPlatformAfterDate(request.position, request.platform, LocalDateTime.now()).asSequence()
-            .map { AdvertisementResponse.of(it.detail) }
-            .shuffled()
-            .toList()
+        val advertisements = advertisementRepository.findActivatedAdvertisementsByPositionAndPlatformAfterDate(request.position, request.platform, LocalDateTime.now())
+        return advertisements.map { AdvertisementResponse.of(it.detail) }
     }
 
 }

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component
 import java.util.*
 import javax.annotation.PostConstruct
 
+private val authServiceMap: MutableMap<BossAccountSocialType, AuthService> = EnumMap(BossAccountSocialType::class.java)
+
 @Component
 class AuthServiceProvider(
     private val kaKaoAuthService: KaKaoAuthService,
@@ -28,10 +30,6 @@ class AuthServiceProvider(
 
     fun getAuthService(socialType: BossAccountSocialType): AuthService {
         return authServiceMap[socialType] ?: throw InternalServerException("AuthService ($socialType) 로직이 구현되지 않았습니다")
-    }
-
-    companion object {
-        private val authServiceMap: MutableMap<BossAccountSocialType, AuthService> = EnumMap(BossAccountSocialType::class.java)
     }
 
 }

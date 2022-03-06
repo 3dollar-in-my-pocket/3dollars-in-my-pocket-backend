@@ -7,6 +7,10 @@ import java.util.regex.Pattern
 /**
  * 연락처 번호 (핸드폰 및 일반 전화 번호)
  */
+
+private const val SEPARATOR = "-"
+private val CONTACTS_NUMBER_REGEX = Pattern.compile("^\\d{2,3}-\\d{3,4}-\\d{4}\$")
+
 data class ContactsNumber(
     private val first: String,
     private val second: String,
@@ -28,9 +32,6 @@ data class ContactsNumber(
                 third = number.split(SEPARATOR)[2]
             )
         }
-
-        private const val SEPARATOR = "-"
-        private val CONTACTS_NUMBER_REGEX = Pattern.compile("^\\d{2,3}-\\d{3,4}-\\d{4}\$")
     }
 
 }

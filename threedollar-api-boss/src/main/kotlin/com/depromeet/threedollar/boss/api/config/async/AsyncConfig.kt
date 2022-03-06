@@ -11,6 +11,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
 import java.lang.reflect.Method
 import java.util.concurrent.Executor
 
+private const val MAX_POOL_SIZE = 100
+
 @EnableAsync
 @Configuration
 class AsyncConfig : AsyncConfigurerSupport() {
@@ -25,10 +27,6 @@ class AsyncConfig : AsyncConfigurerSupport() {
 
     override fun getAsyncUncaughtExceptionHandler(): AsyncUncaughtExceptionHandler {
         return AsyncTaskExceptionHandler()
-    }
-
-    companion object {
-        private const val MAX_POOL_SIZE = 100
     }
 
 }

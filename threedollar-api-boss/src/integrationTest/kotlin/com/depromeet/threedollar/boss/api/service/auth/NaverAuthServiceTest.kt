@@ -19,6 +19,9 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
 
+private const val SOCIAL_ID = "social-id"
+private val SOCIAL_TYPE = BossAccountSocialType.NAVER
+
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 class NaverAuthServiceTest(
@@ -83,11 +86,6 @@ class NaverAuthServiceTest(
                 NaverProfileInfoResponse(id = SOCIAL_ID)
             )
         }
-    }
-
-    companion object {
-        private const val SOCIAL_ID = "social-id"
-        private val SOCIAL_TYPE = BossAccountSocialType.NAVER
     }
 
 }

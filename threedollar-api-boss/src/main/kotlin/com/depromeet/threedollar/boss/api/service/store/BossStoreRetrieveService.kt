@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import kotlin.math.min
 
+private const val MAX_DISTANCE_KM = 2.0
+
 @Service
 class BossStoreRetrieveService(
     private val bossStoreRepository: BossStoreRepository,
@@ -48,10 +50,7 @@ class BossStoreRetrieveService(
     }
 
     private fun getCategory(bossStore: BossStore, categoriesDictionary: Map<String, BossStoreCategory>): List<BossStoreCategory> {
-        return bossStore.categoriesIds.asSequence()
-            .filter { categoriesDictionary.containsKey(it) }
-            .map { categoriesDictionary[it]!! }
-            .toList()
+        return bossStore.categoriesIds.mapNotNull { categoriesDictionary[it] }
     }
 
     @Transactional(readOnly = true)
@@ -74,10 +73,6 @@ class BossStoreRetrieveService(
             categories = bossStoreCategoryRepository.findCategoriesByIds(bossStore.categoriesIds),
             bossStoreOpenInfo = bossStoreOpenInfoRepository.findByIdOrNull(bossStore.id)
         )
-    }
-
-    companion object {
-        private const val MAX_DISTANCE_KM = 2.0
     }
 
 }

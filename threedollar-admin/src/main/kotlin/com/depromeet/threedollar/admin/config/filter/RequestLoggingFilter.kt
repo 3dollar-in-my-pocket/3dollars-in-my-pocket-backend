@@ -40,7 +40,7 @@ class RequestLoggingFilter : Filter {
     }
 
     companion object {
-        val log = logger()
+        private val log = logger()
     }
 
 }

@@ -36,6 +36,13 @@ import java.time.LocalDate
 import java.time.LocalTime
 import javax.servlet.http.HttpSession
 
+private val BOSS = BossAccount(
+    name = "테스트 계정",
+    socialInfo = BossAccountSocialInfo("test-social-id", BossAccountSocialType.KAKAO),
+    businessNumber = BusinessNumber.of("000-12-12345"),
+    pushSettingsStatus = PushSettingsStatus.OFF
+)
+
 @Profile("local", "local-docker", "integration-test", "dev")
 @RestController
 class LocalTestController(
@@ -185,15 +192,6 @@ class LocalTestController(
         if (bossAccountRepository.existsBossAccountBySocialInfo(socialId = socialInfo.socialId, socialType = socialInfo.socialType)) {
             throw ConflictException("이미 가입한 사장님(${socialInfo.socialId} - ${socialInfo.socialType})입니다")
         }
-    }
-
-    companion object {
-        private val BOSS = BossAccount(
-            name = "테스트 계정",
-            socialInfo = BossAccountSocialInfo("test-social-id", BossAccountSocialType.KAKAO),
-            businessNumber = BusinessNumber.of("000-12-12345"),
-            pushSettingsStatus = PushSettingsStatus.OFF
-        )
     }
 
 }

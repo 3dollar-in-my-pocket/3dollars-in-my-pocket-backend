@@ -17,6 +17,9 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
 
+private const val SOCIAL_ID = "social-id"
+private val SOCIAL_TYPE = BossAccountSocialType.KAKAO
+
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class KaKaoAuthServiceTest(
@@ -79,11 +82,6 @@ internal class KaKaoAuthServiceTest(
         override fun getProfileInfo(accessToken: String?): KaKaoProfileResponse {
             return KaKaoProfileResponse.testInstance(SOCIAL_ID)
         }
-    }
-
-    companion object {
-        private const val SOCIAL_ID = "social-id"
-        private val SOCIAL_TYPE = BossAccountSocialType.KAKAO
     }
 
 }
