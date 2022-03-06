@@ -13,6 +13,12 @@ Content-Type: application/json
     "acquisitionDescription": "획득 조건 설명"
 }
 
+> {%
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
 
 ### 특정 메달을 수정한다
 PUT {{host_admin}}/v1/medal/1
@@ -25,3 +31,9 @@ Content-Type: application/json
     "activationIconUrl": "https://changed-activation.png",
     "disableIconUrl": "https://changed-disable.png"
 }
+
+> {%
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}

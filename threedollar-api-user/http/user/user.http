@@ -9,6 +9,17 @@ client.test("200 OK", function() {
 %}
 
 
+### [인증] 나의 활동 정보를 조회합니다.
+GET {{host_api}}/v1/user/activity
+Authorization: {{AUTHORIZATION}}
+
+> {%
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
 ### [인증] 나의 회원 정보를 수정합니다.
 PUT {{host_api}}/v2/user/me
 Content-Type: application/json
@@ -25,7 +36,7 @@ client.test("200 OK or 409 Conflict", function() {
 %}
 
 
-### 닉네임 중복 여부를 체크 요청합니다.
+### 닉네임 중복 여부를 체크합니다.
 GET {{host_api}}/v2/user/name/check?name=wi_ll
 
 > {%
@@ -39,7 +50,7 @@ client.test("200 OK or 409 Conflict", function() {
 GET {{host_api}}/v2/user/name/check?name=-11-
 
 > {%
-client.test("200 OK or 409 Conflict", function() {
+client.test("400 BadRequest", function() {
      client.assert(response.status === 400, "응답 실패");
 });
 %}

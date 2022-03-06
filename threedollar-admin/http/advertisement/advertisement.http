@@ -22,6 +22,7 @@ client.test("200 OK", function() {
 });
 %}
 
+
 ### 전체 광고 목록을 조회합니다.
 GET {{host_admin}}/v1/advertisements?page=1&size=3
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}

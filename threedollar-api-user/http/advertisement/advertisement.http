@@ -1,4 +1,4 @@
-### 활성화 중인 광고 목록을 조회한다 (AOS)
+### 특정 위치에 활성화 중인 광고 목록을 조회한다 (AOS)
 GET {{host_api}}/v1/advertisements?platform=AOS&position=MENU_CATEGORY_BANNER
 
 > {%
@@ -8,7 +8,7 @@ client.test("200 OK", function() {
 %}
 
 
-### 활성화 중인 광고 목록을 조회한다 (IOS)
+### 특정 위치에 활성화 중인 광고 목록을 조회한다 (IOS)
 GET {{host_api}}/v1/advertisements?platform=IOS
 
 > {%
