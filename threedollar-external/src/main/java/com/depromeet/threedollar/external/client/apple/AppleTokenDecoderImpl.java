@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.external.client.apple;
 
 import com.depromeet.threedollar.common.exception.model.InvalidException;
-import com.depromeet.threedollar.external.client.apple.dto.properties.AppleAuthProperties;
+import com.depromeet.threedollar.external.client.apple.dto.property.AppleAuthProperty;
 import com.depromeet.threedollar.external.client.apple.dto.response.ApplePublicKeyResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -31,7 +31,7 @@ import static com.depromeet.threedollar.common.exception.type.ErrorCode.*;
 public class AppleTokenDecoderImpl implements AppleTokenDecoder {
 
     private final AppleAuthApiClient appleApiCaller;
-    private final AppleAuthProperties appleAuthProperties;
+    private final AppleAuthProperty appleAuthProperty;
     private final ObjectMapper objectMapper;
 
     @Override
@@ -43,8 +43,8 @@ public class AppleTokenDecoderImpl implements AppleTokenDecoder {
             PublicKey publicKey = getPublicKey(header);
             Claims claims = Jwts.parserBuilder()
                 .setSigningKey(publicKey)
-                .requireIssuer(appleAuthProperties.getIssuer())
-                .requireAudience(appleAuthProperties.getClientId())
+                .requireIssuer(appleAuthProperty.getIssuer())
+                .requireAudience(appleAuthProperty.getClientId())
                 .build()
                 .parseClaimsJws(idToken)
                 .getBody();

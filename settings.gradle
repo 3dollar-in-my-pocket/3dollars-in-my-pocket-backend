@@ -1,15 +1,15 @@
 rootProject.name = 'threedollar'
-include 'threedollar-api-user'
-include 'threedollar-api-boss'
-include 'threedollar-admin'
+
 include 'threedollar-batch'
 
+include 'threedollar-api-admin'
+include 'threedollar-api-user'
+include 'threedollar-api-boss'
 include 'threedollar-api-core'
 
-include 'threedollar-domain'
+include 'threedollar-domain-mongo'
+include 'threedollar-domain-redis'
+include 'threedollar-domain-rds'
 
 include 'threedollar-external'
 include 'threedollar-common'
-include 'threedollar-document'
-include 'threedollar-redis'
-

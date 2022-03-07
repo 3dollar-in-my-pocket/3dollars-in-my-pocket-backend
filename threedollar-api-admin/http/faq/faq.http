@@ -1,0 +1,79 @@
+### [인증] 새로운 FAQ를 등록합니다.
+POST {{host_admin}}/v1/user/faq
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+Content-Type: application/json
+
+{
+    "category": "STORE",
+    "question": "앱 이름이 뭔가요??",
+    "answer": "\"가슴속 삼천원\"입니다.\n많이 이용해주세요."
+}
+
+> {%
+client.test("200 OK", function() {
+    client.global.set("FAQ_ID", response.body["data"]["faqId"])
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 등록된 FAQ를 수정합니다
+PUT {{host_admin}}/v1/user/faq/{{FAQ_ID}}
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+Content-Type: application/json
+
+{
+    "category": "STORE",
+    "question": "변경후 질문??",
+    "answer": "ABCABCABC\nABCABCABC"
+}
+
+> {%
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 등록된 FAQ를 삭제합니다
+DELETE {{host_admin}}/v1/user/faq/{{FAQ_ID}}
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 등록된 FAQ를 모두 조회한다
+GET {{host_admin}}/v1/user/faqs
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 등록된 FAQ를 특정 카테고리 범위에서 조회한다
+GET {{host_admin}}/v1/user/faqs?category=STORE
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 등록된 FAQ 카테고리들을 조회한다
+GET {{host_admin}}/v1/user/faq/categories
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}

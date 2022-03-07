@@ -2,12 +2,12 @@ package com.depromeet.threedollar.batch.jobs.statistics
 
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
 import com.depromeet.threedollar.batch.jobs.statistics.StatisticsMessageFormat.*
-import com.depromeet.threedollar.domain.user.domain.medal.MedalRepository
-import com.depromeet.threedollar.domain.user.domain.store.MenuRepository
-import com.depromeet.threedollar.domain.user.domain.review.ReviewRepository
-import com.depromeet.threedollar.domain.user.domain.store.StoreRepository
-import com.depromeet.threedollar.domain.user.domain.user.UserRepository
-import com.depromeet.threedollar.domain.user.domain.visit.VisitHistoryRepository
+import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
+import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository
+import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
+import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository
 import com.depromeet.threedollar.external.client.slack.SlackWebhookApiClient
 import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest
 import org.springframework.batch.core.Job
@@ -24,17 +24,17 @@ import java.time.LocalDate
  */
 @Configuration
 class DailyStatisticsJobConfiguration(
-    private val jobBuilderFactory: JobBuilderFactory,
-    private val stepBuilderFactory: StepBuilderFactory,
+        private val jobBuilderFactory: JobBuilderFactory,
+        private val stepBuilderFactory: StepBuilderFactory,
 
-    private val userRepository: UserRepository,
-    private val menuRepository: MenuRepository,
-    private val storeRepository: StoreRepository,
-    private val reviewRepository: ReviewRepository,
-    private val visitHistoryRepository: VisitHistoryRepository,
-    private val medalRepository: MedalRepository,
+        private val userRepository: UserRepository,
+        private val menuRepository: MenuRepository,
+        private val storeRepository: StoreRepository,
+        private val reviewRepository: ReviewRepository,
+        private val visitHistoryRepository: VisitHistoryRepository,
+        private val medalRepository: MedalRepository,
 
-    private val slackNotificationApiClient: SlackWebhookApiClient
+        private val slackNotificationApiClient: SlackWebhookApiClient
 ) {
 
     @Bean

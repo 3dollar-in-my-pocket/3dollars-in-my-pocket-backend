@@ -23,7 +23,7 @@ services:
       - "6380:6379"
     restart: unless-stopped
     volumes:
-      - threedollar-redis-volume:/data
+      - threedollar-cache-volume:/data
     networks:
       - threedollar-network
 
@@ -39,7 +39,7 @@ services:
       - threedollar-network
 
 volumes:
-  threedollar-redis-volume:
+  threedollar-cache-volume:
   threedollar-mariadb-volume:
   threedollar-mongodb-volume:
 

@@ -25,6 +25,8 @@
 - Java 11, Kotlin 1.5
 - Spring Framework (Spring MVC)
 - JPA/Hibernate, QueryDSL
+- MariaDB, flyway
+- Redis, Caffeine Cache
 - Spring Batch
 - Feign Client
 - Gradle
@@ -34,8 +36,8 @@
 ![img.png](images/3dollars-architecture-20211211.png)
 
 - ECS Fargate
-- RDS (MariaDB), flyway
-- Elastic Cache (Redis)
+- RDS
+- Elastic Cache
 - S3, CloudFront
 - Application LoadBalancer
 - GitHub Actions CI/CD
@@ -45,6 +47,10 @@
 - 오류 수집 & 알림: Sentry, Slack
 - APM 도구: NewRelic
 - 부하 테스트: locust
+
+
+### 멀티 모듈 구조
+![img.png](images/modules-20220307.png)
 
 | 서비스     | 운영 환경                                                                                                                               | 개발 환경                                                                                                                                     |
 |---------|-------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|

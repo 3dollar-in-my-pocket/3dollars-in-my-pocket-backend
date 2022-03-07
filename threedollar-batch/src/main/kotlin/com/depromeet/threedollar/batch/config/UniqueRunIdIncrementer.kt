@@ -4,6 +4,8 @@ import org.springframework.batch.core.JobParameters
 import org.springframework.batch.core.JobParametersBuilder
 import org.springframework.batch.core.launch.support.RunIdIncrementer
 
+private const val RUN_ID = "run.id"
+
 class UniqueRunIdIncrementer : RunIdIncrementer() {
 
     override fun getNext(parameters: JobParameters?): JobParameters {
@@ -14,10 +16,6 @@ class UniqueRunIdIncrementer : RunIdIncrementer() {
                 params.getLong(RUN_ID, 0L) + 1
             )
             .toJobParameters()
-    }
-
-    companion object {
-        private const val RUN_ID = "run.id"
     }
 
 }

@@ -1,0 +1,42 @@
+spring.config:
+  activate:
+    on-profile:
+      - integration-test
+      - local
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 0
+      database: test
+
+
+---
+spring.config:
+  activate:
+    on-profile: local-docker
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27018
+      database: threedollar
+
+
+---
+spring.config:
+  activate:
+    on-profile:
+      - dev
+      - stage
+      - prod
+
+spring:
+  data:
+    mongodb:
+      uri: ${secret.mongodb.uri}
+
+
+---

@@ -1,6 +1,6 @@
 dependencies {
     implementation project(':threedollar-api-core')
-    implementation project(':threedollar-document')
+    implementation project(':threedollar-domain-mongo')
 
     // Spring MVC
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -23,8 +23,8 @@ dependencies {
     implementation("io.sentry:sentry-logback:${sentryVersion}")
 
     // TestFixtures
-    testImplementation(testFixtures(project(":threedollar-document")))
-    testImplementation(testFixtures(project(":threedollar-redis")))
+    testImplementation(testFixtures(project(":threedollar-domain-mongo")))
+    testImplementation(testFixtures(project(":threedollar-domain-redis")))
 }
 
 application {

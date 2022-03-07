@@ -4,14 +4,16 @@ ext {
 
 dependencies {
     api project(":threedollar-external")
-    api project(":threedollar-domain")
-    api project(":threedollar-redis")
+    api project(":threedollar-domain-rds")
+    api project(":threedollar-domain-redis")
 
-    // Jackson
-    implementation("org.springframework.boot:spring-boot-starter-json")
+    implementation("org.springframework.boot:spring-boot-starter-web")
 
     // Spring Retry
     api("org.springframework.retry:spring-retry:${springRetryVersion}")
+
+    // Caffeine Cache
+    implementation("com.github.ben-manes.caffeine:caffeine")
 }
 
 bootJar { enabled = false }
