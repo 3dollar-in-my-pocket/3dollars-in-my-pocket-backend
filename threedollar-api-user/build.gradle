@@ -22,7 +22,7 @@ dependencies {
     implementation("io.sentry:sentry-logback:${sentryVersion}")
 
     // TestFixtures
-    testImplementation(testFixtures(project(":threedollar-domain")))
+    testImplementation(testFixtures(project(":threedollar-domain-rds")))
 }
 
 application {

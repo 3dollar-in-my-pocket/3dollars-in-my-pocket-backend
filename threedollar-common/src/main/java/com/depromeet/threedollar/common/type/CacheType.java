@@ -46,7 +46,6 @@ public enum CacheType {
 
         LOCAL,
         GLOBAL,
-        ;
 
     }
 

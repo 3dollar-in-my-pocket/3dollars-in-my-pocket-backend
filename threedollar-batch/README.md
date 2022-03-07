@@ -1,10 +1,3 @@
-# threedollar-admin
+# threedollar-batch
 
-배치 잡 모듈
-
-## 하위 모듈
-- threedollar-domain
-    - threedollar-common
-- threedollar-external
-    - threedollar-common
-
+배치 모듈
