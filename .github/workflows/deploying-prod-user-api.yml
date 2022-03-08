@@ -31,7 +31,7 @@ jobs:
       - name: Version
         id: version
         run: |
-          VERSION=$GITHUB_REF_NAME
+          VERSION=${GITHUB_REF_NAME#v}
           GIT_COMMIT_MSG=`git show -s`
           echo "::set-output name=version::$VERSION"
           echo "::set-output name=git-commit-msg::$GIT_COMMIT_MSG"
