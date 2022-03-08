@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Check assigned tag
         uses: actions/github-script@v3
-        if: ${{GITHUB.REF.TYPE != 'tag'}}
+        if: ${{GITHUB.REF_TYPE != 'tag'}}
         with:
           script: core.setFailed('You should deploy with tag (not branch !)')
 
