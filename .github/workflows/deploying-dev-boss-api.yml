@@ -2,10 +2,26 @@ name: 개발 환경 - 사장님 API 서버 배포
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: "Semantic Versioning ex) v0.0.1"
+        required: true
+        type: string
 
 jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: validate semantic versioning
+        uses: actions/github-script@v3
+        if: ${{ !startsWith(github.event.inputs.version, 'v') }}
+        with:
+          script: core.setFailed('input semantic version ex) v0.0.1')
+
   build:
     runs-on: ubuntu-latest
+    needs:
+      - validate
     environment: dev-boss
     steps:
       - name: checkout@v2
@@ -14,8 +30,10 @@ jobs:
       - name: Version
         id: version
         run: |
-          VERSION=`cat ./version.txt`-${{ github.run_id }}
+          VERSION=$VERSIONING-${{ github.run_id }}
           echo "::set-output name=version::$VERSION"
+        env:
+          VERSIONING: ${{ github.event.inputs.version }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
