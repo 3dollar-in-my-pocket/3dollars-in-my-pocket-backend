@@ -15,7 +15,7 @@ jobs:
 
       - name: validate semantic versioning
         uses: actions/github-script@v3
-        if: ${{ !startsWith(GITHUB.REF.NAME, 'v') }}
+        if: ${{ !startsWith(GITHUB.REF_NAME, 'v') }}
         with:
           script: core.setFailed('tag is not semantic versioning ex) v0.0.1')
 
