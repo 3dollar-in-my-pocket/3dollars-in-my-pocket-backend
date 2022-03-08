@@ -9,6 +9,8 @@ on:
     branches:
       - main
       - develop
+  workflow_dispatch:
+
 jobs:
   testing:
     runs-on: ubuntu-latest

@@ -1,12 +1,28 @@
-name: 운영 환경 유저 API 서버 배포
+name: 운영 환경 - 유저 API 서버 배포
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+
 jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check assigned tag
+        uses: actions/github-script@v3
+        if: ${{GITHUB.REF_TYPE != 'tag'}}
+        with:
+          script: core.setFailed('You should deploy with tag (not branch !)')
+
+      - name: validate semantic versioning
+        uses: actions/github-script@v3
+        if: ${{ !startsWith(GITHUB.REF_NAME, 'v') }}
+        with:
+          script: core.setFailed('tag is not semantic versioning ex) v0.0.1')
+
   build:
     runs-on: ubuntu-latest
+    needs:
+      - validate
     environment: prod-user
     steps:
       - name: checkout@v2
@@ -15,7 +31,7 @@ jobs:
       - name: Version
         id: version
         run: |
-          VERSION=`cat ./version.txt`
+          VERSION=${GITHUB_REF_NAME#v}
           GIT_COMMIT_MSG=`git show -s`
           echo "::set-output name=version::$VERSION"
           echo "::set-output name=git-commit-msg::$GIT_COMMIT_MSG"
