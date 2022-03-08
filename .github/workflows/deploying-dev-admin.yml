@@ -1,10 +1,8 @@
-name: 개발 환경 관리자 API 서버 배포
+name: 개발 환경 - 관리자 API 서버 배포
 
 on:
-  push:
-    branches:
-      - develop
-      - feature/admin-cicd
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest

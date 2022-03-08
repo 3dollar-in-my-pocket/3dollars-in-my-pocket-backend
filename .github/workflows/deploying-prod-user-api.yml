@@ -1,9 +1,8 @@
-name: 운영 환경 유저 API 서버 배포
+name: 운영 환경 - 유저 API 서버 배포
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
