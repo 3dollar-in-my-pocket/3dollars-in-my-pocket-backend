@@ -5,6 +5,8 @@ import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
@@ -21,10 +23,10 @@ import org.springframework.test.context.TestConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class BossAccountRegistrationServiceTest(
-        private val bossAccountRegistrationService: BossAccountRegistrationService,
-        private val registrationRepository: RegistrationRepository,
-        private val bossAccountRepository: com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository,
-        private val bossStoreCategoryRepository: BossStoreCategoryRepository
+    private val bossAccountRegistrationService: BossAccountRegistrationService,
+    private val registrationRepository: RegistrationRepository,
+    private val bossAccountRepository: BossAccountRepository,
+    private val bossStoreCategoryRepository: BossStoreCategoryRepository
 ) {
 
     @AfterEach
@@ -43,7 +45,7 @@ internal class BossAccountRegistrationServiceTest(
             val categoriesIds = createCategory(bossStoreCategoryRepository, "한식", "일식")
             val bossName = "will"
             val socialId = "social-id"
-            val socialType = com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType.APPLE
+            val socialType = BossAccountSocialType.APPLE
             val businessNumber = "210-10-12345"
             val storeName = "가슴속 3천원 붕어빵 가게"
             val contactsNumber = "010-1234-1234"
@@ -89,7 +91,7 @@ internal class BossAccountRegistrationServiceTest(
             val categoriesIds = createCategory(bossStoreCategoryRepository, "한식")
             val bossName = "will"
             val socialId = "social-id"
-            val socialType = com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType.APPLE
+            val socialType = BossAccountSocialType.APPLE
             val businessNumber = "210-10-12345"
             val storeName = "가슴속 3천원 붕어빵 가게"
             val contactsNumber = "010-1234-1234"
@@ -123,7 +125,7 @@ internal class BossAccountRegistrationServiceTest(
             val categoriesIds = createCategory(bossStoreCategoryRepository, "한식", "중식")
 
             val socialId = "social-id"
-            val socialType = com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType.APPLE
+            val socialType = BossAccountSocialType.APPLE
             bossAccountRepository.save(
                 BossAccountCreator.create(
                     socialId = socialId,
@@ -154,7 +156,7 @@ internal class BossAccountRegistrationServiceTest(
             val request = SignupRequest(
                 bossName = "will",
                 token = "Dummy Access Token",
-                socialType = com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType.APPLE,
+                socialType = BossAccountSocialType.APPLE,
                 businessNumber = "210-10-1234",
                 storeName = "가슴속 3천원",
                 storeCategoriesIds = categoriesIds + "NotExists Store Category Id",

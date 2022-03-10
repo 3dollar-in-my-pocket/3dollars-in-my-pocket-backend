@@ -1,7 +1,8 @@
 package com.depromeet.threedollar.api.boss.controller
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.boss.service.auth.dto.response.LoginResponse
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.BeforeEach
@@ -21,7 +22,7 @@ internal abstract class ControllerTestUtils {
     protected lateinit var objectMapper: ObjectMapper
 
     @Autowired
-    protected lateinit var bossAccountRepository: com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
+    protected lateinit var bossAccountRepository: BossAccountRepository
 
     @Autowired
     protected lateinit var mockMvc: MockMvc

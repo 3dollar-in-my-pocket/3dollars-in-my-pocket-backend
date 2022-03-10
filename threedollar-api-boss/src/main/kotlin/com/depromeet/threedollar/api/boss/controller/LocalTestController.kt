@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.api.boss.controller
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.boss.config.interceptor.Auth
 import com.depromeet.threedollar.api.boss.config.resolver.BossId
 import com.depromeet.threedollar.api.boss.config.session.SessionConstants
@@ -8,13 +7,15 @@ import com.depromeet.threedollar.api.boss.service.auth.dto.response.LoginRespons
 import com.depromeet.threedollar.api.boss.service.category.BossStoreCategoryServiceUtils
 import com.depromeet.threedollar.api.boss.service.feedback.BossStoreFeedbackService
 import com.depromeet.threedollar.api.boss.service.feedback.dto.request.AddBossStoreFeedbackRequest
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.common.type.DayOfTheWeek
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.*
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
-import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.*
@@ -24,27 +25,22 @@ import com.depromeet.threedollar.domain.mongo.common.domain.TimeInterval
 import io.swagger.annotations.ApiOperation
 import org.springframework.context.annotation.Profile
 import org.springframework.data.geo.Point
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
 import java.time.LocalTime
 import javax.servlet.http.HttpSession
 
 private val BOSS = com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount(
     name = "테스트 계정",
-    socialInfo = com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo("test-social-id", com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType.KAKAO),
+    socialInfo = BossAccountSocialInfo("test-social-id", BossAccountSocialType.KAKAO),
     businessNumber = BusinessNumber.of("000-12-12345"),
-    pushSettingsStatus = com.depromeet.threedollar.domain.mongo.boss.domain.account.PushSettingsStatus.OFF
+    pushSettingsStatus = PushSettingsStatus.OFF
 )
 
 @Profile("local", "local-docker", "integration-test", "dev")
 @RestController
 class LocalTestController(
-    private val bossAccountRepository: com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository,
+    private val bossAccountRepository: BossAccountRepository,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossStoreLocationRepository: BossStoreLocationRepository,
@@ -181,12 +177,12 @@ class LocalTestController(
         return ApiResponse.SUCCESS
     }
 
-    private fun registerNewBossAccount(registration: Registration): com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount {
+    private fun registerNewBossAccount(registration: Registration): BossAccount {
         validateDuplicateRegistration(registration.boss.socialInfo)
         return bossAccountRepository.save(registration.toBossAccount())
     }
 
-    private fun validateDuplicateRegistration(socialInfo: com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo) {
+    private fun validateDuplicateRegistration(socialInfo: BossAccountSocialInfo) {
         if (bossAccountRepository.existsBossAccountBySocialInfo(socialId = socialInfo.socialId, socialType = socialInfo.socialType)) {
             throw ConflictException("이미 가입한 사장님(${socialInfo.socialId} - ${socialInfo.socialType})입니다")
         }

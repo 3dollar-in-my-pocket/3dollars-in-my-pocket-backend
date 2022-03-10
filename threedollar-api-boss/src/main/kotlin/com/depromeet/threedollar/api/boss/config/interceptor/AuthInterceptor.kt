@@ -1,7 +1,8 @@
 package com.depromeet.threedollar.api.boss.config.interceptor
 
-import com.depromeet.threedollar.common.exception.model.UnAuthorizedException
 import com.depromeet.threedollar.api.boss.config.session.SessionConstants.BOSS_ACCOUNT_ID
+import com.depromeet.threedollar.common.exception.model.UnAuthorizedException
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import org.springframework.http.HttpHeaders
 import org.springframework.session.Session
 import org.springframework.session.SessionRepository
@@ -16,7 +17,7 @@ const val HEADER_BEARER_PREFIX = "Bearer "
 @Component
 class AuthInterceptor(
     private val sessionRepository: SessionRepository<out Session?>,
-    private val bossAccountRepository: com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
+    private val bossAccountRepository: BossAccountRepository
 ) : HandlerInterceptor {
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {

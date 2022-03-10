@@ -5,6 +5,7 @@ import com.depromeet.threedollar.api.boss.service.auth.dto.request.SignupRequest
 import com.depromeet.threedollar.api.boss.service.category.BossStoreCategoryServiceUtils
 import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
@@ -15,10 +16,10 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class BossAccountRegistrationService(
-        private val bossAccountRepository: com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository,
-        private val registrationRepository: RegistrationRepository,
-        private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-        private val eventPublisher: ApplicationEventPublisher
+    private val bossAccountRepository: BossAccountRepository,
+    private val registrationRepository: RegistrationRepository,
+    private val bossStoreCategoryRepository: BossStoreCategoryRepository,
+    private val eventPublisher: ApplicationEventPublisher
 ) {
 
     @Transactional

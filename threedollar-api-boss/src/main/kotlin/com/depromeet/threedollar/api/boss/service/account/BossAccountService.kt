@@ -2,6 +2,8 @@ package com.depromeet.threedollar.api.boss.service.account
 
 import com.depromeet.threedollar.api.boss.service.account.dto.request.UpdateBossAccountInfoRequest
 import com.depromeet.threedollar.api.boss.service.account.dto.response.BossAccountInfoResponse
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossWithdrawalAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.event.registration.BossSignOutEvent
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
@@ -9,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class BossAccountService(
-        private val bossAccountRepository: com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository,
-        private val bossWithdrawalAccountRepository: com.depromeet.threedollar.domain.mongo.boss.domain.account.BossWithdrawalAccountRepository,
-        private val eventPublisher: ApplicationEventPublisher
+    private val bossAccountRepository: BossAccountRepository,
+    private val bossWithdrawalAccountRepository: BossWithdrawalAccountRepository,
+    private val eventPublisher: ApplicationEventPublisher
 ) {
 
     @Transactional(readOnly = true)

@@ -1,6 +1,8 @@
 package com.depromeet.threedollar.domain.mongo.boss.domain.registration
 
 import com.depromeet.threedollar.domain.mongo.TestFixture
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
 import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
 
@@ -9,7 +11,7 @@ object RegistrationCreator {
 
     fun create(
         socialId: String,
-        socialType: com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType,
+        socialType: BossAccountSocialType,
         bossName: String = "will",
         businessNumber: String = "123-12-12344",
         storeName: String = "가슴속 3천원",
@@ -20,7 +22,7 @@ object RegistrationCreator {
     ): Registration {
         return Registration(
             boss = RegistrationBossForm(
-                socialInfo = com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo(
+                socialInfo = BossAccountSocialInfo(
                     socialId = socialId,
                     socialType = socialType
                 ),

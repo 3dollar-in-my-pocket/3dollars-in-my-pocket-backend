@@ -4,19 +4,22 @@ import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
 
 object BossAccountServiceUtils {
 
-    fun findBossAccountById(bossAccountRepository: com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository, bossId: String): com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount {
+    fun findBossAccountById(bossAccountRepository: BossAccountRepository, bossId: String): BossAccount {
         return bossAccountRepository.findBossAccountById(bossId)
             ?: throw NotFoundException("해당하는 id($bossId)를 가진 사장님은 존재하지 않습니다", ErrorCode.NOTFOUND_BOSS)
     }
 
     fun validateNotExistsBossAccount(
-            bossAccountRepository: com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository,
+            bossAccountRepository: BossAccountRepository,
             socialId: String,
-            socialType: com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
+            socialType: BossAccountSocialType
     ) {
         if (bossAccountRepository.existsBossAccountBySocialInfo(socialId, socialType)) {
             throw ConflictException("이미 가입한 사장님 (${socialId} - $socialType 입니다.", ErrorCode.CONFLICT_USER)
@@ -24,11 +27,11 @@ object BossAccountServiceUtils {
     }
 
     fun findBossAccountBySocialIdAndSocialTypeWithCheckWaitingRegistration(
-            bossAccountRepository: com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository,
+            bossAccountRepository: BossAccountRepository,
             registrationRepository: RegistrationRepository,
             socialId: String,
-            socialType: com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
-    ): com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount {
+            socialType: BossAccountSocialType
+    ): BossAccount {
         return bossAccountRepository.findBossAccountBySocialInfo(socialId, socialType)
             ?: checkIsWaitingRegistration(registrationRepository, socialId, socialType)
     }
@@ -36,8 +39,8 @@ object BossAccountServiceUtils {
     private fun checkIsWaitingRegistration(
         registrationRepository: RegistrationRepository,
         socialId: String,
-        socialType: com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
-    ): com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount {
+        socialType: BossAccountSocialType
+    ): BossAccount {
         if (registrationRepository.existsRegistrationBySocialIdAndSocialType(socialId, socialType)) {
             throw ForbiddenException("가입 신청 후 대기중인 사장님(${socialId} - (${socialType}) 입니다.", ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT)
         }

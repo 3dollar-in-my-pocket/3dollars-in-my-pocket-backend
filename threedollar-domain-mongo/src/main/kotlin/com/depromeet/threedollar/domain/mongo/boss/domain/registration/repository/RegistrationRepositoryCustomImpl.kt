@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.domain.mongo.boss.domain.registration.repository
 
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStatus
 import org.springframework.data.mongodb.core.MongoTemplate
@@ -12,7 +13,7 @@ class RegistrationRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : RegistrationRepositoryCustom {
 
-    override fun existsRegistrationBySocialIdAndSocialType(socialId: String, socialType: com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType): Boolean {
+    override fun existsRegistrationBySocialIdAndSocialType(socialId: String, socialType: BossAccountSocialType): Boolean {
         return mongoTemplate.exists(Query()
             .addCriteria(where("boss.socialInfo.socialId").isEqualTo(socialId))
             .addCriteria(where("boss.socialInfo.socialType").isEqualTo(socialType)), Registration::class.java

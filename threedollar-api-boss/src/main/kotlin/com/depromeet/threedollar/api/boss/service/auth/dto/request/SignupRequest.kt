@@ -1,17 +1,19 @@
 package com.depromeet.threedollar.api.boss.service.auth.dto.request
 
-import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
-import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationBossForm
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStoreForm
+import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
+import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
 import org.hibernate.validator.constraints.Length
 import org.hibernate.validator.constraints.URL
 import javax.validation.constraints.Size
 
 data class SignupRequest(
     val token: String,
-    val socialType: com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType,
+    val socialType: BossAccountSocialType,
 
     @Length(max = 30, message = "{account.name.length}")
     val bossName: String,
@@ -34,7 +36,7 @@ data class SignupRequest(
     fun toEntity(socialId: String): Registration {
         return Registration(
             boss = RegistrationBossForm(
-                socialInfo = com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo.of(socialId, socialType),
+                socialInfo = BossAccountSocialInfo.of(socialId, socialType),
                 name = bossName,
                 businessNumber = BusinessNumber.of(businessNumber)
             ),

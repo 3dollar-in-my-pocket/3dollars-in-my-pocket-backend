@@ -4,6 +4,7 @@ import com.depromeet.threedollar.api.boss.service.account.BossAccountServiceUtil
 import com.depromeet.threedollar.api.boss.service.auth.AuthService
 import com.depromeet.threedollar.api.boss.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.common.utils.HttpHeaderUtils
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
 import org.springframework.stereotype.Service
@@ -12,9 +13,9 @@ private val SOCIAL_TYPE = com.depromeet.threedollar.domain.mongo.boss.domain.acc
 
 @Service
 class GoogleAuthService(
-        private val bossAccountRepository: com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository,
-        private val registrationRepository: RegistrationRepository,
-        private val googleAuthApiClient: GoogleAuthApiClient
+    private val bossAccountRepository: BossAccountRepository,
+    private val registrationRepository: RegistrationRepository,
+    private val googleAuthApiClient: GoogleAuthApiClient
 ) : AuthService {
 
     override fun login(request: LoginRequest): String {
