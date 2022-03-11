@@ -6,16 +6,16 @@ import java.time.LocalDateTime
 
 @Document("boss_deleted_store_v1")
 class BossDeletedStore(
-        val backupInfo: BackupBossStoreInfo,
-        val bossId: String,
-        var name: String,
-        var imageUrl: String?,
-        var introduction: String?,
-        var contactsNumber: ContactsNumber?,
-        var snsUrl: String?,
-        var menus: List<BossStoreMenu> = listOf(),
-        var appearanceDays: Set<BossStoreAppearanceDay> = setOf(),
-        var categoriesIds: Set<String> = setOf()
+    val backupInfo: BackupBossStoreInfo,
+    val bossId: String,
+    var name: String,
+    var imageUrl: String?,
+    var introduction: String?,
+    var contactsNumber: ContactsNumber?,
+    var snsUrl: String?,
+    var menus: List<BossStoreMenu> = listOf(),
+    var appearanceDays: Set<BossStoreAppearanceDay> = setOf(),
+    var categoriesIds: Set<String> = setOf()
 ) {
 
     companion object {

@@ -6,15 +6,15 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @Document("boss_store_v1")
 class BossStore(
-        val bossId: String,
-        var name: String,
-        var imageUrl: String?,
-        var introduction: String?,
-        var contactsNumber: ContactsNumber?,
-        var snsUrl: String?,
-        var menus: List<BossStoreMenu> = listOf(),
-        var appearanceDays: Set<BossStoreAppearanceDay> = setOf(),
-        var categoriesIds: Set<String> = setOf()
+    val bossId: String,
+    var name: String,
+    var imageUrl: String?,
+    var introduction: String?,
+    var contactsNumber: ContactsNumber?,
+    var snsUrl: String?,
+    var menus: List<BossStoreMenu> = listOf(),
+    var appearanceDays: Set<BossStoreAppearanceDay> = setOf(),
+    var categoriesIds: Set<String> = setOf()
 ) : BaseDocument() {
 
     fun updateInfo(
@@ -45,15 +45,15 @@ class BossStore(
 
     companion object {
         fun of(
-                bossId: String,
-                name: String,
-                imageUrl: String? = null,
-                introduction: String? = null,
-                contactsNumber: ContactsNumber? = null,
-                snsUrl: String? = null,
-                menus: List<BossStoreMenu> = listOf(),
-                appearanceDays: Set<BossStoreAppearanceDay> = setOf(),
-                categoriesIds: Set<String> = setOf(),
+            bossId: String,
+            name: String,
+            imageUrl: String? = null,
+            introduction: String? = null,
+            contactsNumber: ContactsNumber? = null,
+            snsUrl: String? = null,
+            menus: List<BossStoreMenu> = listOf(),
+            appearanceDays: Set<BossStoreAppearanceDay> = setOf(),
+            categoriesIds: Set<String> = setOf(),
         ): BossStore {
             return BossStore(
                 bossId = bossId,

@@ -53,10 +53,10 @@ data class RegistrationBossForm(
 
 
 data class RegistrationStoreForm(
-        val name: String,
-        val categoriesIds: Set<String> = setOf(),
-        val contactsNumber: ContactsNumber,
-        val certificationPhotoUrl: String
+    val name: String,
+    val categoriesIds: Set<String> = setOf(),
+    val contactsNumber: ContactsNumber,
+    val certificationPhotoUrl: String
 ) {
 
     fun toBossStore(bossId: String): BossStore {

@@ -31,14 +31,14 @@ private const val CHUNK_SIZE = 4
 
 @Configuration
 class GiveMedalsToUserByUserActivity(
-        private val jobBuilderFactory: JobBuilderFactory,
-        private val stepBuilderFactory: StepBuilderFactory,
-        private val entityManagerFactory: EntityManagerFactory,
-        private val medalRepository: MedalRepository,
-        private val storeRepository: StoreRepository,
-        private val storeDeleteRequestRepository: StoreDeleteRequestRepository,
-        private val visitHistoryRepository: VisitHistoryRepository,
-        private val reviewRepository: ReviewRepository
+    private val jobBuilderFactory: JobBuilderFactory,
+    private val stepBuilderFactory: StepBuilderFactory,
+    private val entityManagerFactory: EntityManagerFactory,
+    private val medalRepository: MedalRepository,
+    private val storeRepository: StoreRepository,
+    private val storeDeleteRequestRepository: StoreDeleteRequestRepository,
+    private val visitHistoryRepository: VisitHistoryRepository,
+    private val reviewRepository: ReviewRepository
 ) {
 
     @Bean

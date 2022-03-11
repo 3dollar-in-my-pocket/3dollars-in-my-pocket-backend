@@ -18,9 +18,9 @@ import org.springframework.test.context.TestConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class AdminMedalServiceTest(
-        private val adminMedalService: AdminMedalService,
-        private val medalRepository: MedalRepository,
-        private val medalAcquisitionConditionRepository: MedalAcquisitionConditionRepository
+    private val adminMedalService: AdminMedalService,
+    private val medalRepository: MedalRepository,
+    private val medalAcquisitionConditionRepository: MedalAcquisitionConditionRepository
 ) {
 
     @AfterEach

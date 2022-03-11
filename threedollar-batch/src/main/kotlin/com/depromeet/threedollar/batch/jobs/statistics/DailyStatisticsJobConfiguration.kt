@@ -24,17 +24,17 @@ import java.time.LocalDate
  */
 @Configuration
 class DailyStatisticsJobConfiguration(
-        private val jobBuilderFactory: JobBuilderFactory,
-        private val stepBuilderFactory: StepBuilderFactory,
+    private val jobBuilderFactory: JobBuilderFactory,
+    private val stepBuilderFactory: StepBuilderFactory,
 
-        private val userRepository: UserRepository,
-        private val menuRepository: MenuRepository,
-        private val storeRepository: StoreRepository,
-        private val reviewRepository: ReviewRepository,
-        private val visitHistoryRepository: VisitHistoryRepository,
-        private val medalRepository: MedalRepository,
+    private val userRepository: UserRepository,
+    private val menuRepository: MenuRepository,
+    private val storeRepository: StoreRepository,
+    private val reviewRepository: ReviewRepository,
+    private val visitHistoryRepository: VisitHistoryRepository,
+    private val medalRepository: MedalRepository,
 
-        private val slackNotificationApiClient: SlackWebhookApiClient
+    private val slackNotificationApiClient: SlackWebhookApiClient
 ) {
 
     @Bean

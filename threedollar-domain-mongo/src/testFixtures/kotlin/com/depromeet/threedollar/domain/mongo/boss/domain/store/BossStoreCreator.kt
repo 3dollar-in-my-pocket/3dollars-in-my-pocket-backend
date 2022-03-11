@@ -7,15 +7,15 @@ import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
 object BossStoreCreator {
 
     fun create(
-            bossId: String,
-            name: String,
-            imageUrl: String = "https://image.png",
-            introduction: String = "introduction",
-            contactsNumber: ContactsNumber? = null,
-            snsUrl: String? = null,
-            menus: List<BossStoreMenu> = listOf(),
-            appearanceDays: Set<BossStoreAppearanceDay> = setOf(),
-            categoriesIds: Set<String> = setOf()
+        bossId: String,
+        name: String,
+        imageUrl: String = "https://image.png",
+        introduction: String = "introduction",
+        contactsNumber: ContactsNumber? = null,
+        snsUrl: String? = null,
+        menus: List<BossStoreMenu> = listOf(),
+        appearanceDays: Set<BossStoreAppearanceDay> = setOf(),
+        categoriesIds: Set<String> = setOf()
     ): BossStore {
         return BossStore(
             bossId = bossId,

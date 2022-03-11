@@ -5,8 +5,8 @@ import com.depromeet.threedollar.domain.rds.common.support.CursorPagingSupporter
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store
 
 data class StoresCursorResponse(
-        val contents: List<StoreInfoResponse>,
-        val cursor: CursorResponse<Long>
+    val contents: List<StoreInfoResponse>,
+    val cursor: CursorResponse<Long>
 ) {
 
     companion object {
