@@ -5,11 +5,12 @@ import com.depromeet.threedollar.api.boss.service.auth.AuthService
 import com.depromeet.threedollar.api.boss.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.common.utils.HttpHeaderUtils
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
 import com.depromeet.threedollar.external.client.kakao.KaKaoAuthApiClient
 import org.springframework.stereotype.Service
 
-private val SOCIAL_TYPE = com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType.KAKAO
+private val SOCIAL_TYPE = BossAccountSocialType.KAKAO
 
 @Service
 class KaKaoAuthService(

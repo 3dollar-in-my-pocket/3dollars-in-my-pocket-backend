@@ -30,7 +30,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 import javax.servlet.http.HttpSession
 
-private val BOSS = com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount(
+private val BOSS = BossAccount(
     name = "테스트 계정",
     socialInfo = BossAccountSocialInfo("test-social-id", BossAccountSocialType.KAKAO),
     businessNumber = BusinessNumber.of("000-12-12345"),
@@ -157,9 +157,10 @@ class LocalTestController(
     fun addTestFeedback(
         @PathVariable bossStoreId: String,
         @RequestParam feedbackType: BossStoreFeedbackType,
-        @RequestParam date: LocalDate
+        @RequestParam date: LocalDate,
+        @RequestParam userId: Long
     ): ApiResponse<String> {
-        bossStoreFeedbackService.addFeedback(bossStoreId, AddBossStoreFeedbackRequest(feedbackType), 0L, date)
+        bossStoreFeedbackService.addFeedback(bossStoreId, AddBossStoreFeedbackRequest(feedbackType), userId, date)
         return ApiResponse.SUCCESS
     }
 

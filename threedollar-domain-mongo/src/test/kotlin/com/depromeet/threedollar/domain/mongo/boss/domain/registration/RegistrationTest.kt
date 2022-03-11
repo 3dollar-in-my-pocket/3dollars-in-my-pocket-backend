@@ -1,5 +1,7 @@
 package com.depromeet.threedollar.domain.mongo.boss.domain.registration
 
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
 import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
 import org.assertj.core.api.Assertions.assertThat
@@ -12,7 +14,7 @@ internal class RegistrationTest {
     fun `가입신청을 바탕으로 BossAccout를 생성한다`() {
         // given
         val socialId = "social-id"
-        val socialType = com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType.NAVER
+        val socialType = BossAccountSocialType.NAVER
         val bossName = "가삼"
         val businessNumber = "010-12-12345"
 
@@ -30,7 +32,7 @@ internal class RegistrationTest {
         assertAll({
             bossAccount.let {
                 assertThat(it.name).isEqualTo(bossName)
-                assertThat(it.socialInfo).isEqualTo(com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo.of(socialId, socialType))
+                assertThat(it.socialInfo).isEqualTo(BossAccountSocialInfo.of(socialId, socialType))
                 assertThat(it.businessNumber).isEqualTo(BusinessNumber.of(businessNumber))
             }
         })
@@ -46,7 +48,7 @@ internal class RegistrationTest {
 
         val registration = RegistrationCreator.create(
             socialId = "social-id",
-            socialType = com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType.NAVER,
+            socialType = BossAccountSocialType.NAVER,
             storeName = storeName,
             categoriesIds = categoriesIds,
             contactsNumber = contactsNumber,
