@@ -26,7 +26,7 @@ Content-Type: application/json
 Authorization: {{AUTHORIZATION}}
 
 {
-    "name": "will"
+    "name": "강승호"
 }
 
 > {%

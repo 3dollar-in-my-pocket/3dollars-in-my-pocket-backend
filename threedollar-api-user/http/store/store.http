@@ -6,7 +6,9 @@ Authorization: {{AUTHORIZATION}}
 {
     "appearanceDays": [
         "MONDAY",
-        "TUESDAY"
+        "TUESDAY",
+        "FRIDAY",
+        "SUNDAY"
     ],
     "latitude": 34,
     "longitude": 126,
@@ -17,20 +19,16 @@ Authorization: {{AUTHORIZATION}}
             "price": "3000원"
         },
         {
-            "category": "BUNGEOPPANG",
-            "name": "",
-            "price": ""
-        },
-        {
             "category": "TAKOYAKI",
             "name": "다코야키 10개에 3000원",
             "price": "3000원"
         }
     ],
     "paymentMethods": [
-        "CASH"
+        "CASH",
+        "CARD"
     ],
-    "storeName": "승호의 붕어빵",
+    "storeName": "가슴속 3천원 가게",
     "storeType": "ROAD"
 }
 

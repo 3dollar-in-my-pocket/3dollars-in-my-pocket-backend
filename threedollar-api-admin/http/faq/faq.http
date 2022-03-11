@@ -4,9 +4,9 @@ Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 Content-Type: application/json
 
 {
-    "category": "STORE",
-    "question": "앱 이름이 뭔가요??",
-    "answer": "\"가슴속 삼천원\"입니다.\n많이 이용해주세요."
+    "category": "BOARD",
+    "question": "게시글을 삭제하고 싶어요.",
+    "answer": "가게 정보 삭제는 상세페이지 우측 상단의 '삭제요청'을 통해 가능합니다.\n가게 삭제는 3명 이상의 사용자에게 요청이 들어오면 완료됩니다.\n잘못된 가게 정보를 빠르게 삭제하고 싶다면 '문의하기'를 통해 메일을 보내주세요!."
 }
 
 > {%
@@ -23,9 +23,9 @@ Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 Content-Type: application/json
 
 {
-    "category": "STORE",
-    "question": "변경후 질문??",
-    "answer": "ABCABCABC\nABCABCABC"
+    "category": "ETC",
+    "question": "가슴속 삼천원 서비스팀과 협업하고 싶어요.",
+    "answer": "각종 광고 및 인터뷰, 협업 문의는 저희 가슴속 3천원 대표 메일을 통해 연락 주시면 빠르게 회신 가능합니다.\n많은 연락과 관심 부탁드려요!3dollarinmypocket@gmail.com"
 }
 
 > {%

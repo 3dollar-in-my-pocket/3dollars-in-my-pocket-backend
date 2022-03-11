@@ -15,7 +15,7 @@ Authorization: Bearer {{BOSS_AUTHORIZATION}}
 Content-Type: application/json
 
 {
-    "name": "강승호",
+    "name": "토오끼",
     "pushSettingsStatus": "OFF"
 }
 

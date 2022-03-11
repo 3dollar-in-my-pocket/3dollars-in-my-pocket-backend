@@ -5,7 +5,7 @@ Authorization: {{AUTHORIZATION}}
 
 {
     "storeId": {{STORE_ID}},
-    "contents": "맛있어요",
+    "contents": "진짜 맛있어요~~~ :)",
     "rating": 5
 }
 
@@ -23,8 +23,8 @@ Content-Type: application/json
 Authorization: {{AUTHORIZATION}}
 
 {
-    "contents": "맛있어요",
-    "rating": 3
+    "contents": "가게가 사라졌어요 ㅠㅠ",
+    "rating": 1
 }
 
 > {%

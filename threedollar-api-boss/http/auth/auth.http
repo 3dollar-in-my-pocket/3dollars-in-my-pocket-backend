@@ -3,8 +3,8 @@ POST {{host_boss_api}}/v1/auth/signup
 Content-Type: application/json
 
 {
-    "token": "123",
-    "bossName": "will",
+    "token": "UFzZUqHtCpEAr_OiLAnbkcseCFkfLpNdNxmiWwopyWAAAAF_ee0t4Q",
+    "bossName": "토깽이",
     "socialType": "KAKAO",
     "businessNumber": "123-45-12341",
     "storeName": "가슴속 3천원",
@@ -12,7 +12,7 @@ Content-Type: application/json
         "{{BOSS_CATEGORY_ID}}"
     ],
     "contactsNumber": "010-1234-1234",
-    "certificationPhotoUrl": "https://example.png"
+    "certificationPhotoUrl": "https://www.jungle.co.kr/image/9184139c4725921ad8526df7"
 }
 
 > {%

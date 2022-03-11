@@ -63,31 +63,55 @@ Content-Type: application/json
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 {
-    "name": "변경 후 이름",
-    "imageUrl": "https://image-url.png",
-    "introduction": "변경 후 소개",
+    "name": "가슴속 3천원 붕어빵 가게",
+    "imageUrl": "https://www.jungle.co.kr/image/9184139c4725921ad8526df7",
+    "introduction": "가슴속 3천원 입니다\n많이 이용해주세요",
     "contactsNumber": "010-2345-2345",
-    "snsUrl": "https://sns.com",
+    "snsUrl": "https://www.instagram.com/3dollar_in_my_pocket/",
     "menus": [
         {
-            "name": "메뉴 변경 이후",
-            "price": 2000,
-            "imageUrl": "https://image.png",
-            "groupName": "태그"
+            "name": "슈크림 붕어빵 2개",
+            "price": 1000,
+            "imageUrl": "https://storage.dev.threedollars.co.kr/popup/adv_store_category_20220121_threedollars.png",
+            "groupName": "붕어빵"
         },
         {
-            "name": "메뉴 변경 이후2",
-            "price": 4000,
-            "imageUrl": "https://image.png",
-            "groupName": "태그"
+            "name": "팥 붕어빵 2개",
+            "price": 1000,
+            "imageUrl": "https://storage.dev.threedollars.co.kr/popup/adv_store_category_20220121_threedollars.png",
+            "groupName": "붕어빵"
+        },
+                {
+            "name": "팥 붕어빵 5개",
+            "price": 2000,
+            "imageUrl": "https://storage.dev.threedollars.co.kr/popup/adv_store_category_20220121_threedollars.png",
+            "groupName": "붕어빵"
+        },
+        {
+            "name": "팥 붕어빵 5개",
+            "price": 2000,
+            "imageUrl": "https://storage.dev.threedollars.co.kr/popup/adv_store_category_20220121_threedollars.png",
+            "groupName": "붕어빵"
         }
     ],
     "appearanceDays": [
         {
             "dayOfTheWeek": "MONDAY",
-            "startTime": "08:00",
-            "endTime": "16:00",
+            "startTime": "10:00",
+            "endTime": "19:00",
             "locationDescription": "산본역"
+        },
+        {
+            "dayOfTheWeek": "TUESDAY",
+            "startTime": "10:00",
+            "endTime": "19:00",
+            "locationDescription": "신도림역"
+        },
+        {
+            "dayOfTheWeek": "THURSDAY",
+            "startTime": "10:00",
+            "endTime": "19:00",
+            "locationDescription": "신정네거리역"
         }
     ],
     "categoriesIds": [

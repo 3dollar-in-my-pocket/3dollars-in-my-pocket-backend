@@ -5,15 +5,15 @@ Content-Type: application/json
 
 {
     "position": "SPLASH",
-    "platform": "ALL",
+    "platform": "MENU_CATEGORY_BANNER",
     "imageUrl": "https://image.png",
-    "linkUrl": "https://link.com",
-    "title": "광고 제목",
-    "subTitle": "광고 내용\n광고 내용을 입력해주세요",
-    "bgColor": "#ffffff",
-    "fontColor": "#2e2e2e",
-    "startDateTime": "2023-01-01T00:00:00",
-    "endDateTime": "2024-01-01T00:00:00"
+    "linkUrl": "https://storage.dev.threedollars.co.kr/popup/adv_offline_menu_banner_20220206.png",
+    "title": "붕어빵 먹고! 굿즈도 받고!",
+    "subTitle": "가3팀 익선동에서 붕어빵 팔러 갑니다=3\n오셔서 붕어빵 먹고 굿즈도 받아가세요!",
+    "bgColor": "#F3848D",
+    "fontColor": "#FAFAFA",
+    "startDateTime": "2022-01-01T00:00:00",
+    "endDateTime": "2022-03-01T00:00:00"
 }
 
 > {%
@@ -41,15 +41,15 @@ Content-Type: application/json
 
 {
     "position": "SPLASH",
-    "platform": "AOS",
-    "imageUrl": "https://image1.png",
-    "linkUrl": "https://link1.com",
-    "title": "광고 제목",
-    "subTitle": "광고 내용\n광고 내용을 입력해주세요",
-    "bgColor": "#ffffff",
-    "fontColor": "#2e2e2e",
-    "startDateTime": "2023-01-01T00:00:00",
-    "endDateTime": "2023-03-01T00:00:00"
+    "platform": "MENU_CATEGORY_BANNER",
+    "imageUrl": "https://image.png",
+    "linkUrl": "https://storage.dev.threedollars.co.kr/popup/adv_offline_menu_banner_20220206.png",
+    "title": "붕어빵 먹고! 굿즈도 받고!",
+    "subTitle": "가3팀 익선동에서 붕어빵 팔러 갑니다=3\n오셔서 붕어빵 먹고 굿즈도 받아가세요!",
+    "bgColor": "#F3848D",
+    "fontColor": "#FAFAFA",
+    "startDateTime": "2022-02-01T00:00:00",
+    "endDateTime": "2022-04-01T00:00:00"
 }
 
 > {%
