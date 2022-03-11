@@ -1,0 +1,61 @@
+name: 운영 환경 - 유저 API 서버 Health Check (Around Store)
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 강남역 주변 가게 조회 API
+        uses: jtalk/url-health-check-action@v2
+        with:
+          url: ${{ secrets.USER_API_BASE_URI }}/v2/stores/near?latitude=37.498095&longitude=127.001829&mapLatitude=37.498095&mapLongitude=127.02761&distance=2000
+          max-attempts: 3
+          retry-delay: 3s
+
+      - name: 판교역 주변 가게 조회 API
+        uses: jtalk/url-health-check-action@v2
+        with:
+          url: ${{ secrets.USER_API_BASE_URI }}/v2/stores/near?latitude=37.394230&longitude=1127.110945&mapLatitude=37.394230&mapLongitude=1127.110945&distance=2000
+          max-attempts: 3
+          retry-delay: 3s
+
+      - name: 홍대입구역 주변 가게 조회 API
+        uses: jtalk/url-health-check-action@v2
+        with:
+          url: ${{ secrets.USER_API_BASE_URI }}/v2/stores/near?latitude=37.556290&longitude=126.922736&mapLatitude=37.556290&mapLongitude=126.922736&distance=2000
+          max-attempts: 3
+          retry-delay: 3s
+
+      - name: 여의도 주변 가게 조회 API
+        uses: jtalk/url-health-check-action@v2
+        with:
+          url: ${{ secrets.USER_API_BASE_URI }}/v2/stores/near?latitude=37.521165&longitude=126.924316&mapLatitude=37.521165&mapLongitude=126.924316&distance=2000
+          max-attempts: 3
+          retry-delay: 3s
+
+      - name: 대학로 주변 가게 조회 API
+        uses: jtalk/url-health-check-action@v2
+        with:
+          url: ${{ secrets.USER_API_BASE_URI }}/v2/stores/near?latitude=37.581306&longitude=127.001829&mapLatitude=37.581306&mapLongitude=127.001829&distance=2000
+          max-attempts: 3
+          retry-delay: 3s
+
+      - name: action-slack
+        if: failure()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          fields: workflow
+          custom_payload: |
+            {
+              attachments: [{
+                color: 'danger',
+                text: `${process.env.AS_WORKFLOW}\n유저 API 서버의 주변 가게 API 조회가 실패하였습니다`
+              }]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
