@@ -10,7 +10,7 @@ import org.springframework.test.web.servlet.get
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @AutoConfigureMockMvc
 @SpringBootTest
-class HealthCheckControllerTest(
+internal class HealthCheckControllerTest(
     private val mockMvc: MockMvc
 ) {
 

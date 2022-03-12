@@ -12,9 +12,9 @@ import java.time.LocalDateTime
 
 @Service
 class BossStoreOpenService(
-        private val bossStoreOpenInfoRepository: BossStoreOpenInfoRepository,
-        private val bossStoreRepository: BossStoreRepository,
-        private val bossStoreLocationRepository: BossStoreLocationRepository
+    private val bossStoreOpenInfoRepository: BossStoreOpenInfoRepository,
+    private val bossStoreRepository: BossStoreRepository,
+    private val bossStoreLocationRepository: BossStoreLocationRepository
 ) {
 
     fun openBossStore(bossStoreId: String, bossId: String, mapCoordinate: CoordinateValue) {

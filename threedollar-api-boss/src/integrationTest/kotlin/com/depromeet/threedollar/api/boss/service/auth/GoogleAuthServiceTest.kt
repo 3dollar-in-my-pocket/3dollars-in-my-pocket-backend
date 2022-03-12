@@ -25,8 +25,8 @@ private val SOCIAL_TYPE = BossAccountSocialType.GOOGLE
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class GoogleAuthServiceTest(
-        private val bossAccountRepository: BossAccountRepository,
-        private val registrationRepository: RegistrationRepository
+    private val bossAccountRepository: BossAccountRepository,
+    private val registrationRepository: RegistrationRepository
 ) {
 
     private lateinit var authService: AuthService

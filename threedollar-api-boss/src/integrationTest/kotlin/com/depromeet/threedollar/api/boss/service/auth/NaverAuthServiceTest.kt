@@ -24,7 +24,7 @@ private val SOCIAL_TYPE = BossAccountSocialType.NAVER
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
-class NaverAuthServiceTest(
+internal class NaverAuthServiceTest(
     private val bossAccountRepository: BossAccountRepository,
     private val registrationRepository: RegistrationRepository
 ) {

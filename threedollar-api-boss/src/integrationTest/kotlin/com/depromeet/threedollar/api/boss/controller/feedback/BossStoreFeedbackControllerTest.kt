@@ -19,9 +19,9 @@ import org.springframework.test.web.servlet.get
 import java.time.LocalDate
 
 internal class BossStoreFeedbackControllerTest(
-        private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,
-        private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository,
-        private val bossStoreRepository: BossStoreRepository,
+    private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,
+    private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository,
+    private val bossStoreRepository: BossStoreRepository,
 ) : ControllerTestUtils() {
 
     @AfterEach

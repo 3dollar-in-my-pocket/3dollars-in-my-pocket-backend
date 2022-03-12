@@ -20,10 +20,10 @@ private const val MAX_DISTANCE_KM = 2.0
 
 @Service
 class BossStoreRetrieveService(
-        private val bossStoreRepository: BossStoreRepository,
-        private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-        private val bossStoreOpenInfoRepository: BossStoreOpenInfoRepository,
-        private val bossStoreLocationRepository: BossStoreLocationRepository
+    private val bossStoreRepository: BossStoreRepository,
+    private val bossStoreCategoryRepository: BossStoreCategoryRepository,
+    private val bossStoreOpenInfoRepository: BossStoreOpenInfoRepository,
+    private val bossStoreLocationRepository: BossStoreLocationRepository
 ) {
 
     @Transactional(readOnly = true)
