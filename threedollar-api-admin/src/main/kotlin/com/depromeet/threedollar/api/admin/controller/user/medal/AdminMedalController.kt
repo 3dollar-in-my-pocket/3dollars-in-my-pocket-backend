@@ -5,12 +5,9 @@ import com.depromeet.threedollar.api.admin.service.user.medal.AdminMedalService
 import com.depromeet.threedollar.api.admin.service.user.medal.dto.request.AddMedalRequest
 import com.depromeet.threedollar.api.admin.service.user.medal.dto.request.UpdateMedalRequest
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.service.medal.dto.response.MedalResponse
 import io.swagger.annotations.ApiOperation
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @RestController
@@ -37,6 +34,13 @@ class AdminMedalController(
     ): ApiResponse<String> {
         adminMedalService.updateMedal(medalId, request)
         return ApiResponse.SUCCESS
+    }
+
+    @ApiOperation("전체 메달 목록을 조회합니다")
+    @Auth
+    @GetMapping("/v1/user/medals")
+    fun retrieveMedals(): ApiResponse<List<MedalResponse>> {
+        return ApiResponse.success(adminMedalService.retrieveMedals())
     }
 
 }

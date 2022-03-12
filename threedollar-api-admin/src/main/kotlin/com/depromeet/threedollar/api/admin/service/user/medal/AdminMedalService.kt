@@ -2,6 +2,7 @@ package com.depromeet.threedollar.api.admin.service.user.medal
 
 import com.depromeet.threedollar.api.admin.service.user.medal.dto.request.AddMedalRequest
 import com.depromeet.threedollar.api.admin.service.user.medal.dto.request.UpdateMedalRequest
+import com.depromeet.threedollar.api.core.service.medal.dto.response.MedalResponse
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.type.CacheType.CacheKey.MEDALS
@@ -29,6 +30,12 @@ class AdminMedalService(
         request.let {
             medal.update(it.name, it.introduction, it.activationIconUrl, it.disableIconUrl)
         }
+    }
+
+    @Transactional(readOnly = true)
+    fun retrieveMedals(): List<MedalResponse> {
+        return medalRepository.findAllActiveMedals()
+            .map { MedalResponse.of(it) }
     }
 
     private fun findMedalById(medalId: Long): Medal {
