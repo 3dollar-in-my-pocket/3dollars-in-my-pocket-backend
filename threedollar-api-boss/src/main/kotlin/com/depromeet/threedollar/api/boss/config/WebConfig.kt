@@ -3,6 +3,7 @@ package com.depromeet.threedollar.api.boss.config
 import com.depromeet.threedollar.api.boss.config.interceptor.AuthInterceptor
 import com.depromeet.threedollar.api.boss.config.interceptor.UserMetadataInterceptor
 import com.depromeet.threedollar.api.boss.config.resolver.BossIdResolver
+import com.depromeet.threedollar.api.boss.config.resolver.GeoCoordinateArgumentResolver
 import com.depromeet.threedollar.api.boss.config.resolver.MapCoordinateArgumentResolver
 import org.springframework.context.MessageSource
 import org.springframework.context.annotation.Bean
@@ -19,6 +20,7 @@ class WebConfig(
     private val authInterceptor: AuthInterceptor,
     private val bossIdResolver: BossIdResolver,
     private val mapCoordinateArgumentResolver: MapCoordinateArgumentResolver,
+    private val geoCoordinateArgumentResolver: GeoCoordinateArgumentResolver,
     private val userMetadataInterceptor: UserMetadataInterceptor
 ) : WebMvcConfigurer {
 
@@ -28,7 +30,7 @@ class WebConfig(
     }
 
     override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {
-        resolvers.addAll(listOf(bossIdResolver, mapCoordinateArgumentResolver))
+        resolvers.addAll(listOf(bossIdResolver, mapCoordinateArgumentResolver, geoCoordinateArgumentResolver))
     }
 
     override fun getValidator(): Validator {

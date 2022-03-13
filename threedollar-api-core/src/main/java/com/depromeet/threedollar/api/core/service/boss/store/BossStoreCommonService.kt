@@ -27,7 +27,11 @@ class BossStoreCommonService(
 ) {
 
     @Transactional(readOnly = true)
-    fun getAroundBossStores(mapCoordinate: CoordinateValue, request: GetAroundBossStoresRequest): List<BossStoreInfoResponse> {
+    fun getAroundBossStores(
+        request: GetAroundBossStoresRequest,
+        mapCoordinate: CoordinateValue,
+        geoCoordinate: CoordinateValue = CoordinateValue.of(0.0, 0.0)
+    ): List<BossStoreInfoResponse> {
         val storeLocations: List<BossStoreLocation> = bossStoreLocationRepository.findNearBossStoreLocations(
             latitude = mapCoordinate.latitude,
             longitude = mapCoordinate.longitude,
@@ -39,14 +43,18 @@ class BossStoreCommonService(
         val categoriesDictionary: Map<String, BossStoreCategory> = bossStoreCategoryRepository.findAll().associateBy { it.id }
         val openInfoDictionary: Map<String, BossStoreOpenInfo> = bossStoreOpenInfoRepository.findAllById(bossStores.map { it.id }).associateBy { it.bossStoreId }
 
-        return bossStores.map {
-            BossStoreInfoResponse.of(
-                bossStore = it,
-                categories = getCategory(it, categoriesDictionary),
-                bossStoreOpenInfo = openInfoDictionary[it.id],
-                location = locationsDictionary[it.id]?.location
-            )
-        }
+        return bossStores.asSequence()
+            .map {
+                BossStoreInfoResponse.of(
+                    bossStore = it,
+                    categories = getCategory(it, categoriesDictionary),
+                    bossStoreOpenInfo = openInfoDictionary[it.id],
+                    location = locationsDictionary[it.id]?.location,
+                    geoCoordinate = geoCoordinate
+                )
+            }
+            .sortedWith(request.orderType.sorted)
+            .toList()
     }
 
     private fun getCategory(bossStore: BossStore, categoriesDictionary: Map<String, BossStoreCategory>): List<BossStoreCategory> {
@@ -54,13 +62,17 @@ class BossStoreCommonService(
     }
 
     @Transactional(readOnly = true)
-    fun getBossStore(storeId: String): BossStoreInfoResponse {
+    fun getBossStore(
+        storeId: String,
+        geoCoordinate: CoordinateValue = CoordinateValue.of(0.0, 0.0)
+    ): BossStoreInfoResponse {
         val bossStore = BossStoreCommonServiceUtils.findBossStoreById(bossStoreRepository, storeId)
         return BossStoreInfoResponse.of(
             bossStore = bossStore,
             location = bossStoreLocationRepository.findBossStoreLocationByBossStoreId(bossStore.id)?.location,
             categories = bossStoreCategoryRepository.findCategoriesByIds(bossStore.categoriesIds),
-            bossStoreOpenInfo = bossStoreOpenInfoRepository.findByIdOrNull(bossStore.id)
+            bossStoreOpenInfo = bossStoreOpenInfoRepository.findByIdOrNull(bossStore.id),
+            geoCoordinate
         )
     }
 

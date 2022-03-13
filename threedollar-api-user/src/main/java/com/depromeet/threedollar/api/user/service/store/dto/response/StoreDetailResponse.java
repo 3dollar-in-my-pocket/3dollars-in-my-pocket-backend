@@ -83,7 +83,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
             .storeName(store.getName())
             .storeType(store.getType())
             .rating(store.getRating())
-            .distance(LocationDistanceUtils.getDistance(store.getLatitude(), store.getLongitude(), geoCoordinate.getLatitude(), geoCoordinate.getLongitude()))
+            .distance(LocationDistanceUtils.getDistance(CoordinateValue.of(store.getLatitude(), store.getLongitude()), geoCoordinate))
             .user(UserInfoResponse.of(userDictionary.getUser(store.getUserId())))
             .visitHistory(VisitHistoryCountsResponse.of(visitHistoriesCollection.getStoreExistsVisitsCount(store.getId()), visitHistoriesCollection.getStoreNotExistsVisitsCount(store.getId())))
             .build();
