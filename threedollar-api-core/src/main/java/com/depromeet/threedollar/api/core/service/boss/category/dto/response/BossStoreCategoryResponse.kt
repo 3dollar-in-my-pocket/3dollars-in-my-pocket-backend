@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.boss.service.category.dto.response
+package com.depromeet.threedollar.api.core.service.boss.category.dto.response
 
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
 

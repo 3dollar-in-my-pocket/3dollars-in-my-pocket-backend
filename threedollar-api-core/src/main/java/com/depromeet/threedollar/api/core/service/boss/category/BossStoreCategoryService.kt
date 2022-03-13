@@ -1,6 +1,6 @@
-package com.depromeet.threedollar.api.boss.service.category
+package com.depromeet.threedollar.api.core.service.boss.category
 
-import com.depromeet.threedollar.api.boss.service.category.dto.response.BossStoreCategoryResponse
+import com.depromeet.threedollar.api.core.service.boss.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.common.type.CacheType
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import org.springframework.cache.annotation.Cacheable

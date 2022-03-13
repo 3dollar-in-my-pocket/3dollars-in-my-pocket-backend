@@ -10,7 +10,7 @@ import java.util.Comparator;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public enum StoreOrderType implements EnumModel {
+public enum UserStoreOrderType implements EnumModel {
 
     DISTANCE_ASC("가까운 거리순", Comparator.comparing(StoreWithVisitsAndDistanceResponse::getDistance)),
     REVIEW_DESC("높은 리뷰순", Comparator.comparing(StoreWithVisitsAndDistanceResponse::getRating).reversed()),

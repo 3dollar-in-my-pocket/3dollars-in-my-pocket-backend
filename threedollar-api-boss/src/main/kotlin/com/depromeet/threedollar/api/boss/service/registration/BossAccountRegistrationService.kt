@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.boss.service.registration
 
 import com.depromeet.threedollar.api.boss.service.account.BossAccountServiceUtils
 import com.depromeet.threedollar.api.boss.service.auth.dto.request.SignupRequest
-import com.depromeet.threedollar.api.boss.service.category.BossStoreCategoryServiceUtils
+import com.depromeet.threedollar.api.core.service.boss.category.BossStoreCategoryServiceUtils
 import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
