@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.user.controller.medal
 
 import com.depromeet.threedollar.api.core.service.user.medal.MedalService
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.service.user.medal.MedalResponse
+import com.depromeet.threedollar.api.core.service.user.medal.dto.response.MedalResponse
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController

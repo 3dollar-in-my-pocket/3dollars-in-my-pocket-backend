@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.user.controller.medal
 
-import com.depromeet.threedollar.api.core.service.user.medal.MedalResponse
+import com.depromeet.threedollar.api.core.service.user.medal.dto.response.MedalResponse
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionRepository
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository

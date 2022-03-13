@@ -26,3 +26,9 @@ Authorization: {{AUTHORIZATION}}
 {
     "feedbackType": "FOOD_IS_DELICIOUS"
 }
+
+> {%
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
