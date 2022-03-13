@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.core.mapper.faq.dto.response
+package com.depromeet.threedollar.api.core.mapper.user.faq.dto.response
 
 import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCategory
 

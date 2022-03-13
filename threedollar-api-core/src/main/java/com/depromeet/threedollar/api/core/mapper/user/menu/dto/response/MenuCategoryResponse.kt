@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.core.mapper.menu.dto.response
+package com.depromeet.threedollar.api.core.mapper.user.menu.dto.response
 
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType
 import com.fasterxml.jackson.annotation.JsonProperty

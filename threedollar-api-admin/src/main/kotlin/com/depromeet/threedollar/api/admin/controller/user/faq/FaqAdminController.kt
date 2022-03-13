@@ -5,11 +5,11 @@ import com.depromeet.threedollar.api.admin.service.user.faq.FaqAdminService
 import com.depromeet.threedollar.api.admin.service.user.faq.dto.request.AddFaqRequest
 import com.depromeet.threedollar.api.admin.service.user.faq.dto.request.UpdateFaqRequest
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.mapper.faq.FaqCategoryMapper
-import com.depromeet.threedollar.api.core.mapper.faq.dto.response.FaqCategoryResponse
-import com.depromeet.threedollar.api.core.service.faq.FaqService
-import com.depromeet.threedollar.api.core.service.faq.dto.request.RetrieveFaqsRequest
-import com.depromeet.threedollar.api.core.service.faq.dto.response.FaqResponse
+import com.depromeet.threedollar.api.core.mapper.user.faq.FaqCategoryMapper
+import com.depromeet.threedollar.api.core.mapper.user.faq.dto.response.FaqCategoryResponse
+import com.depromeet.threedollar.api.core.service.user.faq.FaqService
+import com.depromeet.threedollar.api.core.service.user.faq.dto.request.RetrieveFaqsRequest
+import com.depromeet.threedollar.api.core.service.user.faq.dto.response.FaqResponse
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
