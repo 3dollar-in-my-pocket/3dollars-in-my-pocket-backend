@@ -5,6 +5,7 @@ ext {
 dependencies {
     api project(":threedollar-external")
     api project(":threedollar-domain-rds")
+    api project(":threedollar-domain-mongo")
     api project(":threedollar-domain-redis")
 
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -14,6 +15,10 @@ dependencies {
 
     // Caffeine Cache
     implementation("com.github.ben-manes.caffeine:caffeine")
+
+    // TestFixtures
+    testImplementation(testFixtures(project(":threedollar-domain-mongo")))
+    testImplementation(testFixtures(project(":threedollar-domain-redis")))
 }
 
 bootJar { enabled = false }

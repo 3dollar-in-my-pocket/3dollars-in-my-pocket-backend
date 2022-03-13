@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.api.user.controller.store
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.mapper.menu.MenuCategoryMapper
-import com.depromeet.threedollar.api.core.mapper.menu.dto.response.MenuCategoryResponse
+import com.depromeet.threedollar.api.core.mapper.user.menu.MenuCategoryMapper
+import com.depromeet.threedollar.api.core.mapper.user.menu.dto.response.MenuCategoryResponse
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController

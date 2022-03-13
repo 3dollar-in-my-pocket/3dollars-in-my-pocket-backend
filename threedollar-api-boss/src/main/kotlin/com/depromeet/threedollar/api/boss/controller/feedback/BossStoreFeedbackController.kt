@@ -1,11 +1,11 @@
 package com.depromeet.threedollar.api.boss.controller.feedback
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.boss.service.feedback.BossStoreFeedbackService
-import com.depromeet.threedollar.api.boss.service.feedback.dto.request.GetBossStoreFeedbacksCountsBetweenDateRequest
-import com.depromeet.threedollar.api.boss.service.feedback.dto.response.BossStoreFeedbackCountResponse
-import com.depromeet.threedollar.api.boss.service.feedback.dto.response.BossStoreFeedbackCursorResponse
-import com.depromeet.threedollar.api.boss.service.feedback.dto.response.BossStoreFeedbackTypeResponse
+import com.depromeet.threedollar.api.core.service.boss.feedback.BossStoreFeedbackService
+import com.depromeet.threedollar.api.core.service.boss.feedback.dto.request.GetBossStoreFeedbacksCountsBetweenDateRequest
+import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackCountResponse
+import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackCursorResponse
+import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackTypeResponse
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.GetMapping

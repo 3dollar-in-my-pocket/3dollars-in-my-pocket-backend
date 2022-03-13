@@ -18,6 +18,7 @@ spring:
     include:
       - rds
       - redis
+      - mongo
       - sentry
       - external
       - swagger

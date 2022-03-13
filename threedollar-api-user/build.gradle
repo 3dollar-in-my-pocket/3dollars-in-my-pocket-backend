@@ -23,6 +23,8 @@ dependencies {
 
     // TestFixtures
     testImplementation(testFixtures(project(":threedollar-domain-rds")))
+    testImplementation(testFixtures(project(":threedollar-domain-mongo")))
+    testImplementation(testFixtures(project(":threedollar-domain-redis")))
 }
 
 application {

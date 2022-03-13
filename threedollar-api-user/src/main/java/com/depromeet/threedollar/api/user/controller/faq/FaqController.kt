@@ -1,11 +1,11 @@
 package com.depromeet.threedollar.api.user.controller.faq
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.mapper.faq.FaqCategoryMapper
-import com.depromeet.threedollar.api.core.mapper.faq.dto.response.FaqCategoryResponse
-import com.depromeet.threedollar.api.core.service.faq.FaqService
-import com.depromeet.threedollar.api.core.service.faq.dto.request.RetrieveFaqsRequest
-import com.depromeet.threedollar.api.core.service.faq.dto.response.FaqResponse
+import com.depromeet.threedollar.api.core.mapper.user.faq.FaqCategoryMapper
+import com.depromeet.threedollar.api.core.mapper.user.faq.dto.response.FaqCategoryResponse
+import com.depromeet.threedollar.api.core.service.user.faq.FaqService
+import com.depromeet.threedollar.api.core.service.user.faq.dto.request.RetrieveFaqsRequest
+import com.depromeet.threedollar.api.core.service.user.faq.dto.response.FaqResponse
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController

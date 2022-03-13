@@ -14,4 +14,6 @@ interface BossStoreRepositoryCustom {
 
     fun existsBossStoreById(bossStoreId: String): Boolean
 
+    fun findAllByIdByCategory(bossStoreIds: List<String>, categoryId: String?): List<BossStore>
+
 }

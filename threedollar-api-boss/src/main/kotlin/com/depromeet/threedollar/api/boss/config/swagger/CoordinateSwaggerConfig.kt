@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.boss.config.swagger
 
+import com.depromeet.threedollar.api.boss.config.resolver.GeoCoordinate
 import com.depromeet.threedollar.api.boss.config.resolver.MapCoordinate
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
@@ -20,6 +21,11 @@ class CoordinateSwaggerConfig : OperationBuilderPlugin {
 
     override fun apply(context: OperationContext) {
         val parameters = context.parameters
+        if (hasAnnotation(parameters, GeoCoordinate::class.java)) {
+            context.operationBuilder()
+                .requestParameters(queryParameter("latitude", "longitude"))
+                .build()
+        }
         if (hasAnnotation(parameters, MapCoordinate::class.java)) {
             context.operationBuilder()
                 .requestParameters(queryParameter("mapLatitude", "mapLongitude"))

@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.admin.service.user.faq
 
 import com.depromeet.threedollar.api.admin.service.user.faq.dto.request.AddFaqRequest
 import com.depromeet.threedollar.api.admin.service.user.faq.dto.request.UpdateFaqRequest
-import com.depromeet.threedollar.api.core.service.faq.dto.response.FaqResponse
+import com.depromeet.threedollar.api.core.service.user.faq.dto.response.FaqResponse
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.type.CacheType.CacheKey.FAQS

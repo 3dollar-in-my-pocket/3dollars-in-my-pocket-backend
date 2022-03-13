@@ -1,19 +1,28 @@
 package com.depromeet.threedollar.common.utils;
 
+import com.depromeet.threedollar.common.model.CoordinateValue;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LocationDistanceUtils {
 
+    private static final int UNKNOWN_DISTANCE = -1;
     private static final int STRAIGHT_ANGLE = 180;
 
     /**
      * 두 위도/경도간의 거리를 계산해주는 유틸성 메소드.
      */
+    public static int getDistance(CoordinateValue source, CoordinateValue target) {
+        if (source == null || target == null) {
+            return UNKNOWN_DISTANCE;
+        }
+        return getDistance(source.getLatitude(), source.getLongitude(), target.getLatitude(), target.getLongitude());
+    }
+
     public static int getDistance(double sourceLatitude, double sourceLongitude, double targetLatitude, double targetLongitude) {
         if (sourceLatitude == 0 || sourceLongitude == 0 || targetLatitude == 0 || targetLongitude == 0) {
-            return -1;
+            return UNKNOWN_DISTANCE;
         }
         double theta = sourceLongitude - targetLongitude;
         double dist = Math.sin(convertDegreeToRadian(sourceLatitude)) * Math.sin(convertDegreeToRadian(targetLatitude))
