@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.core.service.boss.store
 
+import com.depromeet.threedollar.api.core.service.boss.category.BossStoreCategoryServiceUtils
 import com.depromeet.threedollar.api.core.service.boss.store.dto.request.GetAroundBossStoresRequest
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAroundInfoResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreInfoResponse
@@ -35,6 +36,10 @@ class BossStoreCommonService(
         mapCoordinate: CoordinateValue,
         geoCoordinate: CoordinateValue = CoordinateValue.of(0.0, 0.0)
     ): List<BossStoreAroundInfoResponse> {
+        request.categoryId?.let {
+            BossStoreCategoryServiceUtils.validateExistsCategory(bossStoreCategoryRepository, it)
+        }
+
         val storeLocations: List<BossStoreLocation> = bossStoreLocationRepository.findNearBossStoreLocations(
             latitude = mapCoordinate.latitude,
             longitude = mapCoordinate.longitude,

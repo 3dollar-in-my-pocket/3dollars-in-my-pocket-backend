@@ -14,4 +14,10 @@ object BossStoreCategoryServiceUtils {
         }
     }
 
+    fun validateExistsCategory(bossStoreCategoryRepository: BossStoreCategoryRepository, categoriesId: String) {
+        if (!bossStoreCategoryRepository.existsById(categoriesId)) {
+            throw NotFoundException("해당하는 id (${categoriesId})를 가진 카테고리는 존재하지 않습니다", ErrorCode.NOTFOUND_CATEGORY)
+        }
+    }
+
 }
