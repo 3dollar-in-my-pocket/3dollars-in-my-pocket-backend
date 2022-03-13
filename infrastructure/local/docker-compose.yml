@@ -16,7 +16,7 @@ services:
       - threedollar-network
 
   redis:
-    image: redis
+    image: redis:6.0
     container_name: threedollar-api-redis
     command: redis-server --port 6379
     ports:
@@ -28,7 +28,7 @@ services:
       - threedollar-network
 
   mongodb:
-    image: mongo
+    image: mongo:5.0
     container_name: threedollar-api-mongo
     ports:
       - "27018:27017"

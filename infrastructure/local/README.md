@@ -11,4 +11,5 @@ docker-compose -f ./docker-compose.yml -p threedollar up -d
 ```
 
 ### 3. Add Seed Data
-threedollar-domain-rds/db/seed/seed.sql
+- threedollar-domain-rds/db/seed/seed.sql
+- threedollar-domain-mongo/mongo/V0_seed.js
