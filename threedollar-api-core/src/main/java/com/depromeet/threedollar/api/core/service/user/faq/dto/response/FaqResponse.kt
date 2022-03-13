@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.core.service.faq.dto.response
+package com.depromeet.threedollar.api.core.service.user.faq.dto.response
 
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
 import com.depromeet.threedollar.domain.rds.user.domain.faq.Faq

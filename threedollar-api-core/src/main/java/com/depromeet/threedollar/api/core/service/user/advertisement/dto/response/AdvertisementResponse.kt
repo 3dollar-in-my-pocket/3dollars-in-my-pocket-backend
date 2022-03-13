@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.core.service.advertisement.dto.response
+package com.depromeet.threedollar.api.core.service.user.advertisement.dto.response
 
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementDetail
 

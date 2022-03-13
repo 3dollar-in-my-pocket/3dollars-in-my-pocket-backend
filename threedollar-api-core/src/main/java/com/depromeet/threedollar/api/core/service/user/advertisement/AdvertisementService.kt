@@ -1,7 +1,7 @@
-package com.depromeet.threedollar.api.core.service.advertisement
+package com.depromeet.threedollar.api.core.service.user.advertisement
 
-import com.depromeet.threedollar.api.core.service.advertisement.dto.request.RetrieveAdvertisementsRequest
-import com.depromeet.threedollar.api.core.service.advertisement.dto.response.AdvertisementResponse
+import com.depromeet.threedollar.api.core.service.user.advertisement.dto.request.RetrieveAdvertisementsRequest
+import com.depromeet.threedollar.api.core.service.user.advertisement.dto.response.AdvertisementResponse
 import com.depromeet.threedollar.common.type.CacheType.CacheKey.ADVERTISEMENT
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementRepository
 import org.springframework.cache.annotation.Cacheable

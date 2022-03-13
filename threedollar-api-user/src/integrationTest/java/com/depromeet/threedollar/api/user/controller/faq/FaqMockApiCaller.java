@@ -2,8 +2,8 @@ package com.depromeet.threedollar.api.user.controller.faq;
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.user.controller.MockMvcUtils;
-import com.depromeet.threedollar.api.core.mapper.faq.dto.response.FaqCategoryResponse;
-import com.depromeet.threedollar.api.core.service.faq.dto.response.FaqResponse;
+import com.depromeet.threedollar.api.core.mapper.user.faq.dto.response.FaqCategoryResponse;
+import com.depromeet.threedollar.api.core.service.user.faq.dto.response.FaqResponse;
 import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCategory;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

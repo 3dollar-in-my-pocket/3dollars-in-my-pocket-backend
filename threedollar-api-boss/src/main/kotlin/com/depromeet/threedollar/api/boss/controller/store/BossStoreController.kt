@@ -4,7 +4,6 @@ import com.depromeet.threedollar.api.boss.config.interceptor.Auth
 import com.depromeet.threedollar.api.boss.config.resolver.BossId
 import com.depromeet.threedollar.api.boss.config.resolver.MapCoordinate
 import com.depromeet.threedollar.api.boss.service.store.BossStoreOpenService
-import com.depromeet.threedollar.api.boss.service.store.BossStoreRetrieveService
 import com.depromeet.threedollar.api.boss.service.store.BossStoreService
 import com.depromeet.threedollar.api.boss.service.store.dto.request.UpdateBossStoreInfoRequest
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
@@ -18,7 +17,6 @@ import javax.validation.Valid
 
 @RestController
 class BossStoreController(
-    private val bossStoreRetrieveService: BossStoreRetrieveService,
     private val bossStoreCommonService: BossStoreCommonService,
     private val bossStoreOpenService: BossStoreOpenService,
     private val bossStoreService: BossStoreService
@@ -62,7 +60,7 @@ class BossStoreController(
     fun getMyBossStore(
         @BossId bossId: String
     ): ApiResponse<BossStoreInfoResponse> {
-        return ApiResponse.success(bossStoreRetrieveService.getMyBossStore(bossId))
+        return ApiResponse.success(bossStoreService.getMyBossStore(bossId))
     }
 
     @ApiOperation("특정 가게의 상세 정보를 조회합니다")

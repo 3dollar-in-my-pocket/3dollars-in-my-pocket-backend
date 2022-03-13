@@ -1,7 +1,7 @@
-package com.depromeet.threedollar.api.core.service.faq
+package com.depromeet.threedollar.api.core.service.user.faq
 
-import com.depromeet.threedollar.api.core.service.faq.dto.request.RetrieveFaqsRequest
-import com.depromeet.threedollar.api.core.service.faq.dto.response.FaqResponse
+import com.depromeet.threedollar.api.core.service.user.faq.dto.request.RetrieveFaqsRequest
+import com.depromeet.threedollar.api.core.service.user.faq.dto.response.FaqResponse
 import com.depromeet.threedollar.common.type.CacheType.CacheKey.FAQS
 import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqRepository
 import org.springframework.cache.annotation.Cacheable

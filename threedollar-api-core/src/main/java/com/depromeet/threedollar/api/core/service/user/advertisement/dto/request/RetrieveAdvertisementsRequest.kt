@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.core.service.advertisement.dto.request
+package com.depromeet.threedollar.api.core.service.user.advertisement.dto.request
 
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPositionType

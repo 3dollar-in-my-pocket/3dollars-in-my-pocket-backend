@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.core.service.medal.dto.response
+package com.depromeet.threedollar.api.core.service.user.medal
 
 import com.depromeet.threedollar.domain.rds.user.domain.medal.Medal
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionCondition
