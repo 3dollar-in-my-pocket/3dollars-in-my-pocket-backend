@@ -62,6 +62,49 @@ data class BossStoreInfoResponse(
 
 }
 
+
+data class BossStoreAroundInfoResponse(
+    val bossStoreId: String,
+    val name: String,
+    val location: LocationResponse?,
+    val menus: List<BossStoreMenuResponse>,
+    val categories: Set<BossStoreCategoryResponse>,
+    val openStatus: BossStoreOpenStatusResponse,
+    val totalFeedbacksCounts: Int,
+    val distance: Int,
+) : BaseTimeResponse() {
+
+    companion object {
+        fun of(
+            bossStore: BossStore,
+            location: Point?,
+            categories: List<BossStoreCategory>,
+            bossStoreOpenInfo: BossStoreOpenInfo?,
+            totalFeedbacksCounts: Int,
+            geoCoordinate: CoordinateValue = CoordinateValue.of(0.0, 0.0),
+        ): BossStoreAroundInfoResponse {
+            val response = BossStoreAroundInfoResponse(
+                bossStoreId = bossStore.id,
+                name = bossStore.name,
+                location = location?.let { LocationResponse.of(it) },
+                menus = bossStore.menus.map { BossStoreMenuResponse.of(it) },
+                categories = categories.asSequence().map { BossStoreCategoryResponse.of(it) }.toSet(),
+                openStatus = bossStoreOpenInfo?.let { BossStoreOpenStatusResponse.of(it) }
+                    ?: BossStoreOpenStatusResponse.close(),
+                totalFeedbacksCounts = totalFeedbacksCounts,
+                distance = LocationDistanceUtils.getDistance(
+                    CoordinateValue.of(location?.y ?: 0.0, location?.x ?: 0.0),
+                    geoCoordinate
+                )
+            )
+            response.setBaseTime(bossStore)
+            return response
+        }
+    }
+
+}
+
+
 data class BossStoreCategoryResponse(
     val categoryId: String,
     val name: String

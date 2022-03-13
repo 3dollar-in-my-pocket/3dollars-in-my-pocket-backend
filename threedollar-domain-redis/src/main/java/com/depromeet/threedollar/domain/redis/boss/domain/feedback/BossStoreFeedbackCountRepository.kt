@@ -25,6 +25,14 @@ class BossStoreFeedbackCountRepository(
             .associateWith { countsMap[it.name] ?: 0 }
     }
 
+    fun getAllCounts(bossStoreId: String): Int {
+        val feedbackCounters: HashOperations<String, String, Int> = redisTemplate.opsForHash()
+        val countsMap: Map<String, Int> = feedbackCounters.entries(getKey(bossStoreId))
+        return countsMap
+            .map { it.value }
+            .sumOf {it }
+    }
+
     private fun getKey(bossStoreId: String): String {
         return "$BOSS_STORE_FEEDBACK_KEY:${bossStoreId}"
     }

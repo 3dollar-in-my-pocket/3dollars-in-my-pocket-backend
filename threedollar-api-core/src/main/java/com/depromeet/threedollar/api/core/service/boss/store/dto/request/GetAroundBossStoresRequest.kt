@@ -7,5 +7,7 @@ data class GetAroundBossStoresRequest(
     @field:PositiveOrZero(message = "{store.distance.positiveOrZero}")
     val distanceKm: Double = -0.1,
 
-    val orderType: BossStoreOrderType = BossStoreOrderType.DISTANCE_ASC
+    val orderType: BossStoreOrderType = BossStoreOrderType.DISTANCE_ASC,
+
+    val categoryId: String?
 )
