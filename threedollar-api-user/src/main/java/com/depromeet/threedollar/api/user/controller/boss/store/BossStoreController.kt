@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.user.controller.boss.store
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.service.bossstore.BossStoreCommonService
-import com.depromeet.threedollar.api.core.service.bossstore.dto.request.GetAroundBossStoresRequest
-import com.depromeet.threedollar.api.core.service.bossstore.dto.response.BossStoreInfoResponse
+import com.depromeet.threedollar.api.core.service.boss.store.BossStoreCommonService
+import com.depromeet.threedollar.api.core.service.boss.store.dto.request.GetAroundBossStoresRequest
+import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreInfoResponse
 import com.depromeet.threedollar.api.user.config.resolver.MapCoordinate
 import com.depromeet.threedollar.common.model.CoordinateValue
 import io.swagger.annotations.ApiOperation

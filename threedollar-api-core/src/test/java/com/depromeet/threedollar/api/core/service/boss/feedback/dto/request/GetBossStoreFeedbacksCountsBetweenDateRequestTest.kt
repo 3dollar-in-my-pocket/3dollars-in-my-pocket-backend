@@ -1,8 +1,8 @@
-package com.depromeet.threedollar.api.boss.service.feedback.dto.request
+package com.depromeet.threedollar.api.core.service.boss.feedback.dto.request
 
 import com.depromeet.threedollar.common.exception.model.InvalidException
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
