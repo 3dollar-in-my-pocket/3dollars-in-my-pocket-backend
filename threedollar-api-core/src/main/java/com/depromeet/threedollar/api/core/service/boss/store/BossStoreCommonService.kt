@@ -75,7 +75,8 @@ class BossStoreCommonService(
             bossStore = bossStore,
             location = bossStoreLocationRepository.findBossStoreLocationByBossStoreId(bossStore.id)?.location,
             categories = bossStoreCategoryRepository.findCategoriesByIds(bossStore.categoriesIds),
-            bossStoreOpenInfo = bossStoreOpenInfoRepository.findByIdOrNull(bossStore.id)
+            bossStoreOpenInfo = bossStoreOpenInfoRepository.findByIdOrNull(bossStore.id),
+            geoCoordinate = geoCoordinate
         )
     }
 
