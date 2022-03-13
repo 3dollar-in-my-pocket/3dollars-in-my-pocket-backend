@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.boss.controller.category
 
-import com.depromeet.threedollar.api.boss.service.store.dto.response.BossStoreCategoryResponse
+import com.depromeet.threedollar.api.core.service.bossstore.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import org.hamcrest.collection.IsCollectionWithSize.hasSize

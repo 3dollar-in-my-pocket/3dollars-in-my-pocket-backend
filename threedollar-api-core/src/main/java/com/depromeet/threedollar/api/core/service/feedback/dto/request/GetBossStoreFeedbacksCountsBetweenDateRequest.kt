@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.boss.service.feedback.dto.request
+package com.depromeet.threedollar.api.core.service.feedback.dto.request
 
 import com.depromeet.threedollar.common.exception.model.InvalidException
 import com.depromeet.threedollar.common.exception.type.ErrorCode

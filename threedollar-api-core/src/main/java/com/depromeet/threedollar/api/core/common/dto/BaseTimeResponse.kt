@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.boss.controller.dto.response
+package com.depromeet.threedollar.api.core.common.dto
 
 import com.depromeet.threedollar.domain.mongo.common.domain.BaseDocument
 import java.time.LocalDateTime

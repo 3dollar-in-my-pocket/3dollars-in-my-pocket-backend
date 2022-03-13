@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.boss.service.account.dto.response
 
-import com.depromeet.threedollar.api.boss.controller.dto.response.BaseTimeResponse
+import com.depromeet.threedollar.api.core.common.dto.BaseTimeResponse
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.PushSettingsStatus

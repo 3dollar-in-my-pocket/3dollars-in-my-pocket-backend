@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.boss.service.store.dto.request
+package com.depromeet.threedollar.api.core.service.bossstore.dto.request
 
 import javax.validation.constraints.PositiveOrZero
 
