@@ -8,6 +8,7 @@ import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.*
+import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
 import com.depromeet.threedollar.domain.mongo.common.domain.TimeInterval
 import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenInfoCreator
 import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenInfoRepository
@@ -48,6 +49,8 @@ internal class BossStoreControllerTest(
             name = "사장님 가게",
             imageUrl = "https://image.png",
             introduction = "introduction",
+            snsUrl = "https://sns.com",
+            contactsNumber = ContactsNumber.of("010-1234-1234"),
             menus = listOf(BossStoreMenu("붕어빵", 2000, "https://menu.png", "붕어빵")),
             appearanceDays = setOf(BossStoreAppearanceDay(DayOfTheWeek.FRIDAY, TimeInterval(LocalTime.of(8, 0), LocalTime.of(10, 0)), "강남역")),
             categoriesIds = setOf(category.id)
@@ -76,6 +79,8 @@ internal class BossStoreControllerTest(
 
                 jsonPath("$.data.imageUrl") { value(bossStore.imageUrl) }
                 jsonPath("$.data.introduction") { value(bossStore.introduction) }
+                jsonPath("$.data.snsUrl") { value(bossStore.snsUrl) }
+                jsonPath("$.data.contactsNumber") { value("010-1234-1234") }
 
                 jsonPath("$.data.menus") { hasSize<BossStoreMenuResponse>(1) }
                 jsonPath("$.data.menus[0].name") { value("붕어빵") }
@@ -111,6 +116,8 @@ internal class BossStoreControllerTest(
             name = "사장님 가게",
             imageUrl = "https://image.png",
             introduction = "introduction",
+            snsUrl = "https://sns.com",
+            contactsNumber = ContactsNumber.of("010-1234-1234"),
             menus = listOf(BossStoreMenu("붕어빵", 2000, "https://menu.png", "붕어빵")),
             appearanceDays = setOf(BossStoreAppearanceDay(DayOfTheWeek.FRIDAY, TimeInterval(LocalTime.of(8, 0), LocalTime.of(10, 0)), "강남역")),
             categoriesIds = setOf(category.id)
@@ -140,6 +147,8 @@ internal class BossStoreControllerTest(
 
                     jsonPath("$.data.imageUrl") { value(bossStore.imageUrl) }
                     jsonPath("$.data.introduction") { value(bossStore.introduction) }
+                    jsonPath("$.data.snsUrl") { value(bossStore.snsUrl) }
+                    jsonPath("$.data.contactsNumber") { value("010-1234-1234") }
 
                     jsonPath("$.data.menus") { hasSize<BossStoreMenuResponse>(1) }
                     jsonPath("$.data.menus[0].name") { value("붕어빵") }

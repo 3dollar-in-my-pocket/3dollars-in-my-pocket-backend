@@ -10,7 +10,7 @@ import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDetail
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoresCursorResponse;
 import com.depromeet.threedollar.common.model.CoordinateValue;
-import com.depromeet.threedollar.api.user.service.store.dto.type.StoreOrderType;
+import com.depromeet.threedollar.api.user.service.store.dto.type.UserStoreOrderType;
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,7 +39,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
             .param("mapLongitude", String.valueOf(mapCoordinate.getLongitude()))
             .param("distance", String.valueOf(request.getDistance().getAvailableDistance() * 1000))
             .param("category", request.getCategory() == null ? null : String.valueOf(request.getCategory()))
-            .param("orderType", request.getOrderType() == null ? String.valueOf(StoreOrderType.DISTANCE_ASC) : String.valueOf(request.getOrderType()));
+            .param("orderType", request.getOrderType() == null ? String.valueOf(UserStoreOrderType.DISTANCE_ASC) : String.valueOf(request.getOrderType()));
 
         return objectMapper.readValue(
             mockMvc.perform(builder)

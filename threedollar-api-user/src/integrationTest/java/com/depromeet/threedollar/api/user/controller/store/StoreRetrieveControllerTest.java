@@ -10,7 +10,7 @@ import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDetail
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoresCursorResponse;
 import com.depromeet.threedollar.common.model.CoordinateValue;
-import com.depromeet.threedollar.api.user.service.store.dto.type.StoreOrderType;
+import com.depromeet.threedollar.api.user.service.store.dto.type.UserStoreOrderType;
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
 import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
@@ -241,7 +241,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
                 .distance(2000)
-                .orderType(StoreOrderType.DISTANCE_ASC)
+                .orderType(UserStoreOrderType.DISTANCE_ASC)
                 .build();
 
             // when
@@ -264,7 +264,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
                 .distance(2000)
-                .orderType(StoreOrderType.REVIEW_DESC)
+                .orderType(UserStoreOrderType.REVIEW_DESC)
                 .build();
 
             // when

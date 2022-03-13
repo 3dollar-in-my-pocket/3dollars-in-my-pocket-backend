@@ -1,8 +1,10 @@
 package com.depromeet.threedollar.api.user.config.enummodel;
 
-import com.depromeet.threedollar.api.user.service.store.dto.type.StoreOrderType;
+import com.depromeet.threedollar.api.user.service.store.dto.type.UserStoreOrderType;
+import com.depromeet.threedollar.common.type.BossStoreFeedbackType;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
 import com.depromeet.threedollar.common.utils.EnumMapper;
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreOpenType;
 import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCategory;
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPlatformType;
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPositionType;
@@ -31,7 +33,7 @@ public class EnumMapperConfig {
         enumMapper.put("PaymentMethodType", PaymentMethodType.class);
         enumMapper.put("StoreType", StoreType.class);
         enumMapper.put("DeleteReasonType", DeleteReasonType.class);
-        enumMapper.put("StoreOrderType", StoreOrderType.class);
+        enumMapper.put("StoreOrderType", UserStoreOrderType.class);
         enumMapper.put("MenuCategoryType", MenuCategoryType.class);
 
         // faq
@@ -43,6 +45,11 @@ public class EnumMapperConfig {
 
         // visit
         enumMapper.put("VisitType", VisitType.class);
+
+        // bossStore
+        enumMapper.put("BossStoreOpenType", BossStoreOpenType.class);
+        enumMapper.put("BossStoreFeedbackType", BossStoreFeedbackType.class);
+
         return enumMapper;
     }
 

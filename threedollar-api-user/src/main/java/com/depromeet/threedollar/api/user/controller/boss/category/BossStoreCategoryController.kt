@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.boss.controller.category
+package com.depromeet.threedollar.api.user.controller.boss.category
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.core.service.boss.category.BossStoreCategoryService
