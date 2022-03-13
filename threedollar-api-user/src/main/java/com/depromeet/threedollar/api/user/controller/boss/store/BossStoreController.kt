@@ -3,6 +3,7 @@ package com.depromeet.threedollar.api.user.controller.boss.store
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.core.service.boss.store.BossStoreCommonService
 import com.depromeet.threedollar.api.core.service.boss.store.dto.request.GetAroundBossStoresRequest
+import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAroundInfoResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreInfoResponse
 import com.depromeet.threedollar.api.user.config.resolver.GeoCoordinate
 import com.depromeet.threedollar.api.user.config.resolver.MapCoordinate
@@ -24,7 +25,7 @@ class BossStoreController(
         @Valid request: GetAroundBossStoresRequest,
         @MapCoordinate mapCoordinate: CoordinateValue,
         @GeoCoordinate(required = false) geoCoordinate: CoordinateValue
-    ): ApiResponse<List<BossStoreInfoResponse>> {
+    ): ApiResponse<List<BossStoreAroundInfoResponse>> {
         return ApiResponse.success(bossStoreCommonService.getAroundBossStores(
             request = request,
             mapCoordinate = mapCoordinate,

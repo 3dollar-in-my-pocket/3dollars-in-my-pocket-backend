@@ -4,7 +4,9 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.findOne
 import org.springframework.data.mongodb.core.query.Query
+import org.springframework.data.mongodb.core.query.inValues
 import org.springframework.data.mongodb.core.query.isEqualTo
+import org.springframework.data.mongodb.core.query.where
 
 class BossStoreRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
@@ -42,4 +44,15 @@ class BossStoreRepositoryCustomImpl(
         )
     }
 
+    override fun findAllByIdByCategory(bossStoreIds: List<String>, categoryId: String?): List<BossStore> {
+        return categoryId?.let {
+            mongoTemplate.find(Query()
+                .addCriteria(BossStore::id inValues bossStoreIds)
+                .addCriteria(where(BossStore::categoriesIds).`in`(categoryId)), BossStore::class.java
+            )
+        } ?: mongoTemplate.find(Query()
+            .addCriteria(BossStore::id inValues bossStoreIds), BossStore::class.java)
+    }
+
 }
+

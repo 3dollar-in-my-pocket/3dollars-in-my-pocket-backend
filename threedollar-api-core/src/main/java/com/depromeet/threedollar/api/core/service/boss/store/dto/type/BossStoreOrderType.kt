@@ -1,12 +1,13 @@
 package com.depromeet.threedollar.api.core.service.boss.store.dto.type
 
-import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreInfoResponse
+import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAroundInfoResponse
 
 enum class BossStoreOrderType(
     val description: String,
-    val sorted: Comparator<BossStoreInfoResponse>
+    val sorted: Comparator<BossStoreAroundInfoResponse>
 ) {
 
-    DISTANCE_ASC("가까운 거리순", Comparator.comparing<BossStoreInfoResponse, Int> { it.distance }.reversed())
+    DISTANCE_ASC("가까운 거리순", Comparator.comparing<BossStoreAroundInfoResponse, Int> { it.distance }.reversed()),
+    TOTAL_FEEDBACKS_COUNTS_DESC("총 피드백가 많은 순", Comparator.comparing<BossStoreAroundInfoResponse, Int> { it.totalFeedbacksCounts })
 
 }

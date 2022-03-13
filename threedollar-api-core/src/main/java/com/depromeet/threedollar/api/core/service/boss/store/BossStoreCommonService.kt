@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.core.service.boss.store
 
 import com.depromeet.threedollar.api.core.service.boss.store.dto.request.GetAroundBossStoresRequest
+import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAroundInfoResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreInfoResponse
 import com.depromeet.threedollar.common.model.CoordinateValue
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
@@ -9,6 +10,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
+import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRepository
 import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenInfo
 import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenInfoRepository
 import org.springframework.data.repository.findByIdOrNull
@@ -23,7 +25,8 @@ class BossStoreCommonService(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossStoreOpenInfoRepository: BossStoreOpenInfoRepository,
-    private val bossStoreLocationRepository: BossStoreLocationRepository
+    private val bossStoreLocationRepository: BossStoreLocationRepository,
+    private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository
 ) {
 
     @Transactional(readOnly = true)
@@ -31,7 +34,7 @@ class BossStoreCommonService(
         request: GetAroundBossStoresRequest,
         mapCoordinate: CoordinateValue,
         geoCoordinate: CoordinateValue = CoordinateValue.of(0.0, 0.0)
-    ): List<BossStoreInfoResponse> {
+    ): List<BossStoreAroundInfoResponse> {
         val storeLocations: List<BossStoreLocation> = bossStoreLocationRepository.findNearBossStoreLocations(
             latitude = mapCoordinate.latitude,
             longitude = mapCoordinate.longitude,
@@ -39,18 +42,19 @@ class BossStoreCommonService(
         )
 
         val locationsDictionary: Map<String, BossStoreLocation> = storeLocations.associateBy { it.bossStoreId }
-        val bossStores: Iterable<BossStore> = bossStoreRepository.findAllById(storeLocations.map { it.bossStoreId })
+        val bossStores: List<BossStore> = bossStoreRepository.findAllByIdByCategory(storeLocations.map { it.bossStoreId }, request.categoryId)
         val categoriesDictionary: Map<String, BossStoreCategory> = bossStoreCategoryRepository.findAll().associateBy { it.id }
         val openInfoDictionary: Map<String, BossStoreOpenInfo> = bossStoreOpenInfoRepository.findAllById(bossStores.map { it.id }).associateBy { it.bossStoreId }
 
         return bossStores.asSequence()
             .map {
-                BossStoreInfoResponse.of(
+                BossStoreAroundInfoResponse.of(
                     bossStore = it,
                     categories = getCategory(it, categoriesDictionary),
                     bossStoreOpenInfo = openInfoDictionary[it.id],
                     location = locationsDictionary[it.id]?.location,
-                    geoCoordinate = geoCoordinate
+                    geoCoordinate = geoCoordinate,
+                    totalFeedbacksCounts = bossStoreFeedbackCountRepository.getAllCounts(it.id)
                 )
             }
             .sortedWith(request.orderType.sorted)
@@ -71,8 +75,7 @@ class BossStoreCommonService(
             bossStore = bossStore,
             location = bossStoreLocationRepository.findBossStoreLocationByBossStoreId(bossStore.id)?.location,
             categories = bossStoreCategoryRepository.findCategoriesByIds(bossStore.categoriesIds),
-            bossStoreOpenInfo = bossStoreOpenInfoRepository.findByIdOrNull(bossStore.id),
-            geoCoordinate
+            bossStoreOpenInfo = bossStoreOpenInfoRepository.findByIdOrNull(bossStore.id)
         )
     }
 
