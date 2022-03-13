@@ -2,6 +2,7 @@ package com.depromeet.threedollar.api.user.service.store.dto.response;
 
 import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoryCountsResponse;
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
+import com.depromeet.threedollar.common.model.CoordinateValue;
 import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
@@ -47,14 +48,14 @@ public class StoreWithVisitsAndDistanceResponse extends AuditingTimeResponse {
         this.isDeleted = isDeleted;
     }
 
-    public static StoreWithVisitsAndDistanceResponse of(@NotNull Store store, double latitude, double longitude, VisitHistoryCounter visitsCounter) {
+    public static StoreWithVisitsAndDistanceResponse of(@NotNull Store store, CoordinateValue geoCoordinate, VisitHistoryCounter visitsCounter) {
         StoreWithVisitsAndDistanceResponse response = StoreWithVisitsAndDistanceResponse.builder()
             .storeId(store.getId())
             .latitude(store.getLatitude())
             .longitude(store.getLongitude())
             .storeName(store.getName())
             .rating(store.getRating())
-            .distance(LocationDistanceUtils.getDistance(latitude, longitude, store.getLatitude(), store.getLongitude()))
+            .distance(LocationDistanceUtils.getDistance(geoCoordinate, CoordinateValue.of(store.getLatitude(), store.getLongitude())))
             .existsVisitsCount(visitsCounter.getStoreExistsVisitsCount(store.getId()))
             .notExistsVisitsCount(visitsCounter.getStoreNotExistsVisitsCount(store.getId()))
             .isDeleted(store.isDeleted())

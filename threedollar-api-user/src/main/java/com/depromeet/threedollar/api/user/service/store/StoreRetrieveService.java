@@ -49,7 +49,7 @@ public class StoreRetrieveService {
         List<Store> nearStores = findNearStoresFilterByCategory(storeRepository, mapCoordinate.getLatitude(), mapCoordinate.getLongitude(), request.getDistance(), request.getCategory());
         VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(nearStores);
         return nearStores.stream()
-            .map(store -> StoreWithVisitsAndDistanceResponse.of(store, geoCoordinate.getLatitude(), geoCoordinate.getLongitude(), visitHistoriesCounter))
+            .map(store -> StoreWithVisitsAndDistanceResponse.of(store, geoCoordinate, visitHistoriesCounter))
             .sorted(request.getSorted())
             .collect(Collectors.toList());
     }
@@ -67,13 +67,13 @@ public class StoreRetrieveService {
 
     private List<Long> concatUserIds(List<Review> reviews, List<VisitHistoryWithUserProjection> visitHistories, Store store) {
         return Stream.of(reviews.stream()
-                .map(Review::getUserId)
-                .collect(Collectors.toList()),
-            visitHistories.stream()
-                .map(VisitHistoryWithUserProjection::getUserId)
-                .collect(Collectors.toList()),
-            List.of(store.getUserId())
-        )
+                    .map(Review::getUserId)
+                    .collect(Collectors.toList()),
+                visitHistories.stream()
+                    .map(VisitHistoryWithUserProjection::getUserId)
+                    .collect(Collectors.toList()),
+                List.of(store.getUserId())
+            )
             .flatMap(Collection::stream)
             .collect(Collectors.toList());
     }

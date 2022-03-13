@@ -1,7 +1,9 @@
 package com.depromeet.threedollar.api.core.service.boss.store.dto.response
 
 import com.depromeet.threedollar.api.core.common.dto.BaseTimeResponse
+import com.depromeet.threedollar.common.model.CoordinateValue
 import com.depromeet.threedollar.common.type.DayOfTheWeek
+import com.depromeet.threedollar.common.utils.LocationDistanceUtils
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppearanceDay
@@ -23,7 +25,8 @@ data class BossStoreInfoResponse(
     val menus: List<BossStoreMenuResponse>,
     val appearanceDays: Set<BossStoreAppearanceDayResponse>,
     val categories: Set<BossStoreCategoryResponse>,
-    val openStatus: BossStoreOpenStatusResponse
+    val openStatus: BossStoreOpenStatusResponse,
+    val distance: Int
 ) : BaseTimeResponse() {
 
     companion object {
@@ -31,7 +34,8 @@ data class BossStoreInfoResponse(
             bossStore: BossStore,
             location: Point?,
             categories: List<BossStoreCategory>,
-            bossStoreOpenInfo: BossStoreOpenInfo?
+            bossStoreOpenInfo: BossStoreOpenInfo?,
+            geoCoordinate: CoordinateValue = CoordinateValue.of(0.0, 0.0)
         ): BossStoreInfoResponse {
             val response = BossStoreInfoResponse(
                 bossStoreId = bossStore.id,
@@ -45,7 +49,11 @@ data class BossStoreInfoResponse(
                 appearanceDays = bossStore.appearanceDays.asSequence().map { BossStoreAppearanceDayResponse.of(it) }.toSet(),
                 categories = categories.asSequence().map { BossStoreCategoryResponse.of(it) }.toSet(),
                 openStatus = bossStoreOpenInfo?.let { BossStoreOpenStatusResponse.of(it) }
-                    ?: BossStoreOpenStatusResponse.close()
+                    ?: BossStoreOpenStatusResponse.close(),
+                distance = LocationDistanceUtils.getDistance(
+                    CoordinateValue.of(location?.y ?: 0.0, location?.x ?: 0.0),
+                    geoCoordinate
+                )
             )
             response.setBaseTime(bossStore)
             return response

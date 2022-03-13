@@ -28,7 +28,10 @@ class BossStoreController(
         @MapCoordinate mapCoordinate: CoordinateValue,
         @Valid request: GetAroundBossStoresRequest
     ): ApiResponse<List<BossStoreInfoResponse>> {
-        return ApiResponse.success(bossStoreCommonService.getAroundBossStores(mapCoordinate, request))
+        return ApiResponse.success(bossStoreCommonService.getAroundBossStores(
+            request = request,
+            mapCoordinate = mapCoordinate
+        ))
     }
 
     @ApiOperation("[인증] 가게를 영업 정보를 시작/갱신합니다.", notes = "30분간 갱신하지 않으면 자동 영업 종료 처리되니 주기적으로 갱신해야 합니다.")
