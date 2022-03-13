@@ -1,6 +1,5 @@
 dependencies {
     implementation project(":threedollar-api-core")
-    implementation project(':threedollar-domain-mongo')
 
     // Spring MVC
     implementation("org.springframework.boot:spring-boot-starter-web")

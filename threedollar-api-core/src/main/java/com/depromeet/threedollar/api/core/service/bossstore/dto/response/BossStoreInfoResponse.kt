@@ -1,9 +1,12 @@
-package com.depromeet.threedollar.api.boss.service.store.dto.response
+package com.depromeet.threedollar.api.core.service.bossstore.dto.response
 
-import com.depromeet.threedollar.api.boss.controller.dto.response.BaseTimeResponse
+import com.depromeet.threedollar.api.core.common.dto.BaseTimeResponse
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.*
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppearanceDay
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenu
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreOpenType
 import com.depromeet.threedollar.domain.mongo.common.domain.TimeInterval
 import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenInfo
 import org.springframework.data.geo.Point

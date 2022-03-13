@@ -1,18 +1,19 @@
-package com.depromeet.threedollar.api.boss.controller.feedback
+package com.depromeet.threedollar.api.user.controller.boss.feedback
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.core.service.feedback.BossStoreFeedbackService
+import com.depromeet.threedollar.api.core.service.feedback.dto.request.AddBossStoreFeedbackRequest
 import com.depromeet.threedollar.api.core.service.feedback.dto.request.GetBossStoreFeedbacksCountsBetweenDateRequest
 import com.depromeet.threedollar.api.core.service.feedback.dto.response.BossStoreFeedbackCountResponse
 import com.depromeet.threedollar.api.core.service.feedback.dto.response.BossStoreFeedbackCursorResponse
 import com.depromeet.threedollar.api.core.service.feedback.dto.response.BossStoreFeedbackTypeResponse
+import com.depromeet.threedollar.api.user.config.interceptor.Auth
+import com.depromeet.threedollar.api.user.config.resolver.UserId
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import io.swagger.annotations.ApiOperation
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
+import javax.validation.Valid
 
 @RestController
 class BossStoreFeedbackController(
@@ -44,6 +45,22 @@ class BossStoreFeedbackController(
         return ApiResponse.success(BossStoreFeedbackType.values().asSequence()
             .map { BossStoreFeedbackTypeResponse.of(it) }
             .toList())
+    }
+
+    @ApiOperation("특정 사장님 가게에 피드백을 추가합니다")
+    @Auth
+    @PostMapping("/v1/boss/store/{bossStoreId}/feedback")
+    fun addBossStoreFeedback(
+        @PathVariable bossStoreId: String,
+        @Valid @RequestBody request: AddBossStoreFeedbackRequest,
+        @UserId userId: Long?
+    ): ApiResponse<String> {
+        bossStoreFeedbackService.addFeedback(
+            bossStoreId = bossStoreId,
+            userId = userId ?: 0L,
+            request = request,
+            date = LocalDate.now())
+        return ApiResponse.SUCCESS
     }
 
 }

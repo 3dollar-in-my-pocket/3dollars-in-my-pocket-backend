@@ -1,15 +1,16 @@
 package com.depromeet.threedollar.api.boss.controller.store
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.boss.config.resolver.BossId
 import com.depromeet.threedollar.api.boss.config.interceptor.Auth
+import com.depromeet.threedollar.api.boss.config.resolver.BossId
 import com.depromeet.threedollar.api.boss.config.resolver.MapCoordinate
 import com.depromeet.threedollar.api.boss.service.store.BossStoreOpenService
 import com.depromeet.threedollar.api.boss.service.store.BossStoreRetrieveService
 import com.depromeet.threedollar.api.boss.service.store.BossStoreService
-import com.depromeet.threedollar.api.boss.service.store.dto.request.GetAroundBossStoresRequest
 import com.depromeet.threedollar.api.boss.service.store.dto.request.UpdateBossStoreInfoRequest
-import com.depromeet.threedollar.api.boss.service.store.dto.response.BossStoreInfoResponse
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.service.bossstore.BossStoreCommonService
+import com.depromeet.threedollar.api.core.service.bossstore.dto.request.GetAroundBossStoresRequest
+import com.depromeet.threedollar.api.core.service.bossstore.dto.response.BossStoreInfoResponse
 import com.depromeet.threedollar.common.model.CoordinateValue
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.*
@@ -18,6 +19,7 @@ import javax.validation.Valid
 @RestController
 class BossStoreController(
     private val bossStoreRetrieveService: BossStoreRetrieveService,
+    private val bossStoreCommonService: BossStoreCommonService,
     private val bossStoreOpenService: BossStoreOpenService,
     private val bossStoreService: BossStoreService
 ) {
@@ -28,7 +30,7 @@ class BossStoreController(
         @MapCoordinate mapCoordinate: CoordinateValue,
         @Valid request: GetAroundBossStoresRequest
     ): ApiResponse<List<BossStoreInfoResponse>> {
-        return ApiResponse.success(bossStoreRetrieveService.getAroundBossStores(mapCoordinate, request))
+        return ApiResponse.success(bossStoreCommonService.getAroundBossStores(mapCoordinate, request))
     }
 
     @ApiOperation("[인증] 가게를 영업 정보를 시작/갱신합니다.", notes = "30분간 갱신하지 않으면 자동 영업 종료 처리되니 주기적으로 갱신해야 합니다.")
@@ -68,7 +70,7 @@ class BossStoreController(
     fun getBossStoreDetail(
         @PathVariable bossStoreId: String
     ): ApiResponse<BossStoreInfoResponse> {
-        return ApiResponse.success(bossStoreRetrieveService.getBossStore(bossStoreId))
+        return ApiResponse.success(bossStoreCommonService.getBossStore(bossStoreId))
     }
 
     @ApiOperation("[인증] 사장님 자신의 가게의 정보를 수정합니다")
