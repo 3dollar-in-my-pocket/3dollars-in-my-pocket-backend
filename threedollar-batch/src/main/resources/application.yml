@@ -3,7 +3,7 @@ spring:
     active: local
     default: local
     include:
-      - domain
+      - rds
       - secret
       - external
       - dummy

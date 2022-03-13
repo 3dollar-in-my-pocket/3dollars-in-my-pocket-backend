@@ -16,7 +16,7 @@ spring:
     active: local
     default: local
     include:
-      - domain
+      - rds
       - redis
       - mongo
       - external

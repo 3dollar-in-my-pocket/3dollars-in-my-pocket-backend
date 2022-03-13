@@ -1,6 +1,6 @@
 spring:
   config:
-    import: classpath:/application-domain.yml
+    import: classpath:/application-rds.yml
   profiles:
     active: integration-test
     default: integration-test

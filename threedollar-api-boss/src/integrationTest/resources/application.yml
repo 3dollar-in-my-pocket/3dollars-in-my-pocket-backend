@@ -1,7 +1,7 @@
 spring:
   config:
     import:
-      - classpath:/application-domain.yml
+      - classpath:/application-rds.yml
       - classpath:/application-external.yml
       - classpath:/application-redis.yml
       - classpath:/application-mongo.yml
