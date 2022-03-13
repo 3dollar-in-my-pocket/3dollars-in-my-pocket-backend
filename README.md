@@ -23,13 +23,13 @@
 > 백엔드에서는 v2.0.0부터 마이그레이션을 통해 새롭게 프로젝트를 진행하고 있습니다.
 ### 애플리케이션 (Language & Framework)
 - Java 11, Kotlin 1.5
-- Spring Framework (Spring MVC)
+- Spring Framework (Spring Boot, Spring MVC)
 - JPA/Hibernate, QueryDSL
-- MariaDB, flyway
-- Redis, Caffeine Cache
+- MariaDB 10.4, flyway
+- MongoDB 5.0, Redis 6.0, Caffeine Cache
 - Spring Batch
 - Feign Client
-- Gradle
+- Gradle 7.0
 - Junit5, AssertJ, Mockito
 
 ### 인프라 (Production)
@@ -37,14 +37,14 @@
 
 - ECS Fargate
 - RDS
-- Elastic Cache
+- Elastic Cache (Redis)
 - S3, CloudFront
 - Application LoadBalancer
 - GitHub Actions CI/CD
 
 ### 운영 툴
 - 로그 관리: AWS CloudWatch
-- 오류 수집 & 알림: Sentry, Slack
+- 에러 모니터링: Sentry, Slack
 - APM 도구: NewRelic
 - 부하 테스트: locust
 
