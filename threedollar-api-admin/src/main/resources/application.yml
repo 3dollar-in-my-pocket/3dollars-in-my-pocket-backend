@@ -19,6 +19,7 @@ spring:
       - mongo
       - external
       - swagger
+      - sentry
       - secret
 
   servlet:
