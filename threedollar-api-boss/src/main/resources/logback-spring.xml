@@ -4,21 +4,23 @@
     <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
 
     <springProfile name="local,local-docker,integration-test,stage">
-        <logger name="org.springframework.web" level="INFO"/>
         <logger name="com.depromeet.threedollar" level="DEBUG"/>
+        <logger name="org.springframework.web" level="INFO"/>
         <logger name="org.springframework.cache" level="TRACE"/>
         <logger name="org.springframework.data.mongodb.core.MongoTemplate" level="DEBUG"/>
         <logger name="org.springframework.data.mongodb.repository.query" level="DEBUG"/>
         <logger name="com.amazonaws.util.EC2MetadataUtils" level="ERROR"/>
         <logger name="com.amazonaws.internal.InstanceMetadataServiceResourceFetcher" level="ERROR"/>
+
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
         </root>
+
     </springProfile>
 
     <springProfile name="dev">
-        <logger name="org.springframework.web" level="INFO"/>
         <logger name="com.depromeet.threedollar" level="DEBUG"/>
+        <logger name="org.springframework.web" level="INFO"/>
         <logger name="com.amazonaws.util.EC2MetadataUtils" level="ERROR"/>
         <logger name="com.amazonaws.internal.InstanceMetadataServiceResourceFetcher" level="ERROR"/>
 
@@ -96,8 +98,8 @@
     </springProfile>
 
     <springProfile name="prod">
-        <logger name="org.springframework.web" level="INFO"/>
         <logger name="com.depromeet.threedollar" level="DEBUG"/>
+        <logger name="org.springframework.web" level="INFO"/>
         <logger name="com.amazonaws.util.EC2MetadataUtils" level="ERROR"/>
         <logger name="com.amazonaws.internal.InstanceMetadataServiceResourceFetcher" level="ERROR"/>
 
