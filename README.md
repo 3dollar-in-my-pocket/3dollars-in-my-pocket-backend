@@ -25,11 +25,11 @@
 - Java 11, Kotlin 1.5
 - Spring Framework (Spring Boot, Spring MVC)
 - JPA/Hibernate, QueryDSL
-- MariaDB 10.4, flyway
-- MongoDB 5.0, Redis 6.0, Caffeine Cache
+- MariaDB, flyway
+- MongoDB Redis Caffeine Cache
 - Spring Batch
 - Feign Client
-- Gradle 7.0
+- Gradle
 - Junit5, AssertJ, Mockito
 
 ### 인프라 (Production)
