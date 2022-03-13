@@ -1,7 +1,7 @@
-package com.depromeet.threedollar.api.core.service.bossstore
+package com.depromeet.threedollar.api.core.service.boss.store
 
-import com.depromeet.threedollar.api.core.service.bossstore.dto.request.GetAroundBossStoresRequest
-import com.depromeet.threedollar.api.core.service.bossstore.dto.response.BossStoreInfoResponse
+import com.depromeet.threedollar.api.core.service.boss.store.dto.request.GetAroundBossStoresRequest
+import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreInfoResponse
 import com.depromeet.threedollar.common.model.CoordinateValue
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
@@ -52,7 +52,6 @@ class BossStoreCommonService(
     private fun getCategory(bossStore: BossStore, categoriesDictionary: Map<String, BossStoreCategory>): List<BossStoreCategory> {
         return bossStore.categoriesIds.mapNotNull { categoriesDictionary[it] }
     }
-
 
     @Transactional(readOnly = true)
     fun getBossStore(storeId: String): BossStoreInfoResponse {

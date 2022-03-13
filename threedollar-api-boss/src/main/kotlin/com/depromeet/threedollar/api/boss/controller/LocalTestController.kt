@@ -6,8 +6,8 @@ import com.depromeet.threedollar.api.boss.config.session.SessionConstants
 import com.depromeet.threedollar.api.boss.service.auth.dto.response.LoginResponse
 import com.depromeet.threedollar.api.boss.service.category.BossStoreCategoryServiceUtils
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.service.feedback.BossStoreFeedbackService
-import com.depromeet.threedollar.api.core.service.feedback.dto.request.AddBossStoreFeedbackRequest
+import com.depromeet.threedollar.api.core.service.boss.feedback.BossStoreFeedbackService
+import com.depromeet.threedollar.api.core.service.boss.feedback.dto.request.AddBossStoreFeedbackRequest
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.common.exception.model.NotFoundException

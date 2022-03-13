@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.core.service.bossstore.dto.response
+package com.depromeet.threedollar.api.core.service.boss.store.dto.response
 
 import com.depromeet.threedollar.api.core.common.dto.BaseTimeResponse
 import com.depromeet.threedollar.common.type.DayOfTheWeek

@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.boss.service.store
 
-import com.depromeet.threedollar.api.core.service.bossstore.dto.response.BossStoreInfoResponse
+import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreInfoResponse
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository

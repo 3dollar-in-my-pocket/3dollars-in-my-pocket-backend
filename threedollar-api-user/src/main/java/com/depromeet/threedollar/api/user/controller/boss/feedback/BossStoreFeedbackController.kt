@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.api.user.controller.boss.feedback
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.service.feedback.BossStoreFeedbackService
-import com.depromeet.threedollar.api.core.service.feedback.dto.request.AddBossStoreFeedbackRequest
-import com.depromeet.threedollar.api.core.service.feedback.dto.response.BossStoreFeedbackCountResponse
-import com.depromeet.threedollar.api.core.service.feedback.dto.response.BossStoreFeedbackTypeResponse
+import com.depromeet.threedollar.api.core.service.boss.feedback.BossStoreFeedbackService
+import com.depromeet.threedollar.api.core.service.boss.feedback.dto.request.AddBossStoreFeedbackRequest
+import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackCountResponse
+import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackTypeResponse
 import com.depromeet.threedollar.api.user.config.interceptor.Auth
 import com.depromeet.threedollar.api.user.config.resolver.UserId
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType

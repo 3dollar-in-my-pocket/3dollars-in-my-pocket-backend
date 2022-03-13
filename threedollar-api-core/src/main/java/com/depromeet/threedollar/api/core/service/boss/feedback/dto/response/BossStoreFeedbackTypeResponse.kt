@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.core.service.feedback.dto.response
+package com.depromeet.threedollar.api.core.service.boss.feedback.dto.response
 
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 

@@ -1,11 +1,11 @@
-package com.depromeet.threedollar.api.core.service.feedback
+package com.depromeet.threedollar.api.core.service.boss.feedback
 
-import com.depromeet.threedollar.api.core.service.feedback.dto.request.AddBossStoreFeedbackRequest
-import com.depromeet.threedollar.api.core.service.feedback.dto.request.GetBossStoreFeedbacksCountsBetweenDateRequest
-import com.depromeet.threedollar.api.core.service.feedback.dto.response.BossStoreFeedbackCountResponse
-import com.depromeet.threedollar.api.core.service.feedback.dto.response.BossStoreFeedbackCursorResponse
+import com.depromeet.threedollar.api.core.service.boss.feedback.dto.request.AddBossStoreFeedbackRequest
+import com.depromeet.threedollar.api.core.service.boss.feedback.dto.request.GetBossStoreFeedbacksCountsBetweenDateRequest
+import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackCountResponse
+import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackCursorResponse
+import com.depromeet.threedollar.api.core.service.boss.store.BossStoreCommonServiceUtils
 import com.depromeet.threedollar.common.exception.model.ConflictException
-import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedback
@@ -25,7 +25,7 @@ class BossStoreFeedbackService(
 
     @Transactional
     fun addFeedback(bossStoreId: String, request: AddBossStoreFeedbackRequest, userId: Long, date: LocalDate) {
-        validateExistsBossStore(bossStoreId)
+        BossStoreCommonServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
         validateNotExistsFeedbackOnDate(storeId = bossStoreId, userId = userId, feedbackType = request.feedbackType, date = date)
         bossStoreFeedbackRepository.save(request.toDocument(bossStoreId, userId, date))
         bossStoreFeedbackCountRepository.increment(bossStoreId, request.feedbackType)
@@ -39,14 +39,14 @@ class BossStoreFeedbackService(
 
     @Transactional(readOnly = true)
     fun getBossStoreFeedbacksCounts(bossStoreId: String): List<BossStoreFeedbackCountResponse> {
-        validateExistsBossStore(bossStoreId)
+        BossStoreCommonServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
         return bossStoreFeedbackCountRepository.getAll(bossStoreId)
             .map { BossStoreFeedbackCountResponse.of(it.key, it.value) }
     }
 
     @Transactional(readOnly = true)
     fun getBossStoreFeedbacksCountsBetweenDate(bossStoreId: String, request: GetBossStoreFeedbacksCountsBetweenDateRequest): BossStoreFeedbackCursorResponse {
-        validateExistsBossStore(bossStoreId)
+        BossStoreCommonServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
         val feedbacksBetweenDate = bossStoreFeedbackRepository.findAllByBossStoreIdAndBetween(bossStoreId = bossStoreId, startDate = request.startDate, endDate = request.endDate)
 
         val feedbacksGroupingDate: Map<LocalDate, Map<BossStoreFeedbackType, Int>> = feedbacksBetweenDate
@@ -65,12 +65,6 @@ class BossStoreFeedbackService(
             return null
         }
         return bossStoreFeedbackRepository.findFirstLessThanDate(bossStoreId = bossStoreId, date = feedbacks.minOf { it.date })?.date
-    }
-
-    private fun validateExistsBossStore(bossStoreId: String) {
-        if (!bossStoreRepository.existsBossStoreById(bossStoreId = bossStoreId)) {
-            throw NotFoundException("해당하는 가게(${bossStoreId})는 존재하지 않습니다", ErrorCode.NOTFOUND_STORE)
-        }
     }
 
 }
