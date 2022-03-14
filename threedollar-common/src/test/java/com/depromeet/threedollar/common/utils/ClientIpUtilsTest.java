@@ -8,10 +8,65 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ClientIpUtilsTest {
 
-    @Test
-    void X_Forwarded_For_헤더가_없는경우_Remote_Address를_반환한다() {
+    @ValueSource(strings = {
+        "3.4.5.6 5.6.7.8",
+        "3.4.5.6, 5.6.7.8",
+        "3.4.5.6,5.6.7.8",
+        "3.4.5.6, 5.6.7.8"
+    })
+    @ParameterizedTest
+    void PublicIP인경우_RemoteAddress를_반환한다(String forwarded) {
         // given
         String remoteAddress = "1.2.3.4";
+
+        // when
+        String clientIp = ClientIpUtils.getClientIp(remoteAddress, forwarded);
+
+        // then
+        assertThat(clientIp).isEqualTo(remoteAddress);
+    }
+
+    @ValueSource(strings = {
+        "3.4.5.6",
+        "3.4.5.6 5.6.7.8",
+        "3.4.5.6, 5.6.7.8",
+        "3.4.5.6,5.6.7.8",
+        "3.4.5.6, 5.6.7.8",
+        "3.4.5.6, 5.6.7.8 11.12.13.14"
+    })
+    @ParameterizedTest
+    void 사설IP인경우_X_Forwarded_For_헤더에_여러_IP가_있는경우_첫번째_IP를_파싱해서_반환한다(String forwarded) {
+        // given
+        String remoteAddress = "10.0.0.1";
+
+        // when
+        String clientIp = ClientIpUtils.getClientIp(remoteAddress, forwarded);
+
+        // then
+        assertThat(clientIp).isEqualTo("3.4.5.6");
+    }
+
+    @ValueSource(strings = {
+        "10.0.0.1",
+        "172.16.0.1",
+        "192.168.0.1"
+    })
+    @ParameterizedTest
+    void RemoteAddress가_PrivateIP인경우_X_forwarded_for_헤더에서_추출한IP를_반환한다(String remoteAddress) {
+        // given
+        String forwarded = "1.2.3.4";
+
+        // when
+        String clientIp = ClientIpUtils.getClientIp(remoteAddress, forwarded);
+
+        // then
+        assertThat(clientIp).isEqualTo(forwarded);
+    }
+
+    @Test
+    void RemoteAddress가_사설IP이지만_X_Forwarded_For_헤더가_null인경우_Remote_Address를_반환한다() {
+        // given
+        String remoteAddress = "10.1.1.1";
 
         // when
         String clientIp = ClientIpUtils.getClientIp(remoteAddress, null);
@@ -21,7 +76,7 @@ class ClientIpUtilsTest {
     }
 
     @Test
-    void X_Forwarded_For_헤더가_빈경우_Remote_Address를_반환한다() {
+    void RemoteAddress가_사설IP이지만_X_Forwarded_For_헤더가_빈경우_Remote_Address를_반환한다() {
         // given
         String remoteAddress = "1.2.3.4";
         String forwarded = "";
@@ -31,37 +86,6 @@ class ClientIpUtilsTest {
 
         // then
         assertThat(clientIp).isEqualTo(remoteAddress);
-    }
-
-    @Test
-    void X_Forwarded_For_헤더에_IP_하나_있을경우_해당_IP를_반환한다() {
-        // given
-        String remoteAddress = "1.2.3.4";
-        String forwarded = "3.4.5.6";
-
-        // when
-        String clientIp = ClientIpUtils.getClientIp(remoteAddress, forwarded);
-
-        // then
-        assertThat(clientIp).isEqualTo(forwarded);
-    }
-
-    @ValueSource(strings = {
-        "3.4.5.6 5.6.7.8",
-        "3.4.5.6, 5.6.7.8",
-        "3.4.5.6,5.6.7.8",
-        "3.4.5.6, 5.6.7.8"
-    })
-    @ParameterizedTest
-    void X_Forwarded_For_헤더에_여러_IP가_있는경우_첫번째_IP를_파싱해서_반환한다(String forwarded) {
-        // given
-        String remoteAddress = "1.2.3.4";
-
-        // when
-        String clientIp = ClientIpUtils.getClientIp(remoteAddress, forwarded);
-
-        // then
-        assertThat(clientIp).isEqualTo("3.4.5.6");
     }
 
 }
