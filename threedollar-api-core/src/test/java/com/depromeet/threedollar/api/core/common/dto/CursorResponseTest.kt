@@ -8,7 +8,7 @@ internal class CursorResponseTest {
 
     @Test
     fun `nextCursor가 null인 경우 마지막 커서이다`() {
-        // when
+        // given
         val nextCursor: String? = null
 
         // when
@@ -21,7 +21,7 @@ internal class CursorResponseTest {
 
     @Test
     fun `nextCursor에 null이 아닌 값이 넘어오면 마지막 커서가 아니다`() {
-        // when
+        // given
         val nextCursor = "cursor"
 
         // when

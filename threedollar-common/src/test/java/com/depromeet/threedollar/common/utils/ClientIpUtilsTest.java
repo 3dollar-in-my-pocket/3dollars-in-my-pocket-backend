@@ -8,16 +8,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ClientIpUtilsTest {
 
-    @ValueSource(strings = {
-        "3.4.5.6 5.6.7.8",
-        "3.4.5.6, 5.6.7.8",
-        "3.4.5.6,5.6.7.8",
-        "3.4.5.6, 5.6.7.8"
-    })
-    @ParameterizedTest
-    void PublicIP인경우_RemoteAddress를_반환한다(String forwarded) {
+    @Test
+    void PublicIP인경우_RemoteAddress를_반환한다() {
         // given
         String remoteAddress = "1.2.3.4";
+        String forwarded = "3.4.5.6";
 
         // when
         String clientIp = ClientIpUtils.getClientIp(remoteAddress, forwarded);
@@ -31,8 +26,7 @@ class ClientIpUtilsTest {
         "3.4.5.6 5.6.7.8",
         "3.4.5.6, 5.6.7.8",
         "3.4.5.6,5.6.7.8",
-        "3.4.5.6, 5.6.7.8",
-        "3.4.5.6, 5.6.7.8 11.12.13.14"
+        "3.4.5.6 5.6.7.8 11.12.13.14"
     })
     @ParameterizedTest
     void 사설IP인경우_X_Forwarded_For_헤더에_여러_IP가_있는경우_첫번째_IP를_파싱해서_반환한다(String forwarded) {
@@ -66,7 +60,7 @@ class ClientIpUtilsTest {
     @Test
     void RemoteAddress가_사설IP이지만_X_Forwarded_For_헤더가_null인경우_Remote_Address를_반환한다() {
         // given
-        String remoteAddress = "10.1.1.1";
+        String remoteAddress = "10.0.0.1";
 
         // when
         String clientIp = ClientIpUtils.getClientIp(remoteAddress, null);
