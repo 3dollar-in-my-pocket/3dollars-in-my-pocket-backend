@@ -17,23 +17,23 @@ external:
   client:
     kakao:
       profile:
-        base-url: "https://kapi.kakao.com"
-        url: "/v2/user/me"
+        base-url: https://kapi.kakao.com
+        url: /v2/user/me
     google:
       profile:
-        base-url: "https://www.googleapis.com"
-        url: "/oauth2/v2/userinfo"
+        base-url: https://www.googleapis.com
+        url: /oauth2/v2/userinfo
     apple:
       profile:
-        base-url: "https://appleid.apple.com"
-        url: "/auth/keys"
+        base-url: https://appleid.apple.com
+        url: /auth/keys
     naver:
       profile:
-        base-url: "https://openapi.naver.com"
-        url: "/v1/nid/me"
+        base-url: https://openapi.naver.com
+        url: /v1/nid/me
     slack:
       webhook:
-        base-url: "https://hooks.slack.com/services"
+        base-url: https://hooks.slack.com/services
 
 ---
 spring.config:
