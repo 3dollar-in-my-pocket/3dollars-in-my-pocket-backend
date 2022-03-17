@@ -5,6 +5,7 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.spring' version '1.5.32'
     id 'application'
     id 'jacoco'
+    id "org.sonarqube" version "3.3"
 }
 
 repositories {
@@ -120,6 +121,14 @@ subprojects {
 
 jacoco {
     toolVersion = "0.8.7"
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", ""
+        property "sonar.organization", ""
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
 }
 
 task testCoverage(type: JacocoReport, group: 'verification', description: 'Report Test Coverage') {
