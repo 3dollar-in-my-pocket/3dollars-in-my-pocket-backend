@@ -26,7 +26,7 @@
 - Spring Framework (Spring Boot, Spring MVC)
 - JPA/Hibernate, QueryDSL
 - MariaDB, flyway
-- MongoDB Redis Caffeine Cache
+- MongoDB, Redis, Caffeine Cache
 - Spring Batch
 - Feign Client
 - Gradle

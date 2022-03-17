@@ -50,7 +50,11 @@ class BossStoreRepositoryCustomImpl(
                 .addCriteria(BossStore::id inValues bossStoreIds)
                 .addCriteria(where(BossStore::categoriesIds).`in`(categoryId)), BossStore::class.java
             )
-        } ?: mongoTemplate.find(Query()
+        } ?: findAllById(bossStoreIds)
+    }
+
+    private fun findAllById(bossStoreIds: List<String>): List<BossStore> {
+        return mongoTemplate.find(Query()
             .addCriteria(BossStore::id inValues bossStoreIds), BossStore::class.java)
     }
 

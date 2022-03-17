@@ -6,9 +6,9 @@ import org.springframework.data.geo.Metrics
 import org.springframework.data.geo.Point
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.findOne
-import org.springframework.data.mongodb.core.query.Criteria.where
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.isEqualTo
+import org.springframework.data.mongodb.core.query.where
 
 class BossStoreLocationRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
@@ -17,9 +17,10 @@ class BossStoreLocationRepositoryCustomImpl(
     override fun findNearBossStoreLocations(latitude: Double, longitude: Double, maxDistance: Double): List<BossStoreLocation> {
         return mongoTemplate.find(Query()
             .addCriteria(
-                where("location")
+                where(BossStoreLocation::location)
                     .nearSphere(Point(longitude, latitude))
-                    .maxDistance(Distance(maxDistance, Metrics.KILOMETERS).normalizedValue)), BossStoreLocation::class.java
+                    .maxDistance(Distance(maxDistance, Metrics.KILOMETERS).normalizedValue)
+            ), BossStoreLocation::class.java
         )
     }
 
