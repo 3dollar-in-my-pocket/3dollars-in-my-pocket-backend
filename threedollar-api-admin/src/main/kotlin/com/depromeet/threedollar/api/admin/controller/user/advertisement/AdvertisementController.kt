@@ -23,7 +23,7 @@ class AdvertisementController(
         @Valid @RequestBody request: AddAdvertisementRequest
     ): ApiResponse<String> {
         advertisementAdminService.addAdvertisement(request)
-        return ApiResponse.SUCCESS
+        return ApiResponse.OK
     }
 
     @ApiOperation("특정 광고를 수정합니다")
@@ -34,7 +34,7 @@ class AdvertisementController(
         @Valid @RequestBody request: UpdateAdvertisementRequest
     ): ApiResponse<String> {
         advertisementAdminService.updateAdvertisement(advertisementId, request)
-        return ApiResponse.SUCCESS
+        return ApiResponse.OK
     }
 
     @ApiOperation("특정 광고를 삭제합니다")
@@ -44,7 +44,7 @@ class AdvertisementController(
         @PathVariable advertisementId: Long
     ): ApiResponse<String> {
         advertisementAdminService.deleteAdvertisement(advertisementId)
-        return ApiResponse.SUCCESS
+        return ApiResponse.OK
     }
 
     @ApiOperation("광고 목록을 조회합니다")

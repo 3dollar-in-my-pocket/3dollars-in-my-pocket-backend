@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.function.Supplier;
+import java.util.function.LongSupplier;
 
 import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_MEDALS;
 import static com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionType.NO_CONDITION;
@@ -27,13 +27,13 @@ public class AddUserMedalService {
 
     @CacheEvict(key = "#userId", value = USER_MEDALS)
     @Transactional
-    public void addMedalsIfSatisfyCondition(Long userId, MedalAcquisitionConditionType conditionType, Supplier<Long> countsByUserSupplier) {
+    public void addMedalsIfSatisfyCondition(Long userId, MedalAcquisitionConditionType conditionType, LongSupplier countsByUserSupplier) {
         User user = UserServiceUtils.findUserById(userRepository, userId);
         MedalObtainCollection medalObtainCollection = MedalObtainCollection.of(medalRepository.findAllByConditionType(conditionType), conditionType, user);
         if (medalObtainCollection.hasNoMoreMedalsCanBeObtained()) {
             return;
         }
-        user.addMedals(medalObtainCollection.getSatisfyMedalsCanBeObtained(countsByUserSupplier.get()));
+        user.addMedals(medalObtainCollection.getSatisfyMedalsCanBeObtained(countsByUserSupplier.getAsLong()));
     }
 
     @Transactional

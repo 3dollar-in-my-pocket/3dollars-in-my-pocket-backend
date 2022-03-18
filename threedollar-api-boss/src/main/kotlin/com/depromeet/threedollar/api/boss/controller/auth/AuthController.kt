@@ -34,7 +34,7 @@ class AuthController(
         val authService = authServiceProvider.getAuthService(request.socialType)
         val socialId = authService.getSocialId(LoginRequest(request.token, request.socialType))
         bossAccountRegistrationService.applyForBossAccountRegistration(request, socialId)
-        return ApiResponse.SUCCESS
+        return ApiResponse.OK
     }
 
     @ApiOperation("사장님 계정으로 로그인을 요청합니다.", notes = "https://github.com/3dollar-in-my-pocket/3dollars-in-my-pocket-backend/issues/118")
@@ -56,7 +56,7 @@ class AuthController(
     @PostMapping("/v1/auth/logout")
     fun logout(): ApiResponse<String> {
         httpSession.removeAttribute(BOSS_ACCOUNT_ID)
-        return ApiResponse.SUCCESS
+        return ApiResponse.OK
     }
 
     @ApiOperation("[인증] 사장님 계정을 회원탈퇴 합니다")
@@ -67,7 +67,7 @@ class AuthController(
     ): ApiResponse<String> {
         bossAccountService.signOut(bossId)
         httpSession.invalidate()
-        return ApiResponse.SUCCESS
+        return ApiResponse.OK
     }
 
 }

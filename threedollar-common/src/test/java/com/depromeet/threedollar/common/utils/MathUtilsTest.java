@@ -47,7 +47,7 @@ class MathUtilsTest {
         double result = MathUtils.round(value, 1);
 
         // then
-        assertThat(result).isEqualTo(0);
+        assertThat(result).isZero();
     }
 
 }

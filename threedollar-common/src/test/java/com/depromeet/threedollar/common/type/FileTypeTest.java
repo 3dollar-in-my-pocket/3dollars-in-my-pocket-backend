@@ -40,8 +40,8 @@ class FileTypeTest {
         String result = type.createUniqueFileNameWithExtension(originalFileName);
 
         // then
-        assertThat(result.startsWith(type.getDirectory())).isTrue();
-        assertThat(result.endsWith(".png")).isTrue();
+        assertThat(result).startsWith(type.getDirectory())
+            .endsWith(".png");
     }
 
     @ValueSource(strings = {"image", "video/mp4"})

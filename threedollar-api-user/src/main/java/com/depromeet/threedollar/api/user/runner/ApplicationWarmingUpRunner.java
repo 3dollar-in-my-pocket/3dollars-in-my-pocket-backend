@@ -4,10 +4,12 @@ import com.depromeet.threedollar.common.type.FamousPlace;
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPlatformType;
 import com.depromeet.threedollar.external.client.local.LocalUserApiWarmUpApiClient;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Profile({"dev", "stage", "prod"})
 @RequiredArgsConstructor
 @Component
@@ -31,7 +33,8 @@ public class ApplicationWarmingUpRunner implements CommandLineRunner {
                     apiClient.getAdvertisements(platformType.name());
                 }
             }
-        } catch (Exception ignored) {
+        } catch (Exception exception) {
+            log.error(exception.getMessage(), exception);
         }
     }
 

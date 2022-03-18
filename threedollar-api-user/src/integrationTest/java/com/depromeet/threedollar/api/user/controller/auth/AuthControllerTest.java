@@ -51,9 +51,9 @@ class AuthControllerTest extends SetupUserControllerTest {
         @Test
         void 카카오_회원가입_요청이_성공하면_토큰이_반환된다() throws Exception {
             // given
-            when(kaKaoAuthApiClient.getProfileInfo(any())).thenReturn(KaKaoProfileResponse.testInstance("social-id"));
+            when(kaKaoAuthApiClient.getProfileInfo(any())).thenReturn(KaKaoProfileResponse.testInstance("kakao-social-id"));
 
-            SignUpRequest request = SignUpRequest.testInstance("access-token", "will", UserSocialType.KAKAO);
+            SignUpRequest request = SignUpRequest.testInstance("kakao-access-token", "will", UserSocialType.KAKAO);
 
             // when
             ApiResponse<LoginResponse> response = authMockApiCaller.signUp(request, 200);
@@ -69,9 +69,9 @@ class AuthControllerTest extends SetupUserControllerTest {
         @Test
         void 애플_회원가입_요청이_성공하면_토큰이_반환된다() throws Exception {
             // given
-            when(appleTokenDecoder.getSocialIdFromIdToken(any())).thenReturn("social-id");
+            when(appleTokenDecoder.getSocialIdFromIdToken(any())).thenReturn("apple-social-id");
 
-            SignUpRequest request = SignUpRequest.testInstance("access-token", "will", UserSocialType.APPLE);
+            SignUpRequest request = SignUpRequest.testInstance("apple-access-token", "will", UserSocialType.APPLE);
 
             // when
             ApiResponse<LoginResponse> response = authMockApiCaller.signUp(request, 200);
@@ -186,7 +186,7 @@ class AuthControllerTest extends SetupUserControllerTest {
             assertAll(
                 () -> assertThat(response.getResultCode()).isEmpty(),
                 () -> assertThat(response.getMessage()).isEmpty(),
-                () -> assertThat(response.getData()).isEqualTo(ApiResponse.SUCCESS.getData())
+                () -> assertThat(response.getData()).isEqualTo(ApiResponse.OK.getData())
             );
         }
 
@@ -205,7 +205,7 @@ class AuthControllerTest extends SetupUserControllerTest {
             assertAll(
                 () -> assertThat(response.getResultCode()).isEmpty(),
                 () -> assertThat(response.getMessage()).isEmpty(),
-                () -> assertThat(response.getData()).isEqualTo(ApiResponse.SUCCESS.getData())
+                () -> assertThat(response.getData()).isEqualTo(ApiResponse.OK.getData())
             );
         }
 

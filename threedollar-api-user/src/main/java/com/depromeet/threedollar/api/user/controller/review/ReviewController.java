@@ -62,7 +62,7 @@ public class ReviewController {
     ) {
         ReviewInfoResponse response = reviewService.deleteReview(reviewId, userId);
         eventPublisher.publishEvent(ReviewChangedEvent.of(response.getStoreId()));
-        return ApiResponse.SUCCESS;
+        return ApiResponse.OK;
     }
 
     @ApiOperation(value = "[인증] 내가 작성한 리뷰 목록을 스크롤 페이지네이션으로 조회합니다", notes = "[스크롤 페이지네이션] 첫 스크롤 조회시 cursor=null 그 이후부터 nextCursor로 응답하는 id를 cursor로 hasNext가 false일때 까지 반복 조회")

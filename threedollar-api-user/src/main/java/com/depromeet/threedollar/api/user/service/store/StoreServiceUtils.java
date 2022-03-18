@@ -20,7 +20,7 @@ public class StoreServiceUtils {
 
     public static void validateExistsStore(StoreRepository storeRepository, Long storeId) {
         if (!storeRepository.existsById(storeId)) {
-            throw new NotFoundException(String.format("해당하는 가게 (%s)는 존재하지 않습니다", storeId), NOTFOUND_STORE);
+            throw new NotFoundException(String.format("해당하는 가게 (%s)는 존재하지 않는 가게입니다", storeId), NOTFOUND_STORE);
         }
     }
 

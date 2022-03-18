@@ -8,7 +8,7 @@ public abstract class ThreeDollarsBaseException extends RuntimeException {
 
     private final ErrorCode errorCode;
 
-    public ThreeDollarsBaseException(String message, ErrorCode errorCode) {
+    protected ThreeDollarsBaseException(String message, ErrorCode errorCode) {
         super(message);
         this.errorCode = errorCode;
     }

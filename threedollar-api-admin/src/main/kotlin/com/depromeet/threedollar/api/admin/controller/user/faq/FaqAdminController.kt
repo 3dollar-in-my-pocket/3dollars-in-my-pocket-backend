@@ -46,7 +46,7 @@ class FaqAdminController(
         @PathVariable faqId: Long
     ): ApiResponse<String> {
         faqAdminService.deleteFaq(faqId)
-        return ApiResponse.SUCCESS
+        return ApiResponse.OK
     }
 
     @ApiOperation("FAQ 목록을 조회합니다")

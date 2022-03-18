@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ApiResponse<T> {
 
-    public static final ApiResponse<String> SUCCESS = success("OK");
+    public static final ApiResponse<String> OK = success("OK");
 
     private String resultCode;
 

@@ -47,7 +47,7 @@ class BossStoreFeedbackController(
             userId = userId ?: 0L,
             request = request,
             date = LocalDate.now())
-        return ApiResponse.SUCCESS
+        return ApiResponse.OK
     }
 
 }

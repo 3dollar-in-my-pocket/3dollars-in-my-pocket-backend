@@ -46,7 +46,7 @@ public class StoreImageController {
         @PathVariable Long imageId
     ) {
         storeImageService.deleteStoreImage(imageId);
-        return ApiResponse.SUCCESS;
+        return ApiResponse.OK;
     }
 
 }

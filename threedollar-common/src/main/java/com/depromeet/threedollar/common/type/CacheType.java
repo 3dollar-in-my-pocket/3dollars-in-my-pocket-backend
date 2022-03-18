@@ -1,6 +1,8 @@
 package com.depromeet.threedollar.common.type;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.Duration;
 
@@ -28,6 +30,7 @@ public enum CacheType {
         this.cacheRange = cacheRange;
     }
 
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static class CacheKey {
 
         public static final String FAQS = "FAQS";

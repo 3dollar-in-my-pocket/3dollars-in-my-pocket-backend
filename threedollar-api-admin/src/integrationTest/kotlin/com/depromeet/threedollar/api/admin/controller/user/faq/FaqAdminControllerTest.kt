@@ -115,7 +115,7 @@ internal class FaqAdminControllerTest(
                 .andExpect {
                     status { isOk() }
                     content {
-                        jsonPath("$.data") { value(ApiResponse.SUCCESS.data) }
+                        jsonPath("$.data") { value(ApiResponse.OK.data) }
                     }
                 }
         }

@@ -9,6 +9,7 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode;
 import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException;
+import kotlin.reflect.KParameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
@@ -66,7 +67,11 @@ public class ControllerExceptionAdvice {
     private ApiResponse<Object> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         log.warn(e.getMessage());
         if (e.getRootCause() instanceof MissingKotlinParameterException) {
-            String parameterName = ((MissingKotlinParameterException) e.getRootCause()).getParameter().getName();
+            Throwable throwable = e.getRootCause();
+            if (throwable == null) {
+                return ApiResponse.error(INVALID);
+            }
+            String parameterName = ((MissingKotlinParameterException) throwable).getParameter().getName();
             return ApiResponse.error(INVALID, String.format("필수 파라미터 (%s)를 입력해주세요", parameterName));
         }
         return ApiResponse.error(INVALID);

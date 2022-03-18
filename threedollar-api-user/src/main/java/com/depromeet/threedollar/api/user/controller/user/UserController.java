@@ -49,7 +49,7 @@ public class UserController {
         @Valid CheckAvailableNameRequest request
     ) {
         userService.checkIsAvailableName(request);
-        return ApiResponse.SUCCESS;
+        return ApiResponse.OK;
     }
 
 }

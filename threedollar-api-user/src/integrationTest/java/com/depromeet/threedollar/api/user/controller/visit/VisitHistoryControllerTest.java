@@ -62,9 +62,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             ApiResponse<String> response = visitHistoryApiCaller.addVisitHistory(request, token, 200);
 
             // then
-            assertAll(
-                () -> assertThat(response.getData()).isEqualTo(ApiResponse.SUCCESS.getData())
-            );
+            assertThat(response.getData()).isEqualTo(ApiResponse.OK.getData());
         }
 
         @Test

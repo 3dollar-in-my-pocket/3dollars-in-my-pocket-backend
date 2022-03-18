@@ -75,7 +75,7 @@ class StoreImageControllerTest extends SetupStoreControllerTest {
             assertAll(
                 () -> assertThat(response.getResultCode()).isEmpty(),
                 () -> assertThat(response.getMessage()).isEmpty(),
-                () -> assertThat(response.getData()).isEqualTo(ApiResponse.SUCCESS.getData())
+                () -> assertThat(response.getData()).isEqualTo(ApiResponse.OK.getData())
             );
         }
 

@@ -33,7 +33,7 @@ class VisitHistoriesCountCollectionTest {
             () -> assertThat(counter.getStoreNotExistsVisitsCount(storeOneId)).isEqualTo(1L),
 
             () -> assertThat(counter.getStoreExistsVisitsCount(storeTwoId)).isEqualTo(2L),
-            () -> assertThat(counter.getStoreNotExistsVisitsCount(storeTwoId)).isEqualTo(0L)
+            () -> assertThat(counter.getStoreNotExistsVisitsCount(storeTwoId)).isZero()
         );
     }
 

@@ -14,7 +14,7 @@ public class DummySlackWebhookApiClient implements SlackWebhookApiClient {
 
     @Override
     public void postMessage(PostSlackMessageRequest request) {
-
+        log.debug(request.toString());
     }
 
 }

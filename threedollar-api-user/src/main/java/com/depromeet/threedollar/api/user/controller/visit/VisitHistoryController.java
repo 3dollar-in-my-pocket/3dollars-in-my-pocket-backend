@@ -35,7 +35,7 @@ public class VisitHistoryController {
     ) {
         Long visitHistoryId = visitHistoryService.addVisitHistory(request, userId, LocalDate.now());
         eventPublisher.publishEvent(VisitHistoryAddedEvent.of(visitHistoryId, userId));
-        return ApiResponse.SUCCESS;
+        return ApiResponse.OK;
     }
 
     @ApiOperation("[인증] 내가 방문한 이력을 조회합니다. (스크롤 페이지네이션)")

@@ -59,7 +59,7 @@ public class LocalTestController {
         Store store = StoreServiceUtils.findStoreById(storeRepository, storeId);
         store.delete();
         storeRepository.save(store);
-        return ApiResponse.SUCCESS;
+        return ApiResponse.OK;
     }
 
     @ApiOperation("[개발 서버용] 서버 에러를 발생시킵니다.")

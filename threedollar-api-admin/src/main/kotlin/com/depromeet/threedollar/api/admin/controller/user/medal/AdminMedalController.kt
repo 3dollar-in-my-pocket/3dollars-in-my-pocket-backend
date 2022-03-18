@@ -22,7 +22,7 @@ class AdminMedalController(
         @Valid @RequestBody request: AddMedalRequest
     ): ApiResponse<String> {
         adminMedalService.addMedal(request)
-        return ApiResponse.SUCCESS
+        return ApiResponse.OK
     }
 
     @ApiOperation("특정 메달의 정보를 수정합니다")
@@ -33,7 +33,7 @@ class AdminMedalController(
         @Valid @RequestBody request: UpdateMedalRequest
     ): ApiResponse<String> {
         adminMedalService.updateMedal(medalId, request)
-        return ApiResponse.SUCCESS
+        return ApiResponse.OK
     }
 
     @ApiOperation("전체 메달 목록을 조회합니다")

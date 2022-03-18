@@ -59,7 +59,7 @@ public class AuthController {
     ) {
         userService.signOut(userId);
         httpSession.invalidate();
-        return ApiResponse.SUCCESS;
+        return ApiResponse.OK;
     }
 
     @ApiOperation("[인증] 로그아웃을 요청합니다.")
@@ -67,7 +67,7 @@ public class AuthController {
     @PostMapping("/v2/logout")
     public ApiResponse<String> logout() {
         httpSession.removeAttribute(USER_ID);
-        return ApiResponse.SUCCESS;
+        return ApiResponse.OK;
     }
 
 }

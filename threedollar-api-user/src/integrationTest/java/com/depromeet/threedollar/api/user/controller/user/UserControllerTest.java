@@ -132,7 +132,7 @@ class UserControllerTest extends SetupUserControllerTest {
             checkAvailableNickNameApi(request)
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data").value(ApiResponse.SUCCESS.getData()));
+                .andExpect(jsonPath("$.data").value(ApiResponse.OK.getData()));
         }
 
         @Test

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class GoogleAuthService implements AuthService {
 
-    private final UserSocialType socialType = UserSocialType.GOOGLE;
+    private static final UserSocialType socialType = UserSocialType.GOOGLE;
 
     private final GoogleAuthApiClient googleAuthApiClient;
 

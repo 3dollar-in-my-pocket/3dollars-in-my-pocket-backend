@@ -9,14 +9,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.EnumMap;
 
 @RequiredArgsConstructor
 @Component
 public class AuthServiceProvider {
 
-    private static final Map<UserSocialType, AuthService> authServiceMap = new HashMap<>();
+    private static final EnumMap<UserSocialType, AuthService> authServiceMap = new EnumMap<>(UserSocialType.class);
 
     private final AppleAuthService appleAuthService;
     private final KaKaoAuthService kaKaoAuthService;

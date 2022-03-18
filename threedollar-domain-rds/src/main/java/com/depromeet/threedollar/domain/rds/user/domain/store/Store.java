@@ -82,9 +82,9 @@ public class Store extends AuditingTimeEntity {
             .build();
     }
 
-    public void addPaymentMethods(Set<PaymentMethodType> types) {
-        for (PaymentMethodType type : types) {
-            this.addPaymentMethod(type);
+    public void addPaymentMethods(Set<PaymentMethodType> paymentMethodTypes) {
+        for (PaymentMethodType paymentMethodType : paymentMethodTypes) {
+            this.addPaymentMethod(paymentMethodType);
         }
     }
 

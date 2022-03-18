@@ -4,8 +4,8 @@ import com.depromeet.threedollar.api.boss.config.interceptor.Auth
 import com.depromeet.threedollar.api.boss.config.resolver.BossId
 import com.depromeet.threedollar.api.boss.config.session.SessionConstants
 import com.depromeet.threedollar.api.boss.service.auth.dto.response.LoginResponse
-import com.depromeet.threedollar.api.core.service.boss.category.BossStoreCategoryServiceUtils
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.service.boss.category.BossStoreCategoryServiceUtils
 import com.depromeet.threedollar.api.core.service.boss.feedback.BossStoreFeedbackService
 import com.depromeet.threedollar.api.core.service.boss.feedback.dto.request.AddBossStoreFeedbackRequest
 import com.depromeet.threedollar.common.exception.model.ConflictException
@@ -85,19 +85,19 @@ class LocalTestController(
                     BossStoreMenu(
                         name = "아저씨 못난이 핫도그",
                         price = 5000,
-                        imageUrl = "menu.img",
+                        imageUrl = "https://menu-one.png",
                         groupName = "아저씨 핫도그"
                     ),
                     BossStoreMenu(
                         name = "팥 붕어빵 2개",
                         price = 1000,
-                        imageUrl = "menu.img",
+                        imageUrl = "https://menu-two.png",
                         groupName = "붕어빵"
                     ),
                     BossStoreMenu(
                         name = "슈크림 붕어빵 2개",
                         price = 1000,
-                        imageUrl = "menu.img",
+                        imageUrl = "https://menu-three.png",
                         groupName = "붕어빵"
                     ),
                 ),
@@ -161,7 +161,7 @@ class LocalTestController(
         @RequestParam userId: Long
     ): ApiResponse<String> {
         bossStoreFeedbackService.addFeedback(bossStoreId, AddBossStoreFeedbackRequest(feedbackType), userId, date)
-        return ApiResponse.SUCCESS
+        return ApiResponse.OK
     }
 
     @ApiOperation("[개발 서버용] 가입 신청을 승인합니다")
@@ -175,7 +175,7 @@ class LocalTestController(
         bossStoreRepository.save(registration.toBossStore(bossAccount.id))
         registration.approve()
         registrationRepository.save(registration)
-        return ApiResponse.SUCCESS
+        return ApiResponse.OK
     }
 
     private fun registerNewBossAccount(registration: Registration): BossAccount {

@@ -44,7 +44,7 @@ class BossStoreController(
         @MapCoordinate mapCoordinate: CoordinateValue
     ): ApiResponse<String> {
         bossStoreOpenService.openBossStore(bossStoreId, bossId, mapCoordinate)
-        return ApiResponse.SUCCESS
+        return ApiResponse.OK
     }
 
     @ApiOperation("[인증] 가게를 강제로 영업 종료합니다")
@@ -55,7 +55,7 @@ class BossStoreController(
         @BossId bossId: String
     ): ApiResponse<String> {
         bossStoreOpenService.closeBossStore(bossStoreId, bossId)
-        return ApiResponse.SUCCESS
+        return ApiResponse.OK
     }
 
     @ApiOperation("[인증] 사장님 자신이 운영중인 가게를 조회합니다.")
@@ -84,7 +84,7 @@ class BossStoreController(
         @BossId bossId: String
     ): ApiResponse<String> {
         bossStoreService.updateBossStoreInfo(bossStoreId, request, bossId)
-        return ApiResponse.SUCCESS
+        return ApiResponse.OK
     }
 
 }

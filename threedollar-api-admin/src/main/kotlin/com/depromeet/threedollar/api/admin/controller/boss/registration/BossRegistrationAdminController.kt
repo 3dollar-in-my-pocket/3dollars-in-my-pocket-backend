@@ -20,7 +20,7 @@ class BossRegistrationAdminController(
         @PathVariable registrationId: String
     ): ApiResponse<String> {
         bossRegistrationAdminService.applyBossRegistration(registrationId)
-        return ApiResponse.SUCCESS
+        return ApiResponse.OK
     }
 
     @ApiOperation("사장님 계정 가입 신청을 반려합니다")
@@ -30,7 +30,7 @@ class BossRegistrationAdminController(
         @PathVariable registrationId: String
     ): ApiResponse<String> {
         bossRegistrationAdminService.rejectBossRegistration(registrationId)
-        return ApiResponse.SUCCESS
+        return ApiResponse.OK
     }
 
 }

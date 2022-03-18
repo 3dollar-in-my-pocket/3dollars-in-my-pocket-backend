@@ -33,6 +33,7 @@ public class ImageUploadFileRequest implements UploadFileRequest {
         type.validateAvailableUploadInModule(applicationType);
     }
 
+    @Override
     public String getFileNameWithBucketDirectory(@Nullable String originalFileName) {
         return type.createUniqueFileNameWithExtension(originalFileName);
     }
