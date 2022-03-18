@@ -48,10 +48,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_QUBE_TOKEN }}
         run: ./gradlew sonarqube
-
-      - name: Upload CodeCoverage
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODE_COV_TOKEN }}
-          file: ./build/reports/jacoco/testCoverage/testCoverage.xml
-          verbose: true
