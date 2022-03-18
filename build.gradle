@@ -5,6 +5,7 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.spring' version '1.5.32'
     id 'application'
     id 'jacoco'
+    id "org.sonarqube" version "3.3"
 }
 
 repositories {
@@ -115,6 +116,16 @@ subprojects {
         dependsOn unitTest
         dependsOn integrationTest
         finalizedBy jacocoTestReport
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "3dollar-in-my-pocket_3dollars-in-my-pocket-backend"
+        property "sonar.organization", "3dollar-in-my-pocket"
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.java.coveragePlugin", "jacoco"
+        property "sonar.coverage.jacoco.xmlReportPaths", "$buildDir/reports/jacoco/testCoverage/testCoverage.xml"
     }
 }
 
