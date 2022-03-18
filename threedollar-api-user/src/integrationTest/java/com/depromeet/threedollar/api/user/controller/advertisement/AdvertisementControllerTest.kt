@@ -26,16 +26,16 @@ class AdvertisementControllerTest(
         // given
         val platform = AdvertisementPlatformType.AOS
         val advertisement = AdvertisementCreator.create(
-            AdvertisementPositionType.SPLASH,
-            platform,
-            "광고 타이틀",
-            "광고 내용\n광고 내용",
-            "https://pop-up-image.png",
-            "https://my-link.com",
-            "#ffffff",
-            "#000000",
-            LocalDateTime.of(2021, 1, 1, 0, 0),
-            LocalDateTime.now().plusDays(1),
+            positionType = AdvertisementPositionType.SPLASH,
+            platformType = platform,
+            title = "광고 타이틀",
+            subTitle = "광고 내용\n광고 내용",
+            imageUrl = "https://pop-up-image.png",
+            linkUrl = "https://my-link.com",
+            bgColor = "#ffffff",
+            fontColor = "#000000",
+            startDateTime = LocalDateTime.of(2021, 1, 1, 0, 0),
+            endDateTime = LocalDateTime.now().plusDays(1),
         )
         advertisementRepository.save(advertisement)
 
@@ -62,16 +62,16 @@ class AdvertisementControllerTest(
         // given
         val platform = AdvertisementPlatformType.AOS
         val advertisement = AdvertisementCreator.create(
-            AdvertisementPositionType.SPLASH,
-            platform,
-            "광고 타이틀",
-            "광고 내용\n광고 내용",
-            "https://pop-up-image.png",
-            "https://my-link.com",
-            "#ffffff",
-            "#000000",
-            LocalDateTime.of(2021, 1, 1, 0, 0),
-            LocalDateTime.now().plusDays(1),
+            positionType = AdvertisementPositionType.SPLASH,
+            platformType = platform,
+            title = "광고 타이틀",
+            subTitle = "광고 내용\n광고 내용",
+            imageUrl = "https://pop-up-image.png",
+            linkUrl = "https://my-link.com",
+            bgColor = "#ffffff",
+            fontColor = "#000000",
+            startDateTime = LocalDateTime.of(2021, 1, 1, 0, 0),
+            endDateTime = LocalDateTime.now().plusDays(1),
         )
         advertisementRepository.save(advertisement)
 

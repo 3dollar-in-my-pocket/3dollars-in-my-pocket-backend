@@ -56,7 +56,7 @@ class GoogleAuthServiceTest {
     }
 
     @Nested
-    class 구글_로그인 {
+    class GoogleLoginTest {
 
         @Test
         void 구글_로그인_성공시_ID가_반환된다() {
@@ -85,7 +85,7 @@ class GoogleAuthServiceTest {
     }
 
     @Nested
-    class 구글_회원가입 {
+    class GoogleSignUpTest {
 
         @Test
         void 구글_회원가입_성공시_새로운_유저정보가_저장된다() {

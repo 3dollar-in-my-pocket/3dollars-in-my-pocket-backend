@@ -31,13 +31,13 @@ class UserMedalControllerTest extends SetupUserControllerTest {
 
     @DisplayName("GET /api/v1/user/medals")
     @Nested
-    class GetMyObtainedMedals {
+    class GetMyObtainedMedalsApiTest {
 
         @Test
         void 보유중인_칭호들을_모두_조회한다() throws Exception {
             // given.
-            Medal medalActive = MedalCreator.create("활성화중인 메달", "활성중인 메달 설명", "메달 아이콘 A", "비활성화 아이콘 A");
-            Medal medalInActive = MedalCreator.create("비활성화중인 메달", "비활성화중인 메달 설명", "메달 아이콘 B", "비활성화 아이콘 B");
+            Medal medalActive = MedalCreator.create("활성화중인 메달", "활성중인 메달 설명", "https://active-medal.png", "https://disable-medal.png");
+            Medal medalInActive = MedalCreator.create("비활성화중인 메달", "비활성화중인 메달 설명", "https://active-medal-two.png", "https://disable-medal-two.png");
             medalRepository.saveAll(List.of(medalActive, medalInActive));
 
             userMedalRepository.saveAll(List.of(
@@ -70,12 +70,12 @@ class UserMedalControllerTest extends SetupUserControllerTest {
 
     @DisplayName("PUT /api/v1/user/medal")
     @Nested
-    class ChangeRepresentaiveMedal {
+    class ChangeRepresentativeMedalTest {
 
         @Test
         void 장착중인_훈장을_변경한다() throws Exception {
             // given
-            Medal medal = MedalCreator.create("활성화중인 메달", "활성중인 메달 설명", "메달 아이콘 A", "비활성화 아이콘 A");
+            Medal medal = MedalCreator.create("활성화중인 메달", "활성중인 메달 설명", "https://active-medal.jpeg", "https://disable-medal.jpeg");
             medalRepository.save(medal);
 
             userMedalRepository.save(UserMedalCreator.createInActive(medal, user));

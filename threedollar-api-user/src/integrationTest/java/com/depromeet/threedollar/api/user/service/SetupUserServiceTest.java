@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class SetupUserServiceTest {
+public abstract class SetupUserServiceTest {
 
     @Autowired
     protected UserRepository userRepository;

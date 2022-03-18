@@ -56,7 +56,7 @@ class AppleAuthServiceTest {
     }
 
     @Nested
-    class 애플_로그인 {
+    class AppleLoginTest {
 
         @Test
         void 애플_로그인_성공시_멤버의_ID_가_반환된다() {
@@ -85,7 +85,7 @@ class AppleAuthServiceTest {
     }
 
     @Nested
-    class 애플_회원가입 {
+    class AppleSignupTest {
 
         @Test
         void 애플_회원가입시_새로운_유저가_등록된다() {

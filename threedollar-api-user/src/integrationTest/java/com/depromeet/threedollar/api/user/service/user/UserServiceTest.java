@@ -46,7 +46,7 @@ class UserServiceTest {
     }
 
     @Nested
-    class 신규_유저_생성 {
+    class AddUserTest {
 
         @Test
         void 새로운_유저가_회원가입하면_새로운_데이터가_추가된다() {
@@ -97,7 +97,7 @@ class UserServiceTest {
     }
 
     @Nested
-    class 회원_정보_조회 {
+    class GetUserAccountInfoTest {
 
         @Test
         void 존재하지_않는_유저을_회원_조회하면_NOT_FOUND_USER_EXCEPTION() {
@@ -111,7 +111,7 @@ class UserServiceTest {
     }
 
     @Nested
-    class 중복된_닉네임_체크 {
+    class CheckDuplicateNicknameTest {
 
         @Test
         void 중복된_닉네임인경우_Conflcit_에러가_발생한다() {
@@ -140,7 +140,7 @@ class UserServiceTest {
     }
 
     @Nested
-    class 회원정보_수정 {
+    class UpdateUserAccountInfoTest {
 
         @Test
         void 나의_회원정보를_수정시_해당_회원의_데이터가_수정된다() {
@@ -178,7 +178,7 @@ class UserServiceTest {
     }
 
     @Nested
-    class 회원탈퇴 {
+    class SignOutTest {
 
         @Test
         void 회원탈퇴시_유저의_백업데이터가_생성된다() {

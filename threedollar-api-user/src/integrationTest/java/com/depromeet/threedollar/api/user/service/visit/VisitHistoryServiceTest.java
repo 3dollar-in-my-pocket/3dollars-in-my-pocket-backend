@@ -9,7 +9,6 @@ import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryCreato
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +37,8 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
         super.cleanup();
     }
 
-    @DisplayName("가게 방문 인증 등록")
     @Nested
-    class AddStoreVisitHistory {
+    class AddStoreVisitHistoryTest {
 
         @Test
         void 유저가_가게_방문_인증_정보를_추가한다() {

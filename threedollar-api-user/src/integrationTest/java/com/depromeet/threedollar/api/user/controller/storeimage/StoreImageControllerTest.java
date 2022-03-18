@@ -34,7 +34,7 @@ class StoreImageControllerTest extends SetupStoreControllerTest {
 
     @DisplayName("GET /api/v2/store/storeId/images")
     @Nested
-    class 특정_가게에_등록된_이미지들을_조회한다 {
+    class GetStoreImagesApiTest {
 
         @Test
         void 가게에_등록된_사진들을_조회한다() throws Exception {
@@ -61,7 +61,7 @@ class StoreImageControllerTest extends SetupStoreControllerTest {
 
     @DisplayName("DELETE /api/v2/store/image")
     @Nested
-    class 가게_이미지_삭제 {
+    class DeleteStoreImageApiTest {
 
         @Test
         void 가게_이미지_삭제요청_성공시_200_OK() throws Exception {

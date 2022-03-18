@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 class StoreImageServiceTest extends SetupStoreServiceTest {
 
-    private static final String IMAGE_URL = "image.png";
+    private static final String IMAGE_URL = "https://image-storage.png";
 
     @Autowired
     private StoreImageService storeImageService;
@@ -47,7 +47,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
     }
 
     @Nested
-    class 가게_이미지_추가 {
+    class AddStoreImageTest {
 
         @Test
         void 가게에_새로운_이미지를_등록한다() {
@@ -78,12 +78,12 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
     }
 
     @Nested
-    class 가게_이미지_삭제 {
+    class DeleteStoreImageTest {
 
         @Test
-        void 가게_이미지_삭제_성공시_해당_이미지가_INACTIVE로_변경된다() {
+        void 가게_이미지_삭제_성공시_해당_이미지가_IN_ACTIVE_로_변경된다() {
             // given
-            String imageUrl = "https://image.png";
+            String imageUrl = "https://store-image.png";
             StoreImage storeImage = StoreImage.newInstance(store, userId, imageUrl);
             storeImageRepository.save(storeImage);
 
@@ -121,12 +121,12 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
     }
 
     @Nested
-    class 가게_이미지_조회 {
+    class GetStoreImagesTest {
 
         @Test
         void 가게에_등록된_이미지_목록을_조회한다() {
             // given
-            String imageUrl = "https://image.png";
+            String imageUrl = "https://store-good-image.png";
             StoreImage storeImage = StoreImage.newInstance(store, userId, imageUrl);
             storeImageRepository.save(storeImage);
 

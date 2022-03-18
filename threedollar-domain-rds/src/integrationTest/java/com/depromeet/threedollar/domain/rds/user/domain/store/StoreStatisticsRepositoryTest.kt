@@ -13,7 +13,7 @@ class StoreStatisticsRepositoryTest(
 ) {
 
     @Nested
-    inner class FindActiveStoresCounts {
+    inner class FindActiveStoresCountsTest {
 
         @Test
         fun 활성화된_전체_가게수를_조회한다() {

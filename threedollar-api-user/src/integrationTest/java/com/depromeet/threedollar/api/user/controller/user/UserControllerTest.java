@@ -33,7 +33,7 @@ class UserControllerTest extends SetupUserControllerTest {
 
     @DisplayName("GET /api/v2/user/me")
     @Nested
-    class 회원_정보_조회 {
+    class GetUserAccountInfoApiTest {
 
         @Test
         void 나의_회원정보_조회시_정상적으로_회원정보가_조회된다() throws Exception {
@@ -91,7 +91,7 @@ class UserControllerTest extends SetupUserControllerTest {
 
     @DisplayName("PUT /api/v2/user/me")
     @Nested
-    class 회원_정보_수정 {
+    class UpdateUserAccountInfoApiTest {
 
         @Test
         void 나의_회원정보_수정_요청시_회원정보가_정상적으로_수정된다() throws Exception {
@@ -119,7 +119,7 @@ class UserControllerTest extends SetupUserControllerTest {
 
     @DisplayName("GET /api/v2/user/me/name/check")
     @Nested
-    class 사용가능한_닉네임_체크 {
+    class CheckAvailableNicknameApiTest {
 
         @Test
         void 사용가능한_닉네임_확인_요청시_사용가능한_닉네임이면_200_OK() throws Exception {

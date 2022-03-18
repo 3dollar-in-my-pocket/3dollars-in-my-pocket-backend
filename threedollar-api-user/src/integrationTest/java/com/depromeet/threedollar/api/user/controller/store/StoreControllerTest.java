@@ -77,7 +77,7 @@ class StoreControllerTest extends SetupUserControllerTest {
 
     @DisplayName("POST /api/v2/store")
     @Nested
-    class 가게_정보_등록 {
+    class AddStoreApiTest {
 
         @Test
         void 가게_등록_성공시_가게_정보를_반환한다() throws Exception {
@@ -96,7 +96,7 @@ class StoreControllerTest extends SetupUserControllerTest {
                 .storeType(storeType)
                 .appearanceDays(appearanceDays)
                 .paymentMethods(paymentMethods)
-                .menus(Set.of(MenuRequest.of("메뉴 이름", "가격", MenuCategoryType.BUNGEOPPANG)))
+                .menus(Set.of(MenuRequest.of("팥 붕어빵", "2개에 천원", MenuCategoryType.BUNGEOPPANG)))
                 .build();
 
             // when
@@ -116,7 +116,7 @@ class StoreControllerTest extends SetupUserControllerTest {
                 .storeType(StoreType.STORE)
                 .appearanceDays(Set.of(DayOfTheWeek.FRIDAY))
                 .paymentMethods(Set.of(PaymentMethodType.CARD))
-                .menus(Set.of(MenuRequest.of("메뉴 이름", "한 개에 만원", MenuCategoryType.BUNGEOPPANG)))
+                .menus(Set.of(MenuRequest.of("슈크림 붕어빵", "5개에 2천원", MenuCategoryType.BUNGEOPPANG)))
                 .build();
 
             // when
@@ -130,7 +130,7 @@ class StoreControllerTest extends SetupUserControllerTest {
 
     @DisplayName("PUT /api/v2/store")
     @Nested
-    class 가게_정보_수정 {
+    class UpdateStoreInfoApiTest {
 
         @Test
         void 가게_수정_성공시_수정된_가게_정보를_반환한다() throws Exception {
@@ -153,7 +153,7 @@ class StoreControllerTest extends SetupUserControllerTest {
                 .storeType(storeType)
                 .appearanceDays(appearanceDays)
                 .paymentMethods(paymentMethods)
-                .menus(Set.of(MenuRequest.of("메뉴 이름", "가격", MenuCategoryType.BUNGEOPPANG)))
+                .menus(Set.of(MenuRequest.of("팥붕 슈붕", "5개에 2천원", MenuCategoryType.BUNGEOPPANG)))
                 .build();
 
             // when
@@ -170,12 +170,12 @@ class StoreControllerTest extends SetupUserControllerTest {
 
     @DisplayName("DELETE /api/v2/store")
     @Nested
-    class 가게_정보_삭제 {
+    class DeleteStoreApiTest {
 
         @Test
         void 가게_삭제_요청시_실제로_삭제되지_않으면_False를_반환한다() throws Exception {
             // given
-            Store store = StoreCreator.create(user.getId(), "storeName");
+            Store store = StoreCreator.create(user.getId(), "가삼 붕어빵");
             storeRepository.save(store);
 
             DeleteStoreRequest request = DeleteStoreRequest.testInstance(DeleteReasonType.OVERLAPSTORE);
@@ -190,7 +190,7 @@ class StoreControllerTest extends SetupUserControllerTest {
         @Test
         void 가게_삭제_요청시_실제로_삭제되면_True를_반환한다() throws Exception {
             // given
-            Store store = StoreCreator.create(user.getId(), "storeName");
+            Store store = StoreCreator.create(user.getId(), "가삼 붕어빵");
             storeRepository.save(store);
 
             storeDeleteRequestRepository.saveAll(List.of(
@@ -210,7 +210,7 @@ class StoreControllerTest extends SetupUserControllerTest {
         @Test
         void 가게_삭제_요청시_메달을_획득하는_작업이_수행된다() throws Exception {
             // given
-            Store store = StoreCreator.create(user.getId(), "storeName");
+            Store store = StoreCreator.create(user.getId(), "가슴속 3천원 붕어빵");
             storeRepository.save(store);
 
             // when

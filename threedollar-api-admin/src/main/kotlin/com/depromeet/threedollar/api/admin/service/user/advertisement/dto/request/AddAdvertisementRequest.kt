@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.admin.service.user.advertisement.dto.request
 
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.Advertisement
+import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementDetail
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPositionType
 import org.hibernate.validator.constraints.Length
@@ -38,7 +39,8 @@ data class AddAdvertisementRequest(
 ) {
 
     fun toEntity(): Advertisement {
-        return Advertisement.newInstance(position, platform, title, subTitle, imageUrl, linkUrl, bgColor, fontColor, startDateTime, endDateTime)
+        val detail = AdvertisementDetail.of(title, subTitle, imageUrl, linkUrl, bgColor, fontColor)
+        return Advertisement.newInstance(position, platform, startDateTime, endDateTime, detail)
     }
 
 }

@@ -41,37 +41,29 @@ public class Advertisement extends AuditingTimeEntity {
     private AdvertisementDetail detail;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private Advertisement(AdvertisementPositionType positionType, AdvertisementPlatformType platformType, @Nullable String title, @Nullable String subTitle,
-                          String imageUrl, String linkUrl, @Nullable String bgColor, @Nullable String fontColor, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    private Advertisement(AdvertisementPositionType positionType, AdvertisementPlatformType platformType, LocalDateTime startDateTime, LocalDateTime endDateTime, AdvertisementDetail detail) {
         this.positionType = positionType;
         this.platformType = platformType;
         this.dateTimeInterval = DateTimeInterval.of(startDateTime, endDateTime);
-        this.detail = AdvertisementDetail.of(title, subTitle, imageUrl, linkUrl, bgColor, fontColor);
+        this.detail = detail;
     }
 
-    public static Advertisement newInstance(AdvertisementPositionType positionType, AdvertisementPlatformType platformType, @Nullable String title,
-                                            @Nullable String subTitle, @Nullable String imageUrl, @Nullable String linkUrl,
-                                            @Nullable String bgColor, @Nullable String fontColor, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public static Advertisement newInstance(AdvertisementPositionType positionType, AdvertisementPlatformType platformType,
+                                            LocalDateTime startDateTime, LocalDateTime endDateTime, AdvertisementDetail detail) {
         return Advertisement.builder()
             .positionType(positionType)
             .platformType(platformType)
             .startDateTime(startDateTime)
             .endDateTime(endDateTime)
-            .title(title)
-            .subTitle(subTitle)
-            .bgColor(bgColor)
-            .fontColor(fontColor)
-            .imageUrl(imageUrl)
-            .linkUrl(linkUrl)
+            .detail(detail)
             .build();
     }
 
-    public void update(AdvertisementPositionType positionType, AdvertisementPlatformType platformType, @Nullable String title, @Nullable String subTitle,
-                       String imageUrl, @Nullable String linkUrl, @Nullable String bgColor, @Nullable String fontColor, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public void update(AdvertisementPositionType positionType, AdvertisementPlatformType platformType, LocalDateTime startDateTime, LocalDateTime endDateTime, AdvertisementDetail detail) {
         this.positionType = positionType;
         this.platformType = platformType;
         this.dateTimeInterval = DateTimeInterval.of(startDateTime, endDateTime);
-        this.detail = AdvertisementDetail.of(title, subTitle, imageUrl, linkUrl, bgColor, fontColor);
+        this.detail = detail;
     }
 
     @NotNull

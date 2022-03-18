@@ -62,7 +62,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
 
     @DisplayName("가게 추가 조건 메달 획득")
     @Nested
-    class addObtainableMedalsByAddStore {
+    class AddObtainableMedalsByAddStoreTest {
 
         @DisplayName("[가게 추가 2] - 가게 추가 2 -> 메달 획득 성공")
         @Test
@@ -108,7 +108,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
 
     @DisplayName("가게 삭제 조건 메달 획득")
     @Nested
-    class addObtainableMedalsByDeleteStore {
+    class AddObtainableMedalsByDeleteStoreTest {
 
         @DisplayName("[가게 삭제 1] - 가게 삭제 1 -> 메달 획득 성공")
         @Test
@@ -155,7 +155,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
 
     @DisplayName("리뷰 작성 조건 메달 획득")
     @Nested
-    class addObtainableMedalsByAddReview {
+    class AddObtainableMedalsByAddReviewTest {
 
         @DisplayName("[리뷰 2] - 리뷰 2 -> 메달 획득 성공")
         @Test
@@ -207,7 +207,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
 
     @DisplayName("방문 인증 조건 메달 획득")
     @Nested
-    class addObtainableMedalsByVisitStore {
+    class AddObtainableMedalsByVisitStoreTest {
 
         @DisplayName("[붕어빵 가게 방문 2] - 붕어빵 가게 방문 2 -> 메달 획득 성공")
         @Test

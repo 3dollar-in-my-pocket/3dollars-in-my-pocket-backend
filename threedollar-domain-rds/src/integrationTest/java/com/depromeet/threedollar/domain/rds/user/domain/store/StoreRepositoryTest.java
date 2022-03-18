@@ -26,7 +26,7 @@ class StoreRepositoryTest {
 
     @DisplayName("특정 반경 거리안에 있는 가게들을 조회한다")
     @Nested
-    class findStoresByLocationLessThanDistance {
+    class FindStoresByLocationLessThanDistanceTest {
 
         @Test
         void 반경에_있는_가게들을_조회한다() {
@@ -59,7 +59,7 @@ class StoreRepositoryTest {
 
     @DisplayName("내가 제보한 가게 수를 카운트한다")
     @Nested
-    class findCountsByUserId {
+    class FindCountsByUserIdTest {
 
         @Test
         void 메뉴가_없는_가게는_포함되지_않는다() {
@@ -92,7 +92,7 @@ class StoreRepositoryTest {
 
     @DisplayName("내가 제보한 가게들을 스크롤 페이지네이션으로 조회한다")
     @Nested
-    class findAllByUserIdUsingCursor {
+    class FindAllByUserIdUsingCursorTest {
 
         @DisplayName("lastStoreId가 null이면 첫 스크롤 페이지를 조회한다")
         @Test
@@ -137,7 +137,7 @@ class StoreRepositoryTest {
 
     @DisplayName("N개 이상 삭제 요청된 가게들을 페이지네이션으로 조회한다")
     @Nested
-    class findStoresByMoreThanReportCntWithPagination {
+    class FindStoresByMoreThanReportCntWithPaginationTest {
 
         @Test
         void N개_이상_삭제_요청된_가게들을_조회한다() {

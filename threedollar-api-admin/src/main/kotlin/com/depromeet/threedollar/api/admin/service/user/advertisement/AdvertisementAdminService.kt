@@ -8,6 +8,7 @@ import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.type.CacheType.CacheKey.ADVERTISEMENT
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.Advertisement
+import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementDetail
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementRepository
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.stereotype.Service
@@ -29,8 +30,8 @@ class AdvertisementAdminService(
     fun updateAdvertisement(advertisementId: Long, request: UpdateAdvertisementRequest) {
         val advertisement = findAdvertisementById(advertisementId)
         request.let {
-            advertisement.update(it.position, it.platform, it.title, it.subTitle, it.imageUrl,
-                it.linkUrl, it.bgColor, it.fontColor, it.startDateTime, it.endDateTime)
+            val detail = AdvertisementDetail.of(it.title, it.subTitle, it.imageUrl, it.linkUrl, it.bgColor, it.fontColor)
+            advertisement.update(it.position, it.platform, it.startDateTime, it.endDateTime, detail)
         }
     }
 

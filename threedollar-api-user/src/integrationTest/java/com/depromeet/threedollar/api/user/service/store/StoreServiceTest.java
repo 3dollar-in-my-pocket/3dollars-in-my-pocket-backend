@@ -30,7 +30,6 @@ import com.depromeet.threedollar.domain.rds.user.domain.storedelete.StoreDeleteR
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -77,7 +76,7 @@ class StoreServiceTest extends SetupUserServiceTest {
     }
 
     @Nested
-    class 가게_정보_등록 {
+    class AddStoreTest {
 
         @Test
         void 새로운_가게를_등록하면_새로운_가게_데이터가_추가된다() {
@@ -226,8 +225,7 @@ class StoreServiceTest extends SetupUserServiceTest {
     }
 
     @Nested
-    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-    class 가게_정보_수정 {
+    class UpdateStoreTest {
 
         @Test
         void 가게의_기본_정보를_수정한다() {
@@ -464,7 +462,7 @@ class StoreServiceTest extends SetupUserServiceTest {
     }
 
     @Nested
-    class 가게_삭제_요청 {
+    class DeleteStoreTest {
 
         @Test
         void 삭제_요청이_1개_쌓이면_실제로_가게정보가_삭제되지_않는다() {

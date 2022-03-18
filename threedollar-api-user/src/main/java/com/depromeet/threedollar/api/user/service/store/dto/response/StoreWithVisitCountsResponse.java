@@ -26,26 +26,21 @@ public class StoreWithVisitCountsResponse extends AuditingTimeResponse {
     private VisitHistoryCountsResponse visitHistory;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private StoreWithVisitCountsResponse(Long storeId, double latitude, double longitude, String storeName, double rating, Boolean isDeleted, long existsVisitsCount, long notExistsVisitsCount) {
-        this.storeId = storeId;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.storeName = storeName;
-        this.rating = rating;
-        this.isDeleted = isDeleted;
+    private StoreWithVisitCountsResponse(Store store, long existsVisitsCount, long notExistsVisitsCount) {
+        this.storeId = store.getId();
+        this.latitude = store.getLatitude();
+        this.longitude = store.getLongitude();
+        this.storeName = store.getName();
+        this.rating = store.getRating();
+        this.isDeleted = store.isDeleted();
         this.visitHistory = VisitHistoryCountsResponse.of(existsVisitsCount, notExistsVisitsCount);
     }
 
     public static StoreWithVisitCountsResponse of(@NotNull Store store, long existsVisitsCount, long notExistsVisitsCount) {
         StoreWithVisitCountsResponse response = StoreWithVisitCountsResponse.builder()
-            .storeId(store.getId())
-            .latitude(store.getLatitude())
-            .longitude(store.getLongitude())
-            .storeName(store.getName())
-            .rating(store.getRating())
+            .store(store)
             .existsVisitsCount(existsVisitsCount)
             .notExistsVisitsCount(notExistsVisitsCount)
-            .isDeleted(store.isDeleted())
             .build();
         response.categories.addAll(store.getMenuCategoriesSortedByCounts());
         response.setBaseTime(store);

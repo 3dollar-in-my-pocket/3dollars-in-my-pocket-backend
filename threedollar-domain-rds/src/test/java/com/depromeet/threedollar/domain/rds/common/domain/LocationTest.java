@@ -1,9 +1,7 @@
 package com.depromeet.threedollar.domain.rds.common.domain;
 
 import com.depromeet.threedollar.common.exception.model.InvalidException;
-import com.depromeet.threedollar.domain.rds.common.domain.Location;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -13,8 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LocationTest {
 
     @Nested
-    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-    class 인스턴스_생성 {
+    class LocationInstanceTest {
 
         @CsvSource({
             "33.1, 124.6",

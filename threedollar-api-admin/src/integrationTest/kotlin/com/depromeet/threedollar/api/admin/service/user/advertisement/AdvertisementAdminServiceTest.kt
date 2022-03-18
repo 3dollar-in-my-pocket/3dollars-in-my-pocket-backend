@@ -29,10 +29,10 @@ internal class AdvertisementAdminServiceTest(
         // given
         val positionType = AdvertisementPositionType.SPLASH
         val platformType = AdvertisementPlatformType.IOS
-        val title = "title"
-        val subTitle = "subTitle"
-        val imageUrl = "https://image-png"
-        val linkUrl = "https://link.com"
+        val title = "광고 제목"
+        val subTitle = "광고 서브 제목"
+        val imageUrl = "https://adv-image-png"
+        val linkUrl = "https://adv-link.com"
         val bgColor = "#ffffff"
         val fontColor = "#000000"
         val startDateTime = LocalDateTime.of(2022, 1, 1, 0, 0)
@@ -79,10 +79,10 @@ internal class AdvertisementAdminServiceTest(
 
         val positionType = AdvertisementPositionType.SPLASH
         val platformType = AdvertisementPlatformType.IOS
-        val title = "title"
-        val subTitle = "subTitle"
-        val imageUrl = "https://image-png"
-        val linkUrl = "https://link.com"
+        val title = "광고 제목"
+        val subTitle = "광고 서브 제목"
+        val imageUrl = "https://ad-image.png"
+        val linkUrl = "https://ad-link.com"
         val bgColor = "#ffffff"
         val fontColor = "#000000"
         val startDateTime = LocalDateTime.of(2022, 1, 1, 0, 0)
@@ -127,10 +127,10 @@ internal class AdvertisementAdminServiceTest(
         val request = UpdateAdvertisementRequest(
             position = AdvertisementPositionType.SPLASH,
             platform = AdvertisementPlatformType.AOS,
-            title = "title",
-            subTitle = "",
-            imageUrl = "imageUrl",
-            linkUrl = "linkUrl",
+            title = "가슴속 3천원과 함께하는 광고",
+            subTitle = "광고 내용 설명",
+            imageUrl = "https://image.jpeg",
+            linkUrl = "https://advertisement-link.com",
             bgColor = "#ffffff",
             fontColor = "#000000",
             startDateTime = LocalDateTime.of(2022, 1, 1, 0, 0),
@@ -163,16 +163,16 @@ internal class AdvertisementAdminServiceTest(
 
     private fun createAdvertisement(): Advertisement {
         return AdvertisementCreator.create(
-            AdvertisementPositionType.SPLASH,
-            AdvertisementPlatformType.AOS,
-            "제목",
-            "서브 타이틀",
-            "imageUrl",
-            "linkUrl",
-            "#ffffff",
-            "#000000",
-            LocalDateTime.of(2022, 3, 1, 0, 0),
-            LocalDateTime.of(2022, 3, 7, 0, 0))
+            positionType = AdvertisementPositionType.SPLASH,
+            platformType = AdvertisementPlatformType.AOS,
+            title = "가슴속 3천원이 익산동에 출몰",
+            subTitle = "붕어빵 먹으러 오세요",
+            imageUrl = "https://adv-image.png",
+            linkUrl = "https://link.com",
+            bgColor = "#ffffff",
+            fontColor = "#000000",
+            startDateTime = LocalDateTime.of(2022, 3, 1, 0, 0),
+            endDateTime = LocalDateTime.of(2022, 3, 7, 0, 0))
     }
 
 }

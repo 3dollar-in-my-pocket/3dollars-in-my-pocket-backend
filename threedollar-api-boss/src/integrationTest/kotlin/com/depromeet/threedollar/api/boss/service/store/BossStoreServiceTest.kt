@@ -36,7 +36,7 @@ internal class BossStoreServiceTest(
     }
 
     @Nested
-    inner class UpdateBossStore {
+    inner class UpdateBossStoreTest {
 
         @Test
         fun `사장님 가게의 정보를 수정한다`() {
@@ -138,7 +138,7 @@ internal class BossStoreServiceTest(
     }
 
     @Nested
-    inner class DeleteBossStoreByBossId {
+    inner class DeleteBossStoreByBossIdTest {
 
         @Test
         fun `사장님 계정의 가게들을 삭제한다`() {

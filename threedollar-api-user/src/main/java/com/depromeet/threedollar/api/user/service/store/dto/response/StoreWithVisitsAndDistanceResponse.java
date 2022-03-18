@@ -36,13 +36,12 @@ public class StoreWithVisitsAndDistanceResponse extends AuditingTimeResponse {
     private VisitHistoryCountsResponse visitHistory;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private StoreWithVisitsAndDistanceResponse(Long storeId, double latitude, double longitude, String storeName, double rating, int distance,
-                                               long existsVisitsCount, long notExistsVisitsCount, boolean isDeleted) {
-        this.storeId = storeId;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.storeName = storeName;
-        this.rating = rating;
+    private StoreWithVisitsAndDistanceResponse(Store store, int distance, long existsVisitsCount, long notExistsVisitsCount, boolean isDeleted) {
+        this.storeId = store.getId();
+        this.latitude = store.getLatitude();
+        this.longitude = store.getLongitude();
+        this.storeName = store.getName();
+        this.rating = store.getRating();
         this.distance = distance;
         this.visitHistory = VisitHistoryCountsResponse.of(existsVisitsCount, notExistsVisitsCount);
         this.isDeleted = isDeleted;
@@ -50,11 +49,7 @@ public class StoreWithVisitsAndDistanceResponse extends AuditingTimeResponse {
 
     public static StoreWithVisitsAndDistanceResponse of(@NotNull Store store, CoordinateValue geoCoordinate, VisitHistoryCounter visitsCounter) {
         StoreWithVisitsAndDistanceResponse response = StoreWithVisitsAndDistanceResponse.builder()
-            .storeId(store.getId())
-            .latitude(store.getLatitude())
-            .longitude(store.getLongitude())
-            .storeName(store.getName())
-            .rating(store.getRating())
+            .store(store)
             .distance(LocationDistanceUtils.getDistance(geoCoordinate, CoordinateValue.of(store.getLatitude(), store.getLongitude())))
             .existsVisitsCount(visitsCounter.getStoreExistsVisitsCount(store.getId()))
             .notExistsVisitsCount(visitsCounter.getStoreNotExistsVisitsCount(store.getId()))

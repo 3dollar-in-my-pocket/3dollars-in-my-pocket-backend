@@ -92,13 +92,13 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
     @DisplayName("GET /api/v2/stores/near")
     @Nested
-    class 주변의_가게_조회 {
+    class GetAroundStoresApiTest {
 
         @Test
         void 나의_지도상_주변_가게들을_조회한다() throws Exception {
             // given
-            Store store1 = StoreCreator.createWithDefaultMenu(user.getId(), "가게 이름 1", 34, 126);
-            Store store2 = StoreCreator.createWithDefaultMenu(user.getId(), "가게 이름 2", 34, 126);
+            Store store1 = StoreCreator.createWithDefaultMenu(user.getId(), "붕어빵 가게 1", 34, 126);
+            Store store2 = StoreCreator.createWithDefaultMenu(user.getId(), "붕어빵 가게 2", 34, 126);
             storeRepository.saveAll(List.of(store1, store2));
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
@@ -119,10 +119,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 주변_가게들을_조회할때_메뉴_카테고리_목록도_반환된다() throws Exception {
             // given
-            Store store = StoreCreator.create(user.getId(), "가게 이름", 34.0, 126.0);
+            Store store = StoreCreator.create(user.getId(), "붕세권 가게", 34.0, 126.0);
             store.addMenus(List.of(
-                MenuCreator.create(store, "메뉴 1", "가격 1", MenuCategoryType.SUNDAE),
-                MenuCreator.create(store, "메뉴 1", "가격 1", MenuCategoryType.DALGONA)
+                MenuCreator.create(store, "팥붕", "2개 천원", MenuCategoryType.SUNDAE),
+                MenuCreator.create(store, "슈붕", "2개 천원", MenuCategoryType.DALGONA)
             ));
             storeRepository.save(store);
 
@@ -145,7 +145,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 주변_가게들을_조회할때_삭제된_가게는_포함되지_않는다() throws Exception {
             // given
-            Store store = StoreCreator.createDeletedWithDefaultMenu(user.getId(), "가게 이름", 34.0, 126.0);
+            Store store = StoreCreator.createDeletedWithDefaultMenu(user.getId(), "타코야키 다 내꺼야", 34.0, 126.0);
             storeRepository.save(store);
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
@@ -282,7 +282,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
     @DisplayName("GET /api/v2/store")
     @Nested
-    class 가게_상세_정보_조회 {
+    class GetStoreDetailApiTest {
 
         @Test
         void 특정_가게에_대한_상세_가게_정보를_조회한다() throws Exception {
@@ -546,7 +546,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
     @DisplayName("GET /api/v2/stores/me")
     @Nested
-    class 내가_제보한_가게_목록_조회 {
+    class GetMyStoresApiTest {
 
         @Test
         void 내가_작성한_가게_목록_조회시_커서를_넘기지_않으면_가장_최신의_N개의_가게_정보를_반환한다() throws Exception {
@@ -698,7 +698,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
     @DisplayName("GET /api/v1/stores/near/exists")
     @Nested
-    class 주변에_가게가_존재하는지_확인하는_API {
+    class CheckExistsStoreAroundApiTest {
 
         @Test
         void 주변에_가게가_존재하는_경우_return_True() throws Exception {

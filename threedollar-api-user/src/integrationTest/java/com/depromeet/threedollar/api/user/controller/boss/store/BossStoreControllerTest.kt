@@ -40,7 +40,7 @@ internal class BossStoreControllerTest(
     @Test
     fun `특정 가게를 조회합니다 오픈 정보가 레디스에 저장되어 있으면 영업중인 가게로 표시된다`() {
         // given
-        val category = BossStoreCategoryCreator.create("한식", 1)
+        val category = BossStoreCategoryCreator.create(title = "한식", sequencePriority = 1)
         bossStoreCategoryRepository.save(category)
 
         val bossStore = BossStoreCreator.create(

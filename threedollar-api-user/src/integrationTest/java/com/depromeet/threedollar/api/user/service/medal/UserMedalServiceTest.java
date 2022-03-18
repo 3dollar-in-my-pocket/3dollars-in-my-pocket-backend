@@ -35,7 +35,7 @@ class UserMedalServiceTest extends SetupUserServiceTest {
 
     @DisplayName("유저의 장착중인 대표 칭호를 변경한다")
     @Nested
-    class ActivateUserMedal {
+    class ActivateUserMedalTest {
 
         @Test
         void 장착중인_대표_칭호를_변경한다() {

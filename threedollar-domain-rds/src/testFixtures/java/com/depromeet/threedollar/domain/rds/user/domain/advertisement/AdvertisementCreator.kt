@@ -7,26 +7,30 @@ import java.time.LocalDateTime
 object AdvertisementCreator {
 
     @JvmStatic
-    fun create(advertisementPositionType: AdvertisementPositionType,
-               platformType: AdvertisementPlatformType,
-               title: String?,
-               subTitle: String?,
-               imageUrl: String,
-               linkUrl: String?,
-               bgColor: String?,
-               fontColor: String?,
-               startDateTime: LocalDateTime,
-               endDateTime: LocalDateTime
+    fun create(
+        positionType: AdvertisementPositionType,
+        platformType: AdvertisementPlatformType,
+        title: String?,
+        subTitle: String?,
+        imageUrl: String,
+        linkUrl: String?,
+        bgColor: String?,
+        fontColor: String?,
+        startDateTime: LocalDateTime,
+        endDateTime: LocalDateTime
     ): Advertisement {
         return Advertisement.builder()
-            .title(title)
-            .subTitle(subTitle)
-            .positionType(advertisementPositionType)
+            .positionType(positionType)
             .platformType(platformType)
-            .imageUrl(imageUrl)
-            .linkUrl(linkUrl)
-            .bgColor(bgColor)
-            .fontColor(fontColor)
+            .detail(AdvertisementDetail.builder()
+                .title(title)
+                .subTitle(subTitle)
+                .imageUrl(imageUrl)
+                .linkUrl(linkUrl)
+                .bgColor(bgColor)
+                .fontColor(fontColor)
+                .build()
+            )
             .startDateTime(startDateTime)
             .endDateTime(endDateTime)
             .build()

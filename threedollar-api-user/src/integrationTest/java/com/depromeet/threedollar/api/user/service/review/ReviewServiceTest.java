@@ -37,7 +37,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
     }
 
     @Nested
-    class 가게_리뷰_등록 {
+    class AddReviewTest {
 
         @Test
         void 가게에_새로운_리뷰를_작성한다() {
@@ -70,7 +70,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
     }
 
     @Nested
-    class 가게_리뷰_수정 {
+    class UpdateStoreReviewTest {
 
         @Test
         void 가게에_사용자가_작성한_리뷰를_수정한다() {
@@ -120,7 +120,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
     }
 
     @Nested
-    class 가게_리뷰_삭제 {
+    class DeleteStoreReviewTest {
 
         @Test
         void 사용자가_작성한_가게_삭제시_DELETED로_변경된다() {

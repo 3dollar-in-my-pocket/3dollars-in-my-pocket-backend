@@ -50,7 +50,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
     }
 
     @Nested
-    class AddVisitHistory {
+    class AddVisitHistoryApiTest {
 
         @Test
         void 가게_방문_인증_등록시_성공시_200_OK() throws Exception {
@@ -80,7 +80,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
 
     @DisplayName("GET /api/v2/store/visits/me")
     @Nested
-    class RetrieveMyVisitHistories {
+    class RetrieveMyVisitHistoriesApiTest {
 
         @Test
         void 내가_방문_인증한_가게들의_정보와_방문_기록을_조회한다() throws Exception {

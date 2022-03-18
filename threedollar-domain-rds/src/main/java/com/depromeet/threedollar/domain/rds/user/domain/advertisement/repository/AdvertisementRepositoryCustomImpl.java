@@ -46,7 +46,6 @@ public class AdvertisementRepositoryCustomImpl implements AdvertisementRepositor
             .fetch();
     }
 
-    // TODO 총 개수 캐싱
     @Override
     public long findAllCounts() {
         return queryFactory.selectFrom(advertisement)

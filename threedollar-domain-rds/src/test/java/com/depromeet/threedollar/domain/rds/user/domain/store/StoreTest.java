@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class StoreTest {
 
     @Nested
-    class UpdateAppearanceDays {
+    class UpdateAppearanceDaysTest {
 
         @Test
         void 개시일을_수정한다() {
@@ -54,7 +54,7 @@ class StoreTest {
     }
 
     @Nested
-    class UpdatePaymentMethods {
+    class UpdatePaymentMethodsTest {
 
         @Test
         void 결제방법을_수정한다() {
@@ -90,7 +90,7 @@ class StoreTest {
     }
 
     @Nested
-    class HasMenuCategory {
+    class HasMenuCategoryTest {
 
         @Test
         void 가게에_해당_카테고리를판매중인지_여부_확인시_메뉴_카테고리_존재하면_true를_반환한다() {
@@ -121,7 +121,7 @@ class StoreTest {
     }
 
     @Nested
-    class GetMenuCategoriesSortedByCounts {
+    class GetMenuCategoriesSortedByCountsTest {
 
         @Test
         void 가게의_카테고리_조회시_가게_메뉴의_수가_많은것부터_정렬해서_반환한다() {
@@ -156,7 +156,7 @@ class StoreTest {
     }
 
     @Nested
-    class UpdateAverageRating {
+    class UpdateAverageRatingTest {
 
         @CsvSource({
             "2.67, 2.7",

@@ -37,7 +37,7 @@ internal class BossAccountRegistrationServiceTest(
     }
 
     @Nested
-    inner class 계정_신규_가입_신청 {
+    inner class RegistrationBossAccountTest {
 
         @Test
         fun `신규 가입을 신청하면 Registration 데이터가 WAITING 상태로 추가된다`() {

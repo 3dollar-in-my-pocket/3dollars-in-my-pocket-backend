@@ -29,8 +29,8 @@ public class AdvertisementDetail {
     @Column(length = 7)
     private String fontColor;
 
-    @Builder(access = AccessLevel.PRIVATE)
-    private AdvertisementDetail(String title, String subTitle, String imageUrl, String linkUrl, String bgColor, String fontColor) {
+    @Builder(access = AccessLevel.PACKAGE)
+    private AdvertisementDetail(@Nullable String title, @Nullable String subTitle, String imageUrl, @Nullable String linkUrl, @Nullable String bgColor, @Nullable String fontColor) {
         this.title = title;
         this.subTitle = subTitle;
         this.imageUrl = imageUrl;

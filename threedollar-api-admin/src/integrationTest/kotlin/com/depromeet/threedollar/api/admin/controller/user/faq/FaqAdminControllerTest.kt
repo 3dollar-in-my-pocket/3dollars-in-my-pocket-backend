@@ -34,7 +34,7 @@ internal class FaqAdminControllerTest(
 
     @DisplayName("POST /admin/v1/user/faq")
     @Nested
-    inner class AddFaq {
+    inner class AddFaqApiTest {
 
         @Test
         fun 새로운_FAQ를_추가한다() {
@@ -65,7 +65,7 @@ internal class FaqAdminControllerTest(
 
     @DisplayName("PUT /admin/v1/user/faq")
     @Nested
-    inner class UpdateFaq {
+    inner class UpdateFaqApiTest {
 
         @Test
         fun FAQ_를_수정한다() {
@@ -98,7 +98,7 @@ internal class FaqAdminControllerTest(
 
     @DisplayName("DELETE /admin/v1/user/faq")
     @Nested
-    inner class DeleteFaq {
+    inner class DeleteFaqApiTest {
 
         @Test
         fun FAQ_를_삭제한다() {
@@ -124,7 +124,7 @@ internal class FaqAdminControllerTest(
 
     @DisplayName("GET /admin/v1/user/faqs")
     @Nested
-    inner class RetrieveFaqs {
+    inner class RetrieveFaqsApiTest {
 
         @Test
         fun FAQ_리스트를_조회한다() {
@@ -190,7 +190,7 @@ internal class FaqAdminControllerTest(
 
     @DisplayName("GET /admin/v1/user/faq/categories")
     @Nested
-    inner class RetrieveFaqCategories {
+    inner class RetrieveFaqCategoriesApiTest {
 
         @Test
         fun FAQ_카테고리_리스트를_조회한다() {

@@ -46,7 +46,7 @@ class AuthControllerTest extends SetupUserControllerTest {
 
     @DisplayName("POST /api/v2/signup")
     @Nested
-    class 회원가입 {
+    class SignUpApiTest {
 
         @Test
         void 카카오_회원가입_요청이_성공하면_토큰이_반환된다() throws Exception {
@@ -106,7 +106,7 @@ class AuthControllerTest extends SetupUserControllerTest {
 
     @DisplayName("POST /api/v2/login")
     @Nested
-    class 로그인 {
+    class LoginApiTest {
 
         @Test
         void 카카오_로그인_요청이_성공하면_토큰이_반환된다() throws Exception {
@@ -175,7 +175,7 @@ class AuthControllerTest extends SetupUserControllerTest {
 
     @DisplayName("DELETE /api/v2/signout")
     @Nested
-    class 회원탈퇴 {
+    class SignOutApiTest {
 
         @Test
         void 회원탈퇴_요청이_성공하면_200_OK() throws Exception {
@@ -194,7 +194,7 @@ class AuthControllerTest extends SetupUserControllerTest {
 
     @DisplayName("DELETE /api/v2/logout")
     @Nested
-    class 로그아웃 {
+    class LogoutApiTest {
 
         @Test
         void 로그아웃_성공시_200_OK() throws Exception {

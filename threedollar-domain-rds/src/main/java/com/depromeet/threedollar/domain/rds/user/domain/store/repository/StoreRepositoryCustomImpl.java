@@ -123,8 +123,6 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
      * 1. 해당 거리 범위내에 도달할 수 있는 거리를 필터링해서
      * 2. 그 안에서 커버링 인덱스해서 특정 거리내의 가게들을 조회.
      * (커버링 인덱스 + Range 실행계획)
-     * -
-     * TODO R-Tree 인덱스 (Spatital Index) 리서치 필요.
      */
     @Override
     public List<Store> findStoresByLocationLessThanDistance(double latitude, double longitude, double distance) {

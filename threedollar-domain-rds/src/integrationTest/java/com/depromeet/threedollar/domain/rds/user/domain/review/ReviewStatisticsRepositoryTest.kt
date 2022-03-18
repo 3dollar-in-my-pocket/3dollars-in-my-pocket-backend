@@ -13,7 +13,7 @@ class ReviewStatisticsRepositoryTest(
 ) {
 
     @Nested
-    inner class FindActiveReviewsCounts {
+    inner class FindActiveReviewsCountsTest {
 
         @Test
         fun 활성화된_전체_리뷰수를_조회한다() {

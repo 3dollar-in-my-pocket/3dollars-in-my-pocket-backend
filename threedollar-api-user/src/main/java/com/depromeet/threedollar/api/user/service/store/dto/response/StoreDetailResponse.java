@@ -60,15 +60,14 @@ public class StoreDetailResponse extends AuditingTimeResponse {
     private VisitHistoryCountsResponse visitHistory;
     private final List<VisitHistoryWithUserResponse> visitHistories = new ArrayList<>();
 
-    @Builder
-    private StoreDetailResponse(Long storeId, double latitude, double longitude, String storeName, @Nullable StoreType storeType,
-                                double rating, int distance, UserInfoResponse user, VisitHistoryCountsResponse visitHistory) {
-        this.storeId = storeId;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.storeName = storeName;
-        this.storeType = storeType;
-        this.rating = rating;
+    @Builder(access = AccessLevel.PRIVATE)
+    private StoreDetailResponse(Store store, int distance, UserInfoResponse user, VisitHistoryCountsResponse visitHistory) {
+        this.storeId = store.getId();
+        this.latitude = store.getLatitude();
+        this.longitude = store.getLongitude();
+        this.storeName = store.getName();
+        this.storeType = store.getType();
+        this.rating = store.getRating();
         this.distance = distance;
         this.user = user;
         this.visitHistory = visitHistory;
@@ -77,12 +76,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
     public static StoreDetailResponse of(Store store, CoordinateValue geoCoordinate, List<StoreImage> storeImages, UserDictionary userDictionary,
                                          List<Review> reviews, VisitHistoryCounter visitHistoriesCollection, List<VisitHistoryWithUserProjection> visitHistories) {
         StoreDetailResponse response = StoreDetailResponse.builder()
-            .storeId(store.getId())
-            .latitude(store.getLatitude())
-            .longitude(store.getLongitude())
-            .storeName(store.getName())
-            .storeType(store.getType())
-            .rating(store.getRating())
+            .store(store)
             .distance(LocationDistanceUtils.getDistance(CoordinateValue.of(store.getLatitude(), store.getLongitude()), geoCoordinate))
             .user(UserInfoResponse.of(userDictionary.getUser(store.getUserId())))
             .visitHistory(VisitHistoryCountsResponse.of(visitHistoriesCollection.getStoreExistsVisitsCount(store.getId()), visitHistoriesCollection.getStoreNotExistsVisitsCount(store.getId())))

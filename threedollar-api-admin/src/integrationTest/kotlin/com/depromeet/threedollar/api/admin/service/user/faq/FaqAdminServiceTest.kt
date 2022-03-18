@@ -27,7 +27,7 @@ internal class FaqAdminServiceTest(
 
     @DisplayName("신규 FAQ 등록")
     @Nested
-    inner class AddFAQ {
+    inner class AddFAQTest {
 
         @Test
         fun 새로운_FAQ_를_등록하면_FAQ_데이터가_추가된다() {
@@ -53,7 +53,7 @@ internal class FaqAdminServiceTest(
 
     @DisplayName("FAQ 수정")
     @Nested
-    inner class UpdateFaq {
+    inner class UpdateFaqTest {
 
         @Test
         fun 등록된_FAQ를_수정하면_FAQ_데이터가_수정된다() {
@@ -97,7 +97,7 @@ internal class FaqAdminServiceTest(
 
     @DisplayName("FAQ 삭제")
     @Nested
-    inner class DeleteFaq {
+    inner class DeleteFaqTest {
 
         @Test
         fun 특정_FAQ_를_삭제하면_해당_데이터가_삭제된다() {

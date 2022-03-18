@@ -56,7 +56,7 @@ class KaKaoAuthServiceTest {
     }
 
     @Nested
-    class 카카오_로그인 {
+    class KaKaoLoginTest {
 
         @Test
         void 카카오_로그인_성공시_멤버의_ID_가_반환된다() {
@@ -85,7 +85,7 @@ class KaKaoAuthServiceTest {
     }
 
     @Nested
-    class 카카오_회원가입 {
+    class KaKaoSignUpTest {
 
         @Test
         void 카카오_회원가입시_새로운_유저가_등록된다() {

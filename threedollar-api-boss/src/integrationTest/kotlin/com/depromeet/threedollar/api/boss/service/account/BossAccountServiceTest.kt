@@ -28,7 +28,7 @@ internal class BossAccountServiceTest(
     }
 
     @Nested
-    inner class 계정_정보_수정 {
+    inner class UpdateBossAccountInfoTest {
 
         @Test
         fun `사장님의 계정 정보를 수정한다`() {
@@ -72,7 +72,7 @@ internal class BossAccountServiceTest(
     }
 
     @Nested
-    inner class SignOut {
+    inner class SignOutTest {
 
         @Test
         fun `회원탈퇴시 BossAccount 계정 정보가 삭제된다`() {

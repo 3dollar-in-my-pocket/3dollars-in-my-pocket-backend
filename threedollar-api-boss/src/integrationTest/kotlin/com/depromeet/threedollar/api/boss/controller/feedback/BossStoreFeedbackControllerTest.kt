@@ -79,7 +79,7 @@ internal class BossStoreFeedbackControllerTest(
 
     @DisplayName("GET /boss/v1/boss/store/{{BOSS_STORE_ID}/feedbacks/specific")
     @Nested
-    inner class GetBossStoreFeedbacksCountsBetweenDate {
+    inner class GetBossStoreFeedbacksCountsBetweenDateTest {
 
         @DisplayName("이전 날에 더 피드백이 없는 경우, nextDate에 null이 반환된다")
         @Test
