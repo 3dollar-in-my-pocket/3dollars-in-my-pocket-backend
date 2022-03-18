@@ -125,8 +125,8 @@ jacoco {
 
 sonarqube {
     properties {
-        property "sonar.projectKey", ""
-        property "sonar.organization", ""
+        property "sonar.projectKey", "3dollar-in-my-pocket_3dollars-in-my-pocket-backend"
+        property "sonar.organization", "3dollar-in-my-pocket"
         property "sonar.host.url", "https://sonarcloud.io"
     }
 }
