@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.user.controller.advertisement
 
+import com.depromeet.threedollar.api.user.controller.SetupControllerTest
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementCreator
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPositionType
@@ -7,20 +8,12 @@ import com.depromeet.threedollar.domain.rds.user.domain.advertisement.Advertisem
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
-import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import java.time.LocalDateTime
 
-@AutoConfigureMockMvc
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@SpringBootTest
 class AdvertisementControllerTest(
-    private val mockMvc: MockMvc,
     private val advertisementRepository: AdvertisementRepository
-) {
+) : SetupControllerTest() {
 
     @AfterEach
     fun cleanUp() {

@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.admin.controller.user.store
 
-import com.depromeet.threedollar.api.admin.controller.ControllerTestUtils
+import com.depromeet.threedollar.api.admin.controller.SetupAdminControllerTest
 import com.depromeet.threedollar.api.admin.service.user.store.dto.response.ReportedStoresResponse
 import com.depromeet.threedollar.api.admin.service.user.store.dto.response.StoreInfoResponse
 import com.depromeet.threedollar.api.admin.service.user.store.dto.response.StoresCursorResponse
@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.get
 internal class StoreControllerTest(
     private val storeRepository: StoreRepository,
     private val storeDeleteRequestRepository: StoreDeleteRequestRepository
-) : ControllerTestUtils() {
+) : SetupAdminControllerTest() {
 
     @AfterEach
     fun cleanUp() {

@@ -24,6 +24,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @TestHelper
 public final class StoreAssertionHelper {
 
+    private StoreAssertionHelper() {
+    }
+
     /**
      * Store
      */

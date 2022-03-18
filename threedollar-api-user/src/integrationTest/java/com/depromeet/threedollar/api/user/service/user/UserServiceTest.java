@@ -51,7 +51,7 @@ class UserServiceTest {
         @Test
         void 새로운_유저가_회원가입하면_새로운_데이터가_추가된다() {
             // given
-            String socialId = "social-id";
+            String socialId = "user-social-id";
             UserSocialType socialType = UserSocialType.APPLE;
             String name = "토끼";
 
@@ -83,7 +83,7 @@ class UserServiceTest {
         @Test
         void 회원가입시_중복되는_소셜정보면_Conflict_에러가_발생한다() {
             // given
-            String socialId = "social-id";
+            String socialId = "conflict-social-id";
             UserSocialType socialType = UserSocialType.GOOGLE;
 
             userRepository.save(UserCreator.create(socialId, socialType, "기존의 닉네임"));

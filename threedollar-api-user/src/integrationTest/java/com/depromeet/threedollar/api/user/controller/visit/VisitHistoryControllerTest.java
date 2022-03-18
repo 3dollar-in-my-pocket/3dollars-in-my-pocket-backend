@@ -49,7 +49,6 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
         super.cleanup();
     }
 
-    @DisplayName("POST /api/v2/store/visit")
     @Nested
     class AddVisitHistory {
 

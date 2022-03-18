@@ -10,10 +10,8 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
-import org.springframework.test.context.TestConstructor
 import org.springframework.test.web.servlet.get
 
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 internal class UserActivityControllerTest(
         private val storeRepository: StoreRepository,
         private val reviewRepository: ReviewRepository

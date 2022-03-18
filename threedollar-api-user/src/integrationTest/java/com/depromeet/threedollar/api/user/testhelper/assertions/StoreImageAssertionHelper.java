@@ -11,6 +11,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @TestHelper
 public final class StoreImageAssertionHelper {
 
+    private StoreImageAssertionHelper() {
+    }
+
     public static void assertStoreImage(StoreImage storeImage, Long storeId, Long userId, String imageUrl, StoreImageStatus status) {
         assertAll(
             () -> assertThat(storeImage.getStore().getId()).isEqualTo(storeId),

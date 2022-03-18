@@ -15,6 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @TestHelper
 public final class UserAssertionHelper {
 
+    private UserAssertionHelper() {
+    }
+
     public static void assertWithdrawalUser(WithdrawalUser withdrawalUser, User user) {
         assertAll(
             () -> assertThat(withdrawalUser.getUserId()).isEqualTo(user.getId()),

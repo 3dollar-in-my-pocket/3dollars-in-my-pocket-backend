@@ -1,26 +1,19 @@
 package com.depromeet.threedollar.api.user.controller.medal
 
 import com.depromeet.threedollar.api.core.service.user.medal.dto.response.MedalResponse
+import com.depromeet.threedollar.api.user.controller.SetupControllerTest
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionRepository
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
 import org.hamcrest.collection.IsCollectionWithSize.hasSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
-import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@AutoConfigureMockMvc
-@SpringBootTest
 class MedalControllerTest(
-        private val mockMvc: MockMvc,
-        private val medalRepository: MedalRepository,
-        private val medalAcquisitionConditionRepository: MedalAcquisitionConditionRepository
-) {
+    private val medalRepository: MedalRepository,
+    private val medalAcquisitionConditionRepository: MedalAcquisitionConditionRepository
+) : SetupControllerTest() {
 
     @AfterEach
     fun cleanUp() {

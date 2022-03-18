@@ -1,25 +1,18 @@
 package com.depromeet.threedollar.api.user.controller.boss.category
 
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreCategoryResponse
+import com.depromeet.threedollar.api.user.controller.SetupControllerTest
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import org.hamcrest.collection.IsCollectionWithSize.hasSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
-import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@AutoConfigureMockMvc
-@SpringBootTest
 internal class BossStoreCategoryControllerTest(
-    private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-    private val mockMvc: MockMvc
-) {
+    private val bossStoreCategoryRepository: BossStoreCategoryRepository
+) : SetupControllerTest() {
 
     @AfterEach
     fun cleanUp() {

@@ -19,6 +19,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @TestHelper
 public final class VisitHistoryAssertionHelper {
 
+    private VisitHistoryAssertionHelper() {
+    }
+
     public static void assertVisitHistory(VisitHistory visitHistory, Long storeId, Long userId, VisitType type, LocalDate dateOfVisit) {
         assertAll(
             () -> assertThat(visitHistory.getStore().getId()).isEqualTo(storeId),

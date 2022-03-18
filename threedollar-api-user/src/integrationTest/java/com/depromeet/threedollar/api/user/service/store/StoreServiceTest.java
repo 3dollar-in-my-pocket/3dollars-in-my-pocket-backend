@@ -163,8 +163,8 @@ class StoreServiceTest extends SetupUserServiceTest {
         @Test
         void 가게_등록시_메뉴_데이터도_추가된다() {
             // given
-            String menuName = "슈크림 붕어빵";
-            String price = "2개에 천원";
+            String menuName = "팥 붕어빵";
+            String price = "3개에 천원";
             MenuCategoryType type = MenuCategoryType.BUNGEOPPANG;
 
             Set<MenuRequest> menus = Set.of(MenuRequest.of(menuName, price, type));
@@ -233,10 +233,10 @@ class StoreServiceTest extends SetupUserServiceTest {
         void 가게의_기본_정보를_수정한다() {
             // given
             String menuName = "슈크림 붕어빵";
-            String price = "2개에 천원";
+            String price = "5개에 2천원";
             MenuCategoryType type = MenuCategoryType.BUNGEOPPANG;
 
-            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
+            Store store = StoreCreator.createWithDefaultMenu(userId, "붕어빵 가게");
             storeRepository.save(store);
 
             double latitude = 34.0;

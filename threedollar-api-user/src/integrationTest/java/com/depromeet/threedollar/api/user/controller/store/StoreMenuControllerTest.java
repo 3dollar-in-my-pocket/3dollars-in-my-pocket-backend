@@ -2,15 +2,11 @@ package com.depromeet.threedollar.api.user.controller.store;
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.core.mapper.user.menu.dto.response.MenuCategoryResponse;
+import com.depromeet.threedollar.api.user.controller.SetupControllerTest;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -24,15 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@AutoConfigureMockMvc
-@SpringBootTest
-class StoreMenuControllerTest {
-
-    @Autowired
-    protected MockMvc mockMvc;
-
-    @Autowired
-    protected ObjectMapper objectMapper;
+class StoreMenuControllerTest extends SetupControllerTest {
 
     @DisplayName("GET /api/v2/store/menu/categories")
     @Test

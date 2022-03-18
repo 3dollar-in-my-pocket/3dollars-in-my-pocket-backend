@@ -8,22 +8,10 @@ import com.depromeet.threedollar.domain.rds.user.domain.user.User;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
 import com.depromeet.threedollar.domain.rds.user.domain.user.WithdrawalUserRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
 
-@AutoConfigureMockMvc
-@SpringBootTest
-public abstract class SetupUserControllerTest {
-
-    @Autowired
-    protected MockMvc mockMvc;
-
-    @Autowired
-    protected ObjectMapper objectMapper;
+public abstract class SetupUserControllerTest extends SetupControllerTest {
 
     @Autowired
     protected UserRepository userRepository;

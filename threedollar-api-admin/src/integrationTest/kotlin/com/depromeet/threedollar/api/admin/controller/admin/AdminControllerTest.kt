@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.admin.controller.admin
 
-import com.depromeet.threedollar.api.admin.controller.ControllerTestUtils
+import com.depromeet.threedollar.api.admin.controller.SetupAdminControllerTest
 import com.depromeet.threedollar.api.admin.service.admin.dto.response.AdminInfoResponse
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.common.exception.type.ErrorCode
@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.get
 
 internal class AdminControllerTest(
     private val adminRepository: AdminRepository
-) : ControllerTestUtils() {
+) : SetupAdminControllerTest() {
 
     @AfterEach
     fun cleanUp() {

@@ -17,6 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @TestHelper
 public final class ReviewAssertionHelper {
 
+    private ReviewAssertionHelper() {
+    }
+
     public static void assertReview(Review review, Long storeId, String contents, int rating, Long userId, ReviewStatus status) {
         assertAll(
             () -> assertThat(review.getStoreId()).isEqualTo(storeId),

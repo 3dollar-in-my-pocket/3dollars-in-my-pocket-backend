@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.boss.controller.feedback
 
-import com.depromeet.threedollar.api.boss.controller.ControllerTestUtils
+import com.depromeet.threedollar.api.boss.controller.SetupBossControllerTest
 import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackCountResponse
 import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackGroupingDateResponse
 import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackTypeResponse
@@ -22,7 +22,7 @@ internal class BossStoreFeedbackControllerTest(
     private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,
     private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository,
     private val bossStoreRepository: BossStoreRepository,
-) : ControllerTestUtils() {
+) : SetupBossControllerTest() {
 
     @AfterEach
     fun cleanUp() {

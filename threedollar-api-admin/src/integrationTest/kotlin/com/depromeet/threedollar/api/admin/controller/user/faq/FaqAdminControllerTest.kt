@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.admin.controller.user.faq
 
-import com.depromeet.threedollar.api.admin.controller.ControllerTestUtils
+import com.depromeet.threedollar.api.admin.controller.SetupAdminControllerTest
 import com.depromeet.threedollar.api.admin.service.user.faq.dto.request.AddFaqRequest
 import com.depromeet.threedollar.api.admin.service.user.faq.dto.request.UpdateFaqRequest
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
@@ -24,7 +24,7 @@ import org.springframework.test.web.servlet.put
 
 internal class FaqAdminControllerTest(
     private val faqRepository: FaqRepository
-) : ControllerTestUtils() {
+) : SetupAdminControllerTest() {
 
     @AfterEach
     fun cleanUp() {

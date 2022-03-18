@@ -87,9 +87,9 @@ class AuthControllerTest extends SetupUserControllerTest {
         @Test
         void 구글_회원가입_요청이_성공하면_토큰이_반환된다() throws Exception {
             // given
-            when(googleAuthApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance("social-id"));
+            when(googleAuthApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance("google-social-id"));
 
-            SignUpRequest request = SignUpRequest.testInstance("access-token", "will", UserSocialType.GOOGLE);
+            SignUpRequest request = SignUpRequest.testInstance("google-access-token", "will", UserSocialType.GOOGLE);
 
             // when
             ApiResponse<LoginResponse> response = authMockApiCaller.signUp(request, 200);
@@ -111,12 +111,12 @@ class AuthControllerTest extends SetupUserControllerTest {
         @Test
         void 카카오_로그인_요청이_성공하면_토큰이_반환된다() throws Exception {
             // given
-            User user = UserCreator.create("social-id", UserSocialType.KAKAO, "카카오 계정");
+            User user = UserCreator.create("kakao-social-id", UserSocialType.KAKAO, "카카오 계정");
             userRepository.save(user);
 
             when(kaKaoAuthApiClient.getProfileInfo(any())).thenReturn(KaKaoProfileResponse.testInstance(user.getSocialId()));
 
-            LoginRequest request = LoginRequest.testInstance("access-token", UserSocialType.KAKAO);
+            LoginRequest request = LoginRequest.testInstance("kakao-access-token", UserSocialType.KAKAO);
 
             // when
             ApiResponse<LoginResponse> response = authMockApiCaller.login(request, 200);
@@ -132,12 +132,12 @@ class AuthControllerTest extends SetupUserControllerTest {
         @Test
         void 애플_로그인_요청이_성공하면_토큰이_반환된다() throws Exception {
             // given
-            User user = UserCreator.create("social-id", UserSocialType.APPLE, "애플 계정");
+            User user = UserCreator.create("apple-social-id", UserSocialType.APPLE, "애플 계정");
             userRepository.save(user);
 
             when(appleTokenDecoder.getSocialIdFromIdToken(any())).thenReturn(user.getSocialId());
 
-            LoginRequest request = LoginRequest.testInstance("access-token", UserSocialType.APPLE);
+            LoginRequest request = LoginRequest.testInstance("apple-access-token", UserSocialType.APPLE);
 
             // when
             ApiResponse<LoginResponse> response = authMockApiCaller.login(request, 200);
@@ -153,12 +153,12 @@ class AuthControllerTest extends SetupUserControllerTest {
         @Test
         void 구글_로그인_요청이_성공하면_토큰이_반환된다() throws Exception {
             // given
-            User user = UserCreator.create("social-id", UserSocialType.GOOGLE, "구글 계정");
+            User user = UserCreator.create("google-social-id", UserSocialType.GOOGLE, "구글 계정");
             userRepository.save(user);
 
             when(googleAuthApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance(user.getSocialId()));
 
-            LoginRequest request = LoginRequest.testInstance("access-token", UserSocialType.GOOGLE);
+            LoginRequest request = LoginRequest.testInstance("google-access-token", UserSocialType.GOOGLE);
 
             // when
             ApiResponse<LoginResponse> response = authMockApiCaller.login(request, 200);

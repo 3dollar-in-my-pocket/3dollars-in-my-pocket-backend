@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.boss.controller.account
 
-import com.depromeet.threedollar.api.boss.controller.ControllerTestUtils
+import com.depromeet.threedollar.api.boss.controller.SetupBossControllerTest
 import com.depromeet.threedollar.api.boss.service.account.dto.request.UpdateBossAccountInfoRequest
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.PushSettingsStatus.OFF
@@ -13,7 +13,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.put
 
-internal class BossAccountControllerTest : ControllerTestUtils() {
+internal class BossAccountControllerTest : SetupBossControllerTest() {
 
     @AfterEach
     fun cleanUp() {
