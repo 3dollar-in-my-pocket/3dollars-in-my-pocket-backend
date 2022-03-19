@@ -24,7 +24,7 @@ public class NaverFeignConfig {
     /**
      * https://developers.naver.com/docs/login/profile/profile.md
      */
-    public static class NaverApiErrorDecoder implements ErrorDecoder {
+    private static class NaverApiErrorDecoder implements ErrorDecoder {
 
         @Override
         public Exception decode(String methodKey, Response response) {

@@ -10,4 +10,4 @@ import org.springframework.context.annotation.Profile
 ])
 @Profile("local-docker", "dev", "stage", "prod")
 @Configuration
-class DisableEmbeddedMongoConfig
+class EmbeddedMongoConfig

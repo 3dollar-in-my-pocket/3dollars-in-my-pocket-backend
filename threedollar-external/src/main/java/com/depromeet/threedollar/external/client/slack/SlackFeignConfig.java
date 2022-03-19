@@ -23,7 +23,7 @@ public class SlackFeignConfig {
     /**
      * https://api.slack.com/changelog/2016-05-17-changes-to-errors-for-incoming-webhooks
      */
-    public static class SlackApiErrorDecoder implements ErrorDecoder {
+    private static class SlackApiErrorDecoder implements ErrorDecoder {
 
         @Override
         public Exception decode(String methodKey, Response response) {

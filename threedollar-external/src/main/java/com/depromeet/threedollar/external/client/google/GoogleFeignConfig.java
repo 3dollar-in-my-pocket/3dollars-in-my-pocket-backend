@@ -21,7 +21,7 @@ public class GoogleFeignConfig {
         return new Retryer.Default(1000, 2000, 3);
     }
 
-    public static class GoogleApiErrorDecoder implements ErrorDecoder {
+    private static class GoogleApiErrorDecoder implements ErrorDecoder {
 
         private static final int MIN_CLIENT_ERROR_STATUS_CODE = 400;
         private static final int MAX_CLIENT_ERROR_STATUS_CODE = 499;

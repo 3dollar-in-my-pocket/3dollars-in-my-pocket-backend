@@ -24,7 +24,7 @@ public class KaKaoFeignConfig {
     /**
      * https://developers.kakao.com/docs/latest/ko/reference/rest-api-reference#response-code
      */
-    public static class KakaoApiErrorDecoder implements ErrorDecoder {
+    private static class KakaoApiErrorDecoder implements ErrorDecoder {
 
         @Override
         public Exception decode(String methodKey, Response response) {

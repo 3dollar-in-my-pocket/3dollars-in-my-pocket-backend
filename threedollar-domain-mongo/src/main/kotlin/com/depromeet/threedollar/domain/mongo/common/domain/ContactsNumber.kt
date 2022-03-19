@@ -26,10 +26,11 @@ data class ContactsNumber(
             if (!CONTACTS_NUMBER_REGEX.matcher(number).matches()) {
                 throw InvalidException("잘못된 전화번호 (${number}) 형식 입니다. 올바른 연락처 형식은 01X-0000-0000 입니다.", ErrorCode.INVALID_CONTACTS_NUMBER_FORMAT)
             }
+            val separatedNumber = number.split(SEPARATOR)
             return ContactsNumber(
-                first = number.split(SEPARATOR)[0],
-                second = number.split(SEPARATOR)[1],
-                third = number.split(SEPARATOR)[2]
+                first = separatedNumber[0],
+                second = separatedNumber[1],
+                third = separatedNumber[2]
             )
         }
     }

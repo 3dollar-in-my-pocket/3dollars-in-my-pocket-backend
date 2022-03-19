@@ -15,7 +15,7 @@ public class FeignDefaultConfig {
         return new FeignErrorDecoder();
     }
 
-    public static class FeignErrorDecoder implements ErrorDecoder {
+    private static class FeignErrorDecoder implements ErrorDecoder {
 
         private static final int MIN_CLIENT_ERROR_STATUS_CODE = 400;
         private static final int MAX_CLIENT_ERROR_STATUS_CODE = 499;
