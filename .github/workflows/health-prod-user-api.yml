@@ -1,4 +1,4 @@
-name: 운영 환경 - 유저 API 서버 Health Check
+name: 운영환경 - 헬스체크 - User API
 
 on:
   schedule:
@@ -12,7 +12,7 @@ jobs:
       - name: 유저 API Health Check
         uses: jtalk/url-health-check-action@v2
         with:
-          url: ${{ secrets.USER_API_BASE_URI }}/ping
+          url: ${{ secrets.USER_API_BASE_URI_PROD }}/ping
           max-attempts: 3
           retry-delay: 1s
 

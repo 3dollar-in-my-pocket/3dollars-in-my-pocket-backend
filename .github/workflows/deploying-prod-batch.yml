@@ -1,4 +1,4 @@
-name: 운영 환경 - 배치 이미지 배포
+name: 운영환경 - 배포 - Batch
 
 on:
   workflow_dispatch:
