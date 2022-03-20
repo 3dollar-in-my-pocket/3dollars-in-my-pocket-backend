@@ -1,4 +1,4 @@
-name: 개발환경- 배포 - Boss API
+name: 개발환경 - 배포 - Boss API
 
 on:
   workflow_dispatch:
