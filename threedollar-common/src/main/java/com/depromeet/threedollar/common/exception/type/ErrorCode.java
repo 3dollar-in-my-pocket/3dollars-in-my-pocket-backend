@@ -39,8 +39,8 @@ public enum ErrorCode {
 
     // 403 Forbidden
     FORBIDDEN(HttpStatusCode.FORBIDDEN, OFF, "FB000", "허용하지 않는 요청입니다"),
-    FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT(HttpStatusCode.CONFLICT, OFF, "FB001", "현재 계정 승인 대기 중입니다."),
-    FORBIDDEN_UPLOAD_FILE_IN_MODULE(HttpStatusCode.CONFLICT, OFF, "FB002", "해당 서버에서 업로드할 수 없는 파일 타입 입니다"),
+    FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT(HttpStatusCode.FORBIDDEN, OFF, "FB001", "현재 계정 승인 대기 중입니다."),
+    FORBIDDEN_UPLOAD_FILE_IN_MODULE(HttpStatusCode.FORBIDDEN, OFF, "FB002", "해당 서버에서 업로드할 수 없는 파일 타입 입니다"),
 
 
     // 404 Not Found
