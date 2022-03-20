@@ -14,7 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 )
 public interface SlackWebhookApiClient {
 
-    @PostMapping("${slack.token}")
-    void postMessage(PostSlackMessageRequest request);
+    @PostMapping("${slack.token.monitoring}")
+    void postMonitoringMessage(PostSlackMessageRequest request);
+
+    @PostMapping("${slack.token.daily-statistics}")
+    void postStatisticsMessage(PostSlackMessageRequest request);
+
+    @PostMapping("${slack.token.boss-manager}")
+    void postBossManagerMessage(PostSlackMessageRequest request);
 
 }

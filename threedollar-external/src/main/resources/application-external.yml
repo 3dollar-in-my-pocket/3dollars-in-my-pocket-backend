@@ -55,7 +55,10 @@ apple:
   issuer: dummy-apple-issue
 
 slack:
-  token: dummy-slack-token
+  token:
+    daily-statistics: dummy-token
+    monitoring: dummy-token
+    boss-manager: dummy-token
 
 
 ---
@@ -77,7 +80,10 @@ apple:
   issuer: https://appleid.apple.com
 
 slack:
-  token: ${secret.slack.token}
+  token:
+    daily-statistics: ${secret.slack.token.daily-statistics}
+    monitoring: ${secret.slack.token.monitoring}
+    boss-manager: ${secret.slack.token.boss-manager}
 
 
 ---
@@ -101,7 +107,10 @@ apple:
   issuer: https://appleid.apple.com
 
 slack:
-  token: ${secret.slack.token}
+  token:
+    daily-statistics: ${secret.slack.token.daily-statistics}
+    monitoring: ${secret.slack.token.monitoring}
+    boss-manager: ${secret.slack.token.boss-manager}
 
 
 ---

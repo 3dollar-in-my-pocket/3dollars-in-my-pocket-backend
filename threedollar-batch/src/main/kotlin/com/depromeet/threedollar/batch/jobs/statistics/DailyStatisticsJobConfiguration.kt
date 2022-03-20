@@ -3,8 +3,8 @@ package com.depromeet.threedollar.batch.jobs.statistics
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
 import com.depromeet.threedollar.batch.jobs.statistics.StatisticsMessageFormat.*
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository
+import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository
@@ -58,7 +58,7 @@ class DailyStatisticsJobConfiguration(
         return stepBuilderFactory["notificationStatisticsInfo"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
-                slackNotificationApiClient.postMessage(
+                slackNotificationApiClient.postStatisticsMessage(
                     PostSlackMessageRequest.of(DAILY_STATISTICS_INFO.messageFormat.format(yesterday))
                 )
                 RepeatStatus.FINISHED
@@ -104,7 +104,7 @@ class DailyStatisticsJobConfiguration(
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 val todayDeletedCounts = storeRepository.findDeletedStoresCountsByDate(yesterday, yesterday)
-                slackNotificationApiClient.postMessage(
+                slackNotificationApiClient.postStatisticsMessage(
                     PostSlackMessageRequest.of(COUNTS_DELETED_STORE.messageFormat.format(todayDeletedCounts))
                 )
                 RepeatStatus.FINISHED
@@ -123,7 +123,9 @@ class DailyStatisticsJobConfiguration(
                         COUNTS_MENU.messageFormat.format(it.category.categoryName, it.counts)
                     }
 
-                slackNotificationApiClient.postMessage(PostSlackMessageRequest.of(COUNTS_MENUS.messageFormat.format(message)))
+                slackNotificationApiClient.postStatisticsMessage(
+                    PostSlackMessageRequest.of(COUNTS_MENUS.messageFormat.format(message))
+                )
                 RepeatStatus.FINISHED
             }
             .build()
@@ -171,7 +173,9 @@ class DailyStatisticsJobConfiguration(
                     .joinToString(separator = "\n") {
                         COUNTS_MEDAL.messageFormat.format(it.medalName, it.counts)
                     }
-                slackNotificationApiClient.postMessage(PostSlackMessageRequest.of(COUNTS_MEDALS.messageFormat.format(message)))
+                slackNotificationApiClient.postStatisticsMessage(
+                    PostSlackMessageRequest.of(COUNTS_MEDALS.messageFormat.format(message))
+                )
                 RepeatStatus.FINISHED
             }
             .build()
@@ -187,7 +191,9 @@ class DailyStatisticsJobConfiguration(
                     .joinToString(separator = "\n") {
                         COUNTS_ACTIVE_MEDAL.messageFormat.format(it.medalName, it.counts)
                     }
-                slackNotificationApiClient.postMessage(PostSlackMessageRequest.of(COUNTS_ACTIVE_MEDALS.messageFormat.format(message)))
+                slackNotificationApiClient.postStatisticsMessage(
+                    PostSlackMessageRequest.of(COUNTS_ACTIVE_MEDALS.messageFormat.format(message))
+                )
                 RepeatStatus.FINISHED
             }
             .build()
@@ -199,10 +205,8 @@ class DailyStatisticsJobConfiguration(
         todayCounts: Long,
         weekendCounts: Long
     ) {
-        slackNotificationApiClient.postMessage(
-            PostSlackMessageRequest.of(
-                messageType.messageFormat.format(totalCounts, todayCounts, weekendCounts)
-            )
+        slackNotificationApiClient.postStatisticsMessage(
+            PostSlackMessageRequest.of(messageType.messageFormat.format(totalCounts, todayCounts, weekendCounts))
         )
     }
 

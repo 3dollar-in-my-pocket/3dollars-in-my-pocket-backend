@@ -21,7 +21,7 @@ public class SlackNotificationEventListener {
     @Async
     @EventListener
     public void sendErrorNotification(ServerExceptionOccurredEvent event) {
-        slackNotificationApiClient.postMessage(PostSlackMessageRequest.of(ERROR_MESSAGE.generateMessage(
+        slackNotificationApiClient.postMonitoringMessage(PostSlackMessageRequest.of(ERROR_MESSAGE.generateMessage(
             event.getApplicationType().getDescription(),
             event.getErrorCode().getCode(),
             event.getRequestUri(),
@@ -35,7 +35,7 @@ public class SlackNotificationEventListener {
     @Async
     @EventListener
     public void sendInfoNotification(ApplicationStateChangedEvent event) {
-        slackNotificationApiClient.postMessage(PostSlackMessageRequest.of(INFO_MESSAGE.generateMessage(
+        slackNotificationApiClient.postMonitoringMessage(PostSlackMessageRequest.of(INFO_MESSAGE.generateMessage(
             event.getApplicationType().getDescription(),
             event.getMessage(),
             event.getTimeStamp()

@@ -21,7 +21,7 @@ class SlackNotificationEventListener(
     @Async
     @EventListener
     fun sendRegistrationNotification(event: NewBossAppliedRegistrationEvent) {
-        slackNotificationApiClient.postMessage(
+        slackNotificationApiClient.postBossManagerMessage(
             PostSlackMessageRequest.of(
                 NEW_BOSS_REGISTRATION_MESSAGE.generateMessage(
                     event.registration.id,
@@ -40,7 +40,7 @@ class SlackNotificationEventListener(
     @Async
     @EventListener
     fun sendErrorNotification(event: ServerExceptionOccurredEvent) {
-        slackNotificationApiClient.postMessage(
+        slackNotificationApiClient.postMonitoringMessage(
             PostSlackMessageRequest.of(
                 SlackNotificationMessageType.ERROR_MESSAGE.generateMessage(
                     event.applicationType.description,
