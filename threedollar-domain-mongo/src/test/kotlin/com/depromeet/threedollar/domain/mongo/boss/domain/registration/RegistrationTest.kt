@@ -24,6 +24,7 @@ internal class RegistrationTest {
             bossName = bossName,
             businessNumber = businessNumber
         )
+        registration.id = "registrationId"
 
         // when
         val bossAccount = registration.toBossAccount()
@@ -53,6 +54,7 @@ internal class RegistrationTest {
             categoriesIds = categoriesIds,
             contactsNumber = contactsNumber,
         )
+        registration.id = "registrationId"
 
         // when
         val bossStore = registration.toBossStore(bossId)
