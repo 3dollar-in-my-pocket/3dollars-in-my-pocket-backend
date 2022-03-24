@@ -7,7 +7,7 @@ enum class BossStoreOrderType(
     val sorted: Comparator<BossStoreAroundInfoResponse>
 ) {
 
-    DISTANCE_ASC("가까운 거리순", Comparator.comparing<BossStoreAroundInfoResponse, Int> { it.distance }.reversed()),
-    TOTAL_FEEDBACKS_COUNTS_DESC("총 피드백가 많은 순", Comparator.comparing<BossStoreAroundInfoResponse, Int> { it.totalFeedbacksCounts })
+    DISTANCE_ASC("가까운 거리순", Comparator.comparing<BossStoreAroundInfoResponse, Int> { it.distance }),
+    TOTAL_FEEDBACKS_COUNTS_DESC("총 피드백가 많은 순", Comparator.comparing<BossStoreAroundInfoResponse, Int> { it.totalFeedbacksCounts }.reversed())
 
 }

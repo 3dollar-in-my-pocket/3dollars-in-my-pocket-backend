@@ -33,6 +33,11 @@ db.boss_registration_v1.createIndex({
     "boss.socialInfo.socialType": 1
 });
 
+// boss_registration_v1
+db.boss_registration_v1.createIndex({
+    "status": 1,
+});
+
 
 // boss_store_feedback_v1
 db.boss_store_feedback_v1.createIndex({

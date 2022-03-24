@@ -25,6 +25,7 @@ class BossRegistrationAdminService(
         bossStoreRepository.save(registration.toBossStore(bossAccount.id))
         registration.approve()
         registrationRepository.save(registration)
+        // TODO 가입 승인 슬랙 알림
     }
 
     private fun registerNewBossAccount(registration: Registration): BossAccount {
@@ -43,6 +44,7 @@ class BossRegistrationAdminService(
         val registration = BossRegistrationServiceUtils.findWaitingRegistrationById(registrationRepository, registrationId)
         registration.reject()
         registrationRepository.save(registration)
+        // TODO 가입 거부 슬랙 알림
     }
 
 }
