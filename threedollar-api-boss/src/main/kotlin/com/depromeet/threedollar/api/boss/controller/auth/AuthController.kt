@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.api.boss.controller.auth
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.boss.config.interceptor.Auth
 import com.depromeet.threedollar.api.boss.config.resolver.BossId
 import com.depromeet.threedollar.api.boss.config.session.SessionConstants.BOSS_ACCOUNT_ID
@@ -10,6 +9,7 @@ import com.depromeet.threedollar.api.boss.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.api.boss.service.auth.dto.request.SignupRequest
 import com.depromeet.threedollar.api.boss.service.auth.dto.response.LoginResponse
 import com.depromeet.threedollar.api.boss.service.registration.BossAccountRegistrationService
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -32,7 +32,7 @@ class AuthController(
         @Valid @RequestBody request: SignupRequest
     ): ApiResponse<String> {
         val authService = authServiceProvider.getAuthService(request.socialType)
-        val socialId = authService.getSocialId(LoginRequest(request.token, request.socialType))
+        val socialId = authService.getSocialId(request.token)
         bossAccountRegistrationService.applyForBossAccountRegistration(request, socialId)
         return ApiResponse.OK
     }

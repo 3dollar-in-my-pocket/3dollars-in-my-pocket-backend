@@ -21,16 +21,16 @@ class GoogleAuthService(
 
     override fun login(request: LoginRequest): String {
         val bossAccount = BossAccountServiceUtils.findBossAccountBySocialIdAndSocialTypeWithCheckWaitingRegistration(
-            bossAccountRepository,
-            registrationRepository,
-            getSocialId(request),
-            SOCIAL_TYPE
+            bossAccountRepository = bossAccountRepository,
+            registrationRepository = registrationRepository,
+            socialId = getSocialId(request.token),
+            socialType = SOCIAL_TYPE
         )
         return bossAccount.id
     }
 
-    override fun getSocialId(request: LoginRequest): String {
-        return googleAuthApiClient.getProfileInfo(HttpHeaderUtils.withBearerToken(request.token)).id
+    override fun getSocialId(token: String): String {
+        return googleAuthApiClient.getProfileInfo(HttpHeaderUtils.withBearerToken(token)).id
     }
 
 }

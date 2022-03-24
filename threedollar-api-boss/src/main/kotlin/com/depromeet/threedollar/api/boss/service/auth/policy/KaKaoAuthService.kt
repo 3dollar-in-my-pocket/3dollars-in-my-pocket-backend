@@ -21,16 +21,16 @@ class KaKaoAuthService(
 
     override fun login(request: LoginRequest): String {
         val bossAccount = BossAccountServiceUtils.findBossAccountBySocialIdAndSocialTypeWithCheckWaitingRegistration(
-            bossAccountRepository,
-            registrationRepository,
-            getSocialId(request),
-            SOCIAL_TYPE
+            bossAccountRepository = bossAccountRepository,
+            registrationRepository = registrationRepository,
+            socialId = getSocialId(request.token),
+            socialType = SOCIAL_TYPE
         )
         return bossAccount.id
     }
 
-    override fun getSocialId(request: LoginRequest): String {
-        return kaKaoAuthApiClient.getProfileInfo(HttpHeaderUtils.withBearerToken(request.token)).id
+    override fun getSocialId(token: String): String {
+        return kaKaoAuthApiClient.getProfileInfo(HttpHeaderUtils.withBearerToken(token)).id
     }
 
 }
