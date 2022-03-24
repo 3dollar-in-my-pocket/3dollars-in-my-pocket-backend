@@ -1,8 +1,11 @@
 package com.depromeet.threedollar.api.boss.config.interceptor
 
 import com.depromeet.threedollar.api.boss.config.session.SessionConstants.BOSS_ACCOUNT_ID
+import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.UnAuthorizedException
+import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
 import org.springframework.http.HttpHeaders
 import org.springframework.session.Session
 import org.springframework.session.SessionRepository
@@ -17,7 +20,8 @@ const val HEADER_BEARER_PREFIX = "Bearer "
 @Component
 class AuthInterceptor(
     private val sessionRepository: SessionRepository<out Session?>,
-    private val bossAccountRepository: BossAccountRepository
+    private val bossAccountRepository: BossAccountRepository,
+    private val registrationRepository: RegistrationRepository
 ) : HandlerInterceptor {
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
@@ -34,11 +38,16 @@ class AuthInterceptor(
         }
 
         val sessionId = header.split(HEADER_BEARER_PREFIX)[1]
-        val bossAccount = bossAccountRepository.findBossAccountById(findSessionBySessionId(sessionId).getAttribute(BOSS_ACCOUNT_ID))
-            ?: throw UnAuthorizedException("잘못된 세션 (${sessionId} 입니다 다시 로그인해주세요")
+        val bossAccountId: String = findSessionBySessionId(sessionId).getAttribute(BOSS_ACCOUNT_ID)
 
-        request.setAttribute(BOSS_ACCOUNT_ID, bossAccount.id)
-        return true
+        bossAccountRepository.findBossAccountById(bossAccountId)?.let {
+            request.setAttribute(BOSS_ACCOUNT_ID, it.id)
+            return true
+        } ?: let {
+            registrationRepository.findWaitingRegistrationById(bossAccountId)?.let {
+                throw ForbiddenException("현재 가입 승인 대기중인 사장님 ($bossAccountId) 입니다", ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT)
+            } ?: throw UnAuthorizedException("해당하는 등록 번호($bossAccountId)를 가진 계정 혹은 대기중인 가입 신청은 존재하지 않습니다")
+        }
     }
 
     private fun findSessionBySessionId(sessionId: String): Session {

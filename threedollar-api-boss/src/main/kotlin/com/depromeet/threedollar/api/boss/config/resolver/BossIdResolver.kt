@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.boss.config.resolver
 
-import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.api.boss.config.session.SessionConstants.BOSS_ACCOUNT_ID
+import com.depromeet.threedollar.common.exception.model.InternalServerException
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.MethodParameter
 import org.springframework.web.bind.support.WebDataBinderFactory
@@ -13,7 +13,7 @@ import org.springframework.web.method.support.ModelAndViewContainer
 class BossIdResolver : HandlerMethodArgumentResolver {
 
     override fun supportsParameter(parameter: MethodParameter): Boolean {
-        return parameter.hasParameterAnnotation(BossId::class.java) && parameter.parameterType == String::class.java
+        return parameter.hasParameterAnnotation(BossId::class.java) && String::class.java == parameter.parameterType
     }
 
     override fun resolveArgument(

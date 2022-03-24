@@ -30,11 +30,15 @@ class AuthController(
     @PostMapping("/v1/auth/signup")
     fun applyForBossAccountRegistration(
         @Valid @RequestBody request: SignupRequest
-    ): ApiResponse<String> {
+    ): ApiResponse<LoginResponse> {
         val authService = authServiceProvider.getAuthService(request.socialType)
         val socialId = authService.getSocialId(request.token)
-        bossAccountRegistrationService.applyForBossAccountRegistration(request, socialId)
-        return ApiResponse.OK
+        val bossId = bossAccountRegistrationService.signUp(request, socialId)
+        httpSession.setAttribute(BOSS_ACCOUNT_ID, bossId)
+        return ApiResponse.success(LoginResponse(
+            token = httpSession.id,
+            bossId = bossId
+        ))
     }
 
     @ApiOperation("사장님 계정으로 로그인을 요청합니다.", notes = "https://github.com/3dollar-in-my-pocket/3dollars-in-my-pocket-backend/issues/118")
@@ -43,11 +47,11 @@ class AuthController(
         @Valid @RequestBody request: LoginRequest
     ): ApiResponse<LoginResponse> {
         val authService = authServiceProvider.getAuthService(request.socialType)
-        val accountId = authService.login(request)
-        httpSession.setAttribute(BOSS_ACCOUNT_ID, accountId)
+        val bossId = authService.login(request)
+        httpSession.setAttribute(BOSS_ACCOUNT_ID, bossId)
         return ApiResponse.success(LoginResponse(
             token = httpSession.id,
-            bossId = accountId
+            bossId = bossId
         ))
     }
 

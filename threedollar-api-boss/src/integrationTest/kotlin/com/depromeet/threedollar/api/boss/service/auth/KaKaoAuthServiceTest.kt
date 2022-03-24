@@ -2,7 +2,6 @@ package com.depromeet.threedollar.api.boss.service.auth
 
 import com.depromeet.threedollar.api.boss.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.api.boss.service.auth.policy.KaKaoAuthService
-import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
@@ -53,10 +52,10 @@ internal class KaKaoAuthServiceTest(
         bossAccountRepository.save(bossAccount)
 
         // when
-        val accountId = authService.login(LoginRequest("token", SOCIAL_TYPE))
+        val bossId = authService.login(LoginRequest("token", SOCIAL_TYPE))
 
         // then
-        assertThat(accountId).isEqualTo(bossAccount.id)
+        assertThat(bossId).isEqualTo(bossAccount.id)
     }
 
     @Test
@@ -68,16 +67,16 @@ internal class KaKaoAuthServiceTest(
     }
 
     @Test
-    fun `카카오 로그인시 가입 승인 대기중인 유저면 403 Forbidden 에러 발생`() {
+    fun `카카오 로그인시 가입 승인 대기중인 유저면 Registration의 ID를 반환한다`() {
         // given
-        val socialId = "social-id"
-
-        registrationRepository.save(RegistrationCreator.create(socialId, SOCIAL_TYPE))
+        val registration = RegistrationCreator.create(SOCIAL_ID, SOCIAL_TYPE)
+        registrationRepository.save(registration)
 
         // when
-        assertThatThrownBy {
-            authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
-        }.isInstanceOf(ForbiddenException::class.java)
+        val bossId = authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
+
+        // then
+        assertThat(bossId).isEqualTo(registration.id)
     }
 
     private class StubKaKaoApiClient : KaKaoAuthApiClient {

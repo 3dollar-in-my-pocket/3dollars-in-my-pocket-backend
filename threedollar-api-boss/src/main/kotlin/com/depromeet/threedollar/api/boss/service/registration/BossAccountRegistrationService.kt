@@ -23,18 +23,19 @@ class BossAccountRegistrationService(
 ) {
 
     @Transactional
-    fun applyForBossAccountRegistration(request: SignupRequest, socialId: String) {
+    fun signUp(request: SignupRequest, socialId: String): String {
+        BossAccountServiceUtils.validateNotExistsBossAccount(bossAccountRepository, socialId, request.socialType)
         validateDuplicateRegistration(socialId, request.socialType)
         BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, request.storeCategoriesIds)
         val registration = request.toEntity(socialId)
         registrationRepository.save(registration)
 
         eventPublisher.publishEvent(NewBossAppliedRegistrationEvent.of(registration))
+        return registration.id
     }
 
     private fun validateDuplicateRegistration(socialId: String, socialType: BossAccountSocialType) {
-        BossAccountServiceUtils.validateNotExistsBossAccount(bossAccountRepository, socialId, socialType)
-        if (registrationRepository.existsRegistrationBySocialIdAndSocialType(socialId, socialType)) {
+        if (registrationRepository.existsWaitingRegistrationBySocialIdAndSocialType(socialId, socialType)) {
             throw ForbiddenException("가입 신청 후 대기중인 사장님(${socialId} - (${socialType}) 입니다.", ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT)
         }
     }

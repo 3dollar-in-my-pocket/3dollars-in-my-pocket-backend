@@ -2,7 +2,6 @@ package com.depromeet.threedollar.api.boss.service.auth
 
 import com.depromeet.threedollar.api.boss.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.api.boss.service.auth.policy.NaverAuthService
-import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
@@ -13,6 +12,7 @@ import com.depromeet.threedollar.external.client.naver.NaverAuthApiClient
 import com.depromeet.threedollar.external.client.naver.dto.response.NaverProfileInfoResponse
 import com.depromeet.threedollar.external.client.naver.dto.response.NaverProfileResponse
 import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -68,16 +68,16 @@ internal class NaverAuthServiceTest(
     }
 
     @Test
-    fun `네이버 로그인시 가입 승인 대기중인 유저면 403 Forbidden 에러 발생`() {
+    fun `네이버 로그인시 가입 승인 대기중인 유저면 Registration의 ID를 반환한다`() {
         // given
-        val socialId = "social-id"
-
-        registrationRepository.save(RegistrationCreator.create(socialId, SOCIAL_TYPE))
+        val registration = RegistrationCreator.create(SOCIAL_ID, SOCIAL_TYPE)
+        registrationRepository.save(registration)
 
         // when
-        Assertions.assertThatThrownBy {
-            authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
-        }.isInstanceOf(ForbiddenException::class.java)
+        val bossId = authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
+
+        // then
+        assertThat(bossId).isEqualTo(registration.id)
     }
 
     private class StubNaverAuthApiClient : NaverAuthApiClient {

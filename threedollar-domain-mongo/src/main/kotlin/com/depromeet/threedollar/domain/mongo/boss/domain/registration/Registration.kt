@@ -16,11 +16,11 @@ class Registration(
 ) : BaseDocument() {
 
     fun toBossAccount(): BossAccount {
-        return this.boss.toBossAccount()
+        return this.boss.toBossAccount(this.id)
     }
 
-    fun toBossStore(bossAccountId: String): BossStore {
-        return this.store.toBossStore(bossAccountId)
+    fun toBossStore(bossId: String): BossStore {
+        return this.store.toBossStore(bossId)
     }
 
     fun approve() {
@@ -40,8 +40,9 @@ data class RegistrationBossForm(
     val businessNumber: BusinessNumber
 ) {
 
-    fun toBossAccount(): BossAccount {
+    fun toBossAccount(registrationId: String): BossAccount {
         return BossAccount.of(
+            bossId = registrationId,
             name = name,
             socialId = socialInfo.socialId,
             socialType = socialInfo.socialType,

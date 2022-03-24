@@ -5,8 +5,10 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registrat
 
 interface RegistrationRepositoryCustom {
 
-    fun existsRegistrationBySocialIdAndSocialType(socialId: String, socialType: BossAccountSocialType): Boolean
+    fun existsWaitingRegistrationBySocialIdAndSocialType(socialId: String, socialType: BossAccountSocialType): Boolean
 
     fun findWaitingRegistrationById(registrationId: String): Registration?
+
+    fun findWaitingRegistrationBySocialIdAndSocialType(socialId: String, socialType: BossAccountSocialType): Registration?
 
 }

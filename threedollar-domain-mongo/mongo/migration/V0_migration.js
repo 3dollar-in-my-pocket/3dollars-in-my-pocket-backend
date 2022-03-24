@@ -31,8 +31,6 @@ db.boss_account_v1.createIndex({
 db.boss_registration_v1.createIndex({
     "boss.socialInfo.socialId": 1,
     "boss.socialInfo.socialType": 1
-}, {
-    unique: true
 });
 
 

@@ -18,13 +18,13 @@ class BossAccountService(
 
     @Transactional(readOnly = true)
     fun getBossAccountInfo(bossId: String): BossAccountInfoResponse {
-        val bossAccount = BossAccountServiceUtils.findBossAccountById(bossAccountRepository, bossId)
+        val bossAccount = BossAccountServiceUtils.findBOssAccountByRegistrationId(bossAccountRepository, bossId)
         return BossAccountInfoResponse.of(bossAccount)
     }
 
     @Transactional
     fun updateBossAccountInfo(bossId: String, request: UpdateBossAccountInfoRequest) {
-        val bossAccount = BossAccountServiceUtils.findBossAccountById(bossAccountRepository, bossId)
+        val bossAccount = BossAccountServiceUtils.findBOssAccountByRegistrationId(bossAccountRepository, bossId)
         request.let {
             bossAccount.update(it.name, it.pushSettingsStatus)
         }
@@ -33,7 +33,7 @@ class BossAccountService(
 
     @Transactional
     fun signOut(bossId: String) {
-        val bossAccount = BossAccountServiceUtils.findBossAccountById(bossAccountRepository, bossId)
+        val bossAccount = BossAccountServiceUtils.findBOssAccountByRegistrationId(bossAccountRepository, bossId)
         bossWithdrawalAccountRepository.save(com.depromeet.threedollar.domain.mongo.boss.domain.account.BossWithdrawalAccount.newInstance(bossAccount))
         bossAccountRepository.delete(bossAccount)
 

@@ -20,13 +20,12 @@ class GoogleAuthService(
 ) : AuthService {
 
     override fun login(request: LoginRequest): String {
-        val bossAccount = BossAccountServiceUtils.findBossAccountBySocialIdAndSocialTypeWithCheckWaitingRegistration(
+        return BossAccountServiceUtils.findBossAccountBySocialIdAndSocialTypeWithCheckWaitingRegistration(
             bossAccountRepository = bossAccountRepository,
             registrationRepository = registrationRepository,
             socialId = getSocialId(request.token),
             socialType = SOCIAL_TYPE
         )
-        return bossAccount.id
     }
 
     override fun getSocialId(token: String): String {

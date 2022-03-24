@@ -28,11 +28,14 @@ import org.springframework.data.geo.Point
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
 import java.time.LocalTime
+import java.util.*
 import javax.servlet.http.HttpSession
 
-private val BOSS = BossAccount(
+private val BOSS = BossAccount.of(
+    bossId = "test" + UUID.randomUUID().toString(),
     name = "테스트 계정",
-    socialInfo = BossAccountSocialInfo("test-social-id", BossAccountSocialType.KAKAO),
+    socialId = "test-social-id",
+    socialType = BossAccountSocialType.KAKAO,
     businessNumber = BusinessNumber.of("000-12-12345"),
     pushSettingsStatus = PushSettingsStatus.OFF
 )
@@ -52,9 +55,8 @@ class LocalTestController(
     @ApiOperation("[개발용] 사장님 서버용 테스트 토큰을 발급 받습니다.")
     @GetMapping("/test-token")
     fun getTestBossAccountToken(): ApiResponse<LoginResponse> {
-        val bossAccount =
-            bossAccountRepository.findBossAccountBySocialInfo(BOSS.socialInfo.socialId, BOSS.socialInfo.socialType)
-                ?: bossAccountRepository.save(BOSS)
+        val bossAccount = bossAccountRepository.findBossAccountBySocialInfo(BOSS.socialInfo.socialId, BOSS.socialInfo.socialType)
+            ?: bossAccountRepository.save(BOSS)
         httpSession.setAttribute(SessionConstants.BOSS_ACCOUNT_ID, bossAccount.id)
         return ApiResponse.success(LoginResponse(httpSession.id, bossAccount.id))
     }

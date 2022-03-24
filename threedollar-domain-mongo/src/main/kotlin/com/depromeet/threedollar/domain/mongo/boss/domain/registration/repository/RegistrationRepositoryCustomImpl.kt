@@ -13,16 +13,25 @@ class RegistrationRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : RegistrationRepositoryCustom {
 
-    override fun existsRegistrationBySocialIdAndSocialType(socialId: String, socialType: BossAccountSocialType): Boolean {
+    override fun existsWaitingRegistrationBySocialIdAndSocialType(socialId: String, socialType: BossAccountSocialType): Boolean {
         return mongoTemplate.exists(Query()
             .addCriteria(where("boss.socialInfo.socialId").isEqualTo(socialId))
-            .addCriteria(where("boss.socialInfo.socialType").isEqualTo(socialType)), Registration::class.java
+            .addCriteria(where("boss.socialInfo.socialType").isEqualTo(socialType))
+            .addCriteria(Registration::status isEqualTo RegistrationStatus.WAITING), Registration::class.java
         )
     }
 
     override fun findWaitingRegistrationById(registrationId: String): Registration? {
         return mongoTemplate.findOne(Query()
             .addCriteria(Registration::id isEqualTo registrationId)
+            .addCriteria(Registration::status isEqualTo RegistrationStatus.WAITING)
+        )
+    }
+
+    override fun findWaitingRegistrationBySocialIdAndSocialType(socialId: String, socialType: BossAccountSocialType): Registration? {
+        return mongoTemplate.findOne(Query()
+            .addCriteria(where("boss.socialInfo.socialId").isEqualTo(socialId))
+            .addCriteria(where("boss.socialInfo.socialType").isEqualTo(socialType))
             .addCriteria(Registration::status isEqualTo RegistrationStatus.WAITING)
         )
     }

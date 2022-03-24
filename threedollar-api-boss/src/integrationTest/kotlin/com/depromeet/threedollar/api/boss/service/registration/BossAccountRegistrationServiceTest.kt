@@ -63,7 +63,7 @@ internal class BossAccountRegistrationServiceTest(
             )
 
             // when
-            bossAccountRegistrationService.applyForBossAccountRegistration(request, socialId)
+            bossAccountRegistrationService.signUp(request, socialId)
 
             // then
             val registrations = registrationRepository.findAll()
@@ -116,7 +116,7 @@ internal class BossAccountRegistrationServiceTest(
             )
 
             // when & then
-            Assertions.assertThatThrownBy { bossAccountRegistrationService.applyForBossAccountRegistration(request, socialId) }.isInstanceOf(ForbiddenException::class.java)
+            Assertions.assertThatThrownBy { bossAccountRegistrationService.signUp(request, socialId) }.isInstanceOf(ForbiddenException::class.java)
         }
 
         @Test
@@ -145,7 +145,7 @@ internal class BossAccountRegistrationServiceTest(
             )
 
             // when & then
-            Assertions.assertThatThrownBy { bossAccountRegistrationService.applyForBossAccountRegistration(request, socialId) }.isInstanceOf(ConflictException::class.java)
+            Assertions.assertThatThrownBy { bossAccountRegistrationService.signUp(request, socialId) }.isInstanceOf(ConflictException::class.java)
         }
 
         @Test
@@ -166,7 +166,7 @@ internal class BossAccountRegistrationServiceTest(
 
             // when & then
             Assertions.assertThatThrownBy {
-                bossAccountRegistrationService.applyForBossAccountRegistration(request, socialId = "socialId")
+                bossAccountRegistrationService.signUp(request, socialId = "socialId")
             }.isInstanceOf(NotFoundException::class.java)
         }
 

@@ -3,25 +3,7 @@ POST {{host_boss_api}}/v1/auth/signup
 Content-Type: application/json
 
 {
-    "token": "token",
-    "bossName": "토깽이",
-    "socialType": "KAKAO",
-    "businessNumber": "123-45-12341",
-    "storeName": "가슴속 3천원",
-    "storeCategoriesIds": [
-        "{{BOSS_CATEGORY_ID}}"
-    ],
-    "contactsNumber": "010-1234-1234",
-    "certificationPhotoUrl": "https://www.jungle.co.kr/image/9184139c4725921ad8526df7"
-}
-
-
-### 사장님 계정의 로그인을 요청합니다.
-POST {{host_boss_api}}/v1/auth/login
-Content-Type: application/json
-
-{
-    "token": "token",
+    "token": "-PfgY_v1uKgLj13aLKJcsMsVolNDzBtK_K5SGAopyV8AAAF_vBjVtw",
     "bossName": "토깽이",
     "socialType": "KAKAO",
     "businessNumber": "123-45-12341",
@@ -34,7 +16,23 @@ Content-Type: application/json
 }
 
 > {%
-client.global.set("REGISTRATION_ID", response.body["data"]["registrationId"])
+client.global.set("BOSS_AUTHORIZATION", response.body["data"]["token"])
+client.global.set("REGISTRATION_ID", response.body["data"]["bossId"])
+%}
+
+
+### 사장님 계정의 로그인을 요청합니다.
+POST {{host_boss_api}}/v1/auth/login
+Content-Type: application/json
+
+{
+    "token": "-PfgY_v1uKgLj13aLKJcsMsVolNDzBtK_K5SGAopyV8AAAF_vBjVtw",
+    "socialType": "KAKAO"
+}
+
+> {%
+client.global.set("BOSS_AUTHORIZATION", response.body["data"]["token"])
+client.global.set("REGISTRATION_ID", response.body["data"]["bossId"])
 %}
 
 
@@ -42,4 +40,3 @@ client.global.set("REGISTRATION_ID", response.body["data"]["registrationId"])
 DELETE {{host_boss_api}}/v1/auth/sign-out
 Content-Type: application/json
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
-
