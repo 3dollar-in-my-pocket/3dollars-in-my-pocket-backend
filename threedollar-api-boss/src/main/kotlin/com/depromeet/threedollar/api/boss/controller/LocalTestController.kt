@@ -158,11 +158,11 @@ class LocalTestController(
     @PostMapping("/test-feedback/{bossStoreId}")
     fun addTestFeedback(
         @PathVariable bossStoreId: String,
-        @RequestParam feedbackType: BossStoreFeedbackType,
+        @RequestParam feedbackTypes: Set<BossStoreFeedbackType>,
         @RequestParam date: LocalDate,
         @RequestParam userId: Long
     ): ApiResponse<String> {
-        bossStoreFeedbackService.addFeedback(bossStoreId, AddBossStoreFeedbackRequest(feedbackType), userId, date)
+        bossStoreFeedbackService.addFeedback(bossStoreId, AddBossStoreFeedbackRequest(feedbackTypes), userId, date)
         return ApiResponse.OK
     }
 

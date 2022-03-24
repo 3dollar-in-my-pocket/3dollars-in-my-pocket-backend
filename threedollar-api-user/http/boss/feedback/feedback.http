@@ -24,7 +24,11 @@ Content-Type: application/json
 Authorization: {{AUTHORIZATION}}
 
 {
-    "feedbackType": "FOOD_IS_DELICIOUS"
+    "feedbackTypes": [
+        "FOOD_IS_DELICIOUS",
+        "BOSS_IS_KIND",
+        "PLATING_IS_BEAUTIFUL"
+    ]
 }
 
 > {%
