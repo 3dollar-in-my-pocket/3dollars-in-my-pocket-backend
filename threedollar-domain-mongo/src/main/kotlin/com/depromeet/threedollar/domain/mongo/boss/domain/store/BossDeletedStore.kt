@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.domain.mongo.boss.domain.store
 
+import com.depromeet.threedollar.domain.mongo.common.domain.BaseDocument
 import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
@@ -16,7 +17,7 @@ class BossDeletedStore(
     var menus: List<BossStoreMenu> = listOf(),
     var appearanceDays: Set<BossStoreAppearanceDay> = setOf(),
     var categoriesIds: Set<String> = setOf()
-) {
+) : BaseDocument() {
 
     companion object {
         fun of(bossStore: BossStore): BossDeletedStore {

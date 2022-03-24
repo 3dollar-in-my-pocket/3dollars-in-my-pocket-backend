@@ -3,7 +3,7 @@ POST {{host_boss_api}}/v1/auth/signup
 Content-Type: application/json
 
 {
-    "token": "-PfgY_v1uKgLj13aLKJcsMsVolNDzBtK_K5SGAopyV8AAAF_vBjVtw",
+    "token": "token",
     "bossName": "토깽이",
     "socialType": "KAKAO",
     "businessNumber": "123-45-12341",
@@ -26,7 +26,7 @@ POST {{host_boss_api}}/v1/auth/login
 Content-Type: application/json
 
 {
-    "token": "-PfgY_v1uKgLj13aLKJcsMsVolNDzBtK_K5SGAopyV8AAAF_vBjVtw",
+    "token": "token",
     "socialType": "KAKAO"
 }
 
