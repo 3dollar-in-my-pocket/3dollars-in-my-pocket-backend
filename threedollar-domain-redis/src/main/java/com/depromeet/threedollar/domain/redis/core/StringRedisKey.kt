@@ -2,13 +2,13 @@ package com.depromeet.threedollar.domain.redis.core
 
 import java.time.Duration
 
-interface StringRedisKey<VALUE> {
+interface StringRedisKey<V> {
 
     fun getKey(): String
 
-    fun getValue(value: String?): VALUE?
+    fun getValue(value: String?): V?
 
-    fun toValue(value: VALUE): String
+    fun toValue(value: V): String
 
     fun getTtl(): Duration?
 

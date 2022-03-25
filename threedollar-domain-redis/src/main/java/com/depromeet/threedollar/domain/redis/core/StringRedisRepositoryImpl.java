@@ -14,33 +14,33 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Repository
-public class StringRedisRepositoryImpl<KEY extends StringRedisKey<VALUE>, VALUE> implements StringRedisRepository<KEY, VALUE> {
+public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implements StringRedisRepository<K, V> {
 
     private final RedisTemplate<String, String> redisTemplate;
 
     @Nullable
     @Override
-    public VALUE get(KEY key) {
+    public V get(K key) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         key.getValue(operations.get(key.getKey()));
         return key.getValue(operations.get(key.getKey()));
     }
 
     @Override
-    public List<VALUE> multiGet(List<KEY> keys) {
+    public List<V> multiGet(List<K> keys) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
-        List<String> values = operations.multiGet(keys.stream().map(KEY::getKey).collect(Collectors.toList()));
+        List<String> values = operations.multiGet(keys.stream().map(K::getKey).collect(Collectors.toList()));
         if (values == null) {
             throw new IllegalArgumentException(String.format("레디스 multiGet (%s) 중 에러가 발생하였습니다", keys));
         }
-        KEY key = keys.get(0);
+        K key = keys.get(0);
         return values.stream()
             .map(key::getValue)
             .collect(Collectors.toList());
     }
 
     @Override
-    public void set(KEY key, VALUE value) {
+    public void set(K key, V value) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         if (key.getTtl() == null) {
             operations.set(key.getKey(), key.toValue(value));
@@ -50,13 +50,13 @@ public class StringRedisRepositoryImpl<KEY extends StringRedisKey<VALUE>, VALUE>
     }
 
     @Override
-    public void incr(KEY key) {
+    public void incr(K key) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         operations.increment(key.getKey());
     }
 
     @Override
-    public void multiIncr(List<KEY> keys) {
+    public void multiIncr(List<K> keys) {
         redisTemplate.executePipelined((RedisCallback<Object>) pipeline -> {
             keys.forEach(key -> pipeline.incr(key.getKey().getBytes(StandardCharsets.UTF_8)));
             return null;
@@ -64,25 +64,25 @@ public class StringRedisRepositoryImpl<KEY extends StringRedisKey<VALUE>, VALUE>
     }
 
     @Override
-    public void incr(KEY key, long value) {
+    public void incr(K key, long value) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         operations.increment(key.getKey(), value);
     }
 
     @Override
-    public void decr(KEY key) {
+    public void decr(K key) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         operations.decrement(key.getKey());
     }
 
     @Override
-    public void decr(KEY key, long value) {
+    public void decr(K key, long value) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         operations.decrement(key.getKey(), value);
     }
 
     @Override
-    public void delete(KEY key) {
+    public void delete(K key) {
         redisTemplate.delete(key.getKey());
     }
 

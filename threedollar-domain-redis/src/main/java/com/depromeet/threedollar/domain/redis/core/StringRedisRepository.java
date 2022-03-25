@@ -4,25 +4,25 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public interface StringRedisRepository<KEY, VALUE> {
+public interface StringRedisRepository<K, V> {
 
     @Nullable
-    VALUE get(KEY key);
+    V get(K key);
 
-    List<VALUE> multiGet(List<KEY> keys);
+    List<V> multiGet(List<K> keys);
 
-    void set(KEY key, VALUE value);
+    void set(K key, V value);
 
-    void incr(KEY key);
+    void incr(K key);
 
-    void multiIncr(List<KEY> keys);
+    void multiIncr(List<K> keys);
 
-    void incr(KEY key, long value);
+    void incr(K key, long value);
 
-    void decr(KEY key);
+    void decr(K key);
 
-    void decr(KEY key, long value);
+    void decr(K key, long value);
 
-    void delete(KEY key);
+    void delete(K key);
 
 }
