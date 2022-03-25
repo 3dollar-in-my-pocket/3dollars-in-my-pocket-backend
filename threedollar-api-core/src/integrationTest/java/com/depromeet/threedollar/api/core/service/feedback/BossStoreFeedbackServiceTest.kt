@@ -16,10 +16,7 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.TestConstructor
 import java.time.LocalDate
 
@@ -29,10 +26,8 @@ internal class BossStoreFeedbackServiceTest(
     private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreFeedbackService: BossStoreFeedbackService,
+    private val bossStoreFeedbackCountRepository: StringRedisRepository<BossStoreFeedbackCountRedisKey, Int>
 ) {
-
-    @MockBean
-    private lateinit var bossStoreFeedbackCountRepository: StringRedisRepository<BossStoreFeedbackCountRedisKey, Int>
 
     @AfterEach
     fun cleanUp() {
@@ -98,7 +93,8 @@ internal class BossStoreFeedbackServiceTest(
         )
 
         // then
-        verify(bossStoreFeedbackCountRepository, times(1)).increase(BossStoreFeedbackCountRedisKey.of(bossStore.id, feedbackType))
+        val count = bossStoreFeedbackCountRepository.get(BossStoreFeedbackCountRedisKey.of(bossStore.id, feedbackType))
+        assertThat(count).isEqualTo(1)
     }
 
     @Test
