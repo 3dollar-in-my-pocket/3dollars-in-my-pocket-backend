@@ -8,7 +8,8 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeed
 import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedbackRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRepository
+import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRedisKey
+import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
 import org.hamcrest.Matchers.hasSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
@@ -18,7 +19,7 @@ import java.time.LocalDate
 
 internal class BossStoreFeedbackControllerTest(
     private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,
-    private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository,
+    private val bossStoreFeedbackCountRepository: StringRedisRepository<BossStoreFeedbackCountRedisKey, Int>,
     private val bossStoreRepository: BossStoreRepository,
 ) : SetupUserControllerTest() {
 
@@ -40,7 +41,7 @@ internal class BossStoreFeedbackControllerTest(
         )
         bossStoreRepository.save(bossStore)
 
-        bossStoreFeedbackCountRepository.increment(bossStore.id, feedbackType)
+        bossStoreFeedbackCountRepository.increase(BossStoreFeedbackCountRedisKey.of(bossStore.id, feedbackType))
         val bossStoreFeedback = BossStoreFeedbackCreator.create(
             storeId = bossStore.id,
             userId = 10000L,

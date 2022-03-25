@@ -2,7 +2,7 @@
 GET {{host_api}}/ping
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -13,7 +13,7 @@ GET {{host_api}}/test-token
 
 > {%
 client.global.set("AUTHORIZATION", response.body["data"]["token"])
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}

@@ -10,8 +10,9 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCate
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.*
 import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
 import com.depromeet.threedollar.domain.mongo.common.domain.TimeInterval
-import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenInfoCreator
-import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenInfoRepository
+import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenRedisKey
+import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenRedisKeyCreator
+import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
 import org.hamcrest.Matchers.hasSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
@@ -25,13 +26,12 @@ internal class BossStoreControllerTest(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossStoreLocationRepository: BossStoreLocationRepository,
-    private val bossStoreOpenInfoRepository: BossStoreOpenInfoRepository
+    private val bossStoreOpenInfoRepository: StringRedisRepository<BossStoreOpenRedisKey, LocalDateTime>
 ) : SetupBossControllerTest() {
 
     @AfterEach
     fun cleanUp() {
         super.cleanup()
-        bossStoreOpenInfoRepository.deleteAll()
         bossStoreCategoryRepository.deleteAll()
         bossStoreRepository.deleteAll()
         bossStoreLocationRepository.deleteAll()
@@ -124,7 +124,7 @@ internal class BossStoreControllerTest(
         )
         bossStoreRepository.save(bossStore)
 
-        bossStoreOpenInfoRepository.save(BossStoreOpenInfoCreator.create(bossStore.id, LocalDateTime.of(2022, 2, 1, 0, 0)))
+        bossStoreOpenInfoRepository.set(BossStoreOpenRedisKeyCreator.create(bossStore.id), LocalDateTime.of(2022, 2, 1, 0, 0))
 
         bossStoreLocationRepository.save(BossStoreLocationCreator.create(
             bossStoreId = bossStore.id,

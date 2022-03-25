@@ -10,7 +10,7 @@ Content-Type: application/json
 }
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.global.set("FAQ_ID", response.body["data"]["faqId"])
     client.assert(response.status === 200, "응답 실패");
 });
@@ -29,7 +29,7 @@ Content-Type: application/json
 }
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -40,7 +40,7 @@ DELETE {{host_admin}}/v1/user/faq/{{FAQ_ID}}
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -51,7 +51,7 @@ GET {{host_admin}}/v1/user/faqs
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -62,7 +62,7 @@ GET {{host_admin}}/v1/user/faqs?category=STORE
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -73,7 +73,7 @@ GET {{host_admin}}/v1/user/faq/categories
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}

@@ -10,7 +10,7 @@ Authorization: {{AUTHORIZATION}}
 }
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.global.set("REVIEW_ID", response.body["data"]["reviewId"])
     client.assert(response.status === 200, "응답 실패");
 });
@@ -28,7 +28,7 @@ Authorization: {{AUTHORIZATION}}
 }
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -39,7 +39,7 @@ DELETE {{host_api}}/v2/store/review/{{REVIEW_ID}}
 Authorization: {{AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -50,7 +50,7 @@ GET {{host_api}}/v3/store/reviews/me?size=30
 Authorization: {{AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.global.set("REVIEW_CURSOR", response.body["data"]["nextCursor"])
     client.assert(response.status === 200, "응답 실패");
 });

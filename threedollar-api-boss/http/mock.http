@@ -17,10 +17,10 @@ client.global.set("BOSS_STORE_ID", response.body["data"])
 
 
 ### [테스트용] 가게에 Mock 피드백 데이터를 추가합니다
-POST {{host_boss_api}}/test-feedback/{{BOSS_STORE_ID}}?feedbackTypes=FOOD_IS_DELICIOUS&date=2022-02-15&userId=1000000
+POST {{host_boss_api}}/test-feedback/{{BOSS_STORE_ID}}?feedbackTypes=FOOD_IS_DELICIOUS,BOSS_IS_KIND&date=2022-02-16&userId=1000000
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -31,7 +31,7 @@ PUT {{host_boss_api}}/test-registration/{{REGISTRATION_ID}}/apply
 
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}

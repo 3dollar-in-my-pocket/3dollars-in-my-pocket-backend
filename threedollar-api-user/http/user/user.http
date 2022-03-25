@@ -3,7 +3,7 @@ GET {{host_api}}/v2/user/me
 Authorization: {{AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -14,7 +14,7 @@ GET {{host_api}}/v1/user/activity
 Authorization: {{AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -30,7 +30,7 @@ Authorization: {{AUTHORIZATION}}
 }
 
 > {%
-client.test("200 OK or 409 Conflict", function() {
+client.test("200 OK or 409 Conflict", () => {
     client.assert(response.status === 200 || 409, "응답 실패");
 });
 %}
@@ -40,7 +40,7 @@ client.test("200 OK or 409 Conflict", function() {
 GET {{host_api}}/v2/user/name/check?name=wi_ll
 
 > {%
-client.test("200 OK or 409 Conflict", function() {
+client.test("200 OK or 409 Conflict", () => {
      client.assert(response.status === 409 || 200, "응답 실패");
 });
 %}
@@ -50,7 +50,7 @@ client.test("200 OK or 409 Conflict", function() {
 GET {{host_api}}/v2/user/name/check?name=-11-
 
 > {%
-client.test("400 BadRequest", function() {
+client.test("400 BadRequest", () => {
      client.assert(response.status === 400, "응답 실패");
 });
 %}

@@ -2,7 +2,7 @@
 GET {{host_boss_api}}/ping
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}

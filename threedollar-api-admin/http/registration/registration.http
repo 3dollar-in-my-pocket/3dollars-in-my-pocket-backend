@@ -3,7 +3,7 @@ PUT {{host_admin}}/v1/boss/account/registration/{{REGISTRATION_ID}}/apply
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -14,7 +14,7 @@ PUT {{host_admin}}/v1/boss/account/registration/{{REGISTRATION_ID}}/reject
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}

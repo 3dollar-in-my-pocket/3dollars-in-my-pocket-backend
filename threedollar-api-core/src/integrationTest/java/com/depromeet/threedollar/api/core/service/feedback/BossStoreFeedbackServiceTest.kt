@@ -9,16 +9,14 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeed
 import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedbackRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRepository
+import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRedisKey
+import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.TestConstructor
 import java.time.LocalDate
 
@@ -28,10 +26,8 @@ internal class BossStoreFeedbackServiceTest(
     private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreFeedbackService: BossStoreFeedbackService,
+    private val bossStoreFeedbackCountRepository: StringRedisRepository<BossStoreFeedbackCountRedisKey, Int>
 ) {
-
-    @MockBean
-    private lateinit var bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository
 
     @AfterEach
     fun cleanUp() {
@@ -97,7 +93,8 @@ internal class BossStoreFeedbackServiceTest(
         )
 
         // then
-        verify(bossStoreFeedbackCountRepository, times(1)).increment(bossStore.id, feedbackType)
+        val count = bossStoreFeedbackCountRepository.get(BossStoreFeedbackCountRedisKey.of(bossStore.id, feedbackType))
+        assertThat(count).isEqualTo(1)
     }
 
     @Test

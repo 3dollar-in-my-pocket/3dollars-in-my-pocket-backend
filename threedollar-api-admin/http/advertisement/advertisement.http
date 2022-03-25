@@ -17,7 +17,7 @@ Content-Type: application/json
 }
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -28,7 +28,7 @@ GET {{host_admin}}/v1/user/advertisements?page=1&size=3
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -53,7 +53,7 @@ Content-Type: application/json
 }
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -64,7 +64,7 @@ DELETE {{host_admin}}/v1/user/advertisement/1
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
