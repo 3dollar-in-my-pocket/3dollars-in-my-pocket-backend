@@ -9,12 +9,13 @@ public interface StringRedisRepository<KEY, VALUE> {
     @Nullable
     VALUE get(KEY key);
 
-    @Nullable
     List<VALUE> multiGet(List<KEY> keys);
 
     void set(KEY key, VALUE value);
 
     void incr(KEY key);
+
+    void multiIncr(List<KEY> keys);
 
     void incr(KEY key, long value);
 

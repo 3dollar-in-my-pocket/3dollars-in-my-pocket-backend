@@ -29,9 +29,9 @@ class BossStoreFeedbackService(
         BossStoreCommonServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
         validateNotExistsFeedbackOnDate(storeId = bossStoreId, userId = userId, date = date)
         bossStoreFeedbackRepository.saveAll(request.toDocuments(bossStoreId, userId, date))
-        request.feedbackTypes.map {
-            bossStoreFeedbackCountRepository.incr(BossStoreFeedbackCountRedisKey.of(bossStoreId, it))
-        }
+        bossStoreFeedbackCountRepository.multiIncr(request.feedbackTypes.map {
+            BossStoreFeedbackCountRedisKey.of(bossStoreId, it)
+        })
     }
 
     private fun validateNotExistsFeedbackOnDate(storeId: String, userId: Long, date: LocalDate) {
@@ -59,7 +59,7 @@ class BossStoreFeedbackService(
         val feedbacksGroupingDate: Map<LocalDate, Map<BossStoreFeedbackType, Int>> = feedbacks
             .groupBy { it.date }
             .entries
-            .associate { it -> it.key to it.value.groupingBy { it.feedbackType }.eachCount()}
+            .associate { it -> it.key to it.value.groupingBy { it.feedbackType }.eachCount() }
 
         return BossStoreFeedbackCursorResponse.of(
             feedbackGroupingDate = feedbacksGroupingDate,
