@@ -34,14 +34,14 @@ class BossStoreOpenService(
     }
 
     private fun upsertStoreOpenInfo(bossStoreId: String) {
-        val openDateTime: LocalDateTime = bossStoreOpenInfoOneRepository.get(BossStoreOpenRedisKey(bossStoreId))
+        val openDateTime: LocalDateTime = bossStoreOpenInfoOneRepository.get(BossStoreOpenRedisKey.of(bossStoreId))
             ?: LocalDateTime.now()
-        bossStoreOpenInfoOneRepository.set(BossStoreOpenRedisKey(bossStoreId), openDateTime)
+        bossStoreOpenInfoOneRepository.set(BossStoreOpenRedisKey.of(bossStoreId), openDateTime)
     }
 
     fun closeBossStore(bossStoreId: String, bossId: String) {
         BossStoreServiceUtils.validateExistsBossStoreByBoss(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
-        bossStoreOpenInfoOneRepository.delete(BossStoreOpenRedisKey(bossStoreId))
+        bossStoreOpenInfoOneRepository.delete(BossStoreOpenRedisKey.of(bossStoreId))
     }
 
 }

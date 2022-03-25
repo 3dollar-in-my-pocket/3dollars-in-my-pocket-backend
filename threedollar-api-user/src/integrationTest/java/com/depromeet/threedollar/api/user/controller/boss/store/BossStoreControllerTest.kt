@@ -55,7 +55,7 @@ internal class BossStoreControllerTest(
         )
         bossStoreRepository.save(bossStore)
 
-        bossStoreOpenInfoRepository.set(BossStoreOpenRedisKey(bossStore.id), LocalDateTime.of(2022, 2, 1, 0, 0))
+        bossStoreOpenInfoRepository.set(BossStoreOpenRedisKey.of(bossStore.id), LocalDateTime.of(2022, 2, 1, 0, 0))
 
         bossStoreLocationRepository.save(BossStoreLocationCreator.create(
             bossStoreId = bossStore.id,

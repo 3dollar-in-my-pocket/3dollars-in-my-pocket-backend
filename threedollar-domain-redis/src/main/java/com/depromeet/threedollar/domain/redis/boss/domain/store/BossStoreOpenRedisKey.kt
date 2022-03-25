@@ -27,4 +27,12 @@ data class BossStoreOpenRedisKey(
         return BOSS_STORE_OPEN.ttl
     }
 
+    companion object {
+        fun of(bossStoreId: String): BossStoreOpenRedisKey {
+            return BossStoreOpenRedisKey(
+                bossStoreId = bossStoreId
+            )
+        }
+    }
+
 }

@@ -55,7 +55,7 @@ class BossStoreCommonService(
                 BossStoreAroundInfoResponse.of(
                     bossStore = it,
                     categories = getCategory(it, categoriesDictionary),
-                    openStartDateTime = bossStoreOpenInfoRepository.get(BossStoreOpenRedisKey(it.id)),
+                    openStartDateTime = bossStoreOpenInfoRepository.get(BossStoreOpenRedisKey.of(it.id)),
                     location = locationsDictionary[it.id]?.location,
                     geoCoordinate = geoCoordinate,
                     totalFeedbacksCounts = bossStoreFeedbackCountRepository.getAllCounts(it.id)
@@ -79,7 +79,7 @@ class BossStoreCommonService(
             bossStore = bossStore,
             location = bossStoreLocationRepository.findBossStoreLocationByBossStoreId(bossStore.id)?.location,
             categories = bossStoreCategoryRepository.findCategoriesByIds(bossStore.categoriesIds),
-            openStartDateTime = bossStoreOpenInfoRepository.get(BossStoreOpenRedisKey(bossStore.id)),
+            openStartDateTime = bossStoreOpenInfoRepository.get(BossStoreOpenRedisKey.of(bossStore.id)),
             geoCoordinate = geoCoordinate
         )
     }

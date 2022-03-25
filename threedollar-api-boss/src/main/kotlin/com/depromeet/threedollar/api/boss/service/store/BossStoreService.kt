@@ -55,7 +55,7 @@ class BossStoreService(
             bossStore = bossStore,
             location = bossStoreLocationRepository.findBossStoreLocationByBossStoreId(bossStore.id)?.location,
             categories = bossStoreCategoryRepository.findCategoriesByIds(bossStore.categoriesIds),
-            openStartDateTime = bossStoreOpenInfoRepository.get(BossStoreOpenRedisKey(bossStore.id))
+            openStartDateTime = bossStoreOpenInfoRepository.get(BossStoreOpenRedisKey.of(bossStore.id))
         )
     }
 
