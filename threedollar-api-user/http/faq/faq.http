@@ -2,7 +2,7 @@
 GET {{host_api}}/v2/faqs
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -12,7 +12,7 @@ client.test("200 OK", function() {
 GET {{host_api}}/v2/faqs?category=STORE
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -22,7 +22,7 @@ client.test("200 OK", function() {
 GET {{host_api}}/v2/faq/categories
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}

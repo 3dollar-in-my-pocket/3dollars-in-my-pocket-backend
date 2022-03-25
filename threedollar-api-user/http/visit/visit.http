@@ -9,7 +9,7 @@ Authorization: {{AUTHORIZATION}}
 }
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -20,7 +20,7 @@ GET {{host_api}}/v2/store/visits/me?size=30
 Authorization: {{AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}

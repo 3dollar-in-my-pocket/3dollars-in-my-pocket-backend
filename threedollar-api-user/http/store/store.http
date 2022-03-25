@@ -33,7 +33,7 @@ Authorization: {{AUTHORIZATION}}
 }
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.global.set("STORE_ID", response.body["data"]["storeId"])
     client.assert(response.status === 200, "응답 실패");
 });
@@ -44,7 +44,7 @@ client.test("200 OK", function() {
 GET {{host_api}}/v2/store/?storeId={{STORE_ID}}&latitude=34&longitude=126&startDate=2022-02-01
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -54,7 +54,7 @@ client.test("200 OK", function() {
 GET {{host_api}}/v2/stores/near?latitude=34&longitude=126&mapLatitude=34&mapLongitude=126&distance=5000&category=DALGONA&orderType=REVIEW_DESC
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -65,7 +65,7 @@ GET {{host_api}}/v3/stores/me?size=30
 Authorization: {{AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.global.set("CURSOR", response.body["data"]["nextCursor"])
     client.assert(response.status === 200, "응답 실패");
 });
@@ -77,7 +77,7 @@ GET {{host_api}}/v3/stores/me?size=30&latitude=34&longitude=126&cursor={{CURSOR}
 Authorization: {{AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     if (response.body["data"]["nextCursor"] !== null) {
         client.global.set("CURSOR", response.body["data"]["nextCursor"])
     }
@@ -114,7 +114,7 @@ Authorization: {{AUTHORIZATION}}
 }
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -125,7 +125,7 @@ DELETE {{host_api}}/v2/store/{{STORE_ID}}?deleteReasonType=NOSTORE
 Authorization: {{AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -135,7 +135,7 @@ client.test("200 OK", function() {
 GET {{host_api}}/v1/stores/near/exists?mapLatitude=34&mapLongitude=126&distance=1000
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -145,7 +145,7 @@ client.test("200 OK", function() {
 GET {{host_api}}/v2/store/menu/categories
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}

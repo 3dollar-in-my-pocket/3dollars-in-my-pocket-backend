@@ -3,7 +3,7 @@ GET {{host_admin}}/v1/user/stores/reported?minCount=1&page=1&size=3
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
@@ -14,7 +14,7 @@ GET {{host_admin}}/v1/user/stores/latest?size=3
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}

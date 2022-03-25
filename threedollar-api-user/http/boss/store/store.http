@@ -2,7 +2,7 @@
 GET {{host_api}}/v1/boss/stores/around?mapLatitude=38&mapLongitude=127.01&distanceKm=1&latitude=38.0&longitude=127.2&orderType=DISTANCE_ASC
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.global.set("BOSS_STORE_ID", response.body["data"][0]["bossStoreId"])
     client.assert(response.status === 200, "응답 실패");
 });
@@ -13,7 +13,7 @@ client.test("200 OK", function() {
 GET {{host_api}}/v1/boss/stores/around?mapLatitude=38&mapLongitude=127.01&distanceKm=1&latitude=38.0&longitude=127.2&orderType=TOTAL_FEEDBACKS_COUNTS_DESC
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.global.set("BOSS_STORE_ID", response.body["data"][0]["bossStoreId"])
     client.assert(response.status === 200, "응답 실패");
 });
@@ -24,7 +24,7 @@ client.test("200 OK", function() {
 GET {{host_api}}/v1/boss/store/{{BOSS_STORE_ID}}?latitude=38.0&longitude=127.1
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
