@@ -98,7 +98,7 @@ internal class BossStoreFeedbackServiceTest(
         )
 
         // then
-        verify(bossStoreFeedbackCountRepository, times(1)).incr(BossStoreFeedbackCountRedisKey.of(bossStore.id, feedbackType))
+        verify(bossStoreFeedbackCountRepository, times(1)).increase(BossStoreFeedbackCountRedisKey.of(bossStore.id, feedbackType))
     }
 
     @Test

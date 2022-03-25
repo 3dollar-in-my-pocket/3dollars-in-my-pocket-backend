@@ -59,7 +59,7 @@ class BossStoreCommonService(
                     openStartDateTime = bossStoreOpenInfoRepository.get(BossStoreOpenRedisKey.of(it.id)),
                     location = locationsDictionary[it.id]?.location,
                     geoCoordinate = geoCoordinate,
-                    totalFeedbacksCounts = bossStoreFeedbackCountRepository.multiGet(
+                    totalFeedbacksCounts = bossStoreFeedbackCountRepository.getAll(
                         BossStoreFeedbackType.values().map { feedback ->
                             BossStoreFeedbackCountRedisKey(it.id, feedback)
                         }).filterNotNull().sum()

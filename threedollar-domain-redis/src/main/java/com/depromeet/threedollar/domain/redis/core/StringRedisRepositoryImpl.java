@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -27,7 +28,7 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implement
     }
 
     @Override
-    public List<V> multiGet(List<K> keys) {
+    public List<V> getAll(List<K> keys) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         List<String> values = operations.multiGet(keys.stream().map(K::getKey).collect(Collectors.toList()));
         if (values == null) {
@@ -41,22 +42,28 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implement
 
     @Override
     public void set(K key, V value) {
-        ValueOperations<String, String> operations = redisTemplate.opsForValue();
         if (key.getTtl() == null) {
+            ValueOperations<String, String> operations = redisTemplate.opsForValue();
             operations.set(key.getKey(), key.toValue(value));
             return;
         }
+        setTtl(key, value, key.getTtl());
+    }
+
+    @Override
+    public void setTtl(K key, V value, Duration ttl) {
+        ValueOperations<String, String> operations = redisTemplate.opsForValue();
         operations.set(key.getKey(), key.toValue(value), key.getTtl().getSeconds(), TimeUnit.SECONDS);
     }
 
     @Override
-    public void incr(K key) {
+    public void increase(K key) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         operations.increment(key.getKey());
     }
 
     @Override
-    public void multiIncr(List<K> keys) {
+    public void increaseAll(List<K> keys) {
         redisTemplate.executePipelined((RedisCallback<Object>) pipeline -> {
             keys.forEach(key -> pipeline.incr(key.getKey().getBytes(StandardCharsets.UTF_8)));
             return null;
@@ -64,19 +71,19 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implement
     }
 
     @Override
-    public void incr(K key, long value) {
+    public void increase(K key, long value) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         operations.increment(key.getKey(), value);
     }
 
     @Override
-    public void decr(K key) {
+    public void decrease(K key) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         operations.decrement(key.getKey());
     }
 
     @Override
-    public void decr(K key, long value) {
+    public void decrease(K key, long value) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         operations.decrement(key.getKey(), value);
     }

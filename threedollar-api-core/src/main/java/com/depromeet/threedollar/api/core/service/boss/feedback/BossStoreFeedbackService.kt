@@ -29,7 +29,7 @@ class BossStoreFeedbackService(
         BossStoreCommonServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
         validateNotExistsFeedbackOnDate(storeId = bossStoreId, userId = userId, date = date)
         bossStoreFeedbackRepository.saveAll(request.toDocuments(bossStoreId, userId, date))
-        bossStoreFeedbackCountRepository.multiIncr(request.feedbackTypes.map {
+        bossStoreFeedbackCountRepository.increaseAll(request.feedbackTypes.map {
             BossStoreFeedbackCountRedisKey.of(bossStoreId, it)
         })
     }

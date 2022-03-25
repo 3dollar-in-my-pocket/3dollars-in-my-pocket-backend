@@ -43,7 +43,7 @@ internal class BossStoreFeedbackControllerTest(
         )
         bossStoreRepository.save(bossStore)
 
-        bossStoreFeedbackCountRepository.incr(BossStoreFeedbackCountRedisKey.of(bossStore.id, feedbackType))
+        bossStoreFeedbackCountRepository.increase(BossStoreFeedbackCountRedisKey.of(bossStore.id, feedbackType))
         val bossStoreFeedback = BossStoreFeedbackCreator.create(
             storeId = bossStore.id,
             userId = 10000L,
