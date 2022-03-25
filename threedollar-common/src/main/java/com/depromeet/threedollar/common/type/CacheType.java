@@ -11,7 +11,7 @@ public enum CacheType {
 
     FAQS("FAQ 목록", CacheKey.FAQS, Duration.ofHours(1), CacheRange.GLOBAL),
     MEDALS("전체 메달 목록", CacheKey.MEDALS, Duration.ofHours(1), CacheRange.GLOBAL),
-    ADVERTISEMENT("활성화 중인 광고 목록", CacheKey.ADVERTISEMENT, Duration.ofMinutes(10), CacheRange.GLOBAL),
+    ADVERTISEMENT("활성화 중인 광고 목록", CacheKey.ADVERTISEMENTS, Duration.ofMinutes(10), CacheRange.GLOBAL),
     USER_STORES_COUNTS("유저가 등록한 가게 수", CacheKey.USER_STORES_COUNTS, Duration.ofMinutes(10), CacheRange.GLOBAL),
     USER_REVIEWS_COUNTS("유저가 작성한 리뷰 수", CacheKey.USER_REVIEWS_COUNTS, Duration.ofMinutes(10), CacheRange.GLOBAL),
     USER_MEDALS("유저가 보유중인 메달 목록", CacheKey.USER_MEDALS, Duration.ofMinutes(10), CacheRange.GLOBAL),
@@ -33,15 +33,15 @@ public enum CacheType {
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static class CacheKey {
 
-        public static final String FAQS = "FAQS";
-        public static final String MEDALS = "MEDALS";
-        public static final String ADVERTISEMENT = "ADVERTISEMENT";
+        public static final String FAQS = "faqs";
+        public static final String MEDALS = "medals";
+        public static final String ADVERTISEMENTS = "advertisements";
 
-        public static final String USER_STORES_COUNTS = "USER_STORES_COUNTS";
-        public static final String USER_REVIEWS_COUNTS = "USER_REVIEWS_COUNTS";
-        public static final String USER_MEDALS = "USER_MEDALS";
+        public static final String USER_STORES_COUNTS = "user_stores_count";
+        public static final String USER_REVIEWS_COUNTS = "user_reviews_count";
+        public static final String USER_MEDALS = "user_medals";
 
-        public static final String BOSS_STORE_CATEGORIES = "BOSS_STORE_CATEGORIES";
+        public static final String BOSS_STORE_CATEGORIES = "boss_store_categories";
 
     }
 

@@ -6,7 +6,7 @@ client.global.set("BOSS_CATEGORY_ID", response.body["data"][0]["categoryId"])
 %}
 
 
-### 특정 거리 안에 위치한 가게 목록을 조회합니다.
+### 주변 특정 거리 안에 위치한 가게 목록을 조회합니다.
 GET {{host_boss_api}}/v1/boss/stores/around?mapLatitude=38&mapLongitude=127.01&distanceKm=1
 
 > {%

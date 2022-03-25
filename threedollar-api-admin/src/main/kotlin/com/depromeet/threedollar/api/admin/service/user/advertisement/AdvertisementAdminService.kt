@@ -6,7 +6,7 @@ import com.depromeet.threedollar.api.admin.service.user.advertisement.dto.reques
 import com.depromeet.threedollar.api.admin.service.user.advertisement.dto.response.AdvertisementsWithPagingResponse
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
-import com.depromeet.threedollar.common.type.CacheType.CacheKey.ADVERTISEMENT
+import com.depromeet.threedollar.common.type.CacheType.CacheKey.ADVERTISEMENTS
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.Advertisement
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementDetail
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementRepository
@@ -19,13 +19,13 @@ class AdvertisementAdminService(
     private val advertisementRepository: AdvertisementRepository
 ) {
 
-    @CacheEvict(key = "{#request.position, #request.platform}", value = [ADVERTISEMENT])
+    @CacheEvict(key = "{#request.position, #request.platform}", value = [ADVERTISEMENTS])
     @Transactional
     fun addAdvertisement(request: AddAdvertisementRequest) {
         advertisementRepository.save(request.toEntity())
     }
 
-    @CacheEvict(key = "{#request.position, #request.platform}", value = [ADVERTISEMENT])
+    @CacheEvict(key = "{#request.position, #request.platform}", value = [ADVERTISEMENTS])
     @Transactional
     fun updateAdvertisement(advertisementId: Long, request: UpdateAdvertisementRequest) {
         val advertisement = findAdvertisementById(advertisementId)
@@ -35,7 +35,7 @@ class AdvertisementAdminService(
         }
     }
 
-    @CacheEvict(allEntries = true, value = [ADVERTISEMENT])
+    @CacheEvict(allEntries = true, value = [ADVERTISEMENTS])
     @Transactional
     fun deleteAdvertisement(advertisementId: Long) {
         val advertisement = findAdvertisementById(advertisementId)
