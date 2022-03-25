@@ -9,7 +9,8 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeed
 import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedbackRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRepository
+import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRedisKey
+import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
@@ -31,7 +32,7 @@ internal class BossStoreFeedbackServiceTest(
 ) {
 
     @MockBean
-    private lateinit var bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository
+    private lateinit var bossStoreFeedbackCountRepository: StringRedisRepository<BossStoreFeedbackCountRedisKey, Int>
 
     @AfterEach
     fun cleanUp() {
@@ -97,7 +98,7 @@ internal class BossStoreFeedbackServiceTest(
         )
 
         // then
-        verify(bossStoreFeedbackCountRepository, times(1)).increment(bossStore.id, feedbackType)
+        verify(bossStoreFeedbackCountRepository, times(1)).incr(BossStoreFeedbackCountRedisKey.of(bossStore.id, feedbackType))
     }
 
     @Test

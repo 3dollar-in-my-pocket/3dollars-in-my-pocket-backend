@@ -5,13 +5,14 @@ import com.depromeet.threedollar.api.core.service.boss.store.dto.request.GetArou
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAroundInfoResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreInfoResponse
 import com.depromeet.threedollar.common.model.CoordinateValue
+import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRepository
+import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRedisKey
 import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenRedisKey
 import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
 import org.springframework.stereotype.Service
@@ -27,7 +28,7 @@ class BossStoreCommonService(
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossStoreOpenInfoRepository: StringRedisRepository<BossStoreOpenRedisKey, LocalDateTime>,
     private val bossStoreLocationRepository: BossStoreLocationRepository,
-    private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository
+    private val bossStoreFeedbackCountRepository: StringRedisRepository<BossStoreFeedbackCountRedisKey, Int>
 ) {
 
     @Transactional(readOnly = true)
@@ -58,7 +59,9 @@ class BossStoreCommonService(
                     openStartDateTime = bossStoreOpenInfoRepository.get(BossStoreOpenRedisKey.of(it.id)),
                     location = locationsDictionary[it.id]?.location,
                     geoCoordinate = geoCoordinate,
-                    totalFeedbacksCounts = bossStoreFeedbackCountRepository.getAllCounts(it.id)
+                    totalFeedbacksCounts = bossStoreFeedbackCountRepository.multiGet(BossStoreFeedbackType.values().map { feedback ->
+                        BossStoreFeedbackCountRedisKey(it.id, feedback)
+                    })?.sum() ?: 0
                 )
             }
             .sortedWith(request.orderType.sorted)
