@@ -12,11 +12,11 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocatio
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRepository
-import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenInfo
-import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenInfoRepository
-import org.springframework.data.repository.findByIdOrNull
+import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenRedisKey
+import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 import kotlin.math.min
 
 private const val MAX_DISTANCE_KM = 2.0
@@ -25,7 +25,7 @@ private const val MAX_DISTANCE_KM = 2.0
 class BossStoreCommonService(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-    private val bossStoreOpenInfoRepository: BossStoreOpenInfoRepository,
+    private val bossStoreOpenInfoRepository: StringRedisRepository<BossStoreOpenRedisKey, LocalDateTime>,
     private val bossStoreLocationRepository: BossStoreLocationRepository,
     private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository
 ) {
@@ -49,14 +49,13 @@ class BossStoreCommonService(
         val locationsDictionary: Map<String, BossStoreLocation> = storeLocations.associateBy { it.bossStoreId }
         val bossStores: List<BossStore> = bossStoreRepository.findAllByIdByCategory(storeLocations.map { it.bossStoreId }, request.categoryId)
         val categoriesDictionary: Map<String, BossStoreCategory> = bossStoreCategoryRepository.findAll().associateBy { it.id }
-        val openInfoDictionary: Map<String, BossStoreOpenInfo> = bossStoreOpenInfoRepository.findAllById(bossStores.map { it.id }).associateBy { it.bossStoreId }
 
         return bossStores.asSequence()
             .map {
                 BossStoreAroundInfoResponse.of(
                     bossStore = it,
                     categories = getCategory(it, categoriesDictionary),
-                    bossStoreOpenInfo = openInfoDictionary[it.id],
+                    openStartDateTime = bossStoreOpenInfoRepository.get(BossStoreOpenRedisKey(it.id)),
                     location = locationsDictionary[it.id]?.location,
                     geoCoordinate = geoCoordinate,
                     totalFeedbacksCounts = bossStoreFeedbackCountRepository.getAllCounts(it.id)
@@ -80,7 +79,7 @@ class BossStoreCommonService(
             bossStore = bossStore,
             location = bossStoreLocationRepository.findBossStoreLocationByBossStoreId(bossStore.id)?.location,
             categories = bossStoreCategoryRepository.findCategoriesByIds(bossStore.categoriesIds),
-            bossStoreOpenInfo = bossStoreOpenInfoRepository.findByIdOrNull(bossStore.id),
+            openStartDateTime = bossStoreOpenInfoRepository.get(BossStoreOpenRedisKey(bossStore.id)),
             geoCoordinate = geoCoordinate
         )
     }
