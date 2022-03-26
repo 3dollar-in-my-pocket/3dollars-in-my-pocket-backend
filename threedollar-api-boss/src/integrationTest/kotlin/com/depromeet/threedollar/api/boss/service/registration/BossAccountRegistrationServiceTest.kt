@@ -69,7 +69,7 @@ internal class BossAccountRegistrationServiceOneTest(
             // then
             val registrations = registrationRepository.findAll()
             registrations shouldHaveSize 1
-            registrations[0].also { it ->
+            registrations[0].also {
                 it.status shouldBe RegistrationStatus.WAITING
             }
             registrations[0].boss.also {
@@ -96,12 +96,14 @@ internal class BossAccountRegistrationServiceOneTest(
             val contactsNumber = "010-1234-1234"
             val certificationPhotoUrl = "https://example-photo.png"
 
-            registrationRepository.save(
-                RegistrationCreator.create(
-                    socialId = socialId,
-                    socialType = socialType
+            withContext(Dispatchers.IO) {
+                registrationRepository.save(
+                    RegistrationCreator.create(
+                        socialId = socialId,
+                        socialType = socialType
+                    )
                 )
-            )
+            }
 
             val request = SignupRequest(
                 bossName = bossName,
@@ -126,12 +128,14 @@ internal class BossAccountRegistrationServiceOneTest(
 
             val socialId = "social-id"
             val socialType = BossAccountSocialType.APPLE
-            bossAccountRepository.save(
-                BossAccountCreator.create(
-                    socialId = socialId,
-                    socialType = socialType
+            withContext(Dispatchers.IO) {
+                bossAccountRepository.save(
+                    BossAccountCreator.create(
+                        socialId = socialId,
+                        socialType = socialType
+                    )
                 )
-            )
+            }
 
             val request = SignupRequest(
                 bossName = "사장님 이름",
