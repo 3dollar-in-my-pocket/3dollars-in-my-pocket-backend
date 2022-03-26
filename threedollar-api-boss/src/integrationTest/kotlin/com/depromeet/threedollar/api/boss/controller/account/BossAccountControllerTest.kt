@@ -3,8 +3,6 @@ package com.depromeet.threedollar.api.boss.controller.account
 import com.depromeet.threedollar.api.boss.controller.SetupBossControllerTest
 import com.depromeet.threedollar.api.boss.service.account.dto.request.UpdateBossAccountInfoRequest
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.PushSettingsStatus.OFF
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.PushSettingsStatus.ON
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -34,7 +32,7 @@ internal class BossAccountControllerTest : SetupBossControllerTest() {
                 jsonPath("$.data.bossId") { value(bossId) }
                 jsonPath("$.data.socialType") { value(BossAccountSocialType.KAKAO.toString()) }
                 jsonPath("$.data.name") { value("테스트 계정") }
-                jsonPath("$.data.pushSettingsStatus") { value(OFF.name) }
+                jsonPath("$.data.isSetupNotification") { value(false) }
             }
         }
     }
@@ -58,7 +56,7 @@ internal class BossAccountControllerTest : SetupBossControllerTest() {
         // given
         val request = UpdateBossAccountInfoRequest(
             name = "붕어빵",
-            pushSettingsStatus = ON
+            isSetupNotification = true
         )
 
         // when & then

@@ -13,7 +13,10 @@ import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.common.type.DayOfTheWeek
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.*
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
@@ -37,7 +40,7 @@ private val BOSS = BossAccount.of(
     socialId = "test-social-id",
     socialType = BossAccountSocialType.KAKAO,
     businessNumber = BusinessNumber.of("000-12-12345"),
-    pushSettingsStatus = PushSettingsStatus.OFF
+    isSetupNotification = false
 )
 
 @Profile("local", "local-docker", "integration-test", "dev")

@@ -11,7 +11,7 @@ class BossWithdrawalAccount(
     val name: String,
     val socialInfo: BossAccountSocialInfo,
     val businessNumber: BusinessNumber,
-    val pushSettingsStatus: PushSettingsStatus,
+    val isSetupNotification: Boolean,
 ) : BaseDocument() {
 
     companion object {
@@ -21,7 +21,7 @@ class BossWithdrawalAccount(
                 name = bossAccount.name,
                 socialInfo = bossAccount.socialInfo.copy(),
                 businessNumber = bossAccount.businessNumber.copy(),
-                pushSettingsStatus = bossAccount.pushSettingsStatus
+                isSetupNotification = bossAccount.isSetupNotification
             )
         }
     }

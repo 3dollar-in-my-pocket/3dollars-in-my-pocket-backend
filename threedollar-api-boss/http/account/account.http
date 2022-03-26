@@ -16,7 +16,7 @@ Content-Type: application/json
 
 {
     "name": "토오끼",
-    "pushSettingsStatus": "OFF"
+    "isSetupNotification": false
 }
 
 > {%

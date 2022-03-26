@@ -3,7 +3,10 @@ package com.depromeet.threedollar.api.admin.service.boss.registration
 import com.depromeet.threedollar.api.admin.service.AdminSetUpTest
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.*
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStatus
@@ -59,7 +62,7 @@ internal class BossRegistrationAdminServiceTest(
                 assertThat(it.socialInfo).isEqualTo(BossAccountSocialInfo.of(socialId, socialType))
                 assertThat(it.name).isEqualTo(bossName)
                 assertThat(it.businessNumber).isEqualTo(BusinessNumber.of(businessNumber))
-                assertThat(it.pushSettingsStatus).isEqualTo(PushSettingsStatus.OFF)
+                assertThat(it.isSetupNotification).isFalse()
             }
         })
     }

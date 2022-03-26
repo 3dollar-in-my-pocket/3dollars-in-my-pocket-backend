@@ -11,13 +11,13 @@ object BossAccountCreator {
         socialType: BossAccountSocialType,
         name: String = "사장님 성함",
         businessNumber: BusinessNumber = BusinessNumber.of("012-12-12345"),
-        pushSettingsStatus: PushSettingsStatus = PushSettingsStatus.OFF
+        isSetupNotification: Boolean = false
     ): BossAccount {
         return BossAccount(
             name = name,
             socialInfo = BossAccountSocialInfo.of(socialId, socialType),
             businessNumber = businessNumber,
-            pushSettingsStatus = pushSettingsStatus
+            isSetupNotification = isSetupNotification
         )
     }
 

@@ -26,7 +26,7 @@ class BossAccountService(
     fun updateBossAccountInfo(bossId: String, request: UpdateBossAccountInfoRequest) {
         val bossAccount = BossAccountServiceUtils.findBOssAccountByRegistrationId(bossAccountRepository, bossId)
         request.let {
-            bossAccount.update(it.name, it.pushSettingsStatus)
+            bossAccount.update(it.name, it.isSetupNotification)
         }
         bossAccountRepository.save(bossAccount)
     }

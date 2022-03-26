@@ -34,25 +34,25 @@ internal class BossAccountServiceTest(
         fun `사장님의 계정 정보를 수정한다`() {
             // given
             val name = "새로운 이름"
-            val pushSettingsStatus = PushSettingsStatus.ON
+            val isSetupNotification = true
 
             val bossAccount = BossAccountCreator.create(
                 socialId = "social-id",
                 socialType = BossAccountSocialType.GOOGLE,
                 name = "사장님 이름",
-                pushSettingsStatus = PushSettingsStatus.OFF
+                isSetupNotification = false
             )
             bossAccountRepository.save(bossAccount)
 
             // when
-            bossAccountService.updateBossAccountInfo(bossAccount.id, UpdateBossAccountInfoRequest(name, pushSettingsStatus))
+            bossAccountService.updateBossAccountInfo(bossAccount.id, UpdateBossAccountInfoRequest(name, isSetupNotification))
 
             // then
             val bossAccounts = bossAccountRepository.findAll()
             assertAll({
                 assertThat(bossAccounts).hasSize(1)
                 assertThat(bossAccounts[0].name).isEqualTo(name)
-                assertThat(bossAccounts[0].pushSettingsStatus).isEqualTo(pushSettingsStatus)
+                assertThat(bossAccounts[0].isSetupNotification).isEqualTo(isSetupNotification)
                 assertThat(bossAccounts[0].id).isEqualTo(bossAccount.id)
                 assertThat(bossAccounts[0].socialInfo).isEqualTo(bossAccount.socialInfo)
                 assertThat(bossAccounts[0].businessNumber).isEqualTo(bossAccount.businessNumber)
@@ -63,7 +63,7 @@ internal class BossAccountServiceTest(
         fun `사장님의 계정 정보를 수정할때 존재하지 않는 사장님이면 NotFoundException이 발생한다`() {
             // given
             val name = "새로운 이름"
-            val request = UpdateBossAccountInfoRequest(name, PushSettingsStatus.OFF)
+            val request = UpdateBossAccountInfoRequest(name = name, isSetupNotification = false)
 
             // when & then
             assertThatThrownBy { bossAccountService.updateBossAccountInfo("Not Found Boss Id", request) }.isInstanceOf(NotFoundException::class.java)
@@ -97,7 +97,7 @@ internal class BossAccountServiceTest(
             val socialId = "auth-social-id"
             val socialType = BossAccountSocialType.APPLE
             val name = "강승호"
-            val pushSettingsStatus = PushSettingsStatus.OFF
+            val isSetupNotification = false
             val businessNumber = BusinessNumber.of("123-12-12345")
 
             val bossAccount = BossAccountCreator.create(
@@ -105,7 +105,7 @@ internal class BossAccountServiceTest(
                 socialType = socialType,
                 name = name,
                 businessNumber = businessNumber,
-                pushSettingsStatus = pushSettingsStatus
+                isSetupNotification = isSetupNotification
             )
             bossAccountRepository.save(bossAccount)
 
@@ -119,7 +119,7 @@ internal class BossAccountServiceTest(
                 withdrawalAccounts[0].let {
                     assertThat(it.name).isEqualTo(name)
                     assertThat(it.socialInfo).isEqualTo(BossAccountSocialInfo.of(socialId, socialType))
-                    assertThat(it.pushSettingsStatus).isEqualTo(pushSettingsStatus)
+                    assertThat(it.isSetupNotification).isEqualTo(isSetupNotification)
                     assertThat(it.businessNumber).isEqualTo(businessNumber)
 
                     assertThat(it.backupInfo.bossId).isEqualTo(bossAccount.id)
