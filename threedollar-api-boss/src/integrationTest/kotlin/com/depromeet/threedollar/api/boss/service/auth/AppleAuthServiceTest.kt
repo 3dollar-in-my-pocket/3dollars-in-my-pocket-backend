@@ -9,79 +9,80 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSoc
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
 import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import io.kotest.assertions.throwables.shouldThrowExactly
+import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
 
 private const val SOCIAL_ID = "social-id"
 private val SOCIAL_TYPE = BossAccountSocialType.APPLE
 
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
-internal class AppleAuthServiceTest(
+internal class AppleAuthServiceOneTest(
     private val bossAccountRepository: BossAccountRepository,
     private val registrationRepository: RegistrationRepository
-) {
+) : FunSpec({
 
-    private lateinit var authService: AuthService
+    lateinit var authService: AuthService
 
-    @BeforeEach
-    fun setUp() {
+    beforeEach {
         authService = AppleAuthService(bossAccountRepository, registrationRepository, StubAppleTokenDecoder())
     }
 
-    @AfterEach
-    fun cleanUp() {
-        registrationRepository.deleteAll()
-        bossAccountRepository.deleteAll()
-    }
-
-    @Test
-    fun `애플 로그인이 성공하면 사장님 계정의 ID가 반환된다`() {
-        // given
-        val bossAccount = BossAccountCreator.create(
-            name = "사장님",
-            socialId = SOCIAL_ID,
-            socialType = SOCIAL_TYPE,
-        )
-        bossAccountRepository.save(bossAccount)
-
-        // when
-        val accountId = authService.login(LoginRequest("token", SOCIAL_TYPE))
-
-        // then
-        assertThat(accountId).isEqualTo(bossAccount.id)
-    }
-
-    @Test
-    fun `애플 로그인시 가입한 유저가 아니면 404 에러 발생`() {
-        // when & then
-        assertThatThrownBy {
-            authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
-        }.isInstanceOf(NotFoundException::class.java)
-    }
-
-    @Test
-    fun `애플 로그인시 가입 승인 대기중인 유저면 Registration Id를 반환한다`() {
-        // given
-        val registration = RegistrationCreator.create(SOCIAL_ID, SOCIAL_TYPE)
-        registrationRepository.save(registration)
-
-        // when
-        val bossId = authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
-
-        // then
-        assertThat(bossId).isEqualTo(registration.id)
-    }
-
-    private class StubAppleTokenDecoder : AppleTokenDecoder {
-        override fun getSocialIdFromIdToken(idToken: String): String {
-            return SOCIAL_ID
+    afterEach {
+        withContext(Dispatchers.IO) {
+            registrationRepository.deleteAll()
+            bossAccountRepository.deleteAll()
         }
     }
 
+    context("애플 로그인") {
+        test("애플 로그인이 성공하면 사장님 계정의 ID가 반환된다") {
+            // given
+            val bossAccount = BossAccountCreator.create(
+                name = "사장님",
+                socialId = SOCIAL_ID,
+                socialType = SOCIAL_TYPE,
+            )
+            withContext(Dispatchers.IO) {
+                bossAccountRepository.save(bossAccount)
+            }
+
+            // when
+            val accountId = authService.login(LoginRequest("token", SOCIAL_TYPE))
+
+            // then
+            accountId shouldBe bossAccount.id
+        }
+
+        test("애플 로그인시, 가입한 유저가 아니라면 NotFound 에러가 발생한다") {
+            // when & then
+            shouldThrowExactly<NotFoundException> {
+                authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
+            }
+        }
+
+        test("애플 로그인시, 가입 승인 대기중인 유저라면 Registration의 Id가 반환된다") {
+            // given
+            val registration = RegistrationCreator.create(SOCIAL_ID, SOCIAL_TYPE)
+            withContext(Dispatchers.IO) {
+                registrationRepository.save(registration)
+            }
+
+            // when
+            val bossId = authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
+
+            // then
+            bossId shouldBe registration.id
+        }
+    }
+
+})
+
+private class StubAppleTokenDecoder : AppleTokenDecoder {
+    override fun getSocialIdFromIdToken(idToken: String): String {
+        return SOCIAL_ID
+    }
 }

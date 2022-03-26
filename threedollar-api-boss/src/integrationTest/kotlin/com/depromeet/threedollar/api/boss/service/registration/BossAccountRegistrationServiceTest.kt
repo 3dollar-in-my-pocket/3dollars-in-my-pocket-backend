@@ -6,41 +6,40 @@ import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStatus
-import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
+import io.kotest.assertions.throwables.shouldThrowExactly
+import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
 
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
-internal class BossAccountRegistrationServiceTest(
+internal class BossAccountRegistrationServiceOneTest(
     private val bossAccountRegistrationService: BossAccountRegistrationService,
     private val registrationRepository: RegistrationRepository,
     private val bossAccountRepository: BossAccountRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository
-) {
+) : FunSpec({
 
-    @AfterEach
-    fun cleanUp() {
-        registrationRepository.deleteAll()
-        bossAccountRepository.deleteAll()
-        bossStoreCategoryRepository.deleteAll()
+    afterEach {
+        withContext(Dispatchers.IO) {
+            registrationRepository.deleteAll()
+            bossAccountRepository.deleteAll()
+            bossStoreCategoryRepository.deleteAll()
+        }
     }
 
-    @Nested
-    inner class RegistrationBossAccountTest {
-
-        @Test
-        fun `신규 가입을 신청하면 Registration 데이터가 WAITING 상태로 추가된다`() {
+    context("신규 회원가입 요청") {
+        test("신규 가입을 신청하면 Registration 테이블에 WAITING 상태인 데이터가 추가된다") {
             // given
             val categoriesIds = createCategory(bossStoreCategoryRepository, "한식", "일식")
             val bossName = "will"
@@ -63,30 +62,30 @@ internal class BossAccountRegistrationServiceTest(
             )
 
             // when
-            bossAccountRegistrationService.signUp(request, socialId)
+            withContext(Dispatchers.IO) {
+                bossAccountRegistrationService.signUp(request, socialId)
+            }
 
             // then
             val registrations = registrationRepository.findAll()
-            assertAll({
-                Assertions.assertThat(registrations).hasSize(1)
-                Assertions.assertThat(registrations[0].status).isEqualTo(RegistrationStatus.WAITING)
-                registrations[0].boss.let {
-                    Assertions.assertThat(it.name).isEqualTo(bossName)
-                    Assertions.assertThat(it.socialInfo.socialId).isEqualTo(socialId)
-                    Assertions.assertThat(it.socialInfo.socialType).isEqualTo(socialType)
-                    Assertions.assertThat(it.businessNumber.getNumberWithSeparator()).isEqualTo(businessNumber)
-                }
-                registrations[0].store.let {
-                    Assertions.assertThat(it.name).isEqualTo(storeName)
-                    Assertions.assertThat(it.categoriesIds).containsExactlyInAnyOrderElementsOf(categoriesIds)
-                    Assertions.assertThat(it.contactsNumber.getNumberWithSeparator()).isEqualTo(contactsNumber)
-                    Assertions.assertThat(it.certificationPhotoUrl).isEqualTo(certificationPhotoUrl)
-                }
-            })
+            registrations shouldHaveSize 1
+            registrations[0].also { it ->
+                it.status shouldBe RegistrationStatus.WAITING
+            }
+            registrations[0].boss.also {
+                it.name shouldBe bossName
+                it.socialInfo shouldBe BossAccountSocialInfo.of(socialId, socialType)
+                it.businessNumber.getNumberWithSeparator() shouldBe businessNumber
+            }
+            registrations[0].store.also {
+                it.name shouldBe storeName
+                it.categoriesIds shouldContainExactlyInAnyOrder categoriesIds
+                it.contactsNumber.getNumberWithSeparator() shouldBe contactsNumber
+                it.certificationPhotoUrl shouldBe certificationPhotoUrl
+            }
         }
 
-        @Test
-        fun `신규 가입 신청시 이미 가입 신청중인 경우 Forbidden 예외가 발생한다`() {
+        test("신규 가입 신청시, 이미 WAITING 상태인 가입 신청이 있는 경우 Forbidden 에러가 발생한다") {
             // given
             val categoriesIds = createCategory(bossStoreCategoryRepository, "한식")
             val bossName = "will"
@@ -116,11 +115,12 @@ internal class BossAccountRegistrationServiceTest(
             )
 
             // when & then
-            Assertions.assertThatThrownBy { bossAccountRegistrationService.signUp(request, socialId) }.isInstanceOf(ForbiddenException::class.java)
+            shouldThrowExactly<ForbiddenException> {
+                bossAccountRegistrationService.signUp(request, socialId)
+            }
         }
 
-        @Test
-        fun `이미 가입한 계정인 경우 신규 가입 신청시 Conflict 예외가 발생합니다`() {
+        test("신규 가입 신청시, 이미 가입 완료한 계정이 있는 경우 Conflict 에러가 발생한다") {
             // given
             val categoriesIds = createCategory(bossStoreCategoryRepository, "한식", "중식")
 
@@ -145,11 +145,12 @@ internal class BossAccountRegistrationServiceTest(
             )
 
             // when & then
-            Assertions.assertThatThrownBy { bossAccountRegistrationService.signUp(request, socialId) }.isInstanceOf(ConflictException::class.java)
+            shouldThrowExactly<ConflictException> {
+                bossAccountRegistrationService.signUp(request, socialId)
+            }
         }
 
-        @Test
-        fun `신규 가입 신청시 존재하지 않는 카테고리가 하나라도 있는 경우 NotFound 에러가 발생한다`() {
+        test("신규 가입 신청시, 하나라도 존재하지 않는 카테고리가 있는 경우 NotFound 에러가 발생한다") {
             // given
             val categoriesIds = createCategory(bossStoreCategoryRepository, "한식")
 
@@ -165,15 +166,13 @@ internal class BossAccountRegistrationServiceTest(
             )
 
             // when & then
-            Assertions.assertThatThrownBy {
+            shouldThrowExactly<NotFoundException> {
                 bossAccountRegistrationService.signUp(request, socialId = "socialId")
-            }.isInstanceOf(NotFoundException::class.java)
+            }
         }
-
     }
 
-
-}
+})
 
 private fun createCategory(
     bossStoreCategoryRepository: BossStoreCategoryRepository,

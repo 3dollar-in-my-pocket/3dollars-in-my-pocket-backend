@@ -4,34 +4,30 @@ import com.depromeet.threedollar.api.boss.service.account.dto.request.UpdateBoss
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.*
 import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
+import io.kotest.assertions.throwables.shouldThrowExactly
+import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
 
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class BossAccountServiceTest(
     private val bossAccountService: BossAccountService,
     private val bossAccountRepository: BossAccountRepository,
-    private val bossWithdrawalAccountRepository: BossWithdrawalAccountRepository,
-) {
+    private val bossWithdrawalAccountRepository: BossWithdrawalAccountRepository
+) : FunSpec({
 
-    @AfterEach
-    fun cleanUp() {
-        bossAccountRepository.deleteAll()
-        bossWithdrawalAccountRepository.deleteAll()
+    afterEach {
+        withContext(Dispatchers.IO) {
+            bossAccountRepository.deleteAll()
+            bossWithdrawalAccountRepository.deleteAll()
+        }
     }
 
-    @Nested
-    inner class UpdateBossAccountInfoTest {
-
-        @Test
-        fun `사장님의 계정 정보를 수정한다`() {
+    context("사장님 자신의 회원 정보를 수정한다") {
+        test("사장님 자신의 회원 정보를 수정하면 DB에 해당 변경된 정보가 반영된다") {
             // given
             val name = "새로운 이름"
             val isSetupNotification = true
@@ -42,57 +38,61 @@ internal class BossAccountServiceTest(
                 name = "사장님 이름",
                 isSetupNotification = false
             )
-            bossAccountRepository.save(bossAccount)
+            withContext(Dispatchers.IO) {
+                bossAccountRepository.save(bossAccount)
+            }
 
             // when
-            bossAccountService.updateBossAccountInfo(bossAccount.id, UpdateBossAccountInfoRequest(name, isSetupNotification))
+            withContext(Dispatchers.IO) {
+                bossAccountService.updateBossAccountInfo(bossAccount.id, UpdateBossAccountInfoRequest(name, isSetupNotification))
+            }
 
             // then
             val bossAccounts = bossAccountRepository.findAll()
-            assertAll({
-                assertThat(bossAccounts).hasSize(1)
-                assertThat(bossAccounts[0].name).isEqualTo(name)
-                assertThat(bossAccounts[0].isSetupNotification).isEqualTo(isSetupNotification)
-                assertThat(bossAccounts[0].id).isEqualTo(bossAccount.id)
-                assertThat(bossAccounts[0].socialInfo).isEqualTo(bossAccount.socialInfo)
-                assertThat(bossAccounts[0].businessNumber).isEqualTo(bossAccount.businessNumber)
-            })
+            bossAccounts shouldHaveSize 1
+            bossAccounts[0].also {
+                it.name shouldBe name
+                it.isSetupNotification shouldBe isSetupNotification
+                it.id shouldBe bossAccount.id
+                it.socialInfo shouldBe bossAccount.socialInfo
+                it.businessNumber shouldBe bossAccount.businessNumber
+            }
         }
 
-        @Test
-        fun `사장님의 계정 정보를 수정할때 존재하지 않는 사장님이면 NotFoundException이 발생한다`() {
+        test("사장님의 계정 정보를 수정할때 존재하지 않는 사장님이면 NotFoundException이 발생한다") {
             // given
-            val name = "새로운 이름"
+            val name = "사장님 이름"
             val request = UpdateBossAccountInfoRequest(name = name, isSetupNotification = false)
 
             // when & then
-            assertThatThrownBy { bossAccountService.updateBossAccountInfo("Not Found Boss Id", request) }.isInstanceOf(NotFoundException::class.java)
+            shouldThrowExactly<NotFoundException> {
+                bossAccountService.updateBossAccountInfo("notFound", request)
+            }
         }
-
     }
 
-    @Nested
-    inner class SignOutTest {
-
-        @Test
-        fun `회원탈퇴시 BossAccount 계정 정보가 삭제된다`() {
+    context("사장님의 회원탈퇴 기능") {
+        test("회원탈퇴시, 기존의 BossAccount 계정 정보가 DB에서 삭제된다") {
             // given
             val bossAccount = BossAccountCreator.create(
                 socialId = "socialId",
                 socialType = BossAccountSocialType.APPLE
             )
-            bossAccountRepository.save(bossAccount)
+            withContext(Dispatchers.IO) {
+                bossAccountRepository.save(bossAccount)
+            }
 
             // when
-            bossAccountService.signOut(bossAccount.id)
+            withContext(Dispatchers.IO) {
+                bossAccountService.signOut(bossAccount.id)
+            }
 
             // then
             val bossAccounts = bossAccountRepository.findAll()
-            assertThat(bossAccounts).isEmpty()
+            bossAccounts shouldHaveSize 0
         }
 
-        @Test
-        fun `회원탈퇴시 계정정보가 BossWithdrawalAccount에 백업된다`() {
+        test("회원탈퇴시, 계정 정보가 BossWithdrawalAccount 테이블에 백업된다") {
             // given
             val socialId = "auth-social-id"
             val socialType = BossAccountSocialType.APPLE
@@ -107,27 +107,26 @@ internal class BossAccountServiceTest(
                 businessNumber = businessNumber,
                 isSetupNotification = isSetupNotification
             )
-            bossAccountRepository.save(bossAccount)
+            withContext(Dispatchers.IO) {
+                bossAccountRepository.save(bossAccount)
+            }
 
             // when
-            bossAccountService.signOut(bossAccount.id)
+            withContext(Dispatchers.IO) {
+                bossAccountService.signOut(bossAccount.id)
+            }
 
             // then
             val withdrawalAccounts = bossWithdrawalAccountRepository.findAll()
-            assertAll({
-                assertThat(withdrawalAccounts).hasSize(1)
-                withdrawalAccounts[0].let {
-                    assertThat(it.name).isEqualTo(name)
-                    assertThat(it.socialInfo).isEqualTo(BossAccountSocialInfo.of(socialId, socialType))
-                    assertThat(it.isSetupNotification).isEqualTo(isSetupNotification)
-                    assertThat(it.businessNumber).isEqualTo(businessNumber)
-
-                    assertThat(it.backupInfo.bossId).isEqualTo(bossAccount.id)
-                    assertThat(it.backupInfo.bossCreatedAt).isEqualToIgnoringNanos(bossAccount.createdAt)
-                }
-            })
+            withdrawalAccounts shouldHaveSize 1
+            withdrawalAccounts[0].also {
+                it.name shouldBe name
+                it.socialInfo shouldBe BossAccountSocialInfo.of(socialId, socialType)
+                it.isSetupNotification shouldBe isSetupNotification
+                it.businessNumber shouldBe businessNumber
+                it.backupInfo.bossId shouldBe bossAccount.id
+            }
         }
-
     }
 
-}
+})

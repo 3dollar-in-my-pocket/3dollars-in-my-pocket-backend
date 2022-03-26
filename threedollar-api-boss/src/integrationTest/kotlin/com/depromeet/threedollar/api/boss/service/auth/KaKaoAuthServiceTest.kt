@@ -10,79 +10,80 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registrat
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
 import com.depromeet.threedollar.external.client.kakao.KaKaoAuthApiClient
 import com.depromeet.threedollar.external.client.kakao.dto.response.KaKaoProfileResponse
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import io.kotest.assertions.throwables.shouldThrowExactly
+import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
 
 private const val SOCIAL_ID = "social-id"
 private val SOCIAL_TYPE = BossAccountSocialType.KAKAO
 
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
-internal class KaKaoAuthServiceTest(
+internal class KaKaoAuthServiceOneTest(
     private val bossAccountRepository: BossAccountRepository,
     private val registrationRepository: RegistrationRepository
-) {
+) : FunSpec({
 
-    private lateinit var authService: AuthService
+    lateinit var authService: AuthService
 
-    @BeforeEach
-    fun setUp() {
+    beforeEach {
         authService = KaKaoAuthService(bossAccountRepository, registrationRepository, StubKaKaoApiClient())
     }
 
-    @AfterEach
-    fun cleanUp() {
-        bossAccountRepository.deleteAll()
-        registrationRepository.deleteAll()
-    }
-
-    @Test
-    fun `카카오 로그인이 성공하면 사장님 계정의 ID가 반환된다`() {
-        // given
-        val bossAccount = BossAccountCreator.create(
-            name = "사장님",
-            socialId = SOCIAL_ID,
-            socialType = SOCIAL_TYPE
-        )
-        bossAccountRepository.save(bossAccount)
-
-        // when
-        val bossId = authService.login(LoginRequest("token", SOCIAL_TYPE))
-
-        // then
-        assertThat(bossId).isEqualTo(bossAccount.id)
-    }
-
-    @Test
-    fun `카카오 로그인시 가입한 유저가 아니면 404 에러 발생`() {
-        // when & then
-        assertThatThrownBy {
-            authService.login(LoginRequest("token", SOCIAL_TYPE))
-        }.isInstanceOf(NotFoundException::class.java)
-    }
-
-    @Test
-    fun `카카오 로그인시 가입 승인 대기중인 유저면 Registration의 ID를 반환한다`() {
-        // given
-        val registration = RegistrationCreator.create(SOCIAL_ID, SOCIAL_TYPE)
-        registrationRepository.save(registration)
-
-        // when
-        val bossId = authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
-
-        // then
-        assertThat(bossId).isEqualTo(registration.id)
-    }
-
-    private class StubKaKaoApiClient : KaKaoAuthApiClient {
-        override fun getProfileInfo(accessToken: String?): KaKaoProfileResponse {
-            return KaKaoProfileResponse.testInstance(SOCIAL_ID)
+    afterEach {
+        withContext(Dispatchers.IO) {
+            bossAccountRepository.deleteAll()
+            registrationRepository.deleteAll()
         }
     }
 
+    context("카카오 로그인") {
+        test("카카오 로그인이 성공하면 사장님 계정의 ID가 반환된다") {
+            // given
+            val bossAccount = BossAccountCreator.create(
+                name = "사장님",
+                socialId = SOCIAL_ID,
+                socialType = SOCIAL_TYPE,
+            )
+            withContext(Dispatchers.IO) {
+                bossAccountRepository.save(bossAccount)
+            }
+
+            // when
+            val accountId = authService.login(LoginRequest("token", SOCIAL_TYPE))
+
+            // then
+            accountId shouldBe bossAccount.id
+        }
+
+        test("카카오 로그인시, 가입한 유저가 아니라면 NotFound 에러가 발생한다") {
+            // when & then
+            shouldThrowExactly<NotFoundException> {
+                authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
+            }
+        }
+
+        test("카카오 로그인시, 가입 승인 대기중인 유저라면 Registration의 Id가 반환된다") {
+            // given
+            val registration = RegistrationCreator.create(SOCIAL_ID, SOCIAL_TYPE)
+            withContext(Dispatchers.IO) {
+                registrationRepository.save(registration)
+            }
+
+            // when
+            val bossId = authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
+
+            // then
+            bossId shouldBe registration.id
+        }
+    }
+
+})
+
+private class StubKaKaoApiClient : KaKaoAuthApiClient {
+    override fun getProfileInfo(accessToken: String?): KaKaoProfileResponse {
+        return KaKaoProfileResponse.testInstance(SOCIAL_ID)
+    }
 }

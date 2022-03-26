@@ -10,43 +10,42 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCate
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.*
 import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
 import com.depromeet.threedollar.domain.mongo.common.domain.TimeInterval
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
+import io.kotest.assertions.throwables.shouldThrowExactly
+import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
 import java.time.LocalTime
 
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
-internal class BossStoreServiceTest(
+internal class BossStoreServiceOneTest(
     private val bossStoreService: BossStoreService,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossDeletedStoreRepository: BossDeletedStoreRepository
-) {
+) : FunSpec({
 
-    @AfterEach
-    fun cleanUp() {
-        bossStoreRepository.deleteAll()
-        bossDeletedStoreRepository.deleteAll()
+    afterEach {
+        withContext(Dispatchers.IO) {
+            bossStoreRepository.deleteAll()
+            bossDeletedStoreRepository.deleteAll()
+        }
     }
 
-    @Nested
-    inner class UpdateBossStoreTest {
-
-        @Test
-        fun `사장님 가게의 정보를 수정한다`() {
+    context("사장님 자신의 가게 정보를 수정한다") {
+        test("사장님이 자신의 가게 정보를 수정하면 DB에 수정된 내용이 반영된다") {
             // given
             val categoriesIds = createCategory(bossStoreCategoryRepository, "한식", "일식")
             val bossStore = BossStoreCreator.create(
                 bossId = "bossId",
                 name = "사장님 가게",
             )
-            bossStoreRepository.save(bossStore)
+            withContext(Dispatchers.IO) {
+                bossStoreRepository.save(bossStore)
+            }
 
             val request = UpdateBossStoreInfoRequest(
                 name = "변경 후 이름",
@@ -69,47 +68,48 @@ internal class BossStoreServiceTest(
             )
 
             // when
-            bossStoreService.updateBossStoreInfo(bossStore.id, request, bossStore.bossId)
+            withContext(Dispatchers.IO) {
+                bossStoreService.updateBossStoreInfo(bossStore.id, request, bossStore.bossId)
+            }
 
             // then
             val bossStores = bossStoreRepository.findAll()
-            assertAll({
-                assertThat(bossStores).hasSize(1)
-                bossStores[0]?.let {
-                    assertThat(it.name).isEqualTo(request.name)
-                    assertThat(it.imageUrl).isEqualTo(request.imageUrl)
-                    assertThat(it.introduction).isEqualTo(request.introduction)
-                    assertThat(it.contactsNumber).isEqualTo(ContactsNumber.of("010-1234-1234"))
-                    assertThat(it.snsUrl).isEqualTo(request.snsUrl)
-                    assertThat(it.menus).containsExactlyInAnyOrder(
-                        BossStoreMenu(
-                            name = "팥 붕어빵",
-                            price = 1000,
-                            imageUrl = "https://menu.png",
-                            groupName = "붕어빵"
-                        )
+            bossStores shouldHaveSize 1
+            bossStores[0].also {
+                it.name shouldBe request.name
+                it.imageUrl shouldBe request.imageUrl
+                it.introduction shouldBe request.introduction
+                it.contactsNumber shouldBe ContactsNumber.of("010-1234-1234")
+                it.snsUrl shouldBe request.snsUrl
+                it.menus shouldContainExactlyInAnyOrder (listOf(
+                    BossStoreMenu(
+                        name = "팥 붕어빵",
+                        price = 1000,
+                        imageUrl = "https://menu.png",
+                        groupName = "붕어빵"
                     )
-                    assertThat(it.appearanceDays).containsExactlyInAnyOrder(
-                        BossStoreAppearanceDay(
-                            dayOfTheWeek = DayOfTheWeek.WEDNESDAY,
-                            openingHours = TimeInterval(LocalTime.of(8, 0), endTime = LocalTime.of(10, 0)),
-                            locationDescription = "강남역"
-                        )
+                ))
+                it.appearanceDays shouldContainExactlyInAnyOrder (listOf(
+                    BossStoreAppearanceDay(
+                        dayOfTheWeek = DayOfTheWeek.WEDNESDAY,
+                        openingHours = TimeInterval(LocalTime.of(8, 0), endTime = LocalTime.of(10, 0)),
+                        locationDescription = "강남역"
                     )
-                    assertThat(it.categoriesIds).containsExactlyInAnyOrderElementsOf(categoriesIds)
-                }
-            })
+                ))
+                it.categoriesIds shouldContainExactlyInAnyOrder (categoriesIds)
+            }
         }
 
-        @Test
-        fun `다른 사장님의 가게 정보를 수정할 수 없다`() {
+        test("다른 사장님의 가게 정보를 수정하려는 경우 NotFound 에러가 발생한다") {
             // given
             val categoriesIds = createCategory(bossStoreCategoryRepository, "한식", "일식")
             val bossStore = BossStoreCreator.create(
                 bossId = "bossId",
                 name = "사장님 가게",
             )
-            bossStoreRepository.save(bossStore)
+            withContext(Dispatchers.IO) {
+                bossStoreRepository.save(bossStore)
+            }
 
             val request = UpdateBossStoreInfoRequest(
                 name = "변경 후 이름",
@@ -132,34 +132,35 @@ internal class BossStoreServiceTest(
             )
 
             // when & then
-            assertThatThrownBy { bossStoreService.updateBossStoreInfo(bossStore.id, request, "anotherBossId") }.isInstanceOf(NotFoundException::class.java)
+            shouldThrowExactly<NotFoundException> {
+                bossStoreService.updateBossStoreInfo(bossStore.id, request, "anotherBossId")
+            }
         }
-
     }
 
-    @Nested
-    inner class DeleteBossStoreByBossIdTest {
-
-        @Test
-        fun `사장님 계정의 가게들을 삭제한다`() {
+    context("사장님 가게를 삭제한다") {
+        test("사장님 가게를 삭제하는 경우 DB에서 해당 가게 데이터가 삭제된다") {
             // given
             val bossId = "bossId"
             val bossStore = BossStoreCreator.create(
                 bossId = bossId,
                 name = "사장님 가게",
             )
-            bossStoreRepository.save(bossStore)
+            withContext(Dispatchers.IO) {
+                bossStoreRepository.save(bossStore)
+            }
 
             // when
-            bossStoreService.deleteBossStoreByBossId(bossId)
+            withContext(Dispatchers.IO) {
+                bossStoreService.deleteBossStoreByBossId(bossId)
+            }
 
             // then
             val bossStores = bossStoreRepository.findAll()
-            assertThat(bossStores).isEmpty()
+            bossStores shouldHaveSize 0
         }
 
-        @Test
-        fun `사장님 계정의 가게들을 삭제할때 가게 정보가 BossDeletedStore 도큐먼트에 백업되서 저장된다`() {
+        test("사장님 가게를 삭제하는 경우 BossDeletedStore 테이블에 해당 가게 정보가 백업되서 저장된다") {
             // given
             val categoriesIds = createCategory(bossStoreCategoryRepository, "한식", "일식")
 
@@ -176,50 +177,53 @@ internal class BossStoreServiceTest(
                 snsUrl = snsUrl,
                 categoriesIds = categoriesIds
             )
-            bossStoreRepository.save(bossStore)
+            withContext(Dispatchers.IO) {
+                bossStoreRepository.save(bossStore)
+            }
 
             // when
-            bossStoreService.deleteBossStoreByBossId(bossId)
+            withContext(Dispatchers.IO) {
+                bossStoreService.deleteBossStoreByBossId(bossId)
+            }
 
             // then
             val bossDeletedStores = bossDeletedStoreRepository.findAll()
-            assertAll({
-                assertThat(bossDeletedStores).hasSize(1)
-                bossDeletedStores[0].let {
-                    assertThat(it.bossId).isEqualTo(bossId)
-                    assertThat(it.name).isEqualTo(name)
-                    assertThat(it.imageUrl).isEqualTo(imageUrl)
-                    assertThat(it.contactsNumber).isEqualTo(contactsNumber)
-                    assertThat(it.snsUrl).isEqualTo(snsUrl)
-                    assertThat(it.menus).isEqualTo(bossStore.menus)
-                    assertThat(it.appearanceDays).isEqualTo(bossStore.appearanceDays)
-                    assertThat(it.categoriesIds).isEqualTo(categoriesIds)
-
-                    assertThat(it.backupInfo.bossStoreId).isEqualTo(bossStore.id)
-                    assertThat(it.backupInfo.bossStoreCreatedAt).isEqualToIgnoringNanos(bossStore.createdAt)
-                }
-            })
+            bossDeletedStores shouldHaveSize 1
+            bossDeletedStores[0].also {
+                it.bossId shouldBe bossId
+                it.name shouldBe name
+                it.imageUrl shouldBe imageUrl
+                it.contactsNumber shouldBe contactsNumber
+                it.snsUrl shouldBe snsUrl
+                it.menus shouldBe bossStore.menus
+                it.appearanceDays shouldBe bossStore.appearanceDays
+                it.categoriesIds shouldBe categoriesIds
+                it.backupInfo.bossStoreId shouldBe bossStore.id
+            }
         }
 
-        @Test
-        fun `다른 사장님의 가게를 삭제할 수 없다`() {
+        test("다른 사장님의 가게를 삭제할 수 없다") {
             // given
             val bossStore = BossStoreCreator.create(
                 bossId = "bossId",
                 name = "사장님 가게"
             )
-            bossStoreRepository.save(bossStore)
+            withContext(Dispatchers.IO) {
+                bossStoreRepository.save(bossStore)
+            }
 
             // when & then
-            bossStoreService.deleteBossStoreByBossId("anotherBossId")
+            withContext(Dispatchers.IO) {
+                bossStoreService.deleteBossStoreByBossId("anotherBossId")
+            }
 
             // then
             val bossStores = bossStoreRepository.findAll()
-            assertThat(bossStores).hasSize(1)
+            bossStores shouldHaveSize 1
         }
     }
 
-}
+})
 
 private fun createCategory(
     bossStoreCategoryRepository: BossStoreCategoryRepository,
