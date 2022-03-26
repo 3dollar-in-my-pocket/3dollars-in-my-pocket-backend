@@ -5,7 +5,6 @@ import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.common.type.FileType
 import com.depromeet.threedollar.common.utils.EnumMapper
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.PushSettingsStatus
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreOpenType
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -22,7 +21,6 @@ class EnumMapperConfig {
 
         // bossAccount
         enumMapper.put("BossAccountSocialType", BossAccountSocialType::class.java)
-        enumMapper.put("PushSeetingStatus", PushSettingsStatus::class.java)
 
         // bossStore
         enumMapper.put("BossStoreOpenType", BossStoreOpenType::class.java)
