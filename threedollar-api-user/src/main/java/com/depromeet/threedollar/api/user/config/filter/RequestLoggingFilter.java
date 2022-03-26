@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 class RequestLoggingFilter implements Filter {
@@ -28,16 +29,16 @@ class RequestLoggingFilter implements Filter {
         ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper((HttpServletRequest) request);
         ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper((HttpServletResponse) response);
 
-        long start = System.currentTimeMillis();
+        long start = System.nanoTime();
         chain.doFilter(requestWrapper, responseWrapper);
-        long end = System.currentTimeMillis();
+        long end = System.nanoTime();
 
         String requestURI = ((HttpServletRequest) request).getRequestURI();
         if (EXCLUDE_LOGGING_RESPONSE_URLS.contains(requestURI) && responseWrapper.getStatus() == HttpStatus.OK.value()) {
             log.info("\n" +
                     "[REQUEST] {} {} - {}s\n" +
                     "Headers : {}\n",
-                HttpServletRequestUtils.getFullUrlWithMethod(requestWrapper), responseWrapper.getStatus(), (end - start) / 1000.0,
+                HttpServletRequestUtils.getFullUrlWithMethod(requestWrapper), responseWrapper.getStatus(), TimeUnit.NANOSECONDS.toMillis(end - start) / 1000.0,
                 HttpServletRequestUtils.getHeaders((HttpServletRequest) request));
             responseWrapper.copyBodyToResponse();
             return;
@@ -48,7 +49,7 @@ class RequestLoggingFilter implements Filter {
                 "Headers : {}\n" +
                 "Request : {}\n" +
                 "Response : {}\n",
-            HttpServletRequestUtils.getFullUrlWithMethod(requestWrapper), responseWrapper.getStatus(), (end - start) / 1000.0,
+            HttpServletRequestUtils.getFullUrlWithMethod(requestWrapper), responseWrapper.getStatus(), (end - start) / 1000000000.0,
             HttpServletRequestUtils.getHeaders((HttpServletRequest) request),
             HttpServletRequestUtils.getRequestBody(requestWrapper),
             HttpServletRequestUtils.getResponseBody(responseWrapper));
