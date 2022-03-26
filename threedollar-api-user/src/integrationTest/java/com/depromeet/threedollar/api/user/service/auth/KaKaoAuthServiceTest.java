@@ -2,7 +2,6 @@ package com.depromeet.threedollar.api.user.service.auth;
 
 import com.depromeet.threedollar.api.user.service.auth.dto.request.LoginRequest;
 import com.depromeet.threedollar.api.user.service.auth.dto.request.SignUpRequest;
-import com.depromeet.threedollar.api.user.service.auth.policy.KaKaoAuthService;
 import com.depromeet.threedollar.api.user.service.user.UserService;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;

@@ -95,7 +95,7 @@ public enum ErrorCode {
 
 
     // 503 Service UnAvailable
-    SERVICE_UNAVAILABLE(HttpStatusCode.SERVICE_UNAVAILABLE, OFF, "SU000", "현재 해당 기능은 점검 중입니다.\n점검 후 다시 이용 부탁드립니다ㅠ.ㅠ"),
+    SERVICE_UNAVAILABLE(HttpStatusCode.SERVICE_UNAVAILABLE, OFF, "SU000", "해당 기능은 현재 사용할 수 없습니다"),
     ;
 
     private final HttpStatusCode statusCode;

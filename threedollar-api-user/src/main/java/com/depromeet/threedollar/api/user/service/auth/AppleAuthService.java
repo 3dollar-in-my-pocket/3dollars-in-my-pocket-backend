@@ -1,6 +1,5 @@
-package com.depromeet.threedollar.api.user.service.auth.policy;
+package com.depromeet.threedollar.api.user.service.auth;
 
-import com.depromeet.threedollar.api.user.service.auth.AuthService;
 import com.depromeet.threedollar.api.user.service.auth.dto.request.LoginRequest;
 import com.depromeet.threedollar.api.user.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.user.service.user.UserService;
@@ -13,12 +12,11 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class AppleAuthService implements AuthService {
+class AppleAuthService implements AuthService {
 
     private static final UserSocialType socialType = UserSocialType.APPLE;
 
     private final AppleTokenDecoder appleTokenDecoder;
-
     private final UserRepository userRepository;
     private final UserService userService;
 

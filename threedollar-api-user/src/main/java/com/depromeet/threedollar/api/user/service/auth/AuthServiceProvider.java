@@ -1,8 +1,5 @@
 package com.depromeet.threedollar.api.user.service.auth;
 
-import com.depromeet.threedollar.api.user.service.auth.policy.AppleAuthService;
-import com.depromeet.threedollar.api.user.service.auth.policy.GoogleAuthService;
-import com.depromeet.threedollar.api.user.service.auth.policy.KaKaoAuthService;
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
 import lombok.RequiredArgsConstructor;

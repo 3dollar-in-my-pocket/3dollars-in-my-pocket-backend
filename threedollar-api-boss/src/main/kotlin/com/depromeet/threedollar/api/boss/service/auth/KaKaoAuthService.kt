@@ -1,7 +1,6 @@
-package com.depromeet.threedollar.api.boss.service.auth.policy
+package com.depromeet.threedollar.api.boss.service.auth
 
 import com.depromeet.threedollar.api.boss.service.account.BossAccountServiceUtils
-import com.depromeet.threedollar.api.boss.service.auth.AuthService
 import com.depromeet.threedollar.api.boss.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.common.utils.HttpHeaderUtils
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
