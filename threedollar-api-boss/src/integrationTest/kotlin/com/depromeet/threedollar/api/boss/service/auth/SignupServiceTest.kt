@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.boss.service.registration
+package com.depromeet.threedollar.api.boss.service.auth
 
 import com.depromeet.threedollar.api.boss.service.auth.dto.request.SignupRequest
 import com.depromeet.threedollar.common.exception.model.ConflictException
@@ -22,8 +22,8 @@ import org.springframework.test.context.TestConstructor
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
-internal class BossAccountRegistrationServiceTest(
-    private val bossAccountRegistrationService: BossAccountRegistrationService,
+internal class SignupServiceTest(
+    private val signupService: SignupService,
     private val registrationRepository: RegistrationRepository,
     private val bossAccountRepository: BossAccountRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository
@@ -63,7 +63,7 @@ internal class BossAccountRegistrationServiceTest(
             )
 
             // when
-            bossAccountRegistrationService.signUp(request, socialId)
+            signupService.signUp(request, socialId)
 
             // then
             val registrations = registrationRepository.findAll()
@@ -116,7 +116,7 @@ internal class BossAccountRegistrationServiceTest(
             )
 
             // when & then
-            Assertions.assertThatThrownBy { bossAccountRegistrationService.signUp(request, socialId) }.isInstanceOf(ForbiddenException::class.java)
+            Assertions.assertThatThrownBy { signupService.signUp(request, socialId) }.isInstanceOf(ForbiddenException::class.java)
         }
 
         @Test
@@ -145,7 +145,7 @@ internal class BossAccountRegistrationServiceTest(
             )
 
             // when & then
-            Assertions.assertThatThrownBy { bossAccountRegistrationService.signUp(request, socialId) }.isInstanceOf(ConflictException::class.java)
+            Assertions.assertThatThrownBy { signupService.signUp(request, socialId) }.isInstanceOf(ConflictException::class.java)
         }
 
         @Test
@@ -166,7 +166,7 @@ internal class BossAccountRegistrationServiceTest(
 
             // when & then
             Assertions.assertThatThrownBy {
-                bossAccountRegistrationService.signUp(request, socialId = "socialId")
+                signupService.signUp(request, socialId = "socialId")
             }.isInstanceOf(NotFoundException::class.java)
         }
 

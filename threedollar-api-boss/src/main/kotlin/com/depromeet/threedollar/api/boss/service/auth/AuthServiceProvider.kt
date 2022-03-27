@@ -23,7 +23,8 @@ class AuthServiceProvider(
     }
 
     fun getAuthService(socialType: BossAccountSocialType): AuthService {
-        return authServiceMap[socialType] ?: throw ServiceUnAvailableException("AuthService ($socialType) 로직이 구현되지 않았습니다")
+        return authServiceMap[socialType]
+            ?: throw ServiceUnAvailableException("AuthService ($socialType) 로직이 구현되지 않았습니다")
     }
 
 }

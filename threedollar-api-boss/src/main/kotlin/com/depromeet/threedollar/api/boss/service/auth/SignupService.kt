@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.boss.service.registration
+package com.depromeet.threedollar.api.boss.service.auth
 
 import com.depromeet.threedollar.api.boss.service.account.BossAccountServiceUtils
 import com.depromeet.threedollar.api.boss.service.auth.dto.request.SignupRequest
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class BossAccountRegistrationService(
+class SignupService(
     private val bossAccountRepository: BossAccountRepository,
     private val registrationRepository: RegistrationRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,

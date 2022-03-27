@@ -5,10 +5,10 @@ import com.depromeet.threedollar.api.boss.config.resolver.BossId
 import com.depromeet.threedollar.api.boss.config.session.SessionConstants.BOSS_ACCOUNT_ID
 import com.depromeet.threedollar.api.boss.service.account.BossAccountService
 import com.depromeet.threedollar.api.boss.service.auth.AuthServiceProvider
+import com.depromeet.threedollar.api.boss.service.auth.SignupService
 import com.depromeet.threedollar.api.boss.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.api.boss.service.auth.dto.request.SignupRequest
 import com.depromeet.threedollar.api.boss.service.auth.dto.response.LoginResponse
-import com.depromeet.threedollar.api.boss.service.registration.BossAccountRegistrationService
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -23,7 +23,7 @@ class AuthController(
     private val httpSession: HttpSession,
     private val authServiceProvider: AuthServiceProvider,
     private val bossAccountService: BossAccountService,
-    private val bossAccountRegistrationService: BossAccountRegistrationService
+    private val signupService: SignupService
 ) {
 
     @ApiOperation("사장님 계정의 회원가입을 요청합니다. (차후 승인이 필요합니다)", notes = "https://github.com/3dollar-in-my-pocket/3dollars-in-my-pocket-backend/issues/118")
@@ -33,7 +33,7 @@ class AuthController(
     ): ApiResponse<LoginResponse> {
         val authService = authServiceProvider.getAuthService(request.socialType)
         val socialId = authService.getSocialId(request.token)
-        val bossId = bossAccountRegistrationService.signUp(request, socialId)
+        val bossId = signupService.signUp(request, socialId)
         httpSession.setAttribute(BOSS_ACCOUNT_ID, bossId)
         return ApiResponse.success(LoginResponse(
             token = httpSession.id,
