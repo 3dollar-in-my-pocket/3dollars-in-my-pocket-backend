@@ -14,17 +14,17 @@ public class DummySlackWebhookApiClient implements SlackWebhookApiClient {
 
     @Override
     public void postMonitoringMessage(PostSlackMessageRequest request) {
-        log.debug("Monitoring Channel: " + request.toString());
+        log.info("Monitoring Channel: " + request.toString());
     }
 
     @Override
     public void postStatisticsMessage(PostSlackMessageRequest request) {
-        log.debug("Statistics Channel: " + request.toString());
+        log.info("Statistics Channel: " + request.toString());
     }
 
     @Override
     public void postBossManagerMessage(PostSlackMessageRequest request) {
-        log.debug("Boss Manager Channel: " + request.toString());
+        log.info("Boss Manager Channel: " + request.toString());
     }
 
 }

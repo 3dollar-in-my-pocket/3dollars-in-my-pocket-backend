@@ -4,6 +4,7 @@ spring:
     default: local
     include:
       - rds
+      - mongo
       - secret
       - external
       - dummy
