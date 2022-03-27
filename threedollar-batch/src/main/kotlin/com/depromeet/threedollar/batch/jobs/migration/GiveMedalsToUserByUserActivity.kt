@@ -41,7 +41,7 @@ class GiveMedalsToUserByUserActivity(
     private val reviewRepository: ReviewRepository
 ) {
 
-    @Bean
+    @Bean(name = [JOB_NAME])
     fun giveMedalsToUserByUserActivityJob(): Job {
         return jobBuilderFactory[JOB_NAME]
             .incrementer(UniqueRunIdIncrementer())
@@ -49,7 +49,7 @@ class GiveMedalsToUserByUserActivity(
             .build()
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_step"])
     fun giveMedalsToUserByUserActivityStep(): Step {
         return stepBuilderFactory[JOB_NAME + "_step"]
             .chunk<User, User>(CHUNK_SIZE)
@@ -59,7 +59,7 @@ class GiveMedalsToUserByUserActivity(
             .build()
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_reader"])
     fun giveMedalsToUserByUserActivityReader(): JpaCursorItemReader<User> {
         return JpaCursorItemReaderBuilder<User>()
             .name(JOB_NAME + "_reader")
@@ -68,7 +68,7 @@ class GiveMedalsToUserByUserActivity(
             .build()
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_processor"])
     fun giveMedalsToUserByUserActivityProcessor(): ItemProcessor<User, User> {
         return ItemProcessor<User, User> { user ->
             val medalCanBeObtainedByAddStore = MedalObtainCollection.of(
@@ -79,7 +79,7 @@ class GiveMedalsToUserByUserActivity(
             if (medalCanBeObtainedByAddStore.hasMoreMedalsCanBeObtained()) {
                 user.addMedals(
                     medalCanBeObtainedByAddStore.getSatisfyMedalsCanBeObtained(
-                        storeRepository.findCountsByUserId(user.id)
+                        storeRepository.countByUserId(user.id)
                     )
                 )
             }
@@ -92,7 +92,7 @@ class GiveMedalsToUserByUserActivity(
             if (medalsCanBeObtainedByDeleteStore.hasMoreMedalsCanBeObtained()) {
                 user.addMedals(
                     medalsCanBeObtainedByDeleteStore.getSatisfyMedalsCanBeObtained(
-                        storeDeleteRequestRepository.findCountsByUserId(user.id)
+                        storeDeleteRequestRepository.countsByUserId(user.id)
                     )
                 )
             }
@@ -105,7 +105,7 @@ class GiveMedalsToUserByUserActivity(
             if (medalsCanBeObtainedByAddReview.hasMoreMedalsCanBeObtained()) {
                 user.addMedals(
                     medalsCanBeObtainedByAddReview.getSatisfyMedalsCanBeObtained(
-                        reviewRepository.findCountsByUserId(user.id)
+                        reviewRepository.countByUserId(user.id)
                     )
                 )
             }
@@ -118,7 +118,7 @@ class GiveMedalsToUserByUserActivity(
             if (medalsCanBeObtainedByVisitStore.hasMoreMedalsCanBeObtained()) {
                 user.addMedals(
                     medalsCanBeObtainedByVisitStore.getSatisfyMedalsCanBeObtained(
-                        visitHistoryRepository.findCountsByUserIdAndCategory(
+                        visitHistoryRepository.countByUserIdAndMenuCategoryType(
                             user.id,
                             MenuCategoryType.BUNGEOPPANG
                         )
@@ -134,7 +134,7 @@ class GiveMedalsToUserByUserActivity(
             if (medalsCanBeObtainedByVisitNotExistsStore.hasMoreMedalsCanBeObtained()) {
                 user.addMedals(
                     medalsCanBeObtainedByVisitNotExistsStore.getSatisfyMedalsCanBeObtained(
-                        visitHistoryRepository.findCountsByUserIdAndVisitType(
+                        visitHistoryRepository.countByUserIdAndVisitType(
                             user.id,
                             VisitType.NOT_EXISTS
                         )
@@ -145,7 +145,7 @@ class GiveMedalsToUserByUserActivity(
         }
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_writer"])
     fun giveMedalsToUserByUserActivityWriter(): JpaItemWriter<User> {
         val itemWriter = JpaItemWriter<User>()
         itemWriter.setEntityManagerFactory(entityManagerFactory)

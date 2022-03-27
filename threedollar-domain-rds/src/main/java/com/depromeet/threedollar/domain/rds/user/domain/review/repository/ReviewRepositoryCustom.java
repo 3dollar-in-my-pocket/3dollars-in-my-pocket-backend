@@ -14,7 +14,7 @@ public interface ReviewRepositoryCustom {
 
     List<Review> findAllByStoreIdWithLock(Long storeId);
 
-    long findCountsByUserId(Long userId);
+    long countByUserId(Long userId);
 
     List<Review> findAllByUserIdUsingCursor(Long userId, Long lastStoreId, int size);
 

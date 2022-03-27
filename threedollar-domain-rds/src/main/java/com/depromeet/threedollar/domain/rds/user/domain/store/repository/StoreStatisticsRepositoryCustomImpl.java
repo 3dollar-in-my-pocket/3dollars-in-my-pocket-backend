@@ -15,7 +15,7 @@ public class StoreStatisticsRepositoryCustomImpl implements StoreStatisticsRepos
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public long findActiveStoresCounts() {
+    public long countAllActiveStores() {
         return queryFactory.select(store.id).distinct()
             .from(store)
             .innerJoin(menu).on(menu.store.id.eq(store.id))
@@ -25,7 +25,7 @@ public class StoreStatisticsRepositoryCustomImpl implements StoreStatisticsRepos
     }
 
     @Override
-    public long findActiveStoresCountsBetweenDate(LocalDate startDate, LocalDate endDate) {
+    public long countActiveStoresBetweenDate(LocalDate startDate, LocalDate endDate) {
         return queryFactory.select(store.id).distinct()
             .from(store)
             .innerJoin(menu).on(menu.store.id.eq(store.id))
@@ -37,7 +37,7 @@ public class StoreStatisticsRepositoryCustomImpl implements StoreStatisticsRepos
     }
 
     @Override
-    public long findDeletedStoresCountsByDate(LocalDate startDate, LocalDate endDate) {
+    public long countDeletedStoresBetweenDate(LocalDate startDate, LocalDate endDate) {
         return queryFactory.select(store.id).distinct()
             .from(store)
             .innerJoin(menu).on(menu.store.id.eq(store.id))

@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.domain.rds.user.domain.user;
 
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserCreator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -28,7 +27,7 @@ class UserRepositoryTest {
         userRepository.saveAll(List.of(user1, user2));
 
         // when
-        long result = userRepository.findUsersCount();
+        long result = userRepository.countAllUsers();
 
         // then
         assertThat(result).isEqualTo(2);
@@ -43,7 +42,7 @@ class UserRepositoryTest {
         userRepository.saveAll(List.of(user1, user2));
 
         // when
-        long counts = userRepository.findUsersCountBetweenDate(startDate, endDate);
+        long counts = userRepository.countUsersBetweenDate(startDate, endDate);
 
         // then
         assertThat(counts).isEqualTo(expectedCount);

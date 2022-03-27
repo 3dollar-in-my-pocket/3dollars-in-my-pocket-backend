@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface MenuStaticsRepositoryCustom {
 
-    List<MenuStatisticsProjection> countsGroupByMenu();
+    List<MenuStatisticsProjection> countMenus();
 
 }

@@ -18,7 +18,7 @@ public class MedalStatisticsRepositoryCustomImpl implements MedalStatisticsRepos
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<MedalCountsStatisticsProjection> findUserMedalsCountsGroupByMedal() {
+    public List<MedalCountsStatisticsProjection> countsUserMedalGroupByMedalType() {
         return queryFactory.select(new QMedalCountsStatisticsProjection(medal.name, userMedal.id.count()))
             .from(medal)
             .innerJoin(userMedal).on(userMedal.medal.id.eq(medal.id))
@@ -28,7 +28,7 @@ public class MedalStatisticsRepositoryCustomImpl implements MedalStatisticsRepos
     }
 
     @Override
-    public List<MedalCountsStatisticsProjection> findActiveCountsGroupByMedal() {
+    public List<MedalCountsStatisticsProjection> countActiveMedalsGroupByMedalType() {
         return queryFactory.select(new QMedalCountsStatisticsProjection(medal.name, userMedal.id.count()))
             .from(medal)
             .innerJoin(userMedal).on(userMedal.medal.id.eq(medal.id))

@@ -18,10 +18,10 @@ public interface VisitHistoryRepositoryCustom {
 
     List<VisitHistory> findAllByUserIdUsingCursor(Long userId, Long lastHistoryId, int size);
 
-    List<VisitHistoryCountProjection> findCountsByStoreIdWithGroup(List<Long> storeIds, LocalDate startDate);
+    List<VisitHistoryCountProjection> countGroupingByStoreId(List<Long> storeIds, LocalDate startDate);
 
-	long findCountsByUserIdAndCategory(Long userId, @Nullable MenuCategoryType menuCategoryType);
+	long countByUserIdAndMenuCategoryType(Long userId, @Nullable MenuCategoryType menuCategoryType);
 
-    long findCountsByUserIdAndVisitType(Long userId, VisitType visitType);
+    long countByUserIdAndVisitType(Long userId, VisitType visitType);
 
 }

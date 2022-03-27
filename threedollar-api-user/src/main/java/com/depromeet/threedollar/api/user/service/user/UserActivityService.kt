@@ -18,8 +18,8 @@ class UserActivityService(
     fun getUserActivity(userId: Long?): UserWithActivityResponse {
         return UserWithActivityResponse.of(
             user = UserServiceUtils.findUserById(userRepository, userId),
-            storesCount = storeRepository.findCountsByUserId(userId),
-            reviewsCount = reviewRepository.findCountsByUserId(userId)
+            storesCount = storeRepository.countByUserId(userId),
+            reviewsCount = reviewRepository.countByUserId(userId)
         )
     }
 

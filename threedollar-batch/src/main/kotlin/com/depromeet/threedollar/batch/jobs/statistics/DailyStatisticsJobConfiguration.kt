@@ -41,20 +41,20 @@ class DailyStatisticsJobConfiguration(
     fun dailyStaticsJob(): Job {
         return jobBuilderFactory.get("dailyStaticsJob")
             .incrementer(UniqueRunIdIncrementer())
-            .start(notificationStatisticsInfo())
-            .next(countsNewUserStep())
-            .next(countsNewStoresStep())
-            .next(countsDeletedStoresStep())
-            .next(countsActiveMenuStep())
-            .next(countsNewReviewsStep())
-            .next(countsNewVisitHistoriesStep())
-            .next(countsUserMedalGroupByMedal())
-            .next(countsActiveUserMedalCounts())
+            .start(notificationStatisticsInfoStep())
+            .next(notificationUsersStatisticsStep())
+            .next(notificationStoresStatisticsStep())
+            .next(notificationDeletedStoresStatisticsStep())
+            .next(notificationMenusStatisticsStep())
+            .next(notificationReviewsStatisticsStep())
+            .next(notificationVisitHistoriesStatisticsStep())
+            .next(notificationUserMedalsStatisticsStep())
+            .next(notificationActiveUserMedalsStatisticsStep())
             .build()
     }
 
     @Bean
-    fun notificationStatisticsInfo(): Step {
+    fun notificationStatisticsInfoStep(): Step {
         return stepBuilderFactory["notificationStatisticsInfo"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
@@ -67,15 +67,15 @@ class DailyStatisticsJobConfiguration(
     }
 
     @Bean
-    fun countsNewUserStep(): Step {
+    fun notificationUsersStatisticsStep(): Step {
         return stepBuilderFactory["countsNewUserStep"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
                     COUNTS_USER,
-                    userRepository.findUsersCount(),
-                    userRepository.findUsersCountBetweenDate(yesterday, yesterday),
-                    userRepository.findUsersCountBetweenDate(yesterday.minusWeeks(1), yesterday)
+                    userRepository.countAllUsers(),
+                    userRepository.countUsersBetweenDate(yesterday, yesterday),
+                    userRepository.countUsersBetweenDate(yesterday.minusWeeks(1), yesterday)
                 )
                 RepeatStatus.FINISHED
             }
@@ -83,15 +83,15 @@ class DailyStatisticsJobConfiguration(
     }
 
     @Bean
-    fun countsNewStoresStep(): Step {
+    fun notificationStoresStatisticsStep(): Step {
         return stepBuilderFactory["countsNewStoresStep"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
                     COUNTS_STORE,
-                    storeRepository.findActiveStoresCounts(),
-                    storeRepository.findActiveStoresCountsBetweenDate(yesterday, yesterday),
-                    storeRepository.findActiveStoresCountsBetweenDate(yesterday.minusWeeks(1), yesterday)
+                    storeRepository.countAllActiveStores(),
+                    storeRepository.countActiveStoresBetweenDate(yesterday, yesterday),
+                    storeRepository.countActiveStoresBetweenDate(yesterday.minusWeeks(1), yesterday)
                 )
                 RepeatStatus.FINISHED
             }
@@ -99,11 +99,11 @@ class DailyStatisticsJobConfiguration(
     }
 
     @Bean
-    fun countsDeletedStoresStep(): Step {
+    fun notificationDeletedStoresStatisticsStep(): Step {
         return stepBuilderFactory["countsDeletedStoresStep"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
-                val todayDeletedCounts = storeRepository.findDeletedStoresCountsByDate(yesterday, yesterday)
+                val todayDeletedCounts = storeRepository.countDeletedStoresBetweenDate(yesterday, yesterday)
                 slackNotificationApiClient.postStatisticsMessage(
                     PostSlackMessageRequest.of(COUNTS_DELETED_STORE.messageFormat.format(todayDeletedCounts))
                 )
@@ -113,10 +113,10 @@ class DailyStatisticsJobConfiguration(
     }
 
     @Bean
-    fun countsActiveMenuStep(): Step {
+    fun notificationMenusStatisticsStep(): Step {
         return stepBuilderFactory["countsActiveMenuStep"]
             .tasklet { _, _ ->
-                val result = menuRepository.countsGroupByMenu()
+                val result = menuRepository.countMenus()
                 val message = result.asSequence()
                     .sortedByDescending { it.counts }
                     .joinToString(separator = "\n") {
@@ -132,15 +132,15 @@ class DailyStatisticsJobConfiguration(
     }
 
     @Bean
-    fun countsNewReviewsStep(): Step {
+    fun notificationReviewsStatisticsStep(): Step {
         return stepBuilderFactory["countsNewReviewsStep"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
                     COUNTS_REVIEW,
-                    reviewRepository.findActiveReviewsCounts(),
-                    reviewRepository.findReviewsCountBetweenDate(yesterday, yesterday),
-                    reviewRepository.findReviewsCountBetweenDate(yesterday.minusWeeks(1), yesterday)
+                    reviewRepository.countActiveReviews(),
+                    reviewRepository.countActiveReviewsBetweenDate(yesterday, yesterday),
+                    reviewRepository.countActiveReviewsBetweenDate(yesterday.minusWeeks(1), yesterday)
                 )
                 RepeatStatus.FINISHED
             }
@@ -148,15 +148,15 @@ class DailyStatisticsJobConfiguration(
     }
 
     @Bean
-    fun countsNewVisitHistoriesStep(): Step {
+    fun notificationVisitHistoriesStatisticsStep(): Step {
         return stepBuilderFactory["countsNewVisitHistoriesStep"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
                     COUNTS_VISIT_HISTORY,
-                    visitHistoryRepository.findAllCounts(),
-                    visitHistoryRepository.findCountsBetweenDate(yesterday, yesterday),
-                    visitHistoryRepository.findCountsBetweenDate(yesterday.minusWeeks(1), yesterday)
+                    visitHistoryRepository.countAllVisitHistoriese(),
+                    visitHistoryRepository.countVisitHistoriesBetweenDate(yesterday, yesterday),
+                    visitHistoryRepository.countVisitHistoriesBetweenDate(yesterday.minusWeeks(1), yesterday)
                 )
                 RepeatStatus.FINISHED
             }
@@ -164,10 +164,10 @@ class DailyStatisticsJobConfiguration(
     }
 
     @Bean
-    fun countsUserMedalGroupByMedal(): Step {
+    fun notificationUserMedalsStatisticsStep(): Step {
         return stepBuilderFactory["countsUserMedalGroupByMedal"]
             .tasklet { _, _ ->
-                val result = medalRepository.findUserMedalsCountsGroupByMedal()
+                val result = medalRepository.countsUserMedalGroupByMedalType()
                 val message = result.asSequence()
                     .sortedByDescending { it.counts }
                     .joinToString(separator = "\n") {
@@ -182,10 +182,10 @@ class DailyStatisticsJobConfiguration(
     }
 
     @Bean
-    fun countsActiveUserMedalCounts(): Step {
+    fun notificationActiveUserMedalsStatisticsStep(): Step {
         return stepBuilderFactory["countsActiveUserMedalCounts"]
             .tasklet { _, _ ->
-                val result = medalRepository.findActiveCountsGroupByMedal()
+                val result = medalRepository.countActiveMedalsGroupByMedalType()
                 val message = result.asSequence()
                     .sortedByDescending { it.counts }
                     .joinToString(separator = "\n") {

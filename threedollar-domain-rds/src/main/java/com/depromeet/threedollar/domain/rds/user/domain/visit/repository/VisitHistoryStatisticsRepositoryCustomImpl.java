@@ -13,14 +13,14 @@ public class VisitHistoryStatisticsRepositoryCustomImpl implements VisitHistoryS
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public long findAllCounts() {
+    public long countAllVisitHistoriese() {
         return queryFactory.select(visitHistory.id)
             .from(visitHistory)
             .fetchCount();
     }
 
     @Override
-    public long findCountsBetweenDate(LocalDate startDate, LocalDate endDate) {
+    public long countVisitHistoriesBetweenDate(LocalDate startDate, LocalDate endDate) {
         return queryFactory.select(visitHistory.id)
             .from(visitHistory)
             .where(

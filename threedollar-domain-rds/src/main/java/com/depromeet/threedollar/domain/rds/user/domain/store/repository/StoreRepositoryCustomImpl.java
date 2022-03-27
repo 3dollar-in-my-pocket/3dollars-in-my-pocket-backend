@@ -64,7 +64,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
 
     @Cacheable(key = "#userId", value = USER_STORES_COUNTS)
     @Override
-    public long findCountsByUserId(Long userId) {
+    public long countByUserId(Long userId) {
         return queryFactory.select(store.id).distinct()
             .from(store)
             .innerJoin(menu).on(menu.store.id.eq(store.id))

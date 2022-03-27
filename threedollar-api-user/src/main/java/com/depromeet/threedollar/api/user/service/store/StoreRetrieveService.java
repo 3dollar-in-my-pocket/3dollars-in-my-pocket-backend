@@ -83,7 +83,7 @@ public class StoreRetrieveService {
         List<Store> storesWithNextCursor = storeRepository.findAllByUserIdUsingCursor(userId, request.getCursor(), request.getSize() + 1);
         CursorPagingSupporter<Store> storesCursor = CursorPagingSupporter.of(storesWithNextCursor, request.getSize());
         VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(storesCursor.getItemsInCurrentCursor());
-        return StoresCursorResponse.of(storesCursor, visitHistoriesCounter, storeRepository.findCountsByUserId(userId));
+        return StoresCursorResponse.of(storesCursor, visitHistoriesCounter, storeRepository.countByUserId(userId));
     }
 
     private VisitHistoryCounter findVisitHistoriesCountByStoreIdsInDuration(List<Store> stores) {
@@ -91,7 +91,7 @@ public class StoreRetrieveService {
         List<Long> storeIds = stores.stream()
             .map(Store::getId).distinct()
             .collect(Collectors.toList());
-        return VisitHistoryCounter.of(visitHistoryRepository.findCountsByStoreIdWithGroup(storeIds, monthAgo));
+        return VisitHistoryCounter.of(visitHistoryRepository.countGroupingByStoreId(storeIds, monthAgo));
     }
 
     @Transactional(readOnly = true)

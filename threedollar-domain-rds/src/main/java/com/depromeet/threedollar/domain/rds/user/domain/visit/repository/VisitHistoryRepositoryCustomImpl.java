@@ -89,7 +89,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
     }
 
     @Override
-    public List<VisitHistoryCountProjection> findCountsByStoreIdWithGroup(List<Long> storeIds, LocalDate startDate) {
+    public List<VisitHistoryCountProjection> countGroupingByStoreId(List<Long> storeIds, LocalDate startDate) {
         return queryFactory.select(new QVisitHistoryCountProjection(visitHistory.store.id, visitHistory.type, visitHistory.id.count()))
             .from(visitHistory)
             .where(
@@ -101,7 +101,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
     }
 
     @Override
-    public long findCountsByUserIdAndCategory(Long userId, @Nullable MenuCategoryType menuCategoryType) {
+    public long countByUserIdAndMenuCategoryType(Long userId, @Nullable MenuCategoryType menuCategoryType) {
         return queryFactory.select(visitHistory.id)
             .from(visitHistory)
             .innerJoin(visitHistory.store, store).fetchJoin()
@@ -120,7 +120,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
     }
 
     @Override
-    public long findCountsByUserIdAndVisitType(Long userId, VisitType visitType) {
+    public long countByUserIdAndVisitType(Long userId, VisitType visitType) {
         return queryFactory.select(visitHistory.id)
             .from(visitHistory)
             .where(

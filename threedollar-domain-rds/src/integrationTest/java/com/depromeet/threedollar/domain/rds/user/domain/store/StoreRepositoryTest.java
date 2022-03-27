@@ -2,7 +2,6 @@ package com.depromeet.threedollar.domain.rds.user.domain.store;
 
 import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreWithReportedCountProjection;
 import com.depromeet.threedollar.domain.rds.user.domain.storedelete.DeleteReasonType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.storedelete.StoreDeleteRequestCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.storedelete.StoreDeleteRequestRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -59,7 +58,7 @@ class StoreRepositoryTest {
 
     @DisplayName("내가 제보한 가게 수를 카운트한다")
     @Nested
-    class FindCountsByUserIdTest {
+    class CountByUserId {
 
         @Test
         void 메뉴가_없는_가게는_포함되지_않는다() {
@@ -68,7 +67,7 @@ class StoreRepositoryTest {
             storeRepository.save(StoreCreator.create(userId, "2번 가게"));
 
             // when
-            long counts = storeRepository.findCountsByUserId(userId);
+            long counts = storeRepository.countByUserId(userId);
 
             // then
             assertThat(counts).isEqualTo(0);
@@ -82,7 +81,7 @@ class StoreRepositoryTest {
             storeRepository.save(deletedStore);
 
             // when
-            long counts = storeRepository.findCountsByUserId(userId);
+            long counts = storeRepository.countByUserId(userId);
 
             // then
             assertThat(counts).isEqualTo(1);

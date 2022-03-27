@@ -23,20 +23,20 @@ public class AddUserMedalFacadeService {
     private final VisitHistoryRepository visitHistoryRepository;
 
     public void addObtainableMedalsByAddStore(Long userId) {
-        userMedalService.addMedalsIfSatisfyCondition(userId, ADD_STORE, () -> storeRepository.findCountsByUserId(userId));
+        userMedalService.addMedalsIfSatisfyCondition(userId, ADD_STORE, () -> storeRepository.countByUserId(userId));
     }
 
     public void addObtainableMedalsByDeleteStore(Long userId) {
-        userMedalService.addMedalsIfSatisfyCondition(userId, DELETE_STORE, () -> storeDeleteRequestRepository.findCountsByUserId(userId));
+        userMedalService.addMedalsIfSatisfyCondition(userId, DELETE_STORE, () -> storeDeleteRequestRepository.countsByUserId(userId));
     }
 
     public void addObtainableMedalsByAddReview(Long userId) {
-        userMedalService.addMedalsIfSatisfyCondition(userId, ADD_REVIEW, () -> reviewRepository.findCountsByUserId(userId));
+        userMedalService.addMedalsIfSatisfyCondition(userId, ADD_REVIEW, () -> reviewRepository.countByUserId(userId));
     }
 
     public void addObtainableMedalsByVisitStore(Long userId) {
-        userMedalService.addMedalsIfSatisfyCondition(userId, VISIT_BUNGEOPPANG_STORE, () -> visitHistoryRepository.findCountsByUserIdAndCategory(userId, MenuCategoryType.BUNGEOPPANG));
-        userMedalService.addMedalsIfSatisfyCondition(userId, VISIT_NOT_EXISTS_STORE, () -> visitHistoryRepository.findCountsByUserIdAndVisitType(userId, VisitType.NOT_EXISTS));
+        userMedalService.addMedalsIfSatisfyCondition(userId, VISIT_BUNGEOPPANG_STORE, () -> visitHistoryRepository.countByUserIdAndMenuCategoryType(userId, MenuCategoryType.BUNGEOPPANG));
+        userMedalService.addMedalsIfSatisfyCondition(userId, VISIT_NOT_EXISTS_STORE, () -> visitHistoryRepository.countByUserIdAndVisitType(userId, VisitType.NOT_EXISTS));
     }
 
     public void addAndActivateDefaultMedals(Long userId) {

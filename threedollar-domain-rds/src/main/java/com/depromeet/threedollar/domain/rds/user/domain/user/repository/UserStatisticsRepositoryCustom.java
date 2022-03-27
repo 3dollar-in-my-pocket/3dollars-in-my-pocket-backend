@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 public interface UserStatisticsRepositoryCustom {
 
-    long findUsersCount();
+    long countAllUsers();
 
-    long findUsersCountBetweenDate(LocalDate startDate, LocalDate endDate);
+    long countUsersBetweenDate(LocalDate startDate, LocalDate endDate);
 
 }

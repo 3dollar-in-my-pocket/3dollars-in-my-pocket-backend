@@ -48,7 +48,7 @@ class MedalStatisticsRepositoryCustomTest {
         userRepository.saveAll(List.of(userHasMedal, userHasTwoMedals));
 
         // when
-        List<MedalCountsStatisticsProjection> result = medalRepository.findUserMedalsCountsGroupByMedal();
+        List<MedalCountsStatisticsProjection> result = medalRepository.countsUserMedalGroupByMedalType();
 
         // then
         assertAll(
@@ -75,7 +75,7 @@ class MedalStatisticsRepositoryCustomTest {
         userMedalRepository.saveAll(List.of(userMedalOne, userMedalTwo));
 
         // when
-        var result = medalRepository.findActiveCountsGroupByMedal();
+        var result = medalRepository.countActiveMedalsGroupByMedalType();
 
         // then
         assertAll(

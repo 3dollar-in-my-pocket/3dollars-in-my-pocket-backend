@@ -55,7 +55,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
 
     @Cacheable(key = "#userId", value = USER_REVIEWS_COUNTS)
     @Override
-    public long findCountsByUserId(Long userId) {
+    public long countByUserId(Long userId) {
         return queryFactory.select(review.id)
             .from(review)
             .innerJoin(store).on(review.storeId.eq(store.id))

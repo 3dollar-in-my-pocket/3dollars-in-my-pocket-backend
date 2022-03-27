@@ -33,7 +33,7 @@ class ReviewStatisticsRepositoryTest(
             reviewRepository.saveAll(listOf(review1, review2))
 
             // when
-            val counts = reviewRepository.findActiveReviewsCounts()
+            val counts = reviewRepository.countActiveReviews()
 
             // then
             assertThat(counts).isEqualTo(2)
@@ -51,7 +51,7 @@ class ReviewStatisticsRepositoryTest(
             reviewRepository.save(review)
 
             // when
-            val counts = reviewRepository.findActiveReviewsCounts()
+            val counts = reviewRepository.countActiveReviews()
 
             // then
             assertThat(counts).isEqualTo(0)

@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface MedalStatisticsRepositoryCustom {
 
-    List<MedalCountsStatisticsProjection> findUserMedalsCountsGroupByMedal();
+    List<MedalCountsStatisticsProjection> countsUserMedalGroupByMedalType();
 
-    List<MedalCountsStatisticsProjection> findActiveCountsGroupByMedal();
+    List<MedalCountsStatisticsProjection> countActiveMedalsGroupByMedalType();
 
 }

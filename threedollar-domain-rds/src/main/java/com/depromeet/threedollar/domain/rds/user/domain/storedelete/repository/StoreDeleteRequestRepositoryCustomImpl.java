@@ -25,7 +25,7 @@ public class StoreDeleteRequestRepositoryCustomImpl implements StoreDeleteReques
     }
 
     @Override
-    public long findCountsByUserId(Long userId) {
+    public long countsByUserId(Long userId) {
         return queryFactory.select(storeDeleteRequest.id)
             .from(storeDeleteRequest)
             .where(

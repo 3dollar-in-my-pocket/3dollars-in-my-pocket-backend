@@ -47,7 +47,7 @@ class VisitHistoryRepositoryTest {
         visitHistoryRepository.saveAll(List.of(visitHistoryBungeoppangStore, visitHistoryDalgonaStore));
 
         // when
-        long counts = visitHistoryRepository.findCountsByUserIdAndCategory(userId, MenuCategoryType.BUNGEOPPANG);
+        long counts = visitHistoryRepository.countByUserIdAndMenuCategoryType(userId, MenuCategoryType.BUNGEOPPANG);
 
         // then
         assertThat(counts).isEqualTo(1);
@@ -70,7 +70,7 @@ class VisitHistoryRepositoryTest {
         visitHistoryRepository.saveAll(List.of(visitHistoryBungeoppangStore, visitHistoryDalgonaStore));
 
         // when
-        long counts = visitHistoryRepository.findCountsByUserIdAndCategory(userId, null);
+        long counts = visitHistoryRepository.countByUserIdAndMenuCategoryType(userId, null);
 
         // then
         assertThat(counts).isEqualTo(2);

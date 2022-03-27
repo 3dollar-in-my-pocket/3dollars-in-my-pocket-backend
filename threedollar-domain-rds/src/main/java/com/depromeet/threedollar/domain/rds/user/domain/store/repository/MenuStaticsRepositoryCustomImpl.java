@@ -18,7 +18,7 @@ public class MenuStaticsRepositoryCustomImpl implements MenuStaticsRepositoryCus
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<MenuStatisticsProjection> countsGroupByMenu() {
+    public List<MenuStatisticsProjection> countMenus() {
         return queryFactory.select(new QMenuStatisticsProjection(menu.category, menu.id.count()))
             .from(menu)
             .innerJoin(menu.store, store)

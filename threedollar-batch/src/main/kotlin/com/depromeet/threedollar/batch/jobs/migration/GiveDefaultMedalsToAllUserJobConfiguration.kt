@@ -31,7 +31,7 @@ class GiveDefaultMedalsToAllUserJobConfiguration(
     private val medalRepository: MedalRepository
 ) {
 
-    @Bean
+    @Bean(name = [JOB_NAME])
     fun giveDefaultMedalsToUsersJob(): Job {
         return jobBuilderFactory.get(JOB_NAME)
             .incrementer(UniqueRunIdIncrementer())
@@ -39,7 +39,7 @@ class GiveDefaultMedalsToAllUserJobConfiguration(
             .build()
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_step"])
     fun giveDefaultMedalsToUsersJobStep(): Step {
         return stepBuilderFactory.get(JOB_NAME + "_step")
             .chunk<User, User>(CHUNK_SIZE)
@@ -49,7 +49,7 @@ class GiveDefaultMedalsToAllUserJobConfiguration(
             .build()
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_reader"])
     fun giveDefaultMedalsToUserJobReader(): JpaCursorItemReader<User> {
         return JpaCursorItemReaderBuilder<User>()
             .name(JOB_NAME + "_reader")
@@ -58,7 +58,7 @@ class GiveDefaultMedalsToAllUserJobConfiguration(
             .build()
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_processor"])
     fun giveDefaultMedalsToUserJobProcessor(): ItemProcessor<User, User> {
         return ItemProcessor<User, User> { user ->
             val medalObtainCollection = MedalObtainCollection.of(
@@ -75,7 +75,7 @@ class GiveDefaultMedalsToAllUserJobConfiguration(
         }
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_writer"])
     fun giveDefaultMedalsToUserJobWriter(): JpaItemWriter<User> {
         val itemWriter = JpaItemWriter<User>()
         itemWriter.setEntityManagerFactory(entityManagerFactory)

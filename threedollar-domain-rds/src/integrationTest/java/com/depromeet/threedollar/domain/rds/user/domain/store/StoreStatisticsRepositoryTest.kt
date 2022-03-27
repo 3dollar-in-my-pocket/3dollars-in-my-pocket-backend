@@ -29,7 +29,7 @@ class StoreStatisticsRepositoryTest(
             storeRepository.saveAll(listOf(store1, store2))
 
             // when
-            val counts = storeRepository.findActiveStoresCounts()
+            val counts = storeRepository.countAllActiveStores()
 
             // then
             assertThat(counts).isEqualTo(2)
@@ -45,7 +45,7 @@ class StoreStatisticsRepositoryTest(
             storeRepository.save(store)
 
             // when
-            val counts = storeRepository.findActiveStoresCounts()
+            val counts = storeRepository.countAllActiveStores()
 
             // then
             assertThat(counts).isEqualTo(0)
@@ -61,7 +61,7 @@ class StoreStatisticsRepositoryTest(
             storeRepository.save(store)
 
             // when
-            val counts = storeRepository.findActiveStoresCounts()
+            val counts = storeRepository.countAllActiveStores()
 
             // then
             assertThat(counts).isEqualTo(0)

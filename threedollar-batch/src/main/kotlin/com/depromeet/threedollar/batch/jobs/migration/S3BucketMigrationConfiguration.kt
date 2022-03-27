@@ -15,6 +15,8 @@ import org.springframework.context.annotation.Configuration
 /**
  * S3 버킷을 마이그레이션 하는 배치.
  */
+private const val JOB_NAME = "migrationS3BucketJob"
+
 @Configuration
 class S3BucketMigrationConfiguration(
     private val jobBuilderFactory: JobBuilderFactory,
@@ -22,21 +24,21 @@ class S3BucketMigrationConfiguration(
     private val storeImageRepository: StoreImageRepository
 ) {
 
-    @Bean
+    @Bean(name = [JOB_NAME])
     fun migrationS3BucketJob(): Job {
-        return jobBuilderFactory.get("migrationS3BucketJob")
+        return jobBuilderFactory.get(JOB_NAME)
             .incrementer(UniqueRunIdIncrementer())
             .start(migrationS3BucketStep("beforePrefix", "afterPrefix"))
             .build()
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_step"])
     @JobScope
     fun migrationS3BucketStep(
         @Value("#{jobParameters[beforePrefix]}") beforePrefix: String,
         @Value("#{jobParameters[afterPrefix]}") afterPrefix: String
     ): Step {
-        return stepBuilderFactory["migrationS3BucketStep"]
+        return stepBuilderFactory[JOB_NAME + "_step"]
             .tasklet { _, _ ->
                 val storeImages = storeImageRepository.findAll().asSequence()
                     .filter { it.url.startsWith(beforePrefix) }

@@ -15,7 +15,7 @@ public interface StoreRepositoryCustom {
 
     List<Store> findAllByIds(List<Long> storeIds);
 
-    long findCountsByUserId(Long userId);
+    long countByUserId(Long userId);
 
     List<Store> findAllUsingCursor(Long lastStoreId, int size);
 

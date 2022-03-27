@@ -13,14 +13,14 @@ public class UserStatisticsRepositoryCustomImpl implements UserStatisticsReposit
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public long findUsersCount() {
+    public long countAllUsers() {
         return queryFactory.select(user.id)
             .from(user)
             .fetchCount();
     }
 
     @Override
-    public long findUsersCountBetweenDate(LocalDate startDate, LocalDate endDate) {
+    public long countUsersBetweenDate(LocalDate startDate, LocalDate endDate) {
         return queryFactory.select(user.id)
             .from(user)
             .where(

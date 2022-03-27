@@ -6,6 +6,6 @@ public interface StoreDeleteRequestRepositoryCustom {
 
     List<Long> findAllUserIdByStoreIdWithLock(Long storeId);
 
-	long findCountsByUserId(Long userId);
+	long countsByUserId(Long userId);
 
 }

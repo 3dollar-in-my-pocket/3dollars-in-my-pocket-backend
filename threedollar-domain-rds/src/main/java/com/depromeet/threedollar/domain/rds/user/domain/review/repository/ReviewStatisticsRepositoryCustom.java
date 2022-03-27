@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 public interface ReviewStatisticsRepositoryCustom {
 
-    long findActiveReviewsCounts();
+    long countActiveReviews();
 
-    long findReviewsCountBetweenDate(LocalDate startDate, LocalDate endDate);
+    long countActiveReviewsBetweenDate(LocalDate startDate, LocalDate endDate);
 
 }

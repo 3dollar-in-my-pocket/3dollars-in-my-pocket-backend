@@ -14,7 +14,7 @@ public class ReviewStatisticsRepositoryCustomImpl implements ReviewStatisticsRep
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public long findActiveReviewsCounts() {
+    public long countActiveReviews() {
         return queryFactory.select(review.id)
             .from(review)
             .where(
@@ -23,7 +23,7 @@ public class ReviewStatisticsRepositoryCustomImpl implements ReviewStatisticsRep
     }
 
     @Override
-    public long findReviewsCountBetweenDate(LocalDate startDate, LocalDate endDate) {
+    public long countActiveReviewsBetweenDate(LocalDate startDate, LocalDate endDate) {
         return queryFactory.select(review.id)
             .from(review)
             .where(
