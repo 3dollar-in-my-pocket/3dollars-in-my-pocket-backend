@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.batch.jobs.statistics
 
-enum class BossStatisticsMessageFormat(
+enum class BossDailyStatisticsMessageFormat(
     val messageFormat: String
 ) {
 

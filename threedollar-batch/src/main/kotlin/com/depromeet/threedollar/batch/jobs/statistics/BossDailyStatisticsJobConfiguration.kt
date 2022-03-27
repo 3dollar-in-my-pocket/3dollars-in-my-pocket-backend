@@ -45,7 +45,7 @@ class BossDailyStatisticsJobConfiguration(
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 slackNotificationApiClient.postStatisticsMessage(
-                    PostSlackMessageRequest.of(BossStatisticsMessageFormat.DAILY_STATISTICS_INFO.messageFormat.format(yesterday))
+                    PostSlackMessageRequest.of(BossDailyStatisticsMessageFormat.DAILY_STATISTICS_INFO.messageFormat.format(yesterday))
                 )
                 RepeatStatus.FINISHED
             }
@@ -58,7 +58,7 @@ class BossDailyStatisticsJobConfiguration(
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
-                    BossStatisticsMessageFormat.BOSS_ACCOUNT_STATISTICS,
+                    BossDailyStatisticsMessageFormat.BOSS_ACCOUNT_STATISTICS,
                     bossAccountRepository.countAllBossAccounts(),
                     bossAccountRepository.countBossAccountsBetweenDate(yesterday, yesterday),
                     bossAccountRepository.countBossAccountsBetweenDate(yesterday.minusWeeks(1), yesterday)
@@ -74,7 +74,7 @@ class BossDailyStatisticsJobConfiguration(
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
-                    BossStatisticsMessageFormat.BOSS_STORE_STATISTICS,
+                    BossDailyStatisticsMessageFormat.BOSS_STORE_STATISTICS,
                     bossStoreRepository.countAllBossStores(),
                     bossStoreRepository.countBossStoresBetweenDate(yesterday, yesterday),
                     bossStoreRepository.countBossStoresBetweenDate(yesterday.minusWeeks(1), yesterday)
@@ -90,7 +90,7 @@ class BossDailyStatisticsJobConfiguration(
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
-                    BossStatisticsMessageFormat.BOSS_STORE_FEEDBACK_STATISTICS,
+                    BossDailyStatisticsMessageFormat.BOSS_STORE_FEEDBACK_STATISTICS,
                     bossStoreFeedbackRepository.countAllBossStoreFeedbacks(),
                     bossStoreFeedbackRepository.countBossStoreFeedbacksBetweenDate(yesterday, yesterday),
                     bossStoreFeedbackRepository.countBossStoreFeedbacksBetweenDate(yesterday.minusWeeks(1), yesterday)
@@ -101,7 +101,7 @@ class BossDailyStatisticsJobConfiguration(
     }
 
     private fun sendStatisticsNotification(
-        messageType: BossStatisticsMessageFormat,
+        messageType: BossDailyStatisticsMessageFormat,
         totalCounts: Long,
         todayCounts: Long,
         weekendCounts: Long
