@@ -4,7 +4,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocatio
 
 interface BossStoreLocationRepositoryCustom {
 
-    fun findNearBossStoreLocations(latitude: Double, longitude: Double, maxDistance: Double): List<BossStoreLocation>
+    fun findNearBossStoreLocations(latitude: Double, longitude: Double, maxDistance: Double, limit: Int): List<BossStoreLocation>
 
     fun findBossStoreLocationByBossStoreId(bossStoreId: String): BossStoreLocation?
 

@@ -14,13 +14,13 @@ class BossStoreLocationRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : BossStoreLocationRepositoryCustom {
 
-    override fun findNearBossStoreLocations(latitude: Double, longitude: Double, maxDistance: Double): List<BossStoreLocation> {
+    override fun findNearBossStoreLocations(latitude: Double, longitude: Double, maxDistance: Double, limit: Int): List<BossStoreLocation> {
         return mongoTemplate.find(Query()
             .addCriteria(
                 where(BossStoreLocation::location)
                     .nearSphere(Point(longitude, latitude))
                     .maxDistance(Distance(maxDistance, Metrics.KILOMETERS).normalizedValue)
-            ), BossStoreLocation::class.java
+            ).limit(limit), BossStoreLocation::class.java
         )
     }
 

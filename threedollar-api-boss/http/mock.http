@@ -7,7 +7,7 @@ client.global.set("BOSS_CATEGORY_ID", response.body["data"][0]["categoryId"])
 
 
 ### [테스트용] Mock 가게 데이터를 추가합니다.
-POST {{host_boss_api}}/test-store?latitude=38&longitude=127&categoriesIds={{BOSS_CATEGORY_ID}}
+POST {{host_boss_api}}/test-store?latitude=38.003&longitude=127&categoriesIds={{BOSS_CATEGORY_ID}}
 Content-Type: application/json
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
