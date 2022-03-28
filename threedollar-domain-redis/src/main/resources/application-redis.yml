@@ -38,26 +38,15 @@ spring:
 ---
 spring.config:
   activate:
-    on-profile: dev
-
-spring:
-  redis:
-    host: threedollar-dev-redis.xbz0jn.0001.apn2.cache.amazonaws.com
-    port: 6379
-    timeout: 3000
-
-
----
-spring.config:
-  activate:
     on-profile:
+      - dev
       - prod
       - stage
 
 spring:
   redis:
-    host: threedollar-api-redis-prod.tqy2kj.0001.apn2.cache.amazonaws.com
-    port: 6379
+    host: ${secret.spring.redis.host}
+    port: ${secret.spring.redis.port}
     timeout: 3000
 
 
