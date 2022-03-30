@@ -51,23 +51,22 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implement
             operations.set(key.getKey(), key.toValue(value));
             return;
         }
-        setTtl(key, value, key.getTtl());
+        setWithTtl(key, value, key.getTtl());
     }
 
     @Override
-    public void setTtl(K key, V value, Duration ttl) {
+    public void setWithTtl(K key, V value, Duration ttl) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         operations.set(key.getKey(), key.toValue(value), key.getTtl().getSeconds(), TimeUnit.SECONDS);
     }
 
     @Override
-    public void increase(K key) {
-        ValueOperations<String, String> operations = redisTemplate.opsForValue();
-        operations.increment(key.getKey());
+    public void incr(K key) {
+        incrBy(key, 1);
     }
 
     @Override
-    public void increaseBulk(List<K> keys) {
+    public void incrBulk(List<K> keys) {
         redisTemplate.executePipelined((RedisCallback<Object>) pipeline -> {
             keys.forEach(key -> pipeline.incr(key.getKey().getBytes(StandardCharsets.UTF_8)));
             return null;
@@ -75,25 +74,24 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implement
     }
 
     @Override
-    public void increase(K key, long value) {
+    public void incrBy(K key, long value) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         operations.increment(key.getKey(), value);
     }
 
     @Override
-    public void decrease(K key) {
-        ValueOperations<String, String> operations = redisTemplate.opsForValue();
-        operations.decrement(key.getKey());
+    public void decr(K key) {
+        decrBy(key, 1);
     }
 
     @Override
-    public void decrease(K key, long value) {
+    public void decrBy(K key, long value) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         operations.decrement(key.getKey(), value);
     }
 
     @Override
-    public void delete(K key) {
+    public void del(K key) {
         redisTemplate.delete(key.getKey());
     }
 

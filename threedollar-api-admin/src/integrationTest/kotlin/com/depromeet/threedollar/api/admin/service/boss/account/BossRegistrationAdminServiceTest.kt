@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.admin.service.boss.registration
+package com.depromeet.threedollar.api.admin.service.boss.account
 
 import com.depromeet.threedollar.api.admin.service.AdminSetUpTest
 import com.depromeet.threedollar.common.exception.model.ConflictException
@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
 internal class BossRegistrationAdminServiceTest(
-    private val bossRegistrationAdminService: BossRegistrationAdminService,
+    private val bossRegistrationAdminService: BossAccountRegistrationAdminService,
     private val registrationRepository: RegistrationRepository,
     private val bossAccountRepository: BossAccountRepository,
     private val bossStoreRepository: BossStoreRepository

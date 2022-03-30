@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.admin.service.boss.registration
+package com.depromeet.threedollar.api.admin.service.boss.account
 
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class BossRegistrationAdminService(
+class BossAccountRegistrationAdminService(
     private val registrationRepository: RegistrationRepository,
     private val bossAccountRepository: BossAccountRepository,
     private val bossStoreRepository: BossStoreRepository
@@ -20,7 +20,7 @@ class BossRegistrationAdminService(
 
     @Transactional
     fun applyBossRegistration(registrationId: String) {
-        val registration = BossRegistrationServiceUtils.findWaitingRegistrationById(registrationRepository, registrationId)
+        val registration = BossAccountRegistrationServiceUtils.findWaitingRegistrationById(registrationRepository, registrationId)
         val bossAccount = registerNewBossAccount(registration)
         bossStoreRepository.save(registration.toBossStore(bossAccount.id))
         registration.approve()
@@ -35,13 +35,13 @@ class BossRegistrationAdminService(
 
     private fun validateDuplicateRegistration(socialInfo: BossAccountSocialInfo) {
         if (bossAccountRepository.existsBossAccountBySocialInfo(socialId = socialInfo.socialId, socialType = socialInfo.socialType)) {
-            throw ConflictException("이미 가입한 사장님(${socialInfo.socialId} - ${socialInfo.socialType})입니다", ErrorCode.CONFLICT_EXISTS_BOSS)
+            throw ConflictException("이미 가입한 사장님(${socialInfo.socialId} - ${socialInfo.socialType})입니다", ErrorCode.CONFLICT_BOSS_ACCOUNT)
         }
     }
 
     @Transactional
     fun rejectBossRegistration(registrationId: String) {
-        val registration = BossRegistrationServiceUtils.findWaitingRegistrationById(registrationRepository, registrationId)
+        val registration = BossAccountRegistrationServiceUtils.findWaitingRegistrationById(registrationRepository, registrationId)
         registration.reject()
         registrationRepository.save(registration)
         // TODO 가입 거부 슬랙 알림

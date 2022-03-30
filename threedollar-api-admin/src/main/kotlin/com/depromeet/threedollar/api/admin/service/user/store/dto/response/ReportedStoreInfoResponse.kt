@@ -4,7 +4,7 @@ import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType
 import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreWithReportedCountProjection
 
-data class ReportedStoresResponse(
+data class ReportedStoreInfoResponse(
     val storeId: Long,
     val storeName: String,
     val latitude: Double,
@@ -15,8 +15,8 @@ data class ReportedStoresResponse(
 ) : AuditingTimeResponse() {
 
     companion object {
-        fun of(projection: StoreWithReportedCountProjection): ReportedStoresResponse {
-            val response = ReportedStoresResponse(
+        fun of(projection: StoreWithReportedCountProjection): ReportedStoreInfoResponse {
+            val response = ReportedStoreInfoResponse(
                 projection.storeId,
                 projection.storeName,
                 projection.latitude,

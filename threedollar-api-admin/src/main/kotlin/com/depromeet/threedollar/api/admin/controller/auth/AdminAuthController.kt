@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession
 import javax.validation.Valid
 
 @RestController
-class AuthController(
+class AdminAuthController(
     private val authService: AuthService,
     private val httpSession: HttpSession
 ) {

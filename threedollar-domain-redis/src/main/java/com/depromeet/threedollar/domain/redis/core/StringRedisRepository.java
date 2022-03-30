@@ -14,18 +14,18 @@ public interface StringRedisRepository<K, V> {
 
     void set(K key, V value);
 
-    void setTtl(K key, V value, Duration ttl);
+    void setWithTtl(K key, V value, Duration ttl);
 
-    void increase(K key);
+    void incr(K key);
 
-    void increaseBulk(List<K> keys);
+    void incrBulk(List<K> keys);
 
-    void increase(K key, long value);
+    void incrBy(K key, long value);
 
-    void decrease(K key);
+    void decr(K key);
 
-    void decrease(K key, long value);
+    void decrBy(K key, long value);
 
-    void delete(K key);
+    void del(K key);
 
 }

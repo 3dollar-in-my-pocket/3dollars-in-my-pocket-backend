@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.admin.controller.user.advertisement
 
 import com.depromeet.threedollar.api.admin.config.interceptor.Auth
-import com.depromeet.threedollar.api.admin.service.user.advertisement.AdvertisementAdminService
+import com.depromeet.threedollar.api.admin.service.user.advertisement.AdminAdvertisementService
 import com.depromeet.threedollar.api.admin.service.user.advertisement.dto.request.AddAdvertisementRequest
 import com.depromeet.threedollar.api.admin.service.user.advertisement.dto.request.RetrieveAdvertisementsRequest
 import com.depromeet.threedollar.api.admin.service.user.advertisement.dto.request.UpdateAdvertisementRequest
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @RestController
-class AdvertisementController(
-    private val advertisementAdminService: AdvertisementAdminService
+class AdminAdvertisementController(
+    private val adminAdvertisementService: AdminAdvertisementService
 ) {
 
     @ApiOperation("광고를 추가합니다")
@@ -22,7 +22,7 @@ class AdvertisementController(
     fun addAdvertisement(
         @Valid @RequestBody request: AddAdvertisementRequest
     ): ApiResponse<String> {
-        advertisementAdminService.addAdvertisement(request)
+        adminAdvertisementService.addAdvertisement(request)
         return ApiResponse.OK
     }
 
@@ -33,7 +33,7 @@ class AdvertisementController(
         @PathVariable advertisementId: Long,
         @Valid @RequestBody request: UpdateAdvertisementRequest
     ): ApiResponse<String> {
-        advertisementAdminService.updateAdvertisement(advertisementId, request)
+        adminAdvertisementService.updateAdvertisement(advertisementId, request)
         return ApiResponse.OK
     }
 
@@ -43,7 +43,7 @@ class AdvertisementController(
     fun deleteAdvertisement(
         @PathVariable advertisementId: Long
     ): ApiResponse<String> {
-        advertisementAdminService.deleteAdvertisement(advertisementId)
+        adminAdvertisementService.deleteAdvertisement(advertisementId)
         return ApiResponse.OK
     }
 
@@ -53,7 +53,7 @@ class AdvertisementController(
     fun retrieveAdvertisements(
         @Valid request: RetrieveAdvertisementsRequest
     ): ApiResponse<AdvertisementsWithPagingResponse> {
-        return ApiResponse.success(advertisementAdminService.retrieveAdvertisements(request))
+        return ApiResponse.success(adminAdvertisementService.retrieveAdvertisements(request))
     }
 
 }

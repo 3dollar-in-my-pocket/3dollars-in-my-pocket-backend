@@ -14,7 +14,7 @@ object BossStoreServiceUtils {
 
     fun findBossStoreByBossId(bossStoreRepository: BossStoreRepository, bossId: String): BossStore {
         return bossStoreRepository.findBossStoreByBossId(bossId)
-            ?: throw NotFoundException("사장님 (${bossId})이 운영중인 가게가 존재하지 않습니다", ErrorCode.NOTFOUND_BOSS_OWNED_STORE)
+            ?: throw NotFoundException("사장님 (${bossId})이 운영중인 가게가 존재하지 않습니다", ErrorCode.NOTFOUND_STORE)
     }
 
     fun validateExistsBossStoreByBoss(bossStoreRepository: BossStoreRepository, bossStoreId: String, bossId: String) {

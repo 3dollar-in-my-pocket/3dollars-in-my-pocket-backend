@@ -14,8 +14,8 @@ import java.time.LocalDateTime
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
-internal class AdvertisementAdminServiceTest(
-    private val advertisementAdminService: AdvertisementAdminService,
+internal class AdminAdvertisementServiceTest(
+    private val adminAdvertisementService: AdminAdvertisementService,
     private val advertisementRepository: AdvertisementRepository
 ) {
 
@@ -52,7 +52,7 @@ internal class AdvertisementAdminServiceTest(
         )
 
         // when
-        advertisementAdminService.addAdvertisement(request)
+        adminAdvertisementService.addAdvertisement(request)
 
         // then
         val advertisements = advertisementRepository.findAll()
@@ -102,7 +102,7 @@ internal class AdvertisementAdminServiceTest(
         )
 
         // when
-        advertisementAdminService.updateAdvertisement(advertisement.id, request)
+        adminAdvertisementService.updateAdvertisement(advertisement.id, request)
 
         // then
         val advertisements = advertisementRepository.findAll()
@@ -138,7 +138,7 @@ internal class AdvertisementAdminServiceTest(
         )
 
         // when & then
-        assertThatThrownBy { advertisementAdminService.updateAdvertisement(-1, request) }.isInstanceOf(NotFoundException::class.java)
+        assertThatThrownBy { adminAdvertisementService.updateAdvertisement(-1, request) }.isInstanceOf(NotFoundException::class.java)
     }
 
     @Test
@@ -148,7 +148,7 @@ internal class AdvertisementAdminServiceTest(
         advertisementRepository.save(advertisement)
 
         // when
-        advertisementAdminService.deleteAdvertisement(advertisement.id)
+        adminAdvertisementService.deleteAdvertisement(advertisement.id)
 
         // then
         val advertisements = advertisementRepository.findAll()
@@ -158,7 +158,7 @@ internal class AdvertisementAdminServiceTest(
     @Test
     fun `광고 삭제시 존재하지 않는 경우 404 에러 발생`() {
         // when & then
-        assertThatThrownBy { advertisementAdminService.deleteAdvertisement(-1) }.isInstanceOf(NotFoundException::class.java)
+        assertThatThrownBy { adminAdvertisementService.deleteAdvertisement(-1) }.isInstanceOf(NotFoundException::class.java)
     }
 
     private fun createAdvertisement(): Advertisement {

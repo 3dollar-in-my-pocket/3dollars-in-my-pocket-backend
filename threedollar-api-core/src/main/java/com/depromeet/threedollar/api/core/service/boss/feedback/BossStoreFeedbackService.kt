@@ -28,7 +28,7 @@ class BossStoreFeedbackService(
         BossStoreCommonServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
         validateNotExistsFeedbackOnDate(storeId = bossStoreId, userId = userId, date = date)
         bossStoreFeedbackRepository.saveAll(request.toDocuments(bossStoreId, userId, date))
-        bossStoreFeedbackCountRedisRepository.incrementAll(bossStoreId, request.feedbackTypes)
+        bossStoreFeedbackCountRedisRepository.increaseBulk(bossStoreId, request.feedbackTypes)
     }
 
     private fun validateNotExistsFeedbackOnDate(storeId: String, userId: Long, date: LocalDate) {
@@ -40,7 +40,7 @@ class BossStoreFeedbackService(
     @Transactional(readOnly = true)
     fun getBossStoreFeedbacksCounts(bossStoreId: String): List<BossStoreFeedbackCountResponse> {
         BossStoreCommonServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
-        val feedbackCountsGroupingByFeedbackType: Map<BossStoreFeedbackType, Int> = bossStoreFeedbackCountRedisRepository.getAll(bossStoreId)
+        val feedbackCountsGroupingByFeedbackType: Map<BossStoreFeedbackType, Int> = bossStoreFeedbackCountRedisRepository.getAllCountsGroupByFeedbackType(bossStoreId)
         return feedbackCountsGroupingByFeedbackType
             .map { BossStoreFeedbackCountResponse.of(it.key, it.value) }
     }
@@ -50,13 +50,13 @@ class BossStoreFeedbackService(
         BossStoreCommonServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
         val feedbacks = bossStoreFeedbackRepository.findAllByBossStoreIdAndBetween(bossStoreId = bossStoreId, startDate = request.startDate, endDate = request.endDate)
 
-        val feedbacksGroupingDate: Map<LocalDate, Map<BossStoreFeedbackType, Int>> = feedbacks
+        val feedbacksGroupByDate: Map<LocalDate, Map<BossStoreFeedbackType, Int>> = feedbacks
             .groupBy { it.date }
             .entries
             .associate { it -> it.key to it.value.groupingBy { it.feedbackType }.eachCount() }
 
         return BossStoreFeedbackCursorResponse.of(
-            feedbackGroupingDate = feedbacksGroupingDate,
+            feedbackGroupingDate = feedbacksGroupByDate,
             nextDate = getNextDate(bossStoreId, feedbacks)
         )
     }

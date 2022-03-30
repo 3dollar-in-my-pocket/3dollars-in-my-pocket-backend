@@ -46,7 +46,7 @@ class BossStoreCommonService(
         )
 
         val locationsDictionary: Map<String, BossStoreLocation> = storeLocations.associateBy { it.bossStoreId }
-        val bossStores: List<BossStore> = bossStoreRepository.findAllByIdByCategory(storeLocations.map { it.bossStoreId }, request.categoryId)
+        val bossStores: List<BossStore> = bossStoreRepository.findAllByIdByCategory(bossStoreIds = storeLocations.map { it.bossStoreId }, categoryId = request.categoryId)
         val categoriesDictionary: Map<String, BossStoreCategory> = bossStoreCategoryRepository.findAll().associateBy { it.id }
 
         return bossStores.asSequence()
@@ -57,7 +57,7 @@ class BossStoreCommonService(
                     openStartDateTime = bossStoreOpenRedisRepository.get(it.id),
                     location = locationsDictionary[it.id]?.location,
                     geoCoordinate = geoCoordinate,
-                    totalFeedbacksCounts = bossStoreFeedbackCountRedisRepository.getTotalCount(it.id)
+                    totalFeedbacksCounts = bossStoreFeedbackCountRedisRepository.getTotalCounts(it.id)
                 )
             }
             .sortedWith(request.orderType.sorted)

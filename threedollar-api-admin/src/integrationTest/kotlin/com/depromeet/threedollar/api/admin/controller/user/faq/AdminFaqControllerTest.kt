@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.put
 
-internal class FaqAdminControllerTest(
+internal class AdminFaqControllerTest(
     private val faqRepository: FaqRepository
 ) : SetupAdminControllerTest() {
 

@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.admin.controller.user.store
 
 import com.depromeet.threedollar.api.admin.controller.SetupAdminControllerTest
-import com.depromeet.threedollar.api.admin.service.user.store.dto.response.ReportedStoresResponse
+import com.depromeet.threedollar.api.admin.service.user.store.dto.response.ReportedStoreInfoResponse
 import com.depromeet.threedollar.api.admin.service.user.store.dto.response.StoreInfoResponse
-import com.depromeet.threedollar.api.admin.service.user.store.dto.response.StoresCursorResponse
+import com.depromeet.threedollar.api.admin.service.user.store.dto.response.StoreInfosWithCursorResponse
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator
@@ -75,7 +75,7 @@ internal class StoreControllerTest(
             status { isOk() }
         }.andDo {
             print()
-        }.andReturn().response.contentAsString, object : TypeReference<ApiResponse<List<ReportedStoresResponse>>>() {})
+        }.andReturn().response.contentAsString, object : TypeReference<ApiResponse<List<ReportedStoreInfoResponse>>>() {})
 
         // then
         assertAll({
@@ -128,7 +128,7 @@ internal class StoreControllerTest(
             status { isOk() }
         }.andDo {
             print()
-        }.andReturn().response.contentAsString, object : TypeReference<ApiResponse<List<ReportedStoresResponse>>>() {})
+        }.andReturn().response.contentAsString, object : TypeReference<ApiResponse<List<ReportedStoreInfoResponse>>>() {})
 
         // then
         assertAll({
@@ -159,13 +159,13 @@ internal class StoreControllerTest(
             status { isOk() }
         }.andDo {
             print()
-        }.andReturn().response.contentAsString, object : TypeReference<ApiResponse<List<ReportedStoresResponse>>>() {})
+        }.andReturn().response.contentAsString, object : TypeReference<ApiResponse<List<ReportedStoreInfoResponse>>>() {})
 
         // then
         assertThat(response.data).isEmpty()
     }
 
-    private fun assertReportedStoresResponse(response: ReportedStoresResponse, store: Store, reportsCount: Long) {
+    private fun assertReportedStoresResponse(response: ReportedStoreInfoResponse, store: Store, reportsCount: Long) {
         assertThat(response.storeId).isEqualTo(store.id)
         assertThat(response.storeName).isEqualTo(store.name)
         assertThat(response.latitude).isEqualTo(store.latitude)
@@ -195,7 +195,7 @@ internal class StoreControllerTest(
             status { isOk() }
         }.andDo {
             print()
-        }.andReturn().response.contentAsString, object : TypeReference<ApiResponse<StoresCursorResponse>>() {})
+        }.andReturn().response.contentAsString, object : TypeReference<ApiResponse<StoreInfosWithCursorResponse>>() {})
 
         // then
         assertAll({
@@ -228,7 +228,7 @@ internal class StoreControllerTest(
             status { isOk() }
         }.andDo {
             print()
-        }.andReturn().response.contentAsString, object : TypeReference<ApiResponse<StoresCursorResponse>>() {})
+        }.andReturn().response.contentAsString, object : TypeReference<ApiResponse<StoreInfosWithCursorResponse>>() {})
 
         // then
         assertAll({

@@ -92,7 +92,7 @@ internal class BossStoreFeedbackServiceTest(
         )
 
         // then
-        val count = bossStoreFeedbackCountRedisRepository.get(bossStoreId = bossStore.id, feedbackType = feedbackType)
+        val count = bossStoreFeedbackCountRedisRepository.getCount(bossStoreId = bossStore.id, feedbackType = feedbackType)
         assertThat(count).isEqualTo(1)
     }
 

@@ -53,11 +53,10 @@ public enum ErrorCode {
     NOTFOUND_MEDAL(NOT_FOUND, OFF, "N006", "존재하지 않은 메달입니다"),
     NOTFOUND_USER_MEDAL(NOT_FOUND, OFF, "N007", "보유하지 않은 메달입니다"),
     NOTFOUND_CATEGORY(NOT_FOUND, OFF, "N008", "존재하지 않는 카테고리 입니다"),
-    NOTFOUND_BOSS(NOT_FOUND, OFF, "N009", "존재하지 않는 사장님 계정입니다"),
-    NOTFOUND_BOSS_OWNED_STORE(NOT_FOUND, OFF, "NF0010", "현재 사장님이 운영하는 가게는 존재하지 않습니다."),
-    NOTFOUND_SIGNUP_REGISTRATION(NOT_FOUND, OFF, "NF011", "해당하는 가입 신청은 존재하지 않습니다"),
-    NOTFOUND_ADMIN(NOT_FOUND, OFF, "NF012", "해당하는 관리자는 존재하지 않습니다"),
-    NOTFOUND_ADVERTISEMENT(NOT_FOUND, OFF, "NF013", "해당하는 광고는 존재하지 않습니다"),
+    NOTFOUND_BOSS_ACCOUNT(NOT_FOUND, OFF, "N009", "존재하지 않는 사장님 계정입니다"),
+    NOTFOUND_SIGNUP_REGISTRATION(NOT_FOUND, OFF, "NF010", "해당하는 가입 신청은 존재하지 않습니다"),
+    NOTFOUND_ADMIN(NOT_FOUND, OFF, "NF011", "해당하는 관리자는 존재하지 않습니다"),
+    NOTFOUND_ADVERTISEMENT(NOT_FOUND, OFF, "NF012", "해당하는 광고는 존재하지 않습니다"),
 
 
     // 405 Method Not Allowed
@@ -75,7 +74,7 @@ public enum ErrorCode {
     CONFLICT_DELETE_REQUEST_STORE(HttpStatusCode.CONFLICT, OFF, "CF003", "이미 해당 가게를 삭제 요청 하였습니다."),
     CONFLICT_VISIT_HISTORY(HttpStatusCode.CONFLICT, OFF, "CF004", "오늘 이미 방문 인증한 가게입니다.\n내일 다시 방문 인증해주세요 :)"),
     CONFLICT_BOSS_STORE_FEEDBACK(HttpStatusCode.CONFLICT, OFF, "CF005", "오늘 이미 피드백을 추가한 가게입니다.\n내일 다시 인증해주세요 :)"),
-    CONFLICT_EXISTS_BOSS(HttpStatusCode.CONFLICT, OFF, "CF006", "이미 가입 완료한 사장님입니다"),
+    CONFLICT_BOSS_ACCOUNT(HttpStatusCode.CONFLICT, OFF, "CF006", "이미 가입 완료한 사장님입니다"),
 
 
     // 415 Unsupported Media Type

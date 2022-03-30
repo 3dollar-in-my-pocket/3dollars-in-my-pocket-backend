@@ -18,7 +18,7 @@ class BossStoreOpenService(
     fun openBossStore(bossStoreId: String, bossId: String, mapCoordinate: CoordinateValue) {
         BossStoreServiceUtils.validateExistsBossStoreByBoss(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
         updateStoreLocation(bossStoreId, latitude = mapCoordinate.latitude, longitude = mapCoordinate.longitude)
-        upsertStoreOpenInfo(bossStoreId)
+        upsertStoreOpenInfo(bossStoreId = bossStoreId)
     }
 
     private fun updateStoreLocation(bossStoreId: String, latitude: Double, longitude: Double) {
@@ -35,12 +35,12 @@ class BossStoreOpenService(
     private fun upsertStoreOpenInfo(bossStoreId: String) {
         val openDateTime: LocalDateTime = bossStoreOpenRedisRepository.get(bossStoreId)
             ?: LocalDateTime.now()
-        bossStoreOpenRedisRepository.set(bossStoreId, openDateTime)
+        bossStoreOpenRedisRepository.set(bossStoreId = bossStoreId, openDateTime = openDateTime)
     }
 
     fun closeBossStore(bossStoreId: String, bossId: String) {
         BossStoreServiceUtils.validateExistsBossStoreByBoss(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
-        bossStoreOpenRedisRepository.delete(bossStoreId)
+        bossStoreOpenRedisRepository.delete(bossStoreId = bossStoreId)
     }
 
 }

@@ -21,7 +21,7 @@ class BossStoreOpenRedisRepository(
 
     fun delete(bossStoreId: String) {
         val key = BossStoreOpenRedisKey.of(bossStoreId)
-        bossStoreOpenRedisRepository.delete(key)
+        bossStoreOpenRedisRepository.del(key)
     }
 
 }

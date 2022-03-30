@@ -11,7 +11,7 @@ class BossStoreFeedbackCountRedisRepository(
     private val bossStoreFeedbackCountRepository: StringRedisRepository<BossStoreFeedbackCountRedisKey, Int>
 ) {
 
-    fun getTotalCount(bossStoreId: String): Int {
+    fun getTotalCounts(bossStoreId: String): Int {
         return bossStoreFeedbackCountRepository.getBulk(
             BossStoreFeedbackType.values().map {
                 BossStoreFeedbackCountRedisKey(bossStoreId = bossStoreId, feedbackType = it)
@@ -25,20 +25,20 @@ class BossStoreFeedbackCountRedisRepository(
             bossStoreId = bossStoreId,
             feedbackType = feedbackType
         )
-        bossStoreFeedbackCountRepository.increase(key)
+        bossStoreFeedbackCountRepository.incr(key)
     }
 
-    fun incrementAll(bossStoreId: String, feedbackTypes: Set<BossStoreFeedbackType>) {
+    fun increaseBulk(bossStoreId: String, feedbackTypes: Set<BossStoreFeedbackType>) {
         val keys = feedbackTypes.map {
             BossStoreFeedbackCountRedisKey.of(
                 bossStoreId = bossStoreId,
                 feedbackType = it
             )
         }
-        bossStoreFeedbackCountRepository.increaseBulk(keys)
+        bossStoreFeedbackCountRepository.incrBulk(keys)
     }
 
-    fun get(bossStoreId: String, feedbackType: BossStoreFeedbackType): Int {
+    fun getCount(bossStoreId: String, feedbackType: BossStoreFeedbackType): Int {
         val key = BossStoreFeedbackCountRedisKey.of(
             bossStoreId = bossStoreId,
             feedbackType = feedbackType
@@ -46,7 +46,7 @@ class BossStoreFeedbackCountRedisRepository(
         return bossStoreFeedbackCountRepository.get(key) ?: DEFAULT_COUNT
     }
 
-    fun getAll(bossStoreId: String): Map<BossStoreFeedbackType, Int> {
+    fun getAllCountsGroupByFeedbackType(bossStoreId: String): Map<BossStoreFeedbackType, Int> {
         val feedbackTypes = BossStoreFeedbackType.values()
         val feedbackCounts: List<Int?> = bossStoreFeedbackCountRepository.getBulk(feedbackTypes
             .map { BossStoreFeedbackCountRedisKey.of(bossStoreId, it) })

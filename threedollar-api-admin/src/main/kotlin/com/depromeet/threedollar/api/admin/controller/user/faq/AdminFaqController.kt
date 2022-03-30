@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @RestController
-class FaqAdminController(
+class AdminFaqController(
     private val faqAdminService: FaqAdminService,
     private val faqService: FaqService
 ) {

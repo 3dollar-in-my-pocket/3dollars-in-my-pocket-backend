@@ -4,18 +4,18 @@ import com.depromeet.threedollar.api.core.common.dto.CursorResponse
 import com.depromeet.threedollar.domain.rds.common.support.CursorPagingSupporter
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store
 
-data class StoresCursorResponse(
+data class StoreInfosWithCursorResponse(
     val contents: List<StoreInfoResponse>,
     val cursor: CursorResponse<Long>
 ) {
 
     companion object {
-        fun of(storesCursor: CursorPagingSupporter<Store>): StoresCursorResponse {
+        fun of(storesCursor: CursorPagingSupporter<Store>): StoreInfosWithCursorResponse {
             val stores = storesCursor.itemsInCurrentCursor.map { StoreInfoResponse.of(it) }
             if (storesCursor.hasNext()) {
-                return StoresCursorResponse(stores, CursorResponse.of(storesCursor.nextCursor.id))
+                return StoreInfosWithCursorResponse(stores, CursorResponse.of(storesCursor.nextCursor.id))
             }
-            return StoresCursorResponse(stores, CursorResponse.newLastCursor())
+            return StoreInfosWithCursorResponse(stores, CursorResponse.newLastCursor())
         }
     }
 
