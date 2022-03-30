@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.domain.rds.user.domain.advertisement;
 
-import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementCreator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
