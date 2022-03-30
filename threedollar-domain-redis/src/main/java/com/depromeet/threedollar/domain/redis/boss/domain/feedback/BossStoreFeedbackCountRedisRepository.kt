@@ -48,7 +48,7 @@ class BossStoreFeedbackCountRedisRepository(
 
     fun getAll(bossStoreId: String): Map<BossStoreFeedbackType, Int> {
         val feedbackTypes = BossStoreFeedbackType.values()
-        val feedbackCounts: List<Int> = bossStoreFeedbackCountRepository.getBulk(feedbackTypes
+        val feedbackCounts: List<Int?> = bossStoreFeedbackCountRepository.getBulk(feedbackTypes
             .map { BossStoreFeedbackCountRedisKey.of(bossStoreId, it) })
 
         val feedbackCountsMap = linkedMapOf<BossStoreFeedbackType, Int>()
