@@ -4,14 +4,16 @@ import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 
 data class BossStoreFeedbackTypeResponse(
     val feedbackType: BossStoreFeedbackType,
-    val description: String
+    val description: String,
+    val emoji: String
 ) {
 
     companion object {
-        fun of(bossStoreFeedbackType: BossStoreFeedbackType): BossStoreFeedbackTypeResponse {
+        fun of(feedbackType: BossStoreFeedbackType): BossStoreFeedbackTypeResponse {
             return BossStoreFeedbackTypeResponse(
-                feedbackType = bossStoreFeedbackType,
-                description = bossStoreFeedbackType.description
+                feedbackType = feedbackType,
+                description = feedbackType.description,
+                emoji = feedbackType.emoji
             )
         }
     }

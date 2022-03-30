@@ -173,8 +173,10 @@ internal class BossStoreFeedbackControllerTest(
                 jsonPath("$.data") { hasSize<BossStoreFeedbackTypeResponse>(BossStoreFeedbackType.values().size) }
                 jsonPath("$.data[0].feedbackType") { value(BossStoreFeedbackType.FOOD_IS_DELICIOUS.name) }
                 jsonPath("$.data[0].description") { value(BossStoreFeedbackType.FOOD_IS_DELICIOUS.description) }
+                jsonPath("$.data[0].emoji") { value(BossStoreFeedbackType.FOOD_IS_DELICIOUS.emoji) }
                 jsonPath("$.data[5].feedbackType") { value(BossStoreFeedbackType.PLATING_IS_BEAUTIFUL.name) }
                 jsonPath("$.data[5].description") { value(BossStoreFeedbackType.PLATING_IS_BEAUTIFUL.description) }
+                jsonPath("$.data[5].emoji") { value(BossStoreFeedbackType.PLATING_IS_BEAUTIFUL.emoji) }
             }
     }
 
