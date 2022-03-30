@@ -15,15 +15,17 @@ class BossStoreFeedbackCountRedisRepository(
         return bossStoreFeedbackCountRepository.getBulk(
             BossStoreFeedbackType.values().map {
                 BossStoreFeedbackCountRedisKey(bossStoreId = bossStoreId, feedbackType = it)
-            }).filterNotNull()
+            })
+            .filterNotNull()
             .sum()
     }
 
     fun increase(bossStoreId: String, feedbackType: BossStoreFeedbackType) {
-        bossStoreFeedbackCountRepository.increase(BossStoreFeedbackCountRedisKey.of(
+        val key = BossStoreFeedbackCountRedisKey.of(
             bossStoreId = bossStoreId,
             feedbackType = feedbackType
-        ))
+        )
+        bossStoreFeedbackCountRepository.increase(key)
     }
 
     fun incrementAll(bossStoreId: String, feedbackTypes: Set<BossStoreFeedbackType>) {
@@ -37,17 +39,16 @@ class BossStoreFeedbackCountRedisRepository(
     }
 
     fun get(bossStoreId: String, feedbackType: BossStoreFeedbackType): Int {
-        return bossStoreFeedbackCountRepository.get(
-            BossStoreFeedbackCountRedisKey.of(
-                bossStoreId = bossStoreId,
-                feedbackType = feedbackType
-            )
-        ) ?: DEFAULT_COUNT
+        val key = BossStoreFeedbackCountRedisKey.of(
+            bossStoreId = bossStoreId,
+            feedbackType = feedbackType
+        )
+        return bossStoreFeedbackCountRepository.get(key) ?: DEFAULT_COUNT
     }
 
     fun getAll(bossStoreId: String): Map<BossStoreFeedbackType, Int> {
         val feedbackTypes = BossStoreFeedbackType.values()
-        val feedbackCounts = bossStoreFeedbackCountRepository.getBulk(feedbackTypes
+        val feedbackCounts: List<Int> = bossStoreFeedbackCountRepository.getBulk(feedbackTypes
             .map { BossStoreFeedbackCountRedisKey.of(bossStoreId, it) })
 
         val feedbackCountsMap = linkedMapOf<BossStoreFeedbackType, Int>()

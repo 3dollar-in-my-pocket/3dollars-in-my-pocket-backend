@@ -10,15 +10,18 @@ class BossStoreOpenRedisRepository(
 ) {
 
     fun get(bossStoreId: String): LocalDateTime? {
-        return bossStoreOpenRedisRepository.get(BossStoreOpenRedisKey(bossStoreId))
+        val key = BossStoreOpenRedisKey(bossStoreId)
+        return bossStoreOpenRedisRepository.get(key)
     }
 
     fun set(bossStoreId: String, openDateTime: LocalDateTime) {
-        bossStoreOpenRedisRepository.set(BossStoreOpenRedisKey.of(bossStoreId), openDateTime)
+        val key = BossStoreOpenRedisKey.of(bossStoreId)
+        bossStoreOpenRedisRepository.set(key, openDateTime)
     }
 
     fun delete(bossStoreId: String) {
-        bossStoreOpenRedisRepository.delete(BossStoreOpenRedisKey.of(bossStoreId))
+        val key = BossStoreOpenRedisKey.of(bossStoreId)
+        bossStoreOpenRedisRepository.delete(key)
     }
 
 }
