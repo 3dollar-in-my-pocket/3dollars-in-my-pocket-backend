@@ -10,7 +10,7 @@ public interface StringRedisRepository<K, V> {
     @Nullable
     V get(K key);
 
-    List<V> getAll(List<K> keys);
+    List<V> getBulk(List<K> keys);
 
     void set(K key, V value);
 
@@ -18,7 +18,7 @@ public interface StringRedisRepository<K, V> {
 
     void increase(K key);
 
-    void increaseAll(List<K> keys);
+    void increaseBulk(List<K> keys);
 
     void increase(K key, long value);
 

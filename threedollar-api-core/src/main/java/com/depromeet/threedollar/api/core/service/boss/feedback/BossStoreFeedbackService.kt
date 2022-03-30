@@ -11,8 +11,7 @@ import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedback
 import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedbackRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRedisKey
-import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
+import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRedisRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
@@ -21,7 +20,7 @@ import java.time.LocalDate
 class BossStoreFeedbackService(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,
-    private val bossStoreFeedbackCountRepository: StringRedisRepository<BossStoreFeedbackCountRedisKey, Int>
+    private val bossStoreFeedbackCountRedisRepository: BossStoreFeedbackCountRedisRepository
 ) {
 
     @Transactional
@@ -29,9 +28,7 @@ class BossStoreFeedbackService(
         BossStoreCommonServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
         validateNotExistsFeedbackOnDate(storeId = bossStoreId, userId = userId, date = date)
         bossStoreFeedbackRepository.saveAll(request.toDocuments(bossStoreId, userId, date))
-        bossStoreFeedbackCountRepository.increaseAll(request.feedbackTypes.map {
-            BossStoreFeedbackCountRedisKey.of(bossStoreId, it)
-        })
+        bossStoreFeedbackCountRedisRepository.incrementAll(bossStoreId, request.feedbackTypes)
     }
 
     private fun validateNotExistsFeedbackOnDate(storeId: String, userId: Long, date: LocalDate) {
@@ -43,12 +40,9 @@ class BossStoreFeedbackService(
     @Transactional(readOnly = true)
     fun getBossStoreFeedbacksCounts(bossStoreId: String): List<BossStoreFeedbackCountResponse> {
         BossStoreCommonServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
-        return BossStoreFeedbackType.values().map {
-            BossStoreFeedbackCountResponse.of(
-                feedbackType = it,
-                count = bossStoreFeedbackCountRepository.get(BossStoreFeedbackCountRedisKey.of(bossStoreId, it)) ?: 0
-            )
-        }
+        val feedbackCountsGroupingByFeedbackType: Map<BossStoreFeedbackType, Int> = bossStoreFeedbackCountRedisRepository.getAll(bossStoreId)
+        return feedbackCountsGroupingByFeedbackType
+            .map { BossStoreFeedbackCountResponse.of(it.key, it.value) }
     }
 
     @Transactional(readOnly = true)

@@ -6,9 +6,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenRedisKey
-import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenRedisKeyCreator
-import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
+import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenRedisRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
@@ -25,7 +23,7 @@ internal class BossStoreOpenServiceTest(
     private val bossStoreOpenService: BossStoreOpenService,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreLocationRepository: BossStoreLocationRepository,
-    private val bossStoreOpenInfoRepository: StringRedisRepository<BossStoreOpenRedisKey, LocalDateTime>
+    private val bossStoreOpenRedisRepository: BossStoreOpenRedisRepository
 ) {
 
     @AfterEach
@@ -47,7 +45,7 @@ internal class BossStoreOpenServiceTest(
         bossStoreOpenService.openBossStore(bossStore.id, bossStore.bossId, CoordinateValue.of(38.0, 127.0))
 
         // then
-        val openStartDateTime = bossStoreOpenInfoRepository.get(BossStoreOpenRedisKeyCreator.create(bossStore.id))
+        val openStartDateTime = bossStoreOpenRedisRepository.get(bossStore.id)
         assertThat(openStartDateTime).isNotNull
     }
 
@@ -61,13 +59,13 @@ internal class BossStoreOpenServiceTest(
         bossStoreRepository.save(bossStore)
 
         val startDateTime = LocalDateTime.of(2022, 1, 1, 0, 0)
-        bossStoreOpenInfoRepository.set(BossStoreOpenRedisKeyCreator.create(bossStore.id), startDateTime)
+        bossStoreOpenRedisRepository.set(bossStore.id, startDateTime)
 
         // when
         bossStoreOpenService.openBossStore(bossStore.id, bossStore.bossId, CoordinateValue.of(38.0, 127.0))
 
         // then
-        val openStartDateTime = bossStoreOpenInfoRepository.get(BossStoreOpenRedisKeyCreator.create(bossStore.id))
+        val openStartDateTime = bossStoreOpenRedisRepository.get(bossStore.id)
         assertThat(openStartDateTime).isEqualTo(startDateTime)
     }
 
@@ -158,13 +156,13 @@ internal class BossStoreOpenServiceTest(
         )
         bossStoreRepository.save(bossStore)
         val startDateTime = LocalDateTime.of(2022, 1, 1, 0, 0)
-        bossStoreOpenInfoRepository.set(BossStoreOpenRedisKeyCreator.create(bossStore.id), startDateTime)
+        bossStoreOpenRedisRepository.set(bossStore.id, startDateTime)
 
         // when
         bossStoreOpenService.closeBossStore(bossStore.id, bossStore.bossId)
 
         // then
-        val openStartDateTime = bossStoreOpenInfoRepository.get(BossStoreOpenRedisKeyCreator.create(bossStore.id))
+        val openStartDateTime = bossStoreOpenRedisRepository.get(bossStore.id)
         assertThat(openStartDateTime).isNull()
     }
 

@@ -5,19 +5,16 @@ import com.depromeet.threedollar.api.core.service.boss.store.dto.request.GetArou
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAroundInfoResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreInfoResponse
 import com.depromeet.threedollar.common.model.CoordinateValue
-import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRedisKey
-import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenRedisKey
-import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
+import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRedisRepository
+import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenRedisRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.LocalDateTime
 import kotlin.math.min
 
 private const val MAX_DISTANCE_KM = 2.0
@@ -26,9 +23,9 @@ private const val MAX_DISTANCE_KM = 2.0
 class BossStoreCommonService(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-    private val bossStoreOpenInfoRepository: StringRedisRepository<BossStoreOpenRedisKey, LocalDateTime>,
+    private val bossStoreOpenRedisRepository: BossStoreOpenRedisRepository,
     private val bossStoreLocationRepository: BossStoreLocationRepository,
-    private val bossStoreFeedbackCountRepository: StringRedisRepository<BossStoreFeedbackCountRedisKey, Int>
+    private val bossStoreFeedbackCountRedisRepository: BossStoreFeedbackCountRedisRepository
 ) {
 
     @Transactional(readOnly = true)
@@ -45,7 +42,7 @@ class BossStoreCommonService(
             latitude = mapCoordinate.latitude,
             longitude = mapCoordinate.longitude,
             maxDistance = min(request.distanceKm, MAX_DISTANCE_KM),
-            limit =  request.limit
+            limit = request.limit
         )
 
         val locationsDictionary: Map<String, BossStoreLocation> = storeLocations.associateBy { it.bossStoreId }
@@ -57,13 +54,10 @@ class BossStoreCommonService(
                 BossStoreAroundInfoResponse.of(
                     bossStore = it,
                     categories = getCategory(it, categoriesDictionary),
-                    openStartDateTime = bossStoreOpenInfoRepository.get(BossStoreOpenRedisKey.of(it.id)),
+                    openStartDateTime = bossStoreOpenRedisRepository.get(it.id),
                     location = locationsDictionary[it.id]?.location,
                     geoCoordinate = geoCoordinate,
-                    totalFeedbacksCounts = bossStoreFeedbackCountRepository.getAll(
-                        BossStoreFeedbackType.values().map { feedback ->
-                            BossStoreFeedbackCountRedisKey(it.id, feedback)
-                        }).filterNotNull().sum()
+                    totalFeedbacksCounts = bossStoreFeedbackCountRedisRepository.getTotalCount(it.id)
                 )
             }
             .sortedWith(request.orderType.sorted)
@@ -84,7 +78,7 @@ class BossStoreCommonService(
             bossStore = bossStore,
             location = bossStoreLocationRepository.findBossStoreLocationByBossStoreId(bossStore.id)?.location,
             categories = bossStoreCategoryRepository.findCategoriesByIds(bossStore.categoriesIds),
-            openStartDateTime = bossStoreOpenInfoRepository.get(BossStoreOpenRedisKey.of(bossStore.id)),
+            openStartDateTime = bossStoreOpenRedisRepository.get(bossStore.id),
             geoCoordinate = geoCoordinate
         )
     }

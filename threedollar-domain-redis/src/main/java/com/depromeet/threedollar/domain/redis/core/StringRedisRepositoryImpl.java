@@ -28,12 +28,16 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implement
     }
 
     @Override
-    public List<V> getAll(List<K> keys) {
+    public List<V> getBulk(List<K> keys) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
-        List<String> values = operations.multiGet(keys.stream().map(K::getKey).collect(Collectors.toList()));
+        List<String> values = operations.multiGet(keys.stream()
+            .map(K::getKey)
+            .collect(Collectors.toList()));
+
         if (values == null) {
             throw new IllegalArgumentException(String.format("레디스 multiGet (%s) 중 에러가 발생하였습니다", keys));
         }
+
         K key = keys.get(0);
         return values.stream()
             .map(key::getValue)
@@ -63,7 +67,7 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implement
     }
 
     @Override
-    public void increaseAll(List<K> keys) {
+    public void increaseBulk(List<K> keys) {
         redisTemplate.executePipelined((RedisCallback<Object>) pipeline -> {
             keys.forEach(key -> pipeline.incr(key.getKey().getBytes(StandardCharsets.UTF_8)));
             return null;

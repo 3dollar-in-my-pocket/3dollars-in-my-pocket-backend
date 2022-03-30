@@ -8,18 +8,16 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossDeletedStore
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossDeletedStoreRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenRedisKey
-import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
+import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenRedisRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.LocalDateTime
 
 @Service
 class BossStoreService(
     private val bossStoreRepository: BossStoreRepository,
     private val bossDeleteBossStoreRepository: BossDeletedStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-    private val bossStoreOpenInfoRepository: StringRedisRepository<BossStoreOpenRedisKey, LocalDateTime>,
+    private val bossStoreOpenRedisRepository: BossStoreOpenRedisRepository,
     private val bossStoreLocationRepository: BossStoreLocationRepository
 ) {
 
@@ -55,7 +53,7 @@ class BossStoreService(
             bossStore = bossStore,
             location = bossStoreLocationRepository.findBossStoreLocationByBossStoreId(bossStore.id)?.location,
             categories = bossStoreCategoryRepository.findCategoriesByIds(bossStore.categoriesIds),
-            openStartDateTime = bossStoreOpenInfoRepository.get(BossStoreOpenRedisKey.of(bossStore.id))
+            openStartDateTime = bossStoreOpenRedisRepository.get(bossStore.id)
         )
     }
 
