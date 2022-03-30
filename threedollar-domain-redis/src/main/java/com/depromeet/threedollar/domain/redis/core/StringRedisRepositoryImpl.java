@@ -23,8 +23,7 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implement
     @Override
     public V get(K key) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
-        key.getValue(operations.get(key.getKey()));
-        return key.getValue(operations.get(key.getKey()));
+        return key.deserializeValue(operations.get(key.getKey()));
     }
 
     @Override
@@ -40,24 +39,24 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implement
 
         K key = keys.get(0);
         return values.stream()
-            .map(key::getValue)
+            .map(key::deserializeValue)
             .collect(Collectors.toList());
     }
 
     @Override
     public void set(K key, V value) {
-        if (key.getTtl() == null) {
-            ValueOperations<String, String> operations = redisTemplate.opsForValue();
-            operations.set(key.getKey(), key.toValue(value));
-            return;
-        }
         setWithTtl(key, value, key.getTtl());
     }
 
     @Override
     public void setWithTtl(K key, V value, Duration ttl) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
-        operations.set(key.getKey(), key.toValue(value), key.getTtl().getSeconds(), TimeUnit.SECONDS);
+        Duration duration = key.getTtl();
+        if (duration == null) {
+            operations.set(key.getKey(), key.serializeValue(value));
+            return;
+        }
+        operations.set(key.getKey(), key.serializeValue(value), duration.getSeconds(), TimeUnit.SECONDS);
     }
 
     @Override

@@ -55,7 +55,7 @@ internal class NaverAuthServiceTest(
         val accountId = authService.login(LoginRequest("token", SOCIAL_TYPE))
 
         // then
-        Assertions.assertThat(accountId).isEqualTo(bossAccount.id)
+        assertThat(accountId).isEqualTo(bossAccount.id)
     }
 
     @Test

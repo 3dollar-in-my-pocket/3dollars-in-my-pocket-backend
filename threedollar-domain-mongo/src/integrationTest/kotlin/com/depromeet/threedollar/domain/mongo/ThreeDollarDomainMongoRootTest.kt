@@ -10,6 +10,7 @@ internal class ThreeDollarDomainMongoRootTest : ThreeDollarDomainMongoRoot() {
 
     @Test
     fun contextsLoad() {
+
     }
 
 }

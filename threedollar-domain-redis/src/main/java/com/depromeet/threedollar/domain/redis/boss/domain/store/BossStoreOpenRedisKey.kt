@@ -15,11 +15,11 @@ data class BossStoreOpenRedisKey(
         return BOSS_STORE_OPEN.baseKey + REDIS_KEY_DELIMITER + bossStoreId
     }
 
-    override fun getValue(value: String?): LocalDateTime? {
+    override fun deserializeValue(value: String?): LocalDateTime? {
         return value?.let { JsonUtils.toObject(value, LocalDateTime::class.java) }
     }
 
-    override fun toValue(value: LocalDateTime): String {
+    override fun serializeValue(value: LocalDateTime): String {
         return JsonUtils.toJson(value)
     }
 

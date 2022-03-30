@@ -56,6 +56,15 @@ internal class BossStoreFeedbackCountRedisRepositoryTest(
     }
 
     @Test
+    fun `가게의 특정 피드백의 개수를 조회한다 해당하는 피드백 카운트 키가 없을 경우 0이 반환된다`() {
+        // when
+        val feedbackCount = bossStoreFeedbackCountRedisRepository.getCount(BOSS_STORE_ID, BossStoreFeedbackType.FOOD_IS_DELICIOUS)
+
+        // then
+        assertThat(feedbackCount).isEqualTo(0)
+    }
+
+    @Test
     fun `가게의 특정 피드백의 카운트 수를 1 증가시킨다`() {
         // given
         val feedbackType = BossStoreFeedbackType.BOSS_IS_KIND

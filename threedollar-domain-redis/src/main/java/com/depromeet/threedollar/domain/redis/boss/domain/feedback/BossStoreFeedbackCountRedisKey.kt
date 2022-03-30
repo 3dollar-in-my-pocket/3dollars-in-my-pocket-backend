@@ -16,11 +16,11 @@ data class BossStoreFeedbackCountRedisKey(
         return BOSS_STORE_FEEDBACK_KEY.baseKey + REDIS_KEY_DELIMITER + bossStoreId + REDIS_KEY_DELIMITER + feedbackType.name
     }
 
-    override fun getValue(value: String?): Int? {
+    override fun deserializeValue(value: String?): Int? {
         return value?.toIntOrNull()
     }
 
-    override fun toValue(value: Int): String {
+    override fun serializeValue(value: Int): String {
         return JsonUtils.toJson(value)
     }
 

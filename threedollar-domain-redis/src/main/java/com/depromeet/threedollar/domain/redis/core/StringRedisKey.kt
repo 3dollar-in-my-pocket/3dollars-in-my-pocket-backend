@@ -6,9 +6,9 @@ interface StringRedisKey<V> {
 
     fun getKey(): String
 
-    fun getValue(value: String?): V?
+    fun deserializeValue(value: String?): V?
 
-    fun toValue(value: V): String
+    fun serializeValue(value: V): String
 
     fun getTtl(): Duration?
 
