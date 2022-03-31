@@ -10,7 +10,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCate
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.*
 import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
 import com.depromeet.threedollar.domain.mongo.common.domain.TimeInterval
-import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenRedisRepository
+import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenTimeRepository
 import org.hamcrest.Matchers.hasSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
@@ -23,7 +23,7 @@ internal class BossStoreControllerTest(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossStoreLocationRepository: BossStoreLocationRepository,
-    private val bossStoreOpenRedisRepository: BossStoreOpenRedisRepository
+    private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository
 ) : SetupUserControllerTest() {
 
     @AfterEach
@@ -54,7 +54,7 @@ internal class BossStoreControllerTest(
         )
         bossStoreRepository.save(bossStore)
 
-        bossStoreOpenRedisRepository.set(bossStore.id, LocalDateTime.of(2022, 2, 1, 0, 0))
+        bossStoreOpenTimeRepository.set(bossStore.id, LocalDateTime.of(2022, 2, 1, 0, 0))
 
         bossStoreLocationRepository.save(BossStoreLocationCreator.create(
             bossStoreId = bossStore.id,

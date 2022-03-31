@@ -9,7 +9,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeed
 import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedbackRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRedisRepository
+import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
@@ -25,7 +25,7 @@ internal class BossStoreFeedbackServiceTest(
     private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreFeedbackService: BossStoreFeedbackService,
-    private val bossStoreFeedbackCountRedisRepository: BossStoreFeedbackCountRedisRepository
+    private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository
 ) {
 
     @AfterEach
@@ -92,7 +92,7 @@ internal class BossStoreFeedbackServiceTest(
         )
 
         // then
-        val count = bossStoreFeedbackCountRedisRepository.getCount(bossStoreId = bossStore.id, feedbackType = feedbackType)
+        val count = bossStoreFeedbackCountRepository.getCount(bossStoreId = bossStore.id, feedbackType = feedbackType)
         assertThat(count).isEqualTo(1)
     }
 

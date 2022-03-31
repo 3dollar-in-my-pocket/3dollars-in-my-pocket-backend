@@ -2,17 +2,15 @@ package com.depromeet.threedollar.domain.redis.boss.domain.store
 
 import com.depromeet.threedollar.common.utils.JsonUtils
 import com.depromeet.threedollar.domain.redis.core.StringRedisKey
-import com.depromeet.threedollar.domain.redis.type.REDIS_KEY_DELIMITER
-import com.depromeet.threedollar.domain.redis.type.RedisKeyType.BOSS_STORE_OPEN
 import java.time.Duration
 import java.time.LocalDateTime
 
-data class BossStoreOpenRedisKey(
+data class BossStoreOpenTimeKey(
     private val bossStoreId: String
 ) : StringRedisKey<LocalDateTime> {
 
     override fun getKey(): String {
-        return BOSS_STORE_OPEN.baseKey + REDIS_KEY_DELIMITER + bossStoreId
+        return "boss:store:$bossStoreId:open:time"
     }
 
     override fun deserializeValue(value: String?): LocalDateTime? {
@@ -24,12 +22,12 @@ data class BossStoreOpenRedisKey(
     }
 
     override fun getTtl(): Duration? {
-        return BOSS_STORE_OPEN.ttl
+        return Duration.ofMinutes(30)
     }
 
     companion object {
-        fun of(bossStoreId: String): BossStoreOpenRedisKey {
-            return BossStoreOpenRedisKey(
+        fun of(bossStoreId: String): BossStoreOpenTimeKey {
+            return BossStoreOpenTimeKey(
                 bossStoreId = bossStoreId
             )
         }

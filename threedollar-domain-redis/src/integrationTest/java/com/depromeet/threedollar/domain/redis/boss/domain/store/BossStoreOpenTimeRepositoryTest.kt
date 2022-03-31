@@ -13,15 +13,15 @@ private const val BOSS_STORE_ID = "boss-store-id"
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
-internal class BossStoreOpenRedisRepositoryTest(
-    private val bossStoreOpenRedisRepository: BossStoreOpenRedisRepository,
-    private val stringRepository: StringRedisRepository<BossStoreOpenRedisKey, LocalDateTime>
+internal class BossStoreOpenTimeRepositoryTest(
+    private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository,
+    private val stringRepository: StringRedisRepository<BossStoreOpenTimeKey, LocalDateTime>
 ) {
 
     @AfterEach
     fun cleanUp() {
         for (feedbackType in BossStoreFeedbackType.values()) {
-            stringRepository.del(BossStoreOpenRedisKey(BOSS_STORE_ID))
+            stringRepository.del(BossStoreOpenTimeKey(BOSS_STORE_ID))
         }
     }
 
@@ -29,10 +29,10 @@ internal class BossStoreOpenRedisRepositoryTest(
     fun `가게의 오픈 시간을 조회하면, 현재 영업중인 경우 영업 시작 날짜를 가져온다`() {
         // given
         val dateTime = LocalDateTime.of(2022, 1, 1, 0, 0)
-        stringRepository.set(BossStoreOpenRedisKey.of(BOSS_STORE_ID), dateTime)
+        stringRepository.set(BossStoreOpenTimeKey.of(BOSS_STORE_ID), dateTime)
 
         // when
-        val openStartDateTime = bossStoreOpenRedisRepository.get(BOSS_STORE_ID)
+        val openStartDateTime = bossStoreOpenTimeRepository.get(BOSS_STORE_ID)
 
         // then
         assertThat(openStartDateTime).isEqualTo(dateTime)
@@ -41,7 +41,7 @@ internal class BossStoreOpenRedisRepositoryTest(
     @Test
     fun `가게의 오픈 시간을 가져올때, 현재 영업중이지 않은 경우 null을 반환한다`() {
         // when
-        val openStartDateTime = bossStoreOpenRedisRepository.get(BOSS_STORE_ID)
+        val openStartDateTime = bossStoreOpenTimeRepository.get(BOSS_STORE_ID)
 
         // then
         assertThat(openStartDateTime).isNull()
@@ -53,23 +53,23 @@ internal class BossStoreOpenRedisRepositoryTest(
         val dateTime = LocalDateTime.of(2022, 1, 1, 0, 0)
 
         // when
-        bossStoreOpenRedisRepository.set(BOSS_STORE_ID, dateTime)
+        bossStoreOpenTimeRepository.set(BOSS_STORE_ID, dateTime)
 
         // then
-        val openStartDateTime = stringRepository.get(BossStoreOpenRedisKey.of(BOSS_STORE_ID))
+        val openStartDateTime = stringRepository.get(BossStoreOpenTimeKey.of(BOSS_STORE_ID))
         assertThat(openStartDateTime).isEqualTo(dateTime)
     }
 
     @Test
     fun `가게의 영업 시작 시간을 삭제한다`() {
         // given
-        stringRepository.set(BossStoreOpenRedisKey.of(BOSS_STORE_ID), LocalDateTime.of(2022, 1, 1, 0, 0))
+        stringRepository.set(BossStoreOpenTimeKey.of(BOSS_STORE_ID), LocalDateTime.of(2022, 1, 1, 0, 0))
 
         // when
-        bossStoreOpenRedisRepository.delete(BOSS_STORE_ID)
+        bossStoreOpenTimeRepository.delete(BOSS_STORE_ID)
 
         // then
-        val openStartDateTime = stringRepository.get(BossStoreOpenRedisKey.of(BOSS_STORE_ID))
+        val openStartDateTime = stringRepository.get(BossStoreOpenTimeKey.of(BOSS_STORE_ID))
         assertThat(openStartDateTime).isNull()
     }
 

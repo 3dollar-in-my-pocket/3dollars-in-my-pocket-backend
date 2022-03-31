@@ -5,22 +5,22 @@ import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
 @Repository
-class BossStoreOpenRedisRepository(
-    private val bossStoreOpenRedisRepository: StringRedisRepository<BossStoreOpenRedisKey, LocalDateTime>
+class BossStoreOpenTimeRepository(
+    private val bossStoreOpenRedisRepository: StringRedisRepository<BossStoreOpenTimeKey, LocalDateTime>
 ) {
 
     fun get(bossStoreId: String): LocalDateTime? {
-        val key = BossStoreOpenRedisKey(bossStoreId)
+        val key = BossStoreOpenTimeKey(bossStoreId)
         return bossStoreOpenRedisRepository.get(key)
     }
 
     fun set(bossStoreId: String, openDateTime: LocalDateTime) {
-        val key = BossStoreOpenRedisKey.of(bossStoreId)
+        val key = BossStoreOpenTimeKey.of(bossStoreId)
         bossStoreOpenRedisRepository.set(key, openDateTime)
     }
 
     fun delete(bossStoreId: String) {
-        val key = BossStoreOpenRedisKey.of(bossStoreId)
+        val key = BossStoreOpenTimeKey.of(bossStoreId)
         bossStoreOpenRedisRepository.del(key)
     }
 

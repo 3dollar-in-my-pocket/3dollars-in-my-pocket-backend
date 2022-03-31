@@ -11,8 +11,8 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRedisRepository
-import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenRedisRepository
+import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRepository
+import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenTimeRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import kotlin.math.min
@@ -23,9 +23,9 @@ private const val MAX_DISTANCE_KM = 2.0
 class BossStoreCommonService(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-    private val bossStoreOpenRedisRepository: BossStoreOpenRedisRepository,
+    private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository,
     private val bossStoreLocationRepository: BossStoreLocationRepository,
-    private val bossStoreFeedbackCountRedisRepository: BossStoreFeedbackCountRedisRepository
+    private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository
 ) {
 
     @Transactional(readOnly = true)
@@ -54,10 +54,10 @@ class BossStoreCommonService(
                 BossStoreAroundInfoResponse.of(
                     bossStore = it,
                     categories = getCategory(it, categoriesDictionary),
-                    openStartDateTime = bossStoreOpenRedisRepository.get(it.id),
+                    openStartDateTime = bossStoreOpenTimeRepository.get(it.id),
                     location = locationsDictionary[it.id]?.location,
                     geoCoordinate = geoCoordinate,
-                    totalFeedbacksCounts = bossStoreFeedbackCountRedisRepository.getTotalCounts(it.id)
+                    totalFeedbacksCounts = bossStoreFeedbackCountRepository.getTotalCounts(it.id)
                 )
             }
             .sortedWith(request.orderType.sorted)
@@ -78,7 +78,7 @@ class BossStoreCommonService(
             bossStore = bossStore,
             location = bossStoreLocationRepository.findBossStoreLocationByBossStoreId(bossStore.id)?.location,
             categories = bossStoreCategoryRepository.findCategoriesByIds(bossStore.categoriesIds),
-            openStartDateTime = bossStoreOpenRedisRepository.get(bossStore.id),
+            openStartDateTime = bossStoreOpenTimeRepository.get(bossStore.id),
             geoCoordinate = geoCoordinate
         )
     }

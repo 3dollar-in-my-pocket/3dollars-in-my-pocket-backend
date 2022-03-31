@@ -4,13 +4,13 @@ import com.depromeet.threedollar.common.model.CoordinateValue
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenRedisRepository
+import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenTimeRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
 class BossStoreOpenService(
-    private val bossStoreOpenRedisRepository: BossStoreOpenRedisRepository,
+    private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreLocationRepository: BossStoreLocationRepository,
 ) {
@@ -33,14 +33,14 @@ class BossStoreOpenService(
     }
 
     private fun upsertStoreOpenInfo(bossStoreId: String) {
-        val openDateTime: LocalDateTime = bossStoreOpenRedisRepository.get(bossStoreId)
+        val openDateTime: LocalDateTime = bossStoreOpenTimeRepository.get(bossStoreId)
             ?: LocalDateTime.now()
-        bossStoreOpenRedisRepository.set(bossStoreId = bossStoreId, openDateTime = openDateTime)
+        bossStoreOpenTimeRepository.set(bossStoreId = bossStoreId, openDateTime = openDateTime)
     }
 
     fun closeBossStore(bossStoreId: String, bossId: String) {
         BossStoreServiceUtils.validateExistsBossStoreByBoss(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
-        bossStoreOpenRedisRepository.delete(bossStoreId = bossStoreId)
+        bossStoreOpenTimeRepository.delete(bossStoreId = bossStoreId)
     }
 
 }
