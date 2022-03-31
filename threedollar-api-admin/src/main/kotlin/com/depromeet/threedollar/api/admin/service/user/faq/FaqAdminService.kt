@@ -3,8 +3,8 @@ package com.depromeet.threedollar.api.admin.service.user.faq
 import com.depromeet.threedollar.api.admin.service.user.faq.dto.request.AddFaqRequest
 import com.depromeet.threedollar.api.admin.service.user.faq.dto.request.UpdateFaqRequest
 import com.depromeet.threedollar.api.core.service.user.faq.dto.response.FaqResponse
-import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.type.CacheType.CacheKey.FAQS
 import com.depromeet.threedollar.domain.rds.user.domain.faq.Faq
 import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqRepository
@@ -17,13 +17,13 @@ class FaqAdminService(
     private val faqRepository: FaqRepository
 ) {
 
-    @CacheEvict(allEntries = true, value = [FAQS])
+    @CacheEvict(cacheNames = [FAQS], allEntries = true)
     @Transactional
     fun addFaq(request: AddFaqRequest): FaqResponse {
         return FaqResponse.of(faqRepository.save(request.toEntity()))
     }
 
-    @CacheEvict(allEntries = true, value = [FAQS])
+    @CacheEvict(cacheNames = [FAQS], allEntries = true)
     @Transactional
     fun updateFaq(faqId: Long, request: UpdateFaqRequest): FaqResponse {
         val faq = findFaqById(faqId)
@@ -31,7 +31,7 @@ class FaqAdminService(
         return FaqResponse.of(faq)
     }
 
-    @CacheEvict(allEntries = true, value = [FAQS])
+    @CacheEvict(cacheNames = [FAQS], allEntries = true)
     @Transactional
     fun deleteFaq(faqId: Long) {
         val faq = findFaqById(faqId)

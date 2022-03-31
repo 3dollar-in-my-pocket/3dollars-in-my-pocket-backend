@@ -53,7 +53,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
             .fetch();
     }
 
-    @Cacheable(key = "#userId", value = USER_REVIEWS_COUNTS)
+    @Cacheable(cacheNames = USER_REVIEWS_COUNTS, key = "#userId")
     @Override
     public long countByUserId(Long userId) {
         return queryFactory.select(review.id)

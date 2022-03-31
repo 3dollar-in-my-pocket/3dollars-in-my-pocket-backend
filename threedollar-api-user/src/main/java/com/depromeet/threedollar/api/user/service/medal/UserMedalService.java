@@ -23,7 +23,7 @@ public class UserMedalService {
 
     private final UserRepository userRepository;
 
-    @Cacheable(key = "#userId", value = USER_MEDALS)
+    @Cacheable(cacheNames = USER_MEDALS, key = "#userId")
     @Transactional(readOnly = true)
     public List<UserMedalResponse> retrieveObtainedMedals(Long userId) {
         List<UserMedal> userMedals = UserServiceUtils.findUserById(userRepository, userId).getUserMedals();

@@ -25,7 +25,7 @@ public class AddUserMedalService {
     private final UserRepository userRepository;
     private final MedalRepository medalRepository;
 
-    @CacheEvict(key = "#userId", value = USER_MEDALS)
+    @CacheEvict(cacheNames = USER_MEDALS, key = "#userId")
     @Transactional
     public void addMedalsIfSatisfyCondition(Long userId, MedalAcquisitionConditionType conditionType, LongSupplier countsByUserSupplier) {
         User user = UserServiceUtils.findUserById(userRepository, userId);

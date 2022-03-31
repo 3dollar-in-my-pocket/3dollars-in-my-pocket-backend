@@ -31,7 +31,7 @@ public class StoreService {
     private final StoreRepository storeRepository;
     private final StoreDeleteRequestRepository storeDeleteRequestRepository;
 
-    @CacheEvict(key = "#userId", value = USER_STORES_COUNTS)
+    @CacheEvict(cacheNames = USER_STORES_COUNTS, key = "#userId")
     @Transactional
     public StoreInfoResponse registerStore(RegisterStoreRequest request, Long userId) {
         Store store = storeRepository.save(request.toStore(userId));

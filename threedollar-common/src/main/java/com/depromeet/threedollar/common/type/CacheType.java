@@ -33,15 +33,15 @@ public enum CacheType {
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static class CacheKey {
 
-        public static final String FAQS = "faqs";
-        public static final String MEDALS = "medals";
-        public static final String ADVERTISEMENTS = "advertisements";
+        public static final String FAQS = "user:common:faqs";
+        public static final String MEDALS = "user:common:medals";
+        public static final String ADVERTISEMENTS = "user:common:advertisements";
 
-        public static final String USER_STORES_COUNTS = "user_stores_count";
-        public static final String USER_REVIEWS_COUNTS = "user_reviews_count";
-        public static final String USER_MEDALS = "user_medals";
+        public static final String USER_STORES_COUNTS = "user:my:stores:count";
+        public static final String USER_REVIEWS_COUNTS = "user:my:reviews:count";
+        public static final String USER_MEDALS = "user:my:medals";
 
-        public static final String BOSS_STORE_CATEGORIES = "boss_store_categories";
+        public static final String BOSS_STORE_CATEGORIES = "boss:store:categories";
 
     }
 

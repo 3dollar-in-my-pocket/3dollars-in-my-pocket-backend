@@ -19,13 +19,13 @@ class AdminAdvertisementService(
     private val advertisementRepository: AdvertisementRepository
 ) {
 
-    @CacheEvict(key = "{#request.position, #request.platform}", value = [ADVERTISEMENTS])
+    @CacheEvict(cacheNames = [ADVERTISEMENTS], key = "{#request.position, #request.platform}")
     @Transactional
     fun addAdvertisement(request: AddAdvertisementRequest) {
         advertisementRepository.save(request.toEntity())
     }
 
-    @CacheEvict(key = "{#request.position, #request.platform}", value = [ADVERTISEMENTS])
+    @CacheEvict(cacheNames = [ADVERTISEMENTS], key = "{#request.position, #request.platform}")
     @Transactional
     fun updateAdvertisement(advertisementId: Long, request: UpdateAdvertisementRequest) {
         val advertisement = findAdvertisementById(advertisementId)
@@ -35,7 +35,7 @@ class AdminAdvertisementService(
         }
     }
 
-    @CacheEvict(allEntries = true, value = [ADVERTISEMENTS])
+    @CacheEvict(cacheNames = [ADVERTISEMENTS], allEntries = true)
     @Transactional
     fun deleteAdvertisement(advertisementId: Long) {
         val advertisement = findAdvertisementById(advertisementId)

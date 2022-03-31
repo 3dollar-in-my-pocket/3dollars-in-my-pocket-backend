@@ -13,7 +13,7 @@ class FaqService(
     private val faqRepository: FaqRepository
 ) {
 
-    @Cacheable(key = "#request.category?:'ALL'", value = [FAQS])
+    @Cacheable(cacheNames = [FAQS], key = "#request.category?:'ALL'")
     @Transactional(readOnly = true)
     fun retrieveFaqsByCategory(request: RetrieveFaqsRequest): List<FaqResponse> {
         return faqRepository.findAllByCategory(request.category).asSequence()

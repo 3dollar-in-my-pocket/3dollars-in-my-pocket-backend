@@ -12,7 +12,7 @@ class MedalService(
     private val medalRepository: MedalRepository
 ) {
 
-    @Cacheable(key = "'ALL'", value = [MEDALS])
+    @Cacheable(cacheNames = [MEDALS], key = "'ALL'")
     @Transactional(readOnly = true)
     fun getAllMedals(): List<MedalResponse> {
         return medalRepository.findAllActiveMedals()

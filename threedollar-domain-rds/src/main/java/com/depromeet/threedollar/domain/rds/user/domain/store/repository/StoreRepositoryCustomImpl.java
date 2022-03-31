@@ -62,7 +62,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
             .fetch();
     }
 
-    @Cacheable(key = "#userId", value = USER_STORES_COUNTS)
+    @Cacheable(cacheNames = USER_STORES_COUNTS, key = "#userId")
     @Override
     public long countByUserId(Long userId) {
         return queryFactory.select(store.id).distinct()

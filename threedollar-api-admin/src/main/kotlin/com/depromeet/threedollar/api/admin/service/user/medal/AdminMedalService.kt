@@ -17,13 +17,13 @@ class AdminMedalService(
     private val medalRepository: MedalRepository
 ) {
 
-    @CacheEvict(allEntries = true, value = [MEDALS])
+    @CacheEvict(cacheNames = [MEDALS], allEntries = true)
     @Transactional
     fun addMedal(request: AddMedalRequest) {
         medalRepository.save(request.toEntity())
     }
 
-    @CacheEvict(allEntries = true, value = [MEDALS])
+    @CacheEvict(cacheNames = [MEDALS], allEntries = true)
     @Transactional
     fun updateMedal(medalId: Long, request: UpdateMedalRequest) {
         val medal = findMedalById(medalId)

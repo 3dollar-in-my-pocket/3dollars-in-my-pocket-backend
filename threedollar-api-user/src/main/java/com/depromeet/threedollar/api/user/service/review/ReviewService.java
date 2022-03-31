@@ -21,7 +21,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final StoreRepository storeRepository;
 
-    @CacheEvict(key = "#userId", value = USER_REVIEWS_COUNTS)
+    @CacheEvict(cacheNames = USER_REVIEWS_COUNTS, key = "#userId")
     @Transactional
     public ReviewInfoResponse addReview(AddReviewRequest request, Long userId) {
         StoreServiceUtils.validateExistsStore(storeRepository, request.getStoreId());
@@ -36,7 +36,7 @@ public class ReviewService {
         return ReviewInfoResponse.of(review);
     }
 
-    @CacheEvict(key = "#userId", value = USER_REVIEWS_COUNTS)
+    @CacheEvict(cacheNames = USER_REVIEWS_COUNTS, key = "#userId")
     @Transactional
     public ReviewInfoResponse deleteReview(Long reviewId, Long userId) {
         Review review = ReviewServiceUtils.findReviewByIdAndUserId(reviewRepository, reviewId, userId);
