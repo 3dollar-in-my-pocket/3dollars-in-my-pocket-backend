@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.user.controller.boss.feedback
 
+import com.depromeet.threedollar.api.core.service.boss.feedback.dto.request.AddBossStoreFeedbackRequest
 import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackCountResponse
 import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackTypeResponse
 import com.depromeet.threedollar.api.user.controller.SetupUserControllerTest
@@ -13,8 +14,12 @@ import org.hamcrest.Matchers.hasSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.get
+import org.springframework.test.web.servlet.post
 import java.time.LocalDate
+
 
 internal class BossStoreFeedbackControllerTest(
     private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,
@@ -88,6 +93,31 @@ internal class BossStoreFeedbackControllerTest(
                 jsonPath("$.data[0].description") { value(BossStoreFeedbackType.FOOD_IS_DELICIOUS.description) }
                 jsonPath("$.data[5].feedbackType") { value(BossStoreFeedbackType.PLATING_IS_BEAUTIFUL.name) }
                 jsonPath("$.data[5].description") { value(BossStoreFeedbackType.PLATING_IS_BEAUTIFUL.description) }
+            }
+    }
+
+    @DisplayName("POST /api/v1/boss/store/{bossStoreId}/feedback")
+    @Test
+    fun `사장님 가게에 피드백을 추가합니다`() {
+        // given
+        val bossStore = BossStoreCreator.create(
+            bossId = "bossId",
+            name = "가슴속 3천원"
+        )
+        bossStoreRepository.save(bossStore)
+
+        val request = AddBossStoreFeedbackRequest(
+            feedbackTypes = setOf(BossStoreFeedbackType.BOSS_IS_KIND, BossStoreFeedbackType.THERE_ARE_PLACES_TO_EAT_AROUND)
+        )
+
+        mockMvc.post("/v1/boss/store/${bossStore.id}/feedback") {
+            header(HttpHeaders.AUTHORIZATION, token)
+            contentType = MediaType.APPLICATION_JSON
+            content = objectMapper.writeValueAsString(request)
+        }
+            .andDo { print() }
+            .andExpect {
+                status { isOk() }
             }
     }
 

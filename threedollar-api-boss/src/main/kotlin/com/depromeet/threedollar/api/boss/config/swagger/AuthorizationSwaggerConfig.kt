@@ -2,6 +2,7 @@ package com.depromeet.threedollar.api.boss.config.swagger
 
 import com.depromeet.threedollar.api.boss.config.interceptor.Auth
 import org.springframework.core.annotation.Order
+import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
 import springfox.documentation.builders.RequestParameterBuilder
 import springfox.documentation.service.AuthorizationScope
@@ -31,7 +32,7 @@ class AuthorizationSwaggerConfig : OperationBuilderPlugin {
 
     private fun authorizationHeader(): RequestParameter {
         return RequestParameterBuilder()
-            .name("Authorization")
+            .name(HttpHeaders.AUTHORIZATION)
             .required(false)
             .`in`(ParameterType.HEADER)
             .build()

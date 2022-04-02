@@ -3,6 +3,7 @@ package com.depromeet.threedollar.api.user.config.swagger;
 import com.depromeet.threedollar.api.user.config.interceptor.Auth;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import springfox.documentation.builders.RequestParameterBuilder;
 import springfox.documentation.service.AuthorizationScope;
@@ -26,7 +27,7 @@ public class AuthorizationSwaggerConfig implements OperationBuilderPlugin {
             context.operationBuilder()
                 .requestParameters(List.of(authorizationHeader()))
                 .authorizations(List.of(SecurityReference.builder()
-                    .reference("Authorization")
+                    .reference(HttpHeaders.AUTHORIZATION)
                     .scopes(authorizationScopes())
                     .build()))
                 .build();
@@ -35,7 +36,7 @@ public class AuthorizationSwaggerConfig implements OperationBuilderPlugin {
 
     private RequestParameter authorizationHeader() {
         return new RequestParameterBuilder()
-            .name("Authorization")
+            .name(HttpHeaders.AUTHORIZATION)
             .required(false)
             .in(ParameterType.HEADER)
             .build();
