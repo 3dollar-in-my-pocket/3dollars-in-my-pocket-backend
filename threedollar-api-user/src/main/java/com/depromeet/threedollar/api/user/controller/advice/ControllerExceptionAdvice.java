@@ -9,7 +9,6 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode;
 import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException;
-import kotlin.reflect.KParameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;

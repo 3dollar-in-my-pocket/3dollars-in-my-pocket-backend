@@ -58,7 +58,7 @@ class StoreRepositoryTest {
 
     @DisplayName("내가 제보한 가게 수를 카운트한다")
     @Nested
-    class CountByUserId {
+    class CountByUserIdTest {
 
         @Test
         void 메뉴가_없는_가게는_포함되지_않는다() {

@@ -41,7 +41,7 @@ internal class BossStoreServiceTest(
         @Test
         fun `사장님 가게의 정보를 수정한다`() {
             // given
-            val categoriesIds = createCategory(bossStoreCategoryRepository, "한식", "일식")
+            val categoriesIds = createMockCategory(bossStoreCategoryRepository, "한식", "일식")
             val bossStore = BossStoreCreator.create(
                 bossId = "bossId",
                 name = "사장님 가게",
@@ -104,7 +104,7 @@ internal class BossStoreServiceTest(
         @Test
         fun `다른 사장님의 가게 정보를 수정할 수 없다`() {
             // given
-            val categoriesIds = createCategory(bossStoreCategoryRepository, "한식", "일식")
+            val categoriesIds = createMockCategory(bossStoreCategoryRepository, "한식", "일식")
             val bossStore = BossStoreCreator.create(
                 bossId = "bossId",
                 name = "사장님 가게",
@@ -161,7 +161,7 @@ internal class BossStoreServiceTest(
         @Test
         fun `사장님 계정의 가게들을 삭제할때 가게 정보가 BossDeletedStore 도큐먼트에 백업되서 저장된다`() {
             // given
-            val categoriesIds = createCategory(bossStoreCategoryRepository, "한식", "일식")
+            val categoriesIds = createMockCategory(bossStoreCategoryRepository, "한식", "일식")
 
             val bossId = "bossId"
             val name = "사장님 가게"
@@ -221,7 +221,7 @@ internal class BossStoreServiceTest(
 
 }
 
-private fun createCategory(
+private fun createMockCategory(
     bossStoreCategoryRepository: BossStoreCategoryRepository,
     vararg titles: String
 ): Set<String> {
