@@ -60,10 +60,10 @@ class BossDailyStatisticsJobConfiguration(
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
-                    BossDailyStatisticsMessageFormat.BOSS_ACCOUNT_STATISTICS,
-                    bossAccountRepository.countAllBossAccounts(),
-                    bossAccountRepository.countBossAccountsBetweenDate(yesterday, yesterday),
-                    bossAccountRepository.countBossAccountsBetweenDate(yesterday.minusWeeks(1), yesterday)
+                    messageType = BossDailyStatisticsMessageFormat.BOSS_ACCOUNT_STATISTICS,
+                    totalCounts = bossAccountRepository.countAllBossAccounts(),
+                    todayCounts = bossAccountRepository.countBossAccountsBetweenDate(yesterday, yesterday),
+                    weekendCounts = bossAccountRepository.countBossAccountsBetweenDate(yesterday.minusWeeks(1), yesterday)
                 )
                 RepeatStatus.FINISHED
             }
@@ -76,10 +76,10 @@ class BossDailyStatisticsJobConfiguration(
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
-                    BossDailyStatisticsMessageFormat.BOSS_STORE_STATISTICS,
-                    bossStoreRepository.countAllBossStores(),
-                    bossStoreRepository.countBossStoresBetweenDate(yesterday, yesterday),
-                    bossStoreRepository.countBossStoresBetweenDate(yesterday.minusWeeks(1), yesterday)
+                    messageType = BossDailyStatisticsMessageFormat.BOSS_STORE_STATISTICS,
+                    totalCounts = bossStoreRepository.countAllBossStores(),
+                    todayCounts = bossStoreRepository.countBossStoresBetweenDate(yesterday, yesterday),
+                    weekendCounts = bossStoreRepository.countBossStoresBetweenDate(yesterday.minusWeeks(1), yesterday)
                 )
                 RepeatStatus.FINISHED
             }
@@ -92,10 +92,10 @@ class BossDailyStatisticsJobConfiguration(
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
-                    BossDailyStatisticsMessageFormat.BOSS_STORE_FEEDBACK_STATISTICS,
-                    bossStoreFeedbackRepository.countAllBossStoreFeedbacks(),
-                    bossStoreFeedbackRepository.countBossStoreFeedbacksBetweenDate(yesterday, yesterday),
-                    bossStoreFeedbackRepository.countBossStoreFeedbacksBetweenDate(yesterday.minusWeeks(1), yesterday)
+                    messageType = BossDailyStatisticsMessageFormat.BOSS_STORE_FEEDBACK_STATISTICS,
+                    totalCounts = bossStoreFeedbackRepository.countAllBossStoreFeedbacks(),
+                    todayCounts = bossStoreFeedbackRepository.countBossStoreFeedbacksBetweenDate(yesterday, yesterday),
+                    weekendCounts = bossStoreFeedbackRepository.countBossStoreFeedbacksBetweenDate(yesterday.minusWeeks(1), yesterday)
                 )
                 RepeatStatus.FINISHED
             }

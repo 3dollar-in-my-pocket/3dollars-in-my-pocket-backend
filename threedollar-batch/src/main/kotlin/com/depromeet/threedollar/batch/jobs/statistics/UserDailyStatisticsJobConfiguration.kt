@@ -6,6 +6,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
+import com.depromeet.threedollar.domain.rds.user.domain.storedelete.StoreDeleteRequestRepository
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository
 import com.depromeet.threedollar.external.client.slack.SlackWebhookApiClient
@@ -36,6 +37,7 @@ class DailyStatisticsJobConfiguration(
     private val reviewRepository: ReviewRepository,
     private val visitHistoryRepository: VisitHistoryRepository,
     private val medalRepository: MedalRepository,
+    private val storeDeleteRequestRepository: StoreDeleteRequestRepository,
 
     private val slackNotificationApiClient: SlackWebhookApiClient
 ) {
@@ -47,8 +49,9 @@ class DailyStatisticsJobConfiguration(
             .start(notificationStatisticsInfoStep())
             .next(notificationUsersStatisticsStep())
             .next(notificationStoresStatisticsStep())
-            .next(notificationDeletedStoresStatisticsStep())
             .next(notificationMenusStatisticsStep())
+            .next(notificationDeletedStoresStatisticsStep())
+            .next(notificationStoreDeleteRequestsStatisticsStep())
             .next(notificationReviewsStatisticsStep())
             .next(notificationVisitHistoriesStatisticsStep())
             .next(notificationUserMedalsStatisticsStep())
@@ -75,10 +78,10 @@ class DailyStatisticsJobConfiguration(
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
-                    COUNTS_USER,
-                    userRepository.countAllUsers(),
-                    userRepository.countUsersBetweenDate(yesterday, yesterday),
-                    userRepository.countUsersBetweenDate(yesterday.minusWeeks(1), yesterday)
+                    messageType = COUNTS_USER,
+                    totalCounts = userRepository.countAllUsers(),
+                    todayCounts = userRepository.countUsersBetweenDate(yesterday, yesterday),
+                    weekendCounts = userRepository.countUsersBetweenDate(yesterday.minusWeeks(1), yesterday)
                 )
                 RepeatStatus.FINISHED
             }
@@ -91,24 +94,10 @@ class DailyStatisticsJobConfiguration(
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
-                    COUNTS_STORE,
-                    storeRepository.countAllActiveStores(),
-                    storeRepository.countActiveStoresBetweenDate(yesterday, yesterday),
-                    storeRepository.countActiveStoresBetweenDate(yesterday.minusWeeks(1), yesterday)
-                )
-                RepeatStatus.FINISHED
-            }
-            .build()
-    }
-
-    @Bean
-    fun notificationDeletedStoresStatisticsStep(): Step {
-        return stepBuilderFactory[DAILY_STATISTICS_JOB + "_deletedStore_step"]
-            .tasklet { _, _ ->
-                val yesterday = LocalDate.now().minusDays(1)
-                val todayDeletedCounts = storeRepository.countDeletedStoresBetweenDate(yesterday, yesterday)
-                slackNotificationApiClient.postStatisticsMessage(
-                    PostSlackMessageRequest.of(COUNTS_DELETED_STORE.messageFormat.format(todayDeletedCounts))
+                    messageType = COUNTS_STORE,
+                    totalCounts = storeRepository.countAllActiveStores(),
+                    todayCounts = storeRepository.countActiveStoresBetweenDate(yesterday, yesterday),
+                    weekendCounts = storeRepository.countActiveStoresBetweenDate(yesterday.minusWeeks(1), yesterday)
                 )
                 RepeatStatus.FINISHED
             }
@@ -135,15 +124,47 @@ class DailyStatisticsJobConfiguration(
     }
 
     @Bean
+    fun notificationDeletedStoresStatisticsStep(): Step {
+        return stepBuilderFactory[DAILY_STATISTICS_JOB + "_deletedStore_step"]
+            .tasklet { _, _ ->
+                val yesterday = LocalDate.now().minusDays(1)
+                sendStatisticsNotification(
+                    messageType = COUNTS_DELETED_STORE,
+                    totalCounts = storeRepository.countAllDeletedStores(),
+                    todayCounts = storeRepository.countDeletedStoresBetweenDate(yesterday, yesterday),
+                    weekendCounts = storeRepository.countDeletedStoresBetweenDate(yesterday.minusWeeks(1), yesterday)
+                )
+                RepeatStatus.FINISHED
+            }
+            .build()
+    }
+
+    @Bean
+    fun notificationStoreDeleteRequestsStatisticsStep(): Step {
+        return stepBuilderFactory[DAILY_STATISTICS_JOB + "_storeDeleteRequest_step"]
+            .tasklet { _, _ ->
+                val yesterday = LocalDate.now().minusDays(1)
+                sendStatisticsNotification(
+                    messageType = COUNTS_DELETE_STORE_REQUEST,
+                    totalCounts = storeDeleteRequestRepository.count(),
+                    todayCounts = storeDeleteRequestRepository.countBetweenDate(yesterday, yesterday),
+                    weekendCounts = storeDeleteRequestRepository.countBetweenDate(yesterday.minusWeeks(1), yesterday)
+                )
+                RepeatStatus.FINISHED
+            }
+            .build()
+    }
+
+    @Bean
     fun notificationReviewsStatisticsStep(): Step {
         return stepBuilderFactory[DAILY_STATISTICS_JOB + "_review_step"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
-                    COUNTS_REVIEW,
-                    reviewRepository.countActiveReviews(),
-                    reviewRepository.countActiveReviewsBetweenDate(yesterday, yesterday),
-                    reviewRepository.countActiveReviewsBetweenDate(yesterday.minusWeeks(1), yesterday)
+                    messageType = COUNTS_REVIEW,
+                    totalCounts = reviewRepository.countActiveReviews(),
+                    todayCounts = reviewRepository.countActiveReviewsBetweenDate(yesterday, yesterday),
+                    weekendCounts = reviewRepository.countActiveReviewsBetweenDate(yesterday.minusWeeks(1), yesterday)
                 )
                 RepeatStatus.FINISHED
             }
@@ -156,10 +177,10 @@ class DailyStatisticsJobConfiguration(
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
-                    COUNTS_VISIT_HISTORY,
-                    visitHistoryRepository.countAllVisitHistoriese(),
-                    visitHistoryRepository.countVisitHistoriesBetweenDate(yesterday, yesterday),
-                    visitHistoryRepository.countVisitHistoriesBetweenDate(yesterday.minusWeeks(1), yesterday)
+                    messageType = COUNTS_VISIT_HISTORY,
+                    totalCounts = visitHistoryRepository.countAllVisitHistoriese(),
+                    todayCounts = visitHistoryRepository.countVisitHistoriesBetweenDate(yesterday, yesterday),
+                    weekendCounts = visitHistoryRepository.countVisitHistoriesBetweenDate(yesterday.minusWeeks(1), yesterday)
                 )
                 RepeatStatus.FINISHED
             }

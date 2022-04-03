@@ -10,4 +10,6 @@ public interface StoreStatisticsRepositoryCustom {
 
     long countDeletedStoresBetweenDate(LocalDate startDate, LocalDate endDate);
 
+    long countAllDeletedStores();
+
 }

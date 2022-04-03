@@ -48,4 +48,14 @@ public class StoreStatisticsRepositoryCustomImpl implements StoreStatisticsRepos
             ).fetchCount();
     }
 
+    @Override
+    public long countAllDeletedStores() {
+        return queryFactory.select(store.id).distinct()
+            .from(store)
+            .innerJoin(menu).on(menu.store.id.eq(store.id))
+            .where(
+                store.status.eq(StoreStatus.DELETED)
+            ).fetchCount();
+    }
+
 }
