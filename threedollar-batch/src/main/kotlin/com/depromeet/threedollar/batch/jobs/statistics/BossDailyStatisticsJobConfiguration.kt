@@ -17,7 +17,9 @@ import java.time.LocalDate
 
 private const val BOSS_DAILY_STATISTICS_JOB = "bossStatisticsJob"
 
-
+/**
+ * 사장님 서비스 일일 통계 배치 잡
+ */
 @Configuration
 class BossDailyStatisticsJobConfiguration(
     private val jobBuilderFactory: JobBuilderFactory,

@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration
 import java.time.LocalDate
 
 /**
- * 알일 통계 정보를 알려주는 슬랙 봇 관련 배치 잡
+ * 유저 서비스 일일 통계 배치 잡
  */
 
 private const val DAILY_STATISTICS_JOB = "dailyStaticsJob"

@@ -6,7 +6,7 @@ enum class UserDailyStatisticsMessageFormat(
 
     DAILY_STATISTICS_INFO(
         """
-            [가슴속 삼천원 %s 통계 정보를 알려드립니다]
+            [가슴속 삼천원 %s 유저 서비스 통계 정보를 알려드립니다]
         """.trimIndent()
     ),
     COUNTS_USER(
