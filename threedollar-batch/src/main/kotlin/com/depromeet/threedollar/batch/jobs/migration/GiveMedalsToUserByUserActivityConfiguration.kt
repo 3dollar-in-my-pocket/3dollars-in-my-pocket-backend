@@ -7,7 +7,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
-import com.depromeet.threedollar.domain.rds.user.domain.storedelete.StoreDeleteRequestRepository
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository
 import com.depromeet.threedollar.domain.rds.user.domain.user.User
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType
@@ -31,14 +31,14 @@ private const val CHUNK_SIZE = 4
 
 @Configuration
 class GiveMedalsToUserByUserActivity(
-    private val jobBuilderFactory: JobBuilderFactory,
-    private val stepBuilderFactory: StepBuilderFactory,
-    private val entityManagerFactory: EntityManagerFactory,
-    private val medalRepository: MedalRepository,
-    private val storeRepository: StoreRepository,
-    private val storeDeleteRequestRepository: StoreDeleteRequestRepository,
-    private val visitHistoryRepository: VisitHistoryRepository,
-    private val reviewRepository: ReviewRepository
+        private val jobBuilderFactory: JobBuilderFactory,
+        private val stepBuilderFactory: StepBuilderFactory,
+        private val entityManagerFactory: EntityManagerFactory,
+        private val medalRepository: MedalRepository,
+        private val storeRepository: StoreRepository,
+        private val storeDeleteRequestRepository: StoreDeleteRequestRepository,
+        private val visitHistoryRepository: VisitHistoryRepository,
+        private val reviewRepository: ReviewRepository
 ) {
 
     @Bean(name = [JOB_NAME])

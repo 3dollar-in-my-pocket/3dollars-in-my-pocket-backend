@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.rds.user.domain.storedelete;
+package com.depromeet.threedollar.domain.rds.user.domain.store;
 
 import com.depromeet.threedollar.common.model.EnumModel;
 import lombok.AccessLevel;

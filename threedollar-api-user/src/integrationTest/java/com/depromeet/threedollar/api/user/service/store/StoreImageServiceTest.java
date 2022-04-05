@@ -1,13 +1,14 @@
-package com.depromeet.threedollar.api.user.service.storeimage;
+package com.depromeet.threedollar.api.user.service.store;
 
 import com.depromeet.threedollar.api.user.service.SetupStoreServiceTest;
-import com.depromeet.threedollar.api.user.service.storeimage.dto.request.AddStoreImageRequest;
-import com.depromeet.threedollar.api.user.service.storeimage.dto.response.StoreImageResponse;
+import com.depromeet.threedollar.api.user.service.store.StoreImageService;
+import com.depromeet.threedollar.api.user.service.store.dto.request.AddStoreImageRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.api.core.provider.upload.UploadProvider;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
-import com.depromeet.threedollar.domain.rds.user.domain.storeimage.StoreImage;
-import com.depromeet.threedollar.domain.rds.user.domain.storeimage.StoreImageRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.storeimage.StoreImageStatus;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageStatus;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

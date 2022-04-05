@@ -1,7 +1,6 @@
-package com.depromeet.threedollar.domain.rds.user.domain.storedelete;
+package com.depromeet.threedollar.domain.rds.user.domain.store;
 
 import com.depromeet.threedollar.domain.rds.common.domain.AuditingTimeEntity;
-import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

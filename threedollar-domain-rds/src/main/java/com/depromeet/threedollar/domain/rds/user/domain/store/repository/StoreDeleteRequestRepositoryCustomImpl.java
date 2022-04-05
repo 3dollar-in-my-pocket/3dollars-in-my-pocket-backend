@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.rds.user.domain.storedelete.repository;
+package com.depromeet.threedollar.domain.rds.user.domain.store.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

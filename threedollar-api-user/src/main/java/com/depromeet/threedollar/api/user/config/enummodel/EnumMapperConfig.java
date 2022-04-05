@@ -11,7 +11,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.advertisement.Advertisem
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
-import com.depromeet.threedollar.domain.rds.user.domain.storedelete.DeleteReasonType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
 import org.springframework.context.annotation.Bean;

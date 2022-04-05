@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.api.user.service.store.dto.response;
 
 import com.depromeet.threedollar.api.user.service.review.dto.response.ReviewWithUserResponse;
-import com.depromeet.threedollar.api.user.service.storeimage.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.api.user.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoryCountsResponse;
 import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoryWithUserResponse;
@@ -15,7 +14,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
-import com.depromeet.threedollar.domain.rds.user.domain.storeimage.StoreImage;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
 import com.depromeet.threedollar.domain.rds.user.collection.user.UserDictionary;
 import com.depromeet.threedollar.domain.rds.user.collection.visit.VisitHistoryCounter;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryWithUserProjection;

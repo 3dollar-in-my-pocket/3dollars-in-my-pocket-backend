@@ -1,10 +1,10 @@
-package com.depromeet.threedollar.api.user.controller.storeimage;
+package com.depromeet.threedollar.api.user.controller.store;
 
 import com.depromeet.threedollar.api.user.controller.SetupStoreControllerTest;
-import com.depromeet.threedollar.api.user.service.storeimage.dto.response.StoreImageResponse;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.domain.rds.user.domain.storeimage.StoreImage;
-import com.depromeet.threedollar.domain.rds.user.domain.storeimage.StoreImageRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -1,7 +1,7 @@
-package com.depromeet.threedollar.domain.rds.user.domain.storeimage.repository;
+package com.depromeet.threedollar.domain.rds.user.domain.store.repository;
 
-import com.depromeet.threedollar.domain.rds.user.domain.storeimage.StoreImage;
-import com.depromeet.threedollar.domain.rds.user.domain.storeimage.StoreImageStatus;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageStatus;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.Nullable;

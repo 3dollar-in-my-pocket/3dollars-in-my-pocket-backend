@@ -8,9 +8,9 @@ import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
-import com.depromeet.threedollar.domain.rds.user.domain.storedelete.DeleteReasonType
-import com.depromeet.threedollar.domain.rds.user.domain.storedelete.StoreDeleteRequest
-import com.depromeet.threedollar.domain.rds.user.domain.storedelete.StoreDeleteRequestRepository
+import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequest
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository
 import com.fasterxml.jackson.core.type.TypeReference
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach

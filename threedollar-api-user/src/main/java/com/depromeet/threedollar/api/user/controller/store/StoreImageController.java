@@ -1,10 +1,10 @@
-package com.depromeet.threedollar.api.user.controller.storeimage;
+package com.depromeet.threedollar.api.user.controller.store;
 
 import com.depromeet.threedollar.api.user.config.interceptor.Auth;
 import com.depromeet.threedollar.api.user.config.resolver.UserId;
-import com.depromeet.threedollar.api.user.service.storeimage.StoreImageService;
-import com.depromeet.threedollar.api.user.service.storeimage.dto.request.AddStoreImageRequest;
-import com.depromeet.threedollar.api.user.service.storeimage.dto.response.StoreImageResponse;
+import com.depromeet.threedollar.api.user.service.store.StoreImageService;
+import com.depromeet.threedollar.api.user.service.store.dto.request.AddStoreImageRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

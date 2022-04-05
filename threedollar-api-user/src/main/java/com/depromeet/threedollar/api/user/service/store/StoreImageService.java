@@ -1,16 +1,15 @@
-package com.depromeet.threedollar.api.user.service.storeimage;
+package com.depromeet.threedollar.api.user.service.store;
 
-import com.depromeet.threedollar.api.user.service.store.StoreServiceUtils;
-import com.depromeet.threedollar.api.user.service.storeimage.dto.request.AddStoreImageRequest;
-import com.depromeet.threedollar.api.user.service.storeimage.dto.response.StoreImageResponse;
+import com.depromeet.threedollar.api.user.service.store.dto.request.AddStoreImageRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.api.core.provider.upload.UploadProvider;
 import com.depromeet.threedollar.api.core.provider.upload.dto.request.ImageUploadFileRequest;
 import com.depromeet.threedollar.common.type.ApplicationType;
 import com.depromeet.threedollar.common.type.FileType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.storeimage.StoreImage;
-import com.depromeet.threedollar.domain.rds.user.domain.storeimage.StoreImageRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

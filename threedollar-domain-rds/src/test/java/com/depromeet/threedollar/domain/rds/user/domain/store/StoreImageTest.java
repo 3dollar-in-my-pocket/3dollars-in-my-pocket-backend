@@ -1,7 +1,5 @@
-package com.depromeet.threedollar.domain.rds.user.domain.storeimage;
+package com.depromeet.threedollar.domain.rds.user.domain.store;
 
-import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.storeimage.StoreImageCreator;
 import org.junit.jupiter.api.Test;
 

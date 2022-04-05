@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.user.testhelper.assertions;
 
-import com.depromeet.threedollar.api.user.service.storeimage.dto.response.StoreImageResponse;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.domain.rds.user.domain.TestHelper;
-import com.depromeet.threedollar.domain.rds.user.domain.storeimage.StoreImage;
-import com.depromeet.threedollar.domain.rds.user.domain.storeimage.StoreImageStatus;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageStatus;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;

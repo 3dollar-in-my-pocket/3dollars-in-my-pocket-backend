@@ -1,6 +1,6 @@
-package com.depromeet.threedollar.domain.rds.user.domain.storeimage;
+package com.depromeet.threedollar.domain.rds.user.domain.store;
 
-import com.depromeet.threedollar.domain.rds.user.domain.storeimage.repository.StoreImageRepositoryCustom;
+import com.depromeet.threedollar.domain.rds.user.domain.store.repository.StoreImageRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StoreImageRepository extends JpaRepository<StoreImage, Long>, StoreImageRepositoryCustom {

@@ -1,6 +1,6 @@
-package com.depromeet.threedollar.domain.rds.user.domain.storeimage.repository;
+package com.depromeet.threedollar.domain.rds.user.domain.store.repository;
 
-import com.depromeet.threedollar.domain.rds.user.domain.storeimage.StoreImage;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;

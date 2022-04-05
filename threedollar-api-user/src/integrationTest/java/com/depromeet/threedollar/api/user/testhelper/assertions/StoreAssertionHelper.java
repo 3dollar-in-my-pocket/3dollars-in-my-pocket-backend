@@ -11,8 +11,8 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
-import com.depromeet.threedollar.domain.rds.user.domain.storedelete.DeleteReasonType;
-import com.depromeet.threedollar.domain.rds.user.domain.storedelete.StoreDeleteRequest;
+import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequest;
 import com.depromeet.threedollar.domain.rds.user.domain.user.User;
 
 import java.util.List;
