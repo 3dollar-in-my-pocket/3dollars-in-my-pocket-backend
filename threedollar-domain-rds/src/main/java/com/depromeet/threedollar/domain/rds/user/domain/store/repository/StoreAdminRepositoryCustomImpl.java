@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 import static com.depromeet.threedollar.domain.rds.user.domain.store.QStore.store;
-import static com.depromeet.threedollar.domain.rds.user.domain.storedelete.QStoreDeleteRequest.storeDeleteRequest;
+import static com.depromeet.threedollar.domain.rds.user.domain.store.QStoreDeleteRequest.storeDeleteRequest;
 
 @RequiredArgsConstructor
 public class StoreAdminRepositoryCustomImpl implements StoreAdminRepositoryCustom {

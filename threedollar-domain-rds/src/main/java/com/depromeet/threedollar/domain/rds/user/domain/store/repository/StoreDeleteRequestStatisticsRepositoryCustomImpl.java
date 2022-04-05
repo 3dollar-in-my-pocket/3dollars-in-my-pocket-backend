@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 
-import static com.depromeet.threedollar.domain.rds.user.domain.storedelete.QStoreDeleteRequest.storeDeleteRequest;
+import static com.depromeet.threedollar.domain.rds.user.domain.store.QStoreDeleteRequest.storeDeleteRequest;
 
 @RequiredArgsConstructor
 public class StoreDeleteRequestStatisticsRepositoryCustomImpl implements StoreDeleteRequestStatisticsRepositoryCustom {

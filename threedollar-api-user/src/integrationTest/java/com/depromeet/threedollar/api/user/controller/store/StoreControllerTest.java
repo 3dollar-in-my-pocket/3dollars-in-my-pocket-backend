@@ -20,7 +20,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
-import com.depromeet.threedollar.domain.rds.user.domain.storedelete.StoreDeleteRequestCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository;
 import com.depromeet.threedollar.domain.rds.user.event.store.StoreCreatedEvent;
 import com.depromeet.threedollar.domain.rds.user.event.store.StoreDeletedEvent;

@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static com.depromeet.threedollar.domain.rds.user.domain.storeimage.QStoreImage.storeImage;
+import static com.depromeet.threedollar.domain.rds.user.domain.store.QStoreImage.storeImage;
 
 @RequiredArgsConstructor
 public class StoreImageRepositoryCustomImpl implements StoreImageRepositoryCustom {

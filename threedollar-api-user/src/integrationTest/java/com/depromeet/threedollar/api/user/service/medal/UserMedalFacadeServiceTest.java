@@ -14,7 +14,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
-import com.depromeet.threedollar.domain.rds.user.domain.storedelete.StoreDeleteRequestCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;

@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.LockModeType;
 import java.util.List;
 
-import static com.depromeet.threedollar.domain.rds.user.domain.storedelete.QStoreDeleteRequest.storeDeleteRequest;
+import static com.depromeet.threedollar.domain.rds.user.domain.store.QStoreDeleteRequest.storeDeleteRequest;
 
 @RequiredArgsConstructor
 public class StoreDeleteRequestRepositoryCustomImpl implements StoreDeleteRequestRepositoryCustom {

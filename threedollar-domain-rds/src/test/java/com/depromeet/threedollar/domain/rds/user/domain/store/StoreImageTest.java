@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.domain.rds.user.domain.store;
 
-import com.depromeet.threedollar.domain.rds.user.domain.storeimage.StoreImageCreator;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

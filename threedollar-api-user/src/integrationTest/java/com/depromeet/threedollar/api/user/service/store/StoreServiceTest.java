@@ -25,7 +25,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.StoreStatus;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequest;
-import com.depromeet.threedollar.domain.rds.user.domain.storedelete.StoreDeleteRequestCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;

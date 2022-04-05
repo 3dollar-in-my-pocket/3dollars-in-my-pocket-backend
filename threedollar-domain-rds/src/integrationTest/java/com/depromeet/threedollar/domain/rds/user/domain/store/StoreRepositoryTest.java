@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.domain.rds.user.domain.store;
 
 import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreWithReportedCountProjection;
-import com.depromeet.threedollar.domain.rds.user.domain.storedelete.StoreDeleteRequestCreator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
