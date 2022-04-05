@@ -67,9 +67,12 @@ spring.config:
 
 spring:
   datasource:
-    hikari:
-      maximum-pool-size: 10
-
+    primary:
+      hikari:
+        maximum-pool-size: 5
+    secondary:
+      hikari:
+        maximum-pool-size: 5
 
 ---
 spring.config:
@@ -80,8 +83,12 @@ spring.config:
 
 spring:
   datasource:
-    hikari:
-      maximum-pool-size: 20
+    primary:
+      hikari:
+        maximum-pool-size: 5
+    secondary:
+      hikari:
+        maximum-pool-size: 10
 
 
 ---

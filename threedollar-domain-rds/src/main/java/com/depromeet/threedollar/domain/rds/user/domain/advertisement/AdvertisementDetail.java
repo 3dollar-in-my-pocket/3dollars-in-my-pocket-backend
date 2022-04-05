@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.domain.rds.user.domain.advertisement;
 
+import com.depromeet.threedollar.domain.rds.common.type.ColumnDefinition;
 import lombok.*;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,10 +24,10 @@ public class AdvertisementDetail {
     @Column(length = 2048)
     private String linkUrl;
 
-    @Column(length = 7)
+    @Column(length = 7, columnDefinition = ColumnDefinition.CHAR)
     private String bgColor;
 
-    @Column(length = 7)
+    @Column(length = 7, columnDefinition = ColumnDefinition.CHAR)
     private String fontColor;
 
     @Builder(access = AccessLevel.PACKAGE)
