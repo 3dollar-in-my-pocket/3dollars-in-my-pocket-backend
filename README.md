@@ -1,6 +1,7 @@
 # 가슴속 삼천원 백엔드
 
 ![Version](https://img.shields.io/github/v/release/depromeet/3dollars-in-my-pocket-backend?include_prereleases)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fgjbae1212%2Fhit-counterhttps%3A%2F%2Fgithub.com%2F3dollar-in-my-pocket%2F3dollars-in-my-pocket-backend&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=3dollar-in-my-pocket_3dollars-in-my-pocket-backend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=3dollar-in-my-pocket_3dollars-in-my-pocket-backend)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=3dollar-in-my-pocket_3dollars-in-my-pocket-backend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=3dollar-in-my-pocket_3dollars-in-my-pocket-backend)
 
