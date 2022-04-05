@@ -13,6 +13,9 @@ import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.depromeet.threedollar.common.type.ReplicationType.PRIMARY;
+import static com.depromeet.threedollar.common.type.ReplicationType.SECONDARY;
+
 @Configuration
 public class DataSourceConfig {
 
@@ -28,16 +31,16 @@ public class DataSourceConfig {
 
     @Bean(ROUTING_DATASOURCE)
     public DataSource routingDataSource(
-        @Qualifier(PRIMARY_DATASOURCE) DataSource masterDataSource,
-        @Qualifier(SECONDARY_DATASOURCE) DataSource slaveDataSource
+        @Qualifier(PRIMARY_DATASOURCE) DataSource primaryDataSource,
+        @Qualifier(SECONDARY_DATASOURCE) DataSource secondaryDataSource
     ) {
         Map<Object, Object> dataSourceMap = new HashMap<>();
-        dataSourceMap.put(RoutingDataSource.PRIMARY, masterDataSource);
-        dataSourceMap.put(RoutingDataSource.SECONDARY, slaveDataSource);
+        dataSourceMap.put(PRIMARY, primaryDataSource);
+        dataSourceMap.put(SECONDARY, secondaryDataSource);
 
         RoutingDataSource routingDataSource = new RoutingDataSource();
         routingDataSource.setTargetDataSources(dataSourceMap);
-        routingDataSource.setDefaultTargetDataSource(slaveDataSource);
+        routingDataSource.setDefaultTargetDataSource(primaryDataSource);
 
         return routingDataSource;
     }

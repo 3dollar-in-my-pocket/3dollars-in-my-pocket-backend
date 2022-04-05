@@ -29,10 +29,16 @@ spring:
       hikari:
         driver-class-name: org.h2.Driver
         jdbc-url: jdbc:h2:mem:testdb;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
+        pool-name: HikariPool-Primary
+        connection-test-query: SELECT 1
+        connection-timeout: 3000
     secondary:
       hikari:
         driver-class-name: org.h2.Driver
         jdbc-url: jdbc:h2:mem:testdb;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
+        pool-name: HikariPool-Seconary
+        connection-test-query: SELECT 1
+        connection-timeout: 3000
   flyway:
     enabled: false
 
@@ -59,12 +65,18 @@ spring:
         jdbc-url: jdbc:h2:mem:threedollar;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
         username: sa
         password:
+        pool-name: HikariPool-Primary
+        connection-test-query: SELECT 1
+        connection-timeout: 3000
     secondary:
       hikari:
         driver-class-name: org.h2.Driver
         jdbc-url: jdbc:h2:mem:threedollar;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
         username: sa
         password:
+        pool-name: HikariPool-Seconary
+        connection-test-query: SELECT 1
+        connection-timeout: 3000
   h2:
     console:
       enabled: true
@@ -99,6 +111,9 @@ spring:
         jdbc-url: jdbc:mariadb://localhost:3309/threedollar_test
         username: root
         password: 3dollar
+        pool-name: HikariPool-Primary
+        connection-test-query: SELECT 1
+        connection-timeout: 3000
     secondary:
       hikari:
         auto-commit: false
@@ -106,6 +121,9 @@ spring:
         jdbc-url: jdbc:mariadb://localhost:3309/threedollar_test
         username: root
         password: 3dollar
+        pool-name: HikariPool-Seconary
+        connection-test-query: SELECT 1
+        connection-timeout: 3000
   flyway:
     enabled: true
 
@@ -134,6 +152,9 @@ spring:
         jdbc-url: ${secret.jdbc.uri}
         username: ${secret.jdbc.username}
         password: ${secret.jdbc.password}
+        pool-name: HikariPool-Primary
+        connection-test-query: SELECT 1
+        connection-timeout: 3000
     secondary:
       hikari:
         auto-commit: false
@@ -141,6 +162,9 @@ spring:
         jdbc-url: ${secret.jdbc.uri}
         username: ${secret.jdbc.username}
         password: ${secret.jdbc.password}
+        pool-name: HikariPool-Seconary
+        connection-test-query: SELECT 1
+        connection-timeout: 3000
   flyway:
     enabled: true
 

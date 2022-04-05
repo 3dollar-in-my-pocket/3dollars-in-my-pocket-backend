@@ -3,10 +3,10 @@ package com.depromeet.threedollar.domain.rds.config.jpa;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
-class RoutingDataSource extends AbstractRoutingDataSource {
+import static com.depromeet.threedollar.common.type.ReplicationType.SECONDARY;
+import static java.text.Collator.PRIMARY;
 
-    static final String PRIMARY = "PRIMARY";
-    static final String SECONDARY = "SECONDARY";
+class RoutingDataSource extends AbstractRoutingDataSource {
 
     @Override
     protected Object determineCurrentLookupKey() {
