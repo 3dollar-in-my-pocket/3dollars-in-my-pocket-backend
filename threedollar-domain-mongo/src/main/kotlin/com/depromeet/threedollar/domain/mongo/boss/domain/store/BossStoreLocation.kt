@@ -21,7 +21,6 @@ class BossStoreLocation(
 
     private fun hasSameLocation(latitude: Double, longitude: Double): Boolean {
         return this.location.x == longitude && location.y == latitude
-
     }
 
     fun updateLocation(latitude: Double, longitude: Double) {
