@@ -89,7 +89,7 @@ spring:
         maximum-pool-size: 5
     secondary:
       hikari:
-        maximum-pool-size: 10
+        maximum-pool-size: 5
 
 
 ---
