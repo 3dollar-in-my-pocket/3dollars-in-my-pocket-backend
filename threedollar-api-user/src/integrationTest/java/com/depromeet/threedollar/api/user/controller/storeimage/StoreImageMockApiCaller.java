@@ -22,10 +22,11 @@ class StoreImageMockApiCaller extends MockMvcUtils {
         super(mockMvc, objectMapper);
     }
 
-    ApiResponse<List<StoreImageResponse>> getStoreImages(Long storeId, int expectedStatus) throws Exception {
+    ApiResponse<List<StoreImageResponse>> getStoreImages(Long storeId, String token, int expectedStatus) throws Exception {
         return objectMapper.readValue(
             mockMvc.perform(get("/v2/store/" + storeId + "/images")
-                .param("storeId", String.valueOf(storeId)))
+                    .header(HttpHeaders.AUTHORIZATION, token)
+                    .param("storeId", String.valueOf(storeId)))
                 .andExpect(status().is(expectedStatus))
                 .andDo(print())
                 .andReturn()
@@ -38,7 +39,7 @@ class StoreImageMockApiCaller extends MockMvcUtils {
     ApiResponse<String> deleteStoreImage(Long imageId, String token, int expectedStatus) throws Exception {
         return objectMapper.readValue(
             mockMvc.perform(delete("/v2/store/image/".concat(String.valueOf(imageId)))
-                .header(HttpHeaders.AUTHORIZATION, token))
+                    .header(HttpHeaders.AUTHORIZATION, token))
                 .andExpect(status().is(expectedStatus))
                 .andDo(print())
                 .andReturn()

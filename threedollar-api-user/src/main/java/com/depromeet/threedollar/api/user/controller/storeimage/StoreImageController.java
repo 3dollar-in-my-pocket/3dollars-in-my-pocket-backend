@@ -20,7 +20,8 @@ public class StoreImageController {
 
     private final StoreImageService storeImageService;
 
-    @ApiOperation("가게에 등록된 이미지 목록을 조회합니다")
+    @ApiOperation("[인증] 가게에 등록된 이미지 목록을 조회합니다")
+    @Auth
     @GetMapping("/v2/store/{storeId}/images")
     public ApiResponse<List<StoreImageResponse>> getStoreImages(
         @PathVariable Long storeId

@@ -47,7 +47,7 @@ class StoreImageControllerTest extends SetupStoreControllerTest {
             storeImageRepository.saveAll(List.of(storeImage1, storeImage2));
 
             // when
-            ApiResponse<List<StoreImageResponse>> response = storeImageMockApiCaller.getStoreImages(storeId, 200);
+            ApiResponse<List<StoreImageResponse>> response = storeImageMockApiCaller.getStoreImages(storeId, token, 200);
 
             // then
             assertAll(
