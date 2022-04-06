@@ -5,6 +5,7 @@ import com.depromeet.threedollar.api.core.service.boss.store.BossStoreCommonServ
 import com.depromeet.threedollar.api.core.service.boss.store.dto.request.GetAroundBossStoresRequest
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAroundInfoResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreInfoResponse
+import com.depromeet.threedollar.api.user.config.interceptor.Auth
 import com.depromeet.threedollar.api.user.config.resolver.GeoCoordinate
 import com.depromeet.threedollar.api.user.config.resolver.MapCoordinate
 import com.depromeet.threedollar.common.model.CoordinateValue
@@ -34,6 +35,7 @@ class BossStoreController(
     }
 
     @ApiOperation("특정 사장님 가게의 상세 정보를 조회합니다")
+    @Auth
     @GetMapping("/v1/boss/store/{bossStoreId}")
     fun getBossStoreDetail(
         @PathVariable bossStoreId: String,

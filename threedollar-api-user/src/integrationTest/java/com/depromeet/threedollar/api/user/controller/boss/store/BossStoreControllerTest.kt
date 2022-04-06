@@ -15,6 +15,7 @@ import org.hamcrest.Matchers.hasSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.springframework.http.HttpHeaders
 import org.springframework.test.web.servlet.get
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -36,7 +37,7 @@ internal class BossStoreControllerTest(
 
     @DisplayName("GET /boss/v1/boss/store/{BOSS_STORE_ID}")
     @Test
-    fun `특정 가게를 조회합니다 오픈 정보가 레디스에 저장되어 있으면 영업중인 가게로 표시된다`() {
+    fun `특정 사장님 가게를 조회합니다 오픈 정보가 레디스에 저장되어 있으면 영업중인 가게로 표시된다`() {
         // given
         val category = BossStoreCategoryCreator.create(title = "한식", sequencePriority = 1)
         bossStoreCategoryRepository.save(category)
@@ -63,7 +64,9 @@ internal class BossStoreControllerTest(
         ))
 
         // when & then
-        mockMvc.get("/v1/boss/store/${bossStore.id}")
+        mockMvc.get("/v1/boss/store/${bossStore.id}") {
+            header(HttpHeaders.AUTHORIZATION, token)
+        }
             .andDo {
                 print()
             }.andExpect {

@@ -68,6 +68,7 @@ class BossStoreController(
     }
 
     @ApiOperation("특정 가게의 상세 정보를 조회합니다")
+    @Auth
     @GetMapping("/v1/boss/store/{bossStoreId}")
     fun getBossStoreDetail(
         @PathVariable bossStoreId: String

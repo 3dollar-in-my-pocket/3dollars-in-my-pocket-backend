@@ -131,7 +131,9 @@ internal class BossStoreControllerTest(
         ))
 
         // when & then
-        mockMvc.get("/v1/boss/store/${bossStore.id}")
+        mockMvc.get("/v1/boss/store/${bossStore.id}") {
+            header(HttpHeaders.AUTHORIZATION, "Bearer $token")
+        }
             .andDo {
                 print()
             }.andExpect {
