@@ -1,8 +1,7 @@
 package com.depromeet.threedollar.api.boss.controller.store
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.boss.config.resolver.BossId
 import com.depromeet.threedollar.api.boss.config.interceptor.Auth
+import com.depromeet.threedollar.api.boss.config.resolver.BossId
 import com.depromeet.threedollar.api.boss.config.resolver.MapCoordinate
 import com.depromeet.threedollar.api.boss.service.store.BossStoreOpenService
 import com.depromeet.threedollar.api.boss.service.store.BossStoreRetrieveService
@@ -10,6 +9,7 @@ import com.depromeet.threedollar.api.boss.service.store.BossStoreService
 import com.depromeet.threedollar.api.boss.service.store.dto.request.GetAroundBossStoresRequest
 import com.depromeet.threedollar.api.boss.service.store.dto.request.UpdateBossStoreInfoRequest
 import com.depromeet.threedollar.api.boss.service.store.dto.response.BossStoreInfoResponse
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.common.model.CoordinateValue
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.*
@@ -63,7 +63,8 @@ class BossStoreController(
         return ApiResponse.success(bossStoreRetrieveService.getMyBossStore(bossId))
     }
 
-    @ApiOperation("특정 가게의 상세 정보를 조회합니다")
+    @Auth
+    @ApiOperation("[인증] 특정 가게의 상세 정보를 조회합니다")
     @GetMapping("/v1/boss/store/{bossStoreId}")
     fun getBossStoreDetail(
         @PathVariable bossStoreId: String

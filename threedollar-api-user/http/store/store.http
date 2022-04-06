@@ -42,8 +42,9 @@ client.test("200 OK", function() {
 %}
 
 
-### 특정 가게의 정보를 조회합니다.
+### [인증] 특정 가게의 정보를 조회합니다.
 GET {{host_api}}/v2/store/?storeId={{STORE_ID}}&latitude=34&longitude=126&startDate=2022-02-01
+Authorization: {{AUTHORIZATION}}
 
 > {%
 client.test("200 OK", function() {
@@ -52,7 +53,7 @@ client.test("200 OK", function() {
 %}
 
 
-### 위도, 경도 주변의 가게 목록을 조회합니다.
+### [인증] 위도, 경도 주변의 가게 목록을 조회합니다.
 GET {{host_api}}/v2/stores/near?latitude=34&longitude=126&mapLatitude=34&mapLongitude=126&distance=5000&category=DALGONA&orderType=REVIEW_DESC
 
 > {%

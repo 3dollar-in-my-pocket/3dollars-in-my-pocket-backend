@@ -39,7 +39,8 @@ public class StoreRetrieveController {
         return ApiResponse.success(storeRetrieveService.getNearStores(request, geoCoordinate, mapCoordinate));
     }
 
-    @ApiOperation(value = "가게의 상세 정보를 조회합니다", notes = "startDate: 특정 날짜부터 방문한 인증 이력들을 조회")
+    @Auth
+    @ApiOperation(value = "[인증] 가게의 상세 정보를 조회합니다", notes = "startDate: 특정 날짜부터 방문한 인증 이력들을 조회")
     @GetMapping("/v2/store")
     public ApiResponse<StoreDetailResponse> getDetailStoreInfo(
         @Valid RetrieveStoreDetailRequest request,
