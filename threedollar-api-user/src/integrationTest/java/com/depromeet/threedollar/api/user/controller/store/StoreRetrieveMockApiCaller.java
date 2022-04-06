@@ -52,8 +52,9 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         );
     }
 
-    ApiResponse<StoreDetailResponse> getStoreDetailInfo(RetrieveStoreDetailRequest request, CoordinateValue coordinate, int expectedStatus) throws Exception {
+    ApiResponse<StoreDetailResponse> getStoreDetailInfo(RetrieveStoreDetailRequest request, CoordinateValue coordinate, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/v2/store")
+            .header(HttpHeaders.AUTHORIZATION, token)
             .param("latitude", String.valueOf(coordinate.getLatitude()))
             .param("longitude", String.valueOf(coordinate.getLongitude()))
             .param("storeId", String.valueOf(request.getStoreId()))
