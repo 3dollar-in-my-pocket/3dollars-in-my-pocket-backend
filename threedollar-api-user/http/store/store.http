@@ -42,8 +42,9 @@ client.test("200 OK", function() {
 %}
 
 
-### 특정 가게의 정보를 조회합니다.
+### [인증] 특정 가게의 정보를 조회합니다.
 GET {{host_api}}/v2/store/?storeId={{STORE_ID}}&latitude=34&longitude=126&startDate=2022-02-01
+Authorization: {{AUTHORIZATION}}
 
 > {%
 client.test("200 OK", function() {
