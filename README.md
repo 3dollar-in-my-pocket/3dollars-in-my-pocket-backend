@@ -22,7 +22,6 @@
 </p>
 
 ## 기술 스택
-> 백엔드에서는 v2.0.0부터 마이그레이션을 통해 새롭게 프로젝트를 진행하고 있습니다.
 ### 애플리케이션 (Language & Framework)
 - Java 11, Kotlin 1.5
 - Spring Framework (Spring Boot, Spring MVC)
@@ -34,11 +33,11 @@
 - Gradle
 - Junit5, AssertJ, Mockito
 
-### 인프라 (Production)
-![img.png](images/3dollars-architecture-20211211.png)
+### 인프라 아키텍처
+![img.png](images/3dollars-architecture-20220409.png)
 
 - ECS Fargate
-- RDS
+- RDS, MongoDB 
 - Elastic Cache (Redis)
 - S3, CloudFront
 - Application LoadBalancer
@@ -53,12 +52,6 @@
 
 ### 멀티 모듈 구조
 ![img.png](images/modules-20220307.png)
-
-| 서비스     | 운영 환경                                                                                                                               | 개발 환경                                                                                                                                     |
-|---------|-------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| 유저 서비스  | ![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://threedollars.co.kr/api/ping) | ![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://dev.threedollars.co.kr/api/ping)   |
-| 사장님 서비스 | 개발 중                                                                                                                                | ![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://dev.threedollars.co.kr/boss/ping)  |
-| 관리자 서비스 | 개발 중                                                                                                                                | ![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://dev.threedollars.co.kr/admin/ping) |
 
 ## Contacts
 - 3dollarinmypocket@gmail.com (가슴속 삼천원 대표 메일)
