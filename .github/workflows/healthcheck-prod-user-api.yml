@@ -1,0 +1,33 @@
+name: 운영환경 - 헬스체크 - User API
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 유저 API Health Check
+        uses: jtalk/url-health-check-action@v2
+        with:
+          url: ${{ secrets.USER_API_BASE_URI_PROD }}/ping
+          max-attempts: 3
+          retry-delay: 1s
+
+      - name: action-slack
+        if: failure()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          fields: workflow
+          custom_payload: |
+            {
+              attachments: [{
+                color: 'danger',
+                text: `${process.env.AS_WORKFLOW}\n유저 API 서버 Health Check가 실패하였습니다 (https://threedollars.co.kr/api/ping)`
+              }]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

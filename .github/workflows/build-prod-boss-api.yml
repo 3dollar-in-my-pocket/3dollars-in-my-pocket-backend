@@ -1,4 +1,4 @@
-name: 운영 환경 - 사장님 API 서버 배포
+name: 운영환경 - 빌드 - Boss API
 
 on:
   workflow_dispatch:

@@ -1,29 +1,28 @@
-name: 운영 환경 - 유저 API 서버 배포
+name: 개발환경 - 배포 - Boss API
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: "Semantic Versioning ex) v0.0.1"
+        required: true
+        type: string
 
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Check assigned tag
-        uses: actions/github-script@v3
-        if: ${{GITHUB.REF_TYPE != 'tag'}}
-        with:
-          script: core.setFailed('You should deploy with tag (not branch !)')
-
       - name: validate semantic versioning
         uses: actions/github-script@v3
-        if: ${{ !startsWith(GITHUB.REF_NAME, 'v') }}
+        if: ${{ !startsWith(github.event.inputs.version, 'v') }}
         with:
-          script: core.setFailed('tag is not semantic versioning ex) v0.0.1')
+          script: core.setFailed('input semantic version ex) v0.0.1')
 
   build:
     runs-on: ubuntu-latest
     needs:
       - validate
-    environment: prod-user
+    environment: dev-boss
     steps:
       - name: checkout@v2
         uses: actions/checkout@v2
@@ -31,16 +30,16 @@ jobs:
       - name: Version
         id: version
         run: |
-          VERSION=${GITHUB_REF_NAME#v}
-          GIT_COMMIT_MSG=`git show -s`
+          VERSION=${VERSIONING#v}-${{ github.run_id }}
           echo "::set-output name=version::$VERSION"
-          echo "::set-output name=git-commit-msg::$GIT_COMMIT_MSG"
+        env:
+          VERSIONING: ${{ github.event.inputs.version }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
 
       - name: Login to Amazon ECR
@@ -51,10 +50,10 @@ jobs:
         id: build
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          DOCKER_REPOSITORY: 3dollar-api
+          DOCKER_REPOSITORY: 3dollar-boss-api-dev
           IMAGE_TAG: ${{ steps.version.outputs.version }}
         run: |
-          docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG -f ./threedollar-api-user/Dockerfile .
+          docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG -f ./threedollar-api-boss/Dockerfile .
           docker tag $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
           docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG
           docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
@@ -65,21 +64,21 @@ jobs:
       - name: Download task definition
         id: download-task-definition
         run: |
-          aws ecs describe-task-definition --task-definition threedollar-api-prod --query taskDefinition > task-definition-prod.json
-          echo "::set-output name=task-definition::$GITHUB_WORKSPACE/task-definition-prod.json"
+          aws ecs describe-task-definition --task-definition threedollar-boss-api-dev --query taskDefinition > task-definition-boss-dev.json
+          echo "::set-output name=task-definition::$GITHUB_WORKSPACE/task-definition-boss-dev.json"
 
       - name: Update Amazon ECS task definition
         id: render-web-container
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: ${{ steps.download-task-definition.outputs.task-definition }}
-          container-name: threedollar-api-prod
+          container-name: threedollar-boss-api-dev
           image: ${{ steps.build.outputs.image }}
 
       - name: Deploy to Amazon ECS service
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.render-web-container.outputs.task-definition }}
-          cluster: threedollar-prod
-          service: threedollar-api-prod
+          cluster: threedollar-dev
+          service: threedollar-boss-api-dev
           wait-for-service-stability: true

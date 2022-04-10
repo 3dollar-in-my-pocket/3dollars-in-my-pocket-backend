@@ -1,4 +1,4 @@
-name: 운영 환경 - 배치 이미지 배포
+name: 운영환경 - 빌드 - User API
 
 on:
   workflow_dispatch:
@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - validate
+    environment: prod-user
     steps:
       - name: checkout@v2
         uses: actions/checkout@v2
@@ -46,17 +47,16 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build Batch
+      - name: Build API
         id: build
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          DOCKER_REPOSITORY: 3dollar-batch-prod
+          DOCKER_REPOSITORY: 3dollar-api
           IMAGE_TAG: ${{ steps.version.outputs.version }}
         run: |
-          docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG -f ./threedollar-batch/Dockerfile .
+          docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG -f ./threedollar-api-user/Dockerfile .
           docker tag $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
           docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG
           docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
 
-          echo "::set-output name=image::$DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG"
           echo "🐇 Build Image >> $DOCKER_REPOSITORY$IMAGE_TAG"

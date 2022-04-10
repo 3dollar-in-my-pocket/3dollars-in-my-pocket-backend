@@ -1,22 +1,23 @@
-name: 개발 환경 - 배치 이미지 배포
+name: 운영환경 - 빌드 - Batch
 
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: "Semantic Versioning ex) v0.0.1"
-        required: true
-        type: string
 
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
+      - name: Check assigned tag
+        uses: actions/github-script@v3
+        if: ${{GITHUB.REF_TYPE != 'tag'}}
+        with:
+          script: core.setFailed('You should deploy with tag (not branch !)')
+
       - name: validate semantic versioning
         uses: actions/github-script@v3
-        if: ${{ !startsWith(github.event.inputs.version, 'v') }}
+        if: ${{ !startsWith(GITHUB.REF_NAME, 'v') }}
         with:
-          script: core.setFailed('input semantic version ex) v0.0.1')
+          script: core.setFailed('tag is not semantic versioning ex) v0.0.1')
 
   build:
     runs-on: ubuntu-latest
@@ -29,16 +30,16 @@ jobs:
       - name: Version
         id: version
         run: |
-          VERSION=${VERSIONING#v}-${{ github.run_id }}
+          VERSION=${GITHUB_REF_NAME#v}
+          GIT_COMMIT_MSG=`git show -s`
           echo "::set-output name=version::$VERSION"
-        env:
-          VERSIONING: ${{ github.event.inputs.version }}
+          echo "::set-output name=git-commit-msg::$GIT_COMMIT_MSG"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
 
       - name: Login to Amazon ECR
@@ -49,7 +50,7 @@ jobs:
         id: build
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          DOCKER_REPOSITORY: 3dollar-batch-dev
+          DOCKER_REPOSITORY: 3dollar-batch-prod
           IMAGE_TAG: ${{ steps.version.outputs.version }}
         run: |
           docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG -f ./threedollar-batch/Dockerfile .
