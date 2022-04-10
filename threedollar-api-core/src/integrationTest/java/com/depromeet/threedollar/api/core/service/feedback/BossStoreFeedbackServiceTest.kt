@@ -61,12 +61,12 @@ internal class BossStoreFeedbackServiceTest(
         val bossStoreFeedbacks = bossStoreFeedbackRepository.findAll()
         assertAll({
             assertThat(bossStoreFeedbacks).hasSize(2)
-            assertThat(bossStoreFeedbacks[0].storeId).isEqualTo(bossStore.id)
+            assertThat(bossStoreFeedbacks[0].bossStoreId).isEqualTo(bossStore.id)
             assertThat(bossStoreFeedbacks[0].userId).isEqualTo(userId)
             assertThat(bossStoreFeedbacks[0].date).isEqualTo(date)
             assertThat(bossStoreFeedbacks[0].feedbackType).isEqualTo(feedbackType1)
 
-            assertThat(bossStoreFeedbacks[1].storeId).isEqualTo(bossStore.id)
+            assertThat(bossStoreFeedbacks[1].bossStoreId).isEqualTo(bossStore.id)
             assertThat(bossStoreFeedbacks[1].userId).isEqualTo(userId)
             assertThat(bossStoreFeedbacks[1].date).isEqualTo(date)
             assertThat(bossStoreFeedbacks[1].feedbackType).isEqualTo(feedbackType2)
@@ -204,14 +204,14 @@ internal class BossStoreFeedbackServiceTest(
         assertAll({
             assertThat(bossStoreFeedbacks).hasSize(2)
             bossStoreFeedbacks[0].let {
-                assertThat(it.storeId).isEqualTo(bossStore.id)
+                assertThat(it.bossStoreId).isEqualTo(bossStore.id)
                 assertThat(it.userId).isEqualTo(userId)
                 assertThat(it.date).isEqualTo(LocalDate.of(2022, 2, 23))
                 assertThat(it.feedbackType).isEqualTo(BossStoreFeedbackType.PLATING_IS_BEAUTIFUL)
             }
 
             bossStoreFeedbacks[1].let {
-                assertThat(it.storeId).isEqualTo(bossStore.id)
+                assertThat(it.bossStoreId).isEqualTo(bossStore.id)
                 assertThat(it.userId).isEqualTo(userId)
                 assertThat(it.date).isEqualTo(LocalDate.of(2022, 2, 24))
                 assertThat(it.feedbackType).isEqualTo(feedbackType)

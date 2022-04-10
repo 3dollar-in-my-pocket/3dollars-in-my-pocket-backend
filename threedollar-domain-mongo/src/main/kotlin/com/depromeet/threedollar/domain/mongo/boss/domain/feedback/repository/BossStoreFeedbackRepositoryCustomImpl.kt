@@ -15,7 +15,7 @@ class BossStoreFeedbackRepositoryCustomImpl(
 
     override fun existsByStoreIdAndUserIdAndDate(storeId: String, userId: Long, date: LocalDate): Boolean {
         return mongoTemplate.exists(Query()
-            .addCriteria(BossStoreFeedback::storeId isEqualTo storeId)
+            .addCriteria(BossStoreFeedback::bossStoreId isEqualTo storeId)
             .addCriteria(BossStoreFeedback::userId isEqualTo userId)
             .addCriteria(BossStoreFeedback::date isEqualTo date), BossStoreFeedback::class.java
         )
@@ -23,14 +23,14 @@ class BossStoreFeedbackRepositoryCustomImpl(
 
     override fun findAllByBossStoreIdAndBetween(bossStoreId: String, startDate: LocalDate, endDate: LocalDate): List<BossStoreFeedback> {
         return mongoTemplate.find(Query()
-            .addCriteria(BossStoreFeedback::storeId isEqualTo bossStoreId)
+            .addCriteria(BossStoreFeedback::bossStoreId isEqualTo bossStoreId)
             .addCriteria(BossStoreFeedback::date.gte(startDate).lte(endDate))
         )
     }
 
     override fun findFirstLessThanDate(bossStoreId: String, date: LocalDate): BossStoreFeedback? {
         return mongoTemplate.findOne(Query()
-            .addCriteria(BossStoreFeedback::storeId isEqualTo bossStoreId)
+            .addCriteria(BossStoreFeedback::bossStoreId isEqualTo bossStoreId)
             .addCriteria(BossStoreFeedback::date lt date)
             .limit(1), BossStoreFeedback::class.java
         )

@@ -41,7 +41,7 @@ db.boss_registration_v1.createIndex({
 
 // boss_store_feedback_v1
 db.boss_store_feedback_v1.createIndex({
-    "storeId": 1,
+    "bossStoreId": 1,
     "userId": 1,
     "feedbackType": 1,
     "date": 1
@@ -50,6 +50,6 @@ db.boss_store_feedback_v1.createIndex({
 });
 
 db.boss_store_feedback_v1.createIndex({
-    "storeId": 1,
+    "bossStoreId": 1,
     "date": 1
 });

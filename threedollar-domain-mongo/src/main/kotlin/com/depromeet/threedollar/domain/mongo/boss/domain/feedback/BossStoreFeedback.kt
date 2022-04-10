@@ -7,7 +7,7 @@ import java.time.LocalDate
 
 @Document("boss_store_feedback_v1")
 class BossStoreFeedback(
-    val storeId: String,
+    val bossStoreId: String,
     val userId: Long,
     val feedbackType: BossStoreFeedbackType,
     val date: LocalDate
