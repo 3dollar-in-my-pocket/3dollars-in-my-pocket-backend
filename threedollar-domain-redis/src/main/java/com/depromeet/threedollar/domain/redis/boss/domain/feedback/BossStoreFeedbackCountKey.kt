@@ -11,7 +11,7 @@ data class BossStoreFeedbackCountKey(
 ) : StringRedisKey<Int> {
 
     override fun getKey(): String {
-        return "boss:store:$bossStoreId:feedback:$feedbackType:count"
+        return "boss:store:$bossStoreId:feedback:$feedbackType:count:v1"
     }
 
     override fun deserializeValue(value: String?): Int? {

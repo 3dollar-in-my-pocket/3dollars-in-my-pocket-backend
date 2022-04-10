@@ -18,7 +18,7 @@ internal class BossStoreOpenTimeKeyTest {
         val key = bossStoreOpenTimeKey.getKey()
 
         // then
-        assertThat(key).isEqualTo("boss:store:bossStoreId:open:time")
+        assertThat(key).isEqualTo("boss:store:bossStoreId:open:time:v1")
     }
 
     @Test

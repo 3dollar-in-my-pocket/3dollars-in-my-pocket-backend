@@ -19,7 +19,7 @@ internal class BossStoreFeedbackCountKeyTest {
         val key = feedbackCountRedisKey.getKey()
 
         // then
-        assertThat(key).isEqualTo("boss:store:bossStoreId:feedback:BOSS_IS_KIND:count")
+        assertThat(key).isEqualTo("boss:store:bossStoreId:feedback:BOSS_IS_KIND:count:v1")
     }
 
     @Test
