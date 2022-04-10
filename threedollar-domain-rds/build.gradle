@@ -24,6 +24,9 @@ dependencies {
     testImplementation(testFixtures(project(":threedollar-domain-rds")))
 }
 
-bootJar { enabled = false }
-jar { enabled = true }
-
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+}

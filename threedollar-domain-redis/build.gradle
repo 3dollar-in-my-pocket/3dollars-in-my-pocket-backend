@@ -15,5 +15,9 @@ dependencies {
     testImplementation(testFixtures(project(":threedollar-domain-redis")))
 }
 
-bootJar { enabled = false }
-jar { enabled = true }
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+}

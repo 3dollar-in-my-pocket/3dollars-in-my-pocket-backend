@@ -15,6 +15,9 @@ dependencies {
     testImplementation(testFixtures(project(":threedollar-domain-mongo")))
 }
 
-bootJar { enabled = false }
-jar { enabled = true }
-
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+}

@@ -15,7 +15,8 @@ repositories {
 ext {
     springCloudVersion = "2020.0.4"
     swaggerVersion = "3.0.0"
-    sentryVersion = "5.7.1"
+    sentryVersion = "5.7.2"
+    jacocoVersion = "0.8.8"
 }
 
 allprojects {
@@ -57,6 +58,7 @@ subprojects {
     }
 
     dependencies {
+        // Spring Boot
         implementation("org.springframework.boot:spring-boot-starter-validation")
         annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
         implementation("org.springframework.boot:spring-boot-starter-json")
@@ -130,7 +132,7 @@ sonarqube {
 }
 
 jacoco {
-    toolVersion = "0.8.7"
+    toolVersion = "$jacocoVersion"
 }
 
 task testCoverage(type: JacocoReport, group: 'verification', description: 'Report Test Coverage') {

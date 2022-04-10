@@ -18,5 +18,9 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:${jjwtVersion}")
 }
 
-bootJar { enabled = false }
-jar { enabled = true }
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+}
