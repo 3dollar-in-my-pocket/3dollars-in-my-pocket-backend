@@ -68,20 +68,28 @@ class LocalTestController(
 
     @ApiOperation("[개발용] 사장님 서버용 테스트 토큰을 발급 받습니다.")
     @PostMapping("/test-registration")
-    fun addMockRegistration(): ApiResponse<String> {
+    fun addMockRegistration(
+        @RequestParam bossName: String,
+        @RequestParam storeName: String,
+        @RequestParam categoriesIds: Set<String>,
+        @RequestParam certificationPhotoUrl: String,
+        @RequestParam contactsNumber: String,
+        @RequestParam businessNumber: String
+    ): ApiResponse<String> {
         val registration = Registration(
             boss = RegistrationBossForm(
                 socialInfo = BossAccountSocialInfo(
                     socialId = UUID.randomUUID().toString(),
                     socialType = BossAccountSocialType.KAKAO
                 ),
-                name = UUID.randomUUID().toString(),
-                businessNumber = BusinessNumber.of("010-12-12344")
+                name = bossName,
+                businessNumber = BusinessNumber.of(businessNumber),
             ),
             store = RegistrationStoreForm(
                 name = "가게 이름",
-                contactsNumber = ContactsNumber.of("010-1234-1234"),
-                certificationPhotoUrl = "https://avatars.githubusercontent.com/u/48153675?v=4"
+                contactsNumber = ContactsNumber.of(contactsNumber),
+                categoriesIds = categoriesIds,
+                certificationPhotoUrl = certificationPhotoUrl
             )
         )
         registrationRepository.save(registration)

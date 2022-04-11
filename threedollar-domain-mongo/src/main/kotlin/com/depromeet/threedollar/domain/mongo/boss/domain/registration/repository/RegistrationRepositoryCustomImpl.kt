@@ -3,6 +3,7 @@ package com.depromeet.threedollar.domain.mongo.boss.domain.registration.reposito
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStatus
+import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.find
 import org.springframework.data.mongodb.core.findOne
@@ -37,9 +38,10 @@ class RegistrationRepositoryCustomImpl(
         )
     }
 
-    override fun findAllWaitingRegistrations(): List<Registration> {
+    override fun findAllWaitingRegistrationsFromTheLatest(): List<Registration> {
         return mongoTemplate.find(Query()
             .addCriteria(Registration::status isEqualTo RegistrationStatus.WAITING)
+            .with(Sort.by(Sort.Direction.DESC, Registration::id.name))
         )
     }
 

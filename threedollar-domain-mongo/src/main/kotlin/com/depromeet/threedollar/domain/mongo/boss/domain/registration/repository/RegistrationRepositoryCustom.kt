@@ -11,6 +11,6 @@ interface RegistrationRepositoryCustom {
 
     fun findWaitingRegistrationBySocialIdAndSocialType(socialId: String, socialType: BossAccountSocialType): Registration?
 
-    fun findAllWaitingRegistrations(): List<Registration>
+    fun findAllWaitingRegistrationsFromTheLatest(): List<Registration>
 
 }

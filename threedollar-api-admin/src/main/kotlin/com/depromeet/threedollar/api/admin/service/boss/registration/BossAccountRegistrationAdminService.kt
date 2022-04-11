@@ -6,6 +6,8 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo
+import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
+import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
@@ -16,7 +18,8 @@ import org.springframework.transaction.annotation.Transactional
 class BossAccountRegistrationAdminService(
     private val registrationRepository: RegistrationRepository,
     private val bossAccountRepository: BossAccountRepository,
-    private val bossStoreRepository: BossStoreRepository
+    private val bossStoreRepository: BossStoreRepository,
+    private val bossStoreCategoryRepository: BossStoreCategoryRepository
 ) {
 
     @Transactional
@@ -51,9 +54,10 @@ class BossAccountRegistrationAdminService(
     // TODO 페이지네이션 적용
     @Transactional(readOnly = true)
     fun getBossRegistrations(): List<BossAccountRegistrationResponse> {
-        val registrations = registrationRepository.findAllWaitingRegistrations()
+        val registrations = registrationRepository.findAllWaitingRegistrationsFromTheLatest()
+        val bossStoreCategoryMap: Map<String, BossStoreCategory> = bossStoreCategoryRepository.findAll().associateBy { it.id }
         return registrations.map {
-            BossAccountRegistrationResponse.of(it)
+            BossAccountRegistrationResponse.of(it, bossStoreCategoryMap)
         }
     }
 
