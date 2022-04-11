@@ -31,7 +31,7 @@ public class MenuResponse extends AuditingTimeResponse {
             .name(menu.getName())
             .price(menu.getPrice())
             .build();
-        response.setBaseTime(menu);
+        response.setAuditingTimeByEntity(menu);
         return response;
     }
 

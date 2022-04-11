@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.core.service.boss.store.dto.response
 
-import com.depromeet.threedollar.api.core.common.dto.BaseTimeResponse
+import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
 import com.depromeet.threedollar.common.model.CoordinateValue
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.common.utils.LocationDistanceUtils
@@ -26,7 +26,7 @@ data class BossStoreInfoResponse(
     val categories: Set<BossStoreCategoryResponse>,
     val openStatus: BossStoreOpenStatusResponse,
     val distance: Int
-) : BaseTimeResponse() {
+) : AuditingTimeResponse() {
 
     companion object {
         fun of(
@@ -54,7 +54,7 @@ data class BossStoreInfoResponse(
                     geoCoordinate
                 )
             )
-            response.setBaseTime(bossStore)
+            response.setAuditingTimeByDocument(bossStore)
             return response
         }
     }
@@ -71,7 +71,7 @@ data class BossStoreAroundInfoResponse(
     val openStatus: BossStoreOpenStatusResponse,
     val totalFeedbacksCounts: Int,
     val distance: Int,
-) : BaseTimeResponse() {
+) : AuditingTimeResponse() {
 
     companion object {
         fun of(
@@ -96,7 +96,7 @@ data class BossStoreAroundInfoResponse(
                     geoCoordinate
                 )
             )
-            response.setBaseTime(bossStore)
+            response.setAuditingTimeByDocument(bossStore)
             return response
         }
     }

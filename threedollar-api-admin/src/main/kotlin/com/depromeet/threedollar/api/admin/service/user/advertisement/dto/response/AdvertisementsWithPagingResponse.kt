@@ -47,7 +47,7 @@ data class AdvertisementResponse(
                 startDateTime = advertisement.startDateTime,
                 endDateTime = advertisement.endDateTime
             )
-            response.setBaseTime(advertisement)
+            response.setAuditingTimeByEntity(advertisement)
             return response
         }
     }

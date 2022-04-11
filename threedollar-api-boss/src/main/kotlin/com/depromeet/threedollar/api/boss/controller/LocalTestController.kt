@@ -20,7 +20,9 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSoc
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationBossForm
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStoreForm
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.*
 import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
 import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
@@ -62,6 +64,28 @@ class LocalTestController(
             ?: bossAccountRepository.save(BOSS)
         httpSession.setAttribute(SessionConstants.BOSS_ACCOUNT_ID, bossAccount.id)
         return ApiResponse.success(LoginResponse(httpSession.id, bossAccount.id))
+    }
+
+    @ApiOperation("[개발용] 사장님 서버용 테스트 토큰을 발급 받습니다.")
+    @PostMapping("/test-registration")
+    fun addMockRegistration(): ApiResponse<String> {
+        val registration = Registration(
+            boss = RegistrationBossForm(
+                socialInfo = BossAccountSocialInfo(
+                    socialId = UUID.randomUUID().toString(),
+                    socialType = BossAccountSocialType.KAKAO
+                ),
+                name = UUID.randomUUID().toString(),
+                businessNumber = BusinessNumber.of("010-12-12344")
+            ),
+            store = RegistrationStoreForm(
+                name = "가게 이름",
+                contactsNumber = ContactsNumber.of("010-1234-1234"),
+                certificationPhotoUrl = "https://avatars.githubusercontent.com/u/48153675?v=4"
+            )
+        )
+        registrationRepository.save(registration)
+        return ApiResponse.OK
     }
 
     @ApiOperation("[개발 서버용] 가게 목 데이터를 추가합니다.")

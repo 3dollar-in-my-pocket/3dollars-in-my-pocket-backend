@@ -35,7 +35,7 @@ public class ReviewInfoResponse extends AuditingTimeResponse {
             .contents(review.getContents())
             .rating(review.getRating())
             .build();
-        response.setBaseTime(review);
+        response.setAuditingTimeByEntity(review);
         return response;
     }
 

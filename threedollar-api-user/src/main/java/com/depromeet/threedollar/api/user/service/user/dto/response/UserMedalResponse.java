@@ -38,7 +38,7 @@ public class UserMedalResponse extends AuditingTimeResponse {
             return signOut();
         }
         UserMedalResponse response = of(userMedal.getMedal());
-        response.setBaseTime(userMedal);
+        response.setAuditingTimeByEntity(userMedal);
         return response;
     }
 

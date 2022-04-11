@@ -15,7 +15,7 @@ public class StoreImageResponse extends AuditingTimeResponse {
 
     public static StoreImageResponse of(StoreImage storeImage) {
         StoreImageResponse response = new StoreImageResponse(storeImage.getId(), storeImage.getUrl());
-        response.setBaseTime(storeImage);
+        response.setAuditingTimeByEntity(storeImage);
         return response;
     }
 

@@ -25,7 +25,7 @@ data class ReportedStoreInfoResponse(
                 projection.rating,
                 projection.reportsCount
             )
-            response.setBaseTime(projection.storeCreatedAt, projection.storeUpdatedAt)
+            response.setAuditingTime(projection.storeCreatedAt, projection.storeUpdatedAt)
             return response
         }
     }

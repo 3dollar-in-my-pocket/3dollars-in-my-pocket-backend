@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.boss.service.account.dto.response
 
-import com.depromeet.threedollar.api.core.common.dto.BaseTimeResponse
+import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 
@@ -10,7 +10,7 @@ data class BossAccountInfoResponse(
     val name: String,
     val businessNumber: String,
     val isSetupNotification: Boolean
-) : BaseTimeResponse() {
+) : AuditingTimeResponse() {
 
     companion object {
         fun of(bossAccount: BossAccount): BossAccountInfoResponse {
@@ -21,7 +21,7 @@ data class BossAccountInfoResponse(
                 businessNumber = bossAccount.businessNumber.getNumberWithSeparator(),
                 isSetupNotification = bossAccount.isSetupNotification
             )
-            response.setBaseTime(bossAccount)
+            response.setAuditingTimeByDocument(bossAccount)
             return response
         }
     }

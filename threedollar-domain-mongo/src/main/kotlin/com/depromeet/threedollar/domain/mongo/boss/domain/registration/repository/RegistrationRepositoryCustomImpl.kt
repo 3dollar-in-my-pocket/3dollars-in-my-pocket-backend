@@ -4,6 +4,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSoc
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStatus
 import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.data.mongodb.core.find
 import org.springframework.data.mongodb.core.findOne
 import org.springframework.data.mongodb.core.query.Criteria.where
 import org.springframework.data.mongodb.core.query.Query
@@ -32,6 +33,12 @@ class RegistrationRepositoryCustomImpl(
         return mongoTemplate.findOne(Query()
             .addCriteria(where("boss.socialInfo.socialId").isEqualTo(socialId))
             .addCriteria(where("boss.socialInfo.socialType").isEqualTo(socialType))
+            .addCriteria(Registration::status isEqualTo RegistrationStatus.WAITING)
+        )
+    }
+
+    override fun findAllWaitingRegistrations(): List<Registration> {
+        return mongoTemplate.find(Query()
             .addCriteria(Registration::status isEqualTo RegistrationStatus.WAITING)
         )
     }

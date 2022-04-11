@@ -87,7 +87,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
         response.menus.addAll(toMenuResponse(store.getMenus()));
         response.reviews.addAll(toReviewResponse(reviews, userDictionary));
         response.visitHistories.addAll(toVisitHistoryResponse(visitHistories, userDictionary));
-        response.setBaseTime(store);
+        response.setAuditingTimeByEntity(store);
         return response;
     }
 

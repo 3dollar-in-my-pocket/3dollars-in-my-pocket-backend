@@ -42,7 +42,7 @@ public class StoreInfoResponse extends AuditingTimeResponse {
             .isDeleted(store.isDeleted())
             .build();
         response.categories.addAll(store.getMenuCategoriesSortedByCounts());
-        response.setBaseTime(store);
+        response.setAuditingTimeByEntity(store);
         return response;
     }
 

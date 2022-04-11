@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.core.common.dto;
 
+import com.depromeet.threedollar.domain.mongo.common.domain.BaseDocument;
 import com.depromeet.threedollar.domain.rds.common.domain.AuditingTimeEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,12 +18,17 @@ public abstract class AuditingTimeResponse {
 
     protected LocalDateTime updatedAt;
 
-    protected void setBaseTime(AuditingTimeEntity auditingTimeEntity) {
+    protected void setAuditingTimeByEntity(AuditingTimeEntity auditingTimeEntity) {
         this.createdAt = auditingTimeEntity.getCreatedAt();
         this.updatedAt = auditingTimeEntity.getUpdatedAt();
     }
 
-    protected void setBaseTime(LocalDateTime createdAt, LocalDateTime updatedAt) {
+    protected void setAuditingTimeByDocument(BaseDocument baseTime) {
+        this.createdAt = baseTime.createdAt;
+        this.updatedAt = baseTime.updatedAt;
+    }
+
+    protected void setAuditingTime(LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }

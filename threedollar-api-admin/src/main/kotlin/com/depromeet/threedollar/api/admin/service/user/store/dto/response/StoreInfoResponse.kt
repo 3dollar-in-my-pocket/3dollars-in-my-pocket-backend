@@ -23,7 +23,7 @@ data class StoreInfoResponse(
                 store.rating,
                 store.menuCategoriesSortedByCounts
             )
-            response.setBaseTime(store)
+            response.setAuditingTimeByEntity(store)
             return response
         }
     }

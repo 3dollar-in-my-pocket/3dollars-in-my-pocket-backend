@@ -29,7 +29,7 @@ public class UserInfoResponse extends AuditingTimeResponse {
             return signOut();
         }
         UserInfoResponse response = new UserInfoResponse(user.getId(), user.getName(), user.getSocialType(), UserMedalResponse.of(user.getActivatedMedal()));
-        response.setBaseTime(user);
+        response.setAuditingTimeByEntity(user);
         return response;
     }
 

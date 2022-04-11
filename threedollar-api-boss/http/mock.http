@@ -43,3 +43,6 @@ POST {{host_boss_api}}/test-category?name=카테고리&priority=1000
 > {%
 client.global.set("BOSS_CATEGORY_ID", response.body["data"])
 %}
+
+### [테스트용] Mock 가입신청 추가
+POST {{host_boss_api}}/test-registration

@@ -43,7 +43,7 @@ public class StoreWithVisitCountsResponse extends AuditingTimeResponse {
             .notExistsVisitsCount(notExistsVisitsCount)
             .build();
         response.categories.addAll(store.getMenuCategoriesSortedByCounts());
-        response.setBaseTime(store);
+        response.setAuditingTimeByEntity(store);
         return response;
     }
 

@@ -19,7 +19,7 @@ data class FaqResponse(
                 answer = faq.answer,
                 category = faq.category
             )
-            response.setBaseTime(faq)
+            response.setAuditingTimeByEntity(faq)
             return response
         }
     }

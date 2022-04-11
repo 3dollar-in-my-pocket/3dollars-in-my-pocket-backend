@@ -26,7 +26,7 @@ data class UserWithActivityResponse(
                 activity = ActivityResponse(storesCount, reviewsCount, user.userMedals.size
                 )
             )
-            response.setBaseTime(user)
+            response.setAuditingTimeByEntity(user)
             return response
         }
     }

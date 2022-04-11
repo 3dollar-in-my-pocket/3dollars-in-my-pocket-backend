@@ -37,7 +37,7 @@ public class ReviewWithUserResponse extends AuditingTimeResponse {
             .contents(review.getContents())
             .user(UserInfoResponse.of(user))
             .build();
-        response.setBaseTime(review);
+        response.setAuditingTimeByEntity(review);
         return response;
     }
 

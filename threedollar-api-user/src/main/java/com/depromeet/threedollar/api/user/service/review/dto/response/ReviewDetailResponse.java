@@ -39,7 +39,7 @@ public class ReviewDetailResponse extends AuditingTimeResponse {
             .user(UserInfoResponse.of(user))
             .store(StoreInfoResponse.of(store))
             .build();
-        response.setBaseTime(review.getCreatedAt(), review.getUpdatedAt());
+        response.setAuditingTime(review.getCreatedAt(), review.getUpdatedAt());
         return response;
     }
 
