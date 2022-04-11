@@ -1,5 +1,7 @@
 package com.depromeet.threedollar.api.admin.service.boss.registration
 
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.admin.service.boss.registration.dto.request.GetBossRegistrationsRequest
 import com.depromeet.threedollar.api.admin.service.boss.registration.dto.response.BossAccountRegistrationResponse
 import com.depromeet.threedollar.common.exception.model.ConflictException
@@ -12,8 +14,6 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCate
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 class BossAccountRegistrationAdminService(

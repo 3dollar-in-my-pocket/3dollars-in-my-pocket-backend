@@ -1,8 +1,5 @@
 package com.depromeet.threedollar.api.boss.controller.account
 
-import com.depromeet.threedollar.api.boss.controller.SetupBossAccountControllerTest
-import com.depromeet.threedollar.api.boss.service.account.dto.request.UpdateBossAccountInfoRequest
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -10,6 +7,9 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.put
+import com.depromeet.threedollar.api.boss.controller.SetupBossAccountControllerTest
+import com.depromeet.threedollar.api.boss.service.account.dto.request.UpdateBossAccountInfoRequest
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 
 internal class BossAccountControllerTest : SetupBossAccountControllerTest() {
 

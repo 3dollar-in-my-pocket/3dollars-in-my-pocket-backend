@@ -1,8 +1,5 @@
 package com.depromeet.threedollar.domain.mongo.boss.domain.registration.repository
 
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStatus
 import org.bson.types.ObjectId
 import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.MongoTemplate
@@ -12,6 +9,9 @@ import org.springframework.data.mongodb.core.query.Criteria.where
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.data.mongodb.core.query.lt
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStatus
 
 class RegistrationRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate

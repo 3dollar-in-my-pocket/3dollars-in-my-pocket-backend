@@ -1,13 +1,19 @@
 package com.depromeet.threedollar.api.user.service.review.dto.response;
 
+import org.jetbrains.annotations.NotNull;
+
+import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreInfoResponse;
 import com.depromeet.threedollar.api.user.service.user.dto.response.UserInfoResponse;
-import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.user.User;
-import lombok.*;
-import org.jetbrains.annotations.NotNull;
+
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @ToString
 @Getter

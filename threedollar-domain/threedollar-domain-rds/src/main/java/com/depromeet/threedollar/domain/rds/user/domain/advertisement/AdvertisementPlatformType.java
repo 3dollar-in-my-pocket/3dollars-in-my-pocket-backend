@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.domain.rds.user.domain.advertisement;
 
 import com.depromeet.threedollar.common.model.EnumModel;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

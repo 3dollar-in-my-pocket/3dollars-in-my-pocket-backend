@@ -1,22 +1,24 @@
 package com.depromeet.threedollar.api.user.service.store;
 
-import com.depromeet.threedollar.api.user.service.store.dto.request.AddStoreImageRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.response.StoreImageResponse;
-import com.depromeet.threedollar.api.core.provider.upload.UploadProvider;
-import com.depromeet.threedollar.api.core.provider.upload.dto.request.ImageUploadFileRequest;
-import com.depromeet.threedollar.common.type.ApplicationType;
-import com.depromeet.threedollar.common.type.FileType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import com.depromeet.threedollar.api.core.provider.upload.UploadProvider;
+import com.depromeet.threedollar.api.core.provider.upload.dto.request.ImageUploadFileRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.request.AddStoreImageRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreImageResponse;
+import com.depromeet.threedollar.common.type.ApplicationType;
+import com.depromeet.threedollar.common.type.FileType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service

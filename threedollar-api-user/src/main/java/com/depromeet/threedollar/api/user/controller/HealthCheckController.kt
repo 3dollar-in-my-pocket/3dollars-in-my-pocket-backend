@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.user.controller
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import io.swagger.annotations.ApiOperation
 
 @RestController
 class HealthCheckController {

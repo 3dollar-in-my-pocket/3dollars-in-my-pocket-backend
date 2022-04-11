@@ -1,5 +1,7 @@
 package com.depromeet.threedollar.api.core.service.boss.store
 
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.core.service.boss.category.BossStoreCategoryServiceUtils
 import com.depromeet.threedollar.api.core.service.boss.store.dto.request.GetAroundBossStoresRequest
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAroundInfoResponse
@@ -13,8 +15,6 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocatio
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRepository
 import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenTimeRepository
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import kotlin.math.min
 
 private const val MAX_DISTANCE_KM = 2.0

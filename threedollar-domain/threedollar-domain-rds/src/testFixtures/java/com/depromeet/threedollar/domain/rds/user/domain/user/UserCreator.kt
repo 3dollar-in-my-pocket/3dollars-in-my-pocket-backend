@@ -7,9 +7,9 @@ object UserCreator {
 
     @JvmStatic
     fun create(
-            socialId: String,
-            socialType: UserSocialType,
-            name: String
+        socialId: String,
+        socialType: UserSocialType,
+        name: String
     ): User {
         return User.builder()
             .socialId(socialId)

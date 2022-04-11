@@ -1,12 +1,12 @@
 package com.depromeet.threedollar.api.boss.runner
 
-import com.depromeet.threedollar.common.type.FamousPlace
-import com.depromeet.threedollar.common.utils.logger
-import com.depromeet.threedollar.external.client.local.LocalBossApiWarmupApiClient
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.ApplicationListener
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
+import com.depromeet.threedollar.common.type.FamousPlace
+import com.depromeet.threedollar.common.utils.logger
+import com.depromeet.threedollar.external.client.local.LocalBossApiWarmupApiClient
 
 private const val API_CALL_COUNT = 20
 

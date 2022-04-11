@@ -1,24 +1,26 @@
 package com.depromeet.threedollar.domain.rds.user.domain.visit.repository;
 
-import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.QVisitHistoryCountProjection;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.QVisitHistoryWithUserProjection;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryCountProjection;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryWithUserProjection;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.Nullable;
-
-import java.time.LocalDate;
-import java.util.List;
-
 import static com.depromeet.threedollar.domain.rds.user.domain.store.QMenu.menu;
 import static com.depromeet.threedollar.domain.rds.user.domain.store.QStore.store;
 import static com.depromeet.threedollar.domain.rds.user.domain.user.QUser.user;
 import static com.depromeet.threedollar.domain.rds.user.domain.visit.QVisitHistory.visitHistory;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
+
+import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.QVisitHistoryCountProjection;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.QVisitHistoryWithUserProjection;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryCountProjection;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryWithUserProjection;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryCustom {

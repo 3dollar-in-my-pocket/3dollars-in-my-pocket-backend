@@ -1,11 +1,6 @@
 package com.depromeet.threedollar.api.boss.service.store
 
-import com.depromeet.threedollar.api.boss.service.SetupBossStoreServiceTest
-import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.common.model.CoordinateValue
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
-import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenTimeRepository
+import java.time.LocalDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
@@ -14,14 +9,19 @@ import org.junit.jupiter.api.assertAll
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.geo.Point
 import org.springframework.test.context.TestConstructor
-import java.time.LocalDateTime
+import com.depromeet.threedollar.api.boss.service.SetupBossStoreServiceTest
+import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.common.model.CoordinateValue
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationCreator
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
+import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenTimeRepository
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class BossStoreOpenServiceTest(
-        private val bossStoreOpenService: BossStoreOpenService,
-        private val bossStoreLocationRepository: BossStoreLocationRepository,
-        private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository
+    private val bossStoreOpenService: BossStoreOpenService,
+    private val bossStoreLocationRepository: BossStoreLocationRepository,
+    private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository
 ) : SetupBossStoreServiceTest() {
 
     @AfterEach

@@ -1,24 +1,27 @@
 package com.depromeet.threedollar.api.user.controller.store;
 
-import com.depromeet.threedollar.api.user.controller.MockMvcUtils;
-import com.depromeet.threedollar.api.user.service.store.dto.response.StoreInfoResponse;
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.api.user.service.store.dto.request.RegisterStoreRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.request.DeleteStoreRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.request.UpdateStoreRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDeleteResponse;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.nio.charset.StandardCharsets;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import java.nio.charset.StandardCharsets;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
+import com.depromeet.threedollar.api.user.controller.MockMvcUtils;
+import com.depromeet.threedollar.api.user.service.store.dto.request.DeleteStoreRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.request.RegisterStoreRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.request.UpdateStoreRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDeleteResponse;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreInfoResponse;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 class StoreMockApiCaller extends MockMvcUtils {
 

@@ -1,12 +1,10 @@
 package com.depromeet.threedollar.api.user.controller.store;
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.api.core.mapper.user.menu.dto.response.MenuCategoryResponse;
-import com.depromeet.threedollar.api.user.controller.SetupControllerTest;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
-import com.fasterxml.jackson.core.type.TypeReference;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -14,11 +12,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
+import com.depromeet.threedollar.api.core.mapper.user.menu.dto.response.MenuCategoryResponse;
+import com.depromeet.threedollar.api.user.controller.SetupControllerTest;
+import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 class StoreMenuControllerTest extends SetupControllerTest {
 

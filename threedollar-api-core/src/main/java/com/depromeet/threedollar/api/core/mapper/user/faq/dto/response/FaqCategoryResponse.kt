@@ -3,9 +3,9 @@ package com.depromeet.threedollar.api.core.mapper.user.faq.dto.response
 import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCategory
 
 data class FaqCategoryResponse(
-        val category: FaqCategory,
-        val description: String,
-        val displayOrder: Int
+    val category: FaqCategory,
+    val description: String,
+    val displayOrder: Int
 ) {
 
     companion object {

@@ -1,9 +1,10 @@
 package com.depromeet.threedollar.external.client.slack;
 
-import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+
+import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest;
 
 @Primary
 @Profile({"local", "local-docker", "integration-test"})

@@ -1,15 +1,21 @@
 package com.depromeet.threedollar.api.user.service.visit.dto.response;
 
-import com.depromeet.threedollar.api.user.service.user.dto.response.UserInfoResponse;
-import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
-import com.depromeet.threedollar.domain.rds.user.domain.user.User;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryWithUserProjection;
-import lombok.*;
+import java.time.LocalDate;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.time.LocalDate;
+import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
+import com.depromeet.threedollar.api.user.service.user.dto.response.UserInfoResponse;
+import com.depromeet.threedollar.domain.rds.user.domain.user.User;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryWithUserProjection;
+
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @ToString
 @Getter

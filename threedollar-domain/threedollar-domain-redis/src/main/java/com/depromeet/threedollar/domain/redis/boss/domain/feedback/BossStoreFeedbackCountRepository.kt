@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.domain.redis.boss.domain.feedback
 
+import org.springframework.stereotype.Repository
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
-import org.springframework.stereotype.Repository
 
 private const val DEFAULT_COUNT = 0
 

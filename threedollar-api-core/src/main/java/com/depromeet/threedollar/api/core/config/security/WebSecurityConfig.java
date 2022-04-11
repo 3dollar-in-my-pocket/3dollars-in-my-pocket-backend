@@ -16,19 +16,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
             .antMatchers(MONITORING_MATCHERS).authenticated()
-                .anyRequest().permitAll()
+            .anyRequest().permitAll()
             .and()
-                .httpBasic().and()
-                .formLogin().disable()
-                .logout().disable()
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .httpBasic().and()
+            .formLogin().disable()
+            .logout().disable()
+            .csrf().disable()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-                .headers()
-                    .frameOptions().sameOrigin()
-                    .cacheControl().and()
-                    .xssProtection().and()
-                    .httpStrictTransportSecurity().disable();
+            .headers()
+            .frameOptions().sameOrigin()
+            .cacheControl().and()
+            .xssProtection().and()
+            .httpStrictTransportSecurity().disable();
     }
 
 }

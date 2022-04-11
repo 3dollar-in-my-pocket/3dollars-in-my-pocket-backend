@@ -1,5 +1,18 @@
 package com.depromeet.threedollar.domain.rds.user.domain.store.repository;
 
+import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_STORES_COUNTS;
+import static com.depromeet.threedollar.domain.rds.user.domain.store.QMenu.menu;
+import static com.depromeet.threedollar.domain.rds.user.domain.store.QStore.store;
+import static com.querydsl.core.types.dsl.MathExpressions.acos;
+import static com.querydsl.core.types.dsl.MathExpressions.cos;
+import static com.querydsl.core.types.dsl.MathExpressions.radians;
+import static com.querydsl.core.types.dsl.MathExpressions.sin;
+
+import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
+import org.springframework.cache.annotation.Cacheable;
+
 import com.depromeet.threedollar.domain.rds.common.support.OrderByNull;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreStatus;
@@ -8,16 +21,8 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.Nullable;
-import org.springframework.cache.annotation.Cacheable;
-
-import java.util.List;
-
-import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_STORES_COUNTS;
-import static com.depromeet.threedollar.domain.rds.user.domain.store.QMenu.menu;
-import static com.depromeet.threedollar.domain.rds.user.domain.store.QStore.store;
-import static com.querydsl.core.types.dsl.MathExpressions.*;
 
 @RequiredArgsConstructor
 public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {

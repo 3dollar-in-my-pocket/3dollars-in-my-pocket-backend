@@ -1,11 +1,12 @@
 package com.depromeet.threedollar.domain.rds.user.domain.user.repository;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
+import static com.depromeet.threedollar.domain.rds.user.domain.user.QUser.user;
 
 import java.time.LocalDate;
 
-import static com.depromeet.threedollar.domain.rds.user.domain.user.QUser.user;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class UserStatisticsRepositoryCustomImpl implements UserStatisticsRepositoryCustom {

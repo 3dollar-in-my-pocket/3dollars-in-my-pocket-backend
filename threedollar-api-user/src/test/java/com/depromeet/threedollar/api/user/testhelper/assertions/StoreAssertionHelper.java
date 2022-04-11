@@ -1,18 +1,28 @@
 package com.depromeet.threedollar.api.user.testhelper.assertions;
 
-import com.depromeet.threedollar.api.user.service.store.dto.response.*;
-import com.depromeet.threedollar.domain.rds.common.domain.Location;
-import com.depromeet.threedollar.domain.rds.user.domain.TestHelper;
-import com.depromeet.threedollar.domain.rds.user.domain.store.*;
-import com.depromeet.threedollar.domain.rds.user.domain.user.User;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-
-import java.util.List;
-
 import static com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper.assertUserInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+
+import java.util.List;
+
+import com.depromeet.threedollar.api.user.service.store.dto.response.MenuResponse;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDetailResponse;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreInfoResponse;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreWithVisitCountsResponse;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
+import com.depromeet.threedollar.domain.rds.common.domain.Location;
+import com.depromeet.threedollar.domain.rds.user.domain.TestHelper;
+import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
+import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequest;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
+import com.depromeet.threedollar.domain.rds.user.domain.user.User;
+
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @TestHelper
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

@@ -1,14 +1,11 @@
 package com.depromeet.threedollar.api.user.service.auth;
 
-import com.depromeet.threedollar.api.user.service.auth.dto.request.LoginRequest;
-import com.depromeet.threedollar.api.user.service.auth.dto.request.SignUpRequest;
-import com.depromeet.threedollar.api.user.service.user.UserService;
-import com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper;
-import com.depromeet.threedollar.common.exception.model.ConflictException;
-import com.depromeet.threedollar.common.exception.model.NotFoundException;
-import com.depromeet.threedollar.domain.rds.user.domain.user.*;
-import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient;
-import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -16,11 +13,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import com.depromeet.threedollar.api.user.service.auth.dto.request.LoginRequest;
+import com.depromeet.threedollar.api.user.service.auth.dto.request.SignUpRequest;
+import com.depromeet.threedollar.api.user.service.user.UserService;
+import com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper;
+import com.depromeet.threedollar.common.exception.model.ConflictException;
+import com.depromeet.threedollar.common.exception.model.NotFoundException;
+import com.depromeet.threedollar.domain.rds.user.domain.user.User;
+import com.depromeet.threedollar.domain.rds.user.domain.user.UserCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
+import com.depromeet.threedollar.domain.rds.user.domain.user.WithdrawalUserRepository;
+import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient;
+import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse;
 
 @SpringBootTest
 class GoogleAuthServiceTest {
@@ -48,6 +53,15 @@ class GoogleAuthServiceTest {
     void cleanUp() {
         userRepository.deleteAll();
         withdrawalUserRepository.deleteAllInBatch();
+    }
+
+    private static class StubGoogleAuthApiClient implements GoogleAuthApiClient {
+
+        @Override
+        public GoogleProfileInfoResponse getProfileInfo(String accessToken) {
+            return GoogleProfileInfoResponse.testInstance(SOCIAL_ID);
+        }
+
     }
 
     @Nested
@@ -107,15 +121,6 @@ class GoogleAuthServiceTest {
 
             // when & then
             assertThatThrownBy(() -> authService.signUp(request)).isInstanceOf(ConflictException.class);
-        }
-
-    }
-
-    private static class StubGoogleAuthApiClient implements GoogleAuthApiClient {
-
-        @Override
-        public GoogleProfileInfoResponse getProfileInfo(String accessToken) {
-            return GoogleProfileInfoResponse.testInstance(SOCIAL_ID);
         }
 
     }

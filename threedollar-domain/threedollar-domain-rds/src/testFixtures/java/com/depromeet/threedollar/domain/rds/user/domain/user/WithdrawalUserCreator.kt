@@ -8,10 +8,10 @@ object WithdrawalUserCreator {
     @JvmOverloads
     @JvmStatic
     fun create(
-            socialId: String,
-            socialType: UserSocialType,
-            userId: Long,
-            name: String = "가삼",
+        socialId: String,
+        socialType: UserSocialType,
+        userId: Long,
+        name: String = "가삼",
     ): WithdrawalUser {
         return WithdrawalUser.builder()
             .userId(userId)

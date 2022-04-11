@@ -1,26 +1,32 @@
 package com.depromeet.threedollar.api.user.service.store.dto.response;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import lombok.*;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StoreInfoResponse extends AuditingTimeResponse {
 
+    private final List<MenuCategoryType> categories = new ArrayList<>();
     private Long storeId;
     private double latitude;
     private double longitude;
     private String storeName;
     private double rating;
     private Boolean isDeleted;
-    private final List<MenuCategoryType> categories = new ArrayList<>();
 
     @Builder(access = AccessLevel.PRIVATE)
     private StoreInfoResponse(Long storeId, double latitude, double longitude, String storeName, double rating, Boolean isDeleted) {

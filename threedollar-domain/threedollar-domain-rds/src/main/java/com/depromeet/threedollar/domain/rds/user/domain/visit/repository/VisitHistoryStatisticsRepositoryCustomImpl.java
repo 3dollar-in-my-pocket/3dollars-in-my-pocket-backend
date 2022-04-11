@@ -1,11 +1,12 @@
 package com.depromeet.threedollar.domain.rds.user.domain.visit.repository;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
+import static com.depromeet.threedollar.domain.rds.user.domain.visit.QVisitHistory.visitHistory;
 
 import java.time.LocalDate;
 
-import static com.depromeet.threedollar.domain.rds.user.domain.visit.QVisitHistory.visitHistory;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class VisitHistoryStatisticsRepositoryCustomImpl implements VisitHistoryStatisticsRepositoryCustom {

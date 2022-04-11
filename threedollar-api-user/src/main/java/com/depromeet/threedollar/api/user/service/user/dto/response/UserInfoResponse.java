@@ -1,10 +1,16 @@
 package com.depromeet.threedollar.api.user.service.user.dto.response;
 
+import org.jetbrains.annotations.Nullable;
+
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.domain.rds.user.domain.user.User;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
-import lombok.*;
-import org.jetbrains.annotations.Nullable;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @ToString
 @Getter

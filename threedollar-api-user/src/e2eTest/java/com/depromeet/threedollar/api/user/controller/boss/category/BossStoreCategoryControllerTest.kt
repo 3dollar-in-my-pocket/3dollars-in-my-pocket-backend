@@ -1,14 +1,14 @@
 package com.depromeet.threedollar.api.user.controller.boss.category
 
-import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreCategoryResponse
-import com.depromeet.threedollar.api.user.controller.SetupControllerTest
-import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import org.hamcrest.collection.IsCollectionWithSize.hasSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
+import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreCategoryResponse
+import com.depromeet.threedollar.api.user.controller.SetupControllerTest
+import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryCreator
+import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 
 internal class BossStoreCategoryControllerTest(
     private val bossStoreCategoryRepository: BossStoreCategoryRepository

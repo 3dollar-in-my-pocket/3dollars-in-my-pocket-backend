@@ -11,10 +11,10 @@ public enum ApplicationType {
     BATCH("배치 서버"),
     ;
 
+    private final String description;
+
     ApplicationType(String description) {
         this.description = description;
     }
-
-    private final String description;
 
 }

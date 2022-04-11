@@ -1,19 +1,36 @@
 package com.depromeet.threedollar.domain.rds.user.domain.store;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import com.depromeet.threedollar.common.type.DayOfTheWeek;
 import com.depromeet.threedollar.common.utils.MathUtils;
 import com.depromeet.threedollar.domain.rds.common.domain.AuditingTimeEntity;
-import com.depromeet.threedollar.common.type.DayOfTheWeek;
 import com.depromeet.threedollar.domain.rds.common.domain.Location;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import javax.persistence.*;
-import java.util.*;
-import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -27,36 +44,26 @@ import java.util.stream.Collectors;
 public class Store extends AuditingTimeEntity {
 
     private static final String DELETE_STORE_NAME = "삭제된 가게입니다";
-
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<PaymentMethod> paymentMethods = new ArrayList<>();
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<AppearanceDay> appearanceDays = new ArrayList<>();
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<Menu> menus = new ArrayList<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(nullable = false)
     private Long userId;
-
     @Embedded
     private Location location;
-
     @Column(nullable = false, length = 300)
     private String name;
-
     @Column(length = 30)
     @Enumerated(EnumType.STRING)
     private StoreType type;
-
     @Column(nullable = false)
     private double rating; // 평균 평가 점수
-
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<PaymentMethod> paymentMethods = new ArrayList<>();
-
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<AppearanceDay> appearanceDays = new ArrayList<>();
-
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<Menu> menus = new ArrayList<>();
-
     @Column(nullable = false, length = 30)
     @Enumerated(EnumType.STRING)
     private StoreStatus status;

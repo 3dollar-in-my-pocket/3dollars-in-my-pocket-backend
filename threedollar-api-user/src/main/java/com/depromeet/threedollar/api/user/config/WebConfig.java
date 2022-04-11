@@ -1,11 +1,7 @@
 package com.depromeet.threedollar.api.user.config;
 
-import com.depromeet.threedollar.api.core.config.resolver.GeoCoordinateArgumentResolver;
-import com.depromeet.threedollar.api.core.config.resolver.MapCoordinateArgumentResolver;
-import com.depromeet.threedollar.api.user.config.interceptor.AuthInterceptor;
-import com.depromeet.threedollar.api.user.config.interceptor.UserMetadataInterceptor;
-import com.depromeet.threedollar.api.user.config.resolver.UserIdResolver;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +12,13 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.List;
+import com.depromeet.threedollar.api.core.config.resolver.GeoCoordinateArgumentResolver;
+import com.depromeet.threedollar.api.core.config.resolver.MapCoordinateArgumentResolver;
+import com.depromeet.threedollar.api.user.config.interceptor.AuthInterceptor;
+import com.depromeet.threedollar.api.user.config.interceptor.UserMetadataInterceptor;
+import com.depromeet.threedollar.api.user.config.resolver.UserIdResolver;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Configuration

@@ -1,12 +1,18 @@
 package com.depromeet.threedollar.api.core.provider.upload.dto.request;
 
-import com.depromeet.threedollar.common.type.ApplicationType;
-import com.depromeet.threedollar.common.type.FileType;
-import lombok.*;
+import javax.validation.constraints.NotNull;
+
 import org.jetbrains.annotations.Nullable;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotNull;
+import com.depromeet.threedollar.common.type.ApplicationType;
+import com.depromeet.threedollar.common.type.FileType;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @ToString
 @Getter

@@ -1,14 +1,15 @@
 package com.depromeet.threedollar.domain.rds.user.domain.visit.repository;
 
-import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryCountProjection;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryWithUserProjection;
+import java.time.LocalDate;
+import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
+
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
-import org.jetbrains.annotations.Nullable;
-
-import java.time.LocalDate;
-import java.util.List;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryCountProjection;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryWithUserProjection;
 
 public interface VisitHistoryRepositoryCustom {
 
@@ -20,7 +21,7 @@ public interface VisitHistoryRepositoryCustom {
 
     List<VisitHistoryCountProjection> countGroupingByStoreId(List<Long> storeIds, LocalDate startDate);
 
-	long countByUserIdAndMenuCategoryType(Long userId, @Nullable MenuCategoryType menuCategoryType);
+    long countByUserIdAndMenuCategoryType(Long userId, @Nullable MenuCategoryType menuCategoryType);
 
     long countByUserIdAndVisitType(Long userId, VisitType visitType);
 

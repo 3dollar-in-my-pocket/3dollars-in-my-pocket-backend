@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.api.user.runner;
 
-import com.depromeet.threedollar.common.model.event.ApplicationStateChangedEvent;
-import com.depromeet.threedollar.common.type.ApplicationType;
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -12,8 +12,10 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import com.depromeet.threedollar.common.model.event.ApplicationStateChangedEvent;
+import com.depromeet.threedollar.common.type.ApplicationType;
+
+import lombok.RequiredArgsConstructor;
 
 @Profile({"dev", "prod"})
 @RequiredArgsConstructor

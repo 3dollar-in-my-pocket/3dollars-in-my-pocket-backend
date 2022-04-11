@@ -1,11 +1,12 @@
 package com.depromeet.threedollar.domain.rds.user.domain.store;
 
+import static com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType.MenuCategoryTypeStatus.ACTIVE;
+
 import com.depromeet.threedollar.common.model.EnumModel;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
-import static com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType.MenuCategoryTypeStatus.ACTIVE;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)

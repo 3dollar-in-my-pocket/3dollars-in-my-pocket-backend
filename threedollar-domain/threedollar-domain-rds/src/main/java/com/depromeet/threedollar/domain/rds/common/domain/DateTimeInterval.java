@@ -1,12 +1,18 @@
 package com.depromeet.threedollar.domain.rds.common.domain;
 
-import com.depromeet.threedollar.common.exception.model.InvalidException;
-import com.depromeet.threedollar.common.exception.type.ErrorCode;
-import lombok.*;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import java.time.LocalDateTime;
+
+import com.depromeet.threedollar.common.exception.model.InvalidException;
+import com.depromeet.threedollar.common.exception.type.ErrorCode;
+
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @EqualsAndHashCode
 @Getter

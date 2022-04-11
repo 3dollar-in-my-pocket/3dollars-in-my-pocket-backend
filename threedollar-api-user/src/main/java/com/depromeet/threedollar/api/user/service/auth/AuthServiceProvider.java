@@ -1,12 +1,15 @@
 package com.depromeet.threedollar.api.user.service.auth;
 
-import com.depromeet.threedollar.common.exception.model.InternalServerException;
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import java.util.EnumMap;
 
 import javax.annotation.PostConstruct;
-import java.util.EnumMap;
+
+import org.springframework.stereotype.Component;
+
+import com.depromeet.threedollar.common.exception.model.InternalServerException;
+import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Component

@@ -1,9 +1,10 @@
 package com.depromeet.threedollar.domain.rds.user.domain.review.repository;
 
-import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
+import java.util.List;
+
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
 
 public interface ReviewRepositoryCustom {
 

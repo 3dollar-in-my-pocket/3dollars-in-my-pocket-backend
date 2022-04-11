@@ -1,5 +1,21 @@
 package com.depromeet.threedollar.api.user.service.store;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import com.depromeet.threedollar.api.user.service.SetupUserServiceTest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.DeleteStoreRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.MenuRequest;
@@ -10,22 +26,24 @@ import com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHe
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
-import com.depromeet.threedollar.domain.rds.user.domain.store.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDay;
+import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDayRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
+import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethod;
+import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequest;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreStatus;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
 
 @SpringBootTest
 class StoreServiceTest extends SetupUserServiceTest {
@@ -56,6 +74,18 @@ class StoreServiceTest extends SetupUserServiceTest {
         menuRepository.deleteAllInBatch();
         storeDeleteRequestRepository.deleteAllInBatch();
         storeRepository.deleteAllInBatch();
+    }
+
+    private List<DayOfTheWeek> getDayOfTheWeeks(List<AppearanceDay> appearanceDays) {
+        return appearanceDays.stream()
+            .map(AppearanceDay::getDay)
+            .collect(Collectors.toList());
+    }
+
+    private List<PaymentMethodType> getPaymentMethodTypes(List<PaymentMethod> paymentMethods) {
+        return paymentMethods.stream()
+            .map(PaymentMethod::getMethod)
+            .collect(Collectors.toList());
     }
 
     @Nested
@@ -547,18 +577,6 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .isInstanceOf(ConflictException.class);
         }
 
-    }
-
-    private List<DayOfTheWeek> getDayOfTheWeeks(List<AppearanceDay> appearanceDays) {
-        return appearanceDays.stream()
-            .map(AppearanceDay::getDay)
-            .collect(Collectors.toList());
-    }
-
-    private List<PaymentMethodType> getPaymentMethodTypes(List<PaymentMethod> paymentMethods) {
-        return paymentMethods.stream()
-            .map(PaymentMethod::getMethod)
-            .collect(Collectors.toList());
     }
 
 }

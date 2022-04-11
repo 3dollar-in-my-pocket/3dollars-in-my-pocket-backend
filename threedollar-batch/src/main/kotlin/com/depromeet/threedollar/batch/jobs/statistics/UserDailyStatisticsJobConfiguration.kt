@@ -1,16 +1,6 @@
 package com.depromeet.threedollar.batch.jobs.statistics
 
-import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
-import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.*
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository
-import com.depromeet.threedollar.external.client.slack.SlackWebhookApiClient
-import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest
+import java.time.LocalDate
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
@@ -18,7 +8,29 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.repeat.RepeatStatus
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import java.time.LocalDate
+import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
+import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_ACTIVE_MEDAL
+import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_ACTIVE_MEDALS
+import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_DELETED_STORE
+import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_DELETE_STORE_REQUEST
+import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_MEDAL
+import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_MEDALS
+import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_MENU
+import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_MENUS
+import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_REVIEW
+import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_STORE
+import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_USER
+import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_VISIT_HISTORY
+import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.DAILY_STATISTICS_INFO
+import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
+import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository
+import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
+import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository
+import com.depromeet.threedollar.external.client.slack.SlackWebhookApiClient
+import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest
 
 /**
  * 유저 서비스 일일 통계 배치 잡
@@ -28,18 +40,18 @@ private const val DAILY_STATISTICS_JOB = "dailyStaticsJob"
 
 @Configuration
 class DailyStatisticsJobConfiguration(
-        private val jobBuilderFactory: JobBuilderFactory,
-        private val stepBuilderFactory: StepBuilderFactory,
+    private val jobBuilderFactory: JobBuilderFactory,
+    private val stepBuilderFactory: StepBuilderFactory,
 
-        private val userRepository: UserRepository,
-        private val menuRepository: MenuRepository,
-        private val storeRepository: StoreRepository,
-        private val reviewRepository: ReviewRepository,
-        private val visitHistoryRepository: VisitHistoryRepository,
-        private val medalRepository: MedalRepository,
-        private val storeDeleteRequestRepository: StoreDeleteRequestRepository,
+    private val userRepository: UserRepository,
+    private val menuRepository: MenuRepository,
+    private val storeRepository: StoreRepository,
+    private val reviewRepository: ReviewRepository,
+    private val visitHistoryRepository: VisitHistoryRepository,
+    private val medalRepository: MedalRepository,
+    private val storeDeleteRequestRepository: StoreDeleteRequestRepository,
 
-        private val slackNotificationApiClient: SlackWebhookApiClient
+    private val slackNotificationApiClient: SlackWebhookApiClient
 ) {
 
     @Bean

@@ -1,11 +1,11 @@
 package com.depromeet.threedollar.domain.mongo.common.domain
 
-import com.depromeet.threedollar.common.exception.model.InvalidException
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import com.depromeet.threedollar.common.exception.model.InvalidException
 
 internal class BusinessNumberTest {
 

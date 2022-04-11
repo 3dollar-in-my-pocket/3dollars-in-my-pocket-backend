@@ -1,11 +1,13 @@
 package com.depromeet.threedollar.external.config.feign;
 
-import com.depromeet.threedollar.common.exception.model.InternalServerException;
-import com.depromeet.threedollar.common.exception.model.InvalidException;
-import feign.Response;
-import feign.codec.ErrorDecoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.depromeet.threedollar.common.exception.model.InternalServerException;
+import com.depromeet.threedollar.common.exception.model.InvalidException;
+
+import feign.Response;
+import feign.codec.ErrorDecoder;
 
 @Configuration
 public class FeignDefaultConfig {

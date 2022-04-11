@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.domain.mongo.boss.domain.store
 
-import com.depromeet.threedollar.domain.mongo.TestFixture
 import org.springframework.data.geo.Point
+import com.depromeet.threedollar.domain.mongo.TestFixture
 
 @TestFixture
 object BossStoreLocationCreator {

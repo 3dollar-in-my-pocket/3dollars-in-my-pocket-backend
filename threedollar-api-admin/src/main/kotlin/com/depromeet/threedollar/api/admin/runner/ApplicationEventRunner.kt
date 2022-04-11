@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.admin.runner
 
-import com.depromeet.threedollar.common.model.event.ApplicationStateChangedEvent
-import com.depromeet.threedollar.common.type.ApplicationType
+import java.time.LocalDateTime
+import java.time.ZoneId
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.ApplicationEventPublisher
@@ -9,8 +9,8 @@ import org.springframework.context.ApplicationListener
 import org.springframework.context.annotation.Profile
 import org.springframework.context.event.ContextClosedEvent
 import org.springframework.stereotype.Component
-import java.time.LocalDateTime
-import java.time.ZoneId
+import com.depromeet.threedollar.common.model.event.ApplicationStateChangedEvent
+import com.depromeet.threedollar.common.type.ApplicationType
 
 @Profile("dev", "prod")
 @Component

@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.common.type;
 
+import java.time.Duration;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.Duration;
 
 @Getter
 public enum CacheType {
@@ -30,6 +30,21 @@ public enum CacheType {
         this.cacheRange = cacheRange;
     }
 
+    public boolean isLocalCache() {
+        return this.cacheRange == CacheRange.LOCAL;
+    }
+
+    public boolean isGlobalCache() {
+        return this.cacheRange == CacheRange.GLOBAL;
+    }
+
+    private enum CacheRange {
+
+        LOCAL,
+        GLOBAL,
+
+    }
+
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static class CacheKey {
 
@@ -43,21 +58,6 @@ public enum CacheType {
 
         public static final String BOSS_STORE_CATEGORIES = "boss:store:categories:v1";
 
-    }
-
-    private enum CacheRange {
-
-        LOCAL,
-        GLOBAL,
-
-    }
-
-    public boolean isLocalCache() {
-        return this.cacheRange == CacheRange.LOCAL;
-    }
-
-    public boolean isGlobalCache() {
-        return this.cacheRange == CacheRange.GLOBAL;
     }
 
 }

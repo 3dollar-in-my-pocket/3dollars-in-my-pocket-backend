@@ -5,18 +5,18 @@ import com.depromeet.threedollar.domain.rds.user.domain.user.User
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType
 
 data class UserWithActivityResponse(
-        val userId: Long,
-        val name: String,
-        val socialType: UserSocialType,
-        val medal: UserMedalResponse?,
-        val activity: ActivityResponse
+    val userId: Long,
+    val name: String,
+    val socialType: UserSocialType,
+    val medal: UserMedalResponse?,
+    val activity: ActivityResponse
 ) : AuditingTimeResponse() {
 
     companion object {
         fun of(
-                user: User,
-                storesCount: Long,
-                reviewsCount: Long
+            user: User,
+            storesCount: Long,
+            reviewsCount: Long
         ): UserWithActivityResponse {
             val response = UserWithActivityResponse(
                 userId = user.id,

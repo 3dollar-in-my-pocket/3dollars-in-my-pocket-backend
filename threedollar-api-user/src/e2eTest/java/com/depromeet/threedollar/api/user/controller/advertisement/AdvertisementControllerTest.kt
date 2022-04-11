@@ -1,15 +1,15 @@
 package com.depromeet.threedollar.api.user.controller.advertisement
 
+import java.time.LocalDateTime
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.user.controller.SetupControllerTest
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementCreator
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPositionType
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementRepository
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
-import org.springframework.test.web.servlet.get
-import java.time.LocalDateTime
 
 class AdvertisementControllerTest(
     private val advertisementRepository: AdvertisementRepository

@@ -1,5 +1,7 @@
 package com.depromeet.threedollar.api.core.service.boss.store.dto.response
 
+import java.time.LocalDateTime
+import org.springframework.data.geo.Point
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
 import com.depromeet.threedollar.common.model.CoordinateValue
 import com.depromeet.threedollar.common.type.DayOfTheWeek
@@ -10,8 +12,6 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppeara
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenu
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreOpenType
 import com.depromeet.threedollar.domain.mongo.common.domain.TimeInterval
-import org.springframework.data.geo.Point
-import java.time.LocalDateTime
 
 data class BossStoreInfoResponse(
     val bossStoreId: String,

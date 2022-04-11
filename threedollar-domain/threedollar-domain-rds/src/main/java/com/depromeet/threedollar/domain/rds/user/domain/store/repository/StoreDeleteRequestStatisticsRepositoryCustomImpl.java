@@ -1,11 +1,12 @@
 package com.depromeet.threedollar.domain.rds.user.domain.store.repository;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
+import static com.depromeet.threedollar.domain.rds.user.domain.store.QStoreDeleteRequest.storeDeleteRequest;
 
 import java.time.LocalDate;
 
-import static com.depromeet.threedollar.domain.rds.user.domain.store.QStoreDeleteRequest.storeDeleteRequest;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class StoreDeleteRequestStatisticsRepositoryCustomImpl implements StoreDeleteRequestStatisticsRepositoryCustom {

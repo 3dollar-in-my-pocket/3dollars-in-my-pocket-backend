@@ -1,5 +1,10 @@
 package com.depromeet.threedollar.api.user.testhelper.assertions;
 
+import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHelper.assertStoreInfoResponse;
+import static com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper.assertUserInfoResponse;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 import com.depromeet.threedollar.api.user.service.review.dto.response.ReviewDetailResponse;
 import com.depromeet.threedollar.api.user.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.user.service.review.dto.response.ReviewWithUserResponse;
@@ -8,13 +13,9 @@ import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewStatus;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.user.User;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
-import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHelper.assertStoreInfoResponse;
-import static com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper.assertUserInfoResponse;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 @TestHelper
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

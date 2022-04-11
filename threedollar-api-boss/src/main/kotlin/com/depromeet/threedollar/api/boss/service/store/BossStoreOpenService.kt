@@ -1,12 +1,12 @@
 package com.depromeet.threedollar.api.boss.service.store
 
+import java.time.LocalDateTime
+import org.springframework.stereotype.Service
 import com.depromeet.threedollar.common.model.CoordinateValue
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenTimeRepository
-import org.springframework.stereotype.Service
-import java.time.LocalDateTime
 
 @Service
 class BossStoreOpenService(

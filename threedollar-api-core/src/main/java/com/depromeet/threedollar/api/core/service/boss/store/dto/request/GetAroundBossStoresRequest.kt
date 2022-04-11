@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.core.service.boss.store.dto.request
 
-import com.depromeet.threedollar.api.core.service.boss.store.dto.type.BossStoreOrderType
 import javax.validation.constraints.Max
 import javax.validation.constraints.Positive
 import javax.validation.constraints.PositiveOrZero
+import com.depromeet.threedollar.api.core.service.boss.store.dto.type.BossStoreOrderType
 
 data class GetAroundBossStoresRequest(
     @field:PositiveOrZero(message = "{store.distance.positiveOrZero}")

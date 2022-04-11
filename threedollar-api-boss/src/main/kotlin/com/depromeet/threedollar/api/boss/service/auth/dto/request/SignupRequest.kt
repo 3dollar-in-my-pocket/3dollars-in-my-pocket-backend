@@ -1,12 +1,12 @@
 package com.depromeet.threedollar.api.boss.service.auth.dto.request
 
+import javax.validation.constraints.Size
+import org.hibernate.validator.constraints.URL
 import com.depromeet.threedollar.api.boss.config.validator.BossName
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationBossForm
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStoreForm
-import org.hibernate.validator.constraints.URL
-import javax.validation.constraints.Size
 
 data class SignupRequest(
     val token: String,

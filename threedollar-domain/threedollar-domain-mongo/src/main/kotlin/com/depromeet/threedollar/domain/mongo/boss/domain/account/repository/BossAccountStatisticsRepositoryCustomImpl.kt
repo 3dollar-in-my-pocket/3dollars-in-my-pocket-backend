@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.domain.mongo.boss.domain.account.repository
 
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount
+import java.time.LocalDate
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.gte
-import java.time.LocalDate
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount
 
 class BossAccountStatisticsRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate

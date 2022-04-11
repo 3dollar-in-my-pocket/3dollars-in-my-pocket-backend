@@ -1,12 +1,13 @@
 package com.depromeet.threedollar.domain.rds.common.domain;
 
-import com.depromeet.threedollar.common.exception.model.InvalidException;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import java.time.LocalDateTime;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import org.junit.jupiter.api.Test;
+
+import com.depromeet.threedollar.common.exception.model.InvalidException;
 
 class DateTimeIntervalTest {
 

@@ -1,5 +1,13 @@
 package com.depromeet.threedollar.api.admin.controller.user.faq
 
+import javax.validation.Valid
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.admin.config.interceptor.Auth
 import com.depromeet.threedollar.api.admin.service.user.faq.FaqAdminService
 import com.depromeet.threedollar.api.admin.service.user.faq.dto.request.AddFaqRequest
@@ -11,8 +19,6 @@ import com.depromeet.threedollar.api.core.service.user.faq.FaqService
 import com.depromeet.threedollar.api.core.service.user.faq.dto.request.RetrieveFaqsRequest
 import com.depromeet.threedollar.api.core.service.user.faq.dto.response.FaqResponse
 import io.swagger.annotations.ApiOperation
-import org.springframework.web.bind.annotation.*
-import javax.validation.Valid
 
 @RestController
 class AdminFaqController(

@@ -1,5 +1,8 @@
 package com.depromeet.threedollar.api.core.service.boss
 
+import org.junit.jupiter.api.BeforeEach
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
@@ -9,9 +12,6 @@ import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalRepositor
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserCreator
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType
-import org.junit.jupiter.api.BeforeEach
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 internal abstract class SetupBossAccountAndUserServiceTest {

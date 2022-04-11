@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.domain.mongo.common.domain
 
-import com.depromeet.threedollar.common.exception.model.InvalidException
+import java.time.LocalTime
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
-import java.time.LocalTime
+import com.depromeet.threedollar.common.exception.model.InvalidException
 
 internal class TimeIntervalTest {
 

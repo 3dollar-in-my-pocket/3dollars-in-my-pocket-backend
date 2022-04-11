@@ -1,5 +1,13 @@
 package com.depromeet.threedollar.api.boss.controller.store
 
+import java.time.LocalDateTime
+import java.time.LocalTime
+import org.hamcrest.Matchers.hasSize
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import org.springframework.http.HttpHeaders
+import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.boss.controller.SetupBossAccountControllerTest
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAppearanceDayResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreCategoryResponse
@@ -7,17 +15,15 @@ import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossSt
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.*
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppearanceDayCreator
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCreator
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationCreator
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenuCreator
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreOpenType
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
 import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
 import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenTimeRepository
-import org.hamcrest.Matchers.hasSize
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
-import org.springframework.http.HttpHeaders
-import org.springframework.test.web.servlet.get
-import java.time.LocalDateTime
-import java.time.LocalTime
 
 internal class BossStoreControllerTest(
     private val bossStoreRepository: BossStoreRepository,

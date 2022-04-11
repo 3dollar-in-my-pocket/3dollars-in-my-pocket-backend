@@ -1,9 +1,10 @@
 package com.depromeet.threedollar.api.user.service.store.dto.request;
 
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
 
 class MenuRequestTest {
 

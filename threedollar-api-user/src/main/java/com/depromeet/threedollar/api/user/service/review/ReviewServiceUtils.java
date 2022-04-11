@@ -1,13 +1,15 @@
 package com.depromeet.threedollar.api.user.service.review;
 
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOTFOUND_REVIEW;
+
+import org.jetbrains.annotations.NotNull;
+
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.NotNull;
-
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOTFOUND_REVIEW;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class ReviewServiceUtils {

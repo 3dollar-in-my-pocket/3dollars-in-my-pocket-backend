@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.domain.rds.user.domain.medal;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class MedalAcquisitionConditionTest {
 

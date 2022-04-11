@@ -1,12 +1,13 @@
 package com.depromeet.threedollar.domain.rds.common.domain;
 
-import com.depromeet.threedollar.common.exception.model.InvalidException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import com.depromeet.threedollar.common.exception.model.InvalidException;
 
 class LocationTest {
 

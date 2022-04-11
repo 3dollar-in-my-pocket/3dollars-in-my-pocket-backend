@@ -1,10 +1,5 @@
 package com.depromeet.threedollar.api.boss.config.filter
 
-import com.depromeet.threedollar.api.core.utils.HttpServletRequestUtils
-import com.depromeet.threedollar.common.utils.logger
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload
-import org.springframework.web.util.ContentCachingRequestWrapper
-import org.springframework.web.util.ContentCachingResponseWrapper
 import java.util.concurrent.TimeUnit
 import javax.servlet.Filter
 import javax.servlet.FilterChain
@@ -12,6 +7,11 @@ import javax.servlet.ServletRequest
 import javax.servlet.ServletResponse
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload
+import org.springframework.web.util.ContentCachingRequestWrapper
+import org.springframework.web.util.ContentCachingResponseWrapper
+import com.depromeet.threedollar.api.core.utils.HttpServletRequestUtils
+import com.depromeet.threedollar.common.utils.logger
 
 class RequestLoggingFilter : Filter {
 

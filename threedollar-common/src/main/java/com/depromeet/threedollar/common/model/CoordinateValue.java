@@ -1,6 +1,8 @@
 package com.depromeet.threedollar.common.model;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 @ToString
 @EqualsAndHashCode

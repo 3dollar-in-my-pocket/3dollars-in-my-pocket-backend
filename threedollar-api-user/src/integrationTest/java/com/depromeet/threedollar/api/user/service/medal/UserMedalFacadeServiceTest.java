@@ -1,14 +1,11 @@
 package com.depromeet.threedollar.api.user.service.medal;
 
-import com.depromeet.threedollar.api.user.service.SetupUserServiceTest;
-import com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.*;
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.store.*;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+import java.time.LocalDate;
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -16,11 +13,26 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import com.depromeet.threedollar.api.user.service.SetupUserServiceTest;
+import com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper;
+import com.depromeet.threedollar.domain.rds.user.domain.medal.Medal;
+import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionType;
+import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedal;
+import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalStatus;
+import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
 
 @SpringBootTest
 class UserMedalFacadeServiceTest extends SetupUserServiceTest {

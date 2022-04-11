@@ -1,21 +1,34 @@
 package com.depromeet.threedollar.domain.rds.user.domain.user;
 
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOTFOUND_USER_MEDAL;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.common.domain.AuditingTimeEntity;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.Medal;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedal;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOTFOUND_USER_MEDAL;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -30,18 +43,15 @@ import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOTFOUND
 )
 public class User extends AuditingTimeEntity {
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<UserMedal> userMedals = new ArrayList<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Embedded
     private SocialInfo socialInfo;
-
     @Column(length = 50, nullable = false)
     private String name;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<UserMedal> userMedals = new ArrayList<>();
 
     @Builder(access = AccessLevel.PACKAGE)
     private User(String socialId, UserSocialType socialType, String name) {

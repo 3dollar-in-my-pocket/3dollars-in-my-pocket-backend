@@ -1,10 +1,17 @@
 package com.depromeet.threedollar.api.user.config.swagger;
 
-import com.depromeet.threedollar.api.core.config.resolver.GeoCoordinate;
-import com.depromeet.threedollar.api.core.config.resolver.MapCoordinate;
+import java.lang.annotation.Annotation;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import com.depromeet.threedollar.api.core.config.resolver.GeoCoordinate;
+import com.depromeet.threedollar.api.core.config.resolver.MapCoordinate;
+
 import springfox.documentation.builders.RequestParameterBuilder;
 import springfox.documentation.service.ParameterType;
 import springfox.documentation.service.RequestParameter;
@@ -13,11 +20,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.OperationBuilderPlugin;
 import springfox.documentation.spi.service.contexts.OperationContext;
 import springfox.documentation.swagger.common.SwaggerPluginSupport;
-
-import java.lang.annotation.Annotation;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @Order(SwaggerPluginSupport.SWAGGER_PLUGIN_ORDER + 1001)

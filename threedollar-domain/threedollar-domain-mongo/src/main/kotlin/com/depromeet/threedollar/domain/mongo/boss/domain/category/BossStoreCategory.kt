@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.domain.mongo.boss.domain.category
 
-import com.depromeet.threedollar.domain.mongo.common.domain.BaseDocument
 import org.springframework.data.mongodb.core.mapping.Document
+import com.depromeet.threedollar.domain.mongo.common.domain.BaseDocument
 
 @Document("boss_store_category_v1")
 class BossStoreCategory(

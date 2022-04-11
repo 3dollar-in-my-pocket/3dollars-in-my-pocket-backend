@@ -1,30 +1,34 @@
 package com.depromeet.threedollar.api.user.controller.store;
 
-import com.depromeet.threedollar.api.user.controller.SetupStoreControllerTest;
-import com.depromeet.threedollar.api.user.service.store.dto.response.StoreImageResponse;
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository;
-import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
-
 import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreImageAssertionHelper.assertStoreImageResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
+import com.depromeet.threedollar.api.user.controller.SetupStoreControllerTest;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreImageResponse;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository;
+
 class StoreImageControllerTest extends SetupStoreControllerTest {
 
     private StoreImageMockApiCaller storeImageMockApiCaller;
+    @Autowired
+    private StoreImageRepository storeImageRepository;
 
     @BeforeEach
     void setUp() {
         storeImageMockApiCaller = new StoreImageMockApiCaller(mockMvc, objectMapper);
     }
-
-    @Autowired
-    private StoreImageRepository storeImageRepository;
 
     @AfterEach
     void cleanUp() {

@@ -1,13 +1,15 @@
 package com.depromeet.threedollar.api.user.service.store;
 
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOTFOUND_STORE_IMAGE;
+
+import org.jetbrains.annotations.NotNull;
+
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.NotNull;
-
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOTFOUND_STORE_IMAGE;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class StoreImageServiceUtils {

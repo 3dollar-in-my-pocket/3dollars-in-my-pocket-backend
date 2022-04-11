@@ -1,13 +1,15 @@
 package com.depromeet.threedollar.domain.rds.user.domain.admin.repository;
 
-import com.depromeet.threedollar.domain.rds.user.domain.admin.Admin;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.Nullable;
+import static com.depromeet.threedollar.domain.rds.user.domain.admin.QAdmin.admin;
 
 import java.util.List;
 
-import static com.depromeet.threedollar.domain.rds.user.domain.admin.QAdmin.admin;
+import org.jetbrains.annotations.Nullable;
+
+import com.depromeet.threedollar.domain.rds.user.domain.admin.Admin;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class AdminRepositoryCustomImpl implements AdminRepositoryCustom {

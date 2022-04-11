@@ -1,5 +1,8 @@
 package com.depromeet.threedollar.api.admin.service.user.faq
 
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.admin.service.user.faq.dto.request.AddFaqRequest
 import com.depromeet.threedollar.api.admin.service.user.faq.dto.request.UpdateFaqRequest
 import com.depromeet.threedollar.api.core.service.user.faq.dto.response.FaqResponse
@@ -8,9 +11,6 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.type.CacheType.CacheKey.FAQS
 import com.depromeet.threedollar.domain.rds.user.domain.faq.Faq
 import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqRepository
-import org.springframework.cache.annotation.CacheEvict
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 class FaqAdminService(

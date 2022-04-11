@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.domain.mongo.boss.domain.feedback.repository
 
-import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedback
 import java.time.LocalDate
+import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedback
 
 interface BossStoreFeedbackRepositoryCustom {
 

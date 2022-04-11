@@ -1,5 +1,12 @@
 package com.depromeet.threedollar.api.boss.service.auth
 
+import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.api.boss.service.auth.dto.request.SignupRequest
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.ForbiddenException
@@ -12,21 +19,14 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCate
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStatus
-import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class SignupServiceTest(
-        private val signupService: SignupService,
-        private val registrationRepository: RegistrationRepository,
-        private val bossAccountRepository: BossAccountRepository,
-        private val bossStoreCategoryRepository: BossStoreCategoryRepository
+    private val signupService: SignupService,
+    private val registrationRepository: RegistrationRepository,
+    private val bossAccountRepository: BossAccountRepository,
+    private val bossStoreCategoryRepository: BossStoreCategoryRepository
 ) {
 
     @AfterEach

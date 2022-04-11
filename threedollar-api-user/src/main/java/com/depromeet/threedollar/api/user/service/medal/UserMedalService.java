@@ -1,5 +1,14 @@
 package com.depromeet.threedollar.api.user.service.medal;
 
+import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_MEDALS;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.depromeet.threedollar.api.user.service.medal.dto.request.ChangeRepresentativeMedalRequest;
 import com.depromeet.threedollar.api.user.service.user.UserServiceUtils;
 import com.depromeet.threedollar.api.user.service.user.dto.response.UserInfoResponse;
@@ -7,15 +16,8 @@ import com.depromeet.threedollar.api.user.service.user.dto.response.UserMedalRes
 import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedal;
 import com.depromeet.threedollar.domain.rds.user.domain.user.User;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_MEDALS;
 
 @RequiredArgsConstructor
 @Service

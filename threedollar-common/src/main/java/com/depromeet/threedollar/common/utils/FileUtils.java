@@ -1,11 +1,13 @@
 package com.depromeet.threedollar.common.utils;
 
-import com.depromeet.threedollar.common.exception.model.InvalidException;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_UPLOAD_FILE_TYPE;
+
 import org.jetbrains.annotations.NotNull;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_UPLOAD_FILE_TYPE;
+import com.depromeet.threedollar.common.exception.model.InvalidException;
+
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FileUtils {

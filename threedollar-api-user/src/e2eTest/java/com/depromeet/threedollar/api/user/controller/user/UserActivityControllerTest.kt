@@ -1,5 +1,9 @@
 package com.depromeet.threedollar.api.user.controller.user
 
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Test
+import org.springframework.http.HttpHeaders
+import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.user.controller.SetupUserControllerTest
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator
 import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalCreator
@@ -7,14 +11,10 @@ import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Test
-import org.springframework.http.HttpHeaders
-import org.springframework.test.web.servlet.get
 
 internal class UserActivityControllerTest(
-        private val storeRepository: StoreRepository,
-        private val reviewRepository: ReviewRepository
+    private val storeRepository: StoreRepository,
+    private val reviewRepository: ReviewRepository
 ) : SetupUserControllerTest() {
 
     @AfterEach

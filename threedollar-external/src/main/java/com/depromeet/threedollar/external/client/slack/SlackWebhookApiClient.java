@@ -1,8 +1,9 @@
 package com.depromeet.threedollar.external.client.slack;
 
-import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest;
 
 @FeignClient(
     name = "slackWebhookApiClient",

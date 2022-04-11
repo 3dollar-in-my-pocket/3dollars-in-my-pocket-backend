@@ -1,13 +1,15 @@
 package com.depromeet.threedollar.api.boss.config.swagger
 
-import com.depromeet.threedollar.api.boss.config.resolver.BossId
-import com.depromeet.threedollar.common.model.CoordinateValue
+import java.util.stream.Collectors
+import java.util.stream.Stream
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.RestController
+import com.depromeet.threedollar.api.boss.config.resolver.BossId
+import com.depromeet.threedollar.common.model.CoordinateValue
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration
 import springfox.documentation.builders.ApiInfoBuilder
 import springfox.documentation.builders.PathSelectors
@@ -23,8 +25,6 @@ import springfox.documentation.swagger.web.DocExpansion
 import springfox.documentation.swagger.web.UiConfiguration
 import springfox.documentation.swagger.web.UiConfigurationBuilder
 import springfox.documentation.swagger2.annotations.EnableSwagger2
-import java.util.stream.Collectors
-import java.util.stream.Stream
 
 @Import(BeanValidatorPluginsConfiguration::class)
 @EnableSwagger2

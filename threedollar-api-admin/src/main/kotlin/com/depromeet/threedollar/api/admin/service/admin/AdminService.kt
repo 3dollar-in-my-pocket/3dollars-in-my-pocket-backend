@@ -1,13 +1,13 @@
 package com.depromeet.threedollar.api.admin.service.admin
 
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.admin.service.admin.dto.request.GetAdminListWithPagingRequest
 import com.depromeet.threedollar.api.admin.service.admin.dto.request.RegisterAdminRequest
 import com.depromeet.threedollar.api.admin.service.admin.dto.request.UpdateMyAdminInfoRequest
 import com.depromeet.threedollar.api.admin.service.admin.dto.response.AdminInfoResponse
 import com.depromeet.threedollar.api.admin.service.admin.dto.response.AdminListInfoWithPagingResponse
 import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminRepository
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 class AdminService(

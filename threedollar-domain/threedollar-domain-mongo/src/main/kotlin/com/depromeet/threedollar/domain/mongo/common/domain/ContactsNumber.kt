@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.domain.mongo.common.domain
 
+import java.util.regex.Pattern
 import com.depromeet.threedollar.common.exception.model.InvalidException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
-import java.util.regex.Pattern
 
 /**
  * 연락처 번호 (핸드폰 및 일반 전화 번호)

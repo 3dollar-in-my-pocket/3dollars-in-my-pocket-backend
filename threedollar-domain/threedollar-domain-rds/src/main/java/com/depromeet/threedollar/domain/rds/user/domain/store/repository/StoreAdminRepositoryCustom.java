@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.domain.rds.user.domain.store.repository;
 
-import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreWithReportedCountProjection;
-
 import java.util.List;
+
+import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreWithReportedCountProjection;
 
 public interface StoreAdminRepositoryCustom {
 

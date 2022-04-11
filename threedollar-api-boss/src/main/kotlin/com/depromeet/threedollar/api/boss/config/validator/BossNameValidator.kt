@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.boss.config.validator
 
-import org.springframework.stereotype.Component
 import java.util.regex.Pattern
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
+import org.springframework.stereotype.Component
 
 /**
  * 사장님 이름 규칙

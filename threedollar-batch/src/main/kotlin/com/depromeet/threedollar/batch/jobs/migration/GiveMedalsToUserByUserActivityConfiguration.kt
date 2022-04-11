@@ -1,16 +1,6 @@
 package com.depromeet.threedollar.batch.jobs.migration
 
-import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
-import com.depromeet.threedollar.domain.rds.user.collection.medal.MedalObtainCollection
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionType
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository
-import com.depromeet.threedollar.domain.rds.user.domain.user.User
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType
+import javax.persistence.EntityManagerFactory
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
@@ -21,7 +11,17 @@ import org.springframework.batch.item.database.JpaItemWriter
 import org.springframework.batch.item.database.builder.JpaCursorItemReaderBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import javax.persistence.EntityManagerFactory
+import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
+import com.depromeet.threedollar.domain.rds.user.collection.medal.MedalObtainCollection
+import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionType
+import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
+import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository
+import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
+import com.depromeet.threedollar.domain.rds.user.domain.user.User
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType
 
 /**
  * 마이그레이션을 위해 기존의 유저의 활동 이력을 통해 메달을 제공하는 배치
@@ -31,14 +31,14 @@ private const val CHUNK_SIZE = 4
 
 @Configuration
 class GiveMedalsToUserByUserActivity(
-        private val jobBuilderFactory: JobBuilderFactory,
-        private val stepBuilderFactory: StepBuilderFactory,
-        private val entityManagerFactory: EntityManagerFactory,
-        private val medalRepository: MedalRepository,
-        private val storeRepository: StoreRepository,
-        private val storeDeleteRequestRepository: StoreDeleteRequestRepository,
-        private val visitHistoryRepository: VisitHistoryRepository,
-        private val reviewRepository: ReviewRepository
+    private val jobBuilderFactory: JobBuilderFactory,
+    private val stepBuilderFactory: StepBuilderFactory,
+    private val entityManagerFactory: EntityManagerFactory,
+    private val medalRepository: MedalRepository,
+    private val storeRepository: StoreRepository,
+    private val storeDeleteRequestRepository: StoreDeleteRequestRepository,
+    private val visitHistoryRepository: VisitHistoryRepository,
+    private val reviewRepository: ReviewRepository
 ) {
 
     @Bean(name = [JOB_NAME])

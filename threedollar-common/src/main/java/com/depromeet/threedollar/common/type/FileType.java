@@ -1,19 +1,23 @@
 package com.depromeet.threedollar.common.type;
 
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_EMPTY_UPLOAD_FILE_NAME;
+import static com.depromeet.threedollar.common.type.ApplicationType.ADMIN_API;
+import static com.depromeet.threedollar.common.type.ApplicationType.BOSS_API;
+import static com.depromeet.threedollar.common.type.ApplicationType.USER_API;
+
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.depromeet.threedollar.common.exception.model.ForbiddenException;
 import com.depromeet.threedollar.common.exception.model.InvalidException;
 import com.depromeet.threedollar.common.exception.type.ErrorCode;
 import com.depromeet.threedollar.common.model.EnumModel;
 import com.depromeet.threedollar.common.utils.FileUtils;
 import com.depromeet.threedollar.common.utils.UuidUtils;
+
 import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
-
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_EMPTY_UPLOAD_FILE_NAME;
-import static com.depromeet.threedollar.common.type.ApplicationType.*;
 
 @Getter
 public enum FileType implements EnumModel {

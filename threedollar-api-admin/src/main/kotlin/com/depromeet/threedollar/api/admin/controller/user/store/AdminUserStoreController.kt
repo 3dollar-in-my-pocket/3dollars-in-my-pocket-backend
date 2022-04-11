@@ -1,5 +1,8 @@
 package com.depromeet.threedollar.api.admin.controller.user.store
 
+import javax.validation.Valid
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.admin.config.interceptor.Auth
 import com.depromeet.threedollar.api.admin.service.user.store.AdminUserStoreService
 import com.depromeet.threedollar.api.admin.service.user.store.dto.request.RetrieveLatestStoresRequest
@@ -8,9 +11,6 @@ import com.depromeet.threedollar.api.admin.service.user.store.dto.response.Repor
 import com.depromeet.threedollar.api.admin.service.user.store.dto.response.StoreInfosWithCursorResponse
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import io.swagger.annotations.ApiOperation
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RestController
-import javax.validation.Valid
 
 @RestController
 class AdminUserStoreController(

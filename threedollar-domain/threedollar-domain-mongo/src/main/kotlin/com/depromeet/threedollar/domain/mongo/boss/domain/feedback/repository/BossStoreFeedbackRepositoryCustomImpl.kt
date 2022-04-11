@@ -1,13 +1,13 @@
 package com.depromeet.threedollar.domain.mongo.boss.domain.feedback.repository
 
-import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedback
+import java.time.LocalDate
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.find
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.gte
 import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.data.mongodb.core.query.lt
-import java.time.LocalDate
+import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedback
 
 class BossStoreFeedbackRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate

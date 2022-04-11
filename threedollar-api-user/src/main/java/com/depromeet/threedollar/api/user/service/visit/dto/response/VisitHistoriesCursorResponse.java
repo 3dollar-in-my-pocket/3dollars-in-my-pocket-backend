@@ -1,15 +1,16 @@
 package com.depromeet.threedollar.api.user.service.visit.dto.response;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.depromeet.threedollar.domain.rds.common.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @ToString
 @Getter

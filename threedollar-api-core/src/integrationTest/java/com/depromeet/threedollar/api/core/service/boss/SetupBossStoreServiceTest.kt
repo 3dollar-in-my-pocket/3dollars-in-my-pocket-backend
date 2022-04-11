@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.core.service.boss
 
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCreator
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
 
 internal abstract class SetupBossStoreServiceTest : SetupBossAccountAndUserServiceTest() {
 

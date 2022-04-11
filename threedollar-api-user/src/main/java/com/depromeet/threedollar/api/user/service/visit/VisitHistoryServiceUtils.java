@@ -1,13 +1,14 @@
 package com.depromeet.threedollar.api.user.service.visit;
 
-import com.depromeet.threedollar.common.exception.model.ConflictException;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.CONFLICT_VISIT_HISTORY;
 
 import java.time.LocalDate;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.CONFLICT_VISIT_HISTORY;
+import com.depromeet.threedollar.common.exception.model.ConflictException;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
+
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class VisitHistoryServiceUtils {

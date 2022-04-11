@@ -1,10 +1,11 @@
 package com.depromeet.threedollar.domain.rds.user.domain.medal.repository;
 
-import com.depromeet.threedollar.domain.rds.user.domain.medal.Medal;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionType;
+import java.util.List;
+
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+import com.depromeet.threedollar.domain.rds.user.domain.medal.Medal;
+import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionType;
 
 public interface MedalRepositoryCustom {
 

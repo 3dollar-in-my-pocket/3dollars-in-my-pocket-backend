@@ -1,10 +1,15 @@
 package com.depromeet.threedollar.api.user.service.auth.dto.request;
 
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
-import lombok.*;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @ToString
 @Getter

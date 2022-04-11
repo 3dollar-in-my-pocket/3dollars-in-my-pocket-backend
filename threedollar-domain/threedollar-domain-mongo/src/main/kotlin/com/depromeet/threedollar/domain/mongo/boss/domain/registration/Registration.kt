@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.domain.mongo.boss.domain.registration
 
+import org.springframework.data.mongodb.core.mapping.Document
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
@@ -7,7 +8,6 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 import com.depromeet.threedollar.domain.mongo.common.domain.BaseDocument
 import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
 import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
-import org.springframework.data.mongodb.core.mapping.Document
 
 @Document("boss_registration_v1")
 class Registration(

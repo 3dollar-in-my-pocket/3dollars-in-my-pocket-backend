@@ -1,15 +1,17 @@
 package com.depromeet.threedollar.api.user.listener.medal;
 
+import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
+
 import com.depromeet.threedollar.api.user.service.medal.AddUserMedalFacadeService;
 import com.depromeet.threedollar.domain.rds.user.event.review.ReviewCreatedEvent;
 import com.depromeet.threedollar.domain.rds.user.event.store.StoreCreatedEvent;
 import com.depromeet.threedollar.domain.rds.user.event.store.StoreDeletedEvent;
 import com.depromeet.threedollar.domain.rds.user.event.user.NewUserCreatedEvent;
 import com.depromeet.threedollar.domain.rds.user.event.visit.VisitHistoryAddedEvent;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.event.EventListener;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component

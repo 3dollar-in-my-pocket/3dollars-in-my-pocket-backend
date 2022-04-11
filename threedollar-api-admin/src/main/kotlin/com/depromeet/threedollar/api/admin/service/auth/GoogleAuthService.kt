@@ -1,17 +1,17 @@
 package com.depromeet.threedollar.api.admin.service.auth
 
+import org.springframework.stereotype.Service
 import com.depromeet.threedollar.api.admin.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.utils.HttpHeaderUtils
 import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminRepository
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
-import org.springframework.stereotype.Service
 
 @Service
 class GoogleAuthService(
-        private val adminRepository: AdminRepository,
-        private val googleAuthApiClient: GoogleAuthApiClient
+    private val adminRepository: AdminRepository,
+    private val googleAuthApiClient: GoogleAuthApiClient
 ) : AuthService {
 
     override fun login(request: LoginRequest): Long {

@@ -1,12 +1,12 @@
 package com.depromeet.threedollar.domain.mongo.boss.domain.store.repository
 
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.findOne
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.inValues
 import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.data.mongodb.core.query.where
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 
 class BossStoreRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate

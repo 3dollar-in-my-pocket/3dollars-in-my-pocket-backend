@@ -1,16 +1,17 @@
 package com.depromeet.threedollar.api.user.controller.user;
 
-import com.depromeet.threedollar.api.user.controller.MockMvcUtils;
-import com.depromeet.threedollar.api.user.service.auth.dto.response.LoginResponse;
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 import java.nio.charset.StandardCharsets;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import org.springframework.test.web.servlet.MockMvc;
+
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
+import com.depromeet.threedollar.api.user.controller.MockMvcUtils;
+import com.depromeet.threedollar.api.user.service.auth.dto.response.LoginResponse;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class UserMockApiCaller extends MockMvcUtils {
 

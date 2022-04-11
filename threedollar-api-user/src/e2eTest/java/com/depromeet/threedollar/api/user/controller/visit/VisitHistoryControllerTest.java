@@ -1,25 +1,5 @@
 package com.depromeet.threedollar.api.user.controller.visit;
 
-import com.depromeet.threedollar.api.user.controller.SetupStoreControllerTest;
-import com.depromeet.threedollar.api.user.listener.medal.AddUserMedalEventListener;
-import com.depromeet.threedollar.api.user.service.visit.dto.request.AddVisitHistoryRequest;
-import com.depromeet.threedollar.api.user.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
-import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoriesCursorResponse;
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
-import com.depromeet.threedollar.domain.rds.user.event.visit.VisitHistoryAddedEvent;
-import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-
-import java.time.LocalDate;
-import java.util.List;
-
 import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHelper.assertStoreInfoResponse;
 import static com.depromeet.threedollar.api.user.testhelper.assertions.VisitHistoryAssertionHelper.assertVisitHistoryWithStoreResponse;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,20 +8,43 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
+import com.depromeet.threedollar.api.user.controller.SetupStoreControllerTest;
+import com.depromeet.threedollar.api.user.listener.medal.AddUserMedalEventListener;
+import com.depromeet.threedollar.api.user.service.visit.dto.request.AddVisitHistoryRequest;
+import com.depromeet.threedollar.api.user.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
+import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoriesCursorResponse;
+import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
+import com.depromeet.threedollar.domain.rds.user.event.visit.VisitHistoryAddedEvent;
+
 class VisitHistoryControllerTest extends SetupStoreControllerTest {
 
     private VisitHistoryApiCaller visitHistoryApiCaller;
+    @Autowired
+    private VisitHistoryRepository visitHistoryRepository;
+    @MockBean
+    private AddUserMedalEventListener addUserMedalEventListener;
 
     @BeforeEach
     void setUp() {
         visitHistoryApiCaller = new VisitHistoryApiCaller(mockMvc, objectMapper);
     }
-
-    @Autowired
-    private VisitHistoryRepository visitHistoryRepository;
-
-    @MockBean
-    private AddUserMedalEventListener addUserMedalEventListener;
 
     @AfterEach
     void cleanUp() {

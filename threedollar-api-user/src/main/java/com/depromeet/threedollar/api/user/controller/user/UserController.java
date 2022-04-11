@@ -1,21 +1,23 @@
 package com.depromeet.threedollar.api.user.controller.user;
 
+import javax.validation.Valid;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.user.config.interceptor.Auth;
 import com.depromeet.threedollar.api.user.config.resolver.UserId;
 import com.depromeet.threedollar.api.user.service.user.UserService;
 import com.depromeet.threedollar.api.user.service.user.dto.request.CheckAvailableNameRequest;
 import com.depromeet.threedollar.api.user.service.user.dto.request.UpdateUserInfoRequest;
 import com.depromeet.threedollar.api.user.service.user.dto.response.UserInfoResponse;
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
+
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 
 @Slf4j
 @RequiredArgsConstructor

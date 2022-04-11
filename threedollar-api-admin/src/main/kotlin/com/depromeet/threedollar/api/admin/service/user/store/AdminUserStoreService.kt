@@ -1,13 +1,13 @@
 package com.depromeet.threedollar.api.admin.service.user.store
 
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.admin.service.user.store.dto.request.RetrieveLatestStoresRequest
 import com.depromeet.threedollar.api.admin.service.user.store.dto.request.RetrieveReportedStoresRequest
 import com.depromeet.threedollar.api.admin.service.user.store.dto.response.ReportedStoreInfoResponse
 import com.depromeet.threedollar.api.admin.service.user.store.dto.response.StoreInfosWithCursorResponse
 import com.depromeet.threedollar.domain.rds.common.support.CursorPagingSupporter
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 class AdminUserStoreService(

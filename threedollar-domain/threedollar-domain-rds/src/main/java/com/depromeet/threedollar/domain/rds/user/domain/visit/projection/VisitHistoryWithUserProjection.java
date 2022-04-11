@@ -1,14 +1,16 @@
 package com.depromeet.threedollar.domain.rds.user.domain.visit.projection;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import org.jetbrains.annotations.Nullable;
+
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
 import com.querydsl.core.annotations.QueryProjection;
+
 import lombok.Getter;
 import lombok.ToString;
-import org.jetbrains.annotations.Nullable;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @ToString
 @Getter

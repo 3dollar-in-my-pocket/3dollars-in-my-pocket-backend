@@ -1,18 +1,18 @@
 package com.depromeet.threedollar.api.user.controller.medal
 
+import org.hamcrest.collection.IsCollectionWithSize.hasSize
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Test
+import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.core.service.user.medal.dto.response.MedalResponse
 import com.depromeet.threedollar.api.user.controller.SetupControllerTest
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionRepository
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
-import org.hamcrest.collection.IsCollectionWithSize.hasSize
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Test
-import org.springframework.test.web.servlet.get
 
 class MedalControllerTest(
-        private val medalRepository: MedalRepository,
-        private val medalAcquisitionConditionRepository: MedalAcquisitionConditionRepository
+    private val medalRepository: MedalRepository,
+    private val medalAcquisitionConditionRepository: MedalAcquisitionConditionRepository
 ) : SetupControllerTest() {
 
     @AfterEach

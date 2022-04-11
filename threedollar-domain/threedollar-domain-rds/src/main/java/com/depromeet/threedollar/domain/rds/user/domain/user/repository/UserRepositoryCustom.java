@@ -1,10 +1,11 @@
 package com.depromeet.threedollar.domain.rds.user.domain.user.repository;
 
-import com.depromeet.threedollar.domain.rds.user.domain.user.User;
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
+import java.util.List;
+
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+import com.depromeet.threedollar.domain.rds.user.domain.user.User;
+import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
 
 public interface UserRepositoryCustom {
 
@@ -18,6 +19,6 @@ public interface UserRepositoryCustom {
     @Nullable
     User findUserById(Long userId);
 
-	List<User> findAllByUserId(List<Long> userIds);
+    List<User> findAllByUserId(List<Long> userIds);
 
 }

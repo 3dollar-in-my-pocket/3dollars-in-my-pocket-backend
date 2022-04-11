@@ -1,13 +1,11 @@
 package com.depromeet.threedollar.api.user.service.auth;
 
-import com.depromeet.threedollar.api.user.service.auth.dto.request.LoginRequest;
-import com.depromeet.threedollar.api.user.service.auth.dto.request.SignUpRequest;
-import com.depromeet.threedollar.api.user.service.user.UserService;
-import com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper;
-import com.depromeet.threedollar.common.exception.model.ConflictException;
-import com.depromeet.threedollar.common.exception.model.NotFoundException;
-import com.depromeet.threedollar.domain.rds.user.domain.user.*;
-import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+import java.util.List;
+
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,11 +14,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import com.depromeet.threedollar.api.user.service.auth.dto.request.LoginRequest;
+import com.depromeet.threedollar.api.user.service.auth.dto.request.SignUpRequest;
+import com.depromeet.threedollar.api.user.service.user.UserService;
+import com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper;
+import com.depromeet.threedollar.common.exception.model.ConflictException;
+import com.depromeet.threedollar.common.exception.model.NotFoundException;
+import com.depromeet.threedollar.domain.rds.user.domain.user.User;
+import com.depromeet.threedollar.domain.rds.user.domain.user.UserCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
+import com.depromeet.threedollar.domain.rds.user.domain.user.WithdrawalUserRepository;
+import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder;
 
 @SpringBootTest
 class AppleAuthServiceTest {
@@ -48,6 +53,15 @@ class AppleAuthServiceTest {
     void cleanUp() {
         userRepository.deleteAll();
         withdrawalUserRepository.deleteAllInBatch();
+    }
+
+    private static class StubAppleTokenDecoder implements AppleTokenDecoder {
+
+        @Override
+        public String getSocialIdFromIdToken(@NotNull String idToken) {
+            return SOCIAL_ID;
+        }
+
     }
 
     @Nested
@@ -106,15 +120,6 @@ class AppleAuthServiceTest {
 
             // when & then
             assertThatThrownBy(() -> authService.signUp(request)).isInstanceOf(ConflictException.class);
-        }
-
-    }
-
-    private static class StubAppleTokenDecoder implements AppleTokenDecoder {
-
-        @Override
-        public String getSocialIdFromIdToken(@NotNull String idToken) {
-            return SOCIAL_ID;
         }
 
     }

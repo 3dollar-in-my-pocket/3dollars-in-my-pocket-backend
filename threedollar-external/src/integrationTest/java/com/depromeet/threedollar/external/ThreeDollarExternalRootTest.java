@@ -10,7 +10,7 @@ public class ThreeDollarExternalRootTest extends ThreeDollarExternalRoot {
 
     @Test
     void contextsLoad() {
-        
+
     }
 
 }

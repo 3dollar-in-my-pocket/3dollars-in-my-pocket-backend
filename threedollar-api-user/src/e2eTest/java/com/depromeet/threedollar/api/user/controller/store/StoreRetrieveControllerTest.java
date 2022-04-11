@@ -1,5 +1,29 @@
 package com.depromeet.threedollar.api.user.controller.store;
 
+import static com.depromeet.threedollar.api.user.testhelper.assertions.ReviewAssertionHelper.assertReviewWithWriterResponse;
+import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHelper.assertMenuResponse;
+import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHelper.assertStoreDetailInfoResponse;
+import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHelper.assertStoreWithVisitsAndDistanceResponse;
+import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHelper.assertStoreWithVisitsResponse;
+import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreImageAssertionHelper.assertStoreImageResponse;
+import static com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper.assertUserInfoResponse;
+import static com.depromeet.threedollar.api.user.testhelper.assertions.VisitHistoryAssertionHelper.assertVisitHistoryInfoResponse;
+import static com.depromeet.threedollar.api.user.testhelper.assertions.VisitHistoryAssertionHelper.assertVisitHistoryWithUserResponse;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.user.controller.SetupUserControllerTest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.CheckExistsStoresNearbyRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveMyStoresRequest;
@@ -9,11 +33,12 @@ import com.depromeet.threedollar.api.user.service.store.dto.response.CheckExistS
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDetailResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoresCursorResponse;
-import com.depromeet.threedollar.common.model.CoordinateValue;
 import com.depromeet.threedollar.api.user.service.store.dto.type.UserStoreOrderType;
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
+import com.depromeet.threedollar.common.model.CoordinateValue;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
 import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
+import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDayRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
@@ -23,60 +48,36 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodRepos
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
-import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Set;
-
-import static com.depromeet.threedollar.api.user.testhelper.assertions.ReviewAssertionHelper.assertReviewWithWriterResponse;
-import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreImageAssertionHelper.assertStoreImageResponse;
-import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHelper.*;
-import static com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper.assertUserInfoResponse;
-import static com.depromeet.threedollar.api.user.testhelper.assertions.VisitHistoryAssertionHelper.assertVisitHistoryInfoResponse;
-import static com.depromeet.threedollar.api.user.testhelper.assertions.VisitHistoryAssertionHelper.assertVisitHistoryWithUserResponse;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
     private StoreRetrieveMockApiCaller storeRetrieveMockApiCaller;
+    @Autowired
+    private StoreRepository storeRepository;
+    @Autowired
+    private AppearanceDayRepository appearanceDayRepository;
+    @Autowired
+    private PaymentMethodRepository paymentMethodRepository;
+    @Autowired
+    private MenuRepository menuRepository;
+    @Autowired
+    private ReviewRepository reviewRepository;
+    @Autowired
+    private VisitHistoryRepository visitHistoryRepository;
+    @Autowired
+    private StoreImageRepository storeImageRepository;
 
     @BeforeEach
     void setUp() {
         storeRetrieveMockApiCaller = new StoreRetrieveMockApiCaller(mockMvc, objectMapper);
     }
-
-    @Autowired
-    private StoreRepository storeRepository;
-
-    @Autowired
-    private AppearanceDayRepository appearanceDayRepository;
-
-    @Autowired
-    private PaymentMethodRepository paymentMethodRepository;
-
-    @Autowired
-    private MenuRepository menuRepository;
-
-    @Autowired
-    private ReviewRepository reviewRepository;
-
-    @Autowired
-    private VisitHistoryRepository visitHistoryRepository;
-
-    @Autowired
-    private StoreImageRepository storeImageRepository;
 
     @AfterEach
     void cleanUp() {

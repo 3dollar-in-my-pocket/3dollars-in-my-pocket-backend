@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.admin.service.user.medal.dto.request
 
-import org.hibernate.validator.constraints.URL
 import javax.validation.constraints.Size
+import org.hibernate.validator.constraints.URL
 
 data class UpdateMedalRequest(
     @field:Size(max = 30, message = "{medal.name.size}")

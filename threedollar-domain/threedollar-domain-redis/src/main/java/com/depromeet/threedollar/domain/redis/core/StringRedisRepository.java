@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.domain.redis.core;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.time.Duration;
 import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
 
 public interface StringRedisRepository<K, V> {
 

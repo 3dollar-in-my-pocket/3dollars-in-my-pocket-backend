@@ -1,5 +1,8 @@
 package com.depromeet.threedollar.api.user.controller;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.depromeet.threedollar.api.user.controller.user.UserMockApiCaller;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository;
@@ -8,29 +11,21 @@ import com.depromeet.threedollar.domain.rds.user.domain.user.User;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
 import com.depromeet.threedollar.domain.rds.user.domain.user.WithdrawalUserRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class SetupUserControllerTest extends SetupControllerTest {
 
     @Autowired
     protected UserRepository userRepository;
-
-    @Autowired
-    private WithdrawalUserRepository withdrawalUserRepository;
-
     @Autowired
     protected UserMedalRepository userMedalRepository;
-
     @Autowired
     protected MedalRepository medalRepository;
-
     @Autowired
     protected MedalAcquisitionConditionRepository medalAcquisitionConditionRepository;
-
     protected User user;
-
     protected String token;
+    @Autowired
+    private WithdrawalUserRepository withdrawalUserRepository;
 
     @BeforeEach
     void setupUser() throws Exception {

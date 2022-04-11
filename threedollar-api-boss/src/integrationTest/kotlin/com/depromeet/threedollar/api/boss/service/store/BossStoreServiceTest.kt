@@ -1,5 +1,14 @@
 package com.depromeet.threedollar.api.boss.service.store
 
+import java.time.LocalTime
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.api.boss.service.SetupBossAccountServiceTest
 import com.depromeet.threedollar.api.boss.service.store.dto.request.AppearanceDayRequest
 import com.depromeet.threedollar.api.boss.service.store.dto.request.MenuRequest
@@ -9,25 +18,20 @@ import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.*
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossDeletedStoreRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppearanceDayCreator
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCreator
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenuCreator
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
 import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
-import java.time.LocalTime
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class BossStoreSetupBossAccountServiceTest(
-        private val bossStoreService: BossStoreService,
-        private val bossStoreRepository: BossStoreRepository,
-        private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-        private val bossDeletedStoreRepository: BossDeletedStoreRepository
+    private val bossStoreService: BossStoreService,
+    private val bossStoreRepository: BossStoreRepository,
+    private val bossStoreCategoryRepository: BossStoreCategoryRepository,
+    private val bossDeletedStoreRepository: BossDeletedStoreRepository
 ) : SetupBossAccountServiceTest() {
 
     @AfterEach

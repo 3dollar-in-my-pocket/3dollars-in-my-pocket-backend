@@ -1,14 +1,13 @@
 package com.depromeet.threedollar.api.user.service.store;
 
-import com.depromeet.threedollar.api.core.provider.upload.UploadProvider;
-import com.depromeet.threedollar.api.user.testhelper.assertions.StoreImageAssertionHelper;
-import com.depromeet.threedollar.api.user.service.SetupStoreServiceTest;
-import com.depromeet.threedollar.api.user.service.store.dto.request.AddStoreImageRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.response.StoreImageResponse;
-import com.depromeet.threedollar.common.exception.model.NotFoundException;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageStatus;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -17,13 +16,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import com.depromeet.threedollar.api.core.provider.upload.UploadProvider;
+import com.depromeet.threedollar.api.user.service.SetupStoreServiceTest;
+import com.depromeet.threedollar.api.user.service.store.dto.request.AddStoreImageRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreImageResponse;
+import com.depromeet.threedollar.api.user.testhelper.assertions.StoreImageAssertionHelper;
+import com.depromeet.threedollar.common.exception.model.NotFoundException;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageStatus;
 
 @SpringBootTest
 class StoreImageServiceTest extends SetupStoreServiceTest {

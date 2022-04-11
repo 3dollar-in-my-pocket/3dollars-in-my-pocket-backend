@@ -1,9 +1,18 @@
 package com.depromeet.threedollar.api.user.service.review.dto.request;
 
-import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
-import lombok.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-import javax.validation.constraints.*;
+import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @ToString
 @Getter

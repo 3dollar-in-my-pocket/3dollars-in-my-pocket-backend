@@ -1,12 +1,14 @@
 package com.depromeet.threedollar.external.client.slack;
 
+import org.springframework.context.annotation.Bean;
+
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
+
 import feign.FeignException;
 import feign.Response;
 import feign.RetryableException;
 import feign.Retryer;
 import feign.codec.ErrorDecoder;
-import org.springframework.context.annotation.Bean;
 
 public class SlackFeignConfig {
 

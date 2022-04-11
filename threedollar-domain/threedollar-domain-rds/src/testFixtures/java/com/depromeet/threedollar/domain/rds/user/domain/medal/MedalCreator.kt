@@ -8,9 +8,9 @@ object MedalCreator {
     @JvmOverloads
     @JvmStatic
     fun create(
-            name: String,
-            conditionType: MedalAcquisitionConditionType = MedalAcquisitionConditionType.ADD_STORE,
-            conditionCount: Int = 3
+        name: String,
+        conditionType: MedalAcquisitionConditionType = MedalAcquisitionConditionType.ADD_STORE,
+        conditionCount: Int = 3
     ): Medal {
         return Medal.builder()
             .name(name)
@@ -25,12 +25,12 @@ object MedalCreator {
     @JvmOverloads
     @JvmStatic
     fun create(
-            name: String,
-            introduction: String,
-            activationIconUrl: String,
-            disableIconUrl: String,
-            conditionType: MedalAcquisitionConditionType = MedalAcquisitionConditionType.ADD_STORE,
-            conditionCount: Int = 3
+        name: String,
+        introduction: String,
+        activationIconUrl: String,
+        disableIconUrl: String,
+        conditionType: MedalAcquisitionConditionType = MedalAcquisitionConditionType.ADD_STORE,
+        conditionCount: Int = 3
     ): Medal {
         return Medal.builder()
             .name(name)

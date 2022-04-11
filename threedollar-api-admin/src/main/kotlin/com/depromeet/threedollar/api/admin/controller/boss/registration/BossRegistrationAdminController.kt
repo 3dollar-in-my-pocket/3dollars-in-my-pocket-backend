@@ -1,16 +1,16 @@
 package com.depromeet.threedollar.api.admin.controller.boss.registration
 
+import javax.validation.Valid
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.admin.config.interceptor.Auth
 import com.depromeet.threedollar.api.admin.service.boss.registration.BossAccountRegistrationAdminService
 import com.depromeet.threedollar.api.admin.service.boss.registration.dto.request.GetBossRegistrationsRequest
 import com.depromeet.threedollar.api.admin.service.boss.registration.dto.response.BossAccountRegistrationResponse
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import io.swagger.annotations.ApiOperation
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RestController
-import javax.validation.Valid
 
 @RestController
 class BossRegistrationAdminController(

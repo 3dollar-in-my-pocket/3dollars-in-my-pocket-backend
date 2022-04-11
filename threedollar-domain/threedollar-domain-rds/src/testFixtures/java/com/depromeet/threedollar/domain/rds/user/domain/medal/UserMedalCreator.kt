@@ -8,8 +8,8 @@ object UserMedalCreator {
 
     @JvmStatic
     fun createActive(
-            medal: Medal,
-            user: User
+        medal: Medal,
+        user: User
     ): UserMedal {
         return UserMedal.builder()
             .medal(medal)
@@ -20,8 +20,8 @@ object UserMedalCreator {
 
     @JvmStatic
     fun createInActive(
-            medal: Medal,
-            user: User
+        medal: Medal,
+        user: User
     ): UserMedal {
         return UserMedal.builder()
             .medal(medal)

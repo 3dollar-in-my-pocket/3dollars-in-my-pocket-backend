@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.common.utils;
 
 import com.depromeet.threedollar.common.model.UserMetaValue;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

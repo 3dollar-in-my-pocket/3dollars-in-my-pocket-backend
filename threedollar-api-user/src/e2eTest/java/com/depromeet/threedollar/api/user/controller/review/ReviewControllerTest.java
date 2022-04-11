@@ -1,27 +1,5 @@
 package com.depromeet.threedollar.api.user.controller.review;
 
-import com.depromeet.threedollar.api.user.controller.SetupStoreControllerTest;
-import com.depromeet.threedollar.api.user.listener.medal.AddUserMedalEventListener;
-import com.depromeet.threedollar.api.user.listener.store.StoreRatingEventListener;
-import com.depromeet.threedollar.api.user.service.review.dto.request.AddReviewRequest;
-import com.depromeet.threedollar.api.user.service.review.dto.request.RetrieveMyReviewsRequest;
-import com.depromeet.threedollar.api.user.service.review.dto.request.UpdateReviewRequest;
-import com.depromeet.threedollar.api.user.service.review.dto.response.ReviewInfoResponse;
-import com.depromeet.threedollar.api.user.service.review.dto.response.ReviewsCursorResponse;
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
-import com.depromeet.threedollar.domain.rds.user.event.review.ReviewChangedEvent;
-import com.depromeet.threedollar.domain.rds.user.event.review.ReviewCreatedEvent;
-import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-
-import java.util.List;
-
 import static com.depromeet.threedollar.api.user.testhelper.assertions.ReviewAssertionHelper.assertReviewDetailInfoResponse;
 import static com.depromeet.threedollar.api.user.testhelper.assertions.ReviewAssertionHelper.assertReviewInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,23 +8,47 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
+import com.depromeet.threedollar.api.user.controller.SetupStoreControllerTest;
+import com.depromeet.threedollar.api.user.listener.medal.AddUserMedalEventListener;
+import com.depromeet.threedollar.api.user.listener.store.StoreRatingEventListener;
+import com.depromeet.threedollar.api.user.service.review.dto.request.AddReviewRequest;
+import com.depromeet.threedollar.api.user.service.review.dto.request.RetrieveMyReviewsRequest;
+import com.depromeet.threedollar.api.user.service.review.dto.request.UpdateReviewRequest;
+import com.depromeet.threedollar.api.user.service.review.dto.response.ReviewInfoResponse;
+import com.depromeet.threedollar.api.user.service.review.dto.response.ReviewsCursorResponse;
+import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
+import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
+import com.depromeet.threedollar.domain.rds.user.event.review.ReviewChangedEvent;
+import com.depromeet.threedollar.domain.rds.user.event.review.ReviewCreatedEvent;
+
 class ReviewControllerTest extends SetupStoreControllerTest {
 
     private ReviewMockApiCaller reviewMockApiCaller;
+    @Autowired
+    private ReviewRepository reviewRepository;
+    @MockBean
+    private AddUserMedalEventListener addUserMedalEventListener;
+    @MockBean
+    private StoreRatingEventListener storeRatingEventListener;
 
     @BeforeEach
     void setUp() {
         reviewMockApiCaller = new ReviewMockApiCaller(mockMvc, objectMapper);
     }
-
-    @Autowired
-    private ReviewRepository reviewRepository;
-
-    @MockBean
-    private AddUserMedalEventListener addUserMedalEventListener;
-
-    @MockBean
-    private StoreRatingEventListener storeRatingEventListener;
 
     @AfterEach
     void cleanUp() {

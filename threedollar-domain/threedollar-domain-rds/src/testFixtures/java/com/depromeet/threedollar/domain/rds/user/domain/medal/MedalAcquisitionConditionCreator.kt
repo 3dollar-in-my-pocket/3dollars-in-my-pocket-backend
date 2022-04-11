@@ -7,10 +7,10 @@ object MedalAcquisitionConditionCreator {
 
     @JvmStatic
     fun create(
-            medal: Medal,
-            conditionType: MedalAcquisitionConditionType,
-            count: Int,
-            description: String
+        medal: Medal,
+        conditionType: MedalAcquisitionConditionType,
+        count: Int,
+        description: String
     ): MedalAcquisitionCondition {
         return MedalAcquisitionCondition.builder()
             .medal(medal)

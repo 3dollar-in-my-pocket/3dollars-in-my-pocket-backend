@@ -1,9 +1,10 @@
 package com.depromeet.threedollar.domain.rds.user.domain.admin.repository;
 
-import com.depromeet.threedollar.domain.rds.user.domain.admin.Admin;
+import java.util.List;
+
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+import com.depromeet.threedollar.domain.rds.user.domain.admin.Admin;
 
 public interface AdminRepositoryCustom {
 

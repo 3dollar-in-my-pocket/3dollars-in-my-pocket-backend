@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.domain.mongo.boss.domain.feedback
 
+import java.time.LocalDate
+import org.springframework.data.mongodb.core.mapping.Document
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.mongo.common.domain.BaseDocument
-import org.springframework.data.mongodb.core.mapping.Document
-import java.time.LocalDate
 
 @Document("boss_store_feedback_v1")
 class BossStoreFeedback(

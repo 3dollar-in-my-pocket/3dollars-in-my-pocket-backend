@@ -1,14 +1,16 @@
 package com.depromeet.threedollar.common.type;
 
-import com.depromeet.threedollar.common.exception.model.ForbiddenException;
-import com.depromeet.threedollar.common.exception.model.InvalidException;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import com.depromeet.threedollar.common.exception.model.ForbiddenException;
+import com.depromeet.threedollar.common.exception.model.InvalidException;
 
 class FileTypeTest {
 

@@ -1,14 +1,16 @@
 package com.depromeet.threedollar.common.utils;
 
-import com.depromeet.threedollar.common.exception.model.InternalServerException;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import com.depromeet.threedollar.common.exception.model.InternalServerException;
+
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ClientIpUtils {

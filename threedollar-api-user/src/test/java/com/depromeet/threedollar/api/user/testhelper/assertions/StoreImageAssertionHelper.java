@@ -1,14 +1,15 @@
 package com.depromeet.threedollar.api.user.testhelper.assertions;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.domain.rds.user.domain.TestHelper;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageStatus;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 @TestHelper
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

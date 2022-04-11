@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.domain.redis.boss.domain.store
 
-import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
-import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
+import org.springframework.stereotype.Repository
+import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
 
 @Repository
 class BossStoreOpenTimeRepository(

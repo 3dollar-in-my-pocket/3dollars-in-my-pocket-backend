@@ -1,7 +1,5 @@
 package com.depromeet.threedollar.domain.mongo.config.mongo
 
-import com.depromeet.threedollar.domain.mongo.ThreeDollarDomainMongoRoot
-import com.mongodb.ReadPreference
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.mongodb.MongoDatabaseFactory
@@ -12,6 +10,8 @@ import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
+import com.depromeet.threedollar.domain.mongo.ThreeDollarDomainMongoRoot
+import com.mongodb.ReadPreference
 
 @EnableMongoAuditing
 @EnableMongoRepositories(basePackageClasses = [ThreeDollarDomainMongoRoot::class])

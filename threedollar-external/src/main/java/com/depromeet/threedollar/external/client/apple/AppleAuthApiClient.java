@@ -1,8 +1,9 @@
 package com.depromeet.threedollar.external.client.apple;
 
-import com.depromeet.threedollar.external.client.apple.dto.response.ApplePublicKeyResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.depromeet.threedollar.external.client.apple.dto.response.ApplePublicKeyResponse;
 
 @FeignClient(
     name = "appleAuthApiClient",

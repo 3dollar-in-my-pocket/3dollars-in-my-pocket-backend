@@ -1,29 +1,6 @@
 package com.depromeet.threedollar.api.user.service.store;
 
-import com.depromeet.threedollar.common.model.CoordinateValue;
-import com.depromeet.threedollar.api.user.service.store.dto.request.CheckExistsStoresNearbyRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveMyStoresRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveNearStoresRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveStoreDetailRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDetailResponse;
-import com.depromeet.threedollar.api.user.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
-import com.depromeet.threedollar.api.user.service.store.dto.response.StoresCursorResponse;
-import com.depromeet.threedollar.api.user.service.store.dto.response.CheckExistStoresNearbyResponse;
-import com.depromeet.threedollar.domain.rds.common.support.CursorPagingSupporter;
-import com.depromeet.threedollar.domain.rds.user.collection.user.UserDictionary;
-import com.depromeet.threedollar.domain.rds.user.collection.visit.VisitHistoryCounter;
-import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryWithUserProjection;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import static com.depromeet.threedollar.api.user.service.store.StoreServiceUtils.findNearStoresFilterByCategory;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -32,7 +9,32 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.depromeet.threedollar.api.user.service.store.StoreServiceUtils.findNearStoresFilterByCategory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.depromeet.threedollar.api.user.service.store.dto.request.CheckExistsStoresNearbyRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveMyStoresRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveNearStoresRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveStoreDetailRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.response.CheckExistStoresNearbyResponse;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDetailResponse;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoresCursorResponse;
+import com.depromeet.threedollar.common.model.CoordinateValue;
+import com.depromeet.threedollar.domain.rds.common.support.CursorPagingSupporter;
+import com.depromeet.threedollar.domain.rds.user.collection.user.UserDictionary;
+import com.depromeet.threedollar.domain.rds.user.collection.visit.VisitHistoryCounter;
+import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
+import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryWithUserProjection;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service

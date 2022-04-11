@@ -1,10 +1,6 @@
 package com.depromeet.threedollar.batch.jobs.migration
 
-import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
-import com.depromeet.threedollar.domain.rds.user.collection.medal.MedalObtainCollection
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionType
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
-import com.depromeet.threedollar.domain.rds.user.domain.user.User
+import javax.persistence.EntityManagerFactory
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
@@ -15,7 +11,11 @@ import org.springframework.batch.item.database.JpaItemWriter
 import org.springframework.batch.item.database.builder.JpaCursorItemReaderBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import javax.persistence.EntityManagerFactory
+import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
+import com.depromeet.threedollar.domain.rds.user.collection.medal.MedalObtainCollection
+import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionType
+import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
+import com.depromeet.threedollar.domain.rds.user.domain.user.User
 
 /**
  * 마이그레이션을 위해 모든 유저에게 기본 획득 메달을 제공하는 배치

@@ -1,36 +1,47 @@
 package com.depromeet.threedollar.api.user.controller.faq;
 
-import com.depromeet.threedollar.api.user.controller.SetupUserControllerTest;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.core.mapper.user.faq.dto.response.FaqCategoryResponse;
 import com.depromeet.threedollar.api.core.service.user.faq.dto.response.FaqResponse;
+import com.depromeet.threedollar.api.user.controller.SetupUserControllerTest;
 import com.depromeet.threedollar.domain.rds.user.domain.faq.Faq;
 import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCategory;
 import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqRepository;
-import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class FaqControllerTest extends SetupUserControllerTest {
 
     private FaqMockApiCaller faqMockApiCaller;
+    @Autowired
+    private FaqRepository faqRepository;
 
     @BeforeEach
     void setUp() {
         faqMockApiCaller = new FaqMockApiCaller(mockMvc, objectMapper);
     }
 
-    @Autowired
-    private FaqRepository faqRepository;
-
     @AfterEach
     void cleanUp() {
         super.cleanup();
         faqRepository.deleteAllInBatch();
+    }
+
+    private void assertFaqResponse(FaqResponse faqResponse, Long id, String question, String answer, FaqCategory category) {
+        assertThat(faqResponse.getFaqId()).isEqualTo(id);
+        assertThat(faqResponse.getQuestion()).isEqualTo(question);
+        assertThat(faqResponse.getAnswer()).isEqualTo(answer);
+        assertThat(faqResponse.getCategory()).isEqualTo(category);
     }
 
     @DisplayName("GET /api/v2/faqs")
@@ -89,13 +100,6 @@ class FaqControllerTest extends SetupUserControllerTest {
             assertThat(response.getData()).hasSize(FaqCategory.values().length);
         }
 
-    }
-
-    private void assertFaqResponse(FaqResponse faqResponse, Long id, String question, String answer, FaqCategory category) {
-        assertThat(faqResponse.getFaqId()).isEqualTo(id);
-        assertThat(faqResponse.getQuestion()).isEqualTo(question);
-        assertThat(faqResponse.getAnswer()).isEqualTo(answer);
-        assertThat(faqResponse.getCategory()).isEqualTo(category);
     }
 
 }

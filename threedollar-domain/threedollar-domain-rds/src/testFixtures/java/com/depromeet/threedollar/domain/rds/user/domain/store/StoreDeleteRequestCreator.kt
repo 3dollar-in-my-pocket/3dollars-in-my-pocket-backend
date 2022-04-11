@@ -7,9 +7,9 @@ object StoreDeleteRequestCreator {
 
     @JvmStatic
     fun create(
-            store: Store,
-            userId: Long,
-            reasonType: DeleteReasonType
+        store: Store,
+        userId: Long,
+        reasonType: DeleteReasonType
     ): StoreDeleteRequest {
         return StoreDeleteRequest.builder()
             .store(store)

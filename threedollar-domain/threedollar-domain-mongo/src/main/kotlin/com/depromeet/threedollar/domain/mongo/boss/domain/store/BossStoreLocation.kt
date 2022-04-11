@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.domain.mongo.boss.domain.store
 
-import com.depromeet.threedollar.domain.mongo.common.domain.BaseDocument
-import com.depromeet.threedollar.domain.mongo.common.domain.LocationValidator
 import org.springframework.data.geo.Point
 import org.springframework.data.mongodb.core.mapping.Document
+import com.depromeet.threedollar.domain.mongo.common.domain.BaseDocument
+import com.depromeet.threedollar.domain.mongo.common.domain.LocationValidator
 
 @Document("boss_store_location_v1")
 class BossStoreLocation(

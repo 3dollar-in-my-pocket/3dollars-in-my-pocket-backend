@@ -1,13 +1,13 @@
 package com.depromeet.threedollar.api.boss.service.account
 
+import org.springframework.context.ApplicationEventPublisher
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.boss.service.account.dto.request.UpdateBossAccountInfoRequest
 import com.depromeet.threedollar.api.boss.service.account.dto.response.BossAccountInfoResponse
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossWithdrawalAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.event.registration.BossSignOutEvent
-import org.springframework.context.ApplicationEventPublisher
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 class BossAccountService(

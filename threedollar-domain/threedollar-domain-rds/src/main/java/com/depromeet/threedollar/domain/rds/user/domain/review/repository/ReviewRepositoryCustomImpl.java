@@ -1,19 +1,22 @@
 package com.depromeet.threedollar.domain.rds.user.domain.review.repository;
 
+import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_REVIEWS_COUNTS;
+import static com.depromeet.threedollar.domain.rds.user.domain.review.QReview.review;
+import static com.depromeet.threedollar.domain.rds.user.domain.store.QStore.store;
+
+import java.util.List;
+
+import javax.persistence.LockModeType;
+
+import org.jetbrains.annotations.Nullable;
+import org.springframework.cache.annotation.Cacheable;
+
 import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewStatus;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.Nullable;
-import org.springframework.cache.annotation.Cacheable;
-
-import javax.persistence.LockModeType;
-import java.util.List;
-
-import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_REVIEWS_COUNTS;
-import static com.depromeet.threedollar.domain.rds.user.domain.review.QReview.review;
-import static com.depromeet.threedollar.domain.rds.user.domain.store.QStore.store;
 
 @RequiredArgsConstructor
 public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {

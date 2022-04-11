@@ -1,19 +1,21 @@
 package com.depromeet.threedollar.domain.rds.user.domain.user.repository;
 
-import com.depromeet.threedollar.domain.rds.user.domain.user.User;
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.Nullable;
-
-import javax.persistence.LockModeType;
-
-import java.util.List;
-
 import static com.depromeet.threedollar.domain.rds.user.domain.medal.QMedal.medal;
 import static com.depromeet.threedollar.domain.rds.user.domain.medal.QMedalAcquisitionCondition.medalAcquisitionCondition;
 import static com.depromeet.threedollar.domain.rds.user.domain.medal.QUserMedal.userMedal;
 import static com.depromeet.threedollar.domain.rds.user.domain.user.QUser.user;
+
+import java.util.List;
+
+import javax.persistence.LockModeType;
+
+import org.jetbrains.annotations.Nullable;
+
+import com.depromeet.threedollar.domain.rds.user.domain.user.User;
+import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class UserRepositoryCustomImpl implements UserRepositoryCustom {

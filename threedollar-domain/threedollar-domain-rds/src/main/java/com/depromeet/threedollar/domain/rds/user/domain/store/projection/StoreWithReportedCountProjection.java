@@ -1,10 +1,12 @@
 package com.depromeet.threedollar.domain.rds.user.domain.store.projection;
 
+import java.time.LocalDateTime;
+
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
 import com.querydsl.core.annotations.QueryProjection;
-import lombok.*;
 
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.ToString;
 
 @ToString
 @Getter

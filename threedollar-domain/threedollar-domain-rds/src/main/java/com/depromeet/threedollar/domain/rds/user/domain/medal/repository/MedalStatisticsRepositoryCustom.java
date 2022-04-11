@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.domain.rds.user.domain.medal.repository;
 
-import com.depromeet.threedollar.domain.rds.user.domain.medal.projection.MedalCountsStatisticsProjection;
-
 import java.util.List;
+
+import com.depromeet.threedollar.domain.rds.user.domain.medal.projection.MedalCountsStatisticsProjection;
 
 public interface MedalStatisticsRepositoryCustom {
 

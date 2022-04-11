@@ -7,10 +7,10 @@ object MenuCreator {
 
     @JvmStatic
     fun create(
-            store: Store,
-            name: String,
-            price: String,
-            category: MenuCategoryType
+        store: Store,
+        name: String,
+        price: String,
+        category: MenuCategoryType
     ): Menu {
         return Menu.builder()
             .store(store)

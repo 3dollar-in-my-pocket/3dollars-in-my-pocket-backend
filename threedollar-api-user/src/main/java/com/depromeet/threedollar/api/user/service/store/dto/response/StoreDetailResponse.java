@@ -1,63 +1,66 @@
 package com.depromeet.threedollar.api.user.service.store.dto.response;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.jetbrains.annotations.Nullable;
+
+import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.api.user.service.review.dto.response.ReviewWithUserResponse;
 import com.depromeet.threedollar.api.user.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoryCountsResponse;
 import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoryWithUserResponse;
-import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.common.model.CoordinateValue;
-import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
+import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
+import com.depromeet.threedollar.domain.rds.user.collection.user.UserDictionary;
+import com.depromeet.threedollar.domain.rds.user.collection.visit.VisitHistoryCounter;
 import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
-import com.depromeet.threedollar.domain.rds.user.collection.user.UserDictionary;
-import com.depromeet.threedollar.domain.rds.user.collection.visit.VisitHistoryCounter;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryWithUserProjection;
-import lombok.*;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StoreDetailResponse extends AuditingTimeResponse {
 
+    private final List<MenuCategoryType> categories = new ArrayList<>();
+    private final Set<DayOfTheWeek> appearanceDays = new HashSet<>();
+    private final Set<PaymentMethodType> paymentMethods = new HashSet<>();
+    private final List<MenuResponse> menus = new ArrayList<>();
+    // 가게 이미지
+    private final List<StoreImageResponse> images = new ArrayList<>();
+    // 리뷰
+    private final List<ReviewWithUserResponse> reviews = new ArrayList<>();
+    private final List<VisitHistoryWithUserResponse> visitHistories = new ArrayList<>();
     // 가게
     private Long storeId;
     private double latitude;
     private double longitude;
     private String storeName;
-
     @Nullable
     private StoreType storeType;
-
     private double rating;
     private int distance;
-
-    private final List<MenuCategoryType> categories = new ArrayList<>();
-    private final Set<DayOfTheWeek> appearanceDays = new HashSet<>();
-    private final Set<PaymentMethodType> paymentMethods = new HashSet<>();
-    private final List<MenuResponse> menus = new ArrayList<>();
-
     // 작성자
     private UserInfoResponse user;
-
-    // 가게 이미지
-    private final List<StoreImageResponse> images = new ArrayList<>();
-
-    // 리뷰
-    private final List<ReviewWithUserResponse> reviews = new ArrayList<>();
-
     // 방문 인증
     private VisitHistoryCountsResponse visitHistory;
-    private final List<VisitHistoryWithUserResponse> visitHistories = new ArrayList<>();
 
     @Builder(access = AccessLevel.PRIVATE)
     private StoreDetailResponse(Store store, int distance, UserInfoResponse user, VisitHistoryCountsResponse visitHistory) {

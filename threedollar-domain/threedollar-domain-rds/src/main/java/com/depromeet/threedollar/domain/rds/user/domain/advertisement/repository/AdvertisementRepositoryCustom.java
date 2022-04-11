@@ -1,12 +1,13 @@
 package com.depromeet.threedollar.domain.rds.user.domain.advertisement.repository;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
+
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.Advertisement;
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPlatformType;
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPositionType;
-import org.jetbrains.annotations.Nullable;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 public interface AdvertisementRepositoryCustom {
 

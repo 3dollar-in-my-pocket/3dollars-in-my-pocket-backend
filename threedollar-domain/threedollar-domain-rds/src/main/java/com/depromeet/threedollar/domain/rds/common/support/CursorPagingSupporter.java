@@ -1,10 +1,11 @@
 package com.depromeet.threedollar.domain.rds.common.support;
 
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 /**
  * 커서 기반 페이지네이션을 위한 컬렉션

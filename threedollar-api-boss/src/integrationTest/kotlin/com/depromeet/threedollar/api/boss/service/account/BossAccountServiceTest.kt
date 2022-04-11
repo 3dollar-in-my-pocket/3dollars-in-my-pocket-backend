@@ -1,9 +1,5 @@
 package com.depromeet.threedollar.api.boss.service.account
 
-import com.depromeet.threedollar.api.boss.service.account.dto.request.UpdateBossAccountInfoRequest
-import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.*
-import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
@@ -12,13 +8,21 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
+import com.depromeet.threedollar.api.boss.service.account.dto.request.UpdateBossAccountInfoRequest
+import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossWithdrawalAccountRepository
+import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class BossAccountServiceTest(
-        private val bossAccountService: BossAccountService,
-        private val bossAccountRepository: BossAccountRepository,
-        private val bossWithdrawalAccountRepository: BossWithdrawalAccountRepository,
+    private val bossAccountService: BossAccountService,
+    private val bossAccountRepository: BossAccountRepository,
+    private val bossWithdrawalAccountRepository: BossWithdrawalAccountRepository,
 ) {
 
     @AfterEach

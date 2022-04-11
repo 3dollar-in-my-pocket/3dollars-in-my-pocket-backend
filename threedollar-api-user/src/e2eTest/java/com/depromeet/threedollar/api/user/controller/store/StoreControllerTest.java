@@ -1,36 +1,5 @@
 package com.depromeet.threedollar.api.user.controller.store;
 
-import com.depromeet.threedollar.api.user.controller.SetupUserControllerTest;
-import com.depromeet.threedollar.api.user.listener.medal.AddUserMedalEventListener;
-import com.depromeet.threedollar.api.user.service.store.dto.request.RegisterStoreRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.request.DeleteStoreRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.request.MenuRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.request.UpdateStoreRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDeleteResponse;
-import com.depromeet.threedollar.api.user.service.store.dto.response.StoreInfoResponse;
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.common.type.DayOfTheWeek;
-import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDayRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository;
-import com.depromeet.threedollar.domain.rds.user.event.store.StoreCreatedEvent;
-import com.depromeet.threedollar.domain.rds.user.event.store.StoreDeletedEvent;
-import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-
-import java.util.List;
-import java.util.Set;
-
 import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHelper.assertStoreInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -38,32 +7,62 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.util.List;
+import java.util.Set;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
+import com.depromeet.threedollar.api.user.controller.SetupUserControllerTest;
+import com.depromeet.threedollar.api.user.listener.medal.AddUserMedalEventListener;
+import com.depromeet.threedollar.api.user.service.store.dto.request.DeleteStoreRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.request.MenuRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.request.RegisterStoreRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.request.UpdateStoreRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDeleteResponse;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreInfoResponse;
+import com.depromeet.threedollar.common.type.DayOfTheWeek;
+import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDayRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
+import com.depromeet.threedollar.domain.rds.user.event.store.StoreCreatedEvent;
+import com.depromeet.threedollar.domain.rds.user.event.store.StoreDeletedEvent;
+
 class StoreControllerTest extends SetupUserControllerTest {
 
     private StoreMockApiCaller storeMockApiCaller;
+    @Autowired
+    private StoreRepository storeRepository;
+    @Autowired
+    private AppearanceDayRepository appearanceDayRepository;
+    @Autowired
+    private PaymentMethodRepository paymentMethodRepository;
+    @Autowired
+    private MenuRepository menuRepository;
+    @Autowired
+    private StoreDeleteRequestRepository storeDeleteRequestRepository;
+    @MockBean
+    private AddUserMedalEventListener addUserMedalEventListener;
 
     @BeforeEach
     void setUp() {
         storeMockApiCaller = new StoreMockApiCaller(mockMvc, objectMapper);
     }
-
-    @Autowired
-    private StoreRepository storeRepository;
-
-    @Autowired
-    private AppearanceDayRepository appearanceDayRepository;
-
-    @Autowired
-    private PaymentMethodRepository paymentMethodRepository;
-
-    @Autowired
-    private MenuRepository menuRepository;
-
-    @Autowired
-    private StoreDeleteRequestRepository storeDeleteRequestRepository;
-
-    @MockBean
-    private AddUserMedalEventListener addUserMedalEventListener;
 
     @AfterEach
     void cleanUp() {

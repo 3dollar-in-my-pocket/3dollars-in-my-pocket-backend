@@ -1,9 +1,13 @@
 package com.depromeet.threedollar.domain.rds.user.domain.medal;
 
-import lombok.*;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @EqualsAndHashCode
 @Getter
