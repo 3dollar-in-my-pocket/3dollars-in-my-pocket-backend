@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.admin.service.admin
 
+import com.depromeet.threedollar.api.admin.service.admin.dto.request.UpdateMyAdminInfoRequest
 import com.depromeet.threedollar.api.admin.service.admin.dto.response.AdminInfoResponse
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
@@ -16,6 +17,15 @@ class AdminService(
     @Transactional(readOnly = true)
     fun getMyAdminInfo(adminId: Long): AdminInfoResponse {
         val admin = findAdminById(adminId)
+        return AdminInfoResponse.of(admin)
+    }
+
+    @Transactional
+    fun updateMyAdminInfo(adminId: Long, request: UpdateMyAdminInfoRequest): AdminInfoResponse {
+        val admin = findAdminById(adminId)
+        request.let {
+            admin.updateName(it.name)
+        }
         return AdminInfoResponse.of(admin)
     }
 

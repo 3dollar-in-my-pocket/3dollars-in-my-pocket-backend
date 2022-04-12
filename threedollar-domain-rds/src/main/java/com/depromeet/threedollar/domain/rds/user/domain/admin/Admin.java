@@ -33,4 +33,8 @@ public class Admin extends AuditingTimeEntity {
         return new Admin(email, name);
     }
 
+    public void updateName(String name) {
+        this.name = name;
+    }
+
 }
