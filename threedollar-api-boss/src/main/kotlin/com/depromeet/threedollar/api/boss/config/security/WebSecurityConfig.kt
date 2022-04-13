@@ -6,22 +6,28 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
 
+private const val MONITORING_MATCHERS = "/monitoring/**"
+
 @EnableWebSecurity
 @Configuration
 class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
         http.authorizeRequests()
-                .antMatchers("/monitoring/**").authenticated()
+                .antMatchers(MONITORING_MATCHERS).authenticated()
                 .anyRequest().permitAll()
             .and()
-                .requestMatchers {   it.antMatchers(   "/h2-console/**") }.headers().frameOptions().sameOrigin()
-            .and()
-                .httpBasic()
-            .and()
+                .httpBasic().and()
+                .formLogin().disable()
+                .logout().disable()
+                .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-                .csrf().disable()
+                .headers()
+                    .frameOptions().sameOrigin()
+                    .cacheControl().and()
+                    .xssProtection().and()
+                    .httpStrictTransportSecurity().disable()
     }
 
 }

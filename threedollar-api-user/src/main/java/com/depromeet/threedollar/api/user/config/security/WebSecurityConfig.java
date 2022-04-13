@@ -10,19 +10,25 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final String MONITORING_MATCHERS = "/monitoring/**";
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .antMatchers("/monitoring/**").authenticated()
+            .antMatchers(MONITORING_MATCHERS).authenticated()
                 .anyRequest().permitAll()
             .and()
-                .requestMatchers((matcher) -> matcher.antMatchers("/h2-console/**")).headers().frameOptions().sameOrigin()
-            .and()
-                .httpBasic()
-            .and()
+                .httpBasic().and()
+                .formLogin().disable()
+                .logout().disable()
+                .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-                .csrf().disable();
+                .headers()
+                    .frameOptions().sameOrigin()
+                    .cacheControl().and()
+                    .xssProtection().and()
+                    .httpStrictTransportSecurity().disable();
     }
 
 }
