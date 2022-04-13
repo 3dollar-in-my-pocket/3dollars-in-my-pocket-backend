@@ -17,6 +17,7 @@ ext {
     swaggerVersion = "3.0.0"
     sentryVersion = "5.7.2"
     jacocoVersion = "0.8.8"
+    springRetryVersion = "1.3.2"
 }
 
 allprojects {
@@ -62,6 +63,9 @@ subprojects {
         implementation("org.springframework.boot:spring-boot-starter-validation")
         annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
         implementation("org.springframework.boot:spring-boot-starter-json")
+
+        // Spring Retry
+        implementation("org.springframework.retry:spring-retry:${springRetryVersion}")
 
         // Test
         testImplementation("org.springframework.boot:spring-boot-starter-test")
