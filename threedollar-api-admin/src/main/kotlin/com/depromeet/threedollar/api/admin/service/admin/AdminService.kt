@@ -29,6 +29,12 @@ class AdminService(
         return AdminInfoResponse.of(admin)
     }
 
+    @Transactional(readOnly = true)
+    fun getAllAdminInfos(): List<AdminInfoResponse> {
+        return adminRepository.findAll()
+            .map { AdminInfoResponse.of(it) }
+    }
+
     private fun findAdminById(adminId: Long): Admin {
         return adminRepository.findAdminById(adminId)
             ?: throw NotFoundException("해당하는 관리자 ($adminId)는 존재하지 않습니다", ErrorCode.NOTFOUND_ADMIN)

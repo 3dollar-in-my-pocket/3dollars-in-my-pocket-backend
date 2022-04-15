@@ -26,6 +26,7 @@ class AdminController(
         return ApiResponse.success(adminService.getMyAdminInfo(adminId))
     }
 
+    @ApiOperation("관리자의 회원 정보를 수정합니다")
     @Auth
     @PutMapping("/v1/account/admin/my-info")
     fun updateAdminInfo(
@@ -33,6 +34,13 @@ class AdminController(
         @RequestBody request: UpdateMyAdminInfoRequest
     ): ApiResponse<AdminInfoResponse> {
         return ApiResponse.success(adminService.updateMyAdminInfo(adminId = adminId, request = request))
+    }
+
+    @ApiOperation("등록된 관리자 목록을 조회합니다")
+    @Auth
+    @GetMapping("/v1/account/admins")
+    fun getAdminInfos(): ApiResponse<List<AdminInfoResponse>> {
+        return ApiResponse.success(adminService.getAllAdminInfos())
     }
 
 }
