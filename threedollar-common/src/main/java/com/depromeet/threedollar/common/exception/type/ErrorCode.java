@@ -31,6 +31,7 @@ public enum ErrorCode {
     INVALID_UPLOAD_FILE_SIZE(BAD_REQUEST, ON, "BR208", "업로드 가능한 파일 크기를 초과했습니다"),
     INVALID_DATE_TIME_INTERVAL(BAD_REQUEST, OFF, "BR209", "시작 날짜가 종료 날짜보다 이후일 수 없습니다"),
     INVALID_EXCESS_MAX_BETWEEN_DAY_DIFFERENCE(BAD_REQUEST, OFF, "BR210", "시작 날짜와 종료날짜 간 차이는 최대 15일 이내로 조회해주세요"),
+    INVALID_EMAIL_FORMAT(BAD_REQUEST, OFF, "BR211", "잘못된 이메일 포맷입니다"),
 
 
     // 401 UnAuthorized
@@ -75,6 +76,7 @@ public enum ErrorCode {
     CONFLICT_VISIT_HISTORY(HttpStatusCode.CONFLICT, OFF, "CF004", "오늘 이미 방문 인증한 가게입니다.\n내일 다시 방문 인증해주세요 :)"),
     CONFLICT_BOSS_STORE_FEEDBACK(HttpStatusCode.CONFLICT, OFF, "CF005", "오늘 이미 피드백을 추가한 가게입니다.\n내일 다시 인증해주세요 :)"),
     CONFLICT_BOSS_ACCOUNT(HttpStatusCode.CONFLICT, OFF, "CF006", "이미 가입 완료한 사장님입니다"),
+    CONFLICT_EMAIL(HttpStatusCode.CONFLICT, OFF, "CF007", "이미 존재하는 이메일 입니다"),
 
 
     // 415 Unsupported Media Type

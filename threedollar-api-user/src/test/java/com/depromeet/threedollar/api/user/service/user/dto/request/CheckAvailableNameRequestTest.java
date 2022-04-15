@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CheckAvailableNameRequestTest {
 
-    private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+    private static final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     @ValueSource(strings = {"디프만", "붕어빵", "가슴속-삼천원", "강승호"})
     @ParameterizedTest

@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class AddReviewRequestTest {
 
-    private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+    private static final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     @ValueSource(ints = {0, 6})
     @ParameterizedTest

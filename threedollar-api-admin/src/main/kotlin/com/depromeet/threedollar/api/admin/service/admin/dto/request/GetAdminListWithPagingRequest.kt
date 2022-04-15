@@ -1,12 +1,9 @@
-package com.depromeet.threedollar.api.admin.service.user.store.dto.request
+package com.depromeet.threedollar.api.admin.service.admin.dto.request
 
 import javax.validation.constraints.Max
 import javax.validation.constraints.Min
 
-data class RetrieveReportedStoresRequest(
-    @field:Min(value = 1, message = "{store.reported.minCount.min}")
-    val minCount: Int = 1,
-
+data class GetAdminListWithPagingRequest(
     @field:Min(value = 1, message = "{common.page.min}")
     val page: Long = 1,
 

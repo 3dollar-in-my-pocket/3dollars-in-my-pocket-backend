@@ -1,6 +1,8 @@
 package com.depromeet.threedollar.api.admin.service.admin
 
+import com.depromeet.threedollar.api.admin.service.admin.dto.request.RegisterAdminRequest
 import com.depromeet.threedollar.api.admin.service.admin.dto.request.UpdateMyAdminInfoRequest
+import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminCreator
 import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminRepository
@@ -61,7 +63,7 @@ internal class AdminServiceTest(
     }
 
     @Test
-    fun `해당하는 관리자가 없는 경우 NotFoundException`() {
+    fun `관리자_정보를_수정할때_해당하는 관리자가 없는 경우 NotFoundException`() {
         // given
         val notFoundAdminId = -1L
         val request = UpdateMyAdminInfoRequest(
@@ -70,6 +72,49 @@ internal class AdminServiceTest(
 
         // when & then
         assertThatThrownBy { adminService.updateMyAdminInfo(notFoundAdminId, request) }.isInstanceOf(NotFoundException::class.java)
+    }
+
+    @Test
+    fun `새로운 관리자를 신규 등록한다`() {
+        // given
+        val adminId = 100000L
+
+        val request = RegisterAdminRequest(
+            name = "토끼",
+            email = "will.seungho@gmail.com"
+        )
+
+        // when
+        adminService.registerAdmin(request, adminId)
+
+        // then
+        val admins = adminRepository.findAll()
+        assertAll({
+            assertThat(admins).hasSize(1)
+            assertThat(admins[0].email).isEqualTo(request.email)
+            assertThat(admins[0].name).isEqualTo(request.name)
+            assertThat(admins[0].creatorAdminId).isEqualTo(adminId)
+        })
+    }
+
+    @Test
+    fun `이미 존재하는 이메일인경우 ConflictException`() {
+        // given
+        val email = "will.seungho@gmail.com"
+
+        val admin = AdminCreator.create(
+            email = email,
+            name = "토끼"
+        )
+        adminRepository.save(admin)
+
+        val request = RegisterAdminRequest(
+            name = "토끼",
+            email = email
+        )
+
+        // when & then
+        assertThatThrownBy { adminService.registerAdmin(request, 10000L) }.isInstanceOf(ConflictException::class.java)
     }
 
 }

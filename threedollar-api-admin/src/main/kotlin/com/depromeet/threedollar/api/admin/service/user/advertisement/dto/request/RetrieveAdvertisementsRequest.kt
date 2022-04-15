@@ -6,8 +6,8 @@ import javax.validation.constraints.Min
 data class RetrieveAdvertisementsRequest(
     @field:Min(value = 1, message = "{common.size.min}")
     @field:Max(value = 30, message = "{common.size.max}")
-    val size: Long = 0,
+    val size: Long = 1,
 
     @field:Min(value = 1, message = "{common.page.min}")
-    val page: Int = 0
+    val page: Int = 10
 )

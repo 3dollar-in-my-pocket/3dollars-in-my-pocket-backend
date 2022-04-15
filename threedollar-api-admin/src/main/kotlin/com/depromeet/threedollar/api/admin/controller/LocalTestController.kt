@@ -22,7 +22,7 @@ class LocalTestController(
     @GetMapping("/test-token")
     fun getTestToken(): ApiResponse<String> {
         val admin = adminRepository.findAdminByEmail(TEST_ADMIN_EMAIL)
-            ?: adminRepository.save(Admin.newInstance(TEST_ADMIN_EMAIL, TEST_ADMIN_NAME))
+            ?: adminRepository.save(Admin.newInstance(TEST_ADMIN_EMAIL, TEST_ADMIN_NAME, null))
         httpSession.setAttribute(ADMIN_ID, admin.id)
         return ApiResponse.success(httpSession.id)
     }
