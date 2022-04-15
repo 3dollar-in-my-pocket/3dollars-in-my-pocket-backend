@@ -25,33 +25,19 @@
 
 ## 기술 스택
 
-### 애플리케이션 (Language & Framework)
-
-- Java 11, Kotlin 1.6
-- Spring Framework (Spring Boot, Spring MVC, Spring Batch)
-- JPA/Hibernate, QueryDSL
-- MariaDB, flyway
-- MongoDB, Redis, Caffeine Cache
-- Feign Client
-- Gradle
-- Junit5, AssertJ, Mockito
-
-### 인프라 아키텍처
-
 ![img.png](images/3dollars-architecture-20220409.png)
 
-- ECS Fargate (API, Batch)
-- MariaDB(RDS), MongoDB(EC2), Redis Cluster(Elastic Cache)
-- S3, CloudFront
-- Application LoadBalancer
-- GitHub Actions CI/CD
+- **Language**: Java 11 / Kotlin 1.6
+- **Framework**: Spring Boot / Spring MVC / Spring Batch
+- **Data(RDBMS)**: JPA(Hibernate) / QueryDSL / MariaDB / flyway
+- **Data(NoSQL, Cache)**: MongoDB / Redis / Caffeine Cache
+- **Test**: Junit5 / Spring Test 
+- **Build tool**: Gradle
+- **Infra**: ECS Fargate / ALB / RDS / Elastic Cache / EC2 / S3 / CloudFront
+- **CI/CD**: Git, Github Actions
+- **Operations**: CloudWatch, NewRelic, Sentry, Slack, Locust 
 
-### 운영 툴
 
-- 로그 및 모니터링: AWS CloudWatch
-- 에러 모니터링 & 알림: Sentry, Slack
-- APM 도구: NewRelic
-- 부하 테스트 도구: Locust
 
 ### 멀티 모듈 구조
 
