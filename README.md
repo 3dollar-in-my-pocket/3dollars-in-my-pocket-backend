@@ -25,19 +25,24 @@
 
 ## 기술 스택
 
+### 애플리케이션 (Language & Framework)
+
+- **Language** - Java 11, Kotlin 1.6
+- **Framework** - Spring Framework (Spring Boot, Spring MVC, Spring Batch)
+- **Data(RDBMS)** - JPA/Hibernate, QueryDSL, MariaDB, flyway
+- **Data(NoSQL, Cache)** - MongoDB, Redis, Caffeine Cache
+- **API Client** - Feign Client
+- **Build Tool** - Gradle
+- **Test** - Junit5, Spring Test
+
+### 인프라 아키텍처
+
 ![img.png](images/3dollars-architecture-20220409.png)
 
-- **Language**: Java 11 / Kotlin 1.6
-- **Framework**: Spring Boot / Spring MVC / Spring Batch
-- **Data(RDBMS)**: JPA(Hibernate) / QueryDSL / MariaDB / flyway
-- **Data(NoSQL, Cache)**: MongoDB / Redis / Caffeine Cache
-- **Test**: Junit5 / Spring Test 
-- **Build tool**: Gradle
-- **Infra**: ECS Fargate / ALB / RDS / Elastic Cache / EC2 / S3 / CloudFront
-- **CI/CD**: Git, Github Actions
-- **Operations**: CloudWatch, NewRelic, Sentry, Slack, Locust 
-
-
+- **Infra** - ECS Fargate (API, Batch), ALB, S3, CloudFront
+- **DB** - MariaDB(RDS), MongoDB(EC2), Redis Cluster(Elastic Cache)
+- **CI/CD** - Git, GitHub Actions CI/CD
+- **Operations** - CloudWatch, Sentry, Slack, NewRelic, Locust
 
 ### 멀티 모듈 구조
 
