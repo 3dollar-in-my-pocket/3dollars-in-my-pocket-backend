@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.admin.service.boss.registration
 
+import com.depromeet.threedollar.api.admin.service.boss.registration.dto.request.GetBossRegistrationsRequest
 import com.depromeet.threedollar.api.admin.service.boss.registration.dto.response.BossAccountRegistrationResponse
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
@@ -51,10 +52,9 @@ class BossAccountRegistrationAdminService(
         // TODO 가입 거부 슬랙 알림
     }
 
-    // TODO 페이지네이션 적용
     @Transactional(readOnly = true)
-    fun getBossRegistrations(): List<BossAccountRegistrationResponse> {
-        val registrations = registrationRepository.findAllWaitingRegistrationsFromTheLatest()
+    fun getBossRegistrations(request: GetBossRegistrationsRequest): List<BossAccountRegistrationResponse> {
+        val registrations = registrationRepository.findWaitingRegistrationsLessThanCursorOrderByLatest(request.cursor, request.size)
         val bossStoreCategoryMap: Map<String, BossStoreCategory> = bossStoreCategoryRepository.findAll().associateBy { it.id }
         return registrations.map {
             BossAccountRegistrationResponse.of(it, bossStoreCategoryMap)

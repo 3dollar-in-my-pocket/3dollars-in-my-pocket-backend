@@ -21,7 +21,7 @@ client.test("200 OK", () => {
 
 
 ### 사장님 게정 가입 신청 목록을 조회합니다
-GET {{host_admin}}/v1/boss/account/registrations
+GET {{host_admin}}/v1/boss/account/registrations?size=10
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%
