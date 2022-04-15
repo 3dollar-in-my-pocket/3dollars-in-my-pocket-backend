@@ -1,20 +1,20 @@
 package com.depromeet.threedollar.api.admin.service.user.medal.dto.request
 
-import org.hibernate.validator.constraints.Length
 import org.hibernate.validator.constraints.URL
+import javax.validation.constraints.Size
 
 data class UpdateMedalRequest(
-    @field:Length(max = 30, message = "{medal.name.length}")
+    @field:Size(max = 30, message = "{medal.name.size}")
     val name: String,
 
-    @field:Length(max = 200, message = "{medal.introduction.length}")
+    @field:Size(max = 200, message = "{medal.introduction.size}")
     val introduction: String?,
 
-    @field:Length(max = 2048, message = "{medal.activationIconUrl.length}")
+    @field:Size(max = 2048, message = "{medal.activationIconUrl.size}")
     @field:URL(message = "{medal.activationIconUrl.url}")
     val activationIconUrl: String,
 
-    @field:Length(max = 2048, message = "{medal.disableIconUrl.length}")
+    @field:Size(max = 2048, message = "{medal.disableIconUrl.size}")
     @field:URL(message = "{medal.disableIconUrl.url}")
     val disableIconUrl: String
 )

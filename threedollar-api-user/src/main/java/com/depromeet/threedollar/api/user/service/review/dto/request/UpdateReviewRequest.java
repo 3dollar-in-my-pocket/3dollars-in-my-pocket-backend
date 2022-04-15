@@ -1,11 +1,9 @@
 package com.depromeet.threedollar.api.user.service.review.dto.request;
 
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.*;
+import javax.validation.constraints.Size;
 
 @ToString
 @Getter
@@ -13,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UpdateReviewRequest {
 
-    @Length(max = 300, message = "{review.content.length}")
+    @Size(max = 300, message = "{review.content.size}")
     @NotBlank(message = "{review.content.notBlank}")
     private String contents;
 

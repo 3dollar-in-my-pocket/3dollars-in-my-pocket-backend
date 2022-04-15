@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 @RestController
 class AdminController(
@@ -31,7 +32,7 @@ class AdminController(
     @PutMapping("/v1/account/admin/my-info")
     fun updateAdminInfo(
         @AdminId adminId: Long,
-        @RequestBody request: UpdateMyAdminInfoRequest
+        @Valid @RequestBody request: UpdateMyAdminInfoRequest
     ): ApiResponse<AdminInfoResponse> {
         return ApiResponse.success(adminService.updateMyAdminInfo(adminId = adminId, request = request))
     }

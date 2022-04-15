@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.boss.service.account.dto.request
 
-import org.hibernate.validator.constraints.Length
+import javax.validation.constraints.Size
 
 data class UpdateBossAccountInfoRequest(
-    @field:Length(max = 30, message = "{account.name.length}")
+    @field:Size(max = 30, message = "{account.name.size}")
     val name: String,
 
     val isSetupNotification: Boolean

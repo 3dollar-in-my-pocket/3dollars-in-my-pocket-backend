@@ -15,7 +15,7 @@ Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 Content-Type: application/json
 
 {
-    "name": "tokki"
+    "name": "tokkito"
 }
 
 > {%

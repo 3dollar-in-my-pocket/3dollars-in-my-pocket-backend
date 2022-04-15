@@ -5,13 +5,13 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
 import org.jetbrains.annotations.Nullable;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,7 +26,7 @@ public class RegisterStoreRequest {
     @NotNull(message = "{store.longitude.notNull}")
     private Double longitude;
 
-    @Length(max = 300, message = "{store.name.length}")
+    @Size(max = 300, message = "{store.name.size}")
     @NotBlank(message = "{store.name.notBlank}")
     private String storeName;
 

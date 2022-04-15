@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.admin.service.user.advertisement.dto.reque
 
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPositionType
-import org.hibernate.validator.constraints.Length
+import javax.validation.constraints.Size
 import org.hibernate.validator.constraints.URL
 import java.time.LocalDateTime
 
@@ -11,24 +11,24 @@ data class UpdateAdvertisementRequest(
 
     val platform: AdvertisementPlatformType,
 
-    @field:Length(max = 50, message = "{advertisement.title.length}")
+    @field:Size(max = 50, message = "{advertisement.title.size}")
     val title: String?,
 
-    @field:Length(max = 100, message = "{advertisement.subTitle.length}")
+    @field:Size(max = 100, message = "{advertisement.subTitle.size}")
     val subTitle: String?,
 
     @field:URL(message = "{advertisement.imageUrl.url}")
-    @field:Length(max = 2048, message = "{advertisement.imageUrl.length}")
+    @field:Size(max = 2048, message = "{advertisement.imageUrl.size}")
     val imageUrl: String,
 
     @field:URL(message = "{advertisement.linkUrl.url}")
-    @field:Length(max = 2048, message = "{advertisement.linkUrl.length}")
+    @field:Size(max = 2048, message = "{advertisement.linkUrl.size}")
     val linkUrl: String?,
 
-    @field:Length(min = 7, max = 7, message = "{advertisement.bgColor.length}")
+    @field:Size(min = 7, max = 7, message = "{advertisement.bgColor.size}")
     val bgColor: String?,
 
-    @field:Length(min = 7, max = 7, message = "{advertisement.fontColor.length}")
+    @field:Size(min = 7, max = 7, message = "{advertisement.fontColor.size}")
     val fontColor: String?,
 
     val startDateTime: LocalDateTime,

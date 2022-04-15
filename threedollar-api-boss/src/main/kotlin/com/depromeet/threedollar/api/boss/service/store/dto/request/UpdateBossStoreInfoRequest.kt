@@ -4,26 +4,25 @@ import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppearanceDay
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenu
 import com.depromeet.threedollar.domain.mongo.common.domain.TimeInterval
-import org.hibernate.validator.constraints.Length
 import org.hibernate.validator.constraints.URL
 import java.time.LocalTime
 import javax.validation.constraints.Size
 
 data class UpdateBossStoreInfoRequest(
-    @field:Length(max = 30, message = "{store.name.length}")
+    @field:Size(max = 30, message = "{store.name.size}")
     val name: String,
 
     @field:URL(message = "{store.imageUrl.url}")
-    @field:Length(max = 2048, message = "{store.imageUrl.length}")
+    @field:Size(max = 2048, message = "{store.imageUrl.size}")
     val imageUrl: String?,
 
-    @field:Length(max = 1024, message = "{store.introduction.length}")
+    @field:Size(max = 1024, message = "{store.introduction.size}")
     val introduction: String?,
 
     val contactsNumber: String?,
 
     @field:URL(message = "{store.snsUrl.url}")
-    @field:Length(max = 2048, message = "{store.snsUrl.length}")
+    @field:Size(max = 2048, message = "{store.snsUrl.size}")
     val snsUrl: String?,
 
     val menus: List<MenuRequest>,

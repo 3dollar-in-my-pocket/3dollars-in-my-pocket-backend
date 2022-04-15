@@ -7,7 +7,6 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registrat
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStoreForm
 import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
 import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
-import org.hibernate.validator.constraints.Length
 import org.hibernate.validator.constraints.URL
 import javax.validation.constraints.Size
 
@@ -15,12 +14,12 @@ data class SignupRequest(
     val token: String,
     val socialType: BossAccountSocialType,
 
-    @Length(max = 30, message = "{account.name.length}")
+    @field:Size(max = 30, message = "{account.name.size}")
     val bossName: String,
 
     val businessNumber: String,
 
-    @field:Length(max = 30, message = "{store.name.length}")
+    @field:Size(max = 30, message = "{store.name.size}")
     val storeName: String,
 
     @field:Size(max = 3, message = "{store.categoriesIds.size}")
@@ -28,7 +27,7 @@ data class SignupRequest(
 
     val contactsNumber: String,
 
-    @field:Length(max = 2048, message = "{store.certificationPhotoUrl.length}")
+    @field:Size(max = 2048, message = "{store.certificationPhotoUrl.size}")
     @field:URL(message = "{store.certificationPhotoUrl.url}")
     val certificationPhotoUrl: String,
 ) {

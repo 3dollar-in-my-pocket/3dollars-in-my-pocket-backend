@@ -2,12 +2,8 @@ package com.depromeet.threedollar.api.user.service.review.dto.request;
 
 import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 @ToString
 @Getter
@@ -18,7 +14,7 @@ public class AddReviewRequest {
     @NotNull(message = "{store.storeId.notNull}")
     private Long storeId;
 
-    @Length(max = 300, message = "{review.content.length}")
+    @Size(max = 300, message = "{review.content.size}")
     @NotBlank(message = "{review.content.notBlank}")
     private String contents;
 
