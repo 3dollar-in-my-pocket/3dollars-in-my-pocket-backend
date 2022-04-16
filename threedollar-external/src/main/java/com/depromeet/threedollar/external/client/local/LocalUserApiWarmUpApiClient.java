@@ -5,13 +5,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(
-    name = "localWarmUpApiClient",
-    url = "http://localhost:${server.port}"
+    name = "localWarmUpUserApiClient",
+    url = "http://localhost:${server.port}/api"
 )
 public interface LocalUserApiWarmUpApiClient {
 
-    @GetMapping("/api/v2/stores/near")
-    void retrieveNearStores(
+    @GetMapping("/v2/stores/near")
+    void retrieveNearUserStores(
         @RequestParam double latitude,
         @RequestParam double longitude,
         @RequestParam double mapLatitude,
@@ -19,16 +19,16 @@ public interface LocalUserApiWarmUpApiClient {
         @RequestParam int distance
     );
 
-    @GetMapping("/api/v2/faqs")
+    @GetMapping("/v2/faqs")
     void getFaqs();
 
-    @GetMapping("/api/v1/advertisements")
+    @GetMapping("/v1/advertisements")
     void getAdvertisements(@RequestParam String platform);
 
-    @GetMapping("/api/v1/medals")
+    @GetMapping("/v1/medals")
     void getMedals();
 
-    @GetMapping("/api/v2/store/menu/categories")
+    @GetMapping("/v2/store/menu/categories")
     void getStoreMenuCategories();
 
 }
