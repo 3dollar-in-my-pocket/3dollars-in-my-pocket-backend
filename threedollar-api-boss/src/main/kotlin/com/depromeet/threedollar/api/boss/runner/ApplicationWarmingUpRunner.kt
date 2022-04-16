@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.boss.runner
 
 import com.depromeet.threedollar.common.type.FamousPlace
+import com.depromeet.threedollar.common.utils.logger
 import com.depromeet.threedollar.external.client.local.LocalBossApiWarmupApiClient
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.ApplicationListener
@@ -24,8 +25,14 @@ class ApplicationWarmingUpRunner(
                 }
                 apiClient.retrieveBossStoreCategories()
             }
+        } catch (exception: InterruptedException) {
+            log.error(exception.message, exception)
         } catch (ignored: Exception) {
         }
+    }
+
+    companion object {
+        private val log = logger()
     }
 
 }
