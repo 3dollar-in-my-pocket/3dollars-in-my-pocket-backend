@@ -6,7 +6,7 @@ spring:
   redis:
     host: localhost
     port: 9998
-    timeout: 3000
+    timeout: 5000
   cache:
     type: none
 
@@ -20,7 +20,7 @@ spring:
   redis:
     host: localhost
     port: 6379
-    timeout: 3000
+    timeout: 5000
 
 
 ---
@@ -32,7 +32,7 @@ spring:
   redis:
     host: localhost
     port: 6380
-    timeout: 3000
+    timeout: 5000
 
 
 ---
@@ -47,7 +47,7 @@ spring:
   redis:
     host: ${secret.spring.redis.host}
     port: ${secret.spring.redis.port}
-    timeout: 3000
+    timeout: 5000
 
 
 ---

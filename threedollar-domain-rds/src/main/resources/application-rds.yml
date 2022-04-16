@@ -31,14 +31,14 @@ spring:
         jdbc-url: jdbc:h2:mem:testdb;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
         pool-name: HikariPool-Primary
         connection-test-query: SELECT 1
-        connection-timeout: 3000
+        connection-timeout: 5000
     secondary:
       hikari:
         driver-class-name: org.h2.Driver
         jdbc-url: jdbc:h2:mem:testdb;MODE=MYSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;
         pool-name: HikariPool-Seconary
         connection-test-query: SELECT 1
-        connection-timeout: 3000
+        connection-timeout: 5000
   flyway:
     enabled: false
 
@@ -67,7 +67,7 @@ spring:
         password:
         pool-name: HikariPool-Primary
         connection-test-query: SELECT 1
-        connection-timeout: 3000
+        connection-timeout: 5000
     secondary:
       hikari:
         driver-class-name: org.h2.Driver
@@ -76,7 +76,7 @@ spring:
         password:
         pool-name: HikariPool-Seconary
         connection-test-query: SELECT 1
-        connection-timeout: 3000
+        connection-timeout: 5000
   h2:
     console:
       enabled: true
@@ -113,7 +113,7 @@ spring:
         password: 3dollar
         pool-name: HikariPool-Primary
         connection-test-query: SELECT 1
-        connection-timeout: 3000
+        connection-timeout: 5000
     secondary:
       hikari:
         auto-commit: false
@@ -123,7 +123,7 @@ spring:
         password: 3dollar
         pool-name: HikariPool-Seconary
         connection-test-query: SELECT 1
-        connection-timeout: 3000
+        connection-timeout: 5000
   flyway:
     enabled: true
 
@@ -154,7 +154,7 @@ spring:
         password: ${secret.jdbc.password}
         pool-name: HikariPool-Primary
         connection-test-query: SELECT 1
-        connection-timeout: 3000
+        connection-timeout: 5000
     secondary:
       hikari:
         auto-commit: false
@@ -164,7 +164,7 @@ spring:
         password: ${secret.jdbc.password}
         pool-name: HikariPool-Seconary
         connection-test-query: SELECT 1
-        connection-timeout: 3000
+        connection-timeout: 5000
   flyway:
     enabled: true
 
