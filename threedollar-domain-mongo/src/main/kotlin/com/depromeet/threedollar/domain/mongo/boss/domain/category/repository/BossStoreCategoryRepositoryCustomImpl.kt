@@ -10,7 +10,7 @@ class BossStoreCategoryRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : BossStoreCategoryRepositoryCustom {
 
-    override fun findCategoriesByIds(categoriesIds: Set<String>): List<BossStoreCategory> {
+    override fun findAllCategoriesByIds(categoriesIds: Set<String>): List<BossStoreCategory> {
         return mongoTemplate.find(Query()
             .addCriteria(BossStoreCategory::id inValues categoriesIds)
         )

@@ -54,7 +54,7 @@ class BossAccountRegistrationAdminService(
 
     @Transactional(readOnly = true)
     fun getBossRegistrations(request: GetBossRegistrationsRequest): List<BossAccountRegistrationResponse> {
-        val registrations = registrationRepository.findWaitingRegistrationsLessThanCursorOrderByLatest(request.cursor, request.size)
+        val registrations = registrationRepository.findAllWaitingRegistrationsLessThanCursorOrderByLatest(request.cursor, request.size)
         val bossStoreCategoryMap: Map<String, BossStoreCategory> = bossStoreCategoryRepository.findAll().associateBy { it.id }
         return registrations.map {
             BossAccountRegistrationResponse.of(it, bossStoreCategoryMap)

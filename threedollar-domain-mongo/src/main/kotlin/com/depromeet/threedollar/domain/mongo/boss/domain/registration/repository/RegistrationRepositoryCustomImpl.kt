@@ -40,18 +40,18 @@ class RegistrationRepositoryCustomImpl(
         )
     }
 
-    override fun findWaitingRegistrationsLessThanCursorOrderByLatest(cursor: String?, size: Int): List<Registration> {
-        return cursor?.let {
-            mongoTemplate.find(Query()
+    override fun findAllWaitingRegistrationsLessThanCursorOrderByLatest(cursor: String?, size: Int): List<Registration> {
+        if (cursor == null) {
+            return mongoTemplate.find(Query()
                 .addCriteria(Registration::status isEqualTo RegistrationStatus.WAITING)
-                .addCriteria(Registration::id lt ObjectId(cursor))
                 .with(Sort.by(Sort.Direction.DESC, Registration::id.name))
                 .limit(size))
-        } ?: mongoTemplate.find(Query()
+        }
+        return mongoTemplate.find(Query()
             .addCriteria(Registration::status isEqualTo RegistrationStatus.WAITING)
+            .addCriteria(Registration::id lt ObjectId(cursor))
             .with(Sort.by(Sort.Direction.DESC, Registration::id.name))
-            .limit(size)
-        )
+            .limit(size))
     }
 
 }

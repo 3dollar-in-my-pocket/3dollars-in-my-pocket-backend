@@ -38,7 +38,7 @@ class BossStoreCommonService(
             BossStoreCategoryServiceUtils.validateExistsCategory(bossStoreCategoryRepository, it)
         }
 
-        val storeLocations: List<BossStoreLocation> = bossStoreLocationRepository.findNearBossStoreLocations(
+        val storeLocations: List<BossStoreLocation> = bossStoreLocationRepository.findAllNearBossStoreLocations(
             latitude = mapCoordinate.latitude,
             longitude = mapCoordinate.longitude,
             maxDistance = min(request.distanceKm, MAX_DISTANCE_KM),
@@ -77,7 +77,7 @@ class BossStoreCommonService(
         return BossStoreInfoResponse.of(
             bossStore = bossStore,
             location = bossStoreLocationRepository.findBossStoreLocationByBossStoreId(bossStore.id)?.location,
-            categories = bossStoreCategoryRepository.findCategoriesByIds(bossStore.categoriesIds),
+            categories = bossStoreCategoryRepository.findAllCategoriesByIds(bossStore.categoriesIds),
             openStartDateTime = bossStoreOpenTimeRepository.get(bossStore.id),
             geoCoordinate = geoCoordinate
         )

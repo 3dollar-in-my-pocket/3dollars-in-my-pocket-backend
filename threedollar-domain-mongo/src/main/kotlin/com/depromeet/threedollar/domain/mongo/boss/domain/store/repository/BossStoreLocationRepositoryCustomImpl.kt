@@ -14,7 +14,7 @@ class BossStoreLocationRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : BossStoreLocationRepositoryCustom {
 
-    override fun findNearBossStoreLocations(latitude: Double, longitude: Double, maxDistance: Double, limit: Int): List<BossStoreLocation> {
+    override fun findAllNearBossStoreLocations(latitude: Double, longitude: Double, maxDistance: Double, limit: Int): List<BossStoreLocation> {
         return mongoTemplate.find(Query()
             .addCriteria(
                 where(BossStoreLocation::location)

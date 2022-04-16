@@ -4,6 +4,6 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCate
 
 interface BossStoreCategoryRepositoryCustom {
 
-    fun findCategoriesByIds(categoriesIds: Set<String>): List<BossStoreCategory>
+    fun findAllCategoriesByIds(categoriesIds: Set<String>): List<BossStoreCategory>
 
 }

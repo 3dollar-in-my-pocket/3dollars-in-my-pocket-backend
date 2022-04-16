@@ -45,7 +45,7 @@ class AdminAdvertisementService(
     @Transactional(readOnly = true)
     fun retrieveAdvertisements(request: RetrieveAdvertisementsRequest): AdvertisementsWithPagingResponse {
         return AdvertisementsWithPagingResponse.of(
-            advertisements = advertisementRepository.findAllWithPage(request.size, request.page - 1),
+            advertisements = advertisementRepository.findAllByPositionAndPlatformWithPaging(request.size, request.page - 1, request.platform, request.position),
             totalCounts = advertisementRepository.findAllCounts()
         )
     }

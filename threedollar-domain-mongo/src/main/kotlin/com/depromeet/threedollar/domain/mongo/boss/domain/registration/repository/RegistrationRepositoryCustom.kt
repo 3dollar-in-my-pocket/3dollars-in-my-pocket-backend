@@ -11,6 +11,6 @@ interface RegistrationRepositoryCustom {
 
     fun findWaitingRegistrationBySocialIdAndSocialType(socialId: String, socialType: BossAccountSocialType): Registration?
 
-    fun findWaitingRegistrationsLessThanCursorOrderByLatest(cursor: String?, size: Int): List<Registration>
+    fun findAllWaitingRegistrationsLessThanCursorOrderByLatest(cursor: String?, size: Int): List<Registration>
 
 }

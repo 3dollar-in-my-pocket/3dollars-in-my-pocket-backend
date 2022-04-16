@@ -3,8 +3,10 @@ package com.depromeet.threedollar.domain.rds.user.domain.advertisement.repositor
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.Advertisement;
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPlatformType;
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPositionType;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,6 +18,7 @@ public class AdvertisementRepositoryCustomImpl implements AdvertisementRepositor
 
     private final JPAQueryFactory queryFactory;
 
+    @Nullable
     @Override
     public Advertisement findAdvertisementById(long advertisementId) {
         return queryFactory.selectFrom(advertisement)
@@ -38,12 +41,30 @@ public class AdvertisementRepositoryCustomImpl implements AdvertisementRepositor
     }
 
     @Override
-    public List<Advertisement> findAllWithPage(long size, int page) {
+    public List<Advertisement> findAllByPositionAndPlatformWithPaging(long size, int page, AdvertisementPlatformType platformType, AdvertisementPositionType positionType) {
         return queryFactory.selectFrom(advertisement)
+            .where(
+                eqPlatform(platformType),
+                eqPosition(positionType)
+            )
             .orderBy(advertisement.id.desc())
             .offset(page * size)
             .limit(size)
             .fetch();
+    }
+
+    private BooleanExpression eqPosition(AdvertisementPositionType positionType) {
+        if (positionType == null) {
+            return null;
+        }
+        return advertisement.positionType.eq(positionType);
+    }
+
+    private BooleanExpression eqPlatform(AdvertisementPlatformType platformType) {
+        if (platformType == null) {
+            return null;
+        }
+        return advertisement.platformType.eq(platformType);
     }
 
     @Override

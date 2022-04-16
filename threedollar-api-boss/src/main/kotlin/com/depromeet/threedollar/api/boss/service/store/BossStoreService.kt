@@ -52,7 +52,7 @@ class BossStoreService(
         return BossStoreInfoResponse.of(
             bossStore = bossStore,
             location = bossStoreLocationRepository.findBossStoreLocationByBossStoreId(bossStore.id)?.location,
-            categories = bossStoreCategoryRepository.findCategoriesByIds(bossStore.categoriesIds),
+            categories = bossStoreCategoryRepository.findAllCategoriesByIds(bossStore.categoriesIds),
             openStartDateTime = bossStoreOpenTimeRepository.get(bossStore.id)
         )
     }

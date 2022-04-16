@@ -4,6 +4,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.medal.Medal;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionType;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class MedalRepositoryCustomImpl implements MedalRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
+    @Nullable
     @Override
     public Medal findMedalById(Long medalId) {
         return queryFactory.selectFrom(medal)
