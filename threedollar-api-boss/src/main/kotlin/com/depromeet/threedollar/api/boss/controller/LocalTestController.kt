@@ -106,13 +106,9 @@ class LocalTestController(
         @RequestParam categoriesIds: Set<String>
     ): ApiResponse<String> {
         BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, categoriesIds)
-        if (bossStoreRepository.findBossStoreByBossId(bossId) != null) {
-            throw ConflictException("이미 존재합니다")
-        }
-
         val bossStore = bossStoreRepository.save(
             BossStore(
-                bossId = bossId,
+                bossId = "test${UUID.randomUUID()}",
                 name = "행복한 붕어빵",
                 imageUrl = "https://image.com",
                 introduction = "소개",
