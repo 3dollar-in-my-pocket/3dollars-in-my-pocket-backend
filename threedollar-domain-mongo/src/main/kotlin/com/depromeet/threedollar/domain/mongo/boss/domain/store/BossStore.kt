@@ -43,6 +43,14 @@ class BossStore(
         this.categoriesIds = categoriesIds
     }
 
+    fun isNotOwner(bossId: String): Boolean {
+        return !isOwner(bossId)
+    }
+
+    private fun isOwner(bossId: String): Boolean {
+        return this.bossId == bossId
+    }
+
     companion object {
         fun of(
             bossId: String,

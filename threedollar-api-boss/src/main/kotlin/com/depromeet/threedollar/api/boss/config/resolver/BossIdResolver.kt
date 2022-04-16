@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.api.boss.config.resolver
 
 import com.depromeet.threedollar.api.boss.config.session.SessionConstants.BOSS_ACCOUNT_ID
-import com.depromeet.threedollar.common.exception.model.InternalServerException
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.MethodParameter
 import org.springframework.web.bind.support.WebDataBinderFactory
@@ -21,9 +20,8 @@ class BossIdResolver : HandlerMethodArgumentResolver {
         mavContainer: ModelAndViewContainer?,
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?
-    ): Any {
+    ): Any? {
         return webRequest.getAttribute(BOSS_ACCOUNT_ID, 0)
-            ?: throw InternalServerException("bossId를 받아오지 못했습니다.")
     }
 
 }

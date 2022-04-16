@@ -15,7 +15,7 @@ import org.springframework.web.servlet.HandlerInterceptor
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-const val HEADER_BEARER_PREFIX = "Bearer "
+private const val HEADER_BEARER_PREFIX = "Bearer "
 
 @Component
 class AuthInterceptor(
@@ -28,8 +28,30 @@ class AuthInterceptor(
         if (handler !is HandlerMethod) {
             return true
         }
-        handler.getMethodAnnotation(Auth::class.java) ?: return true
+        val auth = handler.getMethodAnnotation(Auth::class.java) ?: return true
 
+        if (auth.optional) {
+            return optionalAuth(request)
+        }
+        return requiredAuth(request)
+    }
+
+    private fun optionalAuth(request: HttpServletRequest): Boolean {
+        val authorization = request.getHeader(HttpHeaders.AUTHORIZATION) ?: return true
+        if (authorization.split(HEADER_BEARER_PREFIX).size <= 1) {
+            return true
+        }
+        val sessionId = sessionRepository.findById(authorization.split(HEADER_BEARER_PREFIX)[1])
+        val bossAccountId: String? = sessionId?.getAttribute(BOSS_ACCOUNT_ID)
+        bossAccountId?.let {
+            if (bossAccountRepository.existsBossAccountById(bossAccountId)) {
+                request.setAttribute(BOSS_ACCOUNT_ID, bossAccountId)
+            }
+        }
+        return true
+    }
+
+    private fun requiredAuth(request: HttpServletRequest): Boolean {
         val header = request.getHeader(HttpHeaders.AUTHORIZATION)
             ?: throw UnAuthorizedException("빈 Authorization 헤더입니다 다시 로그인해주세요.")
 
@@ -40,14 +62,13 @@ class AuthInterceptor(
         val sessionId = header.split(HEADER_BEARER_PREFIX)[1]
         val bossAccountId: String = findSessionBySessionId(sessionId).getAttribute(BOSS_ACCOUNT_ID)
 
-        bossAccountRepository.findBossAccountById(bossAccountId)?.let {
-            request.setAttribute(BOSS_ACCOUNT_ID, it.id)
+        if (bossAccountRepository.existsBossAccountById(bossAccountId)) {
+            request.setAttribute(BOSS_ACCOUNT_ID, bossAccountId)
             return true
-        } ?: let {
-            registrationRepository.findWaitingRegistrationById(bossAccountId)?.let {
-                throw ForbiddenException("현재 가입 승인 대기중인 사장님 ($bossAccountId) 입니다", ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT)
-            } ?: throw UnAuthorizedException("해당하는 등록 번호($bossAccountId)를 가진 계정 혹은 대기중인 가입 신청은 존재하지 않습니다")
         }
+        registrationRepository.findWaitingRegistrationById(bossAccountId)?.let {
+            throw ForbiddenException("현재 가입 승인 대기중인 사장님 ($bossAccountId) 입니다", ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT)
+        } ?: throw UnAuthorizedException("해당하는 등록 번호($bossAccountId)를 가진 계정 혹은 대기중인 가입 신청은 존재하지 않습니다")
     }
 
     private fun findSessionBySessionId(sessionId: String): Session {

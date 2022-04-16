@@ -12,6 +12,12 @@ class BossAccountRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : BossAccountRepositoryCustom {
 
+    override fun existsBossAccountById(id: String): Boolean {
+        return mongoTemplate.exists(Query()
+            .addCriteria(BossAccount::id isEqualTo id), BossAccount::class.java
+        )
+    }
+
     override fun findBossAccountById(id: String): BossAccount? {
         return mongoTemplate.findOne(Query()
             .addCriteria(BossAccount::id isEqualTo id)

@@ -13,7 +13,7 @@ import org.springframework.web.servlet.HandlerInterceptor
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-const val TOKEN_PREFIX = "Bearer "
+private const val TOKEN_PREFIX = "Bearer "
 
 @Component
 class AuthInterceptor(

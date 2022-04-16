@@ -24,14 +24,17 @@ class BossStoreController(
 ) {
 
     @ApiOperation("특정 거리 안에 위치한 가게 목록을 조회합니다.", notes = "distanceKm=1: 반경 1km 이내의 가게 목록을 조회 (최대 2km 제한 중)")
+    @Auth(optional = true)
     @GetMapping("/v1/boss/stores/around")
     fun getAroundBossStores(
         @MapCoordinate mapCoordinate: CoordinateValue,
-        @Valid request: GetAroundBossStoresRequest
+        @Valid request: GetAroundBossStoresRequest,
+        @BossId bossId: String?
     ): ApiResponse<List<BossStoreAroundInfoResponse>> {
         return ApiResponse.success(bossStoreCommonService.getAroundBossStores(
             request = request,
-            mapCoordinate = mapCoordinate
+            mapCoordinate = mapCoordinate,
+            bossId = bossId
         ))
     }
 

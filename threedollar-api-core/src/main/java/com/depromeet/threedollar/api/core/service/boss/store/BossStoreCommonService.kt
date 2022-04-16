@@ -32,7 +32,8 @@ class BossStoreCommonService(
     fun getAroundBossStores(
         request: GetAroundBossStoresRequest,
         mapCoordinate: CoordinateValue,
-        geoCoordinate: CoordinateValue = CoordinateValue.of(0.0, 0.0)
+        geoCoordinate: CoordinateValue = CoordinateValue.of(0.0, 0.0),
+        bossId: String? = null
     ): List<BossStoreAroundInfoResponse> {
         request.categoryId?.let {
             BossStoreCategoryServiceUtils.validateExistsCategory(bossStoreCategoryRepository, it)
@@ -50,6 +51,7 @@ class BossStoreCommonService(
         val categoriesDictionary: Map<String, BossStoreCategory> = bossStoreCategoryRepository.findAll().associateBy { it.id }
 
         return bossStores.asSequence()
+            .filter { it.isNotOwner(bossId ?: "") }
             .map {
                 BossStoreAroundInfoResponse.of(
                     bossStore = it,

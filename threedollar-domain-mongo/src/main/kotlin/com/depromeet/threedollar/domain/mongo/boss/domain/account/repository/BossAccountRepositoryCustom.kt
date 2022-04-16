@@ -5,6 +5,8 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSoc
 
 interface BossAccountRepositoryCustom {
 
+    fun existsBossAccountById(id: String): Boolean
+
     fun findBossAccountById(id: String): BossAccount?
 
     fun findBossAccountBySocialInfo(socialId: String, socialType: BossAccountSocialType): BossAccount?
