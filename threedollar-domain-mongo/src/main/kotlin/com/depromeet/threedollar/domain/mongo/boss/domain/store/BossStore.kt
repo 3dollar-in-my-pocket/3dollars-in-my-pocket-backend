@@ -59,10 +59,6 @@ class BossStore(
         this.categoriesIds = categoriesIds
     }
 
-    fun patchCategoriesIds(categoriesIds: Set<String>?) {
-        categoriesIds?.let { updateCategoriesIds(it) }
-    }
-
     fun isNotOwner(bossId: String): Boolean {
         return !isOwner(bossId)
     }

@@ -50,10 +50,10 @@ class BossStoreService(
             bossStore.patchInfo(it.name, it.imageUrl, it.introduction, it.contactsNumber, it.snsUrl)
             bossStore.patchMenus(it.toMenus())
             bossStore.patchAppearanceDays(it.toAppearanceDays())
-            it.categoriesIds?.let { categoryId ->
-                BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, categoryId)
+            it.categoriesIds?.let { categoriesIds ->
+                BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, categoriesIds)
+                bossStore.updateCategoriesIds(categoriesIds)
             }
-            bossStore.patchCategoriesIds(request.categoriesIds)
         }
         bossStoreRepository.save(bossStore)
     }
