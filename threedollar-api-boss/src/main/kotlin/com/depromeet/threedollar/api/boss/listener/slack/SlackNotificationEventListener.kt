@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.boss.listener.slack
 
+import com.depromeet.threedollar.common.model.event.ApplicationStateChangedEvent
 import com.depromeet.threedollar.common.model.event.ServerExceptionOccurredEvent
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.boss.event.registration.NewBossAppliedRegistrationEvent
@@ -53,6 +54,18 @@ class SlackNotificationEventListener(
                 )
             )
         )
+    }
+
+    @Async
+    @EventListener
+    fun sendInfoNotification(event: ApplicationStateChangedEvent) {
+        slackNotificationApiClient.postMonitoringMessage(
+            PostSlackMessageRequest.of(
+                SlackNotificationMessageType.INFO_MESSAGE.generateMessage(
+                    event.applicationType.description,
+                    event.message,
+                    event.timeStamp
+                )))
     }
 
 }

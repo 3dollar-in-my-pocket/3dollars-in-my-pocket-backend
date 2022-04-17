@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.user.runner;
 
-import com.depromeet.threedollar.common.type.ApplicationType;
 import com.depromeet.threedollar.common.model.event.ApplicationStateChangedEvent;
+import com.depromeet.threedollar.common.type.ApplicationType;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.CommandLineRunner;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-@Profile({"prod"})
+@Profile({"dev", "prod"})
 @RequiredArgsConstructor
 @Component
 public class ApplicationEventRunner implements CommandLineRunner, ApplicationListener<ContextClosedEvent> {
