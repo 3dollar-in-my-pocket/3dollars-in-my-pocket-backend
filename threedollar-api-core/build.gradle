@@ -12,6 +12,7 @@ dependencies {
     // TestFixtures
     testImplementation(testFixtures(project(":threedollar-domain-mongo")))
     testImplementation(testFixtures(project(":threedollar-domain-redis")))
+    testImplementation(testFixtures(project(":threedollar-domain-rds")))
 }
 
 bootJar {

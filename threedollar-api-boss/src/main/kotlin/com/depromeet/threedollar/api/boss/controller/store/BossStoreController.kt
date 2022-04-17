@@ -5,6 +5,7 @@ import com.depromeet.threedollar.api.boss.config.resolver.BossId
 import com.depromeet.threedollar.api.boss.config.resolver.MapCoordinate
 import com.depromeet.threedollar.api.boss.service.store.BossStoreOpenService
 import com.depromeet.threedollar.api.boss.service.store.BossStoreService
+import com.depromeet.threedollar.api.boss.service.store.dto.request.PatchBossStoreInfoRequest
 import com.depromeet.threedollar.api.boss.service.store.dto.request.UpdateBossStoreInfoRequest
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.core.service.boss.store.BossStoreCommonService
@@ -79,7 +80,7 @@ class BossStoreController(
         return ApiResponse.success(bossStoreCommonService.getBossStore(bossStoreId))
     }
 
-    @ApiOperation("[인증] 사장님 자신의 가게의 정보를 수정합니다")
+    @ApiOperation("[인증] 사장님 자신의 가게의 정보를 수정합니다 (전체 수정)")
     @Auth
     @PutMapping("/v1/boss/store/my-store/{bossStoreId}")
     fun updateBossStoreInfo(
@@ -88,6 +89,18 @@ class BossStoreController(
         @BossId bossId: String
     ): ApiResponse<String> {
         bossStoreService.updateBossStoreInfo(bossStoreId, request, bossId)
+        return ApiResponse.OK
+    }
+
+    @ApiOperation("[인증] 사장님 자신의 가게의 정보를 수정합니다 (명시한 리소스만 수정)")
+    @Auth
+    @PatchMapping("/v1/boss/store/my-store/{bossStoreId}")
+    fun patchBossStoreInfo(
+        @PathVariable bossStoreId: String,
+        @Valid @RequestBody request: PatchBossStoreInfoRequest,
+        @BossId bossId: String
+    ): ApiResponse<String> {
+        bossStoreService.patchBossStoreInfo(bossStoreId, request, bossId)
         return ApiResponse.OK
     }
 

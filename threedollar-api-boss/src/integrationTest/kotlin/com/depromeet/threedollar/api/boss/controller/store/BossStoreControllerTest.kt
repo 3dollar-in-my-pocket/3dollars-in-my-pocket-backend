@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.boss.controller.store
 
-import com.depromeet.threedollar.api.boss.controller.SetupBossControllerTest
+import com.depromeet.threedollar.api.boss.controller.SetupBossAccountControllerTest
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAppearanceDayResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreMenuResponse
@@ -25,7 +25,7 @@ internal class BossStoreControllerTest(
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossStoreLocationRepository: BossStoreLocationRepository,
     private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository
-) : SetupBossControllerTest() {
+) : SetupBossAccountControllerTest() {
 
     @AfterEach
     fun cleanUp() {

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse
 private const val USER_AGENT_HEADER = "User-Agent"
 private const val X_FORWARDED_FOR_HEADER = "X-Forwarded-For"
 private const val ANDROID_VERSION_HEADER = "X-Android-Service-Version"
-private const val IOS_USER_AGENT_POSTFIX = " (com.macgongmon"
+private const val IOS_USER_AGENT_POSTFIX = "(com.macgongmon"
 
 @Component
 class UserMetadataInterceptor : HandlerInterceptor {
@@ -35,7 +35,7 @@ class UserMetadataInterceptor : HandlerInterceptor {
 
     private fun extractAppVersion(platform: OsPlatformType, request: HttpServletRequest): String? {
         return when (platform) {
-            OsPlatformType.IPHONE -> request.getHeader(USER_AGENT_HEADER).split(IOS_USER_AGENT_POSTFIX)[0]
+            OsPlatformType.IPHONE -> request.getHeader(USER_AGENT_HEADER).split(IOS_USER_AGENT_POSTFIX)[0].trim()
             OsPlatformType.ANDROID -> request.getHeader(ANDROID_VERSION_HEADER)
             else -> null
         }

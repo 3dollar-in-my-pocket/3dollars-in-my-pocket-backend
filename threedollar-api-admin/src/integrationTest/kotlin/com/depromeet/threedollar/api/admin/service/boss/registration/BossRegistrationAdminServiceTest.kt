@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.admin.service.boss.registration
 
-import com.depromeet.threedollar.api.admin.service.AdminSetUpTest
+import com.depromeet.threedollar.api.admin.service.SetupAdminServiceTest
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
@@ -24,7 +24,7 @@ internal class BossRegistrationAdminServiceTest(
     private val registrationRepository: RegistrationRepository,
     private val bossAccountRepository: BossAccountRepository,
     private val bossStoreRepository: BossStoreRepository
-) : AdminSetUpTest() {
+) : SetupAdminServiceTest() {
 
     @AfterEach
     fun cleanUp() {

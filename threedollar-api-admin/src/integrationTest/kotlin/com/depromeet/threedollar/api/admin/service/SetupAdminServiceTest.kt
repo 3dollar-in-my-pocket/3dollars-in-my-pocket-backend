@@ -9,7 +9,7 @@ import org.springframework.test.context.TestConstructor
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
-internal abstract class AdminSetUpTest {
+internal abstract class SetupAdminServiceTest {
 
     @Autowired
     private lateinit var adminRepository: AdminRepository

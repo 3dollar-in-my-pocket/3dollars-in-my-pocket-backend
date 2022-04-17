@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 
-internal abstract class SetupBossControllerTest : SetupControllerTest() {
+internal abstract class SetupBossAccountControllerTest : SetupControllerTest() {
 
     @Autowired
     protected lateinit var bossAccountRepository: BossAccountRepository

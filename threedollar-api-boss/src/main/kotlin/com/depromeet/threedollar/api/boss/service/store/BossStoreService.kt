@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.boss.service.store
 
+import com.depromeet.threedollar.api.boss.service.store.dto.request.PatchBossStoreInfoRequest
 import com.depromeet.threedollar.api.boss.service.store.dto.request.UpdateBossStoreInfoRequest
 import com.depromeet.threedollar.api.core.service.boss.category.BossStoreCategoryServiceUtils
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreInfoResponse
@@ -34,6 +35,25 @@ class BossStoreService(
             bossStore.updateMenus(request.toMenus())
             bossStore.updateAppearanceDays(request.toAppearanceDays())
             bossStore.updateCategoriesIds(request.categoriesIds)
+        }
+        bossStoreRepository.save(bossStore)
+    }
+
+    @Transactional
+    fun patchBossStoreInfo(
+        bossStoreId: String,
+        request: PatchBossStoreInfoRequest,
+        bossId: String
+    ) {
+        val bossStore = BossStoreServiceUtils.findBossStoreByIdAndBossId(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
+        request.let {
+            bossStore.patchInfo(it.name, it.imageUrl, it.introduction, it.contactsNumber, it.snsUrl)
+            bossStore.patchMenus(it.toMenus())
+            bossStore.patchAppearanceDays(it.toAppearanceDays())
+            it.categoriesIds?.let { categoryId ->
+                BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, categoryId)
+            }
+            bossStore.patchCategoriesIds(request.categoriesIds)
         }
         bossStoreRepository.save(bossStore)
     }

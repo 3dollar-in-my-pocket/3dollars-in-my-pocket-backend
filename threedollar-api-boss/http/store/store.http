@@ -126,3 +126,22 @@ client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
+
+
+### 사장님 가게의 정보를 수정합니다 (PATCH)
+PATCH {{host_boss_api}}/v1/boss/store/my-store/{{BOSS_STORE_ID}}
+Content-Type: application/json
+Authorization: Bearer {{BOSS_AUTHORIZATION}}
+
+{
+    "name": "PATCH NAME",
+    "menus": [],
+    "appearanceDays": [],
+    "categoriesIds": []
+}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}

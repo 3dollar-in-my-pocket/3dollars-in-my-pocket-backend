@@ -66,7 +66,12 @@ internal class BossAccountServiceTest(
             val request = UpdateBossAccountInfoRequest(name = name, isSetupNotification = false)
 
             // when & then
-            assertThatThrownBy { bossAccountService.updateBossAccountInfo("Not Found Boss Id", request) }.isInstanceOf(NotFoundException::class.java)
+            assertThatThrownBy {
+                bossAccountService.updateBossAccountInfo(
+                    bossId = "Not Found Boss Id",
+                    request = request
+                )
+            }.isInstanceOf(NotFoundException::class.java)
         }
 
     }

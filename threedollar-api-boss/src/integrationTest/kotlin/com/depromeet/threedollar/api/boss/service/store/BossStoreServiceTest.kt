@@ -1,7 +1,9 @@
 package com.depromeet.threedollar.api.boss.service.store
 
+import com.depromeet.threedollar.api.boss.service.SetupBossAccountServiceTest
 import com.depromeet.threedollar.api.boss.service.store.dto.request.AppearanceDayRequest
 import com.depromeet.threedollar.api.boss.service.store.dto.request.MenuRequest
+import com.depromeet.threedollar.api.boss.service.store.dto.request.PatchBossStoreInfoRequest
 import com.depromeet.threedollar.api.boss.service.store.dto.request.UpdateBossStoreInfoRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.type.DayOfTheWeek
@@ -22,15 +24,16 @@ import java.time.LocalTime
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
-internal class BossStoreServiceTest(
+internal class BossStoreSetupBossAccountServiceTest(
     private val bossStoreService: BossStoreService,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossDeletedStoreRepository: BossDeletedStoreRepository
-) {
+) : SetupBossAccountServiceTest() {
 
     @AfterEach
     fun cleanUp() {
+        super.cleanup()
         bossStoreRepository.deleteAll()
         bossDeletedStoreRepository.deleteAll()
     }
@@ -41,9 +44,9 @@ internal class BossStoreServiceTest(
         @Test
         fun `사장님 가게의 정보를 수정한다`() {
             // given
-            val categoriesIds = createMockCategory(bossStoreCategoryRepository, "한식", "일식")
+            val categoriesIds = createMockCategory(bossStoreCategoryRepository, "한식", "일식", "중식")
             val bossStore = BossStoreCreator.create(
-                bossId = "bossId",
+                bossId = bossId,
                 name = "사장님 가게",
             )
             bossStoreRepository.save(bossStore)
@@ -69,7 +72,7 @@ internal class BossStoreServiceTest(
             )
 
             // when
-            bossStoreService.updateBossStoreInfo(bossStore.id, request, bossStore.bossId)
+            bossStoreService.updateBossStoreInfo(bossStore.id, request, bossId)
 
             // then
             val bossStores = bossStoreRepository.findAll()
@@ -97,6 +100,7 @@ internal class BossStoreServiceTest(
                         )
                     )
                     assertThat(it.categoriesIds).containsExactlyInAnyOrderElementsOf(categoriesIds)
+                    assertThat(it.bossId).isEqualTo(bossId)
                 }
             })
         }
@@ -106,7 +110,7 @@ internal class BossStoreServiceTest(
             // given
             val categoriesIds = createMockCategory(bossStoreCategoryRepository, "한식", "일식")
             val bossStore = BossStoreCreator.create(
-                bossId = "bossId",
+                bossId = bossId,
                 name = "사장님 가게",
             )
             bossStoreRepository.save(bossStore)
@@ -138,12 +142,148 @@ internal class BossStoreServiceTest(
     }
 
     @Nested
+    inner class PatchBossStoreTest {
+
+        @Test
+        fun `따로 파라미터에 명시하지 않은 정보들은 수정되지 않는다`() {
+            // given
+            val bossStore = BossStoreCreator.create(
+                bossId = bossId,
+                name = "사장님 가게",
+                menus = listOf(BossStoreMenu(name = "슈붕", price = 1000, imageUrl = "https://image.png", groupName = "붕어빵")),
+                appearanceDays = setOf(BossStoreAppearanceDay(dayOfTheWeek = DayOfTheWeek.FRIDAY, openingHours = TimeInterval(LocalTime.of(8, 0), LocalTime.of(10, 0)))),
+                categoriesIds = setOf("카테고리 1")
+            )
+            bossStoreRepository.save(bossStore)
+
+            val request = PatchBossStoreInfoRequest()
+
+            // when
+            bossStoreService.patchBossStoreInfo(bossStore.id, request, bossId)
+
+            // then
+            val bossStores = bossStoreRepository.findAll()
+            assertAll({
+                assertThat(bossStores).hasSize(1)
+                bossStores[0].let {
+                    assertThat(it.bossId).isEqualTo(bossStore.bossId)
+                    assertThat(it.name).isEqualTo(bossStore.name)
+                    assertThat(it.imageUrl).isEqualTo(bossStore.imageUrl)
+                    assertThat(it.introduction).isEqualTo(bossStore.introduction)
+                    assertThat(it.contactsNumber).isEqualTo(bossStore.contactsNumber)
+                    assertThat(it.snsUrl).isEqualTo(bossStore.snsUrl)
+                    assertThat(it.menus).isEqualTo(bossStore.menus)
+                    assertThat(it.appearanceDays).isEqualTo(bossStore.appearanceDays)
+                    assertThat(it.categoriesIds).isEqualTo(bossStore.categoriesIds)
+                }
+            })
+        }
+
+        @Test
+        fun `수정 요청한 이름만 변경된다`() {
+            // given
+            val newName = "새로운 가게 이름"
+            val bossStore = BossStoreCreator.create(
+                bossId = bossId,
+                name = "사장님 가게",
+            )
+            bossStoreRepository.save(bossStore)
+
+            val request = PatchBossStoreInfoRequest(
+                name = newName
+            )
+
+            // when
+            bossStoreService.patchBossStoreInfo(bossStore.id, request, bossId)
+
+            // then
+            val bossStores = bossStoreRepository.findAll()
+            assertAll({
+                assertThat(bossStores).hasSize(1)
+                bossStores[0].let {
+                    assertThat(it.name).isEqualTo(newName)
+                    assertThat(it.imageUrl).isEqualTo(bossStore.imageUrl)
+                    assertThat(it.introduction).isEqualTo(bossStore.introduction)
+                    assertThat(it.contactsNumber).isEqualTo(bossStore.contactsNumber)
+                    assertThat(it.snsUrl).isEqualTo(bossStore.snsUrl)
+                    assertThat(it.bossId).isEqualTo(bossId)
+                }
+            })
+        }
+
+        @Test
+        fun `사장님 가게의 메뉴 정보를 수정한다`() {
+            // given
+            val bossStore = BossStoreCreator.create(
+                bossId = bossId,
+                name = "사장님 가게",
+                menus = listOf(BossStoreMenu(name = "슈붕", price = 1000, imageUrl = "https://image.png", groupName = "붕어빵"))
+            )
+            bossStoreRepository.save(bossStore)
+
+            val request = PatchBossStoreInfoRequest(
+                menus = listOf(
+                    MenuRequest(name = "팥 붕어빵", price = 1000, imageUrl = "https://menu.png", groupName = "붕어빵"),
+                    MenuRequest(name = "슈크림 붕어빵", price = 1000, imageUrl = "https://menu.png", groupName = "붕어빵")
+                )
+            )
+
+            // when
+            bossStoreService.patchBossStoreInfo(bossStore.id, request, bossId)
+
+            // then
+            val bossStores = bossStoreRepository.findAll()
+            assertAll({
+                assertThat(bossStores).hasSize(1)
+                bossStores[0].let {
+                    assertThat(it.menus).hasSize(2)
+                    assertThat(it.menus[0].name).isEqualTo("팥 붕어빵")
+                    assertThat(it.menus[1].name).isEqualTo("슈크림 붕어빵")
+                }
+            })
+        }
+
+        @Test
+        fun `메뉴 리스트를 빈 리스트로 요청하면, 모든 메뉴가 삭제된다`() {
+            // given
+            val bossStore = BossStoreCreator.create(
+                bossId = bossId,
+                name = "사장님 가게",
+                menus = listOf(BossStoreMenu(name = "슈붕", price = 1000, imageUrl = "https://image.png", groupName = "붕어빵")),
+                appearanceDays = setOf(BossStoreAppearanceDay(dayOfTheWeek = DayOfTheWeek.FRIDAY, openingHours = TimeInterval(LocalTime.of(8, 0), LocalTime.of(10, 0)))),
+                categoriesIds = setOf("카테고리 1")
+            )
+            bossStoreRepository.save(bossStore)
+
+            val request = PatchBossStoreInfoRequest(
+                menus = listOf(),
+                categoriesIds = setOf(),
+                appearanceDays = setOf()
+            )
+
+            // when
+            bossStoreService.patchBossStoreInfo(bossStore.id, request, bossId)
+
+            // then
+            val bossStores = bossStoreRepository.findAll()
+            assertAll({
+                assertThat(bossStores).hasSize(1)
+                bossStores[0].let {
+                    assertThat(it.menus).isEmpty()
+                    assertThat(it.categoriesIds).isEmpty()
+                    assertThat(it.appearanceDays).isEmpty()
+                }
+            })
+        }
+
+    }
+
+    @Nested
     inner class DeleteBossStoreByBossIdTest {
 
         @Test
         fun `사장님 계정의 가게들을 삭제한다`() {
             // given
-            val bossId = "bossId"
             val bossStore = BossStoreCreator.create(
                 bossId = bossId,
                 name = "사장님 가게",
@@ -163,7 +303,6 @@ internal class BossStoreServiceTest(
             // given
             val categoriesIds = createMockCategory(bossStoreCategoryRepository, "한식", "일식")
 
-            val bossId = "bossId"
             val name = "사장님 가게"
             val imageUrl = "https://image.png"
             val contactsNumber = ContactsNumber.of("010-1234-1234")
@@ -205,7 +344,7 @@ internal class BossStoreServiceTest(
         fun `다른 사장님의 가게를 삭제할 수 없다`() {
             // given
             val bossStore = BossStoreCreator.create(
-                bossId = "bossId",
+                bossId = bossId,
                 name = "사장님 가게"
             )
             bossStoreRepository.save(bossStore)

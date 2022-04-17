@@ -31,16 +31,36 @@ class BossStore(
         this.snsUrl = snsUrl
     }
 
+    fun patchInfo(name: String?, imageUrl: String?, introduction: String?, contactsNumber: String?, snsUrl: String?) {
+        name?.let { this.name = it }
+        imageUrl?.let { this.imageUrl = it }
+        introduction?.let { this.introduction = introduction }
+        contactsNumber?.let { this.contactsNumber = ContactsNumber.of(it) }
+        snsUrl?.let { this.snsUrl = snsUrl }
+    }
+
     fun updateMenus(menus: List<BossStoreMenu>) {
         this.menus = menus
+    }
+
+    fun patchMenus(menus: List<BossStoreMenu>?) {
+        menus?.let { updateMenus(it) }
     }
 
     fun updateAppearanceDays(appearanceDays: Set<BossStoreAppearanceDay>) {
         this.appearanceDays = appearanceDays
     }
 
+    fun patchAppearanceDays(appearanceDays: Set<BossStoreAppearanceDay>?) {
+        appearanceDays?.let { updateAppearanceDays(it) }
+    }
+
     fun updateCategoriesIds(categoriesIds: Set<String>) {
         this.categoriesIds = categoriesIds
+    }
+
+    fun patchCategoriesIds(categoriesIds: Set<String>?) {
+        categoriesIds?.let { updateCategoriesIds(it) }
     }
 
     fun isNotOwner(bossId: String): Boolean {
