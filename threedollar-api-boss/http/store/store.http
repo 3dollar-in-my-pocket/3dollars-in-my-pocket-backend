@@ -74,26 +74,22 @@ Authorization: Bearer {{BOSS_AUTHORIZATION}}
         {
             "name": "슈크림 붕어빵 2개",
             "price": 1000,
-            "imageUrl": "https://storage.dev.threedollars.co.kr/popup/adv_store_category_20220121_threedollars.png",
-            "groupName": "붕어빵"
+            "imageUrl": "https://storage.dev.threedollars.co.kr/popup/adv_store_category_20220121_threedollars.png"
         },
         {
             "name": "팥 붕어빵 2개",
             "price": 1000,
-            "imageUrl": "https://storage.dev.threedollars.co.kr/popup/adv_store_category_20220121_threedollars.png",
-            "groupName": "붕어빵"
-        },
-                {
-            "name": "팥 붕어빵 5개",
-            "price": 2000,
-            "imageUrl": "https://storage.dev.threedollars.co.kr/popup/adv_store_category_20220121_threedollars.png",
-            "groupName": "붕어빵"
+            "imageUrl": "https://storage.dev.threedollars.co.kr/popup/adv_store_category_20220121_threedollars.png"
         },
         {
             "name": "팥 붕어빵 5개",
             "price": 2000,
-            "imageUrl": "https://storage.dev.threedollars.co.kr/popup/adv_store_category_20220121_threedollars.png",
-            "groupName": "붕어빵"
+            "imageUrl": "https://storage.dev.threedollars.co.kr/popup/adv_store_category_20220121_threedollars.png"
+        },
+        {
+            "name": "팥 붕어빵 5개",
+            "price": 2000,
+            "imageUrl": "https://storage.dev.threedollars.co.kr/popup/adv_store_category_20220121_threedollars.png"
         }
     ],
     "appearanceDays": [

@@ -142,7 +142,6 @@ data class BossStoreMenuResponse(
     val name: String,
     val price: Int,
     val imageUrl: String?,
-    val groupName: String
 ) {
 
     companion object {
@@ -151,7 +150,6 @@ data class BossStoreMenuResponse(
                 name = menu.name,
                 price = menu.price,
                 imageUrl = menu.imageUrl,
-                groupName = menu.groupName
             )
         }
     }

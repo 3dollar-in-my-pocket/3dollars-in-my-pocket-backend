@@ -3,7 +3,6 @@ package com.depromeet.threedollar.api.boss.service.store.dto.request
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppearanceDay
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenu
-import com.depromeet.threedollar.domain.mongo.common.domain.TimeInterval
 import org.hibernate.validator.constraints.URL
 import java.time.LocalTime
 import javax.validation.constraints.Size
@@ -52,15 +51,13 @@ data class MenuRequest(
     val name: String,
     val price: Int,
     val imageUrl: String?,
-    val groupName: String
 ) {
 
     fun toMenu(): BossStoreMenu {
-        return BossStoreMenu(
+        return BossStoreMenu.of(
             name = name,
             price = price,
-            imageUrl = imageUrl,
-            groupName = groupName
+            imageUrl = imageUrl
         )
     }
 
@@ -75,9 +72,10 @@ data class AppearanceDayRequest(
 ) {
 
     fun toAppearanceDay(): BossStoreAppearanceDay {
-        return BossStoreAppearanceDay(
+        return BossStoreAppearanceDay.of(
             dayOfTheWeek = dayOfTheWeek,
-            openingHours = TimeInterval(startTime, endTime),
+            startTime = startTime,
+            endTime = endTime,
             locationDescription = locationDescription
         )
     }

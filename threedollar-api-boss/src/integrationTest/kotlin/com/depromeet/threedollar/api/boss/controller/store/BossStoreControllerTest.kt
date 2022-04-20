@@ -9,7 +9,6 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCate
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.*
 import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
-import com.depromeet.threedollar.domain.mongo.common.domain.TimeInterval
 import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenTimeRepository
 import org.hamcrest.Matchers.hasSize
 import org.junit.jupiter.api.AfterEach
@@ -49,8 +48,13 @@ internal class BossStoreControllerTest(
             introduction = "introduction",
             snsUrl = "https://sns.com",
             contactsNumber = ContactsNumber.of("010-1234-1234"),
-            menus = listOf(BossStoreMenu("붕어빵", 2000, "https://menu.png", "붕어빵")),
-            appearanceDays = setOf(BossStoreAppearanceDay(DayOfTheWeek.FRIDAY, TimeInterval(LocalTime.of(8, 0), LocalTime.of(10, 0)), "강남역")),
+            menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
+            appearanceDays = setOf(BossStoreAppearanceDayCreator.create(
+                dayOfTheWeek = DayOfTheWeek.FRIDAY,
+                startTime = LocalTime.of(8, 0),
+                endTime = LocalTime.of(10, 0),
+                locationDescription = "강남역")
+            ),
             categoriesIds = setOf(category.id)
         )
         bossStoreRepository.save(bossStore)
@@ -84,7 +88,6 @@ internal class BossStoreControllerTest(
                 jsonPath("$.data.menus[0].name") { value("붕어빵") }
                 jsonPath("$.data.menus[0].price") { value(2000) }
                 jsonPath("$.data.menus[0].imageUrl") { value("https://menu.png") }
-                jsonPath("$.data.menus[0].groupName") { value("붕어빵") }
 
                 jsonPath("$.data.appearanceDays") { hasSize<BossStoreAppearanceDayResponse>(1) }
                 jsonPath("$.data.appearanceDays[0].dayOfTheWeek") { value(DayOfTheWeek.FRIDAY.name) }
@@ -116,8 +119,8 @@ internal class BossStoreControllerTest(
             introduction = "introduction",
             snsUrl = "https://sns.com",
             contactsNumber = ContactsNumber.of("010-1234-1234"),
-            menus = listOf(BossStoreMenu("붕어빵", 2000, "https://menu.png", "붕어빵")),
-            appearanceDays = setOf(BossStoreAppearanceDay(DayOfTheWeek.FRIDAY, TimeInterval(LocalTime.of(8, 0), LocalTime.of(10, 0)), "강남역")),
+            menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
+            appearanceDays = setOf(BossStoreAppearanceDayCreator.create(DayOfTheWeek.FRIDAY, LocalTime.of(8, 0), LocalTime.of(10, 0), "강남역")),
             categoriesIds = setOf(category.id)
         )
         bossStoreRepository.save(bossStore)
@@ -154,7 +157,6 @@ internal class BossStoreControllerTest(
                     jsonPath("$.data.menus[0].name") { value("붕어빵") }
                     jsonPath("$.data.menus[0].price") { value(2000) }
                     jsonPath("$.data.menus[0].imageUrl") { value("https://menu.png") }
-                    jsonPath("$.data.menus[0].groupName") { value("붕어빵") }
 
                     jsonPath("$.data.appearanceDays") { hasSize<BossStoreAppearanceDayResponse>(1) }
                     jsonPath("$.data.appearanceDays[0].dayOfTheWeek") { value(DayOfTheWeek.FRIDAY.name) }

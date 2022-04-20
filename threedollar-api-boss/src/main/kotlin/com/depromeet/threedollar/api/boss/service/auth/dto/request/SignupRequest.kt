@@ -1,12 +1,9 @@
 package com.depromeet.threedollar.api.boss.service.auth.dto.request
 
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationBossForm
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStoreForm
-import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
-import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
 import org.hibernate.validator.constraints.URL
 import javax.validation.constraints.Size
 
@@ -33,16 +30,17 @@ data class SignupRequest(
 ) {
 
     fun toEntity(socialId: String): Registration {
-        return Registration(
-            boss = RegistrationBossForm(
-                socialInfo = BossAccountSocialInfo.of(socialId, socialType),
+        return Registration.of(
+            boss = RegistrationBossForm.of(
+                socialId = socialId,
+                socialType = socialType,
                 name = bossName,
-                businessNumber = BusinessNumber.of(businessNumber)
+                businessNumber = businessNumber
             ),
-            store = RegistrationStoreForm(
+            store = RegistrationStoreForm.of(
                 name = storeName,
                 categoriesIds = storeCategoriesIds,
-                contactsNumber = ContactsNumber.of(contactsNumber),
+                contactsNumber = contactsNumber,
                 certificationPhotoUrl = certificationPhotoUrl
             )
         )

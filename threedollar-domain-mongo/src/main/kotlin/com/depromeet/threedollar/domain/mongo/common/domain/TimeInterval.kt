@@ -14,4 +14,16 @@ data class TimeInterval(
         }
     }
 
+    companion object {
+        fun of(
+            startTime: LocalTime,
+            endTime: LocalTime
+        ): TimeInterval {
+            return TimeInterval(
+                startTime = startTime,
+                endTime = endTime
+            )
+        }
+    }
+
 }

@@ -7,4 +7,18 @@ import org.springframework.data.mongodb.core.mapping.Document
 class BossStoreCategory(
     val name: String,
     val sequencePriority: Int
-) : BaseDocument()
+) : BaseDocument() {
+
+    companion object {
+        fun of(
+            name: String,
+            sequencePriority: Int
+        ): BossStoreCategory {
+            return BossStoreCategory(
+                name = name,
+                sequencePriority = sequencePriority
+            )
+        }
+    }
+
+}

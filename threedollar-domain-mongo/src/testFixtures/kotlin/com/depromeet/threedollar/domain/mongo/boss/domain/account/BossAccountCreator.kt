@@ -15,7 +15,7 @@ object BossAccountCreator {
     ): BossAccount {
         return BossAccount(
             name = name,
-            socialInfo = BossAccountSocialInfo.of(socialId, socialType),
+            socialInfo = BossAccountSocialInfo(socialId, socialType),
             businessNumber = businessNumber,
             isSetupNotification = isSetupNotification
         )

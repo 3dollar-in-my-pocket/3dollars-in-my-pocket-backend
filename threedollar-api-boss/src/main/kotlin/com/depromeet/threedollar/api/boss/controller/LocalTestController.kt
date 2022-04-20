@@ -26,10 +26,8 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registrat
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.*
 import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
 import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
-import com.depromeet.threedollar.domain.mongo.common.domain.TimeInterval
 import io.swagger.annotations.ApiOperation
 import org.springframework.context.annotation.Profile
-import org.springframework.data.geo.Point
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
 import java.time.LocalTime
@@ -76,18 +74,16 @@ class LocalTestController(
         @RequestParam contactsNumber: String,
         @RequestParam businessNumber: String
     ): ApiResponse<String> {
-        val registration = Registration(
-            boss = RegistrationBossForm(
-                socialInfo = BossAccountSocialInfo(
-                    socialId = UUID.randomUUID().toString(),
-                    socialType = BossAccountSocialType.KAKAO
-                ),
+        val registration = Registration.of(
+            boss = RegistrationBossForm.of(
+                socialId = UUID.randomUUID().toString(),
+                socialType = BossAccountSocialType.KAKAO,
                 name = bossName,
-                businessNumber = BusinessNumber.of(businessNumber),
+                businessNumber = businessNumber,
             ),
-            store = RegistrationStoreForm(
+            store = RegistrationStoreForm.of(
                 name = "가게 이름",
-                contactsNumber = ContactsNumber.of(contactsNumber),
+                contactsNumber = contactsNumber,
                 categoriesIds = categoriesIds,
                 certificationPhotoUrl = certificationPhotoUrl
             )
@@ -115,40 +111,33 @@ class LocalTestController(
                 contactsNumber = ContactsNumber.of("010-1234-1234"),
                 snsUrl = "https://sns.example.com",
                 menus = listOf(
-                    BossStoreMenu(
+                    BossStoreMenu.of(
                         name = "아저씨 못난이 핫도그",
                         price = 5000,
-                        imageUrl = "https://menu-one.png",
-                        groupName = "아저씨 핫도그"
+                        imageUrl = "https://menu-one.png"
                     ),
-                    BossStoreMenu(
+                    BossStoreMenu.of(
                         name = "팥 붕어빵 2개",
                         price = 1000,
-                        imageUrl = "https://menu-two.png",
-                        groupName = "붕어빵"
+                        imageUrl = "https://menu-two.png"
                     ),
-                    BossStoreMenu(
+                    BossStoreMenu.of(
                         name = "슈크림 붕어빵 2개",
                         price = 1000,
-                        imageUrl = "https://menu-three.png",
-                        groupName = "붕어빵"
+                        imageUrl = "https://menu-three.png"
                     ),
                 ),
                 appearanceDays = setOf(
-                    BossStoreAppearanceDay(
+                    BossStoreAppearanceDay.of(
                         dayOfTheWeek = DayOfTheWeek.MONDAY,
-                        openingHours = TimeInterval(
-                            startTime = LocalTime.of(10, 0),
-                            endTime = LocalTime.of(20, 0)
-                        ),
+                        startTime = LocalTime.of(10, 0),
+                        endTime = LocalTime.of(20, 0),
                         locationDescription = "서울특별시 강남역 0번 출구"
                     ),
-                    BossStoreAppearanceDay(
+                    BossStoreAppearanceDay.of(
                         dayOfTheWeek = DayOfTheWeek.WEDNESDAY,
-                        openingHours = TimeInterval(
-                            startTime = LocalTime.of(10, 0),
-                            endTime = LocalTime.of(20, 0)
-                        ),
+                        startTime = LocalTime.of(10, 0),
+                        endTime = LocalTime.of(20, 0),
                         locationDescription = "서울특별시 강남역 0번 출구"
                     )
                 ),
@@ -157,9 +146,10 @@ class LocalTestController(
         )
 
         bossStoreLocationRepository.save(
-            BossStoreLocation(
+            BossStoreLocation.of(
                 bossStoreId = bossStore.id,
-                location = Point(longitude, latitude),
+                longitude = longitude,
+                latitude = latitude
             )
         )
         return ApiResponse.success(bossStore.id)
@@ -171,7 +161,7 @@ class LocalTestController(
         @RequestParam name: String,
         @RequestParam priority: Int
     ): ApiResponse<String> {
-        val category = BossStoreCategory(
+        val category = BossStoreCategory.of(
             name = name,
             sequencePriority = priority
         )

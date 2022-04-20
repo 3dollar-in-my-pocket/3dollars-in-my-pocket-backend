@@ -1,10 +1,7 @@
 package com.depromeet.threedollar.domain.mongo.boss.domain.registration
 
 import com.depromeet.threedollar.domain.mongo.TestFixture
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
-import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
-import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
 
 @TestFixture
 object RegistrationCreator {
@@ -21,17 +18,15 @@ object RegistrationCreator {
         status: RegistrationStatus = RegistrationStatus.WAITING
     ): Registration {
         return Registration(
-            boss = RegistrationBossForm(
-                socialInfo = BossAccountSocialInfo(
-                    socialId = socialId,
-                    socialType = socialType
-                ),
+            boss = RegistrationBossForm.of(
+                socialId = socialId,
+                socialType = socialType,
                 name = bossName,
-                businessNumber = BusinessNumber.of(businessNumber)
+                businessNumber = businessNumber
             ),
-            store = RegistrationStoreForm(
+            store = RegistrationStoreForm.of(
                 name = storeName,
-                contactsNumber = ContactsNumber.of(contactsNumber),
+                contactsNumber = contactsNumber,
                 categoriesIds = categoriesIds,
                 certificationPhotoUrl = certificationPhotoUrl
             ),

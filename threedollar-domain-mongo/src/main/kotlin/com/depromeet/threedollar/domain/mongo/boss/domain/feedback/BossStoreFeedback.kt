@@ -11,5 +11,22 @@ class BossStoreFeedback(
     val userId: Long,
     val feedbackType: BossStoreFeedbackType,
     val date: LocalDate
-) : BaseDocument()
+) : BaseDocument() {
 
+    companion object {
+        fun of(
+            bossStoreId: String,
+            userId: Long,
+            feedbackType: BossStoreFeedbackType,
+            date: LocalDate
+        ): BossStoreFeedback {
+            return BossStoreFeedback(
+                bossStoreId = bossStoreId,
+                userId = userId,
+                feedbackType = feedbackType,
+                date = date
+            )
+        }
+    }
+
+}

@@ -2,6 +2,7 @@ package com.depromeet.threedollar.domain.mongo.boss.domain.registration
 
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 import com.depromeet.threedollar.domain.mongo.common.domain.BaseDocument
 import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
@@ -12,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 class Registration(
     val boss: RegistrationBossForm,
     val store: RegistrationStoreForm,
-    var status: RegistrationStatus = RegistrationStatus.WAITING
+    var status: RegistrationStatus
 ) : BaseDocument() {
 
     fun toBossAccount(): BossAccount {
@@ -29,6 +30,20 @@ class Registration(
 
     fun reject() {
         this.status = RegistrationStatus.REJECTED
+    }
+
+    companion object {
+        fun of(
+            boss: RegistrationBossForm,
+            store: RegistrationStoreForm,
+            status: RegistrationStatus = RegistrationStatus.WAITING
+        ): Registration {
+            return Registration(
+                boss = boss,
+                store = store,
+                status = status
+            )
+        }
     }
 
 }
@@ -50,6 +65,21 @@ data class RegistrationBossForm(
         )
     }
 
+    companion object {
+        fun of(
+            socialId: String,
+            socialType: BossAccountSocialType,
+            name: String,
+            businessNumber: String
+        ): RegistrationBossForm {
+            return RegistrationBossForm(
+                socialInfo = BossAccountSocialInfo.of(socialId = socialId, socialType = socialType),
+                name = name,
+                businessNumber = BusinessNumber.of(businessNumber)
+            )
+        }
+    }
+
 }
 
 
@@ -67,6 +97,22 @@ data class RegistrationStoreForm(
             categoriesIds = categoriesIds,
             contactsNumber = contactsNumber
         )
+    }
+
+    companion object {
+        fun of(
+            name: String,
+            categoriesIds: Set<String> = setOf(),
+            contactsNumber: String,
+            certificationPhotoUrl: String
+        ): RegistrationStoreForm {
+            return RegistrationStoreForm(
+                name = name,
+                categoriesIds = categoriesIds,
+                contactsNumber = ContactsNumber.of(contactsNumber),
+                certificationPhotoUrl = certificationPhotoUrl
+            )
+        }
     }
 
 }
