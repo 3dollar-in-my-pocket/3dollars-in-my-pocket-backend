@@ -28,7 +28,11 @@ class BossStoreLocation(
     }
 
     companion object {
-        fun of(bossStoreId: String, latitude: Double, longitude: Double): BossStoreLocation {
+        fun of(
+            bossStoreId: String,
+            latitude: Double,
+            longitude: Double
+        ): BossStoreLocation {
             return BossStoreLocation(
                 bossStoreId = bossStoreId,
                 location = Point(longitude, latitude)

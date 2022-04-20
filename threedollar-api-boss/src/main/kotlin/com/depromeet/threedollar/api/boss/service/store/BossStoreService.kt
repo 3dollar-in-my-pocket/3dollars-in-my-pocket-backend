@@ -31,7 +31,13 @@ class BossStoreService(
         val bossStore = BossStoreServiceUtils.findBossStoreByIdAndBossId(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
         BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, request.categoriesIds)
         request.let {
-            bossStore.updateInfo(it.name, it.imageUrl, it.introduction, it.contactsNumber, it.snsUrl)
+            bossStore.updateInfo(
+                name = it.name,
+                imageUrl = it.imageUrl,
+                introduction = it.introduction,
+                contactsNumber = it.contactsNumber,
+                snsUrl = it.snsUrl
+            )
             bossStore.updateMenus(request.toMenus())
             bossStore.updateAppearanceDays(request.toAppearanceDays())
             bossStore.updateCategoriesIds(request.categoriesIds)
@@ -47,7 +53,13 @@ class BossStoreService(
     ) {
         val bossStore = BossStoreServiceUtils.findBossStoreByIdAndBossId(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
         request.let {
-            bossStore.patchInfo(it.name, it.imageUrl, it.introduction, it.contactsNumber, it.snsUrl)
+            bossStore.patchInfo(
+                name = it.name,
+                imageUrl = it.imageUrl,
+                introduction = it.introduction,
+                contactsNumber = it.contactsNumber,
+                snsUrl = it.snsUrl,
+            )
             bossStore.patchMenus(it.toMenus())
             bossStore.patchAppearanceDays(it.toAppearanceDays())
             it.categoriesIds?.let { categoriesIds ->

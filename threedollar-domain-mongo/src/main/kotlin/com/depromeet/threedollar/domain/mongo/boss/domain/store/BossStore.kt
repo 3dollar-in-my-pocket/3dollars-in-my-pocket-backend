@@ -31,12 +31,18 @@ class BossStore(
         this.snsUrl = snsUrl
     }
 
-    fun patchInfo(name: String?, imageUrl: String?, introduction: String?, contactsNumber: String?, snsUrl: String?) {
+    fun patchInfo(
+        name: String?,
+        imageUrl: String?,
+        introduction: String?,
+        contactsNumber: String?,
+        snsUrl: String?
+    ) {
         name?.let { this.name = it }
         imageUrl?.let { this.imageUrl = it }
-        introduction?.let { this.introduction = introduction }
+        introduction?.let { this.introduction = it }
         contactsNumber?.let { this.contactsNumber = ContactsNumber.of(it) }
-        snsUrl?.let { this.snsUrl = snsUrl }
+        snsUrl?.let { this.snsUrl = it }
     }
 
     fun updateMenus(menus: List<BossStoreMenu>) {
