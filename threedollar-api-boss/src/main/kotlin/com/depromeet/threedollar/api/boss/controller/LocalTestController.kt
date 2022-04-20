@@ -39,7 +39,7 @@ private val BOSS = BossAccount.of(
     name = "테스트 계정",
     socialId = "test-social-id",
     socialType = BossAccountSocialType.KAKAO,
-    businessNumber = BusinessNumber.of("000-12-12345"),
+    businessNumber = BusinessNumber.of("000-00-00000"),
     isSetupNotification = false
 )
 

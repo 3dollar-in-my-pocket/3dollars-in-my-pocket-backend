@@ -103,7 +103,7 @@ internal class BossAccountServiceTest(
             val socialType = BossAccountSocialType.APPLE
             val name = "강승호"
             val isSetupNotification = false
-            val businessNumber = BusinessNumber.of("123-12-12345")
+            val businessNumber = BusinessNumber.of("000-00-00000")
 
             val bossAccount = BossAccountCreator.create(
                 socialId = socialId,

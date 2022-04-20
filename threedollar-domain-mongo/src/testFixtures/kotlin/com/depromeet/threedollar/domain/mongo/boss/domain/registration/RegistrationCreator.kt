@@ -10,7 +10,7 @@ object RegistrationCreator {
         socialId: String,
         socialType: BossAccountSocialType,
         bossName: String = "will",
-        businessNumber: String = "123-12-12344",
+        businessNumber: String = "000-00-00000",
         storeName: String = "가슴속 3천원",
         contactsNumber: String = "010-1234-1234",
         certificationPhotoUrl: String = "https://sample-photo.png",

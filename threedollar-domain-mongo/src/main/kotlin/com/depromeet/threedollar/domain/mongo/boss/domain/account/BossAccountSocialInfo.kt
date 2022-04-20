@@ -6,10 +6,13 @@ data class BossAccountSocialInfo(
 ) {
 
     companion object {
-        fun of(socialId: String, socialType: BossAccountSocialType): BossAccountSocialInfo {
+        fun of(
+            socialId: String,
+            socialType: BossAccountSocialType
+        ): BossAccountSocialInfo {
             return BossAccountSocialInfo(
-                    socialId = socialId,
-                    socialType = socialType
+                socialId = socialId,
+                socialType = socialType
             )
         }
     }

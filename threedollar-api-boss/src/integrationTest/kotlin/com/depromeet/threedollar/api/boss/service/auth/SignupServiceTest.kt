@@ -46,7 +46,7 @@ internal class SignupServiceTest(
             val bossName = "will"
             val socialId = "social-id"
             val socialType = BossAccountSocialType.APPLE
-            val businessNumber = "210-10-12345"
+            val businessNumber = "000-00-00000"
             val storeName = "가슴속 3천원 붕어빵 가게"
             val contactsNumber = "010-1234-1234"
             val certificationPhotoUrl = "https://example-photo.png"

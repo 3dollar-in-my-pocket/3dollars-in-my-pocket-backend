@@ -40,7 +40,7 @@ internal class BossRegistrationAdminServiceTest(
         val socialId = "social-id"
         val socialType = BossAccountSocialType.NAVER
         val bossName = "가삼"
-        val businessNumber = "010-12-12345"
+        val businessNumber = "000-00-00000"
 
         val registration = RegistrationCreator.create(
             socialId = socialId,

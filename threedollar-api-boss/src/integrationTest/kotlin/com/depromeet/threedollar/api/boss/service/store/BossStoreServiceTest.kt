@@ -57,7 +57,7 @@ internal class BossStoreSetupBossAccountServiceTest(
                 contactsNumber = "010-1234-1234",
                 snsUrl = "https://instagram.com",
                 menus = listOf(
-                    MenuRequest(name = "팥 붕어빵", price = 1000, imageUrl = "https://menu.png")
+                    MenuRequest(name = "팥 붕어빵", price = 1000, imageUrl = "https://menu-bungeoppang.png")
                 ),
                 appearanceDays = setOf(
                     AppearanceDayRequest(
@@ -87,13 +87,13 @@ internal class BossStoreSetupBossAccountServiceTest(
                         BossStoreMenuCreator.create(
                             name = "팥 붕어빵",
                             price = 1000,
-                            imageUrl = "https://menu.png"
+                            imageUrl = "https://menu-bungeoppang.png"
                         )
                     )
                     assertThat(it.appearanceDays).containsExactlyInAnyOrder(
                         BossStoreAppearanceDayCreator.create(
                             dayOfTheWeek = DayOfTheWeek.WEDNESDAY,
-                            startTime =LocalTime.of(8, 0),
+                            startTime = LocalTime.of(8, 0),
                             endTime = LocalTime.of(10, 0),
                             locationDescription = "강남역"
                         )
@@ -121,7 +121,7 @@ internal class BossStoreSetupBossAccountServiceTest(
                 contactsNumber = "010-1234-1234",
                 snsUrl = "https://instagram.com",
                 menus = listOf(
-                    MenuRequest(name = "팥 붕어빵", price = 1000, imageUrl = "https://menu.png")
+                    MenuRequest(name = "팥 붕어빵", price = 1000, imageUrl = "https://store-menu.png")
                 ),
                 appearanceDays = setOf(
                     AppearanceDayRequest(
@@ -149,7 +149,7 @@ internal class BossStoreSetupBossAccountServiceTest(
             val bossStore = BossStoreCreator.create(
                 bossId = bossId,
                 name = "사장님 가게",
-                menus = listOf(BossStoreMenuCreator.create(name = "슈붕", price = 1000, imageUrl = "https://image.png")),
+                menus = listOf(BossStoreMenuCreator.create(name = "슈붕", price = 1000, imageUrl = "https://menu-image.png")),
                 appearanceDays = setOf(BossStoreAppearanceDayCreator.create(dayOfTheWeek = DayOfTheWeek.FRIDAY, startTime = LocalTime.of(8, 0), endTime = LocalTime.of(10, 0))),
                 categoriesIds = setOf("카테고리 1")
             )
@@ -216,14 +216,14 @@ internal class BossStoreSetupBossAccountServiceTest(
             val bossStore = BossStoreCreator.create(
                 bossId = bossId,
                 name = "사장님 가게",
-                menus = listOf(BossStoreMenuCreator.create(name = "슈붕", price = 1000, imageUrl = "https://image.png"))
+                menus = listOf(BossStoreMenuCreator.create(name = "슈붕", price = 1000, imageUrl = "https://menu0.png"))
             )
             bossStoreRepository.save(bossStore)
 
             val request = PatchBossStoreInfoRequest(
                 menus = listOf(
-                    MenuRequest(name = "팥 붕어빵", price = 1000, imageUrl = "https://menu.png"),
-                    MenuRequest(name = "슈크림 붕어빵", price = 1000, imageUrl = "https://menu.png")
+                    MenuRequest(name = "팥 붕어빵", price = 1000, imageUrl = "https://menu1.png"),
+                    MenuRequest(name = "슈크림 붕어빵", price = 1000, imageUrl = "https://menu2.png")
                 )
             )
 
@@ -248,7 +248,7 @@ internal class BossStoreSetupBossAccountServiceTest(
             val bossStore = BossStoreCreator.create(
                 bossId = bossId,
                 name = "사장님 가게",
-                menus = listOf(BossStoreMenuCreator.create(name = "슈붕", price = 1000, imageUrl = "https://image.png")),
+                menus = listOf(BossStoreMenuCreator.create(name = "슈붕", price = 1000, imageUrl = "https://menu-image.png")),
                 appearanceDays = setOf(BossStoreAppearanceDayCreator.create(dayOfTheWeek = DayOfTheWeek.FRIDAY, startTime = LocalTime.of(8, 0), endTime = LocalTime.of(10, 0))),
                 categoriesIds = setOf("카테고리 1")
             )
@@ -303,7 +303,7 @@ internal class BossStoreSetupBossAccountServiceTest(
             val categoriesIds = createMockCategory(bossStoreCategoryRepository, "한식", "일식")
 
             val name = "사장님 가게"
-            val imageUrl = "https://image.png"
+            val imageUrl = "https://store-image.png"
             val contactsNumber = ContactsNumber.of("010-1234-1234")
             val snsUrl = "https://instagram.com/test"
             val bossStore = BossStoreCreator.create(
