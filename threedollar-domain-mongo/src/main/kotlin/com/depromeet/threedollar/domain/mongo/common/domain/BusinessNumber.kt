@@ -10,7 +10,6 @@ import java.util.regex.Pattern
  */
 private val BUSINESS_NUMBER_REGEX: Pattern = Pattern.compile("(\\d{3})-(\\d{2})-(\\d{5})")
 private const val SEPARATOR: String = "-"
-private val CHECKSUM_LOGIC_NUMBERS: List<Int> = listOf(1, 3, 7, 1, 3, 7, 1, 3, 5)
 
 data class BusinessNumber(
     private val first: String,
@@ -28,7 +27,7 @@ data class BusinessNumber(
                 throw InvalidException("잘못된 사업자 번호 (${number}) 입니다. 사업자 번호 형식은 [000-00-00000] 입니다", ErrorCode.INVALID_BUSINESS_NUMBER_FORMAT)
             }
             val separatedNumber = number.split(SEPARATOR)
-            if (!isValid(separatedNumber[0] + separatedNumber[1] + separatedNumber[2])) {
+            if (!BusinessNumberChecksumValidator.isValid(separatedNumber[0] + separatedNumber[1] + separatedNumber[2])) {
                 throw InvalidException("잘못된 사업자 번호 (${number}) 입니다. 사업자 번호 체크섬이 깨집니다", ErrorCode.INVALID_BUSINESS_NUMBER_FORMAT)
             }
             return BusinessNumber(
@@ -37,16 +36,23 @@ data class BusinessNumber(
                 third = separatedNumber[2]
             )
         }
+    }
 
-        private fun isValid(number: String): Boolean {
-            var sum = 0
-            for (i in CHECKSUM_LOGIC_NUMBERS.indices) {
-                sum += number[i].digitToInt() * CHECKSUM_LOGIC_NUMBERS[i]
-            }
-            sum += number[8].digitToInt() * 5 / 10
-            val checkNum = (10 - sum % 10) % 10
-            return checkNum == number[9].digitToInt()
+}
+
+
+object BusinessNumberChecksumValidator {
+
+    private val CHECKSUM_LOGIC_NUMBERS: List<Int> = listOf(1, 3, 7, 1, 3, 7, 1, 3, 5)
+
+    fun isValid(numberWithoutSeparator: String): Boolean {
+        var sum = 0
+        for (i in CHECKSUM_LOGIC_NUMBERS.indices) {
+            sum += numberWithoutSeparator[i].digitToInt() * CHECKSUM_LOGIC_NUMBERS[i]
         }
+        sum += numberWithoutSeparator[8].digitToInt() * 5 / 10
+        val checkNum = (10 - sum % 10) % 10
+        return checkNum == numberWithoutSeparator[9].digitToInt()
     }
 
 }

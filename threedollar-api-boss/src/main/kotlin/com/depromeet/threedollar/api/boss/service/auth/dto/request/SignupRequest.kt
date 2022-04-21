@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.boss.service.auth.dto.request
 
+import com.depromeet.threedollar.api.boss.config.validator.BossName
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationBossForm
@@ -11,7 +12,7 @@ data class SignupRequest(
     val token: String,
     val socialType: BossAccountSocialType,
 
-    @field:Size(max = 30, message = "{account.name.size}")
+    @field:BossName
     val bossName: String,
 
     val businessNumber: String,

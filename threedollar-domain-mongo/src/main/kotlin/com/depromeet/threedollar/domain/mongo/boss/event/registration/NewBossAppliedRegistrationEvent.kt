@@ -8,7 +8,9 @@ data class NewBossAppliedRegistrationEvent(
 
     companion object {
         fun of(registration: Registration): NewBossAppliedRegistrationEvent {
-            return NewBossAppliedRegistrationEvent(registration)
+            return NewBossAppliedRegistrationEvent(
+                registration = registration
+            )
         }
     }
 
