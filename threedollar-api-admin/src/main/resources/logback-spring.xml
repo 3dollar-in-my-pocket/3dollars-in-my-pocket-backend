@@ -81,11 +81,18 @@
             </rollingPolicy>
         </appender>
 
+        <appender name="Sentry" class="io.sentry.logback.SentryAppender">
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>ERROR</level>
+            </filter>
+        </appender>
+
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
-            <appender-ref ref="INFO_FILE"/>
-            <appender-ref ref="WARN_FILE"/>
-            <appender-ref ref="ERROR_FILE"/>
+            <!--            <appender-ref ref="INFO_FILE"/>-->
+            <!--            <appender-ref ref="WARN_FILE"/>-->
+            <!--            <appender-ref ref="ERROR_FILE"/>-->
+            <appender-ref ref="Sentry"/>
         </root>
     </springProfile>
 
@@ -153,10 +160,18 @@
             </rollingPolicy>
         </appender>
 
+        <appender name="Sentry" class="io.sentry.logback.SentryAppender">
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>ERROR</level>
+            </filter>
+        </appender>
+
         <root level="INFO">
-            <appender-ref ref="INFO_FILE"/>
-            <appender-ref ref="WARN_FILE"/>
-            <appender-ref ref="ERROR_FILE"/>
+            <appender-ref ref="CONSOLE"/>
+<!--            <appender-ref ref="INFO_FILE"/>-->
+<!--            <appender-ref ref="WARN_FILE"/>-->
+<!--            <appender-ref ref="ERROR_FILE"/>-->
+            <appender-ref ref="Sentry"/>
         </root>
     </springProfile>
 </configuration>

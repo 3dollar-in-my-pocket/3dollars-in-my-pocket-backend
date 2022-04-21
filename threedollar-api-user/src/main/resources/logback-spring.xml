@@ -89,9 +89,9 @@
 
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
-            <appender-ref ref="INFO_FILE"/>
-            <appender-ref ref="WARN_FILE"/>
-            <appender-ref ref="ERROR_FILE"/>
+<!--            <appender-ref ref="INFO_FILE"/>-->
+<!--            <appender-ref ref="WARN_FILE"/>-->
+<!--            <appender-ref ref="ERROR_FILE"/>-->
             <appender-ref ref="Sentry"/>
         </root>
     </springProfile>
@@ -168,9 +168,9 @@
 
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
-            <appender-ref ref="INFO_FILE"/>
-            <appender-ref ref="WARN_FILE"/>
-            <appender-ref ref="ERROR_FILE"/>
+<!--            <appender-ref ref="INFO_FILE"/>-->
+<!--            <appender-ref ref="WARN_FILE"/>-->
+<!--            <appender-ref ref="ERROR_FILE"/>-->
             <appender-ref ref="Sentry"/>
         </root>
     </springProfile>
