@@ -1,3 +1,5 @@
+threedollars.aplication.uid: ${random.uuid}
+
 server:
   port: 5100
   shutdown: graceful

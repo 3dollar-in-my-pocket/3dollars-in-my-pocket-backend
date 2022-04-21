@@ -24,17 +24,19 @@ enum class SlackNotificationMessageType(
 
     [유저 메타 정보]
     %s
+    -------------------------------------
     """.trimIndent()
     ),
 
     INFO_MESSAGE("""
-    %s에서 발생한 이벤트 정보를 알려드립니다
+    %s(%s)에서 발생한 이벤트 정보를 알려드립니다
 
     [이벤트 내용]
     %s
 
     [발생 시간]
     %s
+    -------------------------------------
     """.trimIndent()
     ),
 
@@ -61,6 +63,7 @@ enum class SlackNotificationMessageType(
 
     [가게 인증사진]
     %s
+    -------------------------------------
     """.trimIndent()
     );
 

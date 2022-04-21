@@ -20,12 +20,22 @@ public class ApplicationStateChangedEvent {
 
     private final LocalDateTime timeStamp;
 
-    public static ApplicationStateChangedEvent start(ApplicationType applicationType, LocalDateTime timeStamp) {
-        return new ApplicationStateChangedEvent(applicationType, START_MESSAGE, timeStamp);
+    private final String applicationUid;
+
+    public static ApplicationStateChangedEvent start(
+        ApplicationType applicationType,
+        LocalDateTime timeStamp,
+        String applicationUid
+    ) {
+        return new ApplicationStateChangedEvent(applicationType, START_MESSAGE, timeStamp, applicationUid);
     }
 
-    public static ApplicationStateChangedEvent stop(ApplicationType applicationType, LocalDateTime timeStamp) {
-        return new ApplicationStateChangedEvent(applicationType, END_MESSAGE, timeStamp);
+    public static ApplicationStateChangedEvent stop(
+        ApplicationType applicationType,
+        LocalDateTime timeStamp,
+        String applicationUid
+    ) {
+        return new ApplicationStateChangedEvent(applicationType, END_MESSAGE, timeStamp, applicationUid);
     }
 
 }

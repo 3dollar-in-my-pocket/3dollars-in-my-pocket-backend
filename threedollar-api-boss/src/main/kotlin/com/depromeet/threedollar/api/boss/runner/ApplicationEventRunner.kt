@@ -2,6 +2,7 @@ package com.depromeet.threedollar.api.boss.runner
 
 import com.depromeet.threedollar.common.model.event.ApplicationStateChangedEvent
 import com.depromeet.threedollar.common.type.ApplicationType
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.context.ApplicationListener
@@ -14,15 +15,18 @@ import java.time.ZoneId
 @Profile("dev", "prod")
 @Component
 class ApplicationEventRunner(
-    private val eventPublisher: ApplicationEventPublisher
+    private val eventPublisher: ApplicationEventPublisher,
+
+    @Value("\${threedollars.aplication.uid}")
+    private val applicationUid: String
 ) : CommandLineRunner, ApplicationListener<ContextClosedEvent> {
 
     override fun run(vararg args: String) {
-        eventPublisher.publishEvent(ApplicationStateChangedEvent.start(ApplicationType.BOSS_API, LocalDateTime.now(ZoneId.of("Asia/Seoul"))))
+        eventPublisher.publishEvent(ApplicationStateChangedEvent.start(ApplicationType.BOSS_API, LocalDateTime.now(ZoneId.of("Asia/Seoul")), applicationUid))
     }
 
     override fun onApplicationEvent(event: ContextClosedEvent) {
-        eventPublisher.publishEvent(ApplicationStateChangedEvent.stop(ApplicationType.BOSS_API, LocalDateTime.now(ZoneId.of("Asia/Seoul"))))
+        eventPublisher.publishEvent(ApplicationStateChangedEvent.stop(ApplicationType.BOSS_API, LocalDateTime.now(ZoneId.of("Asia/Seoul")), applicationUid))
     }
 
 }

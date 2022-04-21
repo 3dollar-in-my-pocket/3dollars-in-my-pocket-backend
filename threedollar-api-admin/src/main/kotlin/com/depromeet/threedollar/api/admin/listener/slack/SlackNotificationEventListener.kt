@@ -18,6 +18,7 @@ class SlackNotificationEventListener(
             PostSlackMessageRequest.of(
                 SlackNotificationMessageType.INFO_MESSAGE.generateMessage(
                     event.applicationType.description,
+                    event.applicationUid,
                     event.message,
                     event.timeStamp
                 )))

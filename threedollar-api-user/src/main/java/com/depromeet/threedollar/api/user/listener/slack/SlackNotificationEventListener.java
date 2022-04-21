@@ -37,6 +37,7 @@ public class SlackNotificationEventListener {
     public void sendInfoNotification(ApplicationStateChangedEvent event) {
         slackNotificationApiClient.postMonitoringMessage(PostSlackMessageRequest.of(INFO_MESSAGE.generateMessage(
             event.getApplicationType().getDescription(),
+            event.getApplicationUid(),
             event.getMessage(),
             event.getTimeStamp()
         )));

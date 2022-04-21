@@ -25,7 +25,14 @@ public class ServerExceptionOccurredEvent {
 
     private final LocalDateTime timeStamp;
 
-    public static ServerExceptionOccurredEvent error(ApplicationType applicationType, ErrorCode errorCode, Exception exception, String requestUri, UserMetaValue userMetaValue, LocalDateTime timeStamp) {
+    public static ServerExceptionOccurredEvent error(
+        ApplicationType applicationType,
+        ErrorCode errorCode,
+        Exception exception,
+        String requestUri,
+        UserMetaValue userMetaValue,
+        LocalDateTime timeStamp
+    ) {
         return new ServerExceptionOccurredEvent(applicationType, errorCode, exception, requestUri, userMetaValue, timeStamp);
     }
 
