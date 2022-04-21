@@ -29,7 +29,9 @@ enum class SlackNotificationMessageType(
     ),
 
     INFO_MESSAGE("""
-    %s(%s)에서 발생한 이벤트 정보를 알려드립니다
+    %s에서 발생한 이벤트 정보를 알려드립니다
+    [애플리케이션 id]
+    %s
 
     [이벤트 내용]
     %s
