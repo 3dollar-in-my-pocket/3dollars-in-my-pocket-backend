@@ -85,7 +85,7 @@ internal class AdminServiceTest(
         )
 
         // when
-        adminService.registerAdmin(request, adminId)
+        adminService.registerAdmin(request, adminId = adminId)
 
         // then
         val admins = adminRepository.findAll()

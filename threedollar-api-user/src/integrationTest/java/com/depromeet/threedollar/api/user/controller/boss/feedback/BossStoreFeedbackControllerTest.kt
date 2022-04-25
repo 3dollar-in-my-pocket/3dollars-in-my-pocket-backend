@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import java.time.LocalDate
 
-
 internal class BossStoreFeedbackControllerTest(
     private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,
     private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository,
@@ -48,7 +47,7 @@ internal class BossStoreFeedbackControllerTest(
         bossStoreFeedbackCountRepository.increase(bossStore.id, feedbackType)
         val bossStoreFeedback = BossStoreFeedbackCreator.create(
             storeId = bossStore.id,
-            userId = 10000L,
+            userId = user.id,
             feedbackType = feedbackType,
             date = LocalDate.of(2022, 1, 1)
         )
