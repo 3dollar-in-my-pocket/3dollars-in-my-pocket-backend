@@ -1,8 +1,8 @@
 dependencies {
     api project(":threedollar-external")
-    api project(":threedollar-domain-rds")
-    api project(":threedollar-domain-mongo")
-    api project(":threedollar-domain-redis")
+    api project(":threedollar-domain:threedollar-domain-rds")
+    api project(":threedollar-domain:threedollar-domain-mongo")
+    api project(":threedollar-domain:threedollar-domain-redis")
 
     implementation("org.springframework.boot:spring-boot-starter-web")
 
@@ -10,9 +10,9 @@ dependencies {
     implementation("com.github.ben-manes.caffeine:caffeine")
 
     // TestFixtures
-    testImplementation(testFixtures(project(":threedollar-domain-mongo")))
-    testImplementation(testFixtures(project(":threedollar-domain-redis")))
-    testImplementation(testFixtures(project(":threedollar-domain-rds")))
+    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-mongo")))
+    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-redis")))
+    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-rds")))
 }
 
 bootJar {

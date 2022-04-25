@@ -5,9 +5,9 @@ import com.depromeet.threedollar.domain.rds.user.domain.advertisement.Advertisem
 import javax.validation.constraints.NotNull
 
 data class RetrieveAdvertisementsRequest(
-    @field:NotNull(message = "{advertisement.platform.notnull}")
+        @field:NotNull(message = "{advertisement.platform.notnull}")
     val platform: AdvertisementPlatformType?,
 
-    @field:NotNull(message = "{advertisement.position.notnull}")
+        @field:NotNull(message = "{advertisement.position.notnull}")
     val position: AdvertisementPositionType = AdvertisementPositionType.SPLASH
 )

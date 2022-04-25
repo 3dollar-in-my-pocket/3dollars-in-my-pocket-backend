@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UserActivityService(
-    private val userRepository: UserRepository,
-    private val storeRepository: StoreRepository,
-    private val reviewRepository: ReviewRepository
+        private val userRepository: UserRepository,
+        private val storeRepository: StoreRepository,
+        private val reviewRepository: ReviewRepository
 ) {
 
     @Transactional(readOnly = true)

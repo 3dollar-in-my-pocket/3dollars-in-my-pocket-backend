@@ -21,8 +21,8 @@ import org.springframework.http.HttpHeaders
 import org.springframework.test.web.servlet.get
 
 internal class StoreControllerTest(
-    private val storeRepository: StoreRepository,
-    private val storeDeleteRequestRepository: StoreDeleteRequestRepository
+        private val storeRepository: StoreRepository,
+        private val storeDeleteRequestRepository: StoreDeleteRequestRepository
 ) : SetupAdminControllerTest() {
 
     @AfterEach

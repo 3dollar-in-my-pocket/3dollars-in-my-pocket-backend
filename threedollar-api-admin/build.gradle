@@ -22,8 +22,8 @@ dependencies {
     implementation("io.sentry:sentry-logback:${sentryVersion}")
 
     // TestFixtures
-    testImplementation(testFixtures(project(":threedollar-domain-rds")))
-    testImplementation(testFixtures(project(":threedollar-domain-mongo")))
+    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-rds")))
+    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-mongo")))
 }
 
 application {

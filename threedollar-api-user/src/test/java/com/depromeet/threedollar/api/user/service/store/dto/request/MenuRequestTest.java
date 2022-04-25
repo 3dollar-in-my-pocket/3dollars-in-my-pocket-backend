@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.api.user.service.store.dto.request;
 
-import com.depromeet.threedollar.api.user.service.store.dto.request.MenuRequest;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
 import org.junit.jupiter.api.Test;
 

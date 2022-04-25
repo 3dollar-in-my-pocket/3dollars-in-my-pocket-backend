@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
 
 class MedalControllerTest(
-    private val medalRepository: MedalRepository,
-    private val medalAcquisitionConditionRepository: MedalAcquisitionConditionRepository
+        private val medalRepository: MedalRepository,
+        private val medalAcquisitionConditionRepository: MedalAcquisitionConditionRepository
 ) : SetupControllerTest() {
 
     @AfterEach
