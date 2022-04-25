@@ -7,31 +7,31 @@ import org.hibernate.validator.constraints.URL
 import java.time.LocalDateTime
 
 data class UpdateAdvertisementRequest(
-    val position: AdvertisementPositionType,
+        val position: AdvertisementPositionType,
 
-    val platform: AdvertisementPlatformType,
+        val platform: AdvertisementPlatformType,
 
-    @field:Size(max = 50, message = "{advertisement.title.size}")
+        @field:Size(max = 50, message = "{advertisement.title.size}")
     val title: String?,
 
-    @field:Size(max = 100, message = "{advertisement.subTitle.size}")
+        @field:Size(max = 100, message = "{advertisement.subTitle.size}")
     val subTitle: String?,
 
-    @field:URL(message = "{advertisement.imageUrl.url}")
+        @field:URL(message = "{advertisement.imageUrl.url}")
     @field:Size(max = 2048, message = "{advertisement.imageUrl.size}")
     val imageUrl: String,
 
-    @field:URL(message = "{advertisement.linkUrl.url}")
+        @field:URL(message = "{advertisement.linkUrl.url}")
     @field:Size(max = 2048, message = "{advertisement.linkUrl.size}")
     val linkUrl: String?,
 
-    @field:Size(min = 7, max = 7, message = "{advertisement.bgColor.size}")
+        @field:Size(min = 7, max = 7, message = "{advertisement.bgColor.size}")
     val bgColor: String?,
 
-    @field:Size(min = 7, max = 7, message = "{advertisement.fontColor.size}")
+        @field:Size(min = 7, max = 7, message = "{advertisement.fontColor.size}")
     val fontColor: String?,
 
-    val startDateTime: LocalDateTime,
+        val startDateTime: LocalDateTime,
 
-    val endDateTime: LocalDateTime
+        val endDateTime: LocalDateTime
 )

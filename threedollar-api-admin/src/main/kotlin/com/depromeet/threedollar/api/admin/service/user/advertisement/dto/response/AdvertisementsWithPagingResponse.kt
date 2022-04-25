@@ -23,15 +23,15 @@ data class AdvertisementsWithPagingResponse(
 }
 
 data class AdvertisementResponse(
-    val advertisementId: Long,
-    val positionType: AdvertisementPositionType,
-    val platformType: AdvertisementPlatformType,
-    val title: String?,
-    val subTitle: String?,
-    val imageUrl: String,
-    val linkUrl: String?,
-    val startDateTime: LocalDateTime,
-    val endDateTime: LocalDateTime
+        val advertisementId: Long,
+        val positionType: AdvertisementPositionType,
+        val platformType: AdvertisementPlatformType,
+        val title: String?,
+        val subTitle: String?,
+        val imageUrl: String,
+        val linkUrl: String?,
+        val startDateTime: LocalDateTime,
+        val endDateTime: LocalDateTime
 ) : AuditingTimeResponse() {
 
     companion object {

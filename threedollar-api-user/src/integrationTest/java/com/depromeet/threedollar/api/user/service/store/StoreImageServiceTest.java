@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.api.user.service.store;
 
 import com.depromeet.threedollar.api.user.service.SetupStoreServiceTest;
-import com.depromeet.threedollar.api.user.service.store.StoreImageService;
 import com.depromeet.threedollar.api.user.service.store.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.api.core.provider.upload.UploadProvider;

@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class GoogleAuthService(
-    private val adminRepository: AdminRepository,
-    private val googleAuthApiClient: GoogleAuthApiClient
+        private val adminRepository: AdminRepository,
+        private val googleAuthApiClient: GoogleAuthApiClient
 ) : AuthService {
 
     override fun login(request: LoginRequest): Long {
