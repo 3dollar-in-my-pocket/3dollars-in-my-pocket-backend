@@ -1,5 +1,5 @@
 ### 전체 메달 목록을 조회합니다
-GET {{host_api}}/v1/medals
+GET {{user_api}}/v1/medals
 
 > {%
 client.test("200 OK", () => {
@@ -9,7 +9,7 @@ client.test("200 OK", () => {
 
 
 ### [인증] 사용자가 보유중인 메달들을 조회한다
-GET {{host_api}}/v1/user/medals
+GET {{user_api}}/v1/user/medals
 Authorization: {{AUTHORIZATION}}
 
 > {%
@@ -21,7 +21,7 @@ client.test("200 OK", () => {
 
 
 ### [인증] 사용자의 장착중인 메달을 수정한다
-PUT {{host_api}}/v1/user/medal
+PUT {{user_api}}/v1/user/medal
 Content-Type: application/json
 Authorization: {{AUTHORIZATION}}
 

@@ -1,5 +1,5 @@
 ### Health Check API
-GET {{host_api}}/ping
+GET {{user_api}}/ping
 
 > {%
 client.test("200 OK", () => {
@@ -9,7 +9,7 @@ client.test("200 OK", () => {
 
 
 ### (개발 서버용) 테스트를 위한 세션
-GET {{host_api}}/test-token
+GET {{user_api}}/test-token
 
 > {%
 client.global.set("AUTHORIZATION", response.body["data"]["token"])

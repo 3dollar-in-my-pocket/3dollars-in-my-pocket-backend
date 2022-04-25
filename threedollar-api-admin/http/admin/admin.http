@@ -1,5 +1,5 @@
 ### [인증] 자신의 관리자 정보를 불러옵니다.
-GET {{host_admin}}/v1/account/admin/my-info
+GET {{admin}}/v1/account/admin/my-info
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%
@@ -10,7 +10,7 @@ client.test("200 OK", () => {
 
 
 ### [인증] 자신의 관리자 정보를 수정합니다
-PUT {{host_admin}}/v1/account/admin/my-info
+PUT {{admin}}/v1/account/admin/my-info
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 Content-Type: application/json
 
@@ -26,7 +26,7 @@ client.test("200 OK", () => {
 
 
 ### [인증] 새로운 관리자를 등록합니다
-POST {{host_admin}}/v1/account/admin
+POST {{admin}}/v1/account/admin
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 Content-Type: application/json
 
@@ -44,7 +44,7 @@ client.test("200 OK", () => {
 
 
 ### [인증] 등록된 관리자 목록을 조회합니다
-GET {{host_admin}}/v1/account/admins?size=5&page=1
+GET {{admin}}/v1/account/admins?size=5&page=1
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%

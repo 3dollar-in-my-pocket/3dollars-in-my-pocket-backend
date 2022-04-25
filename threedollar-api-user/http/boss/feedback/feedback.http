@@ -1,5 +1,5 @@
 ### 전체 가간동안 특정 사장님의 가게의 피드백을 조회합니다
-GET {{host_api}}/v1/boss/store/{{BOSS_STORE_ID}}/feedbacks/full
+GET {{user_api}}/v1/boss/store/{{BOSS_STORE_ID}}/feedbacks/full
 
 > {%
 client.test("200 OK", () => {
@@ -9,7 +9,7 @@ client.test("200 OK", () => {
 
 
 ### 사장님 가게 피드백의 타입 목록을 조회합니다.
-GET {{host_api}}/v1/boss/store/feedback/types
+GET {{user_api}}/v1/boss/store/feedback/types
 
 > {%
 client.test("200 OK", () => {
@@ -19,7 +19,7 @@ client.test("200 OK", () => {
 
 
 ### 사장님 가게에 피드백을 추가합니다
-POST {{host_api}}/v1/boss/store/{{BOSS_STORE_ID}}/feedback
+POST {{user_api}}/v1/boss/store/{{BOSS_STORE_ID}}/feedback
 Content-Type: application/json
 Authorization: {{AUTHORIZATION}}
 

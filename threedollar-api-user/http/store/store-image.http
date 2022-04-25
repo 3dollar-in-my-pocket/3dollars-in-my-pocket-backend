@@ -1,5 +1,5 @@
 ### [인증] 가게에 등록된 이미지 목록을 조회합니다
-GET {{host_api}}/v2/store/images/{{STORE_ID}}
+GET {{user_api}}/v2/store/images/{{STORE_ID}}
 Authorization: {{AUTHORIZATION}}
 
 > {%
@@ -11,7 +11,7 @@ client.test("200 OK", function() {
 
 
 ### [인증] 가게의 이미지를 삭제합니다.
-DELETE {{host_api}}/v2/store/image
+DELETE {{user_api}}/v2/store/image
 Authorization: {{AUTHORIZATION}}
 
 > {%
@@ -24,7 +24,7 @@ client.test("200 OK", () => {
 
 
 ### [인증] 가게의 이미지를 삭제합니다.
-DELETE {{host_api}}/v2/store/image/1
+DELETE {{user_api}}/v2/store/image/1
 Authorization: {{AUTHORIZATION}}
 
 > {%
