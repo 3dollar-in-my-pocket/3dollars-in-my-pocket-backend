@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  testing:
+  warmup:
     runs-on: ubuntu-latest
     steps:
       - name: 사장님 가게 카테고리 API

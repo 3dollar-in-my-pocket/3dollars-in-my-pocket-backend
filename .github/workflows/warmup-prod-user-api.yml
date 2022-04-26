@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  testing:
+  warmup:
     runs-on: ubuntu-latest
     steps:
       - name: 광고 API - 메인 카드 (AOS)

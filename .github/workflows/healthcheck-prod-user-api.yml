@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  testing:
+  healthcheck:
     runs-on: ubuntu-latest
     steps:
       - name: 유저 API Health Check

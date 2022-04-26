@@ -45,7 +45,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build Batch
+      - name: Build Batch Image
         id: build
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
