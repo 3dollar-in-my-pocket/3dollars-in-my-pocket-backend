@@ -10,7 +10,7 @@ data class TimeInterval(
 
     init {
         if (startTime.isAfter(endTime)) {
-            throw InvalidException("시작 시간 ($startTime)이 종료시간 ($endTime)보다 느릴 수 없습니다")
+            throw InvalidException("시작 시간($startTime)이 종료시간($endTime)보다 이후 일 수 없습니다")
         }
     }
 

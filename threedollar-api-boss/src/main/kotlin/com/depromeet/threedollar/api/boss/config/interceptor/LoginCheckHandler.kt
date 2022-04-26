@@ -38,10 +38,10 @@ class LoginCheckHandler(
 
     fun checkAuthRequired(request: HttpServletRequest): Boolean {
         val header = request.getHeader(HttpHeaders.AUTHORIZATION)
-            ?: throw UnAuthorizedException("빈 Authorization 헤더입니다 다시 로그인해주세요.")
+            ?: throw UnAuthorizedException("인증이 실패하였습니다 - 빈 Authorization 헤더가 요청되었습니다")
 
         if (!header.startsWith(HEADER_BEARER_PREFIX)) {
-            throw UnAuthorizedException("빈 Authorization 헤더입니다 다시 로그인해주세요.")
+            throw UnAuthorizedException("인증이 실패하였습니다 - ($HEADER_BEARER_PREFIX) 형식이 아닌 Authorization 헤더($header)입니다.")
         }
 
         val sessionId = header.split(HEADER_BEARER_PREFIX)[1]
@@ -52,13 +52,13 @@ class LoginCheckHandler(
             return true
         }
         registrationRepository.findWaitingRegistrationById(bossAccountId)?.let {
-            throw ForbiddenException("현재 가입 승인 대기중인 사장님 ($bossAccountId) 입니다", ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT)
-        } ?: throw UnAuthorizedException("해당하는 등록 번호($bossAccountId)를 가진 계정 혹은 대기중인 가입 신청은 존재하지 않습니다")
+            throw ForbiddenException("현재 가입 승인 대기중인 사장님($bossAccountId) 입니다", ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT)
+        } ?: throw UnAuthorizedException("해당하는 사장님 계정($bossAccountId) 혹은 대기중인 가입 신청($bossAccountId)은 존재하지 않습니다")
     }
 
     private fun findSessionBySessionId(sessionId: String): Session {
         return sessionRepository.findById(sessionId)
-            ?: throw UnAuthorizedException("잘못된 세션 $sessionId 입니다.")
+            ?: throw UnAuthorizedException("인증이 실패하였습니다 - 해당하는 세션($sessionId)은 존재하지 않습니다.")
     }
 
 }

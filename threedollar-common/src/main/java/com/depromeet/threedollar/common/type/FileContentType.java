@@ -23,7 +23,7 @@ public enum FileContentType {
         if (contentType != null && contentType.contains(SEPARATOR) && prefix.equals(getContentTypePrefix(contentType))) {
             return;
         }
-        throw new InvalidException(String.format("허용되지 않은 파일 형식 (%s) 입니다", contentType), INVALID_UPLOAD_FILE_TYPE);
+        throw new InvalidException(String.format("허용되지 않은 ContentType (%s) 입니다", contentType), INVALID_UPLOAD_FILE_TYPE);
     }
 
     @NotNull

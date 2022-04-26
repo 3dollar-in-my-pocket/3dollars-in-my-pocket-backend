@@ -39,7 +39,7 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implement
             .collect(Collectors.toList()));
 
         if (values == null) {
-            throw new InternalServerException(String.format("Redis multiGet 중 에러가 발생하였습니다. values가 널입니다. keys: (%s)", keys));
+            throw new InternalServerException(String.format("Redis multiGet 조회 중 null인 values가 발생하였습니다 keys: (%s)", keys));
         }
 
         K key = keys.get(0);

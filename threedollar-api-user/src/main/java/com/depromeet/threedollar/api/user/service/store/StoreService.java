@@ -53,7 +53,7 @@ public class StoreService {
         Store store = StoreServiceUtils.findStoreById(storeRepository, storeId);
         List<Long> reporters = storeDeleteRequestRepository.findAllUserIdByStoreIdWithLock(storeId);
         if (reporters.contains(userId)) {
-            throw new ConflictException(String.format("사용자 (%s)는 가게 (%s)에 대해 이미 삭제 요청을 하였습니다", userId, storeId), CONFLICT_DELETE_REQUEST_STORE);
+            throw new ConflictException(String.format("사용자(%s)는 유저 가게(%s)에 대해 이미 삭제 요청을 하였습니다", userId, storeId), CONFLICT_DELETE_REQUEST_STORE);
         }
         storeDeleteRequestRepository.save(request.toEntity(store, userId));
         return StoreDeleteResponse.of(deleteStoreIfSatisfyCondition(store, reporters));

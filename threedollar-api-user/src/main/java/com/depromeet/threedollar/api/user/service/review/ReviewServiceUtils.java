@@ -16,7 +16,7 @@ class ReviewServiceUtils {
     static Review findReviewByIdAndUserId(ReviewRepository reviewRepository, Long reviewId, Long userId) {
         Review review = reviewRepository.findReviewByIdAndUserId(reviewId, userId);
         if (review == null) {
-            throw new NotFoundException(String.format("해당하는 리뷰 (%s)는 존재하지 않습니다", reviewId), NOTFOUND_REVIEW);
+            throw new NotFoundException(String.format("해당하는 리뷰(%s)는 존재하지 않습니다", reviewId), NOTFOUND_REVIEW);
         }
         return review;
     }

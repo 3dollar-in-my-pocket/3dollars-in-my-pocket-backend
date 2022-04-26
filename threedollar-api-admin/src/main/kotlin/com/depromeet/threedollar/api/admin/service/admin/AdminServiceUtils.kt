@@ -10,7 +10,7 @@ object AdminServiceUtils {
 
     fun validateNotExistsEmail(adminRepository: AdminRepository, email: String) {
         if (adminRepository.existsByEmail(email)) {
-            throw ConflictException("이미 존재하는 이메일($email) 입니다.", ErrorCode.CONFLICT_EMAIL)
+            throw ConflictException("이미 관리자로 등록된 이메일($email) 입니다.", ErrorCode.CONFLICT_EMAIL)
         }
     }
 

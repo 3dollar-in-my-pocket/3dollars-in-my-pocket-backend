@@ -193,7 +193,7 @@ class LocalTestController(
         @PathVariable registrationId: String
     ): ApiResponse<String> {
         val registration = registrationRepository.findWaitingRegistrationById(registrationId)
-            ?: throw NotFoundException("존재하지 않는 Registration")
+            ?: throw NotFoundException("해당하는 가입 신청($registrationId)은 존재하지 않습니다.")
         val bossAccount = registerNewBossAccount(registration)
         bossStoreRepository.save(registration.toBossStore(bossAccount.id))
         registration.approve()

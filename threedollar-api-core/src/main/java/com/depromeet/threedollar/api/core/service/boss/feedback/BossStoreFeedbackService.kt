@@ -33,7 +33,7 @@ class BossStoreFeedbackService(
 
     private fun validateNotExistsFeedbackOnDate(storeId: String, userId: Long, date: LocalDate) {
         if (bossStoreFeedbackRepository.existsByStoreIdAndUserIdAndDate(storeId, userId, date)) {
-            throw ConflictException("해당 날짜($date)에 유저($userId)는 해당 가게($storeId)에 이미 피드백을 추가하였습니다", ErrorCode.CONFLICT_BOSS_STORE_FEEDBACK)
+            throw ConflictException("해당 날짜($date)에 유저($userId)는 해당 사장님 가게($storeId)에 이미 피드백을 추가하였습니다", ErrorCode.CONFLICT_BOSS_STORE_FEEDBACK)
         }
     }
 

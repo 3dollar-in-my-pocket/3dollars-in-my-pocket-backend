@@ -29,7 +29,7 @@ public class AuthServiceProvider {
     private void validateInitializeAuthServices() {
         for (UserSocialType userSocialType : UserSocialType.values()) {
             if (authServiceMap.get(userSocialType) == null) {
-                throw new InternalServerException(String.format("모든 소셜에 대한 AuthService가 등록되지 않았습니다. 해당 소셜 타입(%s)의 AuthService를 등록해주세요.", userSocialType));
+                throw new InternalServerException(String.format("예상치 못한 에러가 발생하였습니다. 소셜 타입(%s)에 대한 AuthService를 등록해주세요.", userSocialType));
             }
         }
     }
