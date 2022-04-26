@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.common.utils;
 
-import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -28,7 +27,7 @@ public class ClientIpUtils {
             InetAddress ipAddress = InetAddress.getByName(remoteAddress);
             return !ipAddress.isSiteLocalAddress();
         } catch (UnknownHostException e) {
-            throw new InternalServerException(String.format("알 수 없는 remote Address (%s) 입니다", remoteAddress));
+            throw new IllegalArgumentException(String.format("알 수 없는 remote Address (%s) 입니다", remoteAddress));
         }
     }
 

@@ -52,7 +52,7 @@ public final class ProcessUtils {
                 pidInfo.append(line);
             }
         } catch (Exception e) {
-            throw new InternalServerException("포트를 사용 여부를 확인 중 에러가 발생하였습니다.");
+            throw new InternalServerException(String.format("프로세스 사용 여부를 확인 중 에러가 발생하였습니다. message: (%s)", e.getMessage()));
         }
         return StringUtils.hasLength(pidInfo.toString());
     }

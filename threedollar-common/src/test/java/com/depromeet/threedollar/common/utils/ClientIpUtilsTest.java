@@ -5,6 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ClientIpUtilsTest {
 
@@ -80,6 +81,15 @@ class ClientIpUtilsTest {
 
         // then
         assertThat(clientIp).isEqualTo(remoteAddress);
+    }
+
+    @Test
+    void 잘못된_IP포맷인경우_throw_IllegalArgumentException() {
+        String remoteAddress = "wrong-ip";
+        String forwarded = "";
+
+        // when & then
+        assertThatThrownBy(() -> ClientIpUtils.getClientIp(remoteAddress, forwarded)).isInstanceOf(IllegalArgumentException.class);
     }
 
 }

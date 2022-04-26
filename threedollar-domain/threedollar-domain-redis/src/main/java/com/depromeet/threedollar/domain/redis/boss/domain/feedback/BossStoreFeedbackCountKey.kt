@@ -20,6 +20,7 @@ data class BossStoreFeedbackCountKey(
 
     override fun serializeValue(value: Int): String {
         return JsonUtils.toJson(value)
+            ?: throw IllegalArgumentException("잘못된 Int 타입의 value($value)가 입력되었습니다")
     }
 
     override fun getTtl(): Duration? {

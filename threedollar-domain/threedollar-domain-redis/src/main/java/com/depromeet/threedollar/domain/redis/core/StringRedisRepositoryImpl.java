@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.domain.redis.core;
 
+import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.data.redis.core.RedisCallback;
@@ -28,13 +29,17 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implement
 
     @Override
     public List<V> getBulk(List<K> keys) {
+        if (keys.isEmpty()) {
+            throw new IllegalArgumentException(String.format("Redis 벌크 조회시 keys(%s)가 비어있을 수 없습니다", keys));
+        }
+
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         List<String> values = operations.multiGet(keys.stream()
             .map(K::getKey)
             .collect(Collectors.toList()));
 
         if (values == null) {
-            throw new IllegalArgumentException(String.format("레디스 multiGet (%s) 중 에러가 발생하였습니다", keys));
+            throw new InternalServerException(String.format("Redis multiGet 중 에러가 발생하였습니다. values가 널입니다. keys: (%s)", keys));
         }
 
         K key = keys.get(0);

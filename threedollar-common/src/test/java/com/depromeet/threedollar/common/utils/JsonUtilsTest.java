@@ -4,6 +4,7 @@ import com.depromeet.threedollar.common.model.CoordinateValue;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class JsonUtilsTest {
 
@@ -29,6 +30,15 @@ class JsonUtilsTest {
 
         // then
         assertThat(coordinateValue).isEqualTo(CoordinateValue.of(38.0, 128.0));
+    }
+
+    @Test
+    void JSON포맷이_아닌경우_throw_IllegalArgumentException() {
+        // given
+        String json = "wrong json";
+
+        // when & then
+        assertThatThrownBy(() -> JsonUtils.toObject(json, CoordinateValue.class)).isInstanceOf(IllegalArgumentException.class);
     }
 
 }
