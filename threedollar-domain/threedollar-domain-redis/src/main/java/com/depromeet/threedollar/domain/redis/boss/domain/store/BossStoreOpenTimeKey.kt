@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.domain.redis.boss.domain.store
 
+import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.common.utils.JsonUtils
 import com.depromeet.threedollar.domain.redis.core.StringRedisKey
 import java.time.Duration
@@ -19,7 +20,7 @@ data class BossStoreOpenTimeKey(
 
     override fun serializeValue(value: LocalDateTime): String {
         return JsonUtils.toJson(value)
-            ?: throw IllegalArgumentException("잘못된 LocalDateTime 형태의 value($value)가 입력되었습니다")
+            ?: throw InternalServerException("잘못된 LocalDateTime 형태의 value($value)가 입력되었습니다")
     }
 
     override fun getTtl(): Duration? {

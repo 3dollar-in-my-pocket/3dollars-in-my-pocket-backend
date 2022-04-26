@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.common.utils;
 
+import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -84,12 +85,12 @@ class ClientIpUtilsTest {
     }
 
     @Test
-    void 잘못된_IP포맷인경우_throw_IllegalArgumentException() {
+    void 잘못된_IP포맷인경우_throw_InternalServerException() {
         String remoteAddress = "wrong-ip";
         String forwarded = "";
 
         // when & then
-        assertThatThrownBy(() -> ClientIpUtils.getClientIp(remoteAddress, forwarded)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> ClientIpUtils.getClientIp(remoteAddress, forwarded)).isInstanceOf(InternalServerException.class);
     }
 
 }

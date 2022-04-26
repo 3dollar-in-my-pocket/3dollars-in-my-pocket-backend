@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.common.utils;
 
+import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import com.depromeet.threedollar.common.model.CoordinateValue;
 import org.junit.jupiter.api.Test;
 
@@ -33,12 +34,12 @@ class JsonUtilsTest {
     }
 
     @Test
-    void JSON포맷이_아닌경우_throw_IllegalArgumentException() {
+    void JSON포맷이_아닌경우_throw_InternalServerException() {
         // given
         String json = "wrong json";
 
         // when & then
-        assertThatThrownBy(() -> JsonUtils.toObject(json, CoordinateValue.class)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> JsonUtils.toObject(json, CoordinateValue.class)).isInstanceOf(InternalServerException.class);
     }
 
 }

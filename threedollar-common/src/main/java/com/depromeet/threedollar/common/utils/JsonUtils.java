@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.common.utils;
 
+import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,7 +31,7 @@ public class JsonUtils {
         try {
             return OBJECT_MAPPER.readValue(input, toClass);
         } catch (IOException e) {
-            throw new IllegalArgumentException(String.format("역직렬화 중 에러가 발생하였습니다. input: (%s) toClass: (%s) message: (%s)", input, toClass.getSimpleName(), e.getMessage()));
+            throw new InternalServerException(String.format("역직렬화 중 에러가 발생하였습니다. input: (%s) toClass: (%s) message: (%s)", input, toClass.getSimpleName(), e.getMessage()));
         }
     }
 
@@ -42,7 +43,7 @@ public class JsonUtils {
         try {
             return OBJECT_MAPPER.writeValueAsString(input);
         } catch (JsonProcessingException e) {
-            throw new IllegalArgumentException(String.format("직렬화 중 에러가 발생하였습니다. input: (%s) message: (%s)", input, e.getMessage()));
+            throw new InternalServerException(String.format("직렬화 중 에러가 발생하였습니다. input: (%s) message: (%s)", input, e.getMessage()));
         }
     }
 

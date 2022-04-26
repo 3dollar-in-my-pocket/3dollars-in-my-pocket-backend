@@ -30,7 +30,7 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implement
     @Override
     public List<V> getBulk(List<K> keys) {
         if (keys.isEmpty()) {
-            throw new IllegalArgumentException(String.format("Redis 벌크 조회시 keys(%s)가 비어있을 수 없습니다", keys));
+            throw new InternalServerException(String.format("Redis 벌크 조회시 keys(%s)가 비어있을 수 없습니다", keys));
         }
 
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
