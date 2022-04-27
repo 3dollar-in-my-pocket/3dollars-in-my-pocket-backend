@@ -73,8 +73,10 @@ subprojects {
         // Lombok
         compileOnly("org.projectlombok:lombok")
         annotationProcessor("org.projectlombok:lombok")
+        testCompileOnly("org.projectlombok:lombok")
+        testAnnotationProcessor("org.projectlombok:lombok")
 
-        // kotlin
+        // Kotlin
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -89,6 +91,9 @@ subprojects {
         }
         integrationTestRuntimeOnly {
             extendsFrom testRuntimeOnly
+        }
+        integrationTestCompileOnly {
+            extendsFrom testCompileOnly, testAnnotationProcessor
         }
     }
 

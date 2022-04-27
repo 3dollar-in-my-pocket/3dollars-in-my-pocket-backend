@@ -3,6 +3,7 @@ dependencies {
     implementation project(":threedollar-domain:threedollar-domain-mongo")
     implementation project(":threedollar-external")
 
+    // Spring Batch
     implementation("org.springframework.boot:spring-boot-starter-batch")
 }
 

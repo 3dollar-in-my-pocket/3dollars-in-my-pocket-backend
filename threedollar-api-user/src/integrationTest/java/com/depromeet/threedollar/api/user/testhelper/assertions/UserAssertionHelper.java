@@ -8,15 +8,15 @@ import com.depromeet.threedollar.domain.rds.user.domain.user.SocialInfo;
 import com.depromeet.threedollar.domain.rds.user.domain.user.User;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
 import com.depromeet.threedollar.domain.rds.user.domain.user.WithdrawalUser;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @TestHelper
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class UserAssertionHelper {
-
-    private UserAssertionHelper() {
-    }
 
     public static void assertWithdrawalUser(WithdrawalUser withdrawalUser, User user) {
         assertAll(

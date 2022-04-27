@@ -8,6 +8,8 @@ import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewStatus;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.user.User;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHelper.assertStoreInfoResponse;
 import static com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper.assertUserInfoResponse;
@@ -15,10 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @TestHelper
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ReviewAssertionHelper {
-
-    private ReviewAssertionHelper() {
-    }
 
     public static void assertReview(Review review, Long storeId, String contents, int rating, Long userId, ReviewStatus status) {
         assertAll(

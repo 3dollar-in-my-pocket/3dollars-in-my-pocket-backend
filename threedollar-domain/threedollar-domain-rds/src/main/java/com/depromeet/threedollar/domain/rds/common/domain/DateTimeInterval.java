@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Embeddable
 public class DateTimeInterval {
 
@@ -21,9 +20,18 @@ public class DateTimeInterval {
     @Column(nullable = false)
     private LocalDateTime endDateTime;
 
+    @Builder(access = AccessLevel.PRIVATE)
+    private DateTimeInterval(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+    }
+
     public static DateTimeInterval of(LocalDateTime startDateTime, LocalDateTime endDateTime) {
         validateDateTimeInterval(startDateTime, endDateTime);
-        return new DateTimeInterval(startDateTime, endDateTime);
+        return DateTimeInterval.builder()
+            .startDateTime(startDateTime)
+            .endDateTime(endDateTime)
+            .build();
     }
 
     private static void validateDateTimeInterval(LocalDateTime startDateTime, LocalDateTime endDateTime) {

@@ -8,6 +8,8 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.user.User;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
@@ -17,10 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @TestHelper
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class VisitHistoryAssertionHelper {
-
-    private VisitHistoryAssertionHelper() {
-    }
 
     public static void assertVisitHistory(VisitHistory visitHistory, Long storeId, Long userId, VisitType type, LocalDate dateOfVisit) {
         assertAll(

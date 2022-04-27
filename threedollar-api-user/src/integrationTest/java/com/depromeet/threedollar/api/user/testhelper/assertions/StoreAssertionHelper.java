@@ -14,6 +14,8 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequest;
 import com.depromeet.threedollar.domain.rds.user.domain.user.User;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -22,10 +24,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @TestHelper
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class StoreAssertionHelper {
-
-    private StoreAssertionHelper() {
-    }
 
     /**
      * Store
