@@ -35,6 +35,7 @@ public class ApplicationStateChangedEvent {
             .message(START_MESSAGE)
             .timeStamp(timeStamp)
             .applicationType(applicationType)
+            .applicationUid(applicationUid)
             .build();
     }
 
@@ -44,6 +45,7 @@ public class ApplicationStateChangedEvent {
             .message(END_MESSAGE)
             .timeStamp(timeStamp)
             .applicationType(applicationType)
+            .applicationUid(applicationUid)
             .build();
     }
 
