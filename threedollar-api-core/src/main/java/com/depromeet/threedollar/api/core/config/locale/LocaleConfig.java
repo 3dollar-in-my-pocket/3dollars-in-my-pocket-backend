@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.user.config.locale;
+package com.depromeet.threedollar.api.core.config.locale;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

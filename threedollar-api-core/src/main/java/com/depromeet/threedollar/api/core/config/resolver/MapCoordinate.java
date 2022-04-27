@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.user.config.resolver;
+package com.depromeet.threedollar.api.core.config.resolver;
 
 import java.lang.annotation.*;
 

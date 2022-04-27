@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.boss.config.swagger
 
-import com.depromeet.threedollar.api.boss.config.resolver.GeoCoordinate
-import com.depromeet.threedollar.api.boss.config.resolver.MapCoordinate
+import com.depromeet.threedollar.api.core.config.resolver.GeoCoordinate
+import com.depromeet.threedollar.api.core.config.resolver.MapCoordinate
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 import springfox.documentation.builders.RequestParameterBuilder

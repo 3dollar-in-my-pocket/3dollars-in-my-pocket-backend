@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.user.config.swagger;
 
-import com.depromeet.threedollar.api.user.config.resolver.GeoCoordinate;
-import com.depromeet.threedollar.api.user.config.resolver.MapCoordinate;
+import com.depromeet.threedollar.api.core.config.resolver.GeoCoordinate;
+import com.depromeet.threedollar.api.core.config.resolver.MapCoordinate;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;

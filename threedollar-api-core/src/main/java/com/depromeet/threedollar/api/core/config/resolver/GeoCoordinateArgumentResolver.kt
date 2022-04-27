@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.user.config.resolver
+package com.depromeet.threedollar.api.core.config.resolver
 
 import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.common.exception.model.InvalidException

@@ -6,8 +6,8 @@ import com.depromeet.threedollar.api.core.service.boss.store.dto.request.GetArou
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAroundInfoResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreInfoResponse
 import com.depromeet.threedollar.api.user.config.interceptor.Auth
-import com.depromeet.threedollar.api.user.config.resolver.GeoCoordinate
-import com.depromeet.threedollar.api.user.config.resolver.MapCoordinate
+import com.depromeet.threedollar.api.core.config.resolver.GeoCoordinate
+import com.depromeet.threedollar.api.core.config.resolver.MapCoordinate
 import com.depromeet.threedollar.common.model.CoordinateValue
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.GetMapping
@@ -23,9 +23,9 @@ class BossStoreController(
     @ApiOperation("주변의 사장님 가게 목록을 조회합니다")
     @GetMapping("/v1/boss/stores/around")
     fun retrieveAroundBossStores(
-        @Valid request: GetAroundBossStoresRequest,
-        @MapCoordinate mapCoordinate: CoordinateValue,
-        @GeoCoordinate(required = false) geoCoordinate: CoordinateValue
+            @Valid request: GetAroundBossStoresRequest,
+            @MapCoordinate mapCoordinate: CoordinateValue,
+            @GeoCoordinate(required = false) geoCoordinate: CoordinateValue
     ): ApiResponse<List<BossStoreAroundInfoResponse>> {
         return ApiResponse.success(bossStoreCommonService.getAroundBossStores(
             request = request,

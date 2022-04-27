@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.user.controller.store;
 
 import com.depromeet.threedollar.api.user.config.interceptor.Auth;
-import com.depromeet.threedollar.api.user.config.resolver.GeoCoordinate;
+import com.depromeet.threedollar.api.core.config.resolver.GeoCoordinate;
 import com.depromeet.threedollar.api.user.service.store.StoreRetrieveService;
 import com.depromeet.threedollar.api.user.service.store.dto.request.CheckExistsStoresNearbyRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveMyStoresRequest;
@@ -12,7 +12,7 @@ import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDetail
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoresCursorResponse;
 import com.depromeet.threedollar.common.model.CoordinateValue;
-import com.depromeet.threedollar.api.user.config.resolver.MapCoordinate;
+import com.depromeet.threedollar.api.core.config.resolver.MapCoordinate;
 import com.depromeet.threedollar.api.user.config.resolver.UserId;
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import io.swagger.annotations.ApiOperation;

@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.user.config;
 
+import com.depromeet.threedollar.api.core.config.resolver.GeoCoordinateArgumentResolver;
+import com.depromeet.threedollar.api.core.config.resolver.MapCoordinateArgumentResolver;
 import com.depromeet.threedollar.api.user.config.interceptor.AuthInterceptor;
 import com.depromeet.threedollar.api.user.config.interceptor.UserMetadataInterceptor;
-import com.depromeet.threedollar.api.user.config.resolver.GeoCoordinateArgumentResolver;
-import com.depromeet.threedollar.api.user.config.resolver.MapCoordinateArgumentResolver;
 import com.depromeet.threedollar.api.user.config.resolver.UserIdResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;

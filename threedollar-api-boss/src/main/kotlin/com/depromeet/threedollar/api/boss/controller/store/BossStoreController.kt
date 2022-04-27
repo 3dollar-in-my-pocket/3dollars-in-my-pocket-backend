@@ -2,12 +2,12 @@ package com.depromeet.threedollar.api.boss.controller.store
 
 import com.depromeet.threedollar.api.boss.config.interceptor.Auth
 import com.depromeet.threedollar.api.boss.config.resolver.BossId
-import com.depromeet.threedollar.api.boss.config.resolver.MapCoordinate
 import com.depromeet.threedollar.api.boss.service.store.BossStoreOpenService
 import com.depromeet.threedollar.api.boss.service.store.BossStoreService
 import com.depromeet.threedollar.api.boss.service.store.dto.request.PatchBossStoreInfoRequest
 import com.depromeet.threedollar.api.boss.service.store.dto.request.UpdateBossStoreInfoRequest
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.config.resolver.MapCoordinate
 import com.depromeet.threedollar.api.core.service.boss.store.BossStoreCommonService
 import com.depromeet.threedollar.api.core.service.boss.store.dto.request.GetAroundBossStoresRequest
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAroundInfoResponse

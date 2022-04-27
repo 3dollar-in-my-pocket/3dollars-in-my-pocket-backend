@@ -1,0 +1,16 @@
+spring:
+  security:
+    user:
+      name: ${secret.security.user.name}
+      password: ${secret.security.user.password}
+
+management:
+  endpoints:
+    web:
+      base-path: /monitoring
+      exposure:
+        include:
+          - health
+  endpoint:
+    health:
+      show-details: always
