@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.boss.service.store
 
+import java.time.LocalDateTime
 import java.time.LocalTime
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
@@ -18,9 +19,13 @@ import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossDeletedStore
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossDeletedStoreRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppearanceDay
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppearanceDayCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCreator
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenu
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenuCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
 import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
@@ -82,28 +87,27 @@ internal class BossStoreSetupBossAccountServiceTest(
             assertAll({
                 assertThat(bossStores).hasSize(1)
                 bossStores[0]?.let {
-                    assertThat(it.name).isEqualTo(request.name)
-                    assertThat(it.imageUrl).isEqualTo(request.imageUrl)
-                    assertThat(it.introduction).isEqualTo(request.introduction)
-                    assertThat(it.contactsNumber).isEqualTo(ContactsNumber.of("010-1234-1234"))
-                    assertThat(it.snsUrl).isEqualTo(request.snsUrl)
-                    assertThat(it.menus).containsExactlyInAnyOrder(
-                        BossStoreMenuCreator.create(
+                    assertBossStore(
+                        bossStore = bossStores[0],
+                        bossId = bossId,
+                        name = request.name,
+                        imageUrl = request.imageUrl,
+                        introduction = request.introduction,
+                        contactsNumber = ContactsNumber.of("010-1234-1234"),
+                        snsUrl = request.snsUrl,
+                        categoriesIds = categoriesIds,
+                        menus = listOf(BossStoreMenuCreator.create(
                             name = "팥 붕어빵",
                             price = 1000,
                             imageUrl = "https://menu-bungeoppang.png"
-                        )
-                    )
-                    assertThat(it.appearanceDays).containsExactlyInAnyOrder(
-                        BossStoreAppearanceDayCreator.create(
+                        )),
+                        appearanceDays = setOf(BossStoreAppearanceDayCreator.create(
                             dayOfTheWeek = DayOfTheWeek.WEDNESDAY,
                             startTime = LocalTime.of(8, 0),
                             endTime = LocalTime.of(10, 0),
                             locationDescription = "강남역"
-                        )
+                        ))
                     )
-                    assertThat(it.categoriesIds).containsExactlyInAnyOrderElementsOf(categoriesIds)
-                    assertThat(it.bossId).isEqualTo(bossId)
                 }
             })
         }
@@ -168,17 +172,18 @@ internal class BossStoreSetupBossAccountServiceTest(
             val bossStores = bossStoreRepository.findAll()
             assertAll({
                 assertThat(bossStores).hasSize(1)
-                bossStores[0].let {
-                    assertThat(it.bossId).isEqualTo(bossStore.bossId)
-                    assertThat(it.name).isEqualTo(bossStore.name)
-                    assertThat(it.imageUrl).isEqualTo(bossStore.imageUrl)
-                    assertThat(it.introduction).isEqualTo(bossStore.introduction)
-                    assertThat(it.contactsNumber).isEqualTo(bossStore.contactsNumber)
-                    assertThat(it.snsUrl).isEqualTo(bossStore.snsUrl)
-                    assertThat(it.menus).isEqualTo(bossStore.menus)
-                    assertThat(it.appearanceDays).isEqualTo(bossStore.appearanceDays)
-                    assertThat(it.categoriesIds).isEqualTo(bossStore.categoriesIds)
-                }
+                assertBossStore(
+                    bossStore = bossStores[0],
+                    bossId = bossId,
+                    name = bossStore.name,
+                    imageUrl = bossStore.imageUrl,
+                    introduction = bossStore.introduction,
+                    contactsNumber = bossStore.contactsNumber,
+                    snsUrl = request.snsUrl,
+                    categoriesIds = bossStore.categoriesIds,
+                    menus = bossStore.menus,
+                    appearanceDays = bossStore.appearanceDays
+                )
             })
         }
 
@@ -203,14 +208,18 @@ internal class BossStoreSetupBossAccountServiceTest(
             val bossStores = bossStoreRepository.findAll()
             assertAll({
                 assertThat(bossStores).hasSize(1)
-                bossStores[0].let {
-                    assertThat(it.name).isEqualTo(newName)
-                    assertThat(it.imageUrl).isEqualTo(bossStore.imageUrl)
-                    assertThat(it.introduction).isEqualTo(bossStore.introduction)
-                    assertThat(it.contactsNumber).isEqualTo(bossStore.contactsNumber)
-                    assertThat(it.snsUrl).isEqualTo(bossStore.snsUrl)
-                    assertThat(it.bossId).isEqualTo(bossId)
-                }
+                assertBossStore(
+                    bossStore = bossStores[0],
+                    name = newName,
+                    bossId = bossId,
+                    imageUrl = bossStore.imageUrl,
+                    introduction = bossStore.introduction,
+                    contactsNumber = bossStore.contactsNumber,
+                    snsUrl = request.snsUrl,
+                    categoriesIds = bossStore.categoriesIds,
+                    menus = bossStore.menus,
+                    appearanceDays = bossStore.appearanceDays
+                )
             })
         }
 
@@ -327,19 +336,19 @@ internal class BossStoreSetupBossAccountServiceTest(
             val bossDeletedStores = bossDeletedStoreRepository.findAll()
             assertAll({
                 assertThat(bossDeletedStores).hasSize(1)
-                bossDeletedStores[0].let {
-                    assertThat(it.bossId).isEqualTo(bossId)
-                    assertThat(it.name).isEqualTo(name)
-                    assertThat(it.imageUrl).isEqualTo(imageUrl)
-                    assertThat(it.contactsNumber).isEqualTo(contactsNumber)
-                    assertThat(it.snsUrl).isEqualTo(snsUrl)
-                    assertThat(it.menus).isEqualTo(bossStore.menus)
-                    assertThat(it.appearanceDays).isEqualTo(bossStore.appearanceDays)
-                    assertThat(it.categoriesIds).isEqualTo(categoriesIds)
-
-                    assertThat(it.backupInfo.bossStoreId).isEqualTo(bossStore.id)
-                    assertThat(it.backupInfo.bossStoreCreatedAt).isEqualToIgnoringNanos(bossStore.createdAt)
-                }
+                assertBossDeletedStore(
+                    bossDeletedStore = bossDeletedStores[0],
+                    bossId = bossId,
+                    name = name,
+                    imageUrl = imageUrl,
+                    contactsNumber = contactsNumber,
+                    snsUrl = snsUrl,
+                    menus = bossStore.menus,
+                    appearanceDays = bossStore.appearanceDays,
+                    categoriesIds = categoriesIds,
+                    backUpBossStoreId = bossStore.id,
+                    backUpBossStoreCreatedAt = bossStore.createdAt
+                )
             })
         }
 
@@ -370,4 +379,62 @@ private fun createMockCategory(
     return titles.asSequence()
         .map { bossStoreCategoryRepository.save(BossStoreCategoryCreator.create(it)).id }
         .toSet()
+}
+
+
+/**
+ * AssertionsHelper
+ */
+private fun assertBossStore(
+    bossStore: BossStore,
+    bossId: String? = null,
+    name: String? = null,
+    imageUrl: String? = null,
+    introduction: String? = null,
+    contactsNumber: ContactsNumber? = null,
+    snsUrl: String? = null,
+    categoriesIds: Set<String>? = null,
+    menus: List<BossStoreMenu>? = null,
+    appearanceDays: Set<BossStoreAppearanceDay>? = null,
+) {
+    assertAll({
+        bossId?.let { assertThat(bossStore.bossId).isEqualTo(it) }
+        name?.let { assertThat(bossStore.name).isEqualTo(it) }
+        imageUrl?.let { assertThat(bossStore.imageUrl).isEqualTo(it) }
+        introduction?.let { assertThat(bossStore.introduction).isEqualTo(it) }
+        contactsNumber?.let { assertThat(bossStore.contactsNumber).isEqualTo(it) }
+        snsUrl?.let { assertThat(bossStore.snsUrl).isEqualTo(it) }
+        categoriesIds?.let { assertThat(bossStore.categoriesIds).containsExactlyInAnyOrderElementsOf(it) }
+        menus?.let { assertThat(bossStore.menus).containsExactlyInAnyOrderElementsOf(it) }
+        appearanceDays?.let { assertThat(bossStore.appearanceDays).containsExactlyInAnyOrderElementsOf(it) }
+    })
+}
+
+private fun assertBossDeletedStore(
+    bossDeletedStore: BossDeletedStore,
+    backUpBossStoreId: String? = null,
+    backUpBossStoreCreatedAt: LocalDateTime? = null,
+    bossId: String? = null,
+    name: String? = null,
+    imageUrl: String? = null,
+    introduction: String? = null,
+    contactsNumber: ContactsNumber? = null,
+    snsUrl: String? = null,
+    categoriesIds: Set<String>? = null,
+    menus: List<BossStoreMenu>? = null,
+    appearanceDays: Set<BossStoreAppearanceDay>? = null,
+) {
+    assertAll({
+        backUpBossStoreId?.let { assertThat(bossDeletedStore.backupInfo.bossStoreId).isEqualTo(it) }
+        backUpBossStoreCreatedAt?.let { assertThat(bossDeletedStore.backupInfo.bossStoreCreatedAt).isEqualToIgnoringNanos(it) }
+        bossId?.let { assertThat(bossDeletedStore.bossId).isEqualTo(it) }
+        name?.let { assertThat(bossDeletedStore.name).isEqualTo(it) }
+        imageUrl?.let { assertThat(bossDeletedStore.imageUrl).isEqualTo(it) }
+        introduction?.let { assertThat(bossDeletedStore.introduction).isEqualTo(it) }
+        contactsNumber?.let { assertThat(bossDeletedStore.contactsNumber).isEqualTo(it) }
+        snsUrl?.let { assertThat(bossDeletedStore.snsUrl).isEqualTo(it) }
+        categoriesIds?.let { assertThat(bossDeletedStore.categoriesIds).containsExactlyInAnyOrderElementsOf(it) }
+        menus?.let { assertThat(bossDeletedStore.menus).containsExactlyInAnyOrderElementsOf(it) }
+        appearanceDays?.let { assertThat(bossDeletedStore.appearanceDays).containsExactlyInAnyOrderElementsOf(it) }
+    })
 }

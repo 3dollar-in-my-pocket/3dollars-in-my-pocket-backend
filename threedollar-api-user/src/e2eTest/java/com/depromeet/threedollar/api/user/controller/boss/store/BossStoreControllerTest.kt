@@ -76,36 +76,35 @@ internal class BossStoreControllerTest(
                 print()
             }.andExpect {
                 status { isOk() }
-                content {
-                    jsonPath("$.data.bossStoreId") { value(bossStore.id) }
-                    jsonPath("$.data.name") { value("사장님 가게") }
 
-                    jsonPath("$.data.location.latitude") { value(38.0) }
-                    jsonPath("$.data.location.longitude") { value(128.0) }
+                jsonPath("$.data.bossStoreId") { value(bossStore.id) }
+                jsonPath("$.data.name") { value("사장님 가게") }
 
-                    jsonPath("$.data.imageUrl") { value(bossStore.imageUrl) }
-                    jsonPath("$.data.introduction") { value(bossStore.introduction) }
-                    jsonPath("$.data.snsUrl") { value(bossStore.snsUrl) }
-                    jsonPath("$.data.contactsNumber") { value("010-1234-1234") }
+                jsonPath("$.data.location.latitude") { value(38.0) }
+                jsonPath("$.data.location.longitude") { value(128.0) }
 
-                    jsonPath("$.data.menus") { hasSize<BossStoreMenuResponse>(1) }
-                    jsonPath("$.data.menus[0].name") { value("붕어빵") }
-                    jsonPath("$.data.menus[0].price") { value(2000) }
-                    jsonPath("$.data.menus[0].imageUrl") { value("https://menu.png") }
+                jsonPath("$.data.imageUrl") { value(bossStore.imageUrl) }
+                jsonPath("$.data.introduction") { value(bossStore.introduction) }
+                jsonPath("$.data.snsUrl") { value(bossStore.snsUrl) }
+                jsonPath("$.data.contactsNumber") { value("010-1234-1234") }
 
-                    jsonPath("$.data.appearanceDays") { hasSize<BossStoreAppearanceDayResponse>(1) }
-                    jsonPath("$.data.appearanceDays[0].dayOfTheWeek") { value(DayOfTheWeek.FRIDAY.name) }
-                    jsonPath("$.data.appearanceDays[0].openingHours.startTime") { value("08:00") }
-                    jsonPath("$.data.appearanceDays[0].openingHours.endTime") { value("10:00") }
-                    jsonPath("$.data.appearanceDays[0].locationDescription") { value("강남역") }
+                jsonPath("$.data.menus", hasSize<BossStoreMenuResponse>(1))
+                jsonPath("$.data.menus[0].name") { value("붕어빵") }
+                jsonPath("$.data.menus[0].price") { value(2000) }
+                jsonPath("$.data.menus[0].imageUrl") { value("https://menu.png") }
 
-                    jsonPath("$.data.categories") { hasSize<BossStoreCategoryResponse>(1) }
-                    jsonPath("$.data.categories[0].categoryId") { value(category.id) }
-                    jsonPath("$.data.categories[0].name") { value("한식") }
+                jsonPath("$.data.appearanceDays", hasSize<BossStoreAppearanceDayResponse>(1))
+                jsonPath("$.data.appearanceDays[0].dayOfTheWeek") { value(DayOfTheWeek.FRIDAY.name) }
+                jsonPath("$.data.appearanceDays[0].openingHours.startTime") { value("08:00") }
+                jsonPath("$.data.appearanceDays[0].openingHours.endTime") { value("10:00") }
+                jsonPath("$.data.appearanceDays[0].locationDescription") { value("강남역") }
 
-                    jsonPath("$.data.openStatus.status") { value(BossStoreOpenType.OPEN.name) }
-                    jsonPath("$.data.openStatus.openStartDateTime") { value("2022-02-01T00:00:00") }
-                }
+                jsonPath("$.data.categories", hasSize<BossStoreCategoryResponse>(1))
+                jsonPath("$.data.categories[0].categoryId") { value(category.id) }
+                jsonPath("$.data.categories[0].name") { value("한식") }
+
+                jsonPath("$.data.openStatus.status") { value(BossStoreOpenType.OPEN.name) }
+                jsonPath("$.data.openStatus.openStartDateTime") { value("2022-02-01T00:00:00") }
             }
     }
 

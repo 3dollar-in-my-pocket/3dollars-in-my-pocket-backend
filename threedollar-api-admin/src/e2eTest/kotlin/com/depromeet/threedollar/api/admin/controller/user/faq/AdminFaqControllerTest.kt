@@ -1,15 +1,5 @@
 package com.depromeet.threedollar.api.admin.controller.user.faq
 
-import com.depromeet.threedollar.api.admin.controller.SetupAdminControllerTest
-import com.depromeet.threedollar.api.admin.service.user.faq.dto.request.AddFaqRequest
-import com.depromeet.threedollar.api.admin.service.user.faq.dto.request.UpdateFaqRequest
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.mapper.user.faq.dto.response.FaqCategoryResponse
-import com.depromeet.threedollar.api.core.service.user.faq.dto.request.RetrieveFaqsRequest
-import com.depromeet.threedollar.api.core.service.user.faq.dto.response.FaqResponse
-import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCategory
-import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCreator
-import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqRepository
 import org.hamcrest.collection.IsCollectionWithSize.hasSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
@@ -21,6 +11,16 @@ import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.put
+import com.depromeet.threedollar.api.admin.controller.SetupAdminControllerTest
+import com.depromeet.threedollar.api.admin.service.user.faq.dto.request.AddFaqRequest
+import com.depromeet.threedollar.api.admin.service.user.faq.dto.request.UpdateFaqRequest
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.mapper.user.faq.dto.response.FaqCategoryResponse
+import com.depromeet.threedollar.api.core.service.user.faq.dto.request.RetrieveFaqsRequest
+import com.depromeet.threedollar.api.core.service.user.faq.dto.response.FaqResponse
+import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCategory
+import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCreator
+import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqRepository
 
 internal class AdminFaqControllerTest(
     private val faqRepository: FaqRepository
@@ -52,12 +52,11 @@ internal class AdminFaqControllerTest(
                 }
                 .andExpect {
                     status { isOk() }
-                    content {
-                        jsonPath("$.data.faqId") { isNotEmpty() }
-                        jsonPath("$.data.question") { value(request.question) }
-                        jsonPath("$.data.answer") { value(request.answer) }
-                        jsonPath("$.data.category") { value(request.category.name) }
-                    }
+
+                    jsonPath("$.data.faqId") { isNotEmpty() }
+                    jsonPath("$.data.question") { value(request.question) }
+                    jsonPath("$.data.answer") { value(request.answer) }
+                    jsonPath("$.data.category") { value(request.category.name) }
                 }
         }
 
@@ -85,12 +84,11 @@ internal class AdminFaqControllerTest(
                 }
                 .andExpect {
                     status { isOk() }
-                    content {
-                        jsonPath("$.data.faqId") { value(faq.id) }
-                        jsonPath("$.data.question") { value(request.question) }
-                        jsonPath("$.data.answer") { value(request.answer) }
-                        jsonPath("$.data.category") { value(request.category.name) }
-                    }
+
+                    jsonPath("$.data.faqId") { value(faq.id) }
+                    jsonPath("$.data.question") { value(request.question) }
+                    jsonPath("$.data.answer") { value(request.answer) }
+                    jsonPath("$.data.category") { value(request.category.name) }
                 }
         }
 
@@ -114,9 +112,8 @@ internal class AdminFaqControllerTest(
                 }
                 .andExpect {
                     status { isOk() }
-                    content {
-                        jsonPath("$.data") { value(ApiResponse.OK.data) }
-                    }
+
+                    jsonPath("$.data") { value(ApiResponse.OK.data) }
                 }
         }
 
@@ -142,19 +139,18 @@ internal class AdminFaqControllerTest(
                 }
                 .andExpect {
                     status { isOk() }
-                    content {
-                        jsonPath("$.data") { hasSize<FaqResponse>(2) }
 
-                        jsonPath("$.data[0].faqId") { value(faq1.id) }
-                        jsonPath("$.data[0].question") { value(faq1.question) }
-                        jsonPath("$.data[0].answer") { value(faq1.answer) }
-                        jsonPath("$.data[0].category") { value(faq1.category.name) }
+                    jsonPath("$.data", hasSize<FaqResponse>(2))
 
-                        jsonPath("$.data[1].faqId") { value(faq2.id) }
-                        jsonPath("$.data[1].question") { value(faq2.question) }
-                        jsonPath("$.data[1].answer") { value(faq2.answer) }
-                        jsonPath("$.data[1].category") { value(faq2.category.name) }
-                    }
+                    jsonPath("$.data[0].faqId") { value(faq1.id) }
+                    jsonPath("$.data[0].question") { value(faq1.question) }
+                    jsonPath("$.data[0].answer") { value(faq1.answer) }
+                    jsonPath("$.data[0].category") { value(faq1.category.name) }
+
+                    jsonPath("$.data[1].faqId") { value(faq2.id) }
+                    jsonPath("$.data[1].question") { value(faq2.question) }
+                    jsonPath("$.data[1].answer") { value(faq2.answer) }
+                    jsonPath("$.data[1].category") { value(faq2.category.name) }
                 }
         }
 
@@ -176,13 +172,12 @@ internal class AdminFaqControllerTest(
                 }
                 .andExpect {
                     status { isOk() }
-                    content {
-                        jsonPath("$.data") { hasSize<FaqResponse>(1) }
-                        jsonPath("$.data[0].faqId") { value(faq2.id) }
-                        jsonPath("$.data[0].question") { value(faq2.question) }
-                        jsonPath("$.data[0].answer") { value(faq2.answer) }
-                        jsonPath("$.data[0].category") { value(faq2.category.name) }
-                    }
+
+                    jsonPath("$.data", hasSize<FaqResponse>(1))
+                    jsonPath("$.data[0].faqId") { value(faq2.id) }
+                    jsonPath("$.data[0].question") { value(faq2.question) }
+                    jsonPath("$.data[0].answer") { value(faq2.answer) }
+                    jsonPath("$.data[0].category") { value(faq2.category.name) }
                 }
         }
 
@@ -203,9 +198,8 @@ internal class AdminFaqControllerTest(
                 }
                 .andExpect {
                     status { isOk() }
-                    content {
-                        jsonPath("$.data") { hasSize<FaqCategoryResponse>(6) }
-                    }
+
+                    jsonPath("$.data", hasSize<FaqCategoryResponse>(6))
                 }
         }
 

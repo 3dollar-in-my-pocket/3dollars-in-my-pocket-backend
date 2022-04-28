@@ -1,10 +1,12 @@
 package com.depromeet.threedollar.api.user.controller.advertisement
 
 import java.time.LocalDateTime
+import org.hamcrest.Matchers.hasSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
+import com.depromeet.threedollar.api.core.service.user.advertisement.dto.response.AdvertisementResponse
 import com.depromeet.threedollar.api.user.controller.SetupControllerTest
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementCreator
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPlatformType
@@ -44,14 +46,13 @@ class AdvertisementControllerTest(
             param("platform", platform.toString())
         }.andExpect {
             status { isOk() }
-            content {
-                jsonPath("$.data[0].title") { value(advertisement.detail.title) }
-                jsonPath("$.data[0].subTitle") { value(advertisement.detail.subTitle) }
-                jsonPath("$.data[0].imageUrl") { value(advertisement.detail.imageUrl) }
-                jsonPath("$.data[0].linkUrl") { value(advertisement.detail.linkUrl) }
-                jsonPath("$.data[0].bgColor") { value(advertisement.detail.bgColor) }
-                jsonPath("$.data[0].fontColor") { value(advertisement.detail.fontColor) }
-            }
+
+            jsonPath("$.data[0].title") { value(advertisement.detail.title) }
+            jsonPath("$.data[0].subTitle") { value(advertisement.detail.subTitle) }
+            jsonPath("$.data[0].imageUrl") { value(advertisement.detail.imageUrl) }
+            jsonPath("$.data[0].linkUrl") { value(advertisement.detail.linkUrl) }
+            jsonPath("$.data[0].bgColor") { value(advertisement.detail.bgColor) }
+            jsonPath("$.data[0].fontColor") { value(advertisement.detail.fontColor) }
         }
 
     }
@@ -80,14 +81,14 @@ class AdvertisementControllerTest(
             param("platform", platform.toString())
         }.andExpect {
             status { isOk() }
-            content {
-                jsonPath("$.data[0].title") { value(advertisement.detail.title) }
-                jsonPath("$.data[0].subTitle") { value(advertisement.detail.subTitle) }
-                jsonPath("$.data[0].imageUrl") { value(advertisement.detail.imageUrl) }
-                jsonPath("$.data[0].linkUrl") { value(advertisement.detail.linkUrl) }
-                jsonPath("$.data[0].bgColor") { value(advertisement.detail.bgColor) }
-                jsonPath("$.data[0].fontColor") { value(advertisement.detail.fontColor) }
-            }
+
+            jsonPath("$.data", hasSize<AdvertisementResponse>(1))
+            jsonPath("$.data[0].title") { value(advertisement.detail.title) }
+            jsonPath("$.data[0].subTitle") { value(advertisement.detail.subTitle) }
+            jsonPath("$.data[0].imageUrl") { value(advertisement.detail.imageUrl) }
+            jsonPath("$.data[0].linkUrl") { value(advertisement.detail.linkUrl) }
+            jsonPath("$.data[0].bgColor") { value(advertisement.detail.bgColor) }
+            jsonPath("$.data[0].fontColor") { value(advertisement.detail.fontColor) }
         }
 
     }

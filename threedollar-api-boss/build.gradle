@@ -4,6 +4,7 @@ dependencies {
     // TestFixtures
     testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-mongo")))
     testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-redis")))
+    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-rds")))
 }
 
 application {

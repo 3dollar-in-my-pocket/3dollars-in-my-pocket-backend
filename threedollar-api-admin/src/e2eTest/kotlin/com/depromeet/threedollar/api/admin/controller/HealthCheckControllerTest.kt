@@ -10,6 +10,8 @@ internal class HealthCheckControllerTest : SetupControllerTest() {
         mockMvc.get("/ping")
             .andExpect {
                 status { isOk() }
+
+                jsonPath("$.data") { value("가슴속 삼천원 관리자 API") }
             }
     }
 

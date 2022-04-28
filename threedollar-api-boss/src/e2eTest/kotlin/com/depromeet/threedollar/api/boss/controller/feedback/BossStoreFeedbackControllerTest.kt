@@ -56,7 +56,8 @@ internal class BossStoreFeedbackControllerTest(
             .andDo { print() }
             .andExpect {
                 status { isOk() }
-                jsonPath("$.data") { hasSize<BossStoreFeedbackCountResponse>(1) }
+                jsonPath("$.data", hasSize<BossStoreFeedbackCountResponse>(BossStoreFeedbackType.values().size))
+
                 jsonPath("$.data[0].feedbackType") { value(BossStoreFeedbackType.FOOD_IS_DELICIOUS.name) }
                 jsonPath("$.data[0].count") { value(0) }
 
@@ -109,9 +110,10 @@ internal class BossStoreFeedbackControllerTest(
                     status { isOk() }
                     jsonPath("$.data.cursor.nextCursor") { value(null) }
                     jsonPath("$.data.cursor.hasMore") { value(false) }
-                    jsonPath("$.data.contents") { hasSize<BossStoreFeedbackGroupingDateResponse>(1) }
+
+                    jsonPath("$.data.contents", hasSize<BossStoreFeedbackGroupingDateResponse>(1))
                     jsonPath("$.data.contents[0].date") { value("2022-01-01") }
-                    jsonPath("$.data.contents[0].feedbacks") { hasSize<BossStoreFeedbackGroupingDateResponse>(1) }
+                    jsonPath("$.data.contents[0].feedbacks", hasSize<BossStoreFeedbackGroupingDateResponse>(1))
                     jsonPath("$.data.contents[0].feedbacks[0].feedbackType") { value(feedbackType.name) }
                     jsonPath("$.data.contents[0].feedbacks[0].count") { value(1) }
                 }
@@ -152,9 +154,10 @@ internal class BossStoreFeedbackControllerTest(
                     status { isOk() }
                     jsonPath("$.data.cursor.nextCursor") { value("2021-12-31") }
                     jsonPath("$.data.cursor.hasMore") { value(true) }
-                    jsonPath("$.data.contents") { hasSize<BossStoreFeedbackGroupingDateResponse>(1) }
+
+                    jsonPath("$.data.contents", hasSize<BossStoreFeedbackGroupingDateResponse>(1))
                     jsonPath("$.data.contents[0].date") { value("2022-01-01") }
-                    jsonPath("$.data.contents[0].feedbacks") { hasSize<BossStoreFeedbackGroupingDateResponse>(1) }
+                    jsonPath("$.data.contents[0].feedbacks", hasSize<BossStoreFeedbackGroupingDateResponse>(1))
                     jsonPath("$.data.contents[0].feedbacks[0].feedbackType") { value(feedbackType.name) }
                     jsonPath("$.data.contents[0].feedbacks[0].count") { value(1) }
                 }
@@ -170,10 +173,12 @@ internal class BossStoreFeedbackControllerTest(
             .andDo { print() }
             .andExpect {
                 status { isOk() }
-                jsonPath("$.data") { hasSize<BossStoreFeedbackTypeResponse>(BossStoreFeedbackType.values().size) }
+                jsonPath("$.data", hasSize<BossStoreFeedbackTypeResponse>(BossStoreFeedbackType.values().size))
+
                 jsonPath("$.data[0].feedbackType") { value(BossStoreFeedbackType.FOOD_IS_DELICIOUS.name) }
                 jsonPath("$.data[0].description") { value(BossStoreFeedbackType.FOOD_IS_DELICIOUS.description) }
                 jsonPath("$.data[0].emoji") { value(BossStoreFeedbackType.FOOD_IS_DELICIOUS.emoji) }
+
                 jsonPath("$.data[5].feedbackType") { value(BossStoreFeedbackType.PLATING_IS_BEAUTIFUL.name) }
                 jsonPath("$.data[5].description") { value(BossStoreFeedbackType.PLATING_IS_BEAUTIFUL.description) }
                 jsonPath("$.data[5].emoji") { value(BossStoreFeedbackType.PLATING_IS_BEAUTIFUL.emoji) }

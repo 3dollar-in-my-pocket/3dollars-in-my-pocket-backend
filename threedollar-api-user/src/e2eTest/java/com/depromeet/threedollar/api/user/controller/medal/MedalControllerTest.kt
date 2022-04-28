@@ -35,23 +35,22 @@ class MedalControllerTest(
             }
             .andExpect {
                 status { isOk() }
-                content {
-                    jsonPath("$.data") { hasSize<MedalResponse>(2) }
 
-                    jsonPath("$.data[0].medalId") { value(medalOne.id) }
-                    jsonPath("$.data[0].name") { value(medalOne.name) }
-                    jsonPath("$.data[0].iconUrl") { value(medalOne.activationIconUrl) }
-                    jsonPath("$.data[0].disableIconUrl") { value(medalOne.disableIconUrl) }
-                    jsonPath("$.data[0].introduction") { value(medalOne.introduction) }
-                    jsonPath("$.data[0].acquisition.description") { value(medalOne.acquisitionCondition.description) }
+                jsonPath("$.data", hasSize<MedalResponse>(2))
 
-                    jsonPath("$.data[1].medalId") { value(medalTwo.id) }
-                    jsonPath("$.data[1].name") { value(medalTwo.name) }
-                    jsonPath("$.data[1].iconUrl") { value(medalTwo.activationIconUrl) }
-                    jsonPath("$.data[1].disableIconUrl") { value(medalTwo.disableIconUrl) }
-                    jsonPath("$.data[1].introduction") { value(medalTwo.introduction) }
-                    jsonPath("$.data[1].acquisition.description") { value(medalTwo.acquisitionCondition.description) }
-                }
+                jsonPath("$.data[0].medalId") { value(medalOne.id) }
+                jsonPath("$.data[0].name") { value(medalOne.name) }
+                jsonPath("$.data[0].iconUrl") { value(medalOne.activationIconUrl) }
+                jsonPath("$.data[0].disableIconUrl") { value(medalOne.disableIconUrl) }
+                jsonPath("$.data[0].introduction") { value(medalOne.introduction) }
+                jsonPath("$.data[0].acquisition.description") { value(medalOne.acquisitionCondition.description) }
+
+                jsonPath("$.data[1].medalId") { value(medalTwo.id) }
+                jsonPath("$.data[1].name") { value(medalTwo.name) }
+                jsonPath("$.data[1].iconUrl") { value(medalTwo.activationIconUrl) }
+                jsonPath("$.data[1].disableIconUrl") { value(medalTwo.disableIconUrl) }
+                jsonPath("$.data[1].introduction") { value(medalTwo.introduction) }
+                jsonPath("$.data[1].acquisition.description") { value(medalTwo.acquisitionCondition.description) }
             }
     }
 

@@ -58,7 +58,7 @@ internal class BossStoreFeedbackControllerTest(
             .andDo { print() }
             .andExpect {
                 status { isOk() }
-                jsonPath("$.data") { hasSize<BossStoreFeedbackCountResponse>(1) }
+                jsonPath("$.data", hasSize<BossStoreFeedbackCountResponse>(BossStoreFeedbackType.values().size))
                 jsonPath("$.data[0].feedbackType") { value(BossStoreFeedbackType.FOOD_IS_DELICIOUS.name) }
                 jsonPath("$.data[0].count") { value(0) }
 
@@ -87,7 +87,7 @@ internal class BossStoreFeedbackControllerTest(
             .andDo { print() }
             .andExpect {
                 status { isOk() }
-                jsonPath("$.data") { hasSize<BossStoreFeedbackTypeResponse>(BossStoreFeedbackType.values().size) }
+                jsonPath("$.data", hasSize<BossStoreFeedbackTypeResponse>(BossStoreFeedbackType.values().size))
                 jsonPath("$.data[0].feedbackType") { value(BossStoreFeedbackType.FOOD_IS_DELICIOUS.name) }
                 jsonPath("$.data[0].description") { value(BossStoreFeedbackType.FOOD_IS_DELICIOUS.description) }
                 jsonPath("$.data[5].feedbackType") { value(BossStoreFeedbackType.PLATING_IS_BEAUTIFUL.name) }

@@ -33,11 +33,9 @@ internal class UserActivityControllerTest(
             .andDo { print() }
             .andExpect {
                 status { isOk() }
-                content {
-                    jsonPath("$.data.userId") { value(user.id) }
-                    jsonPath("$.data.name") { value(user.name) }
-                    jsonPath("$.data.socialType") { value(user.socialType.toString()) }
-                }
+                jsonPath("$.data.userId") { value(user.id) }
+                jsonPath("$.data.name") { value(user.name) }
+                jsonPath("$.data.socialType") { value(user.socialType.toString()) }
             }
     }
 
@@ -60,11 +58,9 @@ internal class UserActivityControllerTest(
             .andDo { print() }
             .andExpect {
                 status { isOk() }
-                content {
-                    jsonPath("$.data.medal.name") { value(medal.name) }
-                    jsonPath("$.data.medal.iconUrl") { value(medal.activationIconUrl) }
-                    jsonPath("$.data.medal.disableIconUrl") { value(medal.disableIconUrl) }
-                }
+                jsonPath("$.data.medal.name") { value(medal.name) }
+                jsonPath("$.data.medal.iconUrl") { value(medal.activationIconUrl) }
+                jsonPath("$.data.medal.disableIconUrl") { value(medal.disableIconUrl) }
             }
     }
 
@@ -85,9 +81,7 @@ internal class UserActivityControllerTest(
             .andDo { print() }
             .andExpect {
                 status { isOk() }
-                content {
-                    jsonPath("$.data.activity.storesCount") { value(2) }
-                }
+                jsonPath("$.data.activity.storesCount") { value(2) }
             }
     }
 
@@ -112,9 +106,7 @@ internal class UserActivityControllerTest(
             .andDo { print() }
             .andExpect {
                 status { isOk() }
-                content {
-                    jsonPath("$.data.activity.reviewsCount") { value(3) }
-                }
+                jsonPath("$.data.activity.reviewsCount") { value(3) }
             }
     }
 
@@ -149,9 +141,7 @@ internal class UserActivityControllerTest(
             .andDo { print() }
             .andExpect {
                 status { isOk() }
-                content {
-                    jsonPath("$.data.activity.medalsCounts") { value(2) }
-                }
+                jsonPath("$.data.activity.medalsCounts") { value(2) }
             }
     }
 

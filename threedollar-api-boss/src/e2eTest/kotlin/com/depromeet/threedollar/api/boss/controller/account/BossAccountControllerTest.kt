@@ -9,6 +9,7 @@ import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.put
 import com.depromeet.threedollar.api.boss.controller.SetupBossAccountControllerTest
 import com.depromeet.threedollar.api.boss.service.account.dto.request.UpdateBossAccountInfoRequest
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 
 internal class BossAccountControllerTest : SetupBossAccountControllerTest() {
@@ -28,12 +29,10 @@ internal class BossAccountControllerTest : SetupBossAccountControllerTest() {
             print()
         }.andExpect {
             status { isOk() }
-            content {
-                jsonPath("$.data.bossId") { value(bossId) }
-                jsonPath("$.data.socialType") { value(BossAccountSocialType.KAKAO.toString()) }
-                jsonPath("$.data.name") { value("테스트 계정") }
-                jsonPath("$.data.isSetupNotification") { value(false) }
-            }
+            jsonPath("$.data.bossId") { value(bossId) }
+            jsonPath("$.data.socialType") { value(BossAccountSocialType.KAKAO.toString()) }
+            jsonPath("$.data.name") { value("테스트 계정") }
+            jsonPath("$.data.isSetupNotification") { value(false) }
         }
     }
 
@@ -68,6 +67,8 @@ internal class BossAccountControllerTest : SetupBossAccountControllerTest() {
             print()
         }.andExpect {
             status { isOk() }
+
+            jsonPath("$.data") { value(ApiResponse.OK.data) }
         }
     }
 

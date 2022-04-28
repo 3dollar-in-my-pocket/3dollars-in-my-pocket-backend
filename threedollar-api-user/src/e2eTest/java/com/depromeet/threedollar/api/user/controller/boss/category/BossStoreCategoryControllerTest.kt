@@ -32,7 +32,7 @@ internal class BossStoreCategoryControllerTest(
             .andDo { print() }
             .andExpect {
                 status { isOk() }
-                jsonPath("$.data") { hasSize<BossStoreCategoryResponse>(2) }
+                jsonPath("$.data", hasSize<BossStoreCategoryResponse>(2))
                 jsonPath("$.data[0].categoryId") { value(category1.id) }
                 jsonPath("$.data[0].name") { value(category1.name) }
                 jsonPath("$.data[1].categoryId") { value(category2.id) }

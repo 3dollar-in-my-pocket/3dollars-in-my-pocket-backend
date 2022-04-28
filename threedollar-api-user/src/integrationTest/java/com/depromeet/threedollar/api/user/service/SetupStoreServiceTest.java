@@ -24,10 +24,13 @@ public abstract class SetupStoreServiceTest extends SetupUserServiceTest {
 
     @Autowired
     protected AppearanceDayRepository appearanceDayRepository;
-    protected Long storeId;
-    protected Store store;
+
     @Autowired
     private PaymentMethodRepository paymentMethodRepository;
+
+    protected Long storeId;
+
+    protected Store store;
 
     @BeforeEach
     void setUpStore() {

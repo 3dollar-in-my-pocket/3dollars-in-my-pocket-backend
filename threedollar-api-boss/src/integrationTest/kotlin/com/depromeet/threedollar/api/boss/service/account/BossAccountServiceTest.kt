@@ -55,11 +55,13 @@ internal class BossAccountServiceTest(
             val bossAccounts = bossAccountRepository.findAll()
             assertAll({
                 assertThat(bossAccounts).hasSize(1)
-                assertThat(bossAccounts[0].name).isEqualTo(name)
-                assertThat(bossAccounts[0].isSetupNotification).isEqualTo(isSetupNotification)
-                assertThat(bossAccounts[0].id).isEqualTo(bossAccount.id)
-                assertThat(bossAccounts[0].socialInfo).isEqualTo(bossAccount.socialInfo)
-                assertThat(bossAccounts[0].businessNumber).isEqualTo(bossAccount.businessNumber)
+                bossAccounts[0]?.let {
+                    assertThat(it.name).isEqualTo(name)
+                    assertThat(it.isSetupNotification).isEqualTo(isSetupNotification)
+                    assertThat(it.id).isEqualTo(bossAccount.id)
+                    assertThat(it.socialInfo).isEqualTo(bossAccount.socialInfo)
+                    assertThat(it.businessNumber).isEqualTo(bossAccount.businessNumber)
+                }
             })
         }
 
