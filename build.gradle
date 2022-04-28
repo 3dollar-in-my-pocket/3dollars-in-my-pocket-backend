@@ -151,20 +151,22 @@ subprojects {
         finalizedBy jacocoTestReport
     }
 
+    test {
+        dependsOn unitTest
+        dependsOn integrationTest
+    }
+
     task testNeeded(type: Test, group: "verification", description: "Test Needed") {
         configurations {
             testRunime.getTaskDependencyFromProjectDependency(true, "testNeeded")
         }
+        dependsOn unitTest
         dependsOn integrationTest
         dependsOn e2eTest
     }
 
     buildNeeded {
         finalizedBy testNeeded
-    }
-
-    test {
-        useJUnitPlatform()
     }
 }
 
