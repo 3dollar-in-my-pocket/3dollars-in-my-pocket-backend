@@ -108,6 +108,29 @@ internal class BossStoreOpenServiceTest(
     }
 
     @Test
+    fun `가게 오픈 갱신시 가게 위치가 그대로인경우 위치 정보가 유지된다`() {
+        // given
+        val latitude = 37.3
+        val longitude = 129.2
+
+        bossStoreLocationRepository.save(BossStoreLocationCreator.create(
+            bossStoreId = bossStoreId,
+            latitude = latitude,
+            longitude = longitude
+        ))
+
+        // when
+        bossStoreOpenService.openBossStore(bossStoreId, bossId, CoordinateValue.of(latitude, longitude))
+
+        // then
+        val bossStoreLocations = bossStoreLocationRepository.findAll()
+        assertAll({
+            assertThat(bossStoreLocations).hasSize(1)
+            assertThat(bossStoreLocations[0].location).isEqualTo(Point(longitude, latitude))
+        })
+    }
+
+    @Test
     fun `가게 오픈 정보 갱신시 존재하지 않는 가게인 경우 NotFound Exception`() {
         // when & then
         assertThatThrownBy {
