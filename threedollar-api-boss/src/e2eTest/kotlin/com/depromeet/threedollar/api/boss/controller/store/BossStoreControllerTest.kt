@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.put
 import com.depromeet.threedollar.api.boss.controller.SetupBossAccountControllerTest
 import com.depromeet.threedollar.api.boss.service.store.dto.request.AppearanceDayRequest
 import com.depromeet.threedollar.api.boss.service.store.dto.request.MenuRequest
+import com.depromeet.threedollar.api.boss.service.store.dto.request.PatchBossStoreInfoRequest
 import com.depromeet.threedollar.api.boss.service.store.dto.request.UpdateBossStoreInfoRequest
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAppearanceDayResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreCategoryResponse
@@ -457,7 +458,7 @@ internal class BossStoreControllerTest(
             )
             bossStoreRepository.save(bossStore)
 
-            val request = UpdateBossStoreInfoRequest(
+            val request = PatchBossStoreInfoRequest(
                 name = "변경 후 이름",
                 imageUrl = "https://after.png",
                 introduction = "변경 후 소개",
