@@ -82,6 +82,17 @@ subprojects {
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     }
 
+    sourceSets {
+        integrationTest {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+        }
+        e2eTest {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+        }
+    }
+
     configurations {
         compileOnly {
             extendsFrom annotationProcessor
@@ -108,25 +119,14 @@ subprojects {
         }
     }
 
-    sourceSets {
-        integrationTest {
-            compileClasspath += main.output + test.output
-            runtimeClasspath += main.output + test.output
-        }
-        e2eTest {
-            compileClasspath += main.output + test.output
-            runtimeClasspath += main.output + test.output
-        }
-    }
-
-    task unitTest(type: Test, group: "verification", description: "Unit Tests") {
+    task unitTest(type: Test, group: "verification", description: "Execute Unit Tests") {
         useJUnitPlatform()
         jacoco {
             destinationFile = file("$buildDir/jacoco/unitTest.exec")
         }
     }
 
-    task integrationTest(type: Test, group: "verification", description: "Integration Tests") {
+    task integrationTest(type: Test, group: "verification", description: "Execute Integration Tests") {
         testClassesDirs = sourceSets.integrationTest.output.classesDirs
         classpath = sourceSets.integrationTest.runtimeClasspath
         useJUnitPlatform()
@@ -135,7 +135,7 @@ subprojects {
         }
     }
 
-    task e2eTest(type: Test, group: "verification", description: "E2E Tests") {
+    task e2eTest(type: Test, group: "verification", description: "Execute E2E Tests") {
         testClassesDirs = sourceSets.e2eTest.output.classesDirs
         classpath = sourceSets.e2eTest.runtimeClasspath
         useJUnitPlatform()
@@ -144,7 +144,7 @@ subprojects {
         }
     }
 
-    task ci(type: Test, group: 'verification', description: 'CI') {
+    task ci(type: Test, group: "verification", description: "CI") {
         dependsOn unitTest
         dependsOn integrationTest
         dependsOn e2eTest
@@ -156,17 +156,15 @@ subprojects {
         dependsOn integrationTest
     }
 
-    task testNeeded(type: Test, group: "verification", description: "Test Needed") {
+    task e2eTestNeeded(type: Test, group: "verification", description: "E2E Test Needed") {
         configurations {
-            testRunime.getTaskDependencyFromProjectDependency(true, "testNeeded")
+            testRunime.getTaskDependencyFromProjectDependency(true, "e2eTestNeeded")
         }
-        dependsOn unitTest
-        dependsOn integrationTest
         dependsOn e2eTest
     }
 
     buildNeeded {
-        finalizedBy testNeeded
+        finalizedBy e2eTestNeeded
     }
 }
 
@@ -184,7 +182,7 @@ jacoco {
     toolVersion = "$jacocoVersion"
 }
 
-task testCoverage(type: JacocoReport, group: 'verification', description: 'Report Test Coverage') {
+task testCoverage(type: JacocoReport, group: "verification", description: "Report Test Coverage") {
     executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
 
     subprojects.forEach {
