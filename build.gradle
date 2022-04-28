@@ -86,46 +86,57 @@ subprojects {
         compileOnly {
             extendsFrom annotationProcessor
         }
-        integrationTestImplementation {
+        e2eTestImplementation {
             extendsFrom implementation, testImplementation
         }
-        integrationTestRuntimeOnly {
+        e2eTestRuntimeOnly {
             extendsFrom testRuntimeOnly
         }
-        integrationTestCompileOnly {
+        e2eTestCompileOnly {
             extendsFrom testCompileOnly, testAnnotationProcessor
         }
     }
 
     sourceSets {
-        integrationTest {
+        e2eTest {
             compileClasspath += main.output + test.output
             runtimeClasspath += main.output + test.output
             resources {
-                "src/integrationTest/resources"
+                "src/e2eTest/resources"
             }
         }
     }
 
-    task integrationTest(type: Test, group: 'verification', description: 'Integration Tests') {
-        testClassesDirs = sourceSets.integrationTest.output.classesDirs
-        classpath = sourceSets.integrationTest.runtimeClasspath
-        useJUnitPlatform()
-        jacoco {
-            destinationFile = file("$buildDir/jacoco/integrationTest.exec")
-        }
-    }
-
-    task unitTest(type: Test, group: 'verification', description: 'Unit Tests') {
-        useJUnitPlatform()
-        jacoco {
-            destinationFile = file("$buildDir/jacoco/unitTest.exec")
-        }
-    }
-
     test {
-        dependsOn unitTest
-        dependsOn integrationTest
+        useJUnitPlatform()
+        jacoco {
+            destinationFile = file("$buildDir/jacoco/test.exec")
+        }
+    }
+
+    task e2eTest(type: Test, group: 'verification', description: 'E2E Test') {
+        testClassesDirs = sourceSets.e2eTest.output.classesDirs
+        classpath = sourceSets.e2eTest.runtimeClasspath
+        useJUnitPlatform()
+        jacoco {
+            destinationFile = file("$buildDir/jacoco/e2eTest.exec")
+        }
+    }
+
+    task e2eTestNeeded(type: Test, group: 'verification', description: 'E2E Test Needed') {
+        configurations {
+            testRunime.getTaskDependencyFromProjectDependency(true, "e2eTestNeeded")
+        }
+        dependsOn e2eTest
+    }
+
+    buildNeeded {
+        finalizedBy e2eTestNeeded
+    }
+
+    task ci(type: Test, group: 'verification', description: 'CI') {
+        dependsOn test
+        dependsOn e2eTest
         finalizedBy jacocoTestReport
     }
 }
