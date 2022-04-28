@@ -16,9 +16,9 @@ import org.springframework.test.context.TestConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class BossAccountServiceTest(
-    private val bossAccountService: BossAccountService,
-    private val bossAccountRepository: BossAccountRepository,
-    private val bossWithdrawalAccountRepository: BossWithdrawalAccountRepository,
+        private val bossAccountService: BossAccountService,
+        private val bossAccountRepository: BossAccountRepository,
+        private val bossWithdrawalAccountRepository: BossWithdrawalAccountRepository,
 ) {
 
     @AfterEach

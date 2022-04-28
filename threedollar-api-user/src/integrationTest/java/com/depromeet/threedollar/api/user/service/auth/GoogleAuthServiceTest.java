@@ -3,13 +3,10 @@ package com.depromeet.threedollar.api.user.service.auth;
 import com.depromeet.threedollar.api.user.service.auth.dto.request.LoginRequest;
 import com.depromeet.threedollar.api.user.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.user.service.user.UserService;
+import com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
-import com.depromeet.threedollar.domain.rds.user.domain.user.User;
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
-import com.depromeet.threedollar.domain.rds.user.domain.user.WithdrawalUserRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.user.*;
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient;
 import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse;
 import org.junit.jupiter.api.AfterEach;
@@ -21,7 +18,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper.assertUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -98,7 +94,7 @@ class GoogleAuthServiceTest {
             List<User> users = userRepository.findAll();
             assertAll(
                 () -> assertThat(users).hasSize(1),
-                () -> assertUser(users.get(0), SOCIAL_ID, request.getSocialType(), request.getName())
+                () -> UserAssertionHelper.assertUser(users.get(0), SOCIAL_ID, request.getSocialType(), request.getName())
             );
         }
 

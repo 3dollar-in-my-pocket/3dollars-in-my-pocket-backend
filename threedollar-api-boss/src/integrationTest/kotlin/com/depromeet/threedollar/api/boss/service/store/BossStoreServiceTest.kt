@@ -24,10 +24,10 @@ import java.time.LocalTime
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class BossStoreSetupBossAccountServiceTest(
-    private val bossStoreService: BossStoreService,
-    private val bossStoreRepository: BossStoreRepository,
-    private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-    private val bossDeletedStoreRepository: BossDeletedStoreRepository
+        private val bossStoreService: BossStoreService,
+        private val bossStoreRepository: BossStoreRepository,
+        private val bossStoreCategoryRepository: BossStoreCategoryRepository,
+        private val bossDeletedStoreRepository: BossDeletedStoreRepository
 ) : SetupBossAccountServiceTest() {
 
     @AfterEach

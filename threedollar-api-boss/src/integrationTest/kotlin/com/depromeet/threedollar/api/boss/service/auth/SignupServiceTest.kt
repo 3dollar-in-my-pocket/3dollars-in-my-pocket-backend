@@ -23,10 +23,10 @@ import org.springframework.test.context.TestConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class SignupServiceTest(
-    private val signupService: SignupService,
-    private val registrationRepository: RegistrationRepository,
-    private val bossAccountRepository: BossAccountRepository,
-    private val bossStoreCategoryRepository: BossStoreCategoryRepository
+        private val signupService: SignupService,
+        private val registrationRepository: RegistrationRepository,
+        private val bossAccountRepository: BossAccountRepository,
+        private val bossStoreCategoryRepository: BossStoreCategoryRepository
 ) {
 
     @AfterEach

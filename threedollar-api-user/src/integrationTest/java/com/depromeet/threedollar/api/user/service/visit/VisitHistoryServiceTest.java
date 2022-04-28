@@ -2,6 +2,7 @@ package com.depromeet.threedollar.api.user.service.visit;
 
 import com.depromeet.threedollar.api.user.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.user.service.visit.dto.request.AddVisitHistoryRequest;
+import com.depromeet.threedollar.api.user.testhelper.assertions.VisitHistoryAssertionHelper;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
@@ -17,7 +18,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.depromeet.threedollar.api.user.testhelper.assertions.VisitHistoryAssertionHelper.assertVisitHistory;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -55,7 +55,7 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
             List<VisitHistory> histories = visitHistoryRepository.findAll();
             assertAll(
                 () -> assertThat(histories).hasSize(1),
-                () -> assertVisitHistory(histories.get(0), storeId, userId, visitType, dateOfVisit)
+                () -> VisitHistoryAssertionHelper.assertVisitHistory(histories.get(0), storeId, userId, visitType, dateOfVisit)
             );
         }
 

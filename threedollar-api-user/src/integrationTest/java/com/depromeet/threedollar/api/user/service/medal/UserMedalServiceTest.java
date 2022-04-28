@@ -2,12 +2,9 @@ package com.depromeet.threedollar.api.user.service.medal;
 
 import com.depromeet.threedollar.api.user.service.SetupUserServiceTest;
 import com.depromeet.threedollar.api.user.service.medal.dto.request.ChangeRepresentativeMedalRequest;
+import com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.Medal;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedal;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalStatus;
+import com.depromeet.threedollar.domain.rds.user.domain.medal.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -17,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper.assertUserMedal;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -55,7 +51,7 @@ class UserMedalServiceTest extends SetupUserServiceTest {
             List<UserMedal> userMedals = userMedalRepository.findAll();
             assertAll(
                 () -> assertThat(userMedals).hasSize(1),
-                () -> assertUserMedal(userMedals.get(0), user.getId(), medal.getId(), UserMedalStatus.ACTIVE)
+                () -> UserAssertionHelper.assertUserMedal(userMedals.get(0), user.getId(), medal.getId(), UserMedalStatus.ACTIVE)
             );
         }
 

@@ -3,15 +3,10 @@ package com.depromeet.threedollar.api.user.service.user;
 import com.depromeet.threedollar.api.user.service.user.dto.request.CheckAvailableNameRequest;
 import com.depromeet.threedollar.api.user.service.user.dto.request.CreateUserRequest;
 import com.depromeet.threedollar.api.user.service.user.dto.request.UpdateUserInfoRequest;
+import com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
-import com.depromeet.threedollar.domain.rds.user.domain.user.User;
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
-import com.depromeet.threedollar.domain.rds.user.domain.user.WithdrawalUser;
-import com.depromeet.threedollar.domain.rds.user.domain.user.WithdrawalUserCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.user.WithdrawalUserRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.user.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -21,8 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper.assertUser;
-import static com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper.assertWithdrawalUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -64,7 +57,7 @@ class UserServiceTest {
             List<User> users = userRepository.findAll();
             assertAll(
                 () -> assertThat(users).hasSize(1),
-                () -> assertUser(users.get(0), socialId, socialType, name)
+                () -> UserAssertionHelper.assertUser(users.get(0), socialId, socialType, name)
             );
         }
 
@@ -161,7 +154,7 @@ class UserServiceTest {
             List<User> users = userRepository.findAll();
             assertAll(
                 () -> assertThat(users).hasSize(1),
-                () -> assertUser(users.get(0), socialId, socialType, name)
+                () -> UserAssertionHelper.assertUser(users.get(0), socialId, socialType, name)
             );
         }
 
@@ -196,7 +189,7 @@ class UserServiceTest {
             List<WithdrawalUser> withdrawalUsers = withdrawalUserRepository.findAll();
             assertAll(
                 () -> assertThat(withdrawalUsers).hasSize(1),
-                () -> assertWithdrawalUser(withdrawalUsers.get(0), user)
+                () -> UserAssertionHelper.assertWithdrawalUser(withdrawalUsers.get(0), user)
             );
         }
 
@@ -216,7 +209,7 @@ class UserServiceTest {
             List<User> users = userRepository.findAll();
             assertAll(
                 () -> assertThat(users).hasSize(1),
-                () -> assertUser(users.get(0), user2.getSocialId(), user2.getSocialType(), user2.getName())
+                () -> UserAssertionHelper.assertUser(users.get(0), user2.getSocialId(), user2.getSocialType(), user2.getName())
             );
         }
 
@@ -248,8 +241,8 @@ class UserServiceTest {
             List<WithdrawalUser> withdrawalUsers = withdrawalUserRepository.findAll();
             assertAll(
                 () -> assertThat(withdrawalUsers).hasSize(2),
-                () -> assertWithdrawalUser(withdrawalUsers.get(0), withdrawalUser.getUserId(), withdrawalUser.getName(), withdrawalUser.getSocialInfo()),
-                () -> assertWithdrawalUser(withdrawalUsers.get(1), user.getId(), user.getName(), user.getSocialInfo())
+                () -> UserAssertionHelper.assertWithdrawalUser(withdrawalUsers.get(0), withdrawalUser.getUserId(), withdrawalUser.getName(), withdrawalUser.getSocialInfo()),
+                () -> UserAssertionHelper.assertWithdrawalUser(withdrawalUsers.get(1), user.getId(), user.getName(), user.getSocialInfo())
             );
         }
 
