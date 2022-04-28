@@ -107,14 +107,14 @@ subprojects {
         }
     }
 
-    test {
+    task integrationTest(type: Test, group: "verification", description: "Integration Tests") {
         useJUnitPlatform()
         jacoco {
-            destinationFile = file("$buildDir/jacoco/test.exec")
+            destinationFile = file("$buildDir/jacoco/integrationTest.exec")
         }
     }
 
-    task e2eTest(type: Test, group: 'verification', description: 'E2E Test') {
+    task e2eTest(type: Test, group: "verification", description: "E2E Tests") {
         testClassesDirs = sourceSets.e2eTest.output.classesDirs
         classpath = sourceSets.e2eTest.runtimeClasspath
         useJUnitPlatform()
@@ -123,7 +123,13 @@ subprojects {
         }
     }
 
-    task e2eTestNeeded(type: Test, group: 'verification', description: 'E2E Test Needed') {
+    task ci(type: Test, group: 'verification', description: 'CI') {
+        dependsOn integrationTest
+        dependsOn e2eTest
+        finalizedBy jacocoTestReport
+    }
+
+    task e2eTestNeeded(type: Test, group: "verification", description: "E2E Test Needed") {
         configurations {
             testRunime.getTaskDependencyFromProjectDependency(true, "e2eTestNeeded")
         }
@@ -134,10 +140,8 @@ subprojects {
         finalizedBy e2eTestNeeded
     }
 
-    task ci(type: Test, group: 'verification', description: 'CI') {
-        dependsOn test
-        dependsOn e2eTest
-        finalizedBy jacocoTestReport
+    test {
+        useJUnitPlatform()
     }
 }
 
