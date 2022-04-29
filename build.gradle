@@ -119,6 +119,13 @@ subprojects {
         }
     }
 
+    tasks.withType(Test) {
+        reports {
+            html.enabled = false
+            junitXml.enabled = false
+        }
+    }
+
     task unitTest(type: Test, group: "verification", description: "Execute Unit Tests") {
         useJUnitPlatform()
         jacoco {
