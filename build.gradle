@@ -119,6 +119,16 @@ subprojects {
         }
     }
 
+    tasks.withType(JavaCompile) {
+        options.fork = true
+    }
+
+    tasks.withType(Test) {
+        maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+        reports.html.enabled = false
+        reports.junitXml.enabled = false
+    }
+
     task unitTest(type: Test, group: "verification", description: "Execute Unit Tests") {
         useJUnitPlatform()
         jacoco {
