@@ -43,15 +43,18 @@ import lombok.NoArgsConstructor;
 )
 public class User extends AuditingTimeEntity {
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<UserMedal> userMedals = new ArrayList<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Embedded
     private SocialInfo socialInfo;
+
     @Column(length = 50, nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<UserMedal> userMedals = new ArrayList<>();
 
     @Builder(access = AccessLevel.PACKAGE)
     private User(String socialId, UserSocialType socialType, String name) {
