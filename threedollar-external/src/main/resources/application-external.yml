@@ -91,7 +91,7 @@ spring.config:
   activate:
     on-profile:
       - prod
-      - stage
+      - staging
 
 cloud:
   aws:

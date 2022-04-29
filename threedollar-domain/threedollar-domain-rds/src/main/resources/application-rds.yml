@@ -128,7 +128,7 @@ spring.config:
     on-profile:
       - dev
       - prod
-      - stage
+      - staging
 
 spring:
   jpa:

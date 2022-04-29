@@ -2,7 +2,7 @@ spring.config:
   activate:
     on-profile:
       - prod
-      - stage
+      - staging
 
 springfox:
   documentation:

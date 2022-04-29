@@ -3,7 +3,7 @@ spring.config:
     on-profile:
       - local
       - local-docker
-      - stage
+      - staging
 
 sentry:
   logging:

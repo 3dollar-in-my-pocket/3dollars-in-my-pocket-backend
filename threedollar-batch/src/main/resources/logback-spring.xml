@@ -3,7 +3,7 @@
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
 
-    <springProfile name="local,local-docker,integration-test,stage,dev,prod">
+    <springProfile name="local,local-docker,integration-test,staging,dev,prod">
         <logger name="com.depromeet.threedollar" level="DEBUG"/>
         <logger name="org.springframework.batch" level="DEBUG"/>
         <logger name="org.springframework.web" level="INFO"/>

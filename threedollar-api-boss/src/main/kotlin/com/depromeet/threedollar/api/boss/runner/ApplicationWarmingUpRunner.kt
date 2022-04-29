@@ -10,7 +10,7 @@ import com.depromeet.threedollar.external.client.local.LocalBossApiWarmupApiClie
 
 private const val API_CALL_COUNT = 20
 
-@Profile("dev", "stage", "prod")
+@Profile("dev", "staging", "prod")
 @Component
 class ApplicationWarmingUpRunner(
     private val apiClient: LocalBossApiWarmupApiClient

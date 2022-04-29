@@ -30,7 +30,7 @@ spring.config:
   activate:
     on-profile:
       - dev
-      - stage
+      - staging
       - prod
 
 spring:

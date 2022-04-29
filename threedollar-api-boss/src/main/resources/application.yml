@@ -60,7 +60,7 @@ spring.config:
   activate:
     on-profile:
       - prod
-      - stage
+      - staging
 
 spring:
   datasource:

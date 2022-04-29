@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Profile({"dev", "stage", "prod"})
+@Profile({"dev", "staging", "prod"})
 @RequiredArgsConstructor
 @Component
 public class ApplicationWarmingUpRunner implements ApplicationListener<ApplicationReadyEvent> {
