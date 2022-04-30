@@ -23,10 +23,4 @@ enum class BossStoreFeedbackType(
         return description
     }
 
-    companion object {
-        fun of(key: String): BossStoreFeedbackType? {
-            return values().find { it.key == key }
-        }
-    }
-
 }

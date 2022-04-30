@@ -8,5 +8,5 @@ data class UserMetaValue(
     val userAgent: String? = null,
     val clientIp: String? = null,
     val applicationType: ApplicationType,
-    val appVersion: String? = null,
+    val appVersion: String? = null
 )

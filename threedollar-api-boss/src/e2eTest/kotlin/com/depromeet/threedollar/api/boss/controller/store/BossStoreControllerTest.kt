@@ -21,6 +21,7 @@ import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAppearanceDayResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreMenuResponse
+import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
@@ -438,6 +439,86 @@ internal class BossStoreControllerTest(
 
                     jsonPath("$.data.openStatus.status") { value(BossStoreOpenType.OPEN.name) }
                     jsonPath("$.data.openStatus.openStartDateTime") { value("2022-02-01T00:00:00") }
+                }
+        }
+
+        @Test
+        fun `특정 가게를 조회합니다 위치정보가 없는경우 위치정보가 null로 반환된다`() {
+            // given
+            val category = BossStoreCategoryCreator.create("한식", 1)
+            bossStoreCategoryRepository.save(category)
+
+            val bossStore = BossStoreCreator.create(
+                bossId = "anotherBossId",
+                name = "사장님 가게",
+                imageUrl = "https://image.png",
+                introduction = "introduction",
+                snsUrl = "https://sns.com",
+                contactsNumber = ContactsNumber.of("010-1234-1234"),
+                menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
+                appearanceDays = setOf(BossStoreAppearanceDayCreator.create(DayOfTheWeek.FRIDAY, LocalTime.of(8, 0), LocalTime.of(10, 0), "강남역")),
+                categoriesIds = setOf(category.id)
+            )
+            bossStoreRepository.save(bossStore)
+
+            bossStoreOpenTimeRepository.set(bossStore.id, LocalDateTime.of(2022, 2, 1, 0, 0))
+
+            // when & then
+            mockMvc.get("/v1/boss/store/${bossStore.id}") {
+                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
+            }
+                .andDo {
+                    print()
+                }
+                .andExpect {
+                    status { isOk() }
+
+                    jsonPath("$.data.location") { value(null) }
+
+                    jsonPath("$.data.bossStoreId") { value(bossStore.id) }
+                    jsonPath("$.data.name") { value("사장님 가게") }
+
+                    jsonPath("$.data.imageUrl") { value(bossStore.imageUrl) }
+                    jsonPath("$.data.introduction") { value(bossStore.introduction) }
+                    jsonPath("$.data.snsUrl") { value(bossStore.snsUrl) }
+                    jsonPath("$.data.contactsNumber") { value("010-1234-1234") }
+
+                    jsonPath("$.data.menus", hasSize<BossStoreMenuResponse>(1))
+                    jsonPath("$.data.menus[0].name") { value("붕어빵") }
+                    jsonPath("$.data.menus[0].price") { value(2000) }
+                    jsonPath("$.data.menus[0].imageUrl") { value("https://menu.png") }
+
+                    jsonPath("$.data.appearanceDays", hasSize<BossStoreAppearanceDayResponse>(1))
+                    jsonPath("$.data.appearanceDays[0].dayOfTheWeek") { value(DayOfTheWeek.FRIDAY.name) }
+                    jsonPath("$.data.appearanceDays[0].openingHours.startTime") { value("08:00") }
+                    jsonPath("$.data.appearanceDays[0].openingHours.endTime") { value("10:00") }
+                    jsonPath("$.data.appearanceDays[0].locationDescription") { value("강남역") }
+
+                    jsonPath("$.data.categories", hasSize<BossStoreCategoryResponse>(1))
+                    jsonPath("$.data.categories[0].categoryId") { value(category.id) }
+                    jsonPath("$.data.categories[0].name") { value("한식") }
+
+                    jsonPath("$.data.openStatus.status") { value(BossStoreOpenType.OPEN.name) }
+                    jsonPath("$.data.openStatus.openStartDateTime") { value("2022-02-01T00:00:00") }
+                }
+        }
+
+        @Test
+        fun `특정 가게를 조회할떄 해당하는 가게가 없는경우 404 에러가 발생한다`() {
+            // given
+            val bossStoreId = "notFoundBossStoreId"
+
+            // when & then
+            mockMvc.get("/v1/boss/store/${bossStoreId}") {
+                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
+            }
+                .andDo {
+                    print()
+                }
+                .andExpect {
+                    status { isNotFound() }
+                    jsonPath("$.resultCode") { value(ErrorCode.NOTFOUND_STORE.code) }
+                    jsonPath("$.message") { value(ErrorCode.NOTFOUND_STORE.message) }
                 }
         }
 
