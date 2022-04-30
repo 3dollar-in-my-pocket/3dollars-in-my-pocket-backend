@@ -30,7 +30,8 @@ object MedalCreator {
         activationIconUrl: String,
         disableIconUrl: String,
         conditionType: MedalAcquisitionConditionType = MedalAcquisitionConditionType.ADD_STORE,
-        conditionCount: Int = 3
+        conditionCount: Int = 3,
+        acquisitionDescription: String? = null
     ): Medal {
         return Medal.builder()
             .name(name)
@@ -39,6 +40,7 @@ object MedalCreator {
             .disableIconUrl(disableIconUrl)
             .conditionType(conditionType)
             .conditionCount(conditionCount)
+            .acquisitionDescription(acquisitionDescription)
             .build()
     }
 

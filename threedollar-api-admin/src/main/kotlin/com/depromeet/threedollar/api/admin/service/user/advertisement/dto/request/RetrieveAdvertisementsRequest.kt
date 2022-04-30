@@ -11,7 +11,7 @@ data class RetrieveAdvertisementsRequest(
     val size: Long = 1,
 
     @field:Min(value = 1, message = "{common.page.min}")
-    val page: Int = 10,
+    val page: Int = -1,
 
     val platform: AdvertisementPlatformType?,
 
