@@ -24,7 +24,7 @@ public class KaKaoFeignConfig {
     }
 
     /**
-     * https://developers.kakao.com/docs/latest/ko/reference/rest-api-reference#response-code
+     * <a href="https://developers.kakao.com/docs/latest/ko/reference/rest-api-reference#response-code">https://developers.kakao.com/docs/latest/ko/reference/rest-api-reference#response-code</a>
      */
     private static class KakaoApiErrorDecoder implements ErrorDecoder {
 

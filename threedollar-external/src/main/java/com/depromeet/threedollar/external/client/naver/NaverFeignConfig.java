@@ -24,7 +24,7 @@ public class NaverFeignConfig {
     }
 
     /**
-     * https://developers.naver.com/docs/login/profile/profile.md
+     * <a href="https://developers.naver.com/docs/login/profile/profile.md">https://developers.naver.com/docs/login/profile/profile.md</a>
      */
     private static class NaverApiErrorDecoder implements ErrorDecoder {
 

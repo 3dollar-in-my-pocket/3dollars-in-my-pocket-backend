@@ -29,7 +29,7 @@ import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 
 /**
- * https://developer.apple.com/documentation/sign_in_with_apple/sign_in_with_apple_rest_api/verifying_a_user
+ * <a href="https://developer.apple.com/documentation/sign_in_with_apple/sign_in_with_apple_rest_api/verifying_a_user">https://developer.apple.com/documentation/sign_in_with_apple/sign_in_with_apple_rest_api/verifying_a_user</a>
  */
 @RequiredArgsConstructor
 @Component

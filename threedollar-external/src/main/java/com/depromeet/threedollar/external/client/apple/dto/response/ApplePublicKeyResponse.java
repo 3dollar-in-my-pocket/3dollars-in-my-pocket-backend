@@ -12,7 +12,7 @@ import lombok.ToString;
 
 /**
  * GET Apple Public Key
- * https://developer.apple.com/documentation/sign_in_with_apple/jwkset/keys
+ * <a href="https://developer.apple.com/documentation/sign_in_with_apple/jwkset/keys">https://developer.apple.com/documentation/sign_in_with_apple/jwkset/keys</a>
  */
 @ToString
 @Getter

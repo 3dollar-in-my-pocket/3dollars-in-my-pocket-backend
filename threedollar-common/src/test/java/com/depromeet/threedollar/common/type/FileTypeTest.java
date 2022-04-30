@@ -85,12 +85,6 @@ class FileTypeTest {
                 .endsWith(".png");
         }
 
-        @Test
-        void originalFileName이_없는경우_InvalidException() {
-            // when & then
-            assertThatThrownBy(() -> FileType.ADVERTISEMENT_IMAGE.createUniqueFileNameWithExtension(null)).isInstanceOf(InvalidException.class);
-        }
-
     }
 
 }

@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class Email {
 
-    private static final Pattern EMAIL_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+    private static final Pattern EMAIL_REGEX = Pattern.compile("^[A-Z\\d._%+-]+@[A-Z\\d.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     @Column(nullable = false, length = 50)
     private String email;
