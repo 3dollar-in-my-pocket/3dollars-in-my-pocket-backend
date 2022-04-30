@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.user.controller.review;
 
-import static com.depromeet.threedollar.api.user.testhelper.assertions.ReviewAssertionHelper.assertReviewDetailInfoResponse;
-import static com.depromeet.threedollar.api.user.testhelper.assertions.ReviewAssertionHelper.assertReviewInfoResponse;
+import static com.depromeet.threedollar.api.user.controller.review.support.ReviewAssertions.assertReviewDetailInfoResponse;
+import static com.depromeet.threedollar.api.user.controller.review.support.ReviewAssertions.assertReviewInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
@@ -38,10 +38,13 @@ import com.depromeet.threedollar.domain.rds.user.event.review.ReviewCreatedEvent
 class ReviewControllerTest extends SetupStoreControllerTest {
 
     private ReviewMockApiCaller reviewMockApiCaller;
+
     @Autowired
     private ReviewRepository reviewRepository;
+
     @MockBean
     private AddUserMedalEventListener addUserMedalEventListener;
+
     @MockBean
     private StoreRatingEventListener storeRatingEventListener;
 

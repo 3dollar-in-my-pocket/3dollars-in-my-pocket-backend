@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.user.service.review;
 
+import static com.depromeet.threedollar.api.user.service.review.support.ReviewAssertions.assertReview;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -15,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.depromeet.threedollar.api.user.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.user.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.user.service.review.dto.request.UpdateReviewRequest;
-import com.depromeet.threedollar.api.user.testhelper.assertions.ReviewAssertionHelper;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
@@ -54,7 +54,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             List<Review> reviews = reviewRepository.findAll();
             assertAll(
                 () -> assertThat(reviews).hasSize(1),
-                () -> ReviewAssertionHelper.assertReview(reviews.get(0), store.getId(), contents, rating, userId, ReviewStatus.POSTED)
+                () -> assertReview(reviews.get(0), store.getId(), contents, rating, userId, ReviewStatus.POSTED)
             );
         }
 
@@ -91,7 +91,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             List<Review> reviews = reviewRepository.findAll();
             assertAll(
                 () -> assertThat(reviews).hasSize(1),
-                () -> ReviewAssertionHelper.assertReview(reviews.get(0), store.getId(), contents, rating, userId, ReviewStatus.POSTED)
+                () -> assertReview(reviews.get(0), store.getId(), contents, rating, userId, ReviewStatus.POSTED)
             );
         }
 
@@ -136,7 +136,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             List<Review> reviews = reviewRepository.findAll();
             assertAll(
                 () -> assertThat(reviews).hasSize(1),
-                () -> ReviewAssertionHelper.assertReview(reviews.get(0), store.getId(), review.getContents(), review.getRating(), userId, ReviewStatus.DELETED)
+                () -> assertReview(reviews.get(0), store.getId(), review.getContents(), review.getRating(), userId, ReviewStatus.DELETED)
             );
         }
 

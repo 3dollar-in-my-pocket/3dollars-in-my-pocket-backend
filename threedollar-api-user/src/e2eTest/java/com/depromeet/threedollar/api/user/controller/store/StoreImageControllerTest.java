@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.user.controller.store;
 
-import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreImageAssertionHelper.assertStoreImageResponse;
+import static com.depromeet.threedollar.api.user.controller.store.support.StoreImageAssertions.assertStoreImageResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -22,6 +22,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageReposito
 class StoreImageControllerTest extends SetupStoreControllerTest {
 
     private StoreImageMockApiCaller storeImageMockApiCaller;
+
     @Autowired
     private StoreImageRepository storeImageRepository;
 

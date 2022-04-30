@@ -15,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.depromeet.threedollar.api.user.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.user.service.visit.dto.request.AddVisitHistoryRequest;
-import com.depromeet.threedollar.api.user.testhelper.assertions.VisitHistoryAssertionHelper;
+import com.depromeet.threedollar.api.user.service.visit.support.VisitHistoryAssertions;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
@@ -56,7 +56,7 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
             List<VisitHistory> histories = visitHistoryRepository.findAll();
             assertAll(
                 () -> assertThat(histories).hasSize(1),
-                () -> VisitHistoryAssertionHelper.assertVisitHistory(histories.get(0), storeId, userId, visitType, dateOfVisit)
+                () -> VisitHistoryAssertions.assertVisitHistory(histories.get(0), storeId, userId, visitType, dateOfVisit)
             );
         }
 

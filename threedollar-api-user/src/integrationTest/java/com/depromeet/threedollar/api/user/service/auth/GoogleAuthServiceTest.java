@@ -16,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.depromeet.threedollar.api.user.service.auth.dto.request.LoginRequest;
 import com.depromeet.threedollar.api.user.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.user.service.user.UserService;
-import com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper;
+import com.depromeet.threedollar.api.user.service.user.support.UserAssertions;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.user.domain.user.User;
@@ -108,7 +108,7 @@ class GoogleAuthServiceTest {
             List<User> users = userRepository.findAll();
             assertAll(
                 () -> assertThat(users).hasSize(1),
-                () -> UserAssertionHelper.assertUser(users.get(0), SOCIAL_ID, request.getSocialType(), request.getName())
+                () -> UserAssertions.assertUser(users.get(0), SOCIAL_ID, request.getSocialType(), request.getName())
             );
         }
 

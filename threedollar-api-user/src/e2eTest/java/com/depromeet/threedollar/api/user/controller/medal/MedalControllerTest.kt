@@ -10,7 +10,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionCo
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
 
-class MedalControllerTest(
+internal class MedalControllerTest(
     private val medalRepository: MedalRepository,
     private val medalAcquisitionConditionRepository: MedalAcquisitionConditionRepository
 ) : SetupControllerTest() {

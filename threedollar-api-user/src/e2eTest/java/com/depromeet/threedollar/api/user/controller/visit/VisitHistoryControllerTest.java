@@ -1,7 +1,5 @@
 package com.depromeet.threedollar.api.user.controller.visit;
 
-import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHelper.assertStoreInfoResponse;
-import static com.depromeet.threedollar.api.user.testhelper.assertions.VisitHistoryAssertionHelper.assertVisitHistoryWithStoreResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
@@ -25,6 +23,8 @@ import com.depromeet.threedollar.api.user.listener.medal.AddUserMedalEventListen
 import com.depromeet.threedollar.api.user.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.user.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
 import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoriesCursorResponse;
+import com.depromeet.threedollar.api.user.controller.store.support.StoreAssertions;
+import com.depromeet.threedollar.api.user.controller.visit.support.VisitHistoryAssertions;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
@@ -36,8 +36,10 @@ import com.depromeet.threedollar.domain.rds.user.event.visit.VisitHistoryAddedEv
 class VisitHistoryControllerTest extends SetupStoreControllerTest {
 
     private VisitHistoryApiCaller visitHistoryApiCaller;
+
     @Autowired
     private VisitHistoryRepository visitHistoryRepository;
+
     @MockBean
     private AddUserMedalEventListener addUserMedalEventListener;
 
@@ -103,8 +105,8 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
                 () -> assertThat(response.getData().isHasNext()).isFalse(),
                 () -> assertThat(response.getData().getContents()).hasSize(2),
-                () -> assertVisitHistoryWithStoreResponse(response.getData().getContents().get(0), visitHistory2, store),
-                () -> assertVisitHistoryWithStoreResponse(response.getData().getContents().get(1), visitHistory1, store)
+                () -> VisitHistoryAssertions.assertVisitHistoryWithStoreResponse(response.getData().getContents().get(0), visitHistory2, store),
+                () -> VisitHistoryAssertions.assertVisitHistoryWithStoreResponse(response.getData().getContents().get(1), visitHistory1, store)
             );
         }
 
@@ -126,7 +128,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(visitHistory2.getId()),
                 () -> assertThat(response.getData().isHasNext()).isTrue(),
                 () -> assertThat(response.getData().getContents()).hasSize(1),
-                () -> assertVisitHistoryWithStoreResponse(response.getData().getContents().get(0), visitHistory2, store)
+                () -> VisitHistoryAssertions.assertVisitHistoryWithStoreResponse(response.getData().getContents().get(0), visitHistory2, store)
             );
         }
 
@@ -148,7 +150,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
                 () -> assertThat(response.getData().isHasNext()).isFalse(),
                 () -> assertThat(response.getData().getContents()).hasSize(1),
-                () -> assertVisitHistoryWithStoreResponse(response.getData().getContents().get(0), visitHistory1, store)
+                () -> VisitHistoryAssertions.assertVisitHistoryWithStoreResponse(response.getData().getContents().get(0), visitHistory1, store)
             );
         }
 
@@ -185,7 +187,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getContents()).hasSize(1),
-                () -> assertStoreInfoResponse(response.getData().getContents().get(0).getStore(), deletedStore),
+                () -> StoreAssertions.assertStoreInfoResponse(response.getData().getContents().get(0).getStore(), deletedStore),
                 () -> assertThat(response.getData().getContents().get(0).getStore().getIsDeleted()).isTrue()
             );
         }

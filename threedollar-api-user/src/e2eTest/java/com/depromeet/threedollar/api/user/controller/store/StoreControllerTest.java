@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.api.user.controller.store;
 
-import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHelper.assertStoreInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,6 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.user.controller.SetupUserControllerTest;
+import com.depromeet.threedollar.api.user.controller.store.support.StoreAssertions;
 import com.depromeet.threedollar.api.user.listener.medal.AddUserMedalEventListener;
 import com.depromeet.threedollar.api.user.service.store.dto.request.DeleteStoreRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.MenuRequest;
@@ -46,16 +46,22 @@ import com.depromeet.threedollar.domain.rds.user.event.store.StoreDeletedEvent;
 class StoreControllerTest extends SetupUserControllerTest {
 
     private StoreMockApiCaller storeMockApiCaller;
+
     @Autowired
     private StoreRepository storeRepository;
+
     @Autowired
     private AppearanceDayRepository appearanceDayRepository;
+
     @Autowired
     private PaymentMethodRepository paymentMethodRepository;
+
     @Autowired
     private MenuRepository menuRepository;
+
     @Autowired
     private StoreDeleteRequestRepository storeDeleteRequestRepository;
+
     @MockBean
     private AddUserMedalEventListener addUserMedalEventListener;
 
@@ -102,7 +108,7 @@ class StoreControllerTest extends SetupUserControllerTest {
             ApiResponse<StoreInfoResponse> response = storeMockApiCaller.registerStore(request, token, 200);
 
             // then
-            assertStoreInfoResponse(response.getData(), latitude, longitude, storeName, List.of(MenuCategoryType.BUNGEOPPANG));
+            StoreAssertions.assertStoreInfoResponse(response.getData(), latitude, longitude, storeName, List.of(MenuCategoryType.BUNGEOPPANG));
         }
 
         @Test
@@ -161,7 +167,7 @@ class StoreControllerTest extends SetupUserControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getStoreId()).isEqualTo(store.getId()),
-                () -> assertStoreInfoResponse(response.getData(), latitude, longitude, storeName, List.of(MenuCategoryType.BUNGEOPPANG))
+                () -> StoreAssertions.assertStoreInfoResponse(response.getData(), latitude, longitude, storeName, List.of(MenuCategoryType.BUNGEOPPANG))
             );
         }
 

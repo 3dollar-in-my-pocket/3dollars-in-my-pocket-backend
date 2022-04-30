@@ -23,6 +23,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqRepository;
 class FaqControllerTest extends SetupUserControllerTest {
 
     private FaqMockApiCaller faqMockApiCaller;
+
     @Autowired
     private FaqRepository faqRepository;
 

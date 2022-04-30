@@ -16,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.depromeet.threedollar.api.user.service.user.dto.request.CheckAvailableNameRequest;
 import com.depromeet.threedollar.api.user.service.user.dto.request.CreateUserRequest;
 import com.depromeet.threedollar.api.user.service.user.dto.request.UpdateUserInfoRequest;
-import com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper;
+import com.depromeet.threedollar.api.user.service.user.support.UserAssertions;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.user.domain.user.User;
@@ -64,7 +64,7 @@ class UserServiceTest {
             List<User> users = userRepository.findAll();
             assertAll(
                 () -> assertThat(users).hasSize(1),
-                () -> UserAssertionHelper.assertUser(users.get(0), socialId, socialType, name)
+                () -> UserAssertions.assertUser(users.get(0), socialId, socialType, name)
             );
         }
 
@@ -161,7 +161,7 @@ class UserServiceTest {
             List<User> users = userRepository.findAll();
             assertAll(
                 () -> assertThat(users).hasSize(1),
-                () -> UserAssertionHelper.assertUser(users.get(0), socialId, socialType, name)
+                () -> UserAssertions.assertUser(users.get(0), socialId, socialType, name)
             );
         }
 
@@ -196,7 +196,7 @@ class UserServiceTest {
             List<WithdrawalUser> withdrawalUsers = withdrawalUserRepository.findAll();
             assertAll(
                 () -> assertThat(withdrawalUsers).hasSize(1),
-                () -> UserAssertionHelper.assertWithdrawalUser(withdrawalUsers.get(0), user)
+                () -> UserAssertions.assertWithdrawalUser(withdrawalUsers.get(0), user)
             );
         }
 
@@ -216,7 +216,7 @@ class UserServiceTest {
             List<User> users = userRepository.findAll();
             assertAll(
                 () -> assertThat(users).hasSize(1),
-                () -> UserAssertionHelper.assertUser(users.get(0), user2.getSocialId(), user2.getSocialType(), user2.getName())
+                () -> UserAssertions.assertUser(users.get(0), user2.getSocialId(), user2.getSocialType(), user2.getName())
             );
         }
 
@@ -248,8 +248,8 @@ class UserServiceTest {
             List<WithdrawalUser> withdrawalUsers = withdrawalUserRepository.findAll();
             assertAll(
                 () -> assertThat(withdrawalUsers).hasSize(2),
-                () -> UserAssertionHelper.assertWithdrawalUser(withdrawalUsers.get(0), withdrawalUser.getUserId(), withdrawalUser.getName(), withdrawalUser.getSocialInfo()),
-                () -> UserAssertionHelper.assertWithdrawalUser(withdrawalUsers.get(1), user.getId(), user.getName(), user.getSocialInfo())
+                () -> UserAssertions.assertWithdrawalUser(withdrawalUsers.get(0), withdrawalUser.getUserId(), withdrawalUser.getName(), withdrawalUser.getSocialInfo()),
+                () -> UserAssertions.assertWithdrawalUser(withdrawalUsers.get(1), user.getId(), user.getName(), user.getSocialInfo())
             );
         }
 

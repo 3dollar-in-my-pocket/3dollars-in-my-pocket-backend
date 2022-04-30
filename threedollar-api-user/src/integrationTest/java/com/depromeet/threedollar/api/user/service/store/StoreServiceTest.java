@@ -22,10 +22,10 @@ import com.depromeet.threedollar.api.user.service.store.dto.request.MenuRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.RegisterStoreRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.UpdateStoreRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDeleteResponse;
-import com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHelper;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
+import com.depromeet.threedollar.domain.rds.common.domain.Location;
 import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDay;
 import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDayRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
@@ -116,7 +116,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             List<Store> stores = storeRepository.findAll();
             assertAll(
                 () -> assertThat(stores).hasSize(1),
-                () -> StoreAssertionHelper.assertStore(stores.get(0), latitude, longitude, storeName, storeType, userId)
+                () -> assertStore(stores.get(0), latitude, longitude, storeName, storeType, userId)
             );
         }
 
@@ -198,7 +198,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             List<Menu> menuList = menuRepository.findAll();
             assertAll(
                 () -> assertThat(menuList).hasSize(1),
-                () -> StoreAssertionHelper.assertMenu(menuList.get(0), menuName, price, type)
+                () -> assertMenu(menuList.get(0), menuName, price, type)
             );
         }
 
@@ -231,7 +231,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             List<Menu> menuList = menuRepository.findAll();
             assertAll(
                 () -> assertThat(menuList).hasSize(1),
-                () -> StoreAssertionHelper.assertMenu(menuList.get(0), menuName, price, type)
+                () -> assertMenu(menuList.get(0), menuName, price, type)
             );
         }
 
@@ -274,7 +274,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             assertAll(
                 () -> assertThat(stores).hasSize(1),
                 () -> assertThat(menus).hasSize(1),
-                () -> StoreAssertionHelper.assertMenu(menus.get(0), store.getId(), menuName, price, type)
+                () -> assertMenu(menus.get(0), store.getId(), menuName, price, type)
             );
         }
 
@@ -378,8 +378,8 @@ class StoreServiceTest extends SetupUserServiceTest {
             List<Menu> findMenus = menuRepository.findAll();
             assertAll(
                 () -> assertThat(findMenus).hasSize(2),
-                () -> StoreAssertionHelper.assertMenu(findMenus.get(0), store.getId(), menuName, price, type),
-                () -> StoreAssertionHelper.assertMenu(findMenus.get(1), store.getId(), newMenuName, newMenuPrice, newMenuCategory)
+                () -> assertMenu(findMenus.get(0), store.getId(), menuName, price, type),
+                () -> assertMenu(findMenus.get(1), store.getId(), newMenuName, newMenuPrice, newMenuCategory)
             );
         }
 
@@ -415,7 +415,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             List<Menu> findMenus = menuRepository.findAll();
             assertAll(
                 () -> assertThat(findMenus).hasSize(1),
-                () -> StoreAssertionHelper.assertMenu(findMenus.get(0), store.getId(), menuName, price, type)
+                () -> assertMenu(findMenus.get(0), store.getId(), menuName, price, type)
             );
         }
 
@@ -468,7 +468,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             List<Store> stores = storeRepository.findAll();
             assertAll(
                 () -> assertThat(stores).hasSize(1),
-                () -> StoreAssertionHelper.assertStore(stores.get(0), latitude, longitude, storeName, storeType, creatorUserId)
+                () -> assertStore(stores.get(0), latitude, longitude, storeName, storeType, creatorUserId)
             );
         }
 
@@ -496,7 +496,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 () -> assertThat(stores).hasSize(1),
                 () -> assertThat(stores.get(0).getStatus()).isEqualTo(StoreStatus.ACTIVE),
                 () -> assertThat(storeDeleteRequestList).hasSize(1),
-                () -> StoreAssertionHelper.assertStoreDeleteRequest(storeDeleteRequestList.get(0), store.getId(), userId, deleteReasonType),
+                () -> assertStoreDeleteRequest(storeDeleteRequestList.get(0), store.getId(), userId, deleteReasonType),
                 () -> assertThat(response.getIsDeleted()).isFalse()
             );
         }
@@ -523,8 +523,8 @@ class StoreServiceTest extends SetupUserServiceTest {
                 () -> assertThat(stores.get(0).getStatus()).isEqualTo(StoreStatus.ACTIVE),
 
                 () -> assertThat(storeDeleteRequestList).hasSize(2),
-                () -> StoreAssertionHelper.assertStoreDeleteRequest(storeDeleteRequestList.get(0), store.getId(), 90L, DeleteReasonType.WRONG_CONTENT),
-                () -> StoreAssertionHelper.assertStoreDeleteRequest(storeDeleteRequestList.get(1), store.getId(), userId, deleteReasonType),
+                () -> assertStoreDeleteRequest(storeDeleteRequestList.get(0), store.getId(), 90L, DeleteReasonType.WRONG_CONTENT),
+                () -> assertStoreDeleteRequest(storeDeleteRequestList.get(1), store.getId(), userId, deleteReasonType),
 
                 () -> assertThat(response.getIsDeleted()).isFalse()
             );
@@ -555,9 +555,9 @@ class StoreServiceTest extends SetupUserServiceTest {
                 () -> assertThat(stores.get(0).getStatus()).isEqualTo(StoreStatus.DELETED),
 
                 () -> assertThat(storeDeleteRequestList).hasSize(3),
-                () -> StoreAssertionHelper.assertStoreDeleteRequest(storeDeleteRequestList.get(0), store.getId(), 1000L, DeleteReasonType.NOSTORE),
-                () -> StoreAssertionHelper.assertStoreDeleteRequest(storeDeleteRequestList.get(1), store.getId(), 1001L, DeleteReasonType.NOSTORE),
-                () -> StoreAssertionHelper.assertStoreDeleteRequest(storeDeleteRequestList.get(2), store.getId(), userId, deleteReasonType),
+                () -> assertStoreDeleteRequest(storeDeleteRequestList.get(0), store.getId(), 1000L, DeleteReasonType.NOSTORE),
+                () -> assertStoreDeleteRequest(storeDeleteRequestList.get(1), store.getId(), 1001L, DeleteReasonType.NOSTORE),
+                () -> assertStoreDeleteRequest(storeDeleteRequestList.get(2), store.getId(), userId, deleteReasonType),
 
                 () -> assertThat(response.getIsDeleted()).isTrue()
             );
@@ -577,6 +577,42 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .isInstanceOf(ConflictException.class);
         }
 
+    }
+
+    private void assertStore(Store store, double latitude, double longitude, String storeName, StoreType storeType, Long userId) {
+        assertAll(
+            () -> assertThat(store.getLocation()).isEqualTo(Location.of(latitude, longitude)),
+            () -> assertThat(store.getLatitude()).isEqualTo(latitude),
+            () -> assertThat(store.getLongitude()).isEqualTo(longitude),
+            () -> assertThat(store.getName()).isEqualTo(storeName),
+            () -> assertThat(store.getType()).isEqualTo(storeType),
+            () -> assertThat(store.getUserId()).isEqualTo(userId)
+        );
+    }
+
+    private void assertMenu(Menu menu, String menuName, String price, MenuCategoryType type) {
+        assertAll(
+            () -> assertThat(menu.getName()).isEqualTo(menuName),
+            () -> assertThat(menu.getPrice()).isEqualTo(price),
+            () -> assertThat(menu.getCategory()).isEqualTo(type)
+        );
+    }
+
+    private void assertMenu(Menu menu, Long storeId, String menuName, String price, MenuCategoryType type) {
+        assertAll(
+            () -> assertThat(menu.getStore().getId()).isEqualTo(storeId),
+            () -> assertThat(menu.getName()).isEqualTo(menuName),
+            () -> assertThat(menu.getPrice()).isEqualTo(price),
+            () -> assertThat(menu.getCategory()).isEqualTo(type)
+        );
+    }
+
+    private void assertStoreDeleteRequest(StoreDeleteRequest storeDeleteRequest, Long storeId, Long userId, DeleteReasonType type) {
+        assertAll(
+            () -> assertThat(storeDeleteRequest.getStore().getId()).isEqualTo(storeId),
+            () -> assertThat(storeDeleteRequest.getUserId()).isEqualTo(userId),
+            () -> assertThat(storeDeleteRequest.getReason()).isEqualTo(type)
+        );
     }
 
 }

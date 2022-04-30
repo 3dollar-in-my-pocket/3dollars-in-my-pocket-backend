@@ -32,6 +32,7 @@ internal abstract class SetupBossAccountAndUserServiceTest {
     protected lateinit var bossAccountRepository: BossAccountRepository
 
     protected var userId: Long = -1L
+
     protected lateinit var bossId: String
 
     @BeforeEach

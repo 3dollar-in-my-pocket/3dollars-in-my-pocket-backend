@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.user.service.store;
 
+import static com.depromeet.threedollar.api.user.service.store.support.StoreImageAssertions.assertStoreImage;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -20,7 +21,7 @@ import com.depromeet.threedollar.api.core.provider.upload.UploadProvider;
 import com.depromeet.threedollar.api.user.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreImageResponse;
-import com.depromeet.threedollar.api.user.testhelper.assertions.StoreImageAssertionHelper;
+import com.depromeet.threedollar.api.user.service.store.support.StoreImageAssertions;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository;
@@ -62,7 +63,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
             // then
             List<StoreImage> storeImageList = storeImageRepository.findAll();
             assertThat(storeImageList).hasSize(1);
-            StoreImageAssertionHelper.assertStoreImage(storeImageList.get(0), store.getId(), userId, IMAGE_URL, StoreImageStatus.ACTIVE);
+            assertStoreImage(storeImageList.get(0), store.getId(), userId, IMAGE_URL, StoreImageStatus.ACTIVE);
         }
 
         @Test
@@ -94,7 +95,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
             List<StoreImage> storeImageList = storeImageRepository.findAll();
             assertAll(
                 () -> assertThat(storeImageList).hasSize(1),
-                () -> StoreImageAssertionHelper.assertStoreImage(storeImageList.get(0), store.getId(), userId, imageUrl, StoreImageStatus.INACTIVE)
+                () -> assertStoreImage(storeImageList.get(0), store.getId(), userId, imageUrl, StoreImageStatus.INACTIVE)
             );
         }
 
@@ -136,7 +137,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
             // then
             assertAll(
                 () -> assertThat(responses).hasSize(1),
-                () -> StoreImageAssertionHelper.assertStoreImageResponse(responses.get(0), storeImage.getId(), imageUrl)
+                () -> StoreImageAssertions.assertStoreImageResponse(responses.get(0), storeImage.getId(), imageUrl)
             );
         }
 

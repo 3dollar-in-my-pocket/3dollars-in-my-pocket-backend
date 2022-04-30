@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.user.testhelper.assertions;
+package com.depromeet.threedollar.api.user.service.store.support;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 @TestHelper
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class StoreImageAssertionHelper {
+public final class StoreImageAssertions {
 
     public static void assertStoreImage(StoreImage storeImage, Long storeId, Long userId, String imageUrl, StoreImageStatus status) {
         assertAll(

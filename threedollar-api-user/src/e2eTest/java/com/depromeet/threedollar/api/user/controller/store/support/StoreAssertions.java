@@ -1,6 +1,6 @@
-package com.depromeet.threedollar.api.user.testhelper.assertions;
+package com.depromeet.threedollar.api.user.controller.store.support;
 
-import static com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper.assertUserInfoResponse;
+import static com.depromeet.threedollar.api.user.controller.user.support.UserAssertions.assertUserInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -11,14 +11,10 @@ import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDetail
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreInfoResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreWithVisitCountsResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
-import com.depromeet.threedollar.domain.rds.common.domain.Location;
 import com.depromeet.threedollar.domain.rds.user.domain.TestHelper;
-import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequest;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
 import com.depromeet.threedollar.domain.rds.user.domain.user.User;
 
 import lombok.AccessLevel;
@@ -26,21 +22,7 @@ import lombok.NoArgsConstructor;
 
 @TestHelper
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class StoreAssertionHelper {
-
-    /**
-     * Store
-     */
-    public static void assertStore(Store store, double latitude, double longitude, String storeName, StoreType storeType, Long userId) {
-        assertAll(
-            () -> assertThat(store.getLocation()).isEqualTo(Location.of(latitude, longitude)),
-            () -> assertThat(store.getLatitude()).isEqualTo(latitude),
-            () -> assertThat(store.getLongitude()).isEqualTo(longitude),
-            () -> assertThat(store.getName()).isEqualTo(storeName),
-            () -> assertThat(store.getType()).isEqualTo(storeType),
-            () -> assertThat(store.getUserId()).isEqualTo(userId)
-        );
-    }
+public final class StoreAssertions {
 
     public static void assertStoreInfoResponse(StoreInfoResponse response, Store store) {
         assertStoreInfoResponse(response, store.getLatitude(), store.getLongitude(), store.getName(), store.getMenuCategoriesSortedByCounts());
@@ -104,43 +86,12 @@ public final class StoreAssertionHelper {
         );
     }
 
-    /**
-     * Menu
-     */
-    public static void assertMenu(Menu menu, String menuName, String price, MenuCategoryType type) {
-        assertAll(
-            () -> assertThat(menu.getName()).isEqualTo(menuName),
-            () -> assertThat(menu.getPrice()).isEqualTo(price),
-            () -> assertThat(menu.getCategory()).isEqualTo(type)
-        );
-    }
-
-    public static void assertMenu(Menu menu, Long storeId, String menuName, String price, MenuCategoryType type) {
-        assertAll(
-            () -> assertThat(menu.getStore().getId()).isEqualTo(storeId),
-            () -> assertThat(menu.getName()).isEqualTo(menuName),
-            () -> assertThat(menu.getPrice()).isEqualTo(price),
-            () -> assertThat(menu.getCategory()).isEqualTo(type)
-        );
-    }
-
     public static void assertMenuResponse(MenuResponse response, Menu menu) {
         assertAll(
             () -> assertThat(response.getMenuId()).isEqualTo(menu.getId()),
             () -> assertThat(response.getCategory()).isEqualTo(menu.getCategory()),
             () -> assertThat(response.getName()).isEqualTo(menu.getName()),
             () -> assertThat(response.getPrice()).isEqualTo(menu.getPrice())
-        );
-    }
-
-    /**
-     * StoreDeleteRequest
-     */
-    public static void assertStoreDeleteRequest(StoreDeleteRequest storeDeleteRequest, Long storeId, Long userId, DeleteReasonType type) {
-        assertAll(
-            () -> assertThat(storeDeleteRequest.getStore().getId()).isEqualTo(storeId),
-            () -> assertThat(storeDeleteRequest.getUserId()).isEqualTo(userId),
-            () -> assertThat(storeDeleteRequest.getReason()).isEqualTo(type)
         );
     }
 

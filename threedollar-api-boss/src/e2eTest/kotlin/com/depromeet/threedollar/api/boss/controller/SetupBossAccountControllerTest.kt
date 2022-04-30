@@ -14,6 +14,7 @@ internal abstract class SetupBossAccountControllerTest : SetupControllerTest() {
     protected lateinit var bossAccountRepository: BossAccountRepository
 
     protected lateinit var token: String
+
     protected lateinit var bossId: String
 
     @BeforeEach

@@ -1,12 +1,5 @@
 package com.depromeet.threedollar.api.admin.service.user.medal
 
-import com.depromeet.threedollar.api.admin.service.user.medal.dto.request.AddMedalRequest
-import com.depromeet.threedollar.api.admin.service.user.medal.dto.request.UpdateMedalRequest
-import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionRepository
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionType
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
@@ -14,13 +7,20 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
+import com.depromeet.threedollar.api.admin.service.user.medal.dto.request.AddMedalRequest
+import com.depromeet.threedollar.api.admin.service.user.medal.dto.request.UpdateMedalRequest
+import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionRepository
+import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionType
+import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator
+import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class AdminMedalServiceTest(
-        private val adminMedalService: AdminMedalService,
-        private val medalRepository: MedalRepository,
-        private val medalAcquisitionConditionRepository: MedalAcquisitionConditionRepository
+    private val adminMedalService: AdminMedalService,
+    private val medalRepository: MedalRepository,
+    private val medalAcquisitionConditionRepository: MedalAcquisitionConditionRepository
 ) {
 
     @AfterEach

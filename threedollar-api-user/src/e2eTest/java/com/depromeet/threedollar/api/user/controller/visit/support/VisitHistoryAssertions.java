@@ -1,11 +1,9 @@
-package com.depromeet.threedollar.api.user.testhelper.assertions;
+package com.depromeet.threedollar.api.user.controller.visit.support;
 
-import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHelper.assertStoreInfoResponse;
-import static com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper.assertUserInfoResponse;
+import static com.depromeet.threedollar.api.user.controller.store.support.StoreAssertions.assertStoreInfoResponse;
+import static com.depromeet.threedollar.api.user.controller.user.support.UserAssertions.assertUserInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-
-import java.time.LocalDate;
 
 import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoryCountsResponse;
 import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoryWithStoreResponse;
@@ -14,23 +12,13 @@ import com.depromeet.threedollar.domain.rds.user.domain.TestHelper;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.user.User;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @TestHelper
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class VisitHistoryAssertionHelper {
-
-    public static void assertVisitHistory(VisitHistory visitHistory, Long storeId, Long userId, VisitType type, LocalDate dateOfVisit) {
-        assertAll(
-            () -> assertThat(visitHistory.getStore().getId()).isEqualTo(storeId),
-            () -> assertThat(visitHistory.getUserId()).isEqualTo(userId),
-            () -> assertThat(visitHistory.getType()).isEqualTo(type),
-            () -> assertThat(visitHistory.getDateOfVisit()).isEqualTo(dateOfVisit)
-        );
-    }
+public final class VisitHistoryAssertions {
 
     public static void assertVisitHistoryInfoResponse(VisitHistoryCountsResponse visitHistory, int existsCount, int notExistsCount, boolean isCertified) {
         assertAll(

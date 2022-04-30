@@ -1,14 +1,14 @@
 package com.depromeet.threedollar.api.user.controller.store;
 
-import static com.depromeet.threedollar.api.user.testhelper.assertions.ReviewAssertionHelper.assertReviewWithWriterResponse;
-import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHelper.assertMenuResponse;
-import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHelper.assertStoreDetailInfoResponse;
-import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHelper.assertStoreWithVisitsAndDistanceResponse;
-import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHelper.assertStoreWithVisitsResponse;
-import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreImageAssertionHelper.assertStoreImageResponse;
-import static com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper.assertUserInfoResponse;
-import static com.depromeet.threedollar.api.user.testhelper.assertions.VisitHistoryAssertionHelper.assertVisitHistoryInfoResponse;
-import static com.depromeet.threedollar.api.user.testhelper.assertions.VisitHistoryAssertionHelper.assertVisitHistoryWithUserResponse;
+import static com.depromeet.threedollar.api.user.controller.review.support.ReviewAssertions.assertReviewWithWriterResponse;
+import static com.depromeet.threedollar.api.user.controller.store.support.StoreAssertions.assertMenuResponse;
+import static com.depromeet.threedollar.api.user.controller.store.support.StoreAssertions.assertStoreDetailInfoResponse;
+import static com.depromeet.threedollar.api.user.controller.store.support.StoreAssertions.assertStoreWithVisitsAndDistanceResponse;
+import static com.depromeet.threedollar.api.user.controller.store.support.StoreAssertions.assertStoreWithVisitsResponse;
+import static com.depromeet.threedollar.api.user.controller.store.support.StoreImageAssertions.assertStoreImageResponse;
+import static com.depromeet.threedollar.api.user.controller.user.support.UserAssertions.assertUserInfoResponse;
+import static com.depromeet.threedollar.api.user.controller.visit.support.VisitHistoryAssertions.assertVisitHistoryInfoResponse;
+import static com.depromeet.threedollar.api.user.controller.visit.support.VisitHistoryAssertions.assertVisitHistoryWithUserResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -59,18 +59,25 @@ import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
 class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
     private StoreRetrieveMockApiCaller storeRetrieveMockApiCaller;
+
     @Autowired
     private StoreRepository storeRepository;
+
     @Autowired
     private AppearanceDayRepository appearanceDayRepository;
+
     @Autowired
     private PaymentMethodRepository paymentMethodRepository;
+
     @Autowired
     private MenuRepository menuRepository;
+
     @Autowired
     private ReviewRepository reviewRepository;
+
     @Autowired
     private VisitHistoryRepository visitHistoryRepository;
+
     @Autowired
     private StoreImageRepository storeImageRepository;
 

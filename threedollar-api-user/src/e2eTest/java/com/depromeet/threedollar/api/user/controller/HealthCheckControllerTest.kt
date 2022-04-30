@@ -5,7 +5,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-class HealthCheckControllerTest : SetupControllerTest() {
+internal class HealthCheckControllerTest : SetupControllerTest() {
 
     @Test
     fun healthCheck() {

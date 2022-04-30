@@ -1,7 +1,7 @@
-package com.depromeet.threedollar.api.user.testhelper.assertions;
+package com.depromeet.threedollar.api.user.controller.review.support;
 
-import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHelper.assertStoreInfoResponse;
-import static com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper.assertUserInfoResponse;
+import static com.depromeet.threedollar.api.user.controller.store.support.StoreAssertions.assertStoreInfoResponse;
+import static com.depromeet.threedollar.api.user.controller.user.support.UserAssertions.assertUserInfoResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -10,7 +10,6 @@ import com.depromeet.threedollar.api.user.service.review.dto.response.ReviewInfo
 import com.depromeet.threedollar.api.user.service.review.dto.response.ReviewWithUserResponse;
 import com.depromeet.threedollar.domain.rds.user.domain.TestHelper;
 import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewStatus;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.user.User;
 
@@ -19,17 +18,7 @@ import lombok.NoArgsConstructor;
 
 @TestHelper
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class ReviewAssertionHelper {
-
-    public static void assertReview(Review review, Long storeId, String contents, int rating, Long userId, ReviewStatus status) {
-        assertAll(
-            () -> assertThat(review.getStoreId()).isEqualTo(storeId),
-            () -> assertThat(review.getUserId()).isEqualTo(userId),
-            () -> assertThat(review.getContents()).isEqualTo(contents),
-            () -> assertThat(review.getRating()).isEqualTo(rating),
-            () -> assertThat(review.getStatus()).isEqualTo(status)
-        );
-    }
+public final class ReviewAssertions {
 
     public static void assertReviewDetailInfoResponse(ReviewDetailResponse response, Review review, Store store, User user) {
         assertAll(

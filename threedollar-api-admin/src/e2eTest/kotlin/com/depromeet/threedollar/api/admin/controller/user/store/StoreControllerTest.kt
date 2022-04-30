@@ -1,17 +1,5 @@
 package com.depromeet.threedollar.api.admin.controller.user.store
 
-import com.depromeet.threedollar.api.admin.controller.SetupAdminControllerTest
-import com.depromeet.threedollar.api.admin.service.user.store.dto.response.ReportedStoreInfoResponse
-import com.depromeet.threedollar.api.admin.service.user.store.dto.response.StoreInfoResponse
-import com.depromeet.threedollar.api.admin.service.user.store.dto.response.StoreInfosWithCursorResponse
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.domain.rds.user.domain.store.Store
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
-import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequest
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository
-import com.fasterxml.jackson.core.type.TypeReference
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
@@ -19,10 +7,22 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.springframework.http.HttpHeaders
 import org.springframework.test.web.servlet.get
+import com.depromeet.threedollar.api.admin.controller.SetupAdminControllerTest
+import com.depromeet.threedollar.api.admin.service.user.store.dto.response.ReportedStoreInfoResponse
+import com.depromeet.threedollar.api.admin.service.user.store.dto.response.StoreInfoResponse
+import com.depromeet.threedollar.api.admin.service.user.store.dto.response.StoreInfosWithCursorResponse
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType
+import com.depromeet.threedollar.domain.rds.user.domain.store.Store
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequest
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
+import com.fasterxml.jackson.core.type.TypeReference
 
 internal class StoreControllerTest(
-        private val storeRepository: StoreRepository,
-        private val storeDeleteRequestRepository: StoreDeleteRequestRepository
+    private val storeRepository: StoreRepository,
+    private val storeDeleteRequestRepository: StoreDeleteRequestRepository
 ) : SetupAdminControllerTest() {
 
     @AfterEach

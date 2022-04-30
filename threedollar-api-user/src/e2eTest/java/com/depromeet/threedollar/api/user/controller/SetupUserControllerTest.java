@@ -16,16 +16,22 @@ public abstract class SetupUserControllerTest extends SetupControllerTest {
 
     @Autowired
     protected UserRepository userRepository;
+
     @Autowired
     protected UserMedalRepository userMedalRepository;
+
     @Autowired
     protected MedalRepository medalRepository;
+
     @Autowired
     protected MedalAcquisitionConditionRepository medalAcquisitionConditionRepository;
-    protected User user;
-    protected String token;
+
     @Autowired
     private WithdrawalUserRepository withdrawalUserRepository;
+
+    protected User user;
+
+    protected String token;
 
     @BeforeEach
     void setupUser() throws Exception {

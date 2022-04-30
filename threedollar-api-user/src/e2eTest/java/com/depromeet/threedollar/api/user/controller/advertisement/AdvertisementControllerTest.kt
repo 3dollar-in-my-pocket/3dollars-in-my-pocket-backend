@@ -13,7 +13,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.advertisement.Advertisem
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPositionType
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementRepository
 
-class AdvertisementControllerTest(
+internal class AdvertisementControllerTest(
     private val advertisementRepository: AdvertisementRepository
 ) : SetupControllerTest() {
 
@@ -42,7 +42,7 @@ class AdvertisementControllerTest(
         advertisementRepository.save(advertisement)
 
         // when & then
-        mockMvc.get("/v1/advertisements") {
+        mockMvc.get("/v1/popups") {
             param("platform", platform.toString())
         }.andExpect {
             status { isOk() }

@@ -21,10 +21,10 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
 internal class BossRegistrationAdminServiceTest(
-        private val bossRegistrationAdminService: BossAccountRegistrationAdminService,
-        private val registrationRepository: RegistrationRepository,
-        private val bossAccountRepository: BossAccountRepository,
-        private val bossStoreRepository: BossStoreRepository
+    private val bossRegistrationAdminService: BossAccountRegistrationAdminService,
+    private val registrationRepository: RegistrationRepository,
+    private val bossAccountRepository: BossAccountRepository,
+    private val bossStoreRepository: BossStoreRepository
 ) : SetupAdminServiceTest() {
 
     @AfterEach

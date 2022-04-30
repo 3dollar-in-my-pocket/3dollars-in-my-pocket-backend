@@ -48,7 +48,7 @@ class BossStoreFeedbackController(
     ): ApiResponse<String> {
         bossStoreFeedbackService.addFeedback(
             bossStoreId = bossStoreId,
-            userId = userId ?: 0L,
+            userId = userId!!,
             request = request,
             date = LocalDate.now())
         return ApiResponse.OK

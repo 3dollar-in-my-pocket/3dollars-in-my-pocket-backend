@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.user.service.medal;
 
+import static com.depromeet.threedollar.api.user.service.medal.support.UserMedalAssertions.assertUserMedal;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -15,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.depromeet.threedollar.api.user.service.SetupUserServiceTest;
 import com.depromeet.threedollar.api.user.service.medal.dto.request.ChangeRepresentativeMedalRequest;
-import com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.Medal;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator;
@@ -56,7 +56,7 @@ class UserMedalServiceTest extends SetupUserServiceTest {
             List<UserMedal> userMedals = userMedalRepository.findAll();
             assertAll(
                 () -> assertThat(userMedals).hasSize(1),
-                () -> UserAssertionHelper.assertUserMedal(userMedals.get(0), user.getId(), medal.getId(), UserMedalStatus.ACTIVE)
+                () -> assertUserMedal(userMedals.get(0), user.getId(), medal.getId(), UserMedalStatus.ACTIVE)
             );
         }
 

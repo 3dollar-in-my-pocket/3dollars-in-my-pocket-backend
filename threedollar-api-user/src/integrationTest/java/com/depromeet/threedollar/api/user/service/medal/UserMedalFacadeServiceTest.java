@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.user.service.medal;
 
+import static com.depromeet.threedollar.api.user.service.medal.support.UserMedalAssertions.assertUserMedal;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -14,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.depromeet.threedollar.api.user.service.SetupUserServiceTest;
-import com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper;
+import com.depromeet.threedollar.api.user.service.medal.support.UserMedalAssertions;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.Medal;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionType;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator;
@@ -84,7 +85,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
             List<UserMedal> userMedals = userMedalRepository.findAll();
             assertAll(
                 () -> assertThat(userMedals).hasSize(1),
-                () -> UserAssertionHelper.assertUserMedal(userMedals.get(0), userId, medal.getId(), UserMedalStatus.IN_ACTIVE)
+                () -> UserMedalAssertions.assertUserMedal(userMedals.get(0), userId, medal.getId(), UserMedalStatus.IN_ACTIVE)
             );
         }
 
@@ -130,7 +131,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
             List<UserMedal> userMedals = userMedalRepository.findAll();
             assertAll(
                 () -> assertThat(userMedals).hasSize(1),
-                () -> UserAssertionHelper.assertUserMedal(userMedals.get(0), userId, medal.getId(), UserMedalStatus.IN_ACTIVE)
+                () -> assertUserMedal(userMedals.get(0), userId, medal.getId(), UserMedalStatus.IN_ACTIVE)
             );
         }
 
@@ -180,7 +181,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
             List<UserMedal> userMedals = userMedalRepository.findAll();
             assertAll(
                 () -> assertThat(userMedals).hasSize(1),
-                () -> UserAssertionHelper.assertUserMedal(userMedals.get(0), userId, medal.getId(), UserMedalStatus.IN_ACTIVE)
+                () -> assertUserMedal(userMedals.get(0), userId, medal.getId(), UserMedalStatus.IN_ACTIVE)
             );
         }
 
@@ -233,7 +234,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
             List<UserMedal> userMedals = userMedalRepository.findAll();
             assertAll(
                 () -> assertThat(userMedals).hasSize(1),
-                () -> UserAssertionHelper.assertUserMedal(userMedals.get(0), userId, medal.getId(), UserMedalStatus.IN_ACTIVE)
+                () -> assertUserMedal(userMedals.get(0), userId, medal.getId(), UserMedalStatus.IN_ACTIVE)
             );
         }
 
@@ -281,7 +282,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
             List<UserMedal> userMedals = userMedalRepository.findAll();
             assertAll(
                 () -> assertThat(userMedals).hasSize(1),
-                () -> UserAssertionHelper.assertUserMedal(userMedals.get(0), userId, medal.getId(), UserMedalStatus.IN_ACTIVE)
+                () -> assertUserMedal(userMedals.get(0), userId, medal.getId(), UserMedalStatus.IN_ACTIVE)
             );
         }
 
@@ -307,7 +308,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
             List<UserMedal> userMedals = userMedalRepository.findAll();
             assertAll(
                 () -> assertThat(userMedals).hasSize(1),
-                () -> UserAssertionHelper.assertUserMedal(userMedals.get(0), userId, medal.getId(), UserMedalStatus.IN_ACTIVE)
+                () -> assertUserMedal(userMedals.get(0), userId, medal.getId(), UserMedalStatus.IN_ACTIVE)
             );
         }
 
