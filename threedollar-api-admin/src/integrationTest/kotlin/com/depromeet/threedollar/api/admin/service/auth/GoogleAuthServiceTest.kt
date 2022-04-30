@@ -3,6 +3,7 @@ package com.depromeet.threedollar.api.admin.service.auth
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
@@ -33,28 +34,33 @@ internal class GoogleAuthServiceTest(
         adminRepository.deleteAll()
     }
 
-    @Test
-    fun `구글 로그인이 성공하면 관리자 계정의 ID가 반환된다`() {
-        // given
-        val admin = AdminCreator.create(
-            email = EMAIL,
-            name = "강승호"
-        )
-        adminRepository.save(admin)
+    @Nested
+    inner class GoogleLoginTest {
 
-        // when
-        val adminId = authService.login(LoginRequest("token"))
+        @Test
+        fun `구글 로그인이 성공하면 관리자 계정의 ID가 반환된다`() {
+            // given
+            val admin = AdminCreator.create(
+                email = EMAIL,
+                name = "강승호"
+            )
+            adminRepository.save(admin)
 
-        // then
-        Assertions.assertThat(adminId).isEqualTo(admin.id)
-    }
+            // when
+            val adminId = authService.login(LoginRequest("token"))
 
-    @Test
-    fun `구글 로그인시 가입한 관리자가 아니면 404 에러 발생`() {
-        // when & then
-        Assertions.assertThatThrownBy {
-            authService.login(LoginRequest("token"))
-        }.isInstanceOf(NotFoundException::class.java)
+            // then
+            Assertions.assertThat(adminId).isEqualTo(admin.id)
+        }
+
+        @Test
+        fun `구글 로그인시 가입한 관리자가 아니면 404 에러 발생`() {
+            // when & then
+            Assertions.assertThatThrownBy {
+                authService.login(LoginRequest("token"))
+            }.isInstanceOf(NotFoundException::class.java)
+        }
+
     }
 
     private class StubGoogleAuthApiClient : GoogleAuthApiClient {
