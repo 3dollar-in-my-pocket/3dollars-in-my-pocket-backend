@@ -1,82 +1,150 @@
 package com.depromeet.threedollar.api.admin.controller.admin
 
-import com.depromeet.threedollar.api.admin.controller.SetupAdminControllerTest
-import com.depromeet.threedollar.api.admin.service.admin.dto.response.AdminInfoResponse
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.common.exception.type.ErrorCode
-import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminRepository
-import com.fasterxml.jackson.core.type.TypeReference
-import org.assertj.core.api.Assertions.assertThat
+import org.hamcrest.Matchers.hasSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.get
+import org.springframework.test.web.servlet.post
+import org.springframework.test.web.servlet.put
+import com.depromeet.threedollar.api.admin.controller.SetupAdminControllerTest
+import com.depromeet.threedollar.api.admin.service.admin.dto.request.RegisterAdminRequest
+import com.depromeet.threedollar.api.admin.service.admin.dto.request.UpdateMyAdminInfoRequest
+import com.depromeet.threedollar.api.admin.service.admin.dto.response.AdminInfoResponse
+import com.depromeet.threedollar.common.exception.type.ErrorCode
 
-internal class AdminControllerTest(
-    private val adminRepository: AdminRepository
-) : SetupAdminControllerTest() {
+internal class AdminControllerTest : SetupAdminControllerTest() {
 
     @AfterEach
     fun cleanUp() {
         super.cleanup()
-        adminRepository.deleteAllInBatch()
     }
 
-    @DisplayName("GET /admin/v1/account/admin/my-info 200 OK")
-    @Test
-    fun 관리자가_자신의_관리자_정보를_조회한다() {
-        // when
-        val response = objectMapper.readValue(mockMvc.get("/v1/account/admin/my-info") {
-            header(HttpHeaders.AUTHORIZATION, "Bearer $token")
-        }.andExpect {
-            status { isOk() }
-        }.andDo {
-            print()
-        }.andReturn().response.contentAsString, object : TypeReference<ApiResponse<AdminInfoResponse>>() {})
+    @DisplayName("GET /admin/v1/account/admin/my-info")
+    @Nested
+    inner class GetMyAdminInfoApiTest {
 
-        // then
-        assertAll({
-            assertThat(response.data.email).isEqualTo("test.admin@test.com")
-            assertThat(response.data.name).isEqualTo("테스트 관리자")
-        })
-    }
-
-    @Test
-    fun 잘못된_토큰인경우_401_에러가_발생한다() {
-        // when
-        val response = objectMapper.readValue(mockMvc.get("/v1/account/admin/my-info") {
-            header(HttpHeaders.AUTHORIZATION, "Wrong Token")
-        }.andExpect {
-            status { isUnauthorized() }
-        }.andDo {
-            print()
-        }.andReturn().response.contentAsString, object : TypeReference<ApiResponse<AdminInfoResponse>>() {})
-
-        // then
-        assertAll({
-            assertThat(response.resultCode).isEqualTo(ErrorCode.UNAUTHORIZED.code)
-            assertThat(response.message).isEqualTo(ErrorCode.UNAUTHORIZED.message)
-        })
-    }
-
-    @DisplayName("GET /v1/account/admin/my-info 401")
-    @Test
-    fun 토큰을_넘기지_않은경우_401_에러가_발생한다() {
-        // when
-        val response = objectMapper.readValue(mockMvc.get("/v1/account/admin/my-info")
-            .andExpect {
-                status { isUnauthorized() }
+        @Test
+        fun 관리자가_자신의_관리자_정보를_조회한다() {
+            // when & then
+            mockMvc.get("/v1/account/admin/my-info") {
+                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             }.andDo {
                 print()
-            }.andReturn().response.contentAsString, object : TypeReference<ApiResponse<AdminInfoResponse>>() {})
+            }.andExpect {
+                status { isOk() }
+                jsonPath("$.data.email") { value("test.admin@test.com") }
+                jsonPath("$.data.name") { value("테스트 관리자") }
+            }
+        }
 
-        // then
-        assertAll({
-            assertThat(response.resultCode).isEqualTo(ErrorCode.UNAUTHORIZED.code)
-            assertThat(response.message).isEqualTo(ErrorCode.UNAUTHORIZED.message)
-        })
+        @Test
+        fun 잘못된_토큰인경우_401_에러가_발생한다() {
+            // when & then
+            mockMvc.get("/v1/account/admin/my-info") {
+                header(HttpHeaders.AUTHORIZATION, "Wrong Token")
+            }.andDo {
+                print()
+            }.andExpect {
+                status { isUnauthorized() }
+                jsonPath("$.resultCode") { value(ErrorCode.UNAUTHORIZED.code) }
+                jsonPath("$.message") { value(ErrorCode.UNAUTHORIZED.message) }
+            }
+        }
+
+        @Test
+        fun 토큰을_넘기지_않은경우_401_에러가_발생한다() {
+            // when & then
+            mockMvc.get("/v1/account/admin/my-info")
+                .andDo {
+                    print()
+                }
+                .andExpect {
+                    status { isUnauthorized() }
+                    jsonPath("$.resultCode") { value(ErrorCode.UNAUTHORIZED.code) }
+                    jsonPath("$.message") { value(ErrorCode.UNAUTHORIZED.message) }
+                }
+        }
+
+    }
+
+    @DisplayName("PUT /admin/v1/account/admin/my-info")
+    @Nested
+    inner class UpdateMyAdminInfoApiTest {
+
+        @Test
+        fun 관리자가_자신의_관리자_정보를_수정한다() {
+            // given
+            val request = UpdateMyAdminInfoRequest(
+                name = "변경 후 관리자 이름"
+            )
+
+            // when & then
+            mockMvc.put("/v1/account/admin/my-info") {
+                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
+                contentType = MediaType.APPLICATION_JSON
+                content = objectMapper.writeValueAsString(request)
+            }.andDo {
+                print()
+            }.andExpect {
+                status { isOk() }
+                jsonPath("$.data.email") { value("test.admin@test.com") }
+                jsonPath("$.data.name") { value(request.name) }
+            }
+        }
+
+    }
+
+    @DisplayName("POST /admin/v1/account/admin")
+    @Nested
+    inner class RegisterAdminApiTest {
+
+        @Test
+        fun 관리자가_새로운_관리자를_등록한다() {
+            // given
+            val request = RegisterAdminRequest(
+                email = "new@gmail.com",
+                name = "새로운 관리자 이름"
+            )
+
+            // when & then
+            mockMvc.post("/v1/account/admin") {
+                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
+                contentType = MediaType.APPLICATION_JSON
+                content = objectMapper.writeValueAsString(request)
+            }.andDo {
+                print()
+            }.andExpect {
+                status { isOk() }
+            }
+        }
+
+    }
+
+    @DisplayName("GET /admin/v1/account/admins")
+    @Nested
+    inner class GetAdminInfos {
+
+        @Test
+        fun 등록된_관리자_목록을_조회한다() {
+            // when & then
+            mockMvc.get("/v1/account/admins") {
+                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
+                param("page", "1")
+                param("size", "10")
+            }.andDo {
+                print()
+            }.andExpect {
+                status { isOk() }
+                jsonPath("$.data.admins", hasSize<AdminInfoResponse>(1))
+                jsonPath("$.data.admins[0].email") { value("test.admin@test.com") }
+                jsonPath("$.data.admins[0].name") { value("테스트 관리자") }
+            }
+        }
+
     }
 
 }

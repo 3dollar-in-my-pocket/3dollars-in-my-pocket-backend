@@ -295,6 +295,79 @@ internal class BossStoreControllerTest(
             }
         }
 
+        @Test
+        fun `사장님 자신이 운영중인 가게를 조회합니다 위치정보가_없는경우_location이_null로_반환된다`() {
+            // given
+            val category = BossStoreCategoryCreator.create("한식", 1)
+            bossStoreCategoryRepository.save(category)
+
+            val bossStore = BossStoreCreator.create(
+                bossId = bossId,
+                name = "사장님 가게",
+                imageUrl = "https://image.png",
+                introduction = "introduction",
+                snsUrl = "https://sns.com",
+                contactsNumber = ContactsNumber.of("010-1234-1234"),
+                menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
+                appearanceDays = setOf(BossStoreAppearanceDayCreator.create(
+                    dayOfTheWeek = DayOfTheWeek.FRIDAY,
+                    startTime = LocalTime.of(8, 0),
+                    endTime = LocalTime.of(10, 0),
+                    locationDescription = "강남역")
+                ),
+                categoriesIds = setOf(category.id)
+            )
+            bossStoreRepository.save(bossStore)
+
+            // when & then
+            mockMvc.get("/v1/boss/store/my-store") {
+                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
+            }.andDo {
+                print()
+            }.andExpect {
+                status { isOk() }
+                jsonPath("$.data.location") { value(null) }
+
+                jsonPath("$.data.bossStoreId") { value(bossStore.id) }
+                jsonPath("$.data.name") { value("사장님 가게") }
+
+                jsonPath("$.data.imageUrl") { value(bossStore.imageUrl) }
+                jsonPath("$.data.introduction") { value(bossStore.introduction) }
+                jsonPath("$.data.snsUrl") { value(bossStore.snsUrl) }
+                jsonPath("$.data.contactsNumber") { value("010-1234-1234") }
+
+                jsonPath("$.data.menus", hasSize<BossStoreMenuResponse>(1))
+                jsonPath("$.data.menus[0].name") { value("붕어빵") }
+                jsonPath("$.data.menus[0].price") { value(2000) }
+                jsonPath("$.data.menus[0].imageUrl") { value("https://menu.png") }
+
+                jsonPath("$.data.appearanceDays", hasSize<BossStoreAppearanceDayResponse>(1))
+                jsonPath("$.data.appearanceDays[0].dayOfTheWeek") { value(DayOfTheWeek.FRIDAY.name) }
+                jsonPath("$.data.appearanceDays[0].openingHours.startTime") { value("08:00") }
+                jsonPath("$.data.appearanceDays[0].openingHours.endTime") { value("10:00") }
+                jsonPath("$.data.appearanceDays[0].locationDescription") { value("강남역") }
+
+                jsonPath("$.data.categories", hasSize<BossStoreCategoryResponse>(1))
+                jsonPath("$.data.categories[0].categoryId") { value(category.id) }
+                jsonPath("$.data.categories[0].name") { value("한식") }
+
+                jsonPath("$.data.openStatus.status") { value(BossStoreOpenType.CLOSED.name) }
+                jsonPath("$.data.openStatus.openStartDateTime") { value(null) }
+            }
+        }
+
+        @Test
+        fun `사장님 자신이 운영중인 가게를 조회합니다 운영중인 가게가 없는경우 404 에러를 반환한다`() {
+            // when & then
+            mockMvc.get("/v1/boss/store/my-store") {
+                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
+            }.andDo {
+                print()
+            }.andExpect {
+                status { isNotFound() }
+            }
+        }
+
     }
 
     @DisplayName("GET /boss/v1/boss/store/{BOSS_STORE_ID}")
@@ -474,8 +547,8 @@ internal class BossStoreControllerTest(
                 appearanceDays = setOf(
                     AppearanceDayRequest(
                         dayOfTheWeek = DayOfTheWeek.WEDNESDAY,
-                        startTime = LocalTime.of(8, 0),
-                        endTime = LocalTime.of(10, 0),
+                        startTime = LocalTime.of(9, 0),
+                        endTime = LocalTime.of(11, 0),
                         locationDescription = "강남역"
                     )
                 ),

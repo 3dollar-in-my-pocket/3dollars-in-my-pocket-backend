@@ -9,6 +9,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.mock.http.MockHttpInputMessage;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import com.depromeet.threedollar.api.user.controller.HealthCheckController;
 import com.depromeet.threedollar.api.user.controller.SetupControllerTest;
@@ -83,6 +86,45 @@ class ControllerExceptionAdviceTest extends SetupControllerTest {
             .andExpect(status().isServiceUnavailable())
             .andExpect(jsonPath("$.resultCode").value(ErrorCode.SERVICE_UNAVAILABLE.getCode()))
             .andExpect(jsonPath("$.message").value(ErrorCode.SERVICE_UNAVAILABLE.getMessage()));
+    }
+
+    @Test
+    void HttpMessageNotReadable인경우_400에러가_발생한다() throws Exception {
+        // given
+        when(healthCheckController.healthCheck()).thenThrow(new HttpMessageNotReadableException("HttpMessageNotReadable", new MockHttpInputMessage(new byte[10])));
+
+        // when & then
+        mockMvc.perform(get("/ping"))
+            .andDo(print())
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.resultCode").value(ErrorCode.INVALID.getCode()))
+            .andExpect(jsonPath("$.message").value(ErrorCode.INVALID.getMessage()));
+    }
+
+    @Test
+    void 최대_허용가능한_이미지_크기를_넘은경우_400에러가_발생한다() throws Exception {
+        // given
+        when(healthCheckController.healthCheck()).thenThrow(new MaxUploadSizeExceededException(5000));
+
+        // when & then
+        mockMvc.perform(get("/ping"))
+            .andDo(print())
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.resultCode").value(ErrorCode.INVALID_UPLOAD_FILE_SIZE.getCode()))
+            .andExpect(jsonPath("$.message").value(ErrorCode.INVALID_UPLOAD_FILE_SIZE.getMessage()));
+    }
+
+    @Test
+    void 지정되지_않은_에러들은_디폴트로_500에러가_발생한다() throws Exception {
+        // given
+        when(healthCheckController.healthCheck()).thenThrow(new IllegalArgumentException("디폴트 에러"));
+
+        // when & then
+        mockMvc.perform(get("/ping"))
+            .andDo(print())
+            .andExpect(status().isInternalServerError())
+            .andExpect(jsonPath("$.resultCode").value(ErrorCode.INTERNAL_SERVER.getCode()))
+            .andExpect(jsonPath("$.message").value(ErrorCode.INTERNAL_SERVER.getMessage()));
     }
 
 }

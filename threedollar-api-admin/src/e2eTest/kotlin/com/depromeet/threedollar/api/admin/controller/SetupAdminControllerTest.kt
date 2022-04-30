@@ -1,16 +1,16 @@
 package com.depromeet.threedollar.api.admin.controller
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository
-import com.fasterxml.jackson.core.type.TypeReference
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminRepository
+import com.fasterxml.jackson.core.type.TypeReference
 
 internal abstract class SetupAdminControllerTest : SetupControllerTest() {
 
     @Autowired
-    protected lateinit var userRepository: UserRepository
+    protected lateinit var adminRepository: AdminRepository
 
     protected lateinit var token: String
 
@@ -26,7 +26,7 @@ internal abstract class SetupAdminControllerTest : SetupControllerTest() {
     }
 
     protected fun cleanup() {
-        userRepository.deleteAll()
+        adminRepository.deleteAll()
     }
 
 }
