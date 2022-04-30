@@ -73,7 +73,6 @@ internal class BossAccountControllerTest : SetupBossAccountControllerTest() {
             print()
         }.andExpect {
             status { isOk() }
-
             jsonPath("$.data") { value(ApiResponse.OK.data) }
         }
     }

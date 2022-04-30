@@ -2,7 +2,6 @@ package com.depromeet.threedollar.api.user.controller.user;
 
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.CONFLICT_NICKNAME;
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID;
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.UNAUTHORIZED;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -68,21 +67,6 @@ class UserControllerTest extends SetupUserControllerTest {
                 .andExpect(jsonPath("$.data.medal.name").value(medalName))
                 .andExpect(jsonPath("$.data.medal.iconUrl").value(activationIconUrl))
                 .andExpect(jsonPath("$.data.medal.disableIconUrl").value(disableIconUrl));
-        }
-
-
-        @Test
-        void 잘못된_세션이면_401_에러() throws Exception {
-            // given
-            String token = "Wrong Token";
-
-            // when & then
-            getUserInfoApi(token)
-                .andDo(print())
-                .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.resultCode").value(UNAUTHORIZED.getCode()))
-                .andExpect(jsonPath("$.message").value(UNAUTHORIZED.getMessage()))
-                .andExpect(jsonPath("$.data").isEmpty());
         }
 
         private ResultActions getUserInfoApi(String token) throws Exception {
