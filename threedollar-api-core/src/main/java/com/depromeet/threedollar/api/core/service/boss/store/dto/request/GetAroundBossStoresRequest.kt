@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.core.service.boss.store.dto.request
 
 import javax.validation.constraints.Max
-import javax.validation.constraints.Positive
+import javax.validation.constraints.Min
 import javax.validation.constraints.PositiveOrZero
 import com.depromeet.threedollar.api.core.service.boss.store.dto.type.BossStoreOrderType
 
@@ -13,7 +13,7 @@ data class GetAroundBossStoresRequest(
 
     val categoryId: String?,
 
-    @field:Max(value = 50, message = "{store.limit.max}")
-    @field:Positive(message = "{store.limit.positive")
-    val limit: Int = 50
+    @field:Min(value = 1, message = "{common.size.min}")
+    @field:Max(value = 30, message = "{common.size.max}")
+    val size: Int = 30
 )

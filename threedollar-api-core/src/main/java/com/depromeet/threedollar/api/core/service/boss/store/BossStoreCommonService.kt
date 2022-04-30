@@ -43,7 +43,7 @@ class BossStoreCommonService(
             latitude = mapCoordinate.latitude,
             longitude = mapCoordinate.longitude,
             maxDistance = min(request.distanceKm, MAX_DISTANCE_KM),
-            limit = request.limit
+            size = request.size
         )
 
         val locationsDictionary: Map<String, BossStoreLocation> = storeLocations.associateBy { it.bossStoreId }
