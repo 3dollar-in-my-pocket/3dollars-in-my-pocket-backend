@@ -18,8 +18,8 @@ import com.depromeet.threedollar.api.boss.service.store.dto.request.MenuRequest
 import com.depromeet.threedollar.api.boss.service.store.dto.request.PatchBossStoreInfoRequest
 import com.depromeet.threedollar.api.boss.service.store.dto.request.UpdateBossStoreInfoRequest
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.service.boss.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAppearanceDayResponse
-import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreMenuResponse
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.type.DayOfTheWeek

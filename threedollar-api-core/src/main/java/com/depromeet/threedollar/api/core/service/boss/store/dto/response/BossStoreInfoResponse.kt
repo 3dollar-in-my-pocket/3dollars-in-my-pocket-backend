@@ -3,6 +3,7 @@ package com.depromeet.threedollar.api.core.service.boss.store.dto.response
 import java.time.LocalDateTime
 import org.springframework.data.geo.Point
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
+import com.depromeet.threedollar.api.core.service.boss.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.common.model.CoordinateValue
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.common.utils.LocationDistanceUtils
@@ -102,24 +103,6 @@ data class BossStoreAroundInfoResponse(
     }
 
 }
-
-
-data class BossStoreCategoryResponse(
-    val categoryId: String,
-    val name: String
-) {
-
-    companion object {
-        fun of(bossStoreCategory: BossStoreCategory): BossStoreCategoryResponse {
-            return BossStoreCategoryResponse(
-                categoryId = bossStoreCategory.id,
-                name = bossStoreCategory.name
-            )
-        }
-    }
-
-}
-
 
 data class LocationResponse(
     val latitude: Double,

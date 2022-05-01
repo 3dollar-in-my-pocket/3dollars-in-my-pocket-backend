@@ -8,8 +8,8 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
 import org.springframework.test.web.servlet.get
+import com.depromeet.threedollar.api.core.service.boss.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAppearanceDayResponse
-import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreMenuResponse
 import com.depromeet.threedollar.api.user.controller.SetupUserControllerTest
 import com.depromeet.threedollar.common.type.DayOfTheWeek
