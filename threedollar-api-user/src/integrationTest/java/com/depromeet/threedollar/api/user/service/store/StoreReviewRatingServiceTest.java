@@ -17,7 +17,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 
 @SpringBootTest
-class StoreRatingServiceTest extends SetupStoreServiceTest {
+class StoreReviewRatingServiceTest extends SetupStoreServiceTest {
 
     @Autowired
     private StoreRatingService storeRatingService;

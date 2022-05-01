@@ -43,7 +43,7 @@ public class Review extends AuditingTimeEntity {
     private String contents;
 
     @Embedded
-    private Rating rating;
+    private ReviewRating rating;
 
     @Enumerated(EnumType.STRING)
     private ReviewStatus status;
@@ -53,7 +53,7 @@ public class Review extends AuditingTimeEntity {
         this.storeId = storeId;
         this.userId = userId;
         this.contents = contents;
-        this.rating = Rating.of(rating);
+        this.rating = ReviewRating.of(rating);
         this.status = status;
     }
 
@@ -69,7 +69,7 @@ public class Review extends AuditingTimeEntity {
 
     public void update(String contents, int rating) {
         this.contents = contents;
-        this.rating = Rating.of(rating);
+        this.rating = ReviewRating.of(rating);
     }
 
     public void delete() {

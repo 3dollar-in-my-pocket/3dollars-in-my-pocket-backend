@@ -155,7 +155,7 @@ class StoreTest {
     }
 
     @Nested
-    class UpdateAverageRatingTest {
+    class UpdateAverageReviewRatingTest {
 
         @CsvSource({
             "2.67, 2.7",

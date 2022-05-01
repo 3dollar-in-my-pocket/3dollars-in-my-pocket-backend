@@ -8,23 +8,23 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import com.depromeet.threedollar.common.exception.model.InvalidException;
 
-class RatingTest {
+class ReviewRatingTest {
 
     @ValueSource(ints = {1, 2, 3, 4, 5})
     @ParameterizedTest
     void 점수가_1점이상_5점이하면_통과한다(int value) {
         // when
-        Rating rating = Rating.of(value);
+        ReviewRating reviewRating = ReviewRating.of(value);
 
         // then
-        assertThat(rating.getRating()).isEqualTo(value);
+        assertThat(reviewRating.getRating()).isEqualTo(value);
     }
 
     @ValueSource(ints = {0, 6})
     @ParameterizedTest
     void 점수가_1보다_작거나_5이상이면_VALIDATION_EXEPTION(int value) {
         // when & then
-        assertThatThrownBy(() -> Rating.of(value)).isInstanceOf(InvalidException.class);
+        assertThatThrownBy(() -> ReviewRating.of(value)).isInstanceOf(InvalidException.class);
     }
 
 }

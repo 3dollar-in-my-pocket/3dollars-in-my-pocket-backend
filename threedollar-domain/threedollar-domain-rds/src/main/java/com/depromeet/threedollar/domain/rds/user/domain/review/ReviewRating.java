@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode
 @Embeddable
-public class Rating {
+public class ReviewRating {
 
     private static final int MIN_RATING_VALUE = 1;
     private static final int MAX_RATING_VALUE = 5;
@@ -24,13 +24,13 @@ public class Rating {
     @Column(nullable = false)
     private int rating;
 
-    private Rating(int rating) {
+    private ReviewRating(int rating) {
         validateRatingInAvailableRange(rating);
         this.rating = rating;
     }
 
-    public static Rating of(int rating) {
-        return new Rating(rating);
+    public static ReviewRating of(int rating) {
+        return new ReviewRating(rating);
     }
 
     private void validateRatingInAvailableRange(int rating) {
