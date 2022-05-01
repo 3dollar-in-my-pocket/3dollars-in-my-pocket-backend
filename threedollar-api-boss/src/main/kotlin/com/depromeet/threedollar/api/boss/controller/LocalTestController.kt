@@ -30,9 +30,9 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSoc
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationBossForm
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStoreForm
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppearanceDay

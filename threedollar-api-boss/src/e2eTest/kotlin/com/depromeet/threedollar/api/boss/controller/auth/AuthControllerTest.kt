@@ -17,8 +17,8 @@ import com.depromeet.threedollar.api.boss.service.auth.dto.request.SignupRequest
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
 import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
 import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse

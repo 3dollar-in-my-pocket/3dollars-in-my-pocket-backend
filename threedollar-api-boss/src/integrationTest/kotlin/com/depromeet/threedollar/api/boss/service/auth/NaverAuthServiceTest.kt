@@ -12,8 +12,8 @@ import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
 import com.depromeet.threedollar.external.client.naver.NaverAuthApiClient
 import com.depromeet.threedollar.external.client.naver.dto.response.NaverProfileInfoResponse
 import com.depromeet.threedollar.external.client.naver.dto.response.NaverProfileResponse

@@ -19,12 +19,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.user.controller.SetupStoreControllerTest;
+import com.depromeet.threedollar.api.user.controller.store.support.StoreAssertions;
+import com.depromeet.threedollar.api.user.controller.visit.support.VisitHistoryAssertions;
 import com.depromeet.threedollar.api.user.listener.medal.AddUserMedalEventListener;
 import com.depromeet.threedollar.api.user.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.user.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
 import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoriesCursorResponse;
-import com.depromeet.threedollar.api.user.controller.store.support.StoreAssertions;
-import com.depromeet.threedollar.api.user.controller.visit.support.VisitHistoryAssertions;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
