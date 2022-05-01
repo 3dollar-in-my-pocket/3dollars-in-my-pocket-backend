@@ -9,6 +9,9 @@ import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
 public interface ReviewRepositoryCustom {
 
     @Nullable
+    Review findReviewById(long reviewId);
+
+    @Nullable
     Review findReviewByIdAndUserId(Long reviewId, Long userId);
 
     List<Review> findAllByStoreId(Long storeId);

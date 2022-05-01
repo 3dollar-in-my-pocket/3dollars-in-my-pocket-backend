@@ -43,7 +43,7 @@ public class StoreStatisticsRepositoryCustomImpl implements StoreStatisticsRepos
             .from(store)
             .innerJoin(menu).on(menu.store.id.eq(store.id))
             .where(
-                store.status.eq(StoreStatus.DELETED),
+                store.status.in(StoreStatus.DELETED, StoreStatus.FILTERED),
                 store.updatedAt.goe(startDate.atStartOfDay()),
                 store.updatedAt.lt(endDate.atStartOfDay().plusDays(1))
             ).fetchCount();
@@ -55,7 +55,7 @@ public class StoreStatisticsRepositoryCustomImpl implements StoreStatisticsRepos
             .from(store)
             .innerJoin(menu).on(menu.store.id.eq(store.id))
             .where(
-                store.status.eq(StoreStatus.DELETED)
+                store.status.in(StoreStatus.DELETED, StoreStatus.FILTERED)
             ).fetchCount();
     }
 

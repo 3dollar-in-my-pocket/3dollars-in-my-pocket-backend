@@ -76,6 +76,10 @@ public class Review extends AuditingTimeEntity {
         this.status = ReviewStatus.DELETED;
     }
 
+    public void deleteByAdmin() {
+        this.status = ReviewStatus.FILTERED;
+    }
+
     public int getRating() {
         return this.rating.getRating();
     }

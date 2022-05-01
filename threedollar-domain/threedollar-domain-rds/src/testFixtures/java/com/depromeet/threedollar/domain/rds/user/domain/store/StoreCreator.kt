@@ -13,7 +13,8 @@ object StoreCreator {
         storeName: String,
         latitude: Double = 36.0,
         longitude: Double = 126.0,
-        rating: Double = 0.0
+        rating: Double = 0.0,
+        status: StoreStatus = StoreStatus.ACTIVE
     ): Store {
         return Store.builder()
             .userId(userId)
@@ -22,6 +23,7 @@ object StoreCreator {
             .latitude(latitude)
             .longitude(longitude)
             .rating(rating)
+            .status(status)
             .build()
     }
 
@@ -33,7 +35,8 @@ object StoreCreator {
         latitude: Double = 34.0,
         longitude: Double = 126.0,
         rating: Double = 0.0,
-        storeType: StoreType = StoreType.STORE
+        storeType: StoreType = StoreType.STORE,
+        status: StoreStatus = StoreStatus.ACTIVE
     ): Store {
         val store = Store.builder()
             .userId(userId)
@@ -42,6 +45,7 @@ object StoreCreator {
             .latitude(latitude)
             .longitude(longitude)
             .rating(rating)
+            .status(status)
             .build()
         store.addMenus(listOf(create(store, "메뉴 이름", "메뉴 가격", MenuCategoryType.BUNGEOPPANG)))
         return store
@@ -49,26 +53,33 @@ object StoreCreator {
 
     @JvmOverloads
     @JvmStatic
-    fun createDeleted(
+    fun createDefault(
         userId: Long,
         storeName: String,
-        latitude: Double = 34.0,
-        longitude: Double = 126.0
+        status: StoreStatus = StoreStatus.ACTIVE
     ): Store {
-        val store = create(userId, storeName, latitude, longitude)
-        store.delete()
-        return store
+        return create(
+            userId = userId,
+            storeName = storeName,
+            latitude = 34.0,
+            longitude = 126.0,
+            rating = 0.0,
+            status = status
+        )
     }
 
     @JvmOverloads
     @JvmStatic
-    fun createDeletedWithDefaultMenu(
+    fun createDefaultWithMenu(
         userId: Long,
         storeName: String,
-        latitude: Double = 34.0,
-        longitude: Double = 126.0
+        status: StoreStatus = StoreStatus.ACTIVE
     ): Store {
-        val store = createDeleted(userId, storeName, latitude, longitude)
+        val store = createDefault(
+            userId = userId,
+            storeName = storeName,
+            status = status
+        )
         store.addMenus(listOf(create(store, "메뉴 이름", "메뉴 가격", MenuCategoryType.BUNGEOPPANG)))
         return store
     }

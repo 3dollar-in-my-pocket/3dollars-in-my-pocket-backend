@@ -79,13 +79,13 @@ public class Store extends AuditingTimeEntity {
     private final List<Menu> menus = new ArrayList<>();
 
     @Builder(access = AccessLevel.PACKAGE)
-    private Store(Long userId, double latitude, double longitude, String name, @Nullable StoreType type, double rating) {
+    private Store(Long userId, double latitude, double longitude, String name, @Nullable StoreType type, double rating, StoreStatus status) {
         this.userId = userId;
         this.location = Location.of(latitude, longitude);
         this.name = name;
         this.type = type;
         this.rating = rating;
-        this.status = StoreStatus.ACTIVE;
+        this.status = status;
     }
 
     public static Store newInstance(Long userId, double latitude, double longitude, String storeName, @Nullable StoreType storeType) {
@@ -96,6 +96,7 @@ public class Store extends AuditingTimeEntity {
             .name(storeName)
             .type(storeType)
             .rating(0.0)
+            .status(StoreStatus.ACTIVE)
             .build();
     }
 
@@ -198,8 +199,12 @@ public class Store extends AuditingTimeEntity {
         this.rating = MathUtils.round(average, 1);
     }
 
-    public void delete() {
+    public void deleteByUser() {
         this.status = StoreStatus.DELETED;
+    }
+
+    public void deleteByAdmin() {
+        this.status = StoreStatus.FILTERED;
     }
 
     public double getLatitude() {
@@ -241,7 +246,7 @@ public class Store extends AuditingTimeEntity {
     }
 
     public boolean isDeleted() {
-        return StoreStatus.DELETED.equals(this.status);
+        return !this.status.isActivated();
     }
 
 }

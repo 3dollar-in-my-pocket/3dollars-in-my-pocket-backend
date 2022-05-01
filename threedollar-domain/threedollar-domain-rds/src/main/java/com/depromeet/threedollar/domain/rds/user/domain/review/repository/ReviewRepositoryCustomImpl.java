@@ -25,6 +25,16 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
 
     @Nullable
     @Override
+    public Review findReviewById(long reviewId) {
+        return queryFactory.selectFrom(review)
+            .where(
+                review.id.eq(reviewId),
+                review.status.eq(ReviewStatus.POSTED)
+            ).fetchOne();
+    }
+
+    @Nullable
+    @Override
     public Review findReviewByIdAndUserId(Long reviewId, Long userId) {
         return queryFactory.selectFrom(review)
             .where(

@@ -59,7 +59,7 @@ public class LocalTestController {
         @RequestParam Long storeId
     ) {
         Store store = StoreServiceUtils.findStoreById(storeRepository, storeId);
-        store.delete();
+        store.deleteByUser();
         storeRepository.save(store);
         return ApiResponse.OK;
     }

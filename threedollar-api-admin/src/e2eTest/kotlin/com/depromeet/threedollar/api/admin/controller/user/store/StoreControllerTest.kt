@@ -268,6 +268,7 @@ internal class StoreControllerTest(
             .andDo { print() }
             .andExpect {
                 status { isOk() }
+                jsonPath("$.data") { value(ApiResponse.OK.data) }
             }
 
     }

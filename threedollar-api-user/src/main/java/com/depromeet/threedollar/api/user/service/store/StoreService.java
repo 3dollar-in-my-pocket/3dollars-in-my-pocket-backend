@@ -63,7 +63,7 @@ public class StoreService {
 
     private boolean deleteStoreIfSatisfyCondition(Store store, List<Long> reporters) {
         if (reporters.size() + 1 >= DELETE_REPORTS_COUNT) {
-            store.delete();
+            store.deleteByUser();
             return true;
         }
         return false;

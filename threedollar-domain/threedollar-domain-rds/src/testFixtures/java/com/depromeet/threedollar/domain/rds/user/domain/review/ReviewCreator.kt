@@ -5,38 +5,22 @@ import com.depromeet.threedollar.domain.rds.user.domain.TestFixture
 @TestFixture
 object ReviewCreator {
 
+    @JvmOverloads
     @JvmStatic
     fun create(
         storeId: Long,
         userId: Long,
         contents: String,
-        rating: Int
+        rating: Int,
+        status: ReviewStatus = ReviewStatus.POSTED
     ): Review {
         return Review.builder()
             .storeId(storeId)
             .userId(userId)
             .contents(contents)
             .rating(rating)
-            .status(ReviewStatus.POSTED)
+            .status(status)
             .build()
-    }
-
-    @JvmStatic
-    fun createDeleted(
-        storeId: Long,
-        userId: Long,
-        contents: String,
-        rating: Int
-    ): Review {
-        val review = Review.builder()
-            .storeId(storeId)
-            .userId(userId)
-            .contents(contents)
-            .rating(rating)
-            .status(ReviewStatus.DELETED)
-            .build()
-        review.delete()
-        return review
     }
 
 }

@@ -51,6 +51,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreStatus;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
@@ -153,8 +154,9 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 주변_가게들을_조회할때_삭제된_가게는_포함되지_않는다() throws Exception {
             // given
-            Store store = StoreCreator.createDeletedWithDefaultMenu(user.getId(), "타코야키 다 내꺼야", 34.0, 126.0);
-            storeRepository.save(store);
+            Store deletedStoreByUser = StoreCreator.create(user.getId(), "타코야키 다 내꺼야", 34.0, 126.0, 1.0, StoreStatus.DELETED);
+            Store deletedStoreByAdmin = StoreCreator.create(user.getId(), "타코야키 다 내꺼야", 34.0, 126.0, 1.0, StoreStatus.FILTERED);
+            storeRepository.saveAll(List.of(deletedStoreByUser, deletedStoreByAdmin));
 
             RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
                 .distance(1000)
@@ -656,8 +658,9 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 내가_작성한_가게_목록_조회시_삭제된_가게는_삭제된_가게로_조회된다() throws Exception {
             // given
-            Store store = StoreCreator.createDeletedWithDefaultMenu(user.getId(), "가게 이름");
-            storeRepository.save(store);
+            Store storeDeletedByUser = StoreCreator.createDefaultWithMenu(user.getId(), "가게 이름", StoreStatus.DELETED);
+            Store storeDeletedByAdmin = StoreCreator.createDefaultWithMenu(user.getId(), "가게 이름", StoreStatus.FILTERED);
+            storeRepository.saveAll(List.of(storeDeletedByUser, storeDeletedByAdmin));
 
             RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, null);
 
@@ -666,12 +669,16 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             // then
             assertAll(
-                () -> assertThat(response.getData().getTotalElements()).isEqualTo(1),
+                () -> assertThat(response.getData().getTotalElements()).isEqualTo(2),
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
                 () -> assertThat(response.getData().isHasNext()).isFalse(),
-                () -> assertThat(response.getData().getContents()).hasSize(1),
-                () -> assertStoreWithVisitsResponse(response.getData().getContents().get(0), store.getId(), store.getLatitude(), store.getLongitude(), store.getName(), store.getRating()),
+                () -> assertThat(response.getData().getContents()).hasSize(2),
 
+                () -> assertStoreWithVisitsResponse(response.getData().getContents().get(0), storeDeletedByAdmin.getId(), storeDeletedByAdmin.getLatitude(), storeDeletedByAdmin.getLongitude(), storeDeletedByAdmin.getName(), storeDeletedByAdmin.getRating()),
+                () -> assertThat(response.getData().getContents().get(1).getCategories()).hasSize(1),
+                () -> assertThat(response.getData().getContents().get(1).getCategories()).containsExactlyInAnyOrder(MenuCategoryType.BUNGEOPPANG),
+
+                () -> assertStoreWithVisitsResponse(response.getData().getContents().get(1), storeDeletedByUser.getId(), storeDeletedByUser.getLatitude(), storeDeletedByUser.getLongitude(), storeDeletedByUser.getName(), storeDeletedByUser.getRating()),
                 () -> assertThat(response.getData().getContents().get(0).getCategories()).hasSize(1),
                 () -> assertThat(response.getData().getContents().get(0).getCategories()).containsExactlyInAnyOrder(MenuCategoryType.BUNGEOPPANG)
             );

@@ -30,8 +30,10 @@ import com.depromeet.threedollar.api.user.service.review.dto.response.ReviewsCur
 import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewStatus;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreStatus;
 import com.depromeet.threedollar.domain.rds.user.event.review.ReviewChangedEvent;
 import com.depromeet.threedollar.domain.rds.user.event.review.ReviewCreatedEvent;
 
@@ -289,8 +291,9 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 삭제된_리뷰는_조회되지_않는다() throws Exception {
             // given
-            Review review = ReviewCreator.createDeleted(store.getId(), user.getId(), "너무 맛있어요", 5);
-            reviewRepository.save(review);
+            Review deletedReviewByUser = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요", 5, ReviewStatus.DELETED);
+            Review deletedReviewByAdmin = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요", 5, ReviewStatus.FILTERED);
+            reviewRepository.saveAll(List.of(deletedReviewByAdmin, deletedReviewByUser));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null);
 
@@ -308,11 +311,13 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 삭제된_가게인경우_없어진_가게라고_표시된다() throws Exception {
             // given
-            Store deletedStore = StoreCreator.createDeletedWithDefaultMenu(user.getId(), "삭제되기 전 가게 이름");
-            storeRepository.save(deletedStore);
+            Store storeDeletedByAdmin = StoreCreator.createDefaultWithMenu(user.getId(), "삭제되기 전 가게 이름", StoreStatus.DELETED);
+            Store storeDeleteByUser = StoreCreator.createDefaultWithMenu(user.getId(), "삭제되기 전 가게 이름", StoreStatus.FILTERED);
+            storeRepository.saveAll(List.of(storeDeleteByUser, storeDeletedByAdmin));
 
-            Review review = ReviewCreator.create(deletedStore.getId(), user.getId(), "너무 맛있어요", 5);
-            reviewRepository.save(review);
+            Review review1 = ReviewCreator.create(storeDeleteByUser.getId(), user.getId(), "너무 맛있어요", 5);
+            Review review2 = ReviewCreator.create(storeDeletedByAdmin.getId(), user.getId(), "너무 맛있어요", 5);
+            reviewRepository.saveAll(List.of(review1, review2));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null);
 
@@ -323,8 +328,9 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(-1),
                 () -> assertThat(response.getData().isHasNext()).isFalse(),
-                () -> assertThat(response.getData().getContents()).hasSize(1),
-                () -> assertReviewDetailInfoResponse(response.getData().getContents().get(0), review, deletedStore, user)
+                () -> assertThat(response.getData().getContents()).hasSize(2),
+                () -> assertReviewDetailInfoResponse(response.getData().getContents().get(0), review2, storeDeletedByAdmin, user),
+                () -> assertReviewDetailInfoResponse(response.getData().getContents().get(1), review1, storeDeleteByUser, user)
             );
         }
 
