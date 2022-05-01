@@ -5,12 +5,25 @@ Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 > {%
 client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
+    client.global.set("STORE_ID", response.body["data"]["contents"][0]["storeId"])
 });
 %}
 
 
 ### 등록된 최신순으로 스크롤 기반 페이지네이션으로 가게를 조회한다
 GET {{admin}}/v1/user/stores/latest?size=3
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+    client.global.set("STORE_ID", response.body["data"]["contents"][0]["storeId"])
+});
+%}
+
+
+### 특정 가게를 삭제합니다
+DELETE {{admin}}/v1/user/store/{{STORE_ID}}
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%

@@ -6,6 +6,8 @@ import com.depromeet.threedollar.api.admin.service.user.store.dto.request.Retrie
 import com.depromeet.threedollar.api.admin.service.user.store.dto.request.RetrieveReportedStoresRequest
 import com.depromeet.threedollar.api.admin.service.user.store.dto.response.ReportedStoreInfoResponse
 import com.depromeet.threedollar.api.admin.service.user.store.dto.response.StoreInfosWithCursorResponse
+import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.rds.common.support.CursorPagingSupporter
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
 
@@ -28,6 +30,13 @@ class AdminUserStoreService(
         val storesWithNextCursor = storeRepository.findAllUsingCursor(request.cursor, request.size + 1)
         val storesCursor = CursorPagingSupporter.of(storesWithNextCursor, request.size)
         return StoreInfosWithCursorResponse.of(storesCursor)
+    }
+
+    @Transactional
+    fun deleteStoreByForce(storeId: Long) {
+        val store = storeRepository.findStoreById(storeId)
+            ?: throw NotFoundException("해당하는 가게($storeId)는 존재하지 않습니다", ErrorCode.NOTFOUND_STORE)
+        store.delete()
     }
 
 }

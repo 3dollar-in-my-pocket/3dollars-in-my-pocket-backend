@@ -1,7 +1,9 @@
 package com.depromeet.threedollar.api.admin.controller.user.store
 
 import javax.validation.Valid
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.admin.config.interceptor.Auth
 import com.depromeet.threedollar.api.admin.service.user.store.AdminUserStoreService
@@ -33,6 +35,16 @@ class AdminUserStoreController(
         @Valid request: RetrieveLatestStoresRequest
     ): ApiResponse<StoreInfosWithCursorResponse> {
         return ApiResponse.success(adminUserStoreService.retrieveLatestStores(request))
+    }
+
+    @ApiOperation("특정 가게를 강제로 삭제합니다")
+    @Auth
+    @DeleteMapping("/v1/user/store/{storeId}")
+    fun deleteStoreByForce(
+        @PathVariable storeId: Long
+    ): ApiResponse<String> {
+        adminUserStoreService.deleteStoreByForce(storeId)
+        return ApiResponse.OK
     }
 
 }
