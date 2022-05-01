@@ -17,9 +17,17 @@ enum class BossDailyStatisticsMessageFormat(
             - 일주일 간 %s명이 신규 가입하였습니다.
         """.trimIndent()
     ),
+    BOSS_REGISTRATION_STATISTICS(
+        """
+            2. 사장님 계정 가입 신청 통계 정보
+            - 총 %s명이 가입 신청하였습니다.
+            - 오늘 %s명이 가입 신청하였습니다.
+            - 일주일 간 %s명이 가입 신청하였습니다.
+        """.trimIndent()
+    ),
     BOSS_STORE_STATISTICS(
         """
-            2. 사장님 가게 통계 정보
+            3. 사장님 가게 통계 정보
             - 총 %s개의 가게가 등록되어 있습니다..
             - 오늘 %s개의 가게가 신규 등록되었습니다.
             - 일주일 간 %s개의 가게가 신규 등록되었습니다.
@@ -27,15 +35,23 @@ enum class BossDailyStatisticsMessageFormat(
     ),
     BOSS_STORE_LOCATION_STATISTICS(
         """
-            3. 사장님 가게 위치 통계 정보
+            4. 사장님 가게 위치 통계 정보
             - 총 %s개의 가게의 위치 정보가 등록되어 있습니다.
             - 오늘 %s개의 가게의 위치 정보가 신규 등록되거나 변경되었습니다.
             - 일주일 간 %s개의 가게의 위치 정보가 신규 등록되거나 변경되었습니다.
         """.trimIndent()
     ),
+    DELETED_BOSS_STORE_STATISTICS(
+        """
+            5. 사장님 가게 삭제 통계 정보
+            - 총 %s개의 가게가 삭제 처리되었습니다.
+            - 오늘 %s개의 가게가 삭제 처리되었습니다.
+            - 일주일 간 %s개의 가게가 삭제 처리되었습니다.
+        """.trimIndent()
+    ),
     BOSS_STORE_FEEDBACK_STATISTICS(
         """
-            4. 사장님 가게 피드백 통계 정보
+            6. 사장님 가게 피드백 통계 정보
             - 총 %s개의 피드백이 등록되어 있습니다..
             - 오늘 %s개의 피드백이 신규 등록되었습니다.
             - 일주일 간 %s개의 피드백이 신규 등록되었습니다.

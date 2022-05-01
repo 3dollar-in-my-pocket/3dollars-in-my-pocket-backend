@@ -12,11 +12,11 @@ import com.depromeet.threedollar.api.admin.service.boss.registration.dto.respons
 import com.depromeet.threedollar.api.admin.service.boss.registration.dto.response.BossAccountRegistrationStoreResponse
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
 
 internal class BossRegistrationAdminControllerTest(
-    private val bossRegistrationRepository: BossBossRegistrationRepository
+    private val bossRegistrationRepository: BossRegistrationRepository
 ) : SetupAdminControllerTest() {
 
     @AfterEach

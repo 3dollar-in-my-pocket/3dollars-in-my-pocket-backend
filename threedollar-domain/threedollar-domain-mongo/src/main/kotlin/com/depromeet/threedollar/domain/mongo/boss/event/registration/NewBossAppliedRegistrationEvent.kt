@@ -1,15 +1,15 @@
 package com.depromeet.threedollar.domain.mongo.boss.event.registration
 
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistration
 
 data class NewBossAppliedRegistrationEvent(
-    val registration: Registration
+    val bossRegistration: BossRegistration
 ) {
 
     companion object {
-        fun of(registration: Registration): NewBossAppliedRegistrationEvent {
+        fun of(bossRegistration: BossRegistration): NewBossAppliedRegistrationEvent {
             return NewBossAppliedRegistrationEvent(
-                registration = registration
+                bossRegistration = bossRegistration
             )
         }
     }

@@ -10,7 +10,7 @@ import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
 import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
 
 @Document("boss_registration_v1")
-class Registration(
+class BossRegistration(
     val boss: RegistrationBossForm,
     val store: RegistrationStoreForm,
     var status: BossRegistrationStatus
@@ -37,8 +37,8 @@ class Registration(
             boss: RegistrationBossForm,
             store: RegistrationStoreForm,
             status: BossRegistrationStatus = BossRegistrationStatus.WAITING
-        ): Registration {
-            return Registration(
+        ): BossRegistration {
+            return BossRegistration(
                 boss = boss,
                 store = store,
                 status = status

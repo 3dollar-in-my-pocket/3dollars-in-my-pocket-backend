@@ -4,7 +4,7 @@ import javax.validation.constraints.Size
 import org.hibernate.validator.constraints.URL
 import com.depromeet.threedollar.api.boss.config.validator.BossName
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistration
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationBossForm
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStoreForm
 
@@ -30,8 +30,8 @@ data class SignupRequest(
     val certificationPhotoUrl: String,
 ) {
 
-    fun toEntity(socialId: String): Registration {
-        return Registration.of(
+    fun toEntity(socialId: String): BossRegistration {
+        return BossRegistration.of(
             boss = RegistrationBossForm.of(
                 socialId = socialId,
                 socialType = socialType,

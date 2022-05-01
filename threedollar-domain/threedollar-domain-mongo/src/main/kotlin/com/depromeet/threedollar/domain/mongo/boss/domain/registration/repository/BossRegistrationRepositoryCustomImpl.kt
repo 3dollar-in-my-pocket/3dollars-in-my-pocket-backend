@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.data.mongodb.core.query.lt
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationStatus
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistration
 
 class BossRegistrationRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
@@ -21,36 +21,36 @@ class BossRegistrationRepositoryCustomImpl(
         return mongoTemplate.exists(Query()
             .addCriteria(where("boss.socialInfo.socialId").isEqualTo(socialId))
             .addCriteria(where("boss.socialInfo.socialType").isEqualTo(socialType))
-            .addCriteria(Registration::status isEqualTo BossRegistrationStatus.WAITING), Registration::class.java
+            .addCriteria(BossRegistration::status isEqualTo BossRegistrationStatus.WAITING), BossRegistration::class.java
         )
     }
 
-    override fun findWaitingRegistrationById(registrationId: String): Registration? {
+    override fun findWaitingRegistrationById(registrationId: String): BossRegistration? {
         return mongoTemplate.findOne(Query()
-            .addCriteria(Registration::id isEqualTo registrationId)
-            .addCriteria(Registration::status isEqualTo BossRegistrationStatus.WAITING)
+            .addCriteria(BossRegistration::id isEqualTo registrationId)
+            .addCriteria(BossRegistration::status isEqualTo BossRegistrationStatus.WAITING)
         )
     }
 
-    override fun findWaitingRegistrationBySocialIdAndSocialType(socialId: String, socialType: BossAccountSocialType): Registration? {
+    override fun findWaitingRegistrationBySocialIdAndSocialType(socialId: String, socialType: BossAccountSocialType): BossRegistration? {
         return mongoTemplate.findOne(Query()
             .addCriteria(where("boss.socialInfo.socialId").isEqualTo(socialId))
             .addCriteria(where("boss.socialInfo.socialType").isEqualTo(socialType))
-            .addCriteria(Registration::status isEqualTo BossRegistrationStatus.WAITING)
+            .addCriteria(BossRegistration::status isEqualTo BossRegistrationStatus.WAITING)
         )
     }
 
-    override fun findAllWaitingRegistrationsLessThanCursorOrderByLatest(cursor: String?, size: Int): List<Registration> {
+    override fun findAllWaitingRegistrationsLessThanCursorOrderByLatest(cursor: String?, size: Int): List<BossRegistration> {
         if (cursor == null) {
             return mongoTemplate.find(Query()
-                .addCriteria(Registration::status isEqualTo BossRegistrationStatus.WAITING)
-                .with(Sort.by(Sort.Direction.DESC, Registration::id.name))
+                .addCriteria(BossRegistration::status isEqualTo BossRegistrationStatus.WAITING)
+                .with(Sort.by(Sort.Direction.DESC, BossRegistration::id.name))
                 .limit(size))
         }
         return mongoTemplate.find(Query()
-            .addCriteria(Registration::status isEqualTo BossRegistrationStatus.WAITING)
-            .addCriteria(Registration::id lt ObjectId(cursor))
-            .with(Sort.by(Sort.Direction.DESC, Registration::id.name))
+            .addCriteria(BossRegistration::status isEqualTo BossRegistrationStatus.WAITING)
+            .addCriteria(BossRegistration::id lt ObjectId(cursor))
+            .with(Sort.by(Sort.Direction.DESC, BossRegistration::id.name))
             .limit(size))
     }
 

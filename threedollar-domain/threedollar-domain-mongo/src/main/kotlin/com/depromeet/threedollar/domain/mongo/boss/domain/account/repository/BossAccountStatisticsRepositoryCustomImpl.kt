@@ -10,10 +10,6 @@ class BossAccountStatisticsRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : BossAccountStatisticsRepositoryCustom {
 
-    override fun countAllBossAccounts(): Long {
-        return mongoTemplate.count(Query(), BossAccount::class.java)
-    }
-
     override fun countBossAccountsBetweenDate(startDate: LocalDate, endDate: LocalDate): Long {
         return mongoTemplate.count(Query()
             .addCriteria(BossAccount::createdAt

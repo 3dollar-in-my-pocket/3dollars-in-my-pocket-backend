@@ -6,7 +6,7 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
 
 object BossAccountServiceUtils {
 
@@ -26,10 +26,10 @@ object BossAccountServiceUtils {
     }
 
     fun findBossAccountBySocialIdAndSocialTypeWithCheckWaitingRegistration(
-        bossAccountRepository: BossAccountRepository,
-        bossRegistrationRepository: BossBossRegistrationRepository,
-        socialId: String,
-        socialType: BossAccountSocialType
+            bossAccountRepository: BossAccountRepository,
+            bossRegistrationRepository: BossRegistrationRepository,
+            socialId: String,
+            socialType: BossAccountSocialType
     ): String {
         return bossAccountRepository.findBossAccountBySocialInfo(socialId, socialType)?.id
             ?: run {

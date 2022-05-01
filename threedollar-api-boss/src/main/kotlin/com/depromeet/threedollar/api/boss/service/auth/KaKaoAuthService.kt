@@ -6,16 +6,16 @@ import com.depromeet.threedollar.api.boss.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.common.utils.HttpHeaderUtils
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
 import com.depromeet.threedollar.external.client.kakao.KaKaoAuthApiClient
 
 private val SOCIAL_TYPE = BossAccountSocialType.KAKAO
 
 @Service
 class KaKaoAuthService(
-    private val bossAccountRepository: BossAccountRepository,
-    private val bossRegistrationRepository: BossBossRegistrationRepository,
-    private val kaKaoAuthApiClient: KaKaoAuthApiClient
+        private val bossAccountRepository: BossAccountRepository,
+        private val bossRegistrationRepository: BossRegistrationRepository,
+        private val kaKaoAuthApiClient: KaKaoAuthApiClient
 ) : AuthService {
 
     override fun login(request: LoginRequest): String {

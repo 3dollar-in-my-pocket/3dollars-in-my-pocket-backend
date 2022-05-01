@@ -4,8 +4,6 @@ import java.time.LocalDate
 
 interface BossAccountStatisticsRepositoryCustom {
 
-    fun countAllBossAccounts(): Long
-
     fun countBossAccountsBetweenDate(startDate: LocalDate, endDate: LocalDate): Long
 
 }

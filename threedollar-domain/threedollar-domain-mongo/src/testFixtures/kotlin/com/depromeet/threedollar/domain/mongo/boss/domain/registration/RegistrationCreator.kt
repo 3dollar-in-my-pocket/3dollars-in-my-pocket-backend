@@ -16,8 +16,8 @@ object RegistrationCreator {
         certificationPhotoUrl: String = "https://sample-photo.png",
         categoriesIds: Set<String> = setOf(),
         status: BossRegistrationStatus = BossRegistrationStatus.WAITING
-    ): Registration {
-        return Registration(
+    ): BossRegistration {
+        return BossRegistration(
             boss = RegistrationBossForm.of(
                 socialId = socialId,
                 socialType = socialType,

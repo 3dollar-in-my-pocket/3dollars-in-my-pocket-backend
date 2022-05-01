@@ -5,16 +5,16 @@ import com.depromeet.threedollar.api.boss.service.account.BossAccountServiceUtil
 import com.depromeet.threedollar.api.boss.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType.APPLE
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
 import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder
 
 private val SOCIAL_TYPE = APPLE
 
 @Service
 class AppleAuthService(
-    private val bossAccountRepository: BossAccountRepository,
-    private val bossRegistrationRepository: BossBossRegistrationRepository,
-    private val appleTokenDecoder: AppleTokenDecoder
+        private val bossAccountRepository: BossAccountRepository,
+        private val bossRegistrationRepository: BossRegistrationRepository,
+        private val appleTokenDecoder: AppleTokenDecoder
 ) : AuthService {
 
     override fun login(request: LoginRequest): String {

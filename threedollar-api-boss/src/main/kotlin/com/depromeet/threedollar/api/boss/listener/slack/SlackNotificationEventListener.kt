@@ -25,14 +25,14 @@ class SlackNotificationEventListener(
         slackNotificationApiClient.postBossManagerMessage(
             PostSlackMessageRequest.of(
                 NEW_BOSS_REGISTRATION_MESSAGE.generateMessage(
-                    event.registration.id,
-                    event.registration.boss.name,
-                    event.registration.boss.socialInfo.socialType,
-                    event.registration.boss.businessNumber.getNumberWithSeparator(),
-                    event.registration.store.name,
-                    bossStoreCategoryRepository.findAllCategoriesByIds(event.registration.store.categoriesIds).stream().map { it.name }.collect(Collectors.joining(", ")),
-                    event.registration.store.contactsNumber.getNumberWithSeparator(),
-                    event.registration.store.certificationPhotoUrl
+                    event.bossRegistration.id,
+                    event.bossRegistration.boss.name,
+                    event.bossRegistration.boss.socialInfo.socialType,
+                    event.bossRegistration.boss.businessNumber.getNumberWithSeparator(),
+                    event.bossRegistration.store.name,
+                    bossStoreCategoryRepository.findAllCategoriesByIds(event.bossRegistration.store.categoriesIds).stream().map { it.name }.collect(Collectors.joining(", ")),
+                    event.bossRegistration.store.contactsNumber.getNumberWithSeparator(),
+                    event.bossRegistration.store.certificationPhotoUrl
                 )
             )
         )

@@ -10,10 +10,6 @@ class BossStoreFeedbackStatisticsRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : BossStoreFeedbackStatisticsRepositoryCustom {
 
-    override fun countAllBossStoreFeedbacks(): Long {
-        return mongoTemplate.count(Query(), BossStoreFeedback::class.java)
-    }
-
     override fun countBossStoreFeedbacksBetweenDate(startDate: LocalDate, endDate: LocalDate): Long {
         return mongoTemplate.count(Query()
             .addCriteria(BossStoreFeedback::createdAt

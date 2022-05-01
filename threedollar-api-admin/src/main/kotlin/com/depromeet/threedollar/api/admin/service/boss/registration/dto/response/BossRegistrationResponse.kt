@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.admin.service.boss.registration.dto.respon
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistration
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationBossForm
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStoreForm
 
@@ -14,13 +14,13 @@ data class BossAccountRegistrationResponse(
 ) : AuditingTimeResponse() {
 
     companion object {
-        fun of(registration: Registration, bossStoreCategoryMap: Map<String, BossStoreCategory>): BossAccountRegistrationResponse {
+        fun of(bossRegistration: BossRegistration, bossStoreCategoryMap: Map<String, BossStoreCategory>): BossAccountRegistrationResponse {
             val response = BossAccountRegistrationResponse(
-                registrationId = registration.id,
-                boss = BossAccountRegistrationBossResponse.of(registration.boss),
-                store = BossAccountRegistrationStoreResponse.of(registration.store, bossStoreCategoryMap),
+                registrationId = bossRegistration.id,
+                boss = BossAccountRegistrationBossResponse.of(bossRegistration.boss),
+                store = BossAccountRegistrationStoreResponse.of(bossRegistration.store, bossStoreCategoryMap),
             )
-            response.setAuditingTimeByDocument(registration)
+            response.setAuditingTimeByDocument(bossRegistration)
             return response
         }
     }

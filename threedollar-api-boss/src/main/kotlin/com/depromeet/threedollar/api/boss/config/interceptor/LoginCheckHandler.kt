@@ -10,7 +10,7 @@ import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.UnAuthorizedException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
 
 private const val HEADER_BEARER_PREFIX = "Bearer "
 
@@ -18,7 +18,7 @@ private const val HEADER_BEARER_PREFIX = "Bearer "
 class LoginCheckHandler(
     private val sessionRepository: SessionRepository<out Session?>,
     private val bossAccountRepository: BossAccountRepository,
-    private val bossRegistrationRepository: BossBossRegistrationRepository
+    private val bossRegistrationRepository: BossRegistrationRepository
 ) {
 
     fun checkAuthOptional(request: HttpServletRequest): Boolean {

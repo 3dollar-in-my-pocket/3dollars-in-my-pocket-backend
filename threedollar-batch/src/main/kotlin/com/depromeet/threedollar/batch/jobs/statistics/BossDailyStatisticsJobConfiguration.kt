@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Configuration
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedbackRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossDeletedStoreRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
 import com.depromeet.threedollar.external.client.slack.SlackWebhookApiClient
@@ -27,9 +29,11 @@ class BossDailyStatisticsJobConfiguration(
     private val stepBuilderFactory: StepBuilderFactory,
     private val slackNotificationApiClient: SlackWebhookApiClient,
     private val bossAccountRepository: BossAccountRepository,
+    private val bossRegistrationRepository: BossRegistrationRepository,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,
-    private val bossStoreLocationRepository: BossStoreLocationRepository
+    private val bossStoreLocationRepository: BossStoreLocationRepository,
+    private val bossDeletedStoreRepository: BossDeletedStoreRepository
 ) {
 
     @Bean(name = [BOSS_DAILY_STATISTICS_JOB])
@@ -38,8 +42,10 @@ class BossDailyStatisticsJobConfiguration(
             .incrementer(UniqueRunIdIncrementer())
             .start(bossStatisticsStep())
             .next(bossAccountStatisticsStep())
+            .next(bossRegistrationStatisticsStep())
             .next(bossStoresStatisticsStep())
             .next(bossStoreLocationsStatisticsStep())
+            .next(deleteBossStoreStatisticsStep())
             .next(bossStoreFeedbacksStatisticsStep())
             .build()
     }
@@ -63,10 +69,26 @@ class BossDailyStatisticsJobConfiguration(
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
-                    messageType = BossDailyStatisticsMessageFormat.BOSS_ACCOUNT_STATISTICS,
-                    totalCounts = bossAccountRepository.countAllBossAccounts(),
+                    messageType = BossDailyStatisticsMessageFormat.BOSS_REGISTRATION_STATISTICS,
+                    totalCounts = bossAccountRepository.count(),
                     todayCounts = bossAccountRepository.countBossAccountsBetweenDate(yesterday, yesterday),
                     weekendCounts = bossAccountRepository.countBossAccountsBetweenDate(yesterday.minusWeeks(1), yesterday)
+                )
+                RepeatStatus.FINISHED
+            }
+            .build()
+    }
+
+    @Bean(name = [BOSS_DAILY_STATISTICS_JOB + "_bossRegistrationStep"])
+    fun bossRegistrationStatisticsStep(): Step {
+        return stepBuilderFactory[BOSS_DAILY_STATISTICS_JOB + "_bossRegistrationStep"]
+            .tasklet { _, _ ->
+                val yesterday = LocalDate.now().minusDays(1)
+                sendStatisticsNotification(
+                    messageType = BossDailyStatisticsMessageFormat.BOSS_ACCOUNT_STATISTICS,
+                    totalCounts = bossRegistrationRepository.count(),
+                    todayCounts = bossRegistrationRepository.countBossRegistrationsBetweenDate(yesterday, yesterday),
+                    weekendCounts = bossRegistrationRepository.countBossRegistrationsBetweenDate(yesterday.minusWeeks(1), yesterday)
                 )
                 RepeatStatus.FINISHED
             }
@@ -105,6 +127,22 @@ class BossDailyStatisticsJobConfiguration(
             .build()
     }
 
+    @Bean(name = [BOSS_DAILY_STATISTICS_JOB + "_deletedBossStoreLocationStep"])
+    fun deleteBossStoreStatisticsStep(): Step {
+        return stepBuilderFactory[BOSS_DAILY_STATISTICS_JOB + "_deletedBossStoreLocationStep"]
+            .tasklet { _, _ ->
+                val yesterday = LocalDate.now().minusDays(1)
+                sendStatisticsNotification(
+                    messageType = BossDailyStatisticsMessageFormat.DELETED_BOSS_STORE_STATISTICS,
+                    totalCounts = bossDeletedStoreRepository.count(),
+                    todayCounts = bossDeletedStoreRepository.countDeletedBossStoresBetweenDate(yesterday, yesterday),
+                    weekendCounts = bossDeletedStoreRepository.countDeletedBossStoresBetweenDate(yesterday.minusWeeks(1), yesterday)
+                )
+                RepeatStatus.FINISHED
+            }
+            .build()
+    }
+
     @Bean(name = [BOSS_DAILY_STATISTICS_JOB + "_bossStoreFeedbackStep"])
     fun bossStoreFeedbacksStatisticsStep(): Step {
         return stepBuilderFactory[BOSS_DAILY_STATISTICS_JOB + "_bossStoreFeedbackStep"]
@@ -112,7 +150,7 @@ class BossDailyStatisticsJobConfiguration(
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
                     messageType = BossDailyStatisticsMessageFormat.BOSS_STORE_FEEDBACK_STATISTICS,
-                    totalCounts = bossStoreFeedbackRepository.countAllBossStoreFeedbacks(),
+                    totalCounts = bossStoreFeedbackRepository.count(),
                     todayCounts = bossStoreFeedbackRepository.countBossStoreFeedbacksBetweenDate(yesterday, yesterday),
                     weekendCounts = bossStoreFeedbackRepository.countBossStoreFeedbacksBetweenDate(yesterday.minusWeeks(1), yesterday)
                 )

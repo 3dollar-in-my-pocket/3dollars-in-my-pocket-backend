@@ -12,7 +12,7 @@ import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
 import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse
@@ -24,7 +24,7 @@ private val SOCIAL_TYPE = BossAccountSocialType.GOOGLE
 @SpringBootTest
 internal class GoogleAuthServiceTest(
     private val bossAccountRepository: BossAccountRepository,
-    private val bossRegistrationRepository: BossBossRegistrationRepository
+    private val bossRegistrationRepository: BossRegistrationRepository
 ) {
 
     private lateinit var authService: AuthService

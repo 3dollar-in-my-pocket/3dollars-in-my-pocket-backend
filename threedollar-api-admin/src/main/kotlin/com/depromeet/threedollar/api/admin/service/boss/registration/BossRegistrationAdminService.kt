@@ -11,13 +11,13 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRep
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistration
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
 
 @Service
 class BossRegistrationAdminService(
-    private val bossRegistrationRepository: BossBossRegistrationRepository,
+    private val bossRegistrationRepository: BossRegistrationRepository,
     private val bossAccountRepository: BossAccountRepository,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository
@@ -32,9 +32,9 @@ class BossRegistrationAdminService(
         bossRegistrationRepository.save(registration)
     }
 
-    private fun registerNewBossAccount(registration: Registration): BossAccount {
-        validateDuplicateRegistration(registration.boss.socialInfo)
-        return bossAccountRepository.save(registration.toBossAccount())
+    private fun registerNewBossAccount(bossRegistration: BossRegistration): BossAccount {
+        validateDuplicateRegistration(bossRegistration.boss.socialInfo)
+        return bossAccountRepository.save(bossRegistration.toBossAccount())
     }
 
     private fun validateDuplicateRegistration(socialInfo: BossAccountSocialInfo) {

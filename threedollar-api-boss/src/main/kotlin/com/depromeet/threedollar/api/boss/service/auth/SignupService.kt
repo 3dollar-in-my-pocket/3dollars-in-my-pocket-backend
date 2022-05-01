@@ -11,15 +11,15 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.boss.event.registration.NewBossAppliedRegistrationEvent
 
 @Service
 class SignupService(
-    private val bossAccountRepository: BossAccountRepository,
-    private val bossRegistrationRepository: BossBossRegistrationRepository,
-    private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-    private val eventPublisher: ApplicationEventPublisher
+        private val bossAccountRepository: BossAccountRepository,
+        private val bossRegistrationRepository: BossRegistrationRepository,
+        private val bossStoreCategoryRepository: BossStoreCategoryRepository,
+        private val eventPublisher: ApplicationEventPublisher
 ) {
 
     @Transactional

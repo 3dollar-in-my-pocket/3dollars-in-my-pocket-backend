@@ -16,17 +16,17 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRep
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationStatus
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class SignupServiceTest(
-    private val signupService: SignupService,
-    private val bossRegistrationRepository: BossBossRegistrationRepository,
-    private val bossAccountRepository: BossAccountRepository,
-    private val bossStoreCategoryRepository: BossStoreCategoryRepository
+        private val signupService: SignupService,
+        private val bossRegistrationRepository: BossRegistrationRepository,
+        private val bossAccountRepository: BossAccountRepository,
+        private val bossStoreCategoryRepository: BossStoreCategoryRepository
 ) {
 
     @AfterEach
