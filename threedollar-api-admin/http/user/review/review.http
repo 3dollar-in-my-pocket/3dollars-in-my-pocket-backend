@@ -1,0 +1,9 @@
+### 특정 리뷰를 삭제합니다
+DELETE {{admin}}/v1/user/review/{{REVIEW_ID}}
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
