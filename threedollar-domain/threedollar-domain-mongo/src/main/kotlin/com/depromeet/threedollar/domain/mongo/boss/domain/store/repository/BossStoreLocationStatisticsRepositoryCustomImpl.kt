@@ -6,13 +6,13 @@ import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.gte
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 
-class BossStoreStatisticsRepositoryCustomImpl(
+class BossStoreLocationStatisticsRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
-) : BossStoreStatisticsRepositoryCustom {
+) : BossStoreLocationStatisticsRepositoryCustom {
 
-    override fun countBossStoresBetweenDate(startDate: LocalDate, endDate: LocalDate): Long {
+    override fun countUpdatedBossStoreLocationsBetweenDate(startDate: LocalDate, endDate: LocalDate): Long {
         return mongoTemplate.count(Query()
-            .addCriteria(BossStore::createdAt.gte(startDate.atStartOfDay()).lt(endDate.atStartOfDay().plusDays(1))), BossStore::class.java)
+            .addCriteria(BossStore::updatedAt.gte(startDate.atStartOfDay()).lt(endDate.atStartOfDay().plusDays(1))), BossStore::class.java)
     }
 
 }
