@@ -7,3 +7,14 @@ client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
+
+
+### 특정 리뷰를 조회합니다
+GET {{admin}}/v1/user/review/{{REVIEW_ID}}
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
