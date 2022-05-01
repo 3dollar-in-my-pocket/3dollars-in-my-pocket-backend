@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.put
 import com.depromeet.threedollar.api.admin.controller.SetupAdminControllerTest
-import com.depromeet.threedollar.api.admin.service.admin.dto.request.RegisterAdminRequest
+import com.depromeet.threedollar.api.admin.service.admin.dto.request.AddAdminRequest
 import com.depromeet.threedollar.api.admin.service.admin.dto.request.UpdateMyAdminInfoRequest
 import com.depromeet.threedollar.api.admin.service.admin.dto.response.AdminInfoResponse
 import com.depromeet.threedollar.common.exception.type.ErrorCode
@@ -105,7 +105,7 @@ internal class AdminControllerTest : SetupAdminControllerTest() {
         @Test
         fun 관리자가_새로운_관리자를_등록한다() {
             // given
-            val request = RegisterAdminRequest(
+            val request = AddAdminRequest(
                 email = "new@gmail.com",
                 name = "새로운 관리자 이름"
             )

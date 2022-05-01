@@ -3,7 +3,7 @@ package com.depromeet.threedollar.domain.mongo.boss.domain.registration.reposito
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
 
-interface RegistrationRepositoryCustom {
+interface BossRegistrationRepositoryCustom {
 
     fun existsWaitingRegistrationBySocialIdAndSocialType(socialId: String, socialType: BossAccountSocialType): Boolean
 

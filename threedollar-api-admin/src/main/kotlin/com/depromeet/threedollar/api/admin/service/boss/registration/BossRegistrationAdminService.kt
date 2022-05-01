@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.admin.service.boss.registration
 
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import com.depromeet.threedollar.api.admin.service.boss.registration.dto.request.GetBossRegistrationsRequest
+import com.depromeet.threedollar.api.admin.service.boss.registration.dto.request.RetrieveBossRegistrationsRequest
 import com.depromeet.threedollar.api.admin.service.boss.registration.dto.response.BossAccountRegistrationResponse
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
@@ -11,13 +11,13 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRep
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
 
 @Service
-class BossAccountRegistrationAdminService(
-    private val registrationRepository: RegistrationRepository,
+class BossRegistrationAdminService(
+    private val bossRegistrationRepository: BossBossRegistrationRepository,
     private val bossAccountRepository: BossAccountRepository,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository
@@ -25,12 +25,11 @@ class BossAccountRegistrationAdminService(
 
     @Transactional
     fun applyBossRegistration(registrationId: String) {
-        val registration = BossAccountRegistrationServiceUtils.findWaitingRegistrationById(registrationRepository, registrationId)
+        val registration = BossRegistrationServiceUtils.findWaitingRegistrationById(bossRegistrationRepository, registrationId)
         val bossAccount = registerNewBossAccount(registration)
         bossStoreRepository.save(registration.toBossStore(bossAccount.id))
         registration.approve()
-        registrationRepository.save(registration)
-        // TODO 가입 승인 슬랙 알림
+        bossRegistrationRepository.save(registration)
     }
 
     private fun registerNewBossAccount(registration: Registration): BossAccount {
@@ -46,15 +45,14 @@ class BossAccountRegistrationAdminService(
 
     @Transactional
     fun rejectBossRegistration(registrationId: String) {
-        val registration = BossAccountRegistrationServiceUtils.findWaitingRegistrationById(registrationRepository, registrationId)
+        val registration = BossRegistrationServiceUtils.findWaitingRegistrationById(bossRegistrationRepository, registrationId)
         registration.reject()
-        registrationRepository.save(registration)
-        // TODO 가입 거부 슬랙 알림
+        bossRegistrationRepository.save(registration)
     }
 
     @Transactional(readOnly = true)
-    fun getBossRegistrations(request: GetBossRegistrationsRequest): List<BossAccountRegistrationResponse> {
-        val registrations = registrationRepository.findAllWaitingRegistrationsLessThanCursorOrderByLatest(request.cursor, request.size)
+    fun retrieveBossRegistrations(request: RetrieveBossRegistrationsRequest): List<BossAccountRegistrationResponse> {
+        val registrations = bossRegistrationRepository.findAllWaitingRegistrationsLessThanCursorOrderByLatest(request.cursor, request.size)
         val bossStoreCategoryMap: Map<String, BossStoreCategory> = bossStoreCategoryRepository.findAll().associateBy { it.id }
         return registrations.map {
             BossAccountRegistrationResponse.of(it, bossStoreCategoryMap)

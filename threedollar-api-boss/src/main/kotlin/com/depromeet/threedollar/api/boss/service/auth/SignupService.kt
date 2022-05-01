@@ -11,13 +11,13 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.boss.event.registration.NewBossAppliedRegistrationEvent
 
 @Service
 class SignupService(
     private val bossAccountRepository: BossAccountRepository,
-    private val registrationRepository: RegistrationRepository,
+    private val bossRegistrationRepository: BossBossRegistrationRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val eventPublisher: ApplicationEventPublisher
 ) {
@@ -28,14 +28,14 @@ class SignupService(
         validateDuplicateRegistration(socialId, request.socialType)
         BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, request.storeCategoriesIds)
         val registration = request.toEntity(socialId)
-        registrationRepository.save(registration)
+        bossRegistrationRepository.save(registration)
 
         eventPublisher.publishEvent(NewBossAppliedRegistrationEvent.of(registration))
         return registration.id
     }
 
     private fun validateDuplicateRegistration(socialId: String, socialType: BossAccountSocialType) {
-        if (registrationRepository.existsWaitingRegistrationBySocialIdAndSocialType(socialId, socialType)) {
+        if (bossRegistrationRepository.existsWaitingRegistrationBySocialIdAndSocialType(socialId, socialType)) {
             throw ForbiddenException("가입 승인 대기중인 사장님 게정(${socialId} - (${socialType}) 입니다.", ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT)
         }
     }

@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.admin.config.interceptor.Auth
 import com.depromeet.threedollar.api.admin.config.resolver.AdminId
 import com.depromeet.threedollar.api.admin.service.admin.AdminService
-import com.depromeet.threedollar.api.admin.service.admin.dto.request.GetAdminListWithPagingRequest
-import com.depromeet.threedollar.api.admin.service.admin.dto.request.RegisterAdminRequest
+import com.depromeet.threedollar.api.admin.service.admin.dto.request.AddAdminRequest
+import com.depromeet.threedollar.api.admin.service.admin.dto.request.RetrieveAdminsWithPagingRequest
 import com.depromeet.threedollar.api.admin.service.admin.dto.request.UpdateMyAdminInfoRequest
 import com.depromeet.threedollar.api.admin.service.admin.dto.response.AdminInfoResponse
 import com.depromeet.threedollar.api.admin.service.admin.dto.response.AdminListInfoWithPagingResponse
@@ -34,7 +34,7 @@ class AdminController(
     @ApiOperation("자신의 관리자 정보를 수정합니다")
     @Auth
     @PutMapping("/v1/account/admin/my-info")
-    fun updateAdminInfo(
+    fun updateMyAdminInfo(
         @Valid @RequestBody request: UpdateMyAdminInfoRequest,
         @AdminId adminId: Long
     ): ApiResponse<AdminInfoResponse> {
@@ -44,21 +44,21 @@ class AdminController(
     @ApiOperation("새로운 관리자를 등록합니다")
     @Auth
     @PostMapping("/v1/account/admin")
-    fun registerAdmin(
-        @RequestBody request: RegisterAdminRequest,
+    fun addAdmin(
+        @RequestBody request: AddAdminRequest,
         @AdminId adminId: Long
     ): ApiResponse<String> {
-        adminService.registerAdmin(request, adminId)
+        adminService.addAdmin(request, adminId)
         return ApiResponse.OK
     }
 
     @ApiOperation("등록된 관리자 목록을 조회합니다")
     @Auth
     @GetMapping("/v1/account/admins")
-    fun getAdminInfos(
-        @Valid request: GetAdminListWithPagingRequest
+    fun retrieveAdminsWithPaging(
+        @Valid request: RetrieveAdminsWithPagingRequest
     ): ApiResponse<AdminListInfoWithPagingResponse> {
-        return ApiResponse.success(adminService.getAdminsWithPagination(request))
+        return ApiResponse.success(adminService.retrieveAdminsWithPaging(request))
     }
 
 }

@@ -13,7 +13,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCre
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
 import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder
 
 private const val SOCIAL_ID = "social-id"
@@ -23,19 +23,19 @@ private val SOCIAL_TYPE = BossAccountSocialType.APPLE
 @SpringBootTest
 internal class AppleAuthServiceTest(
     private val bossAccountRepository: BossAccountRepository,
-    private val registrationRepository: RegistrationRepository
+    private val bossRegistrationRepository: BossBossRegistrationRepository
 ) {
 
     private lateinit var authService: AuthService
 
     @BeforeEach
     fun setUp() {
-        authService = AppleAuthService(bossAccountRepository, registrationRepository, StubAppleTokenDecoder())
+        authService = AppleAuthService(bossAccountRepository, bossRegistrationRepository, StubAppleTokenDecoder())
     }
 
     @AfterEach
     fun cleanUp() {
-        registrationRepository.deleteAll()
+        bossRegistrationRepository.deleteAll()
         bossAccountRepository.deleteAll()
     }
 
@@ -68,7 +68,7 @@ internal class AppleAuthServiceTest(
     fun `애플 로그인시 가입 승인 대기중인 유저면 Registration Id를 반환한다`() {
         // given
         val registration = RegistrationCreator.create(SOCIAL_ID, SOCIAL_TYPE)
-        registrationRepository.save(registration)
+        bossRegistrationRepository.save(registration)
 
         // when
         val bossId = authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))

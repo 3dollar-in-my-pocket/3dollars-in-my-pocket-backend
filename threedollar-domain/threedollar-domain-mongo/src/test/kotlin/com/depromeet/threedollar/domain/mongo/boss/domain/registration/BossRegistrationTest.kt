@@ -8,7 +8,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSoc
 import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
 import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
 
-internal class RegistrationTest {
+internal class BossRegistrationTest {
 
     @Test
     fun `가입신청을 바탕으로 BossAccout를 생성한다`() {

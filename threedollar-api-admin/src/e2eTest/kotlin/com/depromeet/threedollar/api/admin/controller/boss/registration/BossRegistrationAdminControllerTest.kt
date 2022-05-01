@@ -12,15 +12,17 @@ import com.depromeet.threedollar.api.admin.service.boss.registration.dto.respons
 import com.depromeet.threedollar.api.admin.service.boss.registration.dto.response.BossAccountRegistrationStoreResponse
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
 
-internal class BossRegistrationAdminControllerTest(private val registrationRepository: RegistrationRepository) : SetupAdminControllerTest() {
+internal class BossRegistrationAdminControllerTest(
+    private val bossRegistrationRepository: BossBossRegistrationRepository
+) : SetupAdminControllerTest() {
 
     @AfterEach
     fun cleanUp() {
         super.cleanup()
-        registrationRepository.deleteAll()
+        bossRegistrationRepository.deleteAll()
     }
 
     @DisplayName("PUT /v1/boss/account/registration/{registration.id}/reject")
@@ -28,7 +30,7 @@ internal class BossRegistrationAdminControllerTest(private val registrationRepos
     fun `사장님 계정 가입 신청을 승인합니다`() {
         // given
         val registration = RegistrationCreator.create("social-id", BossAccountSocialType.GOOGLE)
-        registrationRepository.save(registration)
+        bossRegistrationRepository.save(registration)
 
         // when & then
         mockMvc.put("/v1/boss/account/registration/${registration.id}/apply") {
@@ -46,7 +48,7 @@ internal class BossRegistrationAdminControllerTest(private val registrationRepos
     fun `사장님 계정 가입 신청을 반려합니다`() {
         // given
         val registration = RegistrationCreator.create("social-id", BossAccountSocialType.GOOGLE)
-        registrationRepository.save(registration)
+        bossRegistrationRepository.save(registration)
 
         // when & then
         mockMvc.put("/v1/boss/account/registration/${registration.id}/reject") {
@@ -64,7 +66,7 @@ internal class BossRegistrationAdminControllerTest(private val registrationRepos
     fun `사장님 계정의 가입 신청 목록을 조회합니다`() {
         // given
         val registration = RegistrationCreator.create("social-id", BossAccountSocialType.GOOGLE)
-        registrationRepository.save(registration)
+        bossRegistrationRepository.save(registration)
 
         // when & then
         mockMvc.get("/v1/boss/account/registrations") {

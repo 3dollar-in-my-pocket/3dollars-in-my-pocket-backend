@@ -6,7 +6,7 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
 
 object BossAccountServiceUtils {
 
@@ -27,13 +27,13 @@ object BossAccountServiceUtils {
 
     fun findBossAccountBySocialIdAndSocialTypeWithCheckWaitingRegistration(
         bossAccountRepository: BossAccountRepository,
-        registrationRepository: RegistrationRepository,
+        bossRegistrationRepository: BossBossRegistrationRepository,
         socialId: String,
         socialType: BossAccountSocialType
     ): String {
         return bossAccountRepository.findBossAccountBySocialInfo(socialId, socialType)?.id
             ?: run {
-                return registrationRepository.findWaitingRegistrationBySocialIdAndSocialType(socialId, socialType)?.id
+                return bossRegistrationRepository.findWaitingRegistrationBySocialIdAndSocialType(socialId, socialType)?.id
                     ?: throw NotFoundException("존재하지 않는 사장님 계정(${socialId} - $socialType 입니다.", ErrorCode.NOTFOUND_BOSS_ACCOUNT)
             }
     }

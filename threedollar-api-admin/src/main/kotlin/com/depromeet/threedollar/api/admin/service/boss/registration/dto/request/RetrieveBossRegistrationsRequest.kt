@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.admin.service.boss.registration.dto.reques
 import javax.validation.constraints.Max
 import javax.validation.constraints.Min
 
-data class GetBossRegistrationsRequest(
+data class RetrieveBossRegistrationsRequest(
     val cursor: String?,
 
     @field:Max(value = 50, message = "{common.size.min}")

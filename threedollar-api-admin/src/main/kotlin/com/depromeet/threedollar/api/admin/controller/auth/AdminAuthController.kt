@@ -29,7 +29,6 @@ class AdminAuthController(
         return ApiResponse.success(LoginResponse(httpSession.id))
     }
 
-
     @ApiOperation("[인증] 관리자 계정을 로그아웃을 요청합니다.")
     @Auth
     @PostMapping("/v1/auth/logout")

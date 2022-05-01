@@ -32,7 +32,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCate
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationBossForm
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStoreForm
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppearanceDay
@@ -60,7 +60,7 @@ class LocalTestController(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossStoreLocationRepository: BossStoreLocationRepository,
-    private val registrationRepository: RegistrationRepository,
+    private val bossRegistrationRepository: BossBossRegistrationRepository,
     private val bossStoreFeedbackService: BossStoreFeedbackService,
     private val httpSession: HttpSession
 ) {
@@ -98,7 +98,7 @@ class LocalTestController(
                 certificationPhotoUrl = certificationPhotoUrl
             )
         )
-        registrationRepository.save(registration)
+        bossRegistrationRepository.save(registration)
         return ApiResponse.OK
     }
 
@@ -202,12 +202,12 @@ class LocalTestController(
     fun applyRegistrationForTest(
         @PathVariable registrationId: String
     ): ApiResponse<String> {
-        val registration = registrationRepository.findWaitingRegistrationById(registrationId)
+        val registration = bossRegistrationRepository.findWaitingRegistrationById(registrationId)
             ?: throw NotFoundException("해당하는 가입 신청($registrationId)은 존재하지 않습니다.")
         val bossAccount = registerNewBossAccount(registration)
         bossStoreRepository.save(registration.toBossStore(bossAccount.id))
         registration.approve()
-        registrationRepository.save(registration)
+        bossRegistrationRepository.save(registration)
         return ApiResponse.OK
     }
 

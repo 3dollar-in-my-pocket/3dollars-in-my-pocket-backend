@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Size
 import com.depromeet.threedollar.domain.rds.user.domain.admin.Admin
 
-data class RegisterAdminRequest(
+data class AddAdminRequest(
     @field:Size(min = 1, max = 50, message = "{admin.email.size}")
     @field:Email(message = "{admin.email.email}")
     val email: String = "",

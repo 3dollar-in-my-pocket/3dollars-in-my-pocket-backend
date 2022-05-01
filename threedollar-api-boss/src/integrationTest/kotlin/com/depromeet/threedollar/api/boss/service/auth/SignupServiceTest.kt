@@ -17,21 +17,21 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSoc
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStatus
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationStatus
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class SignupServiceTest(
     private val signupService: SignupService,
-    private val registrationRepository: RegistrationRepository,
+    private val bossRegistrationRepository: BossBossRegistrationRepository,
     private val bossAccountRepository: BossAccountRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository
 ) {
 
     @AfterEach
     fun cleanUp() {
-        registrationRepository.deleteAll()
+        bossRegistrationRepository.deleteAll()
         bossAccountRepository.deleteAll()
         bossStoreCategoryRepository.deleteAll()
     }
@@ -66,10 +66,10 @@ internal class SignupServiceTest(
             signupService.signUp(request, socialId)
 
             // then
-            val registrations = registrationRepository.findAll()
+            val registrations = bossRegistrationRepository.findAll()
             assertAll({
                 Assertions.assertThat(registrations).hasSize(1)
-                Assertions.assertThat(registrations[0].status).isEqualTo(RegistrationStatus.WAITING)
+                Assertions.assertThat(registrations[0].status).isEqualTo(BossRegistrationStatus.WAITING)
                 registrations[0].boss.let {
                     Assertions.assertThat(it.name).isEqualTo(bossName)
                     Assertions.assertThat(it.socialInfo.socialId).isEqualTo(socialId)
@@ -97,7 +97,7 @@ internal class SignupServiceTest(
             val contactsNumber = "010-1234-1234"
             val certificationPhotoUrl = "https://example-photo.png"
 
-            registrationRepository.save(
+            bossRegistrationRepository.save(
                 RegistrationCreator.create(
                     socialId = socialId,
                     socialType = socialType

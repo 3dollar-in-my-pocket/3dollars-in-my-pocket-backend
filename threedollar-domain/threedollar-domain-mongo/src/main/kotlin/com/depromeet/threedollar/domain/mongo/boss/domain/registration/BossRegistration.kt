@@ -13,7 +13,7 @@ import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
 class Registration(
     val boss: RegistrationBossForm,
     val store: RegistrationStoreForm,
-    var status: RegistrationStatus
+    var status: BossRegistrationStatus
 ) : BaseDocument() {
 
     fun toBossAccount(): BossAccount {
@@ -25,18 +25,18 @@ class Registration(
     }
 
     fun approve() {
-        this.status = RegistrationStatus.APPROVED
+        this.status = BossRegistrationStatus.APPROVED
     }
 
     fun reject() {
-        this.status = RegistrationStatus.REJECTED
+        this.status = BossRegistrationStatus.REJECTED
     }
 
     companion object {
         fun of(
             boss: RegistrationBossForm,
             store: RegistrationStoreForm,
-            status: RegistrationStatus = RegistrationStatus.WAITING
+            status: BossRegistrationStatus = BossRegistrationStatus.WAITING
         ): Registration {
             return Registration(
                 boss = boss,

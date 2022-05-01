@@ -10,7 +10,7 @@ import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.UnAuthorizedException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
 
 private const val HEADER_BEARER_PREFIX = "Bearer "
 
@@ -18,7 +18,7 @@ private const val HEADER_BEARER_PREFIX = "Bearer "
 class LoginCheckHandler(
     private val sessionRepository: SessionRepository<out Session?>,
     private val bossAccountRepository: BossAccountRepository,
-    private val registrationRepository: RegistrationRepository
+    private val bossRegistrationRepository: BossBossRegistrationRepository
 ) {
 
     fun checkAuthOptional(request: HttpServletRequest): Boolean {
@@ -51,7 +51,7 @@ class LoginCheckHandler(
             request.setAttribute(SessionConstants.BOSS_ACCOUNT_ID, bossAccountId)
             return true
         }
-        registrationRepository.findWaitingRegistrationById(bossAccountId)?.let {
+        bossRegistrationRepository.findWaitingRegistrationById(bossAccountId)?.let {
             throw ForbiddenException("현재 가입 승인 대기중인 사장님($bossAccountId) 입니다", ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT)
         } ?: throw UnAuthorizedException("해당하는 사장님 계정($bossAccountId) 혹은 대기중인 가입 신청($bossAccountId)은 존재하지 않습니다")
     }

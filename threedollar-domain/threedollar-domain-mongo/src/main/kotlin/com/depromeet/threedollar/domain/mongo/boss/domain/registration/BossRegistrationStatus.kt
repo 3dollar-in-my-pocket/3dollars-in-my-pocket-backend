@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.mongo.boss.domain.registration
 
-enum class RegistrationStatus(
+enum class BossRegistrationStatus(
     private val description: String
 ) {
 

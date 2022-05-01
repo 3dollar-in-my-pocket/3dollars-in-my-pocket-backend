@@ -18,7 +18,7 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
 import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
 import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse
@@ -26,7 +26,7 @@ import com.depromeet.threedollar.external.client.kakao.KaKaoAuthApiClient
 import com.depromeet.threedollar.external.client.kakao.dto.response.KaKaoProfileResponse
 
 internal class AuthControllerTest(
-    private val registrationRepository: RegistrationRepository
+    private val bossRegistrationRepository: BossBossRegistrationRepository
 ) : SetupBossAccountControllerTest() {
 
     @MockBean
@@ -41,7 +41,7 @@ internal class AuthControllerTest(
     @AfterEach
     fun cleanUp() {
         super.cleanup()
-        registrationRepository.deleteAll()
+        bossRegistrationRepository.deleteAll()
     }
 
     @DisplayName("POST /api/v2/signup")
@@ -118,7 +118,7 @@ internal class AuthControllerTest(
         fun 카카오_회원가입시_가입_승인_대기중인경우_403_에러가_발생한다() {
             // given
             val registration = RegistrationCreator.create("google-social-id", BossAccountSocialType.KAKAO)
-            registrationRepository.save(registration)
+            bossRegistrationRepository.save(registration)
 
             `when`(kaKaoAuthApiClient.getProfileInfo(any())).thenReturn(KaKaoProfileResponse.testInstance(registration.boss.socialInfo.socialId))
 
@@ -219,7 +219,7 @@ internal class AuthControllerTest(
         fun 애플_회원가입시_가입_승인_대기중인경우_403_에러가_발생한다() {
             // given
             val registration = RegistrationCreator.create("apple-social-id", BossAccountSocialType.APPLE)
-            registrationRepository.save(registration)
+            bossRegistrationRepository.save(registration)
 
             `when`(appleTokenDecoder.getSocialIdFromIdToken(any())).thenReturn(registration.boss.socialInfo.socialId)
 
@@ -320,7 +320,7 @@ internal class AuthControllerTest(
         fun 구글_회원가입시_가입_승인_대기중인경우_403_에러가_발생한다() {
             // given
             val registration = RegistrationCreator.create("google-social-id", BossAccountSocialType.GOOGLE)
-            registrationRepository.save(registration)
+            bossRegistrationRepository.save(registration)
 
             `when`(googleAuthApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance(registration.boss.socialInfo.socialId))
 
@@ -417,7 +417,7 @@ internal class AuthControllerTest(
         fun 카카오_로그인시_가입승인_대기중인경우_토큰이_반환된다() {
             // given
             val registration = RegistrationCreator.create("google-social-id", BossAccountSocialType.KAKAO)
-            registrationRepository.save(registration)
+            bossRegistrationRepository.save(registration)
 
             `when`(kaKaoAuthApiClient.getProfileInfo(any())).thenReturn(KaKaoProfileResponse.testInstance(registration.boss.socialInfo.socialId))
 
@@ -469,7 +469,7 @@ internal class AuthControllerTest(
         fun 애플_로그인시_가입승인_대기중인경우_토큰이_반환된다() {
             // given
             val registration = RegistrationCreator.create("google-social-id", BossAccountSocialType.APPLE)
-            registrationRepository.save(registration)
+            bossRegistrationRepository.save(registration)
 
             `when`(appleTokenDecoder.getSocialIdFromIdToken(any())).thenReturn(registration.boss.socialInfo.socialId)
 
@@ -521,7 +521,7 @@ internal class AuthControllerTest(
         fun 구글_로그인시_가입승인_대기중인경우_토큰이_반환된다() {
             // given
             val registration = RegistrationCreator.create("google-social-id", BossAccountSocialType.GOOGLE)
-            registrationRepository.save(registration)
+            bossRegistrationRepository.save(registration)
 
             `when`(googleAuthApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance(registration.boss.socialInfo.socialId))
 

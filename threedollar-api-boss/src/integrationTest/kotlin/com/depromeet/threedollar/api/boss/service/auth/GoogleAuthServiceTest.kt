@@ -13,7 +13,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCre
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
 import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse
 
@@ -24,19 +24,19 @@ private val SOCIAL_TYPE = BossAccountSocialType.GOOGLE
 @SpringBootTest
 internal class GoogleAuthServiceTest(
     private val bossAccountRepository: BossAccountRepository,
-    private val registrationRepository: RegistrationRepository
+    private val bossRegistrationRepository: BossBossRegistrationRepository
 ) {
 
     private lateinit var authService: AuthService
 
     @BeforeEach
     fun setUp() {
-        authService = GoogleAuthService(bossAccountRepository, registrationRepository, StubGoogleAuthApiClient())
+        authService = GoogleAuthService(bossAccountRepository, bossRegistrationRepository, StubGoogleAuthApiClient())
     }
 
     @AfterEach
     fun cleanUp() {
-        registrationRepository.deleteAll()
+        bossRegistrationRepository.deleteAll()
         bossAccountRepository.deleteAll()
     }
 
@@ -69,7 +69,7 @@ internal class GoogleAuthServiceTest(
     fun `구글 로그인시 가입 승인 대기중인 유저면 Registration Id를 반환한다`() {
         // given
         val registration = RegistrationCreator.create(SOCIAL_ID, SOCIAL_TYPE)
-        registrationRepository.save(registration)
+        bossRegistrationRepository.save(registration)
 
         // when
         val bossId = authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))

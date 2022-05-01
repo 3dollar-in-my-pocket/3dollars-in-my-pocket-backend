@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.admin.service.admin.dto.request
 import javax.validation.constraints.Max
 import javax.validation.constraints.Min
 
-data class GetAdminListWithPagingRequest(
+data class RetrieveAdminsWithPagingRequest(
     @field:Min(value = 1, message = "{common.page.min}")
     val page: Long = 1,
 

@@ -13,7 +13,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCre
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossBossRegistrationRepository
 import com.depromeet.threedollar.external.client.naver.NaverAuthApiClient
 import com.depromeet.threedollar.external.client.naver.dto.response.NaverProfileInfoResponse
 import com.depromeet.threedollar.external.client.naver.dto.response.NaverProfileResponse
@@ -25,19 +25,19 @@ private val SOCIAL_TYPE = BossAccountSocialType.NAVER
 @SpringBootTest
 internal class NaverAuthServiceTest(
     private val bossAccountRepository: BossAccountRepository,
-    private val registrationRepository: RegistrationRepository
+    private val bossRegistrationRepository: BossBossRegistrationRepository
 ) {
 
     private lateinit var authService: AuthService
 
     @BeforeEach
     fun setUp() {
-        authService = NaverAuthService(bossAccountRepository, registrationRepository, StubNaverAuthApiClient())
+        authService = NaverAuthService(bossAccountRepository, bossRegistrationRepository, StubNaverAuthApiClient())
     }
 
     @AfterEach
     fun cleanUp() {
-        registrationRepository.deleteAll()
+        bossRegistrationRepository.deleteAll()
         bossAccountRepository.deleteAll()
     }
 
@@ -70,7 +70,7 @@ internal class NaverAuthServiceTest(
     fun `네이버 로그인시 가입 승인 대기중인 유저면 Registration의 ID를 반환한다`() {
         // given
         val registration = RegistrationCreator.create(SOCIAL_ID, SOCIAL_TYPE)
-        registrationRepository.save(registration)
+        bossRegistrationRepository.save(registration)
 
         // when
         val bossId = authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))

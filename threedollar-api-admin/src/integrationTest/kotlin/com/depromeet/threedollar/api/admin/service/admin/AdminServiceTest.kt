@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
-import com.depromeet.threedollar.api.admin.service.admin.dto.request.RegisterAdminRequest
+import com.depromeet.threedollar.api.admin.service.admin.dto.request.AddAdminRequest
 import com.depromeet.threedollar.api.admin.service.admin.dto.request.UpdateMyAdminInfoRequest
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
@@ -88,13 +88,13 @@ internal class AdminServiceTest(
             // given
             val adminId = 100000L
 
-            val request = RegisterAdminRequest(
+            val request = AddAdminRequest(
                 name = "토끼",
                 email = "will.seungho@gmail.com"
             )
 
             // when
-            adminService.registerAdmin(request, adminId = adminId)
+            adminService.addAdmin(request, adminId = adminId)
 
             // then
             val admins = adminRepository.findAll()
@@ -122,13 +122,13 @@ internal class AdminServiceTest(
             )
             adminRepository.save(admin)
 
-            val request = RegisterAdminRequest(
+            val request = AddAdminRequest(
                 name = "토끼",
                 email = email
             )
 
             // when & then
-            assertThatThrownBy { adminService.registerAdmin(request, 10000L) }.isInstanceOf(ConflictException::class.java)
+            assertThatThrownBy { adminService.addAdmin(request, 10000L) }.isInstanceOf(ConflictException::class.java)
         }
 
     }
