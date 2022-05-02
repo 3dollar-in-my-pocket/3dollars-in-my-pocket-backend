@@ -69,7 +69,7 @@ class BossDailyStatisticsJobConfiguration(
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
-                    messageType = BossDailyStatisticsMessageFormat.BOSS_REGISTRATION_STATISTICS,
+                    messageType = BossDailyStatisticsMessageFormat.BOSS_ACCOUNT_STATISTICS,
                     totalCounts = bossAccountRepository.count(),
                     todayCounts = bossAccountRepository.countBossAccountsBetweenDate(yesterday, yesterday),
                     weekendCounts = bossAccountRepository.countBossAccountsBetweenDate(yesterday.minusWeeks(1), yesterday)
@@ -85,7 +85,7 @@ class BossDailyStatisticsJobConfiguration(
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
-                    messageType = BossDailyStatisticsMessageFormat.BOSS_ACCOUNT_STATISTICS,
+                    messageType = BossDailyStatisticsMessageFormat.BOSS_REGISTRATION_STATISTICS,
                     totalCounts = bossRegistrationRepository.count(),
                     todayCounts = bossRegistrationRepository.countBossRegistrationsBetweenDate(yesterday, yesterday),
                     weekendCounts = bossRegistrationRepository.countBossRegistrationsBetweenDate(yesterday.minusWeeks(1), yesterday)
