@@ -23,7 +23,7 @@ class UserMetadataInterceptor : HandlerInterceptor {
         val userAgent = request.getHeader(USER_AGENT_HEADER)
         val platform = OsPlatformType.findByUserAgent(userAgent)
 
-        UserMetaSessionUtils.set(UserMetaValue(
+        UserMetaSessionUtils.set(UserMetaValue.of(
             osPlatform = platform,
             userAgent = userAgent,
             clientIp = ClientIpUtils.getClientIp(request.remoteAddr, request.getHeader(X_FORWARDED_FOR_HEADER)),
