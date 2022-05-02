@@ -1,0 +1,9 @@
+### 사장님 가게 피드백의 타입 목록을 조회합니다.
+GET {{boss_api}}/v1/boss/store/feedback/types
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
