@@ -2,7 +2,9 @@ package com.depromeet.threedollar.domain.redis.core;
 
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -13,12 +15,15 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
+import com.depromeet.threedollar.common.utils.PartitionUtils;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Repository
 public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implements StringRedisRepository<K, V> {
+
+    private static final int FETCH_SIZE = 1000;
 
     private final RedisTemplate<String, String> redisTemplate;
 
@@ -36,13 +41,15 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implement
         }
 
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
-        List<String> values = operations.multiGet(keys.stream()
-            .map(K::getKey)
-            .collect(Collectors.toList()));
 
-        if (values == null) {
-            throw new InternalServerException(String.format("Redis multiGet 조회 중 null인 values가 발생하였습니다 keys: (%s)", keys));
-        }
+        List<List<K>> partitionedKeys = PartitionUtils.partition(keys, FETCH_SIZE);
+        List<String> values = partitionedKeys.stream()
+            .map(keyList -> operations.multiGet(keyList.stream()
+                .map(K::getKey).
+                collect(Collectors.toList())))
+            .filter(Objects::nonNull)
+            .flatMap(Collection::stream)
+            .collect(Collectors.toList());
 
         K key = keys.get(0);
         return values.stream()
