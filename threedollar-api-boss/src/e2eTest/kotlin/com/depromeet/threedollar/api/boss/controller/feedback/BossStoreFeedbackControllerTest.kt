@@ -163,6 +163,36 @@ internal class BossStoreFeedbackControllerTest(
                 }
         }
 
+        @Test
+        fun `조회한 기간 범위에는 피드백이 존재하지 않지만 해당 범위 이전에 피드백이 더 있는 경우 cursor가 해당 날짜를 가리킨다`() {
+            // given
+            val date = LocalDate.of(2022, 1, 1)
+            val bossStore = BossStoreCreator.create(
+                bossId = "bossId",
+                name = "가슴속 3천원"
+            )
+            bossStoreRepository.save(bossStore)
+
+            val feedback = BossStoreFeedbackCreator.create(
+                storeId = bossStore.id,
+                userId = 1000000L,
+                feedbackType = BossStoreFeedbackType.BOSS_IS_KIND,
+                date = date
+            )
+            bossStoreFeedbackRepository.save(feedback)
+
+            // when & then
+            mockMvc.get("/v1/boss/store/${bossStore.id}/feedbacks/specific?startDate=2022-01-02&endDate=2022-01-03")
+                .andDo { print() }
+                .andExpect {
+                    status { isOk() }
+                    jsonPath("$.data.cursor.nextCursor") { value("2022-01-01") }
+                    jsonPath("$.data.cursor.hasMore") { value(true) }
+
+                    jsonPath("$.data.contents", hasSize<BossStoreFeedbackGroupingDateResponse>(0))
+                }
+        }
+
     }
 
     @DisplayName("GET /boss/v1/boss/store/feedback/types")

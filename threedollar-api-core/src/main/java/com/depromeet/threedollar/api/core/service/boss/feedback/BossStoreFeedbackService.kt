@@ -11,7 +11,6 @@ import com.depromeet.threedollar.api.core.service.boss.store.BossStoreCommonServ
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
-import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedback
 import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedbackRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRepository
@@ -57,15 +56,12 @@ class BossStoreFeedbackService(
 
         return BossStoreFeedbackCursorResponse.of(
             feedbackGroupingDate = feedbacksGroupByDate,
-            nextDate = getNextDate(bossStoreId, feedbacks)
+            nextDate = getNextDate(bossStoreId = bossStoreId, oldestDateInCursor = request.startDate)
         )
     }
 
-    private fun getNextDate(bossStoreId: String, feedbacks: List<BossStoreFeedback>): LocalDate? {
-        if (feedbacks.isEmpty()) {
-            return null
-        }
-        return bossStoreFeedbackRepository.findFirstLessThanDate(bossStoreId = bossStoreId, date = feedbacks.minOf { it.date })?.date
+    private fun getNextDate(bossStoreId: String, oldestDateInCursor: LocalDate): LocalDate? {
+        return bossStoreFeedbackRepository.findFirstLessThanDate(bossStoreId = bossStoreId, date = oldestDateInCursor)?.date
     }
 
 }
