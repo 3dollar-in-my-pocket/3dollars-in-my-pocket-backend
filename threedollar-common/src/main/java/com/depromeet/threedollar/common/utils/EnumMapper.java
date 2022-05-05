@@ -15,7 +15,7 @@ public class EnumMapper {
 
     private List<EnumValue> toEnumValues(Class<? extends EnumModel> e) {
         return Arrays.stream(e.getEnumConstants())
-            .map(EnumValue::new)
+            .map(EnumValue::of)
             .collect(Collectors.toList());
     }
 
