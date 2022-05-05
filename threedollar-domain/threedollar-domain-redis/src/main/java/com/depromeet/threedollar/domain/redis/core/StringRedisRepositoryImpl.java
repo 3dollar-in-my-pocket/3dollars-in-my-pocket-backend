@@ -2,6 +2,7 @@ package com.depromeet.threedollar.domain.redis.core;
 
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +15,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 
-import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import com.depromeet.threedollar.common.utils.PartitionUtils;
 
 import lombok.RequiredArgsConstructor;
@@ -37,8 +37,9 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implement
     @Override
     public List<V> getBulk(List<K> keys) {
         if (keys.isEmpty()) {
-            throw new InternalServerException(String.format("Redis 벌크 조회시 keys(%s)가 비어있을 수 없습니다", keys));
+            return new ArrayList<>();
         }
+        K key = keys.get(0);
 
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
 
@@ -51,7 +52,6 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implement
             .flatMap(Collection::stream)
             .collect(Collectors.toList());
 
-        K key = keys.get(0);
         return values.stream()
             .map(key::deserializeValue)
             .collect(Collectors.toList());
