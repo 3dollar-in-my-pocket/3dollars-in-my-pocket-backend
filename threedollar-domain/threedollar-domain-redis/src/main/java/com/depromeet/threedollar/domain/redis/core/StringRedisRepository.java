@@ -3,6 +3,7 @@ package com.depromeet.threedollar.domain.redis.core;
 import java.time.Duration;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public interface StringRedisRepository<K, V> {
@@ -12,20 +13,20 @@ public interface StringRedisRepository<K, V> {
 
     List<V> getBulk(List<K> keys);
 
-    void set(K key, V value);
+    void set(@NotNull K key, @NotNull V value);
 
-    void setWithTtl(K key, V value, Duration ttl);
+    void setWithTtl(@NotNull K key, @NotNull V value, @NotNull Duration ttl);
 
-    void incr(K key);
+    void incr(@NotNull K key);
 
     void incrBulk(List<K> keys);
 
-    void incrBy(K key, long value);
+    void incrBy(@NotNull K key, long value);
 
-    void decr(K key);
+    void decr(@NotNull K key);
 
-    void decrBy(K key, long value);
+    void decrBy(@NotNull K key, long value);
 
-    void del(K key);
+    void del(@NotNull K key);
 
 }

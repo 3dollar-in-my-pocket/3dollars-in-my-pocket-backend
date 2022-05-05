@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -58,23 +59,22 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implement
     }
 
     @Override
-    public void set(K key, V value) {
+    public void set(@NotNull K key, @NotNull V value) {
         setWithTtl(key, value, key.getTtl());
     }
 
     @Override
-    public void setWithTtl(K key, V value, Duration ttl) {
+    public void setWithTtl(@NotNull K key, @NotNull V value, @Nullable Duration ttl) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
-        Duration duration = key.getTtl();
-        if (duration == null) {
+        if (ttl == null) {
             operations.set(key.getKey(), key.serializeValue(value));
             return;
         }
-        operations.set(key.getKey(), key.serializeValue(value), duration.getSeconds(), TimeUnit.SECONDS);
+        operations.set(key.getKey(), key.serializeValue(value), ttl.getSeconds(), TimeUnit.SECONDS);
     }
 
     @Override
-    public void incr(K key) {
+    public void incr(@NotNull K key) {
         incrBy(key, 1);
     }
 
@@ -87,24 +87,24 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implement
     }
 
     @Override
-    public void incrBy(K key, long value) {
+    public void incrBy(@NotNull K key, long value) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         operations.increment(key.getKey(), value);
     }
 
     @Override
-    public void decr(K key) {
+    public void decr(@NotNull K key) {
         decrBy(key, 1);
     }
 
     @Override
-    public void decrBy(K key, long value) {
+    public void decrBy(@NotNull K key, long value) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         operations.decrement(key.getKey(), value);
     }
 
     @Override
-    public void del(K key) {
+    public void del(@NotNull K key) {
         redisTemplate.delete(key.getKey());
     }
 

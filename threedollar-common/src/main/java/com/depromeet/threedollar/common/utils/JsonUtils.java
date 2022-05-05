@@ -3,7 +3,6 @@ package com.depromeet.threedollar.common.utils;
 import java.io.IOException;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -37,11 +36,8 @@ public class JsonUtils {
         }
     }
 
-    @Nullable
-    public static <T> String toJson(@Nullable T input) {
-        if (input == null) {
-            return null;
-        }
+    @NotNull
+    public static <T> String toJson(@NotNull T input) {
         try {
             return OBJECT_MAPPER.writeValueAsString(input);
         } catch (JsonProcessingException e) {
