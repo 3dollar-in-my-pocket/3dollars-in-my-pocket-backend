@@ -8,7 +8,7 @@ spring:
   data:
     mongodb:
       host: localhost
-      port: 0
+      port: ${random.int(49152,65535)}
       database: test
 
 

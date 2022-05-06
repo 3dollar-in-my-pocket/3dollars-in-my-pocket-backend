@@ -1,26 +1,16 @@
 spring.config:
   activate:
-    on-profile: integration-test
+    on-profile:
+      - local
+      - integration-test
 
 spring:
   redis:
     host: localhost
-    port: 9998
+    port: ${random.int(49152,65535)}
     timeout: 5000
   cache:
     type: none
-
-
----
-spring.config:
-  activate:
-    on-profile: local
-
-spring:
-  redis:
-    host: localhost
-    port: 6379
-    timeout: 5000
 
 
 ---

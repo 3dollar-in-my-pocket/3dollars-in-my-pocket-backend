@@ -7,8 +7,9 @@ spring:
         default_batch_fetch_size: 1000
         query.in_clause_parameter_padding: true
     open-in-view: false # OSIV off
-  datasource:
-    initialization-mode: never
+  sql:
+    init:
+      mode: never
 
 ---
 spring.config:
