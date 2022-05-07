@@ -47,7 +47,9 @@ class UserMedalServiceTest extends SetupUserServiceTest {
             UserMedal userMedal = UserMedalCreator.createInActive(medal, user);
             userMedalRepository.save(userMedal);
 
-            ChangeRepresentativeMedalRequest request = ChangeRepresentativeMedalRequest.testInstance(medal.getId());
+            ChangeRepresentativeMedalRequest request = ChangeRepresentativeMedalRequest.testBuilder()
+                .medalId(medal.getId())
+                .build();
 
             // when
             userMedalService.updateRepresentativeMedal(request, userId);
@@ -64,7 +66,10 @@ class UserMedalServiceTest extends SetupUserServiceTest {
         void 대표_칭호_변경시_보유하지_않은_칭호를_장착하려하면_NotFound_에러가_발생한다() {
             // given
             Long notFoundMedalId = -1L;
-            ChangeRepresentativeMedalRequest request = ChangeRepresentativeMedalRequest.testInstance(notFoundMedalId);
+
+            ChangeRepresentativeMedalRequest request = ChangeRepresentativeMedalRequest.testBuilder()
+                .medalId(notFoundMedalId)
+                .build();
 
             // when & then
             assertThatThrownBy(() -> userMedalService.updateRepresentativeMedal(request, userId)).isInstanceOfAny(NotFoundException.class);

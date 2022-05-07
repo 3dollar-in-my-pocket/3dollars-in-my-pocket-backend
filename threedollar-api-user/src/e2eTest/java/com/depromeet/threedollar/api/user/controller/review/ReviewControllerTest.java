@@ -68,7 +68,11 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 리뷰_등록_성공시_리뷰_정보가_반환된다() throws Exception {
             // given
-            AddReviewRequest request = AddReviewRequest.testInstance(store.getId(), "붕어빵이 너무 맛있어요", 5);
+            AddReviewRequest request = AddReviewRequest.testBuilder()
+                .storeId(store.getId())
+                .contents("붕어빵이 너무 맛있어요")
+                .rating(5)
+                .build();
 
             // when
             ApiResponse<ReviewInfoResponse> response = reviewMockApiCaller.addReview(request, token, 200);
@@ -80,7 +84,11 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 리뷰_등록시_메달을_획득하는_작업이_수행된다() throws Exception {
             // given
-            AddReviewRequest request = AddReviewRequest.testInstance(store.getId(), "우와!", 4);
+            AddReviewRequest request = AddReviewRequest.testBuilder()
+                .storeId(store.getId())
+                .contents("우와")
+                .rating(4)
+                .build();
 
             // when
             reviewMockApiCaller.addReview(request, token, 200);
@@ -101,7 +109,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요", 5);
             reviewRepository.save(review);
 
-            UpdateReviewRequest request = UpdateReviewRequest.testInstance("맛이 없어졌어요", 1);
+            UpdateReviewRequest request = UpdateReviewRequest.testBuilder()
+                .contents("맛이 없어졌어요")
+                .rating(1)
+                .build();
 
             // when
             ApiResponse<ReviewInfoResponse> response = reviewMockApiCaller.updateReview(review.getId(), request, token, 200);
@@ -116,8 +127,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review = ReviewCreator.create(store.getId(), user.getId(), "맛 없어요", 2);
             reviewRepository.save(review);
 
-            // when
-            UpdateReviewRequest request = UpdateReviewRequest.testInstance("우와", 4);
+            UpdateReviewRequest request = UpdateReviewRequest.testBuilder()
+                .contents("우와")
+                .rating(4)
+                .build();
 
             // when
             reviewMockApiCaller.updateReview(review.getId(), request, token, 200);
@@ -173,7 +186,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review4 = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요4", 2);
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null);
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
+                .size(2)
+                .cursor(null)
+                .build();
 
             // when
             ApiResponse<ReviewsCursorResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
@@ -198,7 +214,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review4 = ReviewCreator.create(store.getId(), user.getId(), "좀 그래요", 2);
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review4.getId());
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
+                .size(2)
+                .cursor(review4.getId())
+                .build();
 
             // when
             ApiResponse<ReviewsCursorResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
@@ -223,7 +242,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review4 = ReviewCreator.create(store.getId(), user.getId(), "좀 그래요", 2);
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review4.getId());
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
+                .size(2)
+                .cursor(review4.getId())
+                .build();
 
             // when
             ApiResponse<ReviewsCursorResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
@@ -248,7 +270,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review4 = ReviewCreator.create(store.getId(), user.getId(), "그냥 그래요", 2);
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review3.getId());
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
+                .size(2)
+                .cursor(review3.getId())
+                .build();
 
             // when
             ApiResponse<ReviewsCursorResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
@@ -273,7 +298,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review4 = ReviewCreator.create(store.getId(), user.getId(), "그냥! 그래요", 2);
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, review2.getId());
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
+                .size(2)
+                .cursor(review2.getId())
+                .build();
 
             // when
             ApiResponse<ReviewsCursorResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
@@ -295,7 +323,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review deletedReviewByAdmin = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요", 5, ReviewStatus.FILTERED);
             reviewRepository.saveAll(List.of(deletedReviewByAdmin, deletedReviewByUser));
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null);
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
+                .size(2)
+                .cursor(null)
+                .build();
 
             // when
             ApiResponse<ReviewsCursorResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);
@@ -319,7 +350,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review2 = ReviewCreator.create(storeDeletedByAdmin.getId(), user.getId(), "너무 맛있어요", 5);
             reviewRepository.saveAll(List.of(review1, review2));
 
-            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testInstance(2, null);
+            RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
+                .size(2)
+                .cursor(null)
+                .build();
 
             // when
             ApiResponse<ReviewsCursorResponse> response = reviewMockApiCaller.retrieveMyReviewHistories(request, token, 200);

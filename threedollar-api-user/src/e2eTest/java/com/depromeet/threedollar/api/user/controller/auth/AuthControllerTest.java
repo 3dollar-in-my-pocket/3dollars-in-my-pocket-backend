@@ -58,7 +58,11 @@ class AuthControllerTest extends SetupUserControllerTest {
             // given
             when(kaKaoAuthApiClient.getProfileInfo(any())).thenReturn(KaKaoProfileResponse.testInstance("kakao-social-id"));
 
-            SignUpRequest request = SignUpRequest.testInstance("kakao-access-token", "will", UserSocialType.KAKAO);
+            SignUpRequest request = SignUpRequest.testBuilder()
+                .token("social-access-token")
+                .name("가슴속 삼천원")
+                .socialType(UserSocialType.KAKAO)
+                .build();
 
             // when
             ApiResponse<LoginResponse> response = authMockApiCaller.signUp(request, 200);
@@ -76,7 +80,11 @@ class AuthControllerTest extends SetupUserControllerTest {
             // given
             when(appleTokenDecoder.getSocialIdFromIdToken(any())).thenReturn("apple-social-id");
 
-            SignUpRequest request = SignUpRequest.testInstance("apple-access-token", "will", UserSocialType.APPLE);
+            SignUpRequest request = SignUpRequest.testBuilder()
+                .token("social-access-token")
+                .name("가슴속 삼천원")
+                .socialType(UserSocialType.APPLE)
+                .build();
 
             // when
             ApiResponse<LoginResponse> response = authMockApiCaller.signUp(request, 200);
@@ -94,7 +102,11 @@ class AuthControllerTest extends SetupUserControllerTest {
             // given
             when(googleAuthApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance("google-social-id"));
 
-            SignUpRequest request = SignUpRequest.testInstance("google-access-token", "will", UserSocialType.GOOGLE);
+            SignUpRequest request = SignUpRequest.testBuilder()
+                .token("social-access-token")
+                .name("가슴속 삼천원")
+                .socialType(UserSocialType.GOOGLE)
+                .build();
 
             // when
             ApiResponse<LoginResponse> response = authMockApiCaller.signUp(request, 200);
@@ -121,7 +133,10 @@ class AuthControllerTest extends SetupUserControllerTest {
 
             when(kaKaoAuthApiClient.getProfileInfo(any())).thenReturn(KaKaoProfileResponse.testInstance(user.getSocialId()));
 
-            LoginRequest request = LoginRequest.testInstance("kakao-access-token", UserSocialType.KAKAO);
+            LoginRequest request = LoginRequest.testBuilder()
+                .token("kakao-access-token")
+                .socialType(UserSocialType.KAKAO)
+                .build();
 
             // when
             ApiResponse<LoginResponse> response = authMockApiCaller.login(request, 200);
@@ -142,7 +157,10 @@ class AuthControllerTest extends SetupUserControllerTest {
 
             when(appleTokenDecoder.getSocialIdFromIdToken(any())).thenReturn(user.getSocialId());
 
-            LoginRequest request = LoginRequest.testInstance("apple-access-token", UserSocialType.APPLE);
+            LoginRequest request = LoginRequest.testBuilder()
+                .token("apple-access-token")
+                .socialType(UserSocialType.APPLE)
+                .build();
 
             // when
             ApiResponse<LoginResponse> response = authMockApiCaller.login(request, 200);
@@ -163,7 +181,10 @@ class AuthControllerTest extends SetupUserControllerTest {
 
             when(googleAuthApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance(user.getSocialId()));
 
-            LoginRequest request = LoginRequest.testInstance("google-access-token", UserSocialType.GOOGLE);
+            LoginRequest request = LoginRequest.testBuilder()
+                .token("google-access-token")
+                .socialType(UserSocialType.GOOGLE)
+                .build();
 
             // when
             ApiResponse<LoginResponse> response = authMockApiCaller.login(request, 200);

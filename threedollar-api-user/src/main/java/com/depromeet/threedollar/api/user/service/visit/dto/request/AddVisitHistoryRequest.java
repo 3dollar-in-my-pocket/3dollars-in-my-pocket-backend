@@ -9,14 +9,13 @@ import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @ToString
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AddVisitHistoryRequest {
 
@@ -26,8 +25,10 @@ public class AddVisitHistoryRequest {
     @NotNull(message = "{visit.type.notNull}")
     private VisitType type;
 
-    public static AddVisitHistoryRequest testInstance(Long storeId, VisitType type) {
-        return new AddVisitHistoryRequest(storeId, type);
+    @Builder(builderMethodName = "testBuilder")
+    private AddVisitHistoryRequest(Long storeId, VisitType type) {
+        this.storeId = storeId;
+        this.type = type;
     }
 
     public VisitHistory toEntity(Store store, Long userId, LocalDate dateOfVisit) {

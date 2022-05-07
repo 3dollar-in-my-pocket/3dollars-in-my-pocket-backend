@@ -487,8 +487,11 @@ class StoreServiceTest extends SetupUserServiceTest {
             Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 
+            DeleteStoreRequest request = DeleteStoreRequest.testBuilder()
+                .deleteReasonType(deleteReasonType).build();
+
             // when
-            StoreDeleteResponse response = storeService.deleteStore(store.getId(), DeleteStoreRequest.testInstance(deleteReasonType), userId);
+            StoreDeleteResponse response = storeService.deleteStore(store.getId(), request, userId);
 
             // then
             List<Store> stores = storeRepository.findAll();
@@ -513,8 +516,12 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             storeDeleteRequestRepository.save(StoreDeleteRequestCreator.create(store, 90L, DeleteReasonType.WRONG_CONTENT));
 
+            DeleteStoreRequest request = DeleteStoreRequest.testBuilder()
+                .deleteReasonType(deleteReasonType)
+                .build();
+
             // when
-            StoreDeleteResponse response = storeService.deleteStore(store.getId(), DeleteStoreRequest.testInstance(deleteReasonType), userId);
+            StoreDeleteResponse response = storeService.deleteStore(store.getId(), request, userId);
 
             // then
             List<Store> stores = storeRepository.findAll();
@@ -545,8 +552,12 @@ class StoreServiceTest extends SetupUserServiceTest {
                 StoreDeleteRequestCreator.create(store, 1001L, DeleteReasonType.NOSTORE))
             );
 
+            DeleteStoreRequest request = DeleteStoreRequest.testBuilder()
+                .deleteReasonType(deleteReasonType)
+                .build();
+
             // when
-            StoreDeleteResponse response = storeService.deleteStore(store.getId(), DeleteStoreRequest.testInstance(deleteReasonType), userId);
+            StoreDeleteResponse response = storeService.deleteStore(store.getId(), request, userId);
 
             // then
             List<Store> stores = storeRepository.findAll();
@@ -574,8 +585,12 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             storeDeleteRequestRepository.save(StoreDeleteRequestCreator.create(store, userId, DeleteReasonType.NOSTORE));
 
+            DeleteStoreRequest request = DeleteStoreRequest.testBuilder()
+                .deleteReasonType(reasonType)
+                .build();
+
             // when & then
-            assertThatThrownBy(() -> storeService.deleteStore(store.getId(), DeleteStoreRequest.testInstance(reasonType), userId))
+            assertThatThrownBy(() -> storeService.deleteStore(store.getId(), request, userId))
                 .isInstanceOf(ConflictException.class);
         }
 

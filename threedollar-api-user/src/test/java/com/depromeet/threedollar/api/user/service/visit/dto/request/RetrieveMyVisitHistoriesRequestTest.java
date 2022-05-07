@@ -19,7 +19,10 @@ class RetrieveMyVisitHistoriesRequestTest {
     @ParameterizedTest
     void 허용된_범위_밖의_SIZE가_입력되면_ValidationException(int size) {
         // given
-        RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(size, null);
+        RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testBuilder()
+            .size(size)
+            .cursor(null)
+            .build();
 
         // when
         Set<ConstraintViolation<RetrieveMyVisitHistoriesRequest>> constraintViolations = validator.validate(request);
@@ -32,7 +35,10 @@ class RetrieveMyVisitHistoriesRequestTest {
     @ParameterizedTest
     void 허용된_범위_내의_SIZE가_입력되면_통과한다(int size) {
         // given
-        RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(size, null);
+        RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testBuilder()
+            .size(size)
+            .cursor(null)
+            .build();
 
         // when
         Set<ConstraintViolation<RetrieveMyVisitHistoriesRequest>> constraintViolations = validator.validate(request);

@@ -55,7 +55,9 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
             // given
             when(uploadProvider.uploadFile(any())).thenReturn(IMAGE_URL);
 
-            AddStoreImageRequest request = AddStoreImageRequest.testInstance(store.getId());
+            AddStoreImageRequest request = AddStoreImageRequest.testBuilder()
+                .storeId(store.getId())
+                .build();
 
             // when
             storeImageService.addStoreImages(request, List.of(new MockMultipartFile("name", new byte[]{})), userId);
@@ -70,7 +72,10 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
         void 존재하지_않는_가게에_이미지를_등록하면_NotFound_에러가_발생한다() {
             // given
             Long notFoundStoreId = -1L;
-            AddStoreImageRequest request = AddStoreImageRequest.testInstance(notFoundStoreId);
+
+            AddStoreImageRequest request = AddStoreImageRequest.testBuilder()
+                .storeId(notFoundStoreId)
+                .build();
 
             // when & then
             assertThatThrownBy(() -> storeImageService.addStoreImages(request, List.of(new MockMultipartFile("name", new byte[]{})), userId)).isInstanceOf(NotFoundException.class);

@@ -22,7 +22,11 @@ class AddReviewRequestTest {
         Long storeId = 100L;
         String contents = "댓글";
 
-        AddReviewRequest request = AddReviewRequest.testInstance(storeId, contents, rating);
+        AddReviewRequest request = AddReviewRequest.testBuilder()
+            .storeId(storeId)
+            .contents(contents)
+            .rating(rating)
+            .build();
 
         // when
         Set<ConstraintViolation<AddReviewRequest>> constraintViolations = validator.validate(request);
@@ -38,7 +42,11 @@ class AddReviewRequestTest {
         Long storeId = 100L;
         String contents = "댓글";
 
-        AddReviewRequest request = AddReviewRequest.testInstance(storeId, contents, rating);
+        AddReviewRequest request = AddReviewRequest.testBuilder()
+            .storeId(storeId)
+            .contents(contents)
+            .rating(rating)
+            .build();
 
         // when
         Set<ConstraintViolation<AddReviewRequest>> constraintViolations = validator.validate(request);

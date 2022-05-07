@@ -183,7 +183,9 @@ class StoreControllerTest extends SetupUserControllerTest {
             Store store = StoreCreator.create(user.getId(), "가삼 붕어빵");
             storeRepository.save(store);
 
-            DeleteStoreRequest request = DeleteStoreRequest.testInstance(DeleteReasonType.OVERLAPSTORE);
+            DeleteStoreRequest request = DeleteStoreRequest.testBuilder()
+                .deleteReasonType(DeleteReasonType.OVERLAPSTORE)
+                .build();
 
             // when
             ApiResponse<StoreDeleteResponse> response = storeMockApiCaller.deleteStore(store.getId(), request, token, 200);
@@ -203,7 +205,9 @@ class StoreControllerTest extends SetupUserControllerTest {
                 StoreDeleteRequestCreator.create(store, 1001L, DeleteReasonType.NOSTORE)
             ));
 
-            DeleteStoreRequest request = DeleteStoreRequest.testInstance(DeleteReasonType.WRONG_CONTENT);
+            DeleteStoreRequest request = DeleteStoreRequest.testBuilder()
+                .deleteReasonType(DeleteReasonType.WRONG_CONTENT)
+                .build();
 
             // when
             ApiResponse<StoreDeleteResponse> response = storeMockApiCaller.deleteStore(store.getId(), request, token, 200);
@@ -218,8 +222,12 @@ class StoreControllerTest extends SetupUserControllerTest {
             Store store = StoreCreator.create(user.getId(), "가슴속 3천원 붕어빵");
             storeRepository.save(store);
 
+            DeleteStoreRequest request = DeleteStoreRequest.testBuilder()
+                .deleteReasonType(DeleteReasonType.OVERLAPSTORE)
+                .build();
+
             // when
-            storeMockApiCaller.deleteStore(store.getId(), DeleteStoreRequest.testInstance(DeleteReasonType.OVERLAPSTORE), token, 200);
+            storeMockApiCaller.deleteStore(store.getId(), request, token, 200);
 
             // then
             verify(addUserMedalEventListener, times(1)).addObtainableMedalsByDeleteStore(any(StoreDeletedEvent.class));

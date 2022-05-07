@@ -8,14 +8,13 @@ import com.depromeet.threedollar.domain.rds.user.domain.user.User;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @ToString
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreateUserRequest {
 
@@ -28,12 +27,11 @@ public class CreateUserRequest {
     @NickName
     private String name;
 
-    public static CreateUserRequest of(String socialId, UserSocialType type, String name) {
-        return new CreateUserRequest(socialId, type, name);
-    }
-
-    public static CreateUserRequest testInstance(String socialId, UserSocialType type, String name) {
-        return new CreateUserRequest(socialId, type, name);
+    @Builder
+    private CreateUserRequest(String socialId, UserSocialType socialType, String name) {
+        this.socialId = socialId;
+        this.socialType = socialType;
+        this.name = name;
     }
 
     public User toEntity() {

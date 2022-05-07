@@ -45,7 +45,12 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             // given
             String contents = "우와 맛있어요";
             int rating = 4;
-            AddReviewRequest request = AddReviewRequest.testInstance(store.getId(), contents, rating);
+
+            AddReviewRequest request = AddReviewRequest.testBuilder()
+                .storeId(store.getId())
+                .contents(contents)
+                .rating(rating)
+                .build();
 
             // when
             reviewService.addReview(request, userId);
@@ -62,7 +67,12 @@ class ReviewServiceTest extends SetupStoreServiceTest {
         void 없는_가게에_리뷰를_작성하면_NOT_FOUND_STORE_EXCEPTION() {
             // given
             Long notFoundStoreId = -1L;
-            AddReviewRequest request = AddReviewRequest.testInstance(notFoundStoreId, "리뷰", 3);
+
+            AddReviewRequest request = AddReviewRequest.testBuilder()
+                .storeId(notFoundStoreId)
+                .contents("리뷰")
+                .rating(3)
+                .build();
 
             // when & then
             assertThatThrownBy(() -> reviewService.addReview(request, userId)).isInstanceOf(NotFoundException.class);
@@ -82,7 +92,10 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             Review review = ReviewCreator.create(store.getId(), userId, "너무 맛있어요", 3);
             reviewRepository.save(review);
 
-            UpdateReviewRequest request = UpdateReviewRequest.testInstance(contents, rating);
+            UpdateReviewRequest request = UpdateReviewRequest.testBuilder()
+                .contents(contents)
+                .rating(rating)
+                .build();
 
             // when
             reviewService.updateReview(review.getId(), request, userId);
@@ -99,7 +112,11 @@ class ReviewServiceTest extends SetupStoreServiceTest {
         void 없는_리뷰에_수정하려하면_NOT_FOUND_REVIEW_EXCEPTION() {
             // given
             long notFoundReviewId = -1L;
-            UpdateReviewRequest request = UpdateReviewRequest.testInstance("content", 5);
+
+            UpdateReviewRequest request = UpdateReviewRequest.testBuilder()
+                .contents("contents")
+                .rating(5)
+                .build();
 
             // when & then
             assertThatThrownBy(() -> reviewService.updateReview(notFoundReviewId, request, userId)).isInstanceOf(NotFoundException.class);
@@ -112,7 +129,10 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             Review review = ReviewCreator.create(store.getId(), creatorId, "너무 맛있어요", 3);
             reviewRepository.save(review);
 
-            UpdateReviewRequest request = UpdateReviewRequest.testInstance("content", 5);
+            UpdateReviewRequest request = UpdateReviewRequest.testBuilder()
+                .contents("contents")
+                .rating(5)
+                .build();
 
             // when & then
             assertThatThrownBy(() -> reviewService.updateReview(review.getId(), request, userId)).isInstanceOf(NotFoundException.class);

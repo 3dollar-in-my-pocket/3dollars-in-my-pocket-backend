@@ -20,7 +20,9 @@ class CheckAvailableNameRequestTest {
     @ParameterizedTest
     void 사용가능한_이름이면_유효성_검사를_통과한다(String name) {
         // given
-        CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
+        CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
+            .name(name)
+            .build();
 
         // when
         Set<ConstraintViolation<CheckAvailableNameRequest>> constraintViolations = validator.validate(request);
@@ -33,7 +35,9 @@ class CheckAvailableNameRequestTest {
     @ParameterizedTest
     void 사용가능하지_않은_이름이면_유효성_검사에서_실패한다(String name) {
         // given
-        CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
+        CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
+            .name(name)
+            .build();
 
         // when
         Set<ConstraintViolation<CheckAvailableNameRequest>> constraintViolations = validator.validate(request);
@@ -47,7 +51,9 @@ class CheckAvailableNameRequestTest {
     @ParameterizedTest
     void 닉네임이_NULL_이거나_빈문자열이면_유효성_검사에서_실패한다(String name) {
         // given
-        CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
+        CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
+            .name(name)
+            .build();
 
         // when
         Set<ConstraintViolation<CheckAvailableNameRequest>> constraintViolations = validator.validate(request);

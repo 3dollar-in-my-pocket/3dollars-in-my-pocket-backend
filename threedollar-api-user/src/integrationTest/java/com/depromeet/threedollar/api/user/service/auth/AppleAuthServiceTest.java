@@ -73,7 +73,10 @@ class AppleAuthServiceTest {
             User user = UserCreator.create(SOCIAL_ID, SOCIAL_TYPE, "닉네임");
             userRepository.save(user);
 
-            LoginRequest request = LoginRequest.testInstance("token", SOCIAL_TYPE);
+            LoginRequest request = LoginRequest.testBuilder()
+                .token("social-access-token")
+                .socialType(SOCIAL_TYPE)
+                .build();
 
             // when
             Long userId = authService.login(request);
@@ -85,7 +88,10 @@ class AppleAuthServiceTest {
         @Test
         void 애플_로그인시_가입한_유저가_아니면_NotFound_에러가_발생한다() {
             // given
-            LoginRequest request = LoginRequest.testInstance("token", SOCIAL_TYPE);
+            LoginRequest request = LoginRequest.testBuilder()
+                .token("social-access-token")
+                .socialType(SOCIAL_TYPE)
+                .build();
 
             // when & then
             assertThatThrownBy(() -> authService.login(request)).isInstanceOf(NotFoundException.class);
@@ -99,7 +105,11 @@ class AppleAuthServiceTest {
         @Test
         void 애플_회원가입시_새로운_유저가_등록된다() {
             // given
-            SignUpRequest request = SignUpRequest.testInstance("token", "가슴속 삼천원", SOCIAL_TYPE);
+            SignUpRequest request = SignUpRequest.testBuilder()
+                .token("social-access-token")
+                .name("가슴속 삼천원")
+                .socialType(SOCIAL_TYPE)
+                .build();
 
             authService.signUp(request);
 
@@ -116,7 +126,11 @@ class AppleAuthServiceTest {
             // given
             userRepository.save(UserCreator.create(SOCIAL_ID, SOCIAL_TYPE, "헬로우"));
 
-            SignUpRequest request = SignUpRequest.testInstance("token", "가슴속 삼천원", SOCIAL_TYPE);
+            SignUpRequest request = SignUpRequest.testBuilder()
+                .token("social-access-token")
+                .name("가슴속 삼천원")
+                .socialType(SOCIAL_TYPE)
+                .build();
 
             // when & then
             assertThatThrownBy(() -> authService.signUp(request)).isInstanceOf(ConflictException.class);

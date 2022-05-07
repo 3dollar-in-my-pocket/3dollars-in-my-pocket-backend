@@ -61,7 +61,10 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
         @Test
         void 가게_방문_인증_등록시_성공시_200_OK() throws Exception {
             // given
-            AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(store.getId(), VisitType.EXISTS);
+            AddVisitHistoryRequest request = AddVisitHistoryRequest.testBuilder()
+                .storeId(store.getId())
+                .type(VisitType.EXISTS)
+                .build();
 
             // when
             ApiResponse<String> response = visitHistoryApiCaller.addVisitHistory(request, token, 200);
@@ -73,7 +76,10 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
         @Test
         void 가게_방문시_메달을_획득하는_작업이_수행된다() throws Exception {
             // given
-            AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(storeId, VisitType.NOT_EXISTS);
+            AddVisitHistoryRequest request = AddVisitHistoryRequest.testBuilder()
+                .storeId(store.getId())
+                .type(VisitType.NOT_EXISTS)
+                .build();
 
             // when
             visitHistoryApiCaller.addVisitHistory(request, token, 200);
@@ -96,7 +102,10 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
 
             visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
 
-            RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(2, null);
+            RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testBuilder()
+                .size(2)
+                .cursor(null)
+                .build();
 
             // when
             ApiResponse<VisitHistoriesCursorResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
@@ -119,7 +128,10 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
 
             visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
 
-            RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(1, null);
+            RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testBuilder()
+                .size(1)
+                .cursor(null)
+                .build();
 
             // when
             ApiResponse<VisitHistoriesCursorResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
@@ -141,7 +153,10 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
 
             visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
 
-            RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(2, visitHistory2.getId());
+            RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testBuilder()
+                .size(2)
+                .cursor(visitHistory2.getId())
+                .build();
 
             // when
             ApiResponse<VisitHistoriesCursorResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
@@ -158,7 +173,10 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
         @Test
         void 아무런_방문_기록을_남기지_않았을경우() throws Exception {
             // given
-            RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(2, null);
+            RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testBuilder()
+                .size(2)
+                .cursor(null)
+                .build();
 
             // when
             ApiResponse<VisitHistoriesCursorResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);
@@ -180,7 +198,10 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
             VisitHistory visitHistory = VisitHistoryCreator.create(deletedStore, user.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
             visitHistoryRepository.save(visitHistory);
 
-            RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testInstance(2, null);
+            RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testBuilder()
+                .size(2)
+                .cursor(null)
+                .build();
 
             // when
             ApiResponse<VisitHistoriesCursorResponse> response = visitHistoryApiCaller.retrieveMyVisitHistories(request, token, 200);

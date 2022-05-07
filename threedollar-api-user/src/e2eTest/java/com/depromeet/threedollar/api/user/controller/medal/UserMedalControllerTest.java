@@ -81,8 +81,12 @@ class UserMedalControllerTest extends SetupUserControllerTest {
 
             userMedalRepository.save(UserMedalCreator.createInActive(medal, user));
 
+            ChangeRepresentativeMedalRequest request = ChangeRepresentativeMedalRequest.testBuilder()
+                .medalId(medal.getId())
+                .build();
+
             // when & then
-            changeRepresentativeMedal(ChangeRepresentativeMedalRequest.testInstance(medal.getId()), token)
+            changeRepresentativeMedal(request, token)
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.medal.name").value(medal.getName()))

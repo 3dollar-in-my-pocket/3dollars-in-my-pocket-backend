@@ -84,7 +84,9 @@ class UserControllerTest extends SetupUserControllerTest {
         void 나의_회원정보_수정_요청시_회원정보가_정상적으로_수정된다() throws Exception {
             // given
             String name = "디프만";
-            UpdateUserInfoRequest request = UpdateUserInfoRequest.testInstance(name);
+            UpdateUserInfoRequest request = UpdateUserInfoRequest.testBuilder()
+                .name(name)
+                .build();
 
             // when & then
             updateUserInfoApi(token, request)
@@ -110,10 +112,12 @@ class UserControllerTest extends SetupUserControllerTest {
 
         @Test
         void 사용가능한_닉네임_확인_요청시_사용가능한_닉네임이면_200_OK() throws Exception {
+            // given
             String name = "붕어빵";
 
-            // given
-            CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
+            CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
+                .name(name)
+                .build();
 
             // when & then
             checkAvailableNickNameApi(request)
@@ -127,7 +131,10 @@ class UserControllerTest extends SetupUserControllerTest {
             // given
             String name = "디프만";
             userRepository.save(UserCreator.create("social-social-id", UserSocialType.APPLE, name));
-            CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
+
+            CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
+                .name(name)
+                .build();
 
             // when & then
             checkAvailableNickNameApi(request)
@@ -143,7 +150,10 @@ class UserControllerTest extends SetupUserControllerTest {
             // given
             String name = "-a-";
             userRepository.save(UserCreator.create("social-social-id", UserSocialType.APPLE, name));
-            CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
+
+            CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
+                .name(name)
+                .build();
 
             // when & then
             checkAvailableNickNameApi(request)

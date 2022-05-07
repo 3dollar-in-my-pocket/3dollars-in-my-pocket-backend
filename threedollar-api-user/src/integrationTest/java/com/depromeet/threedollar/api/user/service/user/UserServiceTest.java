@@ -3,6 +3,7 @@ package com.depromeet.threedollar.api.user.service.user;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.List;
 
@@ -55,7 +56,11 @@ class UserServiceTest {
             UserSocialType socialType = UserSocialType.APPLE;
             String name = "토끼";
 
-            CreateUserRequest request = CreateUserRequest.testInstance(socialId, socialType, name);
+            CreateUserRequest request = CreateUserRequest.builder()
+                .socialId(socialId)
+                .socialType(socialType)
+                .name(name)
+                .build();
 
             // when
             userService.registerUser(request);
@@ -74,7 +79,11 @@ class UserServiceTest {
             String name = "will";
             userRepository.save(UserCreator.create("social-id", UserSocialType.KAKAO, name));
 
-            CreateUserRequest request = CreateUserRequest.testInstance("another-id", UserSocialType.APPLE, name);
+            CreateUserRequest request = CreateUserRequest.builder()
+                .socialId("another-social-id")
+                .socialType(UserSocialType.APPLE)
+                .name(name)
+                .build();
 
             // when & then
             assertThatThrownBy(() -> userService.registerUser(request)).isInstanceOf(ConflictException.class);
@@ -88,7 +97,11 @@ class UserServiceTest {
 
             userRepository.save(UserCreator.create(socialId, socialType, "기존의 닉네임"));
 
-            CreateUserRequest request = CreateUserRequest.testInstance(socialId, socialType, "새로운 닉네임");
+            CreateUserRequest request = CreateUserRequest.builder()
+                .socialId(socialId)
+                .socialType(socialType)
+                .name("새로운 닉네임")
+                .build();
 
             // when & then
             assertThatThrownBy(() -> userService.registerUser(request)).isInstanceOf(ConflictException.class);
@@ -120,7 +133,9 @@ class UserServiceTest {
             User user = UserCreator.create("social-id", UserSocialType.KAKAO, name);
             userRepository.save(user);
 
-            CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
+            CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
+                .name(name)
+                .build();
 
             // when & then
             assertThatThrownBy(() -> userService.checkIsAvailableName(request)).isInstanceOf(ConflictException.class);
@@ -129,12 +144,12 @@ class UserServiceTest {
         @Test
         void 중복되지_않은_닉네임이면_통과한다() {
             // given
-            String name = "토끼";
-
-            CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
+            CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
+                .name("토끼")
+                .build();
 
             // when & then
-            userService.checkIsAvailableName(request);
+            assertDoesNotThrow(() -> userService.checkIsAvailableName(request));
         }
 
     }
@@ -152,7 +167,9 @@ class UserServiceTest {
             User user = UserCreator.create(socialId, socialType, "기존의 닉네임");
             userRepository.save(user);
 
-            UpdateUserInfoRequest request = UpdateUserInfoRequest.testInstance(name);
+            UpdateUserInfoRequest request = UpdateUserInfoRequest.testBuilder()
+                .name(name)
+                .build();
 
             // when
             userService.updateUserInfo(request, user.getId());
@@ -169,7 +186,10 @@ class UserServiceTest {
         void 존재하지_않는_유저의_회원정보_수정시_NotFound_에러가_발생한다() {
             // given
             Long notFoundUserId = -1L;
-            UpdateUserInfoRequest request = UpdateUserInfoRequest.testInstance("name");
+
+            UpdateUserInfoRequest request = UpdateUserInfoRequest.testBuilder()
+                .name("name")
+                .build();
 
             // when & then
             assertThatThrownBy(() -> userService.updateUserInfo(request, notFoundUserId)).isInstanceOf(NotFoundException.class);

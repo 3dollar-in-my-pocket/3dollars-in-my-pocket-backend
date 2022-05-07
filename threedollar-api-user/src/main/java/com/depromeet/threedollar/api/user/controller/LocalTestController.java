@@ -44,7 +44,12 @@ public class LocalTestController {
     public ApiResponse<LoginResponse> getTestSession() {
         User user = userRepository.findUserBySocialIdAndSocialType(testUser.getSocialId(), testUser.getSocialType());
         if (user == null) {
-            CreateUserRequest request = CreateUserRequest.of("test-uid", UserSocialType.KAKAO, "관리자 계정");
+            CreateUserRequest request = CreateUserRequest.builder()
+                .socialId("test-uid")
+                .socialType(UserSocialType.KAKAO)
+                .name("관리자 계정")
+                .build();
+
             Long userId = userService.registerUser(request);
             httpSession.setAttribute(USER_ID, userId);
             return ApiResponse.success(LoginResponse.of(httpSession.getId(), userId));

@@ -306,7 +306,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             storeRepository.save(store);
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), LocalDate.now().minusWeeks(1));
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testBuilder()
+                .storeId(store.getId())
+                .startDate(LocalDate.now().minusWeeks(1))
+                .build();
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, CoordinateValue.of(34.0, 126.0), token, 200);
@@ -325,7 +328,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             store.addMenus(List.of(menu1, menu2));
             storeRepository.save(store);
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), LocalDate.now().minusWeeks(1));
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testBuilder()
+                .storeId(store.getId())
+                .startDate(LocalDate.now().minusWeeks(1))
+                .build();
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, CoordinateValue.of(34.0, 126.0), token, 200);
@@ -345,7 +351,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Store store = StoreCreator.createWithDefaultMenu(user.getId(), "가게 이름");
             storeRepository.save(store);
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), LocalDate.now().minusWeeks(1));
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testBuilder()
+                .storeId(store.getId())
+                .startDate(LocalDate.now().minusWeeks(1))
+                .build();
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, CoordinateValue.of(34.0, 126.0), token, 200);
@@ -362,7 +371,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             store.addAppearanceDays(dayOfTheWeeks);
             storeRepository.save(store);
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), LocalDate.now().minusWeeks(1));
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testBuilder()
+                .storeId(store.getId())
+                .startDate(LocalDate.now().minusWeeks(1))
+                .build();
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, CoordinateValue.of(34.0, 126.0), token, 200);
@@ -382,7 +394,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             store.addPaymentMethods(paymentMethodTypes);
             storeRepository.save(store);
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), LocalDate.now().minusWeeks(1));
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testBuilder()
+                .storeId(store.getId())
+                .startDate(LocalDate.now().minusWeeks(1))
+                .build();
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, CoordinateValue.of(34.0, 126.0), token, 200);
@@ -402,7 +417,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Store store = StoreCreator.createWithDefaultMenu(notFoundUserId, "가게 이름");
             storeRepository.save(store);
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), LocalDate.now().minusWeeks(1));
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testBuilder()
+                .storeId(store.getId())
+                .startDate(LocalDate.now().minusWeeks(1))
+                .build();
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, CoordinateValue.of(34.0, 126.0), token, 200);
@@ -423,7 +441,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             StoreImage storeImage = StoreImage.newInstance(store, user.getId(), imageUrl);
             storeImageRepository.save(storeImage);
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), LocalDate.now().minusWeeks(1));
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testBuilder()
+                .storeId(store.getId())
+                .startDate(LocalDate.now().minusWeeks(1))
+                .build();
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, CoordinateValue.of(34.0, 126.0), token, 200);
@@ -445,7 +466,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             storeImage.delete();
             storeImageRepository.save(storeImage);
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), LocalDate.now().minusWeeks(1));
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testBuilder()
+                .storeId(store.getId())
+                .startDate(LocalDate.now().minusWeeks(1))
+                .build();
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, CoordinateValue.of(34.0, 126.0), token, 200);
@@ -467,7 +491,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             reviewRepository.saveAll(List.of(review1, review2));
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), LocalDate.now().minusWeeks(1));
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testBuilder()
+                .storeId(store.getId())
+                .startDate(LocalDate.now().minusWeeks(1))
+                .build();
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, CoordinateValue.of(34.0, 126.0), token, 200);
@@ -493,7 +520,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             visitHistoryRepository.save(VisitHistoryCreator.create(store, user.getId(), VisitType.EXISTS, today.minusMonths(1)));
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), LocalDate.now().minusWeeks(1));
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testBuilder()
+                .storeId(store.getId())
+                .startDate(LocalDate.now().minusWeeks(1))
+                .build();
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, CoordinateValue.of(34.0, 126.0), token, 200);
@@ -514,7 +544,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             VisitHistory visitHistoryAfterStartDate = VisitHistoryCreator.create(store, user.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 19));
             visitHistoryRepository.saveAll(List.of(visitHistoryBeforeStartDate, visitHistoryAfterStartDate));
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), startDate);
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testBuilder()
+                .storeId(store.getId())
+                .startDate(startDate)
+                .build();
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, CoordinateValue.of(34.0, 126.0), token, 200);
@@ -539,7 +572,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             VisitHistory todayHistory = VisitHistoryCreator.create(store, user.getId(), VisitType.EXISTS, today);
             visitHistoryRepository.saveAll(List.of(beforeLastWeekHistory, lastWeekHistory, todayHistory));
 
-            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testInstance(store.getId(), LocalDate.now().minusWeeks(1));
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testBuilder()
+                .storeId(store.getId())
+                .startDate(LocalDate.now().minusWeeks(1))
+                .build();
 
             // when
             ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.getStoreDetailInfo(request, CoordinateValue.of(34.0, 126.0), token, 200);
@@ -567,7 +603,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             storeRepository.saveAll(List.of(store1, store2, store3));
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, null);
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testBuilder()
+                .size(2)
+                .cursor(null)
+                .build();
 
             // when
             ApiResponse<StoresCursorResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
@@ -593,7 +632,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Store store4 = StoreCreator.createWithDefaultMenu(user.getId(), "가게3");
             storeRepository.saveAll(List.of(store1, store2, store3, store4));
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, store4.getId());
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testBuilder()
+                .size(2)
+                .cursor(store4.getId())
+                .build();
 
             // when
             ApiResponse<StoresCursorResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
@@ -617,7 +659,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Store store2 = StoreCreator.createWithDefaultMenu(user.getId(), "가게2");
             storeRepository.saveAll(List.of(store1, store2));
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, store2.getId());
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testBuilder()
+                .size(1)
+                .cursor(store2.getId())
+                .build();
 
             // when
             ApiResponse<StoresCursorResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
@@ -640,7 +685,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Store store3 = StoreCreator.createWithDefaultMenu(user.getId(), "가게3");
             storeRepository.saveAll(List.of(store1, store2, store3));
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, store2.getId());
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testBuilder()
+                .size(2)
+                .cursor(store2.getId())
+                .build();
 
             // when
             ApiResponse<StoresCursorResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
@@ -662,7 +710,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Store storeDeletedByAdmin = StoreCreator.createDefaultWithMenu(user.getId(), "가게 이름", StoreStatus.FILTERED);
             storeRepository.saveAll(List.of(storeDeletedByUser, storeDeletedByAdmin));
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(2, null);
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testBuilder()
+                .size(2)
+                .cursor(null)
+                .build();
 
             // when
             ApiResponse<StoresCursorResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
@@ -697,7 +748,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 VisitHistoryCreator.create(store, user.getId(), VisitType.NOT_EXISTS, today))
             );
 
-            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testInstance(1, null);
+            RetrieveMyStoresRequest request = RetrieveMyStoresRequest.testBuilder()
+                .size(1)
+                .cursor(null)
+                .build();
 
             // when
             ApiResponse<StoresCursorResponse> response = storeRetrieveMockApiCaller.retrieveMyReportedStoreHistories(request, token, 200);
@@ -722,8 +776,12 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵", "2개에 천원", MenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
+            CheckExistsStoresNearbyRequest request = CheckExistsStoresNearbyRequest.testBuilder()
+                .distance(2000.0)
+                .build();
+
             // when
-            ApiResponse<CheckExistStoresNearbyResponse> response = storeRetrieveMockApiCaller.checkExistStoresNearby(CheckExistsStoresNearbyRequest.testInstance(2000), CoordinateValue.of(34, 126), 200);
+            ApiResponse<CheckExistStoresNearbyResponse> response = storeRetrieveMockApiCaller.checkExistStoresNearby(request, CoordinateValue.of(34, 126), 200);
 
             // then
             assertThat(response.getData().getIsExists()).isTrue();
@@ -731,8 +789,13 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
         @Test
         void 주변에_어떤_가게도_존재하지_않으면_return_False() throws Exception {
+            // given
+            CheckExistsStoresNearbyRequest request = CheckExistsStoresNearbyRequest.testBuilder()
+                .distance(2000.0)
+                .build();
+
             // when
-            ApiResponse<CheckExistStoresNearbyResponse> response = storeRetrieveMockApiCaller.checkExistStoresNearby(CheckExistsStoresNearbyRequest.testInstance(2000), CoordinateValue.of(34, 126), 200);
+            ApiResponse<CheckExistStoresNearbyResponse> response = storeRetrieveMockApiCaller.checkExistStoresNearby(request, CoordinateValue.of(34, 126), 200);
 
             // then
             assertThat(response.getData().getIsExists()).isFalse();

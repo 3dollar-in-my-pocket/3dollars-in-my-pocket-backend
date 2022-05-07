@@ -8,14 +8,13 @@ import com.depromeet.threedollar.api.user.service.user.dto.request.CreateUserReq
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @ToString
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SignUpRequest {
 
@@ -28,12 +27,19 @@ public class SignUpRequest {
     @NotNull(message = "{user.socialType.notNull}")
     private UserSocialType socialType;
 
-    public static SignUpRequest testInstance(String token, String name, UserSocialType socialType) {
-        return new SignUpRequest(token, name, socialType);
+    @Builder(builderMethodName = "testBuilder")
+    private SignUpRequest(String token, String name, UserSocialType socialType) {
+        this.token = token;
+        this.name = name;
+        this.socialType = socialType;
     }
 
     public CreateUserRequest toCreateUserRequest(String socialId) {
-        return CreateUserRequest.of(socialId, socialType, name);
+        return CreateUserRequest.builder()
+            .socialId(socialId)
+            .socialType(socialType)
+            .name(name)
+            .build();
     }
 
 }

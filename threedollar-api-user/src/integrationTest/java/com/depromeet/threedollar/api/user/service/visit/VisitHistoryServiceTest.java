@@ -47,7 +47,10 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
             LocalDate dateOfVisit = LocalDate.of(2021, 12, 1);
             VisitType visitType = VisitType.EXISTS;
 
-            AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(storeId, visitType);
+            AddVisitHistoryRequest request = AddVisitHistoryRequest.testBuilder()
+                .storeId(storeId)
+                .type(visitType)
+                .build();
 
             // when
             visitHistoryService.addVisitHistory(request, userId, dateOfVisit);
@@ -64,7 +67,10 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
         void 존재하지_않는_가게에_방문_인증시_NotFound_에러가_발생한다() {
             // given
             Long notFoundStoreId = -1L;
-            AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(notFoundStoreId, VisitType.EXISTS);
+            AddVisitHistoryRequest request = AddVisitHistoryRequest.testBuilder()
+                .storeId(notFoundStoreId)
+                .type(VisitType.EXISTS)
+                .build();
 
             // when & then
             assertThatThrownBy(() -> visitHistoryService.addVisitHistory(request, userId, LocalDate.of(2021, 11, 18))).isInstanceOf(NotFoundException.class);
@@ -78,7 +84,10 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
 
             visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, dateOfVisit));
 
-            AddVisitHistoryRequest request = AddVisitHistoryRequest.testInstance(storeId, visitType);
+            AddVisitHistoryRequest request = AddVisitHistoryRequest.testBuilder()
+                .storeId(storeId)
+                .type(visitType)
+                .build();
 
             // when & then
             assertThatThrownBy(() -> visitHistoryService.addVisitHistory(request, userId, dateOfVisit)).isInstanceOf(ConflictException.class);
