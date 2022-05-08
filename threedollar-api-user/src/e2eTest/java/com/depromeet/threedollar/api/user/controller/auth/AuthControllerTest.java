@@ -60,7 +60,7 @@ class AuthControllerTest extends SetupUserControllerTest {
 
             SignUpRequest request = SignUpRequest.testBuilder()
                 .token("social-access-token")
-                .name("가슴속 삼천원")
+                .name("카카오 계정")
                 .socialType(UserSocialType.KAKAO)
                 .build();
 
@@ -82,7 +82,7 @@ class AuthControllerTest extends SetupUserControllerTest {
 
             SignUpRequest request = SignUpRequest.testBuilder()
                 .token("social-access-token")
-                .name("가슴속 삼천원")
+                .name("애플 계정")
                 .socialType(UserSocialType.APPLE)
                 .build();
 
@@ -104,7 +104,7 @@ class AuthControllerTest extends SetupUserControllerTest {
 
             SignUpRequest request = SignUpRequest.testBuilder()
                 .token("social-access-token")
-                .name("가슴속 삼천원")
+                .name("구글 계정")
                 .socialType(UserSocialType.GOOGLE)
                 .build();
 

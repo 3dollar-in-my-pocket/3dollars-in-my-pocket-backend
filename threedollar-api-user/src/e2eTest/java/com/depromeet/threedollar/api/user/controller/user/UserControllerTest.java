@@ -93,7 +93,7 @@ class UserControllerTest extends SetupUserControllerTest {
         @Test
         void 나의_회원정보_수정_요청시_회원정보가_정상적으로_수정된다() throws Exception {
             // given
-            String name = "디프만";
+            String name = "가삼";
             UpdateUserInfoRequest request = UpdateUserInfoRequest.testBuilder()
                 .name(name)
                 .build();
@@ -139,7 +139,7 @@ class UserControllerTest extends SetupUserControllerTest {
         @Test
         void 사용가능한_닉네임_확인_요청시_중복된_이름인경우_409_에러() throws Exception {
             // given
-            String name = "디프만";
+            String name = "토수니";
             userRepository.save(UserCreator.builder()
                 .socialId("social-id")
                 .socialType(UserSocialType.APPLE)

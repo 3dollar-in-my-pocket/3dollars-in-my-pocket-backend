@@ -39,7 +39,7 @@ class StoreReviewRatingServiceTest extends SetupStoreServiceTest {
             ReviewCreator.builder()
                 .storeId(storeId)
                 .userId(userId)
-                .contents("너무 맛없어요")
+                .contents("맛없어요")
                 .rating(1)
                 .build(),
             ReviewCreator.builder()

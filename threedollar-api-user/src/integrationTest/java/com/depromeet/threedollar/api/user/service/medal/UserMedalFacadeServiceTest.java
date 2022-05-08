@@ -82,11 +82,11 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
             storeRepository.saveAll(List.of(
                 StoreWithMenuCreator.builder()
                     .userId(userId)
-                    .storeName("가게 A")
+                    .storeName("등록한 가게 A")
                     .build(),
                 StoreWithMenuCreator.builder()
                     .userId(userId)
-                    .storeName("가게 B")
+                    .storeName("등록한 가게 B")
                     .build()
             ));
 
@@ -116,6 +116,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
                 .userId(userId)
                 .storeName("가게")
                 .build();
+            storeRepository.save(store);
 
             // when
             userMedalFacadeService.addObtainableMedalsByAddStore(userId);
@@ -144,7 +145,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
 
             Store store = StoreWithMenuCreator.builder()
                 .userId(userId)
-                .storeName("가게")
+                .storeName("가게 1")
                 .build();
             storeRepository.save(store);
 
@@ -217,13 +218,13 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
                 ReviewCreator.builder()
                     .storeId(store.getId())
                     .userId(userId)
-                    .contents("너무 맛있어요")
+                    .contents("리뷰 작성 1")
                     .rating(5)
                     .build(),
                 ReviewCreator.builder()
                     .storeId(store.getId())
                     .userId(userId)
-                    .contents("너무 맛있어요")
+                    .contents("리뷰 작성 2")
                     .rating(4)
                     .build()
             ));
@@ -259,7 +260,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
             reviewRepository.save(ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(userId)
-                .contents("너무 맛있어요")
+                .contents("리뷰 작성 1")
                 .rating(5)
                 .build());
 
@@ -288,7 +289,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
                 .build();
             medalRepository.save(medal);
 
-            Store store = StoreCreator.builder()
+            Store store = StoreWithMenuCreator.builder()
                 .userId(userId)
                 .storeName("가게")
                 .build();

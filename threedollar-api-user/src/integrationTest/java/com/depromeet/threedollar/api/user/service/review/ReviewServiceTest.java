@@ -70,7 +70,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
 
             AddReviewRequest request = AddReviewRequest.testBuilder()
                 .storeId(notFoundStoreId)
-                .contents("리뷰")
+                .contents("그냥 그래요")
                 .rating(3)
                 .build();
 
@@ -92,7 +92,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             Review review = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(userId)
-                .contents("너무 맛있어요")
+                .contents("그냥 먹을만 해요")
                 .rating(3)
                 .build();
             reviewRepository.save(review);
@@ -119,7 +119,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             long notFoundReviewId = -1L;
 
             UpdateReviewRequest request = UpdateReviewRequest.testBuilder()
-                .contents("contents")
+                .contents("붕어빵 ㅇㅈ..")
                 .rating(5)
                 .build();
 
@@ -134,13 +134,13 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             Review review = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(creatorId)
-                .contents("너무 맛있어요")
+                .contents("그냥 그래요")
                 .rating(3)
                 .build();
             reviewRepository.save(review);
 
             UpdateReviewRequest request = UpdateReviewRequest.testBuilder()
-                .contents("contents")
+                .contents("이전에는 그냥 그랬는데, 너무 맛있어졌네요")
                 .rating(5)
                 .build();
 
@@ -159,7 +159,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             Review review = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(userId)
-                .contents("너무 맛있어요")
+                .contents("먹을만해요")
                 .rating(3)
                 .build();
             reviewRepository.save(review);
@@ -192,7 +192,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
                 .storeId(store.getId())
                 .userId(userId)
                 .contents("너무 맛있어요")
-                .rating(3)
+                .rating(5)
                 .build();
             reviewRepository.save(review);
 

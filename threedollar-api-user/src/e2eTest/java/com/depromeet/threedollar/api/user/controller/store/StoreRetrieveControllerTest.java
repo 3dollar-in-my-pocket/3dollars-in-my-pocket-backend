@@ -109,13 +109,13 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // given
             Store store1 = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름")
+                .storeName("가게 이름1")
                 .latitude(34.0)
                 .longitude(126.0)
                 .build();
             Store store2 = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름")
+                .storeName("가게 이름2")
                 .latitude(34.0)
                 .longitude(126.0)
                 .build();
@@ -141,22 +141,22 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // given
             Store store = StoreCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름")
+                .storeName("행복한 잉어빵")
                 .latitude(34.0)
                 .longitude(126.0)
                 .build();
             store.addMenus(List.of(
                 MenuCreator.builder()
                     .store(store)
-                    .name("팥붕")
-                    .price("2개 1000원")
-                    .category(MenuCategoryType.BUNGEOPPANG)
+                    .name("순대")
+                    .price("1개 1000원")
+                    .category(MenuCategoryType.SUNDAE)
                     .build(),
                 MenuCreator.builder()
                     .store(store)
-                    .name("슈붕")
+                    .name("달고나")
                     .price("2개 1000원")
-                    .category(MenuCategoryType.BUNGEOPPANG)
+                    .category(MenuCategoryType.DALGONA)
                     .build()
             ));
             storeRepository.save(store);
@@ -182,7 +182,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // given
             Store deletedStoreByUser = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름")
+                .storeName("유저에 의해 삭제된 가게의 이름")
                 .latitude(34.0)
                 .longitude(126.0)
                 .rating(1.0)
@@ -190,10 +190,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 .build();
             Store deletedStoreByAdmin = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름")
+                .storeName("관리자에 의해 삭제된 가게의 이름")
                 .latitude(34.0)
                 .longitude(126.0)
-                .rating(1.0)
+                .rating(3.0)
                 .status(StoreStatus.FILTERED)
                 .build();
             storeRepository.saveAll(List.of(deletedStoreByUser, deletedStoreByAdmin));
@@ -293,31 +293,31 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // given
             Store store1 = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름1")
+                .storeName("붕어빵 가게 이름 1")
                 .latitude(34.0)
                 .longitude(126.0)
                 .build();
             store1.addMenus(List.of(
                     MenuCreator.builder()
                         .store(store1)
-                        .name("메뉴 1")
-                        .price("가격 1")
+                        .name("달고나")
+                        .price("1개 1000원")
                         .category(MenuCategoryType.DALGONA)
                         .build()
                 )
             );
             Store store2 = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름2")
+                .storeName("붕어빵 가게 이름 2")
                 .latitude(34.0)
                 .longitude(126.0)
                 .build();
             store2.addMenus(List.of(
                     MenuCreator.builder()
                         .store(store2)
-                        .name("메뉴 2")
-                        .price("가격 2")
-                        .category(MenuCategoryType.DALGONA)
+                        .name("팥 붕어빵")
+                        .price("5개 2000원")
+                        .category(MenuCategoryType.BUNGEOPPANG)
                         .build()
                 )
             );
@@ -343,14 +343,13 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // given
             Store store1 = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름1")
+                .storeName("붕어빵 가게 이름1")
                 .latitude(34.00015)
                 .longitude(126.0)
                 .build();
             Store store2 = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름2")
-                .storeName("가게 이름1")
+                .storeName("뿡어빵 가게 이름2")
                 .latitude(34.0001)
                 .longitude(126.0)
                 .build();
@@ -377,15 +376,14 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // given
             Store store1 = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름1")
+                .storeName("붕어빵 가게 이름1")
                 .latitude(34.00015)
                 .longitude(126.0)
                 .rating(5.0)
                 .build();
             Store store2 = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름2")
-                .storeName("가게 이름1")
+                .storeName("붕어빵 가게 이름2")
                 .latitude(34.0001)
                 .longitude(126.0)
                 .rating(1.0)
@@ -419,7 +417,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // given
             Store store = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름1")
+                .storeName("붕어빵 가게 이름")
                 .build();
             DayOfTheWeek day = DayOfTheWeek.FRIDAY;
             store.addAppearanceDays(Set.of(day));
@@ -447,18 +445,18 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // given
             Store store = StoreCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름")
+                .storeName("붕어빵 가게 이름")
                 .build();
             Menu menu1 = MenuCreator.builder()
                 .store(store)
-                .name("메뉴1")
-                .price("가격1")
+                .name("팥 붕어빵")
+                .price("2개 1000원")
                 .category(MenuCategoryType.BUNGEOPPANG)
                 .build();
             Menu menu2 = MenuCreator.builder()
                 .store(store)
-                .name("메뉴2")
-                .price("가격2")
+                .name("팥 붕어빵")
+                .price("5개 2000원")
                 .category(MenuCategoryType.GUKWAPPANG)
                 .build();
             store.addMenus(List.of(menu1, menu2));
@@ -486,7 +484,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // given
             Store store = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름")
+                .storeName("붕어빵 가게 이름")
                 .build();
             storeRepository.save(store);
 
@@ -508,7 +506,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Set<DayOfTheWeek> dayOfTheWeeks = Set.of(DayOfTheWeek.SATURDAY, DayOfTheWeek.FRIDAY, DayOfTheWeek.THURSDAY);
             Store store = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름")
+                .storeName("붕어빵 가게 이름")
                 .build();
             store.addAppearanceDays(dayOfTheWeeks);
             storeRepository.save(store);
@@ -534,7 +532,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             Set<PaymentMethodType> paymentMethodTypes = Set.of(PaymentMethodType.CASH, PaymentMethodType.CARD);
             Store store = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름")
+                .storeName("붕어빵 가게 이름")
                 .build();
             store.addPaymentMethods(paymentMethodTypes);
             storeRepository.save(store);
@@ -561,7 +559,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             Store store = StoreWithMenuCreator.builder()
                 .userId(notFoundUserId)
-                .storeName("가게 이름")
+                .storeName("붕어빵 가게 이름")
                 .build();
             storeRepository.save(store);
 
@@ -612,7 +610,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // given
             Store store = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름")
+                .storeName("붕어빵 가게 이름")
                 .build();
             storeRepository.save(store);
 
@@ -639,20 +637,20 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             Store store = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름")
+                .storeName("토끼의 붕어빵")
                 .build();
             storeRepository.save(store);
 
             Review review1 = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(user.getId())
-                .contents("댓글 1")
+                .contents("맛있어요")
                 .rating(5)
                 .build();
             Review review2 = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(notFoundUserId)
-                .contents("댓글 2")
+                .contents("그냥 그래요")
                 .rating(3)
                 .build();
             reviewRepository.saveAll(List.of(review1, review2));
@@ -683,7 +681,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             LocalDate today = LocalDate.now();
             Store store = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름")
+                .storeName("토끼의 붕어빵 판매점")
                 .build();
             storeRepository.save(store);
 
@@ -714,7 +712,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             Store store = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름")
+                .storeName("토끼의 붕세권")
                 .build();
             storeRepository.save(store);
 
@@ -754,7 +752,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             LocalDate today = LocalDate.now();
             Store store = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름")
+                .storeName("토끼와 함께하는 붕어빵")
                 .build();
             storeRepository.save(store);
 
@@ -805,15 +803,15 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // given
             Store store1 = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름1")
+                .storeName("붕어빵 가게 이름 1")
                 .build();
             Store store2 = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름2")
+                .storeName("붕어빵 가게 이름 2")
                 .build();
             Store store3 = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름3")
+                .storeName("붕어빵 가게 이름 3")
                 .build();
             storeRepository.saveAll(List.of(store1, store2, store3));
 
@@ -842,19 +840,19 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // given
             Store store1 = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름1")
+                .storeName("붕어빵 가게 이름1")
                 .build();
             Store store2 = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름2")
+                .storeName("붕어빵 가게 이름2")
                 .build();
             Store store3 = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름3")
+                .storeName("붕어빵 가게 이름3")
                 .build();
             Store store4 = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름4")
+                .storeName("붕어빵 가게 이름4")
                 .build();
             storeRepository.saveAll(List.of(store1, store2, store3, store4));
 
@@ -883,11 +881,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // given
             Store store1 = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름1")
+                .storeName("붕어빵 가게 이름1")
                 .build();
             Store store2 = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름2")
+                .storeName("붕어빵 가게 이름2")
                 .build();
             storeRepository.saveAll(List.of(store1, store2));
 
@@ -914,15 +912,15 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // given
             Store store1 = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름1")
+                .storeName("노점상1")
                 .build();
             Store store2 = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름2")
+                .storeName("노점상2")
                 .build();
             Store store3 = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름3")
+                .storeName("노점상3")
                 .build();
             storeRepository.saveAll(List.of(store1, store2, store3));
 

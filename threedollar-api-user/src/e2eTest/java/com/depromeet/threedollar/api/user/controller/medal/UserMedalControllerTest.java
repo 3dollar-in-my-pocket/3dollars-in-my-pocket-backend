@@ -38,12 +38,12 @@ class UserMedalControllerTest extends SetupUserControllerTest {
         void 보유중인_칭호들을_모두_조회한다() throws Exception {
             // given.
             Medal medalActive = MedalCreator.builder()
-                .name("활성화 중인 메달")
+                .name("유저가 활성화 중인 메달")
                 .activationIconUrl("http://medal-image.png")
                 .disableIconUrl("http://medal-image-disable.png")
                 .build();
             Medal medalInActive = MedalCreator.builder()
-                .name("비활성화 중인 메달")
+                .name("유저가 비활성화 중인 메달")
                 .activationIconUrl("http://medal-image-two.png")
                 .disableIconUrl("http://medal-image-disable=two.png")
                 .build();
@@ -85,7 +85,7 @@ class UserMedalControllerTest extends SetupUserControllerTest {
         void 장착중인_훈장을_변경한다() throws Exception {
             // given
             Medal medal = MedalCreator.builder()
-                .name("활성화 중인 메달")
+                .name("유저가 활성화 중인 메달")
                 .acquisitionDescription("활성화 중인 메달 설명")
                 .activationIconUrl("https://active-medal.jpeg")
                 .disableIconUrl("https://disable-medal.jpeg")

@@ -87,7 +87,7 @@ class StoreControllerTest extends SetupUserControllerTest {
         @Test
         void 가게_등록_성공시_가게_정보를_반환한다() throws Exception {
             // given
-            String storeName = "가게 이름";
+            String storeName = "가슴속 삼천원 붕어빵 가게";
             StoreType storeType = StoreType.STORE;
             Set<DayOfTheWeek> appearanceDays = Set.of(DayOfTheWeek.SATURDAY, DayOfTheWeek.MONDAY);
             Set<PaymentMethodType> paymentMethods = Set.of(PaymentMethodType.CASH, PaymentMethodType.ACCOUNT_TRANSFER);
@@ -140,14 +140,14 @@ class StoreControllerTest extends SetupUserControllerTest {
         @Test
         void 가게_수정_성공시_수정된_가게_정보를_반환한다() throws Exception {
             // given
-            String storeName = "가게 이름";
+            String storeName = "새로운 가게의 이름";
             StoreType storeType = StoreType.STORE;
             Set<DayOfTheWeek> appearanceDays = Set.of(DayOfTheWeek.SATURDAY, DayOfTheWeek.MONDAY);
             Set<PaymentMethodType> paymentMethods = Set.of(PaymentMethodType.CASH, PaymentMethodType.ACCOUNT_TRANSFER);
 
             Store store = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름")
+                .storeName("기존의 가게 이름")
                 .build();
             storeRepository.save(store);
 
@@ -161,7 +161,7 @@ class StoreControllerTest extends SetupUserControllerTest {
                 .storeType(storeType)
                 .appearanceDays(appearanceDays)
                 .paymentMethods(paymentMethods)
-                .menus(Set.of(MenuRequest.of("팥붕 슈붕", "5개에 2천원", MenuCategoryType.BUNGEOPPANG)))
+                .menus(Set.of(MenuRequest.of("팥&슈크림 붕어빵", "5개에 2천원", MenuCategoryType.BUNGEOPPANG)))
                 .build();
 
             // when
@@ -185,7 +185,7 @@ class StoreControllerTest extends SetupUserControllerTest {
             // given
             Store store = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름")
+                .storeName("가슴속 삼천원 가게")
                 .build();
             storeRepository.save(store);
 
@@ -205,7 +205,7 @@ class StoreControllerTest extends SetupUserControllerTest {
             // given
             Store store = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름")
+                .storeName("등록된 가게의 이름")
                 .build();
             storeRepository.save(store);
 
@@ -239,7 +239,7 @@ class StoreControllerTest extends SetupUserControllerTest {
             // given
             Store store = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("가게 이름")
+                .storeName("토순이의 붕어빵")
                 .build();
             storeRepository.save(store);
 

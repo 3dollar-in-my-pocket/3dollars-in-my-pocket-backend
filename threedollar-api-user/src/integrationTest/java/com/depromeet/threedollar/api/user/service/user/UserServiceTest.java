@@ -173,7 +173,7 @@ class UserServiceTest {
             // given
             String socialId = "social-id";
             UserSocialType socialType = UserSocialType.APPLE;
-            String name = "토끼";
+            String name = "새로운 닉네임";
 
             User user = UserCreator.builder()
                 .socialId(socialId)
@@ -221,7 +221,7 @@ class UserServiceTest {
             User user = UserCreator.builder()
                 .socialId("social-id")
                 .socialType(UserSocialType.KAKAO)
-                .name("디프만")
+                .name("토끼")
                 .build();
             userRepository.save(user);
 
@@ -246,13 +246,13 @@ class UserServiceTest {
             User user1 = UserCreator.builder()
                 .socialId("social-id1")
                 .socialType(UserSocialType.KAKAO)
-                .name("닉네임1")
+                .name("토수니")
                 .build();
 
             User user2 = UserCreator.builder()
                 .socialId("social-id")
                 .socialType(UserSocialType.APPLE)
-                .name("닉네임2")
+                .name("토도리")
                 .build();
 
             userRepository.saveAll(List.of(user1, user2));
@@ -293,7 +293,7 @@ class UserServiceTest {
             User user = UserCreator.builder()
                 .socialId(socialId)
                 .socialType(socialType)
-                .name("기존의 닉네임")
+                .name("토토")
                 .build();
             userRepository.save(user);
 

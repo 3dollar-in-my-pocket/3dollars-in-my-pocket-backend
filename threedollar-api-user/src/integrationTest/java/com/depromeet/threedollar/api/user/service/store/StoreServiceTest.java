@@ -251,7 +251,10 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             Store store = StoreWithMenuCreator.builder()
                 .userId(userId)
-                .storeName("가게 이름")
+                .storeName("이전의 붕어빵 가게 이름")
+                .latitude(35.0)
+                .longitude(126.0)
+                .storeType(StoreType.CONVENIENCE_STORE)
                 .build();
             storeRepository.save(store);
 
@@ -263,7 +266,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             UpdateStoreRequest request = UpdateStoreRequest.testBuilder()
                 .latitude(latitude)
                 .longitude(longitude)
-                .storeName("가게 이름")
+                .storeName("새로운 붕어빵 가게 이름")
                 .storeType(StoreType.STORE)
                 .appearanceDays(Set.of(DayOfTheWeek.FRIDAY))
                 .paymentMethods(Set.of(PaymentMethodType.CARD))
@@ -290,7 +293,7 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             Store store = StoreWithMenuCreator.builder()
                 .userId(userId)
-                .storeName("가게 이름")
+                .storeName("이전의 붕어빵 가게")
                 .build();
             store.addPaymentMethods(Set.of(PaymentMethodType.CARD));
             storeRepository.save(store);
@@ -298,7 +301,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             UpdateStoreRequest request = UpdateStoreRequest.testBuilder()
                 .latitude(34.0)
                 .longitude(130.0)
-                .storeName("붕어빵")
+                .storeName("새로운 붕어빵 가게 이름")
                 .storeType(StoreType.STORE)
                 .appearanceDays(Collections.emptySet())
                 .paymentMethods(paymentMethodTypes)
@@ -323,7 +326,7 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             Store store = StoreWithMenuCreator.builder()
                 .userId(userId)
-                .storeName("가게 이름")
+                .storeName("기존의 이름")
                 .build();
             store.addAppearanceDays(Set.of(DayOfTheWeek.TUESDAY, DayOfTheWeek.WEDNESDAY));
             storeRepository.save(store);
@@ -331,7 +334,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             UpdateStoreRequest request = UpdateStoreRequest.testBuilder()
                 .latitude(34.0)
                 .longitude(130.0)
-                .storeName("붕어빵")
+                .storeName("새로운 이름")
                 .storeType(StoreType.STORE)
                 .appearanceDays(appearanceDays)
                 .paymentMethods(Collections.emptySet())
@@ -472,13 +475,13 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             Store store = StoreWithMenuCreator.builder()
                 .userId(creatorUserId)
-                .storeName("가게 이름")
+                .storeName("변경 후 새로운 가게 이름")
                 .build();
             storeRepository.save(store);
 
             double latitude = 34.0;
             double longitude = 130.0;
-            String storeName = "붕어빵";
+            String storeName = "변경 전 가게 이름";
             StoreType storeType = StoreType.STORE;
 
             UpdateStoreRequest request = UpdateStoreRequest.testBuilder()
@@ -488,7 +491,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .storeType(storeType)
                 .appearanceDays(Set.of(DayOfTheWeek.FRIDAY))
                 .paymentMethods(Set.of(PaymentMethodType.CARD))
-                .menus(Set.of(MenuRequest.of("메뉴 이름", "가격", MenuCategoryType.BUNGEOPPANG)))
+                .menus(Set.of(MenuRequest.of("새로운 메뉴 이름", "가격에 대한 정보", MenuCategoryType.BUNGEOPPANG)))
                 .build();
 
             // when

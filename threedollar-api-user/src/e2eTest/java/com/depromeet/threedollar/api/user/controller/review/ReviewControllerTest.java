@@ -86,7 +86,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             // given
             AddReviewRequest request = AddReviewRequest.testBuilder()
                 .storeId(store.getId())
-                .contents("우와")
+                .contents("사장님이 친절해요")
                 .rating(4)
                 .build();
 
@@ -109,13 +109,13 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(user.getId())
-                .contents("너무 맛있어요")
+                .contents("붕어빵이 너무 맛있어요\n다음에 또 방문하고 싶어요")
                 .rating(5)
                 .build();
             reviewRepository.save(review);
 
             UpdateReviewRequest request = UpdateReviewRequest.testBuilder()
-                .contents("맛이 없어졌어요")
+                .contents("맛이 없어졌어요\n초심을 잃었네요..")
                 .rating(1)
                 .build();
 
@@ -132,7 +132,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(user.getId())
-                .contents("맛 없어요")
+                .contents("사장님이 불친절해요ㅠ.ㅠ")
                 .rating(2)
                 .build();
             reviewRepository.save(review);
@@ -161,7 +161,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(user.getId())
-                .contents("너무 맛있어요")
+                .contents("붕어빵이 너무 맛있고, 사장님이 친절해요")
                 .rating(5)
                 .build();
             reviewRepository.save(review);
@@ -170,7 +170,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             ApiResponse<String> response = reviewMockApiCaller.deleteReview(review.getId(), token, 200);
 
             // then
-            assertThat(response.getData()).isEqualTo("OK");
+            assertThat(response.getData()).isEqualTo(ApiResponse.OK.getData());
         }
 
         @Test
@@ -179,7 +179,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(user.getId())
-                .contents("너무 맛있어요")
+                .contents("먹기 좋아요")
                 .rating(5)
                 .build();
             reviewRepository.save(review);
@@ -203,13 +203,13 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review1 = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(user.getId())
-                .contents("너무 맛있어요")
+                .contents("맛있어요")
                 .rating(5)
                 .build();
             Review review2 = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(user.getId())
-                .contents("맛있어요")
+                .contents("먹을만 해요")
                 .rating(4)
                 .build();
             Review review3 = ReviewCreator.builder()
@@ -221,7 +221,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review4 = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(user.getId())
-                .contents("좀 그래요")
+                .contents("별로에요")
                 .rating(2)
                 .build();
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
@@ -251,13 +251,13 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review1 = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(user.getId())
-                .contents("너무 맛있어요")
+                .contents("맛있어요")
                 .rating(5)
                 .build();
             Review review2 = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(user.getId())
-                .contents("맛있어요")
+                .contents("먹을만 해요")
                 .rating(4)
                 .build();
             Review review3 = ReviewCreator.builder()
@@ -269,7 +269,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review4 = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(user.getId())
-                .contents("좀 그래요")
+                .contents("별로에요")
                 .rating(2)
                 .build();
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
@@ -299,13 +299,13 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review1 = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(user.getId())
-                .contents("너무 맛있어요")
+                .contents("맛있어요")
                 .rating(5)
                 .build();
             Review review2 = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(user.getId())
-                .contents("맛있어요")
+                .contents("먹을만 해요")
                 .rating(4)
                 .build();
             Review review3 = ReviewCreator.builder()
@@ -317,7 +317,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review4 = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(user.getId())
-                .contents("좀 그래요")
+                .contents("별로에요")
                 .rating(2)
                 .build();
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
@@ -347,13 +347,13 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review1 = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(user.getId())
-                .contents("너무 맛있어요")
+                .contents("맛있어요")
                 .rating(5)
                 .build();
             Review review2 = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(user.getId())
-                .contents("맛있어요")
+                .contents("먹을만 해요")
                 .rating(4)
                 .build();
             Review review3 = ReviewCreator.builder()
@@ -365,7 +365,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review4 = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(user.getId())
-                .contents("좀 그래요")
+                .contents("별로에요")
                 .rating(2)
                 .build();
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
@@ -395,13 +395,13 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review1 = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(user.getId())
-                .contents("너무 맛있어요")
+                .contents("맛있어요")
                 .rating(5)
                 .build();
             Review review2 = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(user.getId())
-                .contents("맛있어요")
+                .contents("먹을만 해요")
                 .rating(4)
                 .build();
             Review review3 = ReviewCreator.builder()
@@ -413,7 +413,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             Review review4 = ReviewCreator.builder()
                 .storeId(store.getId())
                 .userId(user.getId())
-                .contents("좀 그래요")
+                .contents("별로에요")
                 .rating(2)
                 .build();
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
@@ -476,27 +476,27 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             // given
             Store storeDeletedByAdmin = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("삭제되기 전 가게 이름")
+                .storeName("토돌이의 붕어빵 가게")
                 .status(StoreStatus.FILTERED)
                 .build();
             Store storeDeleteByUser = StoreWithMenuCreator.builder()
                 .userId(user.getId())
-                .storeName("삭제되기 전 가게 이름")
+                .storeName("토순인의 붕어빵 가게")
                 .status(StoreStatus.DELETED)
                 .build();
             storeRepository.saveAll(List.of(storeDeleteByUser, storeDeletedByAdmin));
 
             Review review1 = ReviewCreator.builder()
-                .storeId(store.getId())
+                .storeId(storeDeleteByUser.getId())
                 .userId(user.getId())
-                .contents("너무 맛있어요")
-                .rating(5)
+                .contents("가게가 사라졌어요")
+                .rating(1)
                 .build();
             Review review2 = ReviewCreator.builder()
-                .storeId(store.getId())
+                .storeId(storeDeletedByAdmin.getId())
                 .userId(user.getId())
-                .contents("맛있어요")
-                .rating(5)
+                .contents("가게가 없어졌어요")
+                .rating(3)
                 .build();
             reviewRepository.saveAll(List.of(review1, review2));
 

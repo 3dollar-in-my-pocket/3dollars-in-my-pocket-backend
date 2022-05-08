@@ -30,8 +30,8 @@ internal class AdvertisementControllerTest(
         val advertisement = AdvertisementCreator.create(
             positionType = AdvertisementPositionType.SPLASH,
             platformType = platform,
-            title = "광고 타이틀",
-            subTitle = "광고 내용\n광고 내용",
+            title = "가슴속 3천원 팀원 이야기",
+            subTitle = "월 100명에서 IOS 차트 1위가 된\n가슴속 3천원 팀의 솔직 담백 토크",
             imageUrl = "https://pop-up-image.png",
             linkUrl = "https://my-link.com",
             bgColor = "#ffffff",
@@ -65,8 +65,8 @@ internal class AdvertisementControllerTest(
         val advertisement = AdvertisementCreator.create(
             positionType = AdvertisementPositionType.SPLASH,
             platformType = platform,
-            title = "광고 타이틀",
-            subTitle = "광고 내용\n광고 내용",
+            title = "가슴속 3천원 팀원 이야기",
+            subTitle = "월 100명에서 IOS 차트 1위가 된\n가슴속 3천원 팀의 솔직 담백 토크",
             imageUrl = "https://pop-up-image.png",
             linkUrl = "https://my-link.com",
             bgColor = "#ffffff",

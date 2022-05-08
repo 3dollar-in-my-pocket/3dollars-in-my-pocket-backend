@@ -34,7 +34,7 @@ public abstract class SetupStoreControllerTest extends SetupUserControllerTest {
 
     @BeforeEach
     void setUpStore() {
-        Store store = StoreWithMenuCreator.builder()
+        store = StoreWithMenuCreator.builder()
             .userId(user.getId())
             .storeName("디프만 붕어빵")
             .build();
