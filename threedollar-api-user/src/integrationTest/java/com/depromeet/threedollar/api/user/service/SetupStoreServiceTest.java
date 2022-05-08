@@ -11,8 +11,8 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreWithMenuCreator;
 
 public abstract class SetupStoreServiceTest extends SetupUserServiceTest {
 
@@ -29,13 +29,22 @@ public abstract class SetupStoreServiceTest extends SetupUserServiceTest {
     private PaymentMethodRepository paymentMethodRepository;
 
     protected Long storeId;
-
     protected Store store;
 
     @BeforeEach
     void setUpStore() {
-        store = StoreCreator.create(userId, "디프만 붕어빵");
-        store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
+        store = StoreWithMenuCreator.builder()
+            .userId(user.getId())
+            .storeName("디프만 붕어빵")
+            .build();
+        store.addMenus(List.of(
+            MenuCreator.builder()
+                .store(store)
+                .name("팥 붕어빵")
+                .price("2개에 천원")
+                .category(MenuCategoryType.BUNGEOPPANG)
+                .build()
+        ));
         storeRepository.save(store);
         storeId = store.getId();
     }

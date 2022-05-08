@@ -37,12 +37,12 @@ internal class AdminUserReviewControllerTest(
         @Test
         fun `관리자가 특정 리뷰를 삭제한다`() {
             // given
-            val review = ReviewCreator.create(
-                storeId = 10000L,
-                userId = 1L,
-                rating = 1,
-                contents = "욕설"
-            )
+            val review = ReviewCreator.builder()
+                .storeId(10000L)
+                .userId(1L)
+                .contents("욕설")
+                .rating(1)
+                .build()
             reviewRepository.save(review)
 
             mockMvc.delete("/v1/user/review/${review.id}") {
@@ -64,25 +64,25 @@ internal class AdminUserReviewControllerTest(
         @Test
         fun `관리자가 특정 리뷰를 조회한다`() {
             // given
-            val user = UserCreator.create(
-                socialId = "social-id",
-                socialType = UserSocialType.GOOGLE,
-                name = "닉네임"
-            )
+            val user = UserCreator.builder()
+                .socialId("social-id")
+                .socialType(UserSocialType.GOOGLE)
+                .name("닉네임")
+                .build()
             userRepository.save(user)
 
-            val store = StoreCreator.create(
-                userId = user.id,
-                storeName = "가게 이름",
-            )
+            val store = StoreCreator.builder()
+                .userId(user.id)
+                .storeName("가게 이름")
+                .build()
             storeRepository.save(store)
 
-            val review = ReviewCreator.create(
-                storeId = store.id,
-                userId = user.id,
-                rating = 5,
-                contents = "너무 맛있어요"
-            )
+            val review = ReviewCreator.builder()
+                .storeId(store.id)
+                .userId(user.id)
+                .contents("너무 맛있어요")
+                .rating(5)
+                .build()
             reviewRepository.save(review)
 
             mockMvc.get("/v1/user/review/${review.id}") {
@@ -108,12 +108,12 @@ internal class AdminUserReviewControllerTest(
         @Test
         fun `관리자가 특정 리뷰를 조회할때 유저나 가게가 없는경우 해당 정보에 null이 반환된다`() {
             // given
-            val review = ReviewCreator.create(
-                storeId = -1L,
-                userId = -1L,
-                rating = 3,
-                contents = "맛있어요"
-            )
+            val review = ReviewCreator.builder()
+                .storeId(-1L)
+                .userId(-1L)
+                .contents("맛있어요")
+                .rating(3)
+                .build()
             reviewRepository.save(review)
 
             mockMvc.get("/v1/user/review/${review.id}") {

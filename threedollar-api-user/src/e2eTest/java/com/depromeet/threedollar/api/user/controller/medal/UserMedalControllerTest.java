@@ -37,8 +37,16 @@ class UserMedalControllerTest extends SetupUserControllerTest {
         @Test
         void 보유중인_칭호들을_모두_조회한다() throws Exception {
             // given.
-            Medal medalActive = MedalCreator.create("활성화중인 메달", "활성중인 메달 설명", "https://active-medal.png", "https://disable-medal.png");
-            Medal medalInActive = MedalCreator.create("비활성화중인 메달", "비활성화중인 메달 설명", "https://active-medal-two.png", "https://disable-medal-two.png");
+            Medal medalActive = MedalCreator.builder()
+                .name("유저가 활성화 중인 메달")
+                .activationIconUrl("http://medal-image.png")
+                .disableIconUrl("http://medal-image-disable.png")
+                .build();
+            Medal medalInActive = MedalCreator.builder()
+                .name("유저가 비활성화 중인 메달")
+                .activationIconUrl("http://medal-image-two.png")
+                .disableIconUrl("http://medal-image-disable=two.png")
+                .build();
             medalRepository.saveAll(List.of(medalActive, medalInActive));
 
             userMedalRepository.saveAll(List.of(
@@ -76,7 +84,12 @@ class UserMedalControllerTest extends SetupUserControllerTest {
         @Test
         void 장착중인_훈장을_변경한다() throws Exception {
             // given
-            Medal medal = MedalCreator.create("활성화중인 메달", "활성중인 메달 설명", "https://active-medal.jpeg", "https://disable-medal.jpeg");
+            Medal medal = MedalCreator.builder()
+                .name("유저가 활성화 중인 메달")
+                .acquisitionDescription("활성화 중인 메달 설명")
+                .activationIconUrl("https://active-medal.jpeg")
+                .disableIconUrl("https://disable-medal.jpeg")
+                .build();
             medalRepository.save(medal);
 
             userMedalRepository.save(UserMedalCreator.createInActive(medal, user));

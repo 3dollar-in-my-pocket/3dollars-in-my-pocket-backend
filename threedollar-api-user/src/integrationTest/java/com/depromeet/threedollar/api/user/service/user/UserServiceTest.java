@@ -77,7 +77,11 @@ class UserServiceTest {
         void 회원가입시_중복되는_닉네임인경우_Conflict_에러가_발생한다() {
             // given
             String name = "will";
-            userRepository.save(UserCreator.create("social-id", UserSocialType.KAKAO, name));
+            userRepository.save(UserCreator.builder()
+                .socialId("social-id")
+                .socialType(UserSocialType.KAKAO)
+                .name(name)
+                .build());
 
             CreateUserRequest request = CreateUserRequest.builder()
                 .socialId("another-social-id")
@@ -95,7 +99,11 @@ class UserServiceTest {
             String socialId = "conflict-social-id";
             UserSocialType socialType = UserSocialType.GOOGLE;
 
-            userRepository.save(UserCreator.create(socialId, socialType, "기존의 닉네임"));
+            userRepository.save(UserCreator.builder()
+                .socialId(socialId)
+                .socialType(socialType)
+                .name("기존의 닉네임")
+                .build());
 
             CreateUserRequest request = CreateUserRequest.builder()
                 .socialId(socialId)
@@ -130,8 +138,11 @@ class UserServiceTest {
         void 중복된_닉네임인경우_Conflcit_에러가_발생한다() {
             // given
             String name = "토끼";
-            User user = UserCreator.create("social-id", UserSocialType.KAKAO, name);
-            userRepository.save(user);
+            userRepository.save(UserCreator.builder()
+                .socialId("social-id")
+                .socialType(UserSocialType.KAKAO)
+                .name(name)
+                .build());
 
             CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
                 .name(name)
@@ -162,9 +173,13 @@ class UserServiceTest {
             // given
             String socialId = "social-id";
             UserSocialType socialType = UserSocialType.APPLE;
-            String name = "토끼";
+            String name = "새로운 닉네임";
 
-            User user = UserCreator.create(socialId, socialType, "기존의 닉네임");
+            User user = UserCreator.builder()
+                .socialId(socialId)
+                .socialType(socialType)
+                .name("기존의 닉네임")
+                .build();
             userRepository.save(user);
 
             UpdateUserInfoRequest request = UpdateUserInfoRequest.testBuilder()
@@ -203,7 +218,11 @@ class UserServiceTest {
         @Test
         void 회원탈퇴시_유저의_백업데이터가_생성된다() {
             // given
-            User user = UserCreator.create("social-id", UserSocialType.KAKAO, "디프만");
+            User user = UserCreator.builder()
+                .socialId("social-id")
+                .socialType(UserSocialType.KAKAO)
+                .name("토끼")
+                .build();
             userRepository.save(user);
 
             // when
@@ -224,8 +243,17 @@ class UserServiceTest {
         @Test
         void 회원탈퇴시_User테이블에서의_해당_데이터는_삭제된다() {
             // given
-            User user1 = UserCreator.create("social-id1", UserSocialType.KAKAO, "기존의 닉네임1");
-            User user2 = UserCreator.create("social-id2", UserSocialType.APPLE, "기존의 닉네임2");
+            User user1 = UserCreator.builder()
+                .socialId("social-id1")
+                .socialType(UserSocialType.KAKAO)
+                .name("토수니")
+                .build();
+
+            User user2 = UserCreator.builder()
+                .socialId("social-id")
+                .socialType(UserSocialType.APPLE)
+                .name("토도리")
+                .build();
 
             userRepository.saveAll(List.of(user1, user2));
 
@@ -255,10 +283,18 @@ class UserServiceTest {
             String socialId = "social-id";
             UserSocialType socialType = UserSocialType.GOOGLE;
 
-            WithdrawalUser withdrawalUser = WithdrawalUserCreator.create(socialId, socialType, 10000L);
+            WithdrawalUser withdrawalUser = WithdrawalUserCreator.builder()
+                .socialId(socialId)
+                .socialType(socialType)
+                .userId(10000L)
+                .build();
             withdrawalUserRepository.save(withdrawalUser);
 
-            User user = UserCreator.create(socialId, socialType, "기존의 닉네임2");
+            User user = UserCreator.builder()
+                .socialId(socialId)
+                .socialType(socialType)
+                .name("토토")
+                .build();
             userRepository.save(user);
 
             // when

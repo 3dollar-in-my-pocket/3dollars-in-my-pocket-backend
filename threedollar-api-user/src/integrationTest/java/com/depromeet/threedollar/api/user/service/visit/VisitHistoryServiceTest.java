@@ -82,7 +82,13 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
             LocalDate dateOfVisit = LocalDate.of(2021, 12, 1);
             VisitType visitType = VisitType.EXISTS;
 
-            visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, dateOfVisit));
+            VisitHistory visitHistory = VisitHistoryCreator.builder()
+                .store(store)
+                .userId(user.getId())
+                .type(VisitType.EXISTS)
+                .dateOfVisit(dateOfVisit)
+                .build();
+            visitHistoryRepository.save(visitHistory);
 
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testBuilder()
                 .storeId(storeId)

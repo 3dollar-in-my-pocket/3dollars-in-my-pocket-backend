@@ -25,8 +25,20 @@ class UserTest {
         MedalAcquisitionConditionType conditionType = MedalAcquisitionConditionType.ADD_REVIEW;
         int count = 5;
 
-        User user = UserCreator.create("social-id", UserSocialType.KAKAO, "닉네임");
-        Medal medal = MedalCreator.create(medalName, description, activationIconUrl, disabledIconUrl, conditionType, count);
+        User user = UserCreator.builder()
+            .socialId("social-id")
+            .socialType(UserSocialType.KAKAO)
+            .name("닉네임")
+            .build();
+
+        Medal medal = MedalCreator.builder()
+            .name(medalName)
+            .acquisitionDescription(description)
+            .activationIconUrl(activationIconUrl)
+            .disableIconUrl(disabledIconUrl)
+            .conditionType(conditionType)
+            .conditionCount(count)
+            .build();
 
         // when
         user.addMedals(List.of(medal));
@@ -50,8 +62,15 @@ class UserTest {
     @Test
     void 유저가_메달을_획득하면_비활성화_상태로_보관된다() {
         // given
-        User user = UserCreator.create("social-id", UserSocialType.KAKAO, "닉네임");
-        Medal medalA = MedalCreator.create("메달 A");
+        User user = UserCreator.builder()
+            .socialId("social-id")
+            .socialType(UserSocialType.KAKAO)
+            .name("닉네임")
+            .build();
+
+        Medal medalA = MedalCreator.builder()
+            .name("메달 A")
+            .build();
 
         // when
         user.addMedals(List.of(medalA));
@@ -66,8 +85,16 @@ class UserTest {
     @Test
     void 유저가_장착한_메달을_조회할때_장착한_메달이_없는경우_예외가_아닌_null_을_반환한다() {
         // given
-        User user = UserCreator.create("social-id", UserSocialType.KAKAO, "닉네임");
-        Medal medalA = MedalCreator.create("메달 A");
+        User user = UserCreator.builder()
+            .socialId("social-id")
+            .socialType(UserSocialType.KAKAO)
+            .name("닉네임")
+            .build();
+
+        Medal medalA = MedalCreator.builder()
+            .name("메달 A")
+            .build();
+
         user.addMedals(List.of(medalA));
 
         // when

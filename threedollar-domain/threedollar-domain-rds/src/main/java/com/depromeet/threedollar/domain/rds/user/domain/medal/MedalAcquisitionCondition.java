@@ -13,6 +13,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.jetbrains.annotations.Nullable;
+
 import com.depromeet.threedollar.domain.rds.common.domain.AuditingTimeEntity;
 
 import lombok.AccessLevel;
@@ -49,14 +51,14 @@ public class MedalAcquisitionCondition extends AuditingTimeEntity {
     private String description;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private MedalAcquisitionCondition(Medal medal, MedalAcquisitionConditionType conditionType, int count, String description) {
+    private MedalAcquisitionCondition(Medal medal, MedalAcquisitionConditionType conditionType, int count, @Nullable String description) {
         this.medal = medal;
         this.conditionType = conditionType;
         this.count = count;
         this.description = description;
     }
 
-    static MedalAcquisitionCondition of(Medal medal, MedalAcquisitionConditionType conditionType, int count, String description) {
+    static MedalAcquisitionCondition of(Medal medal, MedalAcquisitionConditionType conditionType, int count, @Nullable String description) {
         return new MedalAcquisitionCondition(medal, conditionType, count, description);
     }
 

@@ -41,7 +41,9 @@ class UserMedalServiceTest extends SetupUserServiceTest {
         @Test
         void 장착중인_대표_칭호를_변경한다() {
             // given
-            Medal medal = MedalCreator.create("붕친맨");
+            Medal medal = MedalCreator.builder()
+                .name("붕친맨")
+                .build();
             medalRepository.save(medal);
 
             UserMedal userMedal = UserMedalCreator.createInActive(medal, user);

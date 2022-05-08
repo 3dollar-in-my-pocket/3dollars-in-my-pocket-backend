@@ -39,8 +39,8 @@ internal class BossStoreFeedbackControllerTest(
         val feedbackType = BossStoreFeedbackType.BOSS_IS_KIND
 
         val bossStore = BossStoreCreator.create(
-            bossId = "bossId",
-            name = "가슴속 3천원"
+            bossId = "boss-id",
+            name = "토끼"
         )
         bossStoreRepository.save(bossStore)
 
@@ -100,8 +100,8 @@ internal class BossStoreFeedbackControllerTest(
     fun `사장님 가게에 피드백을 추가합니다`() {
         // given
         val bossStore = BossStoreCreator.create(
-            bossId = "bossId",
-            name = "가슴속 3천원"
+            bossId = "boss-id",
+            name = "토끼님"
         )
         bossStoreRepository.save(bossStore)
 

@@ -37,7 +37,12 @@ internal abstract class SetupBossAccountAndUserServiceTest {
 
     @BeforeEach
     fun setup() {
-        userId = userRepository.save(UserCreator.create("social-id", UserSocialType.KAKAO, "디프만")).id
+        val user = UserCreator.builder()
+            .socialId("social-id")
+            .socialType(UserSocialType.KAKAO)
+            .name("디프만")
+            .build()
+        userId = userRepository.save(user).id
         bossId = bossAccountRepository.save(BossAccountCreator.create(
             socialId = "social-id-test",
             socialType = BossAccountSocialType.KAKAO,

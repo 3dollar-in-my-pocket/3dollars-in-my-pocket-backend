@@ -16,10 +16,10 @@ import com.depromeet.threedollar.domain.mongo.boss.event.registration.NewBossApp
 
 @Service
 class SignupService(
-        private val bossAccountRepository: BossAccountRepository,
-        private val bossRegistrationRepository: BossRegistrationRepository,
-        private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-        private val eventPublisher: ApplicationEventPublisher
+    private val bossAccountRepository: BossAccountRepository,
+    private val bossRegistrationRepository: BossRegistrationRepository,
+    private val bossStoreCategoryRepository: BossStoreCategoryRepository,
+    private val eventPublisher: ApplicationEventPublisher
 ) {
 
     @Transactional

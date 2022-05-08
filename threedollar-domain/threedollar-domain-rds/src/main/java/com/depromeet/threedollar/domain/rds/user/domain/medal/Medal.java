@@ -41,16 +41,16 @@ public class Medal extends AuditingTimeEntity {
     private MedalAcquisitionCondition acquisitionCondition;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private Medal(String name, String introduction, String activationIconUrl, String disableIconUrl,
-                  MedalAcquisitionConditionType conditionType, int conditionCount, String acquisitionDescription) {
+    private Medal(String name, @Nullable String introduction, String activationIconUrl, String disableIconUrl,
+                  MedalAcquisitionConditionType conditionType, int conditionCount, @Nullable String acquisitionDescription) {
         this.name = name;
         this.introduction = introduction;
         this.medalImage = MedalImage.of(activationIconUrl, disableIconUrl);
         this.acquisitionCondition = MedalAcquisitionCondition.of(this, conditionType, conditionCount, acquisitionDescription);
     }
 
-    public static Medal newInstance(String name, String introduction, String activationIconUrl, String disableIconUrl,
-                                    MedalAcquisitionConditionType conditionType, int conditionCount, String acquisitionDescription) {
+    public static Medal newInstance(String name, @Nullable String introduction, String activationIconUrl, String disableIconUrl,
+                                    MedalAcquisitionConditionType conditionType, int conditionCount, @Nullable String acquisitionDescription) {
         return Medal.builder()
             .name(name)
             .introduction(introduction)

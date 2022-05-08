@@ -23,10 +23,10 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registrat
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class SignupServiceTest(
-        private val signupService: SignupService,
-        private val bossRegistrationRepository: BossRegistrationRepository,
-        private val bossAccountRepository: BossAccountRepository,
-        private val bossStoreCategoryRepository: BossStoreCategoryRepository
+    private val signupService: SignupService,
+    private val bossRegistrationRepository: BossRegistrationRepository,
+    private val bossAccountRepository: BossAccountRepository,
+    private val bossStoreCategoryRepository: BossStoreCategoryRepository
 ) {
 
     @AfterEach

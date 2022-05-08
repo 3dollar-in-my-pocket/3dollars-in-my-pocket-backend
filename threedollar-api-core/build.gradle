@@ -28,9 +28,9 @@ dependencies {
     implementation("com.github.ben-manes.caffeine:caffeine")
 
     // TestFixtures
-    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-mongo")))
-    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-redis")))
-    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-rds")))
+    testImplementation testFixtures(project(":threedollar-domain:threedollar-domain-mongo"))
+    testImplementation testFixtures(project(":threedollar-domain:threedollar-domain-redis"))
+    testImplementation testFixtures(project(":threedollar-domain:threedollar-domain-rds"))
 }
 
 bootJar {

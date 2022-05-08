@@ -357,7 +357,7 @@ internal class BossStoreSetupBossAccountServiceTest(
             // given
             val bossStore = BossStoreCreator.create(
                 bossId = bossId,
-                name = "사장님 가게"
+                name = "사장님 가게 이름"
             )
             bossStoreRepository.save(bossStore)
 

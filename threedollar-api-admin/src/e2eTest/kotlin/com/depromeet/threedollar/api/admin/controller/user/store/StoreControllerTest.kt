@@ -20,6 +20,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequest
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreWithMenuCreator
 import com.fasterxml.jackson.core.type.TypeReference
 
 internal class StoreControllerTest(
@@ -41,12 +42,24 @@ internal class StoreControllerTest(
         @Test
         fun N개이상_삭제_요청된_가게들을_삭제요청이_많은것부터_조회한다_첫페이지() {
             // given
-            val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1")
-            val store2 = StoreCreator.createWithDefaultMenu(101L, "가게2")
-            val store3 = StoreCreator.createWithDefaultMenu(102L, "가게3")
-            val store4 = StoreCreator.createWithDefaultMenu(103L, "가게4")
-
+            val store1 = StoreWithMenuCreator.builder()
+                .userId(100L)
+                .storeName("가게1")
+                .build()
+            val store2 = StoreWithMenuCreator.builder()
+                .userId(101L)
+                .storeName("가게2")
+                .build()
+            val store3 = StoreWithMenuCreator.builder()
+                .userId(102L)
+                .storeName("가게3")
+                .build()
+            val store4 = StoreWithMenuCreator.builder()
+                .userId(103L)
+                .storeName("가게4")
+                .build()
             storeRepository.saveAll(listOf(store1, store2, store3, store4))
+
             storeDeleteRequestRepository.saveAll(
                 listOf(
                     // store1: 4개의 삭제 요청
@@ -93,10 +106,22 @@ internal class StoreControllerTest(
         @Test
         fun N개이상_삭제_요청된_가게들을_삭제요청이_많은것부터_조회한다_두번째_페이지() {
             // given
-            val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1")
-            val store2 = StoreCreator.createWithDefaultMenu(101L, "가게2")
-            val store3 = StoreCreator.createWithDefaultMenu(102L, "가게3")
-            val store4 = StoreCreator.createWithDefaultMenu(103L, "가게4")
+            val store1 = StoreWithMenuCreator.builder()
+                .userId(100L)
+                .storeName("가게1")
+                .build()
+            val store2 = StoreWithMenuCreator.builder()
+                .userId(101L)
+                .storeName("가게2")
+                .build()
+            val store3 = StoreWithMenuCreator.builder()
+                .userId(102L)
+                .storeName("가게3")
+                .build()
+            val store4 = StoreWithMenuCreator.builder()
+                .userId(103L)
+                .storeName("가게4")
+                .build()
 
             storeRepository.saveAll(listOf(store1, store2, store3, store4))
             storeDeleteRequestRepository.saveAll(
@@ -144,7 +169,10 @@ internal class StoreControllerTest(
         @Test
         fun N개이상_삭제_요청된_가게들을_조회시_minCount보다_요청수가_적은_가게들은_조회되지_않는다() {
             // given
-            val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1")
+            val store1 = StoreWithMenuCreator.builder()
+                .userId(100L)
+                .storeName("가게1")
+                .build()
 
             storeRepository.save(store1)
 
@@ -187,10 +215,22 @@ internal class StoreControllerTest(
         @Test
         fun 최신순으로_스크롤_페이지네이션으로_가게를_조회한다_첫스크롤() {
             // given
-            val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1")
-            val store2 = StoreCreator.createWithDefaultMenu(101L, "가게2")
-            val store3 = StoreCreator.createWithDefaultMenu(102L, "가게3")
-            val store4 = StoreCreator.createWithDefaultMenu(103L, "가게3")
+            val store1 = StoreWithMenuCreator.builder()
+                .userId(100L)
+                .storeName("가게1")
+                .build()
+            val store2 = StoreWithMenuCreator.builder()
+                .userId(101L)
+                .storeName("가게2")
+                .build()
+            val store3 = StoreWithMenuCreator.builder()
+                .userId(102L)
+                .storeName("가게3")
+                .build()
+            val store4 = StoreWithMenuCreator.builder()
+                .userId(103L)
+                .storeName("가게4")
+                .build()
             storeRepository.saveAll(listOf(store1, store2, store3, store4))
 
             val size = 2
@@ -217,10 +257,22 @@ internal class StoreControllerTest(
         @Test
         fun 최신순으로_스크롤_페이지네이션으로_가게를_조회한다_마지막_스크롤() {
             // given
-            val store1 = StoreCreator.createWithDefaultMenu(100L, "가게1")
-            val store2 = StoreCreator.createWithDefaultMenu(101L, "가게2")
-            val store3 = StoreCreator.createWithDefaultMenu(102L, "가게3")
-            val store4 = StoreCreator.createWithDefaultMenu(103L, "가게3")
+            val store1 = StoreWithMenuCreator.builder()
+                .userId(100L)
+                .storeName("가게1")
+                .build()
+            val store2 = StoreWithMenuCreator.builder()
+                .userId(101L)
+                .storeName("가게2")
+                .build()
+            val store3 = StoreWithMenuCreator.builder()
+                .userId(102L)
+                .storeName("가게3")
+                .build()
+            val store4 = StoreWithMenuCreator.builder()
+                .userId(103L)
+                .storeName("가게4")
+                .build()
             storeRepository.saveAll(listOf(store1, store2, store3, store4))
 
             val size = 2
@@ -252,13 +304,13 @@ internal class StoreControllerTest(
     @Test
     fun `특정 가게를 삭제한다`() {
         // given
-        val store = StoreCreator.create(
-            userId = 10000L,
-            storeName = "가게 이름",
-            latitude = 36.0,
-            longitude = 126.0,
-            rating = 1.0
-        )
+        val store = StoreCreator.builder()
+            .userId(10000L)
+            .storeName("가게 이름")
+            .latitude(36.0)
+            .longitude(126.0)
+            .rating(1.0)
+            .build()
         storeRepository.save(store)
 
         // when & then

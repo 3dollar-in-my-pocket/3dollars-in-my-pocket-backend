@@ -13,6 +13,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreWithMenuCreator
 
 internal class UserActivityControllerTest(
     private val storeRepository: StoreRepository,
@@ -48,12 +49,12 @@ internal class UserActivityControllerTest(
         @Test
         fun `유저의 활동정보가 포함된 회원 정보를 조회시 활성화중인 메달이 있는 경우 함께 조회된다`() {
             // given
-            val medal = MedalCreator.create(
-                name = "붕어빵 전문가",
-                introduction = "우리 동네 붕어에 대해서는 내가 척척 박사",
-                activationIconUrl = "http://medal-image.png",
-                disableIconUrl = "http://medal-image-disable.png"
-            )
+            val medal = MedalCreator.builder()
+                .name("붕어빵 전문가")
+                .acquisitionDescription("우리 동네 붕어에 대해서는 내가 척척 박사")
+                .activationIconUrl("http://medal-image.png")
+                .disableIconUrl("http://medal-image-disable.png")
+                .build()
             medalRepository.save(medal)
             userMedalRepository.save(UserMedalCreator.createActive(medal, user))
 
@@ -75,8 +76,14 @@ internal class UserActivityControllerTest(
             // given
             storeRepository.saveAll(
                 listOf(
-                    StoreCreator.createWithDefaultMenu(user.id, "제보한 가게 1"),
-                    StoreCreator.createWithDefaultMenu(user.id, "제보한 가게 2")
+                    StoreWithMenuCreator.builder()
+                        .userId(user.id)
+                        .storeName("제보한 가게 1")
+                        .build(),
+                    StoreWithMenuCreator.builder()
+                        .userId(user.id)
+                        .storeName("제보한 가게 2")
+                        .build()
                 )
             )
 
@@ -94,14 +101,32 @@ internal class UserActivityControllerTest(
         @Test
         fun `유저가 작성한 리뷰 개수 조회한다`() {
             // given
-            val store = StoreCreator.create(user.id, "가게")
+            val store = StoreCreator.builder()
+                .userId(user.id)
+                .storeName("제보한 가게 1")
+                .build()
             storeRepository.save(store)
 
             reviewRepository.saveAll(
                 listOf(
-                    ReviewCreator.create(store.id, user.id, "리뷰 1", 4),
-                    ReviewCreator.create(store.id, user.id, "리뷰 2", 3),
-                    ReviewCreator.create(store.id, user.id, "리뷰 3", 2)
+                    ReviewCreator.builder()
+                        .storeId(store.id)
+                        .userId(user.id)
+                        .contents("리뷰 1")
+                        .rating(4)
+                        .build(),
+                    ReviewCreator.builder()
+                        .storeId(store.id)
+                        .userId(user.id)
+                        .contents("리뷰 2")
+                        .rating(3)
+                        .build(),
+                    ReviewCreator.builder()
+                        .storeId(store.id)
+                        .userId(user.id)
+                        .contents("리뷰 3")
+                        .rating(2)
+                        .build()
                 )
             )
 
@@ -119,18 +144,18 @@ internal class UserActivityControllerTest(
         @Test
         fun `유저가 보유한 메달 개수 조회한다`() {
             // given
-            val medalOne = MedalCreator.create(
-                name = "붕어빵 전문가",
-                introduction = "우리 동네 붕어에 대해서는 내가 척척 박사",
-                activationIconUrl = "http://medal-image.png",
-                disableIconUrl = "http://medal-image-disable.png"
-            )
-            val medalTwo = MedalCreator.create(
-                name = "붕친맨",
-                introduction = "앗, 이정도면 붕어빵 척척박사는 넘어섰네요",
-                activationIconUrl = "http://medal-image.png",
-                disableIconUrl = "http://medal-image-disable.png"
-            )
+            val medalOne = MedalCreator.builder()
+                .name("붕어빵 전문가")
+                .acquisitionDescription("우리 동네 붕어에 대해서는 내가 척척 박사")
+                .activationIconUrl("http://medal-image.png")
+                .disableIconUrl("http://medal-image-disable.png")
+                .build()
+            val medalTwo = MedalCreator.builder()
+                .name("붕친맨")
+                .acquisitionDescription("앗, 이정도면 붕어빵 척척박사는 넘어섰네요")
+                .activationIconUrl("http://medal-image.png")
+                .disableIconUrl("http://medal-image-disable.png")
+                .build()
             medalRepository.saveAll(listOf(medalOne, medalTwo))
 
             userMedalRepository.saveAll(
@@ -175,12 +200,12 @@ internal class UserActivityControllerTest(
         @Test
         fun `유저의 활동정보가 포함된 회원 정보를 조회시 활성화중인 메달이 있는 경우 함께 조회된다`() {
             // given
-            val medal = MedalCreator.create(
-                name = "붕어빵 전문가",
-                introduction = "우리 동네 붕어에 대해서는 내가 척척 박사",
-                activationIconUrl = "http://medal-image.png",
-                disableIconUrl = "http://medal-image-disable.png"
-            )
+            val medal = MedalCreator.builder()
+                .name("붕어빵 전문가")
+                .acquisitionDescription("우리 동네 붕어에 대해서는 내가 척척 박사")
+                .activationIconUrl("http://medal-image.png")
+                .disableIconUrl("http://medal-image-disable.png")
+                .build()
             medalRepository.save(medal)
             userMedalRepository.save(UserMedalCreator.createActive(medal, user))
 
@@ -202,8 +227,14 @@ internal class UserActivityControllerTest(
             // given
             storeRepository.saveAll(
                 listOf(
-                    StoreCreator.createWithDefaultMenu(user.id, "제보한 가게 1"),
-                    StoreCreator.createWithDefaultMenu(user.id, "제보한 가게 2")
+                    StoreWithMenuCreator.builder()
+                        .userId(user.id)
+                        .storeName("제보한 가게 1")
+                        .build(),
+                    StoreWithMenuCreator.builder()
+                        .userId(user.id)
+                        .storeName("제보한 가게 2")
+                        .build()
                 )
             )
 
@@ -221,14 +252,32 @@ internal class UserActivityControllerTest(
         @Test
         fun `유저가 작성한 리뷰 개수 조회한다`() {
             // given
-            val store = StoreCreator.create(user.id, "가게")
+            val store = StoreCreator.builder()
+                .userId(user.id)
+                .storeName("가게 이름")
+                .build()
             storeRepository.save(store)
 
             reviewRepository.saveAll(
                 listOf(
-                    ReviewCreator.create(store.id, user.id, "리뷰 1", 4),
-                    ReviewCreator.create(store.id, user.id, "리뷰 2", 3),
-                    ReviewCreator.create(store.id, user.id, "리뷰 3", 2)
+                    ReviewCreator.builder()
+                        .storeId(store.id)
+                        .userId(user.id)
+                        .contents("리뷰 1")
+                        .rating(4)
+                        .build(),
+                    ReviewCreator.builder()
+                        .storeId(store.id)
+                        .userId(user.id)
+                        .contents("리뷰 2")
+                        .rating(3)
+                        .build(),
+                    ReviewCreator.builder()
+                        .storeId(store.id)
+                        .userId(user.id)
+                        .contents("리뷰 3")
+                        .rating(2)
+                        .build()
                 )
             )
 
@@ -246,18 +295,18 @@ internal class UserActivityControllerTest(
         @Test
         fun `유저가 보유한 메달 개수 조회한다`() {
             // given
-            val medalOne = MedalCreator.create(
-                name = "붕어빵 전문가",
-                introduction = "우리 동네 붕어에 대해서는 내가 척척 박사",
-                activationIconUrl = "http://medal-image.png",
-                disableIconUrl = "http://medal-image-disable.png"
-            )
-            val medalTwo = MedalCreator.create(
-                name = "붕친맨",
-                introduction = "앗, 이정도면 붕어빵 척척박사는 넘어섰네요",
-                activationIconUrl = "http://medal-image.png",
-                disableIconUrl = "http://medal-image-disable.png"
-            )
+            val medalOne = MedalCreator.builder()
+                .name("붕어빵 전문가")
+                .acquisitionDescription("우리 동네 붕어에 대해서는 내가 척척 박사")
+                .activationIconUrl("http://medal-image.png")
+                .disableIconUrl("http://medal-image-disable.png")
+                .build()
+            val medalTwo = MedalCreator.builder()
+                .name("붕친맨")
+                .acquisitionDescription("앗, 이정도면 붕어빵 척척박사는 넘어섰네요")
+                .activationIconUrl("http://medal-image.png")
+                .disableIconUrl("http://medal-image-disable.png")
+                .build()
             medalRepository.saveAll(listOf(medalOne, medalTwo))
 
             userMedalRepository.saveAll(

@@ -70,7 +70,11 @@ class AppleAuthServiceTest {
         @Test
         void 애플_로그인_성공시_멤버의_ID_가_반환된다() {
             // given
-            User user = UserCreator.create(SOCIAL_ID, SOCIAL_TYPE, "닉네임");
+            User user = UserCreator.builder()
+                .socialId(SOCIAL_ID)
+                .socialType(SOCIAL_TYPE)
+                .name("닉네임")
+                .build();
             userRepository.save(user);
 
             LoginRequest request = LoginRequest.testBuilder()
@@ -124,7 +128,12 @@ class AppleAuthServiceTest {
         @Test
         void 애플_회원가입시_이미_가입한_유저면_Conflict_에러_발생() {
             // given
-            userRepository.save(UserCreator.create(SOCIAL_ID, SOCIAL_TYPE, "헬로우"));
+            User user = UserCreator.builder()
+                .socialId(SOCIAL_ID)
+                .socialType(SOCIAL_TYPE)
+                .name("헬로우")
+                .build();
+            userRepository.save(user);
 
             SignUpRequest request = SignUpRequest.testBuilder()
                 .token("social-access-token")

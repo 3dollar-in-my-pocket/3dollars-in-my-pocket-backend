@@ -48,10 +48,10 @@ internal class BossStoreControllerTest(
         bossStoreCategoryRepository.save(category)
 
         val bossStore = BossStoreCreator.create(
-            bossId = "anotherBossId",
-            name = "사장님 가게",
-            imageUrl = "https://image.png",
-            introduction = "introduction",
+            bossId = "another-boss-id",
+            name = "토끼의 푸드트럭",
+            imageUrl = "https://foodtruck-image.png",
+            introduction = "사장님 가게에 대한 소개\n입니다",
             snsUrl = "https://sns.com",
             contactsNumber = ContactsNumber.of("010-1234-1234"),
             menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
@@ -78,7 +78,7 @@ internal class BossStoreControllerTest(
                 status { isOk() }
 
                 jsonPath("$.data.bossStoreId") { value(bossStore.id) }
-                jsonPath("$.data.name") { value("사장님 가게") }
+                jsonPath("$.data.name") { value(bossStore.name) }
 
                 jsonPath("$.data.location.latitude") { value(38.0) }
                 jsonPath("$.data.location.longitude") { value(128.0) }

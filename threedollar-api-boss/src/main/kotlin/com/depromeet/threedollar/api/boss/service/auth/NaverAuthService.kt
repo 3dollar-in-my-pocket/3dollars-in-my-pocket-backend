@@ -13,9 +13,9 @@ private val SOCIAL_TYPE = BossAccountSocialType.NAVER
 
 @Service
 class NaverAuthService(
-        private val bossAccountRepository: BossAccountRepository,
-        private val bossRegistrationRepository: BossRegistrationRepository,
-        private val naverAuthApiClient: NaverAuthApiClient
+    private val bossAccountRepository: BossAccountRepository,
+    private val bossRegistrationRepository: BossRegistrationRepository,
+    private val naverAuthApiClient: NaverAuthApiClient
 ) : AuthService {
 
     override fun login(request: LoginRequest): String {

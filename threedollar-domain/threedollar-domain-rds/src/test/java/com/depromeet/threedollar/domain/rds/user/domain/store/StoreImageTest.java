@@ -12,8 +12,15 @@ class StoreImageTest {
         long userId = 10000L;
         String imageUrl = "https://image.png";
 
-        Store store = StoreCreator.createWithDefaultMenu(userId, "가게 이름");
-        StoreImage storeImage = StoreImageCreator.create(store, userId, "https://after-store-image.png");
+        Store store = StoreWithMenuCreator.builder()
+            .userId(userId)
+            .storeName("가게 이름")
+            .build();
+        StoreImage storeImage = StoreImageCreator.builder()
+            .store(store)
+            .userId(userId)
+            .url("https://after-store-image.png")
+            .build();
 
         // when
         storeImage.updateUrl(imageUrl);

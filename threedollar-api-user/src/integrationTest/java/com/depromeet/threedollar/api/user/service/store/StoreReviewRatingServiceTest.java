@@ -36,8 +36,18 @@ class StoreReviewRatingServiceTest extends SetupStoreServiceTest {
     void 가게에_작성된_리뷰로_가게의_평균점수를_갱신한다() {
         // given
         reviewRepository.saveAll(List.of(
-            ReviewCreator.create(storeId, userId, "1점", 1),
-            ReviewCreator.create(storeId, userId, "5점", 5)
+            ReviewCreator.builder()
+                .storeId(storeId)
+                .userId(userId)
+                .contents("맛없어요")
+                .rating(1)
+                .build(),
+            ReviewCreator.builder()
+                .storeId(storeId)
+                .userId(userId)
+                .contents("너무 맛있어요")
+                .rating(5)
+                .build()
         ));
 
         // when

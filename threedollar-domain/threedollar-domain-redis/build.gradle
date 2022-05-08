@@ -8,7 +8,7 @@ dependencies {
     implementation("it.ozimov:embedded-redis:${embeddedRedisVersion}")
 
     // TestFixtures
-    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-redis")))
+    testImplementation testFixtures(project(":threedollar-domain:threedollar-domain-redis"))
 }
 
 bootJar {
