@@ -224,7 +224,7 @@ internal class BossStoreControllerTest(
 
     }
 
-    @DisplayName("GET /boss/v1/boss/store/my-store")
+    @DisplayName("GET /boss/v1/boss/store/me")
     @Nested
     inner class GetMyBossStoreApiTest {
 
@@ -259,7 +259,7 @@ internal class BossStoreControllerTest(
             ))
 
             // when & then
-            mockMvc.get("/v1/boss/store/my-store") {
+            mockMvc.get("/v1/boss/store/me") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             }.andDo {
                 print()
@@ -321,7 +321,7 @@ internal class BossStoreControllerTest(
             bossStoreRepository.save(bossStore)
 
             // when & then
-            mockMvc.get("/v1/boss/store/my-store") {
+            mockMvc.get("/v1/boss/store/me") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             }.andDo {
                 print()
@@ -360,7 +360,7 @@ internal class BossStoreControllerTest(
         @Test
         fun `사장님 자신이 운영중인 가게를 조회합니다 운영중인 가게가 없는경우 404 에러를 반환한다`() {
             // when & then
-            mockMvc.get("/v1/boss/store/my-store") {
+            mockMvc.get("/v1/boss/store/me") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             }.andDo {
                 print()
@@ -524,7 +524,7 @@ internal class BossStoreControllerTest(
 
     }
 
-    @DisplayName("PUT /v1/boss/store/my-store/{BOSS_STORE_ID}")
+    @DisplayName("PUT /v1/boss/store/{BOSS_STORE_ID}")
     @Nested
     inner class UpdateBossStoreInfoApiTest {
 
@@ -573,7 +573,7 @@ internal class BossStoreControllerTest(
             )
 
             // when & then
-            mockMvc.put("/v1/boss/store/my-store/${bossStore.id}") {
+            mockMvc.put("/v1/boss/store/${bossStore.id}") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
@@ -588,7 +588,7 @@ internal class BossStoreControllerTest(
 
     }
 
-    @DisplayName("PATCH /v1/boss/store/my-store/{BOSS_STORE_ID}")
+    @DisplayName("PATCH /v1/boss/store/{BOSS_STORE_ID}")
     @Nested
     inner class PatchBossStoreInfoApiTest {
 
@@ -637,7 +637,7 @@ internal class BossStoreControllerTest(
             )
 
             // when & then
-            mockMvc.patch("/v1/boss/store/my-store/${bossStore.id}") {
+            mockMvc.patch("/v1/boss/store/${bossStore.id}") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)

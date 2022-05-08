@@ -1,5 +1,5 @@
 ### 사장님 자신의 회원정보를 조회합니다.
-GET {{boss_api}}/v1/boss/account/my-info
+GET {{boss_api}}/v1/boss/account/me
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 > {%
@@ -10,7 +10,7 @@ client.test("200 OK", () =>  {
 
 
 ### 사장님 자신의 회원정보를 수정합니다
-PUT {{boss_api}}/v1/boss/account/my-info
+PUT {{boss_api}}/v1/boss/account/me
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 Content-Type: application/json
 

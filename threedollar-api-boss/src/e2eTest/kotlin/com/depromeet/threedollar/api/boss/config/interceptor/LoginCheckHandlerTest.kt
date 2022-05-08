@@ -21,7 +21,7 @@ internal class LoginCheckHandlerTest : SetupBossAccountControllerTest() {
     @Test
     fun 로그인_테스트_로그인이_성공하면_200OK() {
         // when & then
-        mockMvc.perform(MockMvcRequestBuilders.get("/v1/boss/account/my-info")
+        mockMvc.perform(MockMvcRequestBuilders.get("/v1/boss/account/me")
             .header(HttpHeaders.AUTHORIZATION, "Bearer $token")
         )
             .andDo(MockMvcResultHandlers.print())
@@ -38,7 +38,7 @@ internal class LoginCheckHandlerTest : SetupBossAccountControllerTest() {
     ])
     fun 로그인_테스트_토큰이_없거나_잘못된토큰인경우_401에러가_발생한다(token: String) {
         // when & then
-        mockMvc.perform(MockMvcRequestBuilders.get("/v1/boss/account/my-info")
+        mockMvc.perform(MockMvcRequestBuilders.get("/v1/boss/account/me")
             .header(HttpHeaders.AUTHORIZATION, token)
         )
             .andDo(MockMvcResultHandlers.print())

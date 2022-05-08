@@ -69,7 +69,7 @@ class BossStoreController(
 
     @ApiOperation("[인증] 사장님 자신이 운영중인 가게를 조회합니다.")
     @Auth
-    @GetMapping("/v1/boss/store/my-store")
+    @GetMapping("/v1/boss/store/me")
     fun getMyBossStore(
         @BossId bossId: String
     ): ApiResponse<BossStoreInfoResponse> {
@@ -87,7 +87,7 @@ class BossStoreController(
 
     @ApiOperation("[인증] 사장님 자신의 가게의 정보를 수정합니다 (전체 수정)")
     @Auth
-    @PutMapping("/v1/boss/store/my-store/{bossStoreId}")
+    @PutMapping("/v1/boss/store/{bossStoreId}")
     fun updateBossStoreInfo(
         @PathVariable bossStoreId: String,
         @Valid @RequestBody request: UpdateBossStoreInfoRequest,
@@ -99,7 +99,7 @@ class BossStoreController(
 
     @ApiOperation("[인증] 사장님 자신의 가게의 정보를 수정합니다 (명시한 리소스만 수정)")
     @Auth
-    @PatchMapping("/v1/boss/store/my-store/{bossStoreId}")
+    @PatchMapping("/v1/boss/store/{bossStoreId}")
     fun patchBossStoreInfo(
         @PathVariable bossStoreId: String,
         @Valid @RequestBody request: PatchBossStoreInfoRequest,

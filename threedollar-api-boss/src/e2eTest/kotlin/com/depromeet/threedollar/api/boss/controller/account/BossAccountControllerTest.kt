@@ -20,14 +20,14 @@ internal class BossAccountControllerTest : SetupBossAccountControllerTest() {
         super.cleanup()
     }
 
-    @DisplayName("GET /boss/v1/boss/account/my-info")
+    @DisplayName("GET /boss/v1/boss/account/me")
     @Nested
     inner class GetMyBossAccountInfoApiTest {
 
         @Test
         fun `사장님이 자신의 계정 정보를 조회한다`() {
             // when & then
-            mockMvc.get("/v1/boss/account/my-info") {
+            mockMvc.get("/v1/boss/account/me") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             }.andDo {
                 print()
@@ -40,11 +40,11 @@ internal class BossAccountControllerTest : SetupBossAccountControllerTest() {
             }
         }
 
-        @DisplayName("GET /boss/v1/boss/account/my-info 401")
+        @DisplayName("GET /boss/v1/boss/account/me 401")
         @Test
         fun `사장님이 자신의 계정 정보를 조회할때 잘못된 토큰이면 401 에러가 발생한다`() {
             // when & then
-            mockMvc.get("/v1/boss/account/my-info") {
+            mockMvc.get("/v1/boss/account/me") {
                 header(HttpHeaders.AUTHORIZATION, "Wrong Token")
             }.andDo {
                 print()
@@ -55,7 +55,7 @@ internal class BossAccountControllerTest : SetupBossAccountControllerTest() {
 
     }
 
-    @DisplayName("PUT /boss/v1/boss/account/my-info")
+    @DisplayName("PUT /boss/v1/boss/account/me")
     @Test
     fun `사장님의 자신 계정 정보를 수정한다`() {
         // given
@@ -65,7 +65,7 @@ internal class BossAccountControllerTest : SetupBossAccountControllerTest() {
         )
 
         // when & then
-        mockMvc.put("/v1/boss/account/my-info") {
+        mockMvc.put("/v1/boss/account/me") {
             header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             contentType = MediaType.APPLICATION_JSON
             content = objectMapper.writeValueAsString(request)

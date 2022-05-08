@@ -4,12 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.depromeet.threedollar.api.user.controller.user.UserMockApiCaller;
+import com.depromeet.threedollar.api.user.service.auth.dto.response.LoginResponse;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.user.User;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
 import com.depromeet.threedollar.domain.rds.user.domain.user.WithdrawalUserRepository;
 
 public abstract class SetupUserControllerTest extends SetupControllerTest {
@@ -36,8 +36,9 @@ public abstract class SetupUserControllerTest extends SetupControllerTest {
     @BeforeEach
     void setupUser() throws Exception {
         UserMockApiCaller userMockApiCaller = new UserMockApiCaller(mockMvc, objectMapper);
-        token = userMockApiCaller.getTestToken().getData().getToken();
-        user = userRepository.findUserBySocialIdAndSocialType("test-uid", UserSocialType.KAKAO);
+        LoginResponse response = userMockApiCaller.getTestToken().getData();
+        user = userRepository.findUserById(response.getUserId());
+        token = response.getToken();
     }
 
     protected void cleanup() {

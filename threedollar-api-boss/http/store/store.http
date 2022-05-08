@@ -18,7 +18,7 @@ client.test("200 OK", () => {
 
 
 ### 사장님 자신이 운영 중인 가게를 조회합니다
-GET {{boss_api}}/v1/boss/store/my-store
+GET {{boss_api}}/v1/boss/store/me?mapLatitude=38&mapLongitude=127.009
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 > {%
@@ -60,7 +60,7 @@ client.test("200 OK", () => {
 
 
 ### 사장님 가게의 정보를 수정합니다
-PUT {{boss_api}}/v1/boss/store/my-store/{{BOSS_STORE_ID}}
+PUT {{boss_api}}/v1/boss/store/{{BOSS_STORE_ID}}
 Content-Type: application/json
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
@@ -125,7 +125,7 @@ client.test("200 OK", () => {
 
 
 ### 사장님 가게의 정보를 수정합니다 (PATCH)
-PATCH {{boss_api}}/v1/boss/store/my-store/{{BOSS_STORE_ID}}
+PATCH {{boss_api}}/v1/boss/store/{{BOSS_STORE_ID}}
 Content-Type: application/json
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
