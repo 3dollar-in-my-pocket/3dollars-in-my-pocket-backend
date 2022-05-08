@@ -1,6 +1,9 @@
 package com.depromeet.threedollar.domain.rds.user.domain.medal;
 
+import java.util.Optional;
+
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.depromeet.threedollar.domain.rds.user.domain.TestFixture;
 import com.depromeet.threedollar.domain.rds.user.domain.user.User;
@@ -13,27 +16,16 @@ import lombok.NoArgsConstructor;
 @TestFixture
 public class UserMedalCreator {
 
-    @Builder(builderMethodName = "active")
-    public static UserMedal createActive(
+    @Builder
+    public static UserMedal create(
         @NotNull Medal medal,
-        @NotNull User user
+        @NotNull User user,
+        @Nullable UserMedalStatus status
     ) {
         return UserMedal.builder()
             .medal(medal)
             .user(user)
-            .status(UserMedalStatus.ACTIVE)
-            .build();
-    }
-
-    @Builder(builderMethodName = "inActive")
-    public static UserMedal createInActive(
-        @NotNull Medal medal,
-        @NotNull User user
-    ) {
-        return UserMedal.builder()
-            .medal(medal)
-            .user(user)
-            .status(UserMedalStatus.IN_ACTIVE)
+            .status(Optional.ofNullable(status).orElse(UserMedalStatus.ACTIVE))
             .build();
     }
 

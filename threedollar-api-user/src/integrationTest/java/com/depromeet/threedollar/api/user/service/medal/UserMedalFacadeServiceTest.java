@@ -23,7 +23,6 @@ import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedal;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalStatus;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
@@ -152,7 +151,6 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
             storeDeleteRequestRepository.save(StoreDeleteRequestCreator.builder()
                 .store(store)
                 .userId(userId)
-                .reasonType(DeleteReasonType.OVERLAPSTORE)
                 .build());
 
             // when

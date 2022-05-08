@@ -9,6 +9,7 @@ import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.user.controller.SetupUserControllerTest
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator
 import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalCreator
+import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalStatus
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator
@@ -52,11 +53,16 @@ internal class UserActivityControllerTest(
             val medal = MedalCreator.builder()
                 .name("붕어빵 전문가")
                 .acquisitionDescription("우리 동네 붕어에 대해서는 내가 척척 박사")
-                .activationIconUrl("http://medal-image.png")
-                .disableIconUrl("http://medal-image-disable.png")
+                .activationIconUrl("https://medal-image.png")
+                .disableIconUrl("https://medal-image-disable.png")
                 .build()
             medalRepository.save(medal)
-            userMedalRepository.save(UserMedalCreator.createActive(medal, user))
+            userMedalRepository.save(UserMedalCreator.builder()
+                .medal(medal)
+                .user(user)
+                .status(UserMedalStatus.ACTIVE)
+                .build()
+            )
 
             // when & then
             mockMvc.get("/v1/user/me/activity") {
@@ -147,21 +153,28 @@ internal class UserActivityControllerTest(
             val medalOne = MedalCreator.builder()
                 .name("붕어빵 전문가")
                 .acquisitionDescription("우리 동네 붕어에 대해서는 내가 척척 박사")
-                .activationIconUrl("http://medal-image.png")
-                .disableIconUrl("http://medal-image-disable.png")
+                .activationIconUrl("https://medal-image.png")
+                .disableIconUrl("https://medal-image-disable.png")
                 .build()
             val medalTwo = MedalCreator.builder()
                 .name("붕친맨")
                 .acquisitionDescription("앗, 이정도면 붕어빵 척척박사는 넘어섰네요")
-                .activationIconUrl("http://medal-image.png")
-                .disableIconUrl("http://medal-image-disable.png")
+                .activationIconUrl("https://medal-image.png")
+                .disableIconUrl("https://medal-image-disable.png")
                 .build()
             medalRepository.saveAll(listOf(medalOne, medalTwo))
 
             userMedalRepository.saveAll(
                 listOf(
-                    UserMedalCreator.createActive(medalOne, user),
-                    UserMedalCreator.createInActive(medalTwo, user)
+                    UserMedalCreator.builder()
+                        .medal(medalOne)
+                        .user(user)
+                        .build(),
+                    UserMedalCreator.builder()
+                        .medal(medalTwo)
+                        .user(user)
+                        .status(UserMedalStatus.IN_ACTIVE)
+                        .build()
                 )
             )
 
@@ -203,11 +216,15 @@ internal class UserActivityControllerTest(
             val medal = MedalCreator.builder()
                 .name("붕어빵 전문가")
                 .acquisitionDescription("우리 동네 붕어에 대해서는 내가 척척 박사")
-                .activationIconUrl("http://medal-image.png")
-                .disableIconUrl("http://medal-image-disable.png")
+                .activationIconUrl("https://medal-image.png")
+                .disableIconUrl("https://medal-image-disable.png")
                 .build()
             medalRepository.save(medal)
-            userMedalRepository.save(UserMedalCreator.createActive(medal, user))
+            userMedalRepository.save(UserMedalCreator.builder()
+                .medal(medal)
+                .user(user)
+                .build()
+            )
 
             // when & then
             mockMvc.get("/v1/user/activity") {
@@ -298,21 +315,31 @@ internal class UserActivityControllerTest(
             val medalOne = MedalCreator.builder()
                 .name("붕어빵 전문가")
                 .acquisitionDescription("우리 동네 붕어에 대해서는 내가 척척 박사")
-                .activationIconUrl("http://medal-image.png")
-                .disableIconUrl("http://medal-image-disable.png")
+                .activationIconUrl("https://medal-image.png")
+                .disableIconUrl("https://medal-image-disable.png")
                 .build()
             val medalTwo = MedalCreator.builder()
                 .name("붕친맨")
                 .acquisitionDescription("앗, 이정도면 붕어빵 척척박사는 넘어섰네요")
-                .activationIconUrl("http://medal-image.png")
-                .disableIconUrl("http://medal-image-disable.png")
+                .activationIconUrl("https://medal-image.png")
+                .disableIconUrl("https://medal-image-disable.png")
                 .build()
             medalRepository.saveAll(listOf(medalOne, medalTwo))
 
             userMedalRepository.saveAll(
                 listOf(
-                    UserMedalCreator.createActive(medalOne, user),
-                    UserMedalCreator.createInActive(medalTwo, user)
+                    userMedalRepository.save(UserMedalCreator.builder()
+                        .medal(medalOne)
+                        .user(user)
+                        .status(UserMedalStatus.ACTIVE)
+                        .build()
+                    ),
+                    userMedalRepository.save(UserMedalCreator.builder()
+                        .medal(medalTwo)
+                        .user(user)
+                        .status(UserMedalStatus.IN_ACTIVE)
+                        .build()
+                    )
                 )
             )
 

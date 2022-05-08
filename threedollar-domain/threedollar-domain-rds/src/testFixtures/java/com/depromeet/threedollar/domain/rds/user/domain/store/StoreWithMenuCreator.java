@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.domain.rds.user.domain.store;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -23,7 +24,10 @@ public class StoreWithMenuCreator {
         @Nullable Double latitude,
         @Nullable Double longitude,
         @Nullable Double rating,
-        @Nullable StoreStatus status
+        @Nullable StoreStatus status,
+        @Nullable String menuName,
+        @Nullable String menuPrice,
+        @Nullable MenuCategoryType menuCategoryType
     ) {
         Store store = StoreCreator.builder()
             .userId(userId)
@@ -36,9 +40,9 @@ public class StoreWithMenuCreator {
             .build();
         store.addMenus(List.of(MenuCreator.builder()
             .store(store)
-            .name("메뉴 이름")
-            .price("메뉴 가격")
-            .category(MenuCategoryType.BUNGEOPPANG)
+            .name(Optional.ofNullable(menuName).orElse("슈크림 & 팥 붕어빵"))
+            .price(Optional.ofNullable(menuPrice).orElse("2개 천원"))
+            .category(Optional.ofNullable(menuCategoryType).orElse(MenuCategoryType.BUNGEOPPANG))
             .build()
         ));
         return store;

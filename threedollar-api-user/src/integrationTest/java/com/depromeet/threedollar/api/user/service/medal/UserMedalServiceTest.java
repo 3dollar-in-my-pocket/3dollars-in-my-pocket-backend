@@ -46,7 +46,11 @@ class UserMedalServiceTest extends SetupUserServiceTest {
                 .build();
             medalRepository.save(medal);
 
-            UserMedal userMedal = UserMedalCreator.createInActive(medal, user);
+            UserMedal userMedal = UserMedalCreator.builder()
+                .medal(medal)
+                .user(user)
+                .status(UserMedalStatus.IN_ACTIVE)
+                .build();
             userMedalRepository.save(userMedal);
 
             ChangeRepresentativeMedalRequest request = ChangeRepresentativeMedalRequest.testBuilder()

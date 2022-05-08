@@ -1,5 +1,7 @@
 package com.depromeet.threedollar.domain.rds.user.domain.store;
 
+import java.util.Optional;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,29 +25,14 @@ public class StoreCreator {
         @Nullable Double rating,
         @Nullable StoreStatus status
     ) {
-        if (latitude == null) {
-            latitude = 34.0;
-        }
-        if (longitude == null) {
-            longitude = 126.0;
-        }
-        if (storeType == null) {
-            storeType = StoreType.STORE;
-        }
-        if (rating == null) {
-            rating = 0.0;
-        }
-        if (status == null) {
-            status = StoreStatus.ACTIVE;
-        }
         return Store.builder()
             .userId(userId)
             .name(storeName)
-            .type(storeType)
-            .latitude(latitude)
-            .longitude(longitude)
-            .rating(rating)
-            .status(status)
+            .type(Optional.ofNullable(storeType).orElse(StoreType.STORE))
+            .latitude(Optional.ofNullable(latitude).orElse(34.0))
+            .longitude(Optional.ofNullable(longitude).orElse(126.0))
+            .rating(Optional.ofNullable(rating).orElse(0.0))
+            .status(Optional.ofNullable(status).orElse(StoreStatus.ACTIVE))
             .build();
     }
 

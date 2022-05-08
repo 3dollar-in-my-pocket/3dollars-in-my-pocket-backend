@@ -213,12 +213,10 @@ class StoreControllerTest extends SetupUserControllerTest {
                     StoreDeleteRequestCreator.builder()
                         .store(store)
                         .userId(1000L)
-                        .reasonType(DeleteReasonType.NOSTORE)
                         .build(),
                     StoreDeleteRequestCreator.builder()
                         .store(store)
                         .userId(1001L)
-                        .reasonType(DeleteReasonType.NOSTORE)
                         .build()
                 )
             );

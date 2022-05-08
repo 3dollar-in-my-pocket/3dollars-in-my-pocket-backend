@@ -1,8 +1,9 @@
 package com.depromeet.threedollar.domain.rds.user.domain.medal;
 
+import java.util.Optional;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.springframework.util.StringUtils;
 
 import com.depromeet.threedollar.domain.rds.user.domain.TestFixture;
 
@@ -24,29 +25,13 @@ public class MedalCreator {
         @Nullable Integer conditionCount,
         @Nullable String acquisitionDescription
     ) {
-        if (!StringUtils.hasText(introduction)) {
-            introduction = "메달 설명";
-        }
-        if (!StringUtils.hasText(activationIconUrl)) {
-            activationIconUrl = "iconUrl";
-        }
-        if (!StringUtils.hasText(disableIconUrl)) {
-            disableIconUrl = "disableUrl";
-        }
-        if (conditionType == null) {
-            conditionType = MedalAcquisitionConditionType.ADD_STORE;
-        }
-        if (conditionCount == null) {
-            conditionCount = 3;
-        }
-
         return Medal.builder()
             .name(name)
-            .introduction(introduction)
-            .activationIconUrl(activationIconUrl)
-            .disableIconUrl(disableIconUrl)
-            .conditionType(conditionType)
-            .conditionCount(conditionCount)
+            .introduction(Optional.ofNullable(introduction).orElse("메달 설명"))
+            .activationIconUrl(Optional.ofNullable(activationIconUrl).orElse("https://activation-iconUrl.png"))
+            .disableIconUrl(Optional.ofNullable(disableIconUrl).orElse("https://disable-iconUrl.png"))
+            .conditionType(Optional.ofNullable(conditionType).orElse(MedalAcquisitionConditionType.ADD_STORE))
+            .conditionCount(Optional.ofNullable(conditionCount).orElse(3))
             .acquisitionDescription(acquisitionDescription)
             .build();
     }

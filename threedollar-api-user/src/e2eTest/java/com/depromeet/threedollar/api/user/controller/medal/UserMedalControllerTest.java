@@ -22,6 +22,7 @@ import com.depromeet.threedollar.api.user.service.medal.dto.request.ChangeRepres
 import com.depromeet.threedollar.domain.rds.user.domain.medal.Medal;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalStatus;
 
 class UserMedalControllerTest extends SetupUserControllerTest {
 
@@ -39,19 +40,27 @@ class UserMedalControllerTest extends SetupUserControllerTest {
             // given.
             Medal medalActive = MedalCreator.builder()
                 .name("유저가 활성화 중인 메달")
-                .activationIconUrl("http://medal-image.png")
-                .disableIconUrl("http://medal-image-disable.png")
+                .activationIconUrl("https://medal-image.png")
+                .disableIconUrl("https://medal-image-disable.png")
                 .build();
             Medal medalInActive = MedalCreator.builder()
                 .name("유저가 비활성화 중인 메달")
-                .activationIconUrl("http://medal-image-two.png")
-                .disableIconUrl("http://medal-image-disable=two.png")
+                .activationIconUrl("https://medal-image-two.png")
+                .disableIconUrl("https://medal-image-disable=two.png")
                 .build();
             medalRepository.saveAll(List.of(medalActive, medalInActive));
 
             userMedalRepository.saveAll(List.of(
-                UserMedalCreator.createActive(medalActive, user),
-                UserMedalCreator.createInActive(medalInActive, user)
+                UserMedalCreator.builder()
+                    .medal(medalActive)
+                    .user(user)
+                    .status(UserMedalStatus.ACTIVE)
+                    .build(),
+                UserMedalCreator.builder()
+                    .medal(medalInActive)
+                    .user(user)
+                    .status(UserMedalStatus.IN_ACTIVE)
+                    .build()
             ));
 
             // when & then
@@ -92,7 +101,11 @@ class UserMedalControllerTest extends SetupUserControllerTest {
                 .build();
             medalRepository.save(medal);
 
-            userMedalRepository.save(UserMedalCreator.createInActive(medal, user));
+            userMedalRepository.save(UserMedalCreator.builder()
+                .medal(medal)
+                .user(user)
+                .status(UserMedalStatus.IN_ACTIVE)
+                .build());
 
             ChangeRepresentativeMedalRequest request = ChangeRepresentativeMedalRequest.testBuilder()
                 .medalId(medal.getId())

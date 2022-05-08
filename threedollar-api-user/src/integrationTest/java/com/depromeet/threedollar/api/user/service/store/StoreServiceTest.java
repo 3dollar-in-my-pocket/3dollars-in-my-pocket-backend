@@ -595,12 +595,10 @@ class StoreServiceTest extends SetupUserServiceTest {
                     StoreDeleteRequestCreator.builder()
                         .store(store)
                         .userId(1000L)
-                        .reasonType(DeleteReasonType.NOSTORE)
                         .build(),
                     StoreDeleteRequestCreator.builder()
                         .store(store)
                         .userId(1001L)
-                        .reasonType(DeleteReasonType.NOSTORE)
                         .build()
                 )
             );
@@ -643,7 +641,6 @@ class StoreServiceTest extends SetupUserServiceTest {
             storeDeleteRequestRepository.save(StoreDeleteRequestCreator.builder()
                 .store(store)
                 .userId(userId)
-                .reasonType(DeleteReasonType.NOSTORE)
                 .build());
 
             DeleteStoreRequest request = DeleteStoreRequest.testBuilder()

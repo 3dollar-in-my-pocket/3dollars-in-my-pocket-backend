@@ -1,6 +1,9 @@
 package com.depromeet.threedollar.domain.rds.user.domain.store;
 
+import java.util.Optional;
+
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.depromeet.threedollar.domain.rds.user.domain.TestFixture;
 
@@ -16,12 +19,12 @@ public class StoreDeleteRequestCreator {
     public static StoreDeleteRequest create(
         @NotNull Store store,
         @NotNull Long userId,
-        @NotNull DeleteReasonType reasonType
+        @Nullable DeleteReasonType reasonType
     ) {
         return StoreDeleteRequest.builder()
             .store(store)
             .userId(userId)
-            .reason(reasonType)
+            .reason(Optional.ofNullable(reasonType).orElse(DeleteReasonType.NOSTORE))
             .build();
     }
 

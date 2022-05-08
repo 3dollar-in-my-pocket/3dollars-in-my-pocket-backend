@@ -24,6 +24,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.medal.Medal;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedal;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalStatus;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
 
@@ -64,9 +65,10 @@ class UserControllerTest extends SetupUserControllerTest {
                 .disableIconUrl(disableIconUrl)
                 .build();
             medalRepository.save(medal);
-            UserMedal userMedal = UserMedalCreator.active()
+            UserMedal userMedal = UserMedalCreator.builder()
                 .medal(medal)
                 .user(user)
+                .status(UserMedalStatus.ACTIVE)
                 .build();
             userMedalRepository.save(userMedal);
 

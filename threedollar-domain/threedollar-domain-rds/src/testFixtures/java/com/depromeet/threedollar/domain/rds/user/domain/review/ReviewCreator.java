@@ -1,6 +1,9 @@
 package com.depromeet.threedollar.domain.rds.user.domain.review;
 
+import java.util.Optional;
+
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.depromeet.threedollar.domain.rds.user.domain.TestFixture;
 
@@ -17,18 +20,15 @@ public class ReviewCreator {
         @NotNull Long storeId,
         @NotNull Long userId,
         @NotNull String contents,
-        int rating,
-        ReviewStatus status
+        @Nullable Integer rating,
+        @Nullable ReviewStatus status
     ) {
-        if (status == null) {
-            status = ReviewStatus.POSTED;
-        }
         return Review.builder()
             .storeId(storeId)
             .userId(userId)
             .contents(contents)
-            .rating(rating)
-            .status(status)
+            .rating(Optional.ofNullable(rating).orElse(3))
+            .status(Optional.ofNullable(status).orElse(ReviewStatus.POSTED))
             .build();
     }
 
