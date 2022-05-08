@@ -21,7 +21,7 @@ dependencies {
     implementation("org.flywaydb:flyway-core")
 
     // TestFixtures
-    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-rds")))
+    testImplementation testFixtures(project(":threedollar-domain:threedollar-domain-rds"))
 }
 
 bootJar {

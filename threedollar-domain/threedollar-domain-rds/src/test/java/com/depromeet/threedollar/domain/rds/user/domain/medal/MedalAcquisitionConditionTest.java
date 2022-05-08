@@ -18,7 +18,15 @@ class MedalAcquisitionConditionTest {
         // given
         int countCanObtainMedal = 5;
         MedalAcquisitionConditionType conditionType = MedalAcquisitionConditionType.ADD_STORE;
-        MedalAcquisitionCondition medalAcquisitionCondition = MedalAcquisitionConditionCreator.create(MedalCreator.create("메달 A"), conditionType, countCanObtainMedal, "메달 인증 소개");
+
+        MedalAcquisitionCondition medalAcquisitionCondition = MedalAcquisitionConditionCreator.builder()
+            .medal(MedalCreator.builder()
+                .name("메달 이름")
+                .build())
+            .conditionType(conditionType)
+            .count(countCanObtainMedal)
+            .description("메달 인증 소개")
+            .build();
 
         // when
         boolean result = medalAcquisitionCondition.canObtain(conditionType, count);
@@ -31,7 +39,14 @@ class MedalAcquisitionConditionTest {
     void 메달_획득_정책이_일치하지_않는경우_메달을_획득할_수_없다() {
         // given
         int count = 2;
-        MedalAcquisitionCondition medalAcquisitionCondition = MedalAcquisitionConditionCreator.create(MedalCreator.create("우리동네 보안관"), MedalAcquisitionConditionType.ADD_STORE, count, "메달 인증 소개");
+        MedalAcquisitionCondition medalAcquisitionCondition = MedalAcquisitionConditionCreator.builder()
+            .medal(MedalCreator.builder()
+                .name("우리동네 보안관")
+                .build())
+            .conditionType(MedalAcquisitionConditionType.ADD_STORE)
+            .count(count)
+            .description("메달 인증 소개")
+            .build();
 
         // when
         boolean result = medalAcquisitionCondition.canObtain(MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE, count);

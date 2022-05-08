@@ -8,7 +8,7 @@ dependencies {
     implementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
 
     // TestFixtures
-    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-mongo")))
+    testImplementation testFixtures(project(":threedollar-domain:threedollar-domain-mongo"))
 }
 
 bootJar {

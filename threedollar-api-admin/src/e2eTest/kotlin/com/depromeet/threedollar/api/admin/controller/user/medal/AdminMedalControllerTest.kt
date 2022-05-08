@@ -59,15 +59,14 @@ internal class AdminMedalControllerTest(
     @Test
     fun `새로운 메달을 수정한다`() {
         // given
-        val medal = MedalCreator.create(
-            name = "메달 이름",
-            introduction = "메달 소개",
-            activationIconUrl = "https://activate-icon.png",
-            disableIconUrl = "https://disable-icon.png",
-            conditionType = MedalAcquisitionConditionType.NO_CONDITION,
-            conditionCount = 0,
-            acquisitionDescription = "기본적으로 제공하는 메달"
-        )
+        val medal = MedalCreator.builder()
+            .name("붕어빵 전문가")
+            .acquisitionDescription("우리 동네 붕어에 대해서는 내가 척척 박사")
+            .activationIconUrl("http://medal-image.png")
+            .disableIconUrl("http://medal-image-disable.png")
+            .conditionType(MedalAcquisitionConditionType.NO_CONDITION)
+            .conditionCount(0)
+            .build()
         medalRepository.save(medal)
 
         val request = UpdateMedalRequest(
@@ -94,15 +93,14 @@ internal class AdminMedalControllerTest(
     @Test
     fun `전체 메달 목록을 조회합니다`() {
         // given
-        val medal = MedalCreator.create(
-            name = "메달 이름",
-            introduction = "메달 소개",
-            activationIconUrl = "https://activate-icon.png",
-            disableIconUrl = "https://disable-icon.png",
-            conditionType = MedalAcquisitionConditionType.NO_CONDITION,
-            conditionCount = 0,
-            acquisitionDescription = "기본적으로 제공하는 메달"
-        )
+        val medal = MedalCreator.builder()
+            .name("붕어빵 전문가")
+            .acquisitionDescription("우리 동네 붕어에 대해서는 내가 척척 박사")
+            .activationIconUrl("http://medal-image.png")
+            .disableIconUrl("http://medal-image-disable.png")
+            .conditionType(MedalAcquisitionConditionType.NO_CONDITION)
+            .conditionCount(0)
+            .build()
         medalRepository.save(medal)
 
         // when & then

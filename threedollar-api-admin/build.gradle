@@ -2,9 +2,9 @@ dependencies {
     implementation project(":threedollar-api-core")
 
     // TestFixtures
-    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-rds")))
-    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-mongo")))
-    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-redis")))
+    testImplementation testFixtures(project(":threedollar-domain:threedollar-domain-rds"))
+    testImplementation testFixtures(project(":threedollar-domain:threedollar-domain-mongo"))
+    testImplementation testFixtures(project(":threedollar-domain:threedollar-domain-redis"))
 }
 
 application {

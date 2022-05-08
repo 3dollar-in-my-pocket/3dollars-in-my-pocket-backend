@@ -69,7 +69,12 @@ internal class AdminFaqControllerTest(
         @Test
         fun FAQ_를_수정한다() {
             // given
-            val faq = faqRepository.save(FaqCreator.create("question", "answer", FaqCategory.BOARD))
+            val faq = faqRepository.save(FaqCreator.builder()
+                .question("question")
+                .answer("answer")
+                .category(FaqCategory.BOARD)
+                .build()
+            )
 
             val request = UpdateFaqRequest("카테고리 질문", "카테고리 답변", FaqCategory.CATEGORY)
 
@@ -101,7 +106,12 @@ internal class AdminFaqControllerTest(
         @Test
         fun FAQ_를_삭제한다() {
             // given
-            val faq = faqRepository.save(FaqCreator.create("question", "answer", FaqCategory.BOARD))
+            val faq = faqRepository.save(FaqCreator.builder()
+                .question("question")
+                .answer("answer")
+                .category(FaqCategory.BOARD)
+                .build()
+            )
 
             // when & then
             mockMvc.delete("/v1/user/faq/${faq.id}") {
@@ -126,8 +136,16 @@ internal class AdminFaqControllerTest(
         @Test
         fun FAQ_리스트를_조회한다() {
             // given
-            val faq1 = FaqCreator.create("question1", "answer1", FaqCategory.BOARD)
-            val faq2 = FaqCreator.create("question2", "answer2", FaqCategory.CATEGORY)
+            val faq1 = FaqCreator.builder()
+                .question("question1")
+                .answer("answer1")
+                .category(FaqCategory.BOARD)
+                .build()
+            val faq2 = FaqCreator.builder()
+                .question("question2")
+                .answer("answer2")
+                .category(FaqCategory.CATEGORY)
+                .build()
             faqRepository.saveAll(listOf(faq1, faq2))
 
             // when & then
@@ -157,8 +175,16 @@ internal class AdminFaqControllerTest(
         @Test
         fun 특정_카테고리의_FAQ_리스트를_조회한다() {
             // given
-            val faq1 = FaqCreator.create("question1", "answer1", FaqCategory.BOARD)
-            val faq2 = FaqCreator.create("question2", "answer2", FaqCategory.CATEGORY)
+            val faq1 = FaqCreator.builder()
+                .question("question1")
+                .answer("answer1")
+                .category(FaqCategory.BOARD)
+                .build()
+            val faq2 = FaqCreator.builder()
+                .question("question2")
+                .answer("answer2")
+                .category(FaqCategory.CATEGORY)
+                .build()
             faqRepository.saveAll(listOf(faq1, faq2))
 
             val request = RetrieveFaqsRequest(FaqCategory.CATEGORY)

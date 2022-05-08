@@ -66,7 +66,11 @@ internal class FaqAdminServiceTest(
             val answer = "가슴속 삼천원입니다"
             val category = FaqCategory.ETC
 
-            val faq = FaqCreator.create("기존의 질문", "기존의 답변", FaqCategory.CATEGORY)
+            val faq = FaqCreator.builder()
+                .question("기존의 질문")
+                .answer("기존의 답변")
+                .category(FaqCategory.CATEGORY)
+                .build()
             faqRepository.save(faq)
 
             val request = UpdateFaqRequest(
@@ -110,7 +114,12 @@ internal class FaqAdminServiceTest(
         @Test
         fun 특정_FAQ_를_삭제하면_해당_데이터가_삭제된다() {
             // given
-            val faq = faqRepository.save(FaqCreator.create(question = "질문", answer = "답변", category = FaqCategory.CATEGORY))
+            val faq = FaqCreator.builder()
+                .question("질문")
+                .answer("답변")
+                .category(FaqCategory.CATEGORY)
+                .build()
+            faqRepository.save(faq)
 
             // when
             faqAdminService.deleteFaq(faq.id)

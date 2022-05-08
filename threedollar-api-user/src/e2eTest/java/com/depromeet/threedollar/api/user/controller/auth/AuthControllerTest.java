@@ -128,7 +128,11 @@ class AuthControllerTest extends SetupUserControllerTest {
         @Test
         void 카카오_로그인_요청이_성공하면_토큰이_반환된다() throws Exception {
             // given
-            User user = UserCreator.create("kakao-social-id", UserSocialType.KAKAO, "카카오 계정");
+            User user = UserCreator.builder()
+                .socialId("kakao-social-id")
+                .socialType(UserSocialType.KAKAO)
+                .name("카카오 계정")
+                .build();
             userRepository.save(user);
 
             when(kaKaoAuthApiClient.getProfileInfo(any())).thenReturn(KaKaoProfileResponse.testInstance(user.getSocialId()));
@@ -152,7 +156,11 @@ class AuthControllerTest extends SetupUserControllerTest {
         @Test
         void 애플_로그인_요청이_성공하면_토큰이_반환된다() throws Exception {
             // given
-            User user = UserCreator.create("apple-social-id", UserSocialType.APPLE, "애플 계정");
+            User user = UserCreator.builder()
+                .socialId("apple-social-id")
+                .socialType(UserSocialType.APPLE)
+                .name("애플 계정")
+                .build();
             userRepository.save(user);
 
             when(appleTokenDecoder.getSocialIdFromIdToken(any())).thenReturn(user.getSocialId());
@@ -176,7 +184,11 @@ class AuthControllerTest extends SetupUserControllerTest {
         @Test
         void 구글_로그인_요청이_성공하면_토큰이_반환된다() throws Exception {
             // given
-            User user = UserCreator.create("google-social-id", UserSocialType.GOOGLE, "구글 계정");
+            User user = UserCreator.builder()
+                .socialId("google-social-id")
+                .socialType(UserSocialType.GOOGLE)
+                .name("구글 계정")
+                .build();
             userRepository.save(user);
 
             when(googleAuthApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance(user.getSocialId()));

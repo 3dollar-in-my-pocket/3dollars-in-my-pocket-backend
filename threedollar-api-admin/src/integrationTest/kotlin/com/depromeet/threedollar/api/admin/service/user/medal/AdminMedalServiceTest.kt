@@ -100,7 +100,11 @@ internal class AdminMedalServiceTest(
                 disableIconUrl = disableIconUrl
             )
 
-            val medal = MedalCreator.create("메달 이름", MedalAcquisitionConditionType.ADD_STORE, 3)
+            val medal = MedalCreator.builder()
+                .name("메달 이름")
+                .conditionType(MedalAcquisitionConditionType.ADD_STORE)
+                .conditionCount(3)
+                .build()
             medalRepository.save(medal)
 
             // when

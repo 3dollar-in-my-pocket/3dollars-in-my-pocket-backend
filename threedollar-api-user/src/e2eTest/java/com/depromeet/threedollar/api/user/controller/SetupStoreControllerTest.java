@@ -11,8 +11,8 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreWithMenuCreator;
 
 public abstract class SetupStoreControllerTest extends SetupUserControllerTest {
 
@@ -34,8 +34,16 @@ public abstract class SetupStoreControllerTest extends SetupUserControllerTest {
 
     @BeforeEach
     void setUpStore() {
-        store = StoreCreator.create(user.getId(), "디프만 붕어빵");
-        store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
+        Store store = StoreWithMenuCreator.builder()
+            .userId(user.getId())
+            .storeName("디프만 붕어빵")
+            .build();
+        store.addMenus(List.of(MenuCreator.builder()
+            .store(store)
+            .name("메뉴")
+            .price("1000원")
+            .category(MenuCategoryType.BUNGEOPPANG)
+            .build()));
         storeRepository.save(store);
         storeId = store.getId();
     }

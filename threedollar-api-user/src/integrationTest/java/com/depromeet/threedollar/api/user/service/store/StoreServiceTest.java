@@ -39,13 +39,13 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethod;
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequest;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreStatus;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreWithMenuCreator;
 
 @SpringBootTest
 class StoreServiceTest extends SetupUserServiceTest {
@@ -249,7 +249,10 @@ class StoreServiceTest extends SetupUserServiceTest {
             String price = "5개에 2천원";
             MenuCategoryType type = MenuCategoryType.BUNGEOPPANG;
 
-            Store store = StoreCreator.createWithDefaultMenu(userId, "붕어빵 가게");
+            Store store = StoreWithMenuCreator.builder()
+                .userId(userId)
+                .storeName("가게 이름")
+                .build();
             storeRepository.save(store);
 
             double latitude = 34.0;
@@ -285,7 +288,10 @@ class StoreServiceTest extends SetupUserServiceTest {
             // given
             Set<PaymentMethodType> paymentMethodTypes = Set.of(PaymentMethodType.CARD);
 
-            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
+            Store store = StoreWithMenuCreator.builder()
+                .userId(userId)
+                .storeName("가게 이름")
+                .build();
             store.addPaymentMethods(Set.of(PaymentMethodType.CARD));
             storeRepository.save(store);
 
@@ -296,7 +302,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .storeType(StoreType.STORE)
                 .appearanceDays(Collections.emptySet())
                 .paymentMethods(paymentMethodTypes)
-                .menus(Collections.emptySet())
+                .menus(Set.of(MenuRequest.of("이름", "가격", MenuCategoryType.BUNGEOPPANG)))
                 .build();
 
             // when
@@ -315,7 +321,10 @@ class StoreServiceTest extends SetupUserServiceTest {
             // given
             Set<DayOfTheWeek> appearanceDays = Set.of(DayOfTheWeek.SATURDAY, DayOfTheWeek.FRIDAY);
 
-            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
+            Store store = StoreWithMenuCreator.builder()
+                .userId(userId)
+                .storeName("가게 이름")
+                .build();
             store.addAppearanceDays(Set.of(DayOfTheWeek.TUESDAY, DayOfTheWeek.WEDNESDAY));
             storeRepository.save(store);
 
@@ -347,11 +356,24 @@ class StoreServiceTest extends SetupUserServiceTest {
             String price = "2개에 천원";
             MenuCategoryType type = MenuCategoryType.BUNGEOPPANG;
 
-            Store store = StoreCreator.create(userId, "storeName");
+            Store store = StoreWithMenuCreator.builder()
+                .userId(userId)
+                .storeName("디프만 붕어빵")
+                .build();
             store.addMenus(List.of(
-                MenuCreator.create(store, "메뉴 1", "1000원", MenuCategoryType.DALGONA),
-                MenuCreator.create(store, menuName, price, type))
-            );
+                MenuCreator.builder()
+                    .store(store)
+                    .name("메뉴")
+                    .price("1000원")
+                    .category(MenuCategoryType.DALGONA)
+                    .build(),
+                MenuCreator.builder()
+                    .store(store)
+                    .name(menuName)
+                    .price(price)
+                    .category(type)
+                    .build()
+            ));
             storeRepository.save(store);
 
             String newMenuName = "신규 추가된 메뉴";
@@ -392,7 +414,10 @@ class StoreServiceTest extends SetupUserServiceTest {
             String price = "2개에 천원";
             MenuCategoryType type = MenuCategoryType.BUNGEOPPANG;
 
-            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
+            Store store = StoreWithMenuCreator.builder()
+                .userId(userId)
+                .storeName("가게 이름")
+                .build();
             storeRepository.save(store);
 
             Set<MenuRequest> menus = new HashSet<>(List.of(
@@ -445,7 +470,10 @@ class StoreServiceTest extends SetupUserServiceTest {
             // given
             long creatorUserId = 100L;
 
-            Store store = StoreCreator.createWithDefaultMenu(creatorUserId, "storeName");
+            Store store = StoreWithMenuCreator.builder()
+                .userId(creatorUserId)
+                .storeName("가게 이름")
+                .build();
             storeRepository.save(store);
 
             double latitude = 34.0;
@@ -484,7 +512,10 @@ class StoreServiceTest extends SetupUserServiceTest {
             // given
             DeleteReasonType deleteReasonType = DeleteReasonType.OVERLAPSTORE;
 
-            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
+            Store store = StoreWithMenuCreator.builder()
+                .userId(userId)
+                .storeName("가게 이름")
+                .build();
             storeRepository.save(store);
 
             DeleteStoreRequest request = DeleteStoreRequest.testBuilder()
@@ -511,10 +542,17 @@ class StoreServiceTest extends SetupUserServiceTest {
             // given
             DeleteReasonType deleteReasonType = DeleteReasonType.OVERLAPSTORE;
 
-            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
+            Store store = StoreWithMenuCreator.builder()
+                .userId(userId)
+                .storeName("가게 이름")
+                .build();
             storeRepository.save(store);
 
-            storeDeleteRequestRepository.save(StoreDeleteRequestCreator.create(store, 90L, DeleteReasonType.WRONG_CONTENT));
+            storeDeleteRequestRepository.save(StoreDeleteRequestCreator.builder()
+                .store(store)
+                .userId(90L)
+                .reasonType(DeleteReasonType.WRONG_CONTENT)
+                .build());
 
             DeleteStoreRequest request = DeleteStoreRequest.testBuilder()
                 .deleteReasonType(deleteReasonType)
@@ -544,12 +582,24 @@ class StoreServiceTest extends SetupUserServiceTest {
             // given
             DeleteReasonType deleteReasonType = DeleteReasonType.WRONG_CONTENT;
 
-            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
+            Store store = StoreWithMenuCreator.builder()
+                .userId(userId)
+                .storeName("가게 이름")
+                .build();
             storeRepository.save(store);
 
             storeDeleteRequestRepository.saveAll(List.of(
-                StoreDeleteRequestCreator.create(store, 1000L, DeleteReasonType.NOSTORE),
-                StoreDeleteRequestCreator.create(store, 1001L, DeleteReasonType.NOSTORE))
+                    StoreDeleteRequestCreator.builder()
+                        .store(store)
+                        .userId(1000L)
+                        .reasonType(DeleteReasonType.NOSTORE)
+                        .build(),
+                    StoreDeleteRequestCreator.builder()
+                        .store(store)
+                        .userId(1001L)
+                        .reasonType(DeleteReasonType.NOSTORE)
+                        .build()
+                )
             );
 
             DeleteStoreRequest request = DeleteStoreRequest.testBuilder()
@@ -580,10 +630,18 @@ class StoreServiceTest extends SetupUserServiceTest {
         void 가게_삭제요청시_내가_이미_삭제요청한_가게인경우_CONFLICT_EXCEPTION() {
             // given
             DeleteReasonType reasonType = DeleteReasonType.OVERLAPSTORE;
-            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
+
+            Store store = StoreWithMenuCreator.builder()
+                .userId(userId)
+                .storeName("가게 이름")
+                .build();
             storeRepository.save(store);
 
-            storeDeleteRequestRepository.save(StoreDeleteRequestCreator.create(store, userId, DeleteReasonType.NOSTORE));
+            storeDeleteRequestRepository.save(StoreDeleteRequestCreator.builder()
+                .store(store)
+                .userId(userId)
+                .reasonType(DeleteReasonType.NOSTORE)
+                .build());
 
             DeleteStoreRequest request = DeleteStoreRequest.testBuilder()
                 .deleteReasonType(reasonType)

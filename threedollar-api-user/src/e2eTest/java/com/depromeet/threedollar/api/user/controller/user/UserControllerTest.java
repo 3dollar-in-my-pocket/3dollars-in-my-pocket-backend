@@ -22,6 +22,7 @@ import com.depromeet.threedollar.api.user.service.user.dto.request.CheckAvailabl
 import com.depromeet.threedollar.api.user.service.user.dto.request.UpdateUserInfoRequest;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.Medal;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedal;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
@@ -56,9 +57,18 @@ class UserControllerTest extends SetupUserControllerTest {
             String activationIconUrl = "https://activation-icon.png";
             String disableIconUrl = "https://disable-icon.png";
 
-            Medal medal = MedalCreator.create(medalName, description, activationIconUrl, disableIconUrl);
+            Medal medal = MedalCreator.builder()
+                .name(medalName)
+                .acquisitionDescription(description)
+                .activationIconUrl(activationIconUrl)
+                .disableIconUrl(disableIconUrl)
+                .build();
             medalRepository.save(medal);
-            userMedalRepository.save(UserMedalCreator.createActive(medal, user));
+            UserMedal userMedal = UserMedalCreator.active()
+                .medal(medal)
+                .user(user)
+                .build();
+            userMedalRepository.save(userMedal);
 
             // when & then
             getUserInfoApi(token)
@@ -130,7 +140,11 @@ class UserControllerTest extends SetupUserControllerTest {
         void 사용가능한_닉네임_확인_요청시_중복된_이름인경우_409_에러() throws Exception {
             // given
             String name = "디프만";
-            userRepository.save(UserCreator.create("social-social-id", UserSocialType.APPLE, name));
+            userRepository.save(UserCreator.builder()
+                .socialId("social-id")
+                .socialType(UserSocialType.APPLE)
+                .name(name)
+                .build());
 
             CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
                 .name(name)
@@ -149,7 +163,12 @@ class UserControllerTest extends SetupUserControllerTest {
         void 사용가능한_닉네임_확인_요청시_허용되지_않은_닉네임인경우_400_에러() throws Exception {
             // given
             String name = "-a-";
-            userRepository.save(UserCreator.create("social-social-id", UserSocialType.APPLE, name));
+            UserCreator.builder()
+                .socialId("social-id")
+                .socialType(UserSocialType.APPLE)
+                .name(name)
+                .build();
+            userRepository.save(user);
 
             CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
                 .name(name)

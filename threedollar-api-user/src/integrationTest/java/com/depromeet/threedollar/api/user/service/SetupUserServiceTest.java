@@ -33,7 +33,12 @@ public abstract class SetupUserServiceTest {
 
     @BeforeEach
     void setup() {
-        user = userRepository.save(UserCreator.create("social-id", UserSocialType.KAKAO, "디프만"));
+        user = UserCreator.builder()
+            .socialId("social-id")
+            .name("디프만")
+            .socialType(UserSocialType.KAKAO)
+            .build();
+        userRepository.save(user);
         userId = user.getId();
     }
 

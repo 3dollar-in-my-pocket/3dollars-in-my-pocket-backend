@@ -46,8 +46,16 @@ class FaqControllerTest extends SetupUserControllerTest {
         @Test
         void FAQ_전체_리스트를_조회한다() throws Exception {
             // given
-            Faq faq1 = FaqCreator.create("앱 이름이 뭔가요?", "가슴속 3천원입니다", FaqCategory.CATEGORY);
-            Faq faq2 = FaqCreator.create("가게 등록이 안되요", "가게 등록은 어찌어찌 할 수 있습니다", FaqCategory.BOARD);
+            Faq faq1 = FaqCreator.builder()
+                .question("앱 이름이 뭔가요?")
+                .answer("가슴속 3천원입니다")
+                .category(FaqCategory.CATEGORY)
+                .build();
+            Faq faq2 = FaqCreator.builder()
+                .question("가게 등록이 안되요")
+                .answer("가게 등록은 어찌어찌 할 수 있습니다")
+                .category(FaqCategory.BOARD)
+                .build();
             faqRepository.saveAll(List.of(faq1, faq2));
 
             // when
@@ -68,8 +76,16 @@ class FaqControllerTest extends SetupUserControllerTest {
         @Test
         void 특정_카테고리의_FAQ_리스트를_조회한다() throws Exception {
             // given
-            Faq faq1 = FaqCreator.create("가게 삭제를 하려면 어떻게 하나요?", "가게 삭제를 하려면 어찌저찌 해야합니다", FaqCategory.CATEGORY);
-            Faq faq2 = FaqCreator.create("리뷰 등록은 어떻게 하나요?", "리뷰 등록은 어찌저찌 하면 됩니다", FaqCategory.BOARD);
+            Faq faq1 = FaqCreator.builder()
+                .question("가게 삭제를 하려면 어떻게 하나요?")
+                .answer("가게 삭제를 하려면 어찌저찌 해야합니다")
+                .category(FaqCategory.CATEGORY)
+                .build();
+            Faq faq2 = FaqCreator.builder()
+                .question("리뷰 등록은 어떻게 하나요?")
+                .answer("리뷰 등록은 어찌저찌 하면 됩니다")
+                .category(FaqCategory.BOARD)
+                .build();
             faqRepository.saveAll(List.of(faq1, faq2));
 
             // when

@@ -25,12 +25,12 @@ internal class AdminUserReviewServiceTest(
     @Test
     fun `특정 리뷰를 강제로 삭제한다`() {
         // given
-        val review = ReviewCreator.create(
-            storeId = 10000L,
-            userId = 1L,
-            rating = 1,
-            contents = "욕설"
-        )
+        val review = ReviewCreator.builder()
+            .storeId(10000L)
+            .userId(1L)
+            .contents("욕설")
+            .rating(1)
+            .build()
         reviewRepository.save(review)
 
         // when
@@ -60,12 +60,12 @@ internal class AdminUserReviewServiceTest(
     @Test
     fun `리뷰 삭제시 해당하는 리뷰가 유저에 의해 삭제처리된 리뷰인 경우 NotFoundException`() {
         // given
-        val review = ReviewCreator.create(
-            storeId = 10000L,
-            userId = 1L,
-            rating = 1,
-            contents = "욕설"
-        )
+        val review = ReviewCreator.builder()
+            .storeId(10000L)
+            .userId(1L)
+            .contents("욕설")
+            .rating(1)
+            .build()
         reviewRepository.save(review)
 
         // when & then

@@ -32,8 +32,8 @@ import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewStatus;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreStatus;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreWithMenuCreator;
 import com.depromeet.threedollar.domain.rds.user.event.review.ReviewChangedEvent;
 import com.depromeet.threedollar.domain.rds.user.event.review.ReviewCreatedEvent;
 
@@ -106,7 +106,12 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 성공시_변경된_리뷰정보가_반환된다() throws Exception {
             // given
-            Review review = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요", 5);
+            Review review = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("너무 맛있어요")
+                .rating(5)
+                .build();
             reviewRepository.save(review);
 
             UpdateReviewRequest request = UpdateReviewRequest.testBuilder()
@@ -124,7 +129,12 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 리뷰를_수정하면_가게의_평균_리뷰점수가_갱신된다() throws Exception {
             // given
-            Review review = ReviewCreator.create(store.getId(), user.getId(), "맛 없어요", 2);
+            Review review = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("맛 없어요")
+                .rating(2)
+                .build();
             reviewRepository.save(review);
 
             UpdateReviewRequest request = UpdateReviewRequest.testBuilder()
@@ -148,7 +158,12 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 자신이_작성한_리뷰를_삭제요청시_성공하면_200OK() throws Exception {
             // given
-            Review review = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요", 5);
+            Review review = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("너무 맛있어요")
+                .rating(5)
+                .build();
             reviewRepository.save(review);
 
             // when
@@ -161,7 +176,12 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 리뷰를_삭제하면_가게의_평균_리뷰점수가_갱신된다() throws Exception {
             // given
-            Review review = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요", 5);
+            Review review = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("너무 맛있어요")
+                .rating(5)
+                .build();
             reviewRepository.save(review);
 
             // when
@@ -180,10 +200,30 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 사용자가_작성한_리뷰_첫_스크롤을_조회한다() throws Exception {
             // given
-            Review review1 = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요1", 5);
-            Review review2 = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요2", 4);
-            Review review3 = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요3", 3);
-            Review review4 = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요4", 2);
+            Review review1 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("너무 맛있어요")
+                .rating(5)
+                .build();
+            Review review2 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("맛있어요")
+                .rating(4)
+                .build();
+            Review review3 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("그냥 그래요")
+                .rating(3)
+                .build();
+            Review review4 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("좀 그래요")
+                .rating(2)
+                .build();
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
@@ -208,10 +248,30 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 사용자가_작성한_리뷰_중간_스크롤_조회시() throws Exception {
             // given
-            Review review1 = ReviewCreator.create(store.getId(), user.getId(), "최고에요", 5);
-            Review review2 = ReviewCreator.create(store.getId(), user.getId(), "맛있어요", 4);
-            Review review3 = ReviewCreator.create(store.getId(), user.getId(), "그냥 그래요", 3);
-            Review review4 = ReviewCreator.create(store.getId(), user.getId(), "좀 그래요", 2);
+            Review review1 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("너무 맛있어요")
+                .rating(5)
+                .build();
+            Review review2 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("맛있어요")
+                .rating(4)
+                .build();
+            Review review3 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("그냥 그래요")
+                .rating(3)
+                .build();
+            Review review4 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("좀 그래요")
+                .rating(2)
+                .build();
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
@@ -236,10 +296,30 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 사용자가_작성한_리뷰_조회시_전체_리뷰수가_반환된다() throws Exception {
             // given
-            Review review1 = ReviewCreator.create(store.getId(), user.getId(), "최고에요", 5);
-            Review review2 = ReviewCreator.create(store.getId(), user.getId(), "맛있어요", 4);
-            Review review3 = ReviewCreator.create(store.getId(), user.getId(), "그냥 그래요", 3);
-            Review review4 = ReviewCreator.create(store.getId(), user.getId(), "좀 그래요", 2);
+            Review review1 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("너무 맛있어요")
+                .rating(5)
+                .build();
+            Review review2 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("맛있어요")
+                .rating(4)
+                .build();
+            Review review3 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("그냥 그래요")
+                .rating(3)
+                .build();
+            Review review4 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("좀 그래요")
+                .rating(2)
+                .build();
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
@@ -264,10 +344,30 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 다음_커서의_리뷰를_한개_추가_조회시_조회되지_않으면_마지막_커서로_판단한다() throws Exception {
             // given
-            Review review1 = ReviewCreator.create(store.getId(), user.getId(), "정말 맛있어요", 5);
-            Review review2 = ReviewCreator.create(store.getId(), user.getId(), "그냥 맛있어요", 4);
-            Review review3 = ReviewCreator.create(store.getId(), user.getId(), "좀 맛있어요", 3);
-            Review review4 = ReviewCreator.create(store.getId(), user.getId(), "그냥 그래요", 2);
+            Review review1 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("너무 맛있어요")
+                .rating(5)
+                .build();
+            Review review2 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("맛있어요")
+                .rating(4)
+                .build();
+            Review review3 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("그냥 그래요")
+                .rating(3)
+                .build();
+            Review review4 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("좀 그래요")
+                .rating(2)
+                .build();
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
@@ -292,10 +392,30 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 조회한_size_보다_적은_리뷰가_조회되면_마지막_커서로_판단한다() throws Exception {
             // given
-            Review review1 = ReviewCreator.create(store.getId(), user.getId(), "정말! 맛있어요", 5);
-            Review review2 = ReviewCreator.create(store.getId(), user.getId(), "그냥! 맛있어요", 4);
-            Review review3 = ReviewCreator.create(store.getId(), user.getId(), "좀! 맛있어요", 3);
-            Review review4 = ReviewCreator.create(store.getId(), user.getId(), "그냥! 그래요", 2);
+            Review review1 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("너무 맛있어요")
+                .rating(5)
+                .build();
+            Review review2 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("맛있어요")
+                .rating(4)
+                .build();
+            Review review3 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("그냥 그래요")
+                .rating(3)
+                .build();
+            Review review4 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("좀 그래요")
+                .rating(2)
+                .build();
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
@@ -319,8 +439,20 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 삭제된_리뷰는_조회되지_않는다() throws Exception {
             // given
-            Review deletedReviewByUser = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요", 5, ReviewStatus.DELETED);
-            Review deletedReviewByAdmin = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요", 5, ReviewStatus.FILTERED);
+            Review deletedReviewByUser = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("너무 맛있어요")
+                .rating(5)
+                .status(ReviewStatus.DELETED)
+                .build();
+            Review deletedReviewByAdmin = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("맛있어요")
+                .rating(4)
+                .status(ReviewStatus.FILTERED)
+                .build();
             reviewRepository.saveAll(List.of(deletedReviewByAdmin, deletedReviewByUser));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
@@ -342,12 +474,30 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 삭제된_가게인경우_없어진_가게라고_표시된다() throws Exception {
             // given
-            Store storeDeletedByAdmin = StoreCreator.createDefaultWithMenu(user.getId(), "삭제되기 전 가게 이름", StoreStatus.DELETED);
-            Store storeDeleteByUser = StoreCreator.createDefaultWithMenu(user.getId(), "삭제되기 전 가게 이름", StoreStatus.FILTERED);
+            Store storeDeletedByAdmin = StoreWithMenuCreator.builder()
+                .userId(user.getId())
+                .storeName("삭제되기 전 가게 이름")
+                .status(StoreStatus.FILTERED)
+                .build();
+            Store storeDeleteByUser = StoreWithMenuCreator.builder()
+                .userId(user.getId())
+                .storeName("삭제되기 전 가게 이름")
+                .status(StoreStatus.DELETED)
+                .build();
             storeRepository.saveAll(List.of(storeDeleteByUser, storeDeletedByAdmin));
 
-            Review review1 = ReviewCreator.create(storeDeleteByUser.getId(), user.getId(), "너무 맛있어요", 5);
-            Review review2 = ReviewCreator.create(storeDeletedByAdmin.getId(), user.getId(), "너무 맛있어요", 5);
+            Review review1 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("너무 맛있어요")
+                .rating(5)
+                .build();
+            Review review2 = ReviewCreator.builder()
+                .storeId(store.getId())
+                .userId(user.getId())
+                .contents("맛있어요")
+                .rating(5)
+                .build();
             reviewRepository.saveAll(List.of(review1, review2));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
