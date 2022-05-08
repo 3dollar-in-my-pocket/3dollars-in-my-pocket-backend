@@ -20,7 +20,7 @@ class BossAccount(
     var isSetupNotification: Boolean
 ) : BaseDocument() {
 
-    fun update(name: String, isSetupNotification: Boolean) {
+    fun updateInfo(name: String, isSetupNotification: Boolean) {
         this.name = name
         this.isSetupNotification = isSetupNotification
     }

@@ -10,7 +10,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegis
 
 object BossAccountServiceUtils {
 
-    fun findBOssAccountByRegistrationId(bossAccountRepository: BossAccountRepository, bossId: String): BossAccount {
+    fun findBossAccountByRegistrationId(bossAccountRepository: BossAccountRepository, bossId: String): BossAccount {
         return bossAccountRepository.findBossAccountById(bossId)
             ?: throw NotFoundException("해당하는 사장님 계정($bossId)은 존재하지 않습니다", ErrorCode.NOTFOUND_BOSS_ACCOUNT)
     }
