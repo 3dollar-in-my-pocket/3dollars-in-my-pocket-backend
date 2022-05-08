@@ -49,7 +49,7 @@ client.test("200 OK", () => {
 
 
 ### 특정 가게의 정보를 상세 조회합니다
-GET {{boss_api}}/v1/boss/store/{{BOSS_STORE_ID}}
+GET {{boss_api}}/v1/boss/store/{{BOSS_STORE_ID}}?mapLatitude=38&mapLongitude=129
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 > {%

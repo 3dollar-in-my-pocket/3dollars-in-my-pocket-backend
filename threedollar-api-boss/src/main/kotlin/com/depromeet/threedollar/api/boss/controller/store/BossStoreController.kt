@@ -80,9 +80,10 @@ class BossStoreController(
     @Auth
     @GetMapping("/v1/boss/store/{bossStoreId}")
     fun getBossStoreDetail(
-        @PathVariable bossStoreId: String
+        @PathVariable bossStoreId: String,
+        @MapCoordinate(required = false) mapCoordinate: CoordinateValue
     ): ApiResponse<BossStoreInfoResponse> {
-        return ApiResponse.success(bossStoreCommonService.getBossStore(bossStoreId))
+        return ApiResponse.success(bossStoreCommonService.getBossStore(bossStoreId, mapCoordinate))
     }
 
     @ApiOperation("[인증] 사장님 자신의 가게의 정보를 수정합니다 (전체 수정)")
