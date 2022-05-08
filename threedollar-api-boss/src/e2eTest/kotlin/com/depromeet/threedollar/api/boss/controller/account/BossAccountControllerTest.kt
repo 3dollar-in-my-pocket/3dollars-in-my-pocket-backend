@@ -40,19 +40,6 @@ internal class BossAccountControllerTest : SetupBossAccountControllerTest() {
             }
         }
 
-        @DisplayName("GET /boss/v1/boss/account/me 401")
-        @Test
-        fun `사장님이 자신의 계정 정보를 조회할때 잘못된 토큰이면 401 에러가 발생한다`() {
-            // when & then
-            mockMvc.get("/v1/boss/account/me") {
-                header(HttpHeaders.AUTHORIZATION, "Wrong Token")
-            }.andDo {
-                print()
-            }.andExpect {
-                status { isUnauthorized() }
-            }
-        }
-
     }
 
     @DisplayName("PUT /boss/v1/boss/account/me")

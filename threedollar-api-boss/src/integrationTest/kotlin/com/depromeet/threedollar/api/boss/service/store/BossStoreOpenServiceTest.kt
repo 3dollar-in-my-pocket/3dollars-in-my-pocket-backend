@@ -49,14 +49,14 @@ internal class BossStoreOpenServiceTest(
     @Test
     fun `가게 오픈 갱신시 오픈 정보가 있는 경우 정보가 유지된채 만료시간만 연장된다`() {
         // given
-        val startDateTime = LocalDateTime.of(2022, 1, 1, 0, 0)
+        val startDateTime = LocalDateTime.of(2022, 1, 3, 0, 0)
         bossStoreOpenTimeRepository.set(bossStoreId, startDateTime)
 
         // when
         bossStoreOpenService.openBossStore(
             bossStoreId = bossStoreId,
             bossId = bossId,
-            mapCoordinate = CoordinateValue.of(38.0, 127.0)
+            mapCoordinate = CoordinateValue.of(36.0, 128.0)
         )
 
         // then

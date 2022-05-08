@@ -37,13 +37,13 @@ internal class BossAccountServiceTest(
         @Test
         fun `사장님의 계정 정보를 수정한다`() {
             // given
-            val name = "새로운 이름"
+            val name = "변경 후 사장님 이름"
             val isSetupNotification = true
 
             val bossAccount = BossAccountCreator.create(
                 socialId = "social-id",
                 socialType = BossAccountSocialType.GOOGLE,
-                name = "사장님 이름",
+                name = "변경 전 사장님 이름",
                 isSetupNotification = false
             )
             bossAccountRepository.save(bossAccount)
@@ -89,7 +89,7 @@ internal class BossAccountServiceTest(
         fun `회원탈퇴시 BossAccount 계정 정보가 삭제된다`() {
             // given
             val bossAccount = BossAccountCreator.create(
-                socialId = "socialId",
+                socialId = "boss-social-id",
                 socialType = BossAccountSocialType.APPLE
             )
             bossAccountRepository.save(bossAccount)

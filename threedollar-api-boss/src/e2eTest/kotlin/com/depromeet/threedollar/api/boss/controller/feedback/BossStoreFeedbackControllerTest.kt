@@ -7,22 +7,19 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
-import com.depromeet.threedollar.api.boss.controller.SetupBossAccountControllerTest
+import com.depromeet.threedollar.api.boss.controller.SetupBossStoreControllerTest
 import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackCountResponse
 import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackGroupingDateResponse
 import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackTypeResponse
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedbackCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedbackRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRepository
 
 internal class BossStoreFeedbackControllerTest(
     private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,
     private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository,
-    private val bossStoreRepository: BossStoreRepository,
-) : SetupBossAccountControllerTest() {
+) : SetupBossStoreControllerTest() {
 
     @AfterEach
     fun cleanUp() {
@@ -36,15 +33,9 @@ internal class BossStoreFeedbackControllerTest(
         // given
         val feedbackType = BossStoreFeedbackType.BOSS_IS_KIND
 
-        val bossStore = BossStoreCreator.create(
-            bossId = "bossId",
-            name = "가슴속 3천원"
-        )
-        bossStoreRepository.save(bossStore)
-
-        bossStoreFeedbackCountRepository.increase(bossStore.id, feedbackType)
+        bossStoreFeedbackCountRepository.increase(bossStoreId, feedbackType)
         val bossStoreFeedback = BossStoreFeedbackCreator.create(
-            storeId = bossStore.id,
+            storeId = bossStoreId,
             userId = 10000L,
             feedbackType = feedbackType,
             date = LocalDate.of(2022, 1, 1)
@@ -52,7 +43,7 @@ internal class BossStoreFeedbackControllerTest(
         bossStoreFeedbackRepository.save(bossStoreFeedback)
 
         // when & then
-        mockMvc.get("/v1/boss/store/${bossStore.id}/feedbacks/full")
+        mockMvc.get("/v1/boss/store/${bossStoreId}/feedbacks/full")
             .andDo { print() }
             .andExpect {
                 status { isOk() }
@@ -89,14 +80,8 @@ internal class BossStoreFeedbackControllerTest(
             val feedbackType = BossStoreFeedbackType.BOSS_IS_KIND
             val date = LocalDate.of(2022, 1, 1)
 
-            val bossStore = BossStoreCreator.create(
-                bossId = "bossId",
-                name = "가슴속 3천원"
-            )
-            bossStoreRepository.save(bossStore)
-
             val feedback = BossStoreFeedbackCreator.create(
-                storeId = bossStore.id,
+                storeId = bossStoreId,
                 userId = 1000000L,
                 feedbackType = feedbackType,
                 date = date
@@ -104,7 +89,7 @@ internal class BossStoreFeedbackControllerTest(
             bossStoreFeedbackRepository.save(feedback)
 
             // when & then
-            mockMvc.get("/v1/boss/store/${bossStore.id}/feedbacks/specific?startDate=2022-01-01&endDate=2022-01-02")
+            mockMvc.get("/v1/boss/store/${bossStoreId}/feedbacks/specific?startDate=2022-01-01&endDate=2022-01-02")
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
@@ -127,20 +112,14 @@ internal class BossStoreFeedbackControllerTest(
             val date = LocalDate.of(2022, 1, 1)
             val nextDate = LocalDate.of(2021, 12, 31)
 
-            val bossStore = BossStoreCreator.create(
-                bossId = "bossId",
-                name = "가슴속 3천원"
-            )
-            bossStoreRepository.save(bossStore)
-
             val feedback = BossStoreFeedbackCreator.create(
-                storeId = bossStore.id,
+                storeId = bossStoreId,
                 userId = 1000000L,
                 feedbackType = feedbackType,
                 date = date
             )
             val feedbackMore = BossStoreFeedbackCreator.create(
-                storeId = bossStore.id,
+                storeId = bossStoreId,
                 userId = 1000000L,
                 feedbackType = feedbackType,
                 date = nextDate
@@ -148,7 +127,7 @@ internal class BossStoreFeedbackControllerTest(
             bossStoreFeedbackRepository.saveAll(listOf(feedback, feedbackMore))
 
             // when & then
-            mockMvc.get("/v1/boss/store/${bossStore.id}/feedbacks/specific?startDate=2022-01-01&endDate=2022-01-02")
+            mockMvc.get("/v1/boss/store/${bossStoreId}/feedbacks/specific?startDate=2022-01-01&endDate=2022-01-02")
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
@@ -167,14 +146,9 @@ internal class BossStoreFeedbackControllerTest(
         fun `조회한 기간 범위에는 피드백이 존재하지 않지만 해당 범위 이전에 피드백이 더 있는 경우 cursor가 해당 날짜를 가리킨다`() {
             // given
             val date = LocalDate.of(2022, 1, 1)
-            val bossStore = BossStoreCreator.create(
-                bossId = "bossId",
-                name = "가슴속 3천원"
-            )
-            bossStoreRepository.save(bossStore)
 
             val feedback = BossStoreFeedbackCreator.create(
-                storeId = bossStore.id,
+                storeId = bossStoreId,
                 userId = 1000000L,
                 feedbackType = BossStoreFeedbackType.BOSS_IS_KIND,
                 date = date
@@ -182,7 +156,7 @@ internal class BossStoreFeedbackControllerTest(
             bossStoreFeedbackRepository.save(feedback)
 
             // when & then
-            mockMvc.get("/v1/boss/store/${bossStore.id}/feedbacks/specific?startDate=2022-01-02&endDate=2022-01-03")
+            mockMvc.get("/v1/boss/store/${bossStoreId}/feedbacks/specific?startDate=2022-01-02&endDate=2022-01-03")
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }

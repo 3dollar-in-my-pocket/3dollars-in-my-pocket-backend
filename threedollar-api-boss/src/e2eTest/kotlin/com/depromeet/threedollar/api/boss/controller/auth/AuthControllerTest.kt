@@ -54,7 +54,7 @@ internal class AuthControllerTest(
             `when`(kaKaoAuthApiClient.getProfileInfo(any())).thenReturn(KaKaoProfileResponse.testInstance("kakao-socialId"))
 
             val request = SignupRequest(
-                token = "token",
+                token = "kakao-access-token",
                 socialType = BossAccountSocialType.KAKAO,
                 bossName = "bossName",
                 businessNumber = "000-00-00000",
@@ -88,11 +88,11 @@ internal class AuthControllerTest(
             `when`(kaKaoAuthApiClient.getProfileInfo(any())).thenReturn(KaKaoProfileResponse.testInstance(boss.socialInfo.socialId))
 
             val request = SignupRequest(
-                token = "token",
+                token = "google-access-token",
                 socialType = BossAccountSocialType.KAKAO,
-                bossName = "bossName",
+                bossName = "사장님 이름",
                 businessNumber = "000-00-00000",
-                storeName = "가게 이름",
+                storeName = "푸드트럭 가게 이름",
                 storeCategoriesIds = setOf(),
                 contactsNumber = "010-1234-1234",
                 certificationPhotoUrl = "https://photo.png"
@@ -123,11 +123,11 @@ internal class AuthControllerTest(
             `when`(kaKaoAuthApiClient.getProfileInfo(any())).thenReturn(KaKaoProfileResponse.testInstance(registration.boss.socialInfo.socialId))
 
             val request = SignupRequest(
-                token = "token",
+                token = "kakao-access-token",
                 socialType = BossAccountSocialType.KAKAO,
-                bossName = "bossName",
+                bossName = "사장님 이름",
                 businessNumber = "000-00-00000",
-                storeName = "가게 이름",
+                storeName = "푸드트럭 가게 이름",
                 storeCategoriesIds = setOf(),
                 contactsNumber = "010-1234-1234",
                 certificationPhotoUrl = "https://photo.png"
@@ -155,11 +155,11 @@ internal class AuthControllerTest(
             `when`(appleTokenDecoder.getSocialIdFromIdToken(any())).thenReturn("apple-social-id")
 
             val request = SignupRequest(
-                token = "token",
+                token = "apple-access-token",
                 socialType = BossAccountSocialType.APPLE,
-                bossName = "bossName",
+                bossName = "사장님 이름",
                 businessNumber = "000-00-00000",
-                storeName = "가게 이름",
+                storeName = "푸드트럭 가게 이름",
                 storeCategoriesIds = setOf(),
                 contactsNumber = "010-1234-1234",
                 certificationPhotoUrl = "https://photo.png"
@@ -189,11 +189,11 @@ internal class AuthControllerTest(
             `when`(appleTokenDecoder.getSocialIdFromIdToken(any())).thenReturn(boss.socialInfo.socialId)
 
             val request = SignupRequest(
-                token = "token",
+                token = "apple-access-token",
                 socialType = BossAccountSocialType.APPLE,
-                bossName = "bossName",
+                bossName = "사장님 이름",
                 businessNumber = "000-00-00000",
-                storeName = "가게 이름",
+                storeName = "푸드트럭 가게 이름",
                 storeCategoriesIds = setOf(),
                 contactsNumber = "010-1234-1234",
                 certificationPhotoUrl = "https://photo.png"
@@ -224,11 +224,11 @@ internal class AuthControllerTest(
             `when`(appleTokenDecoder.getSocialIdFromIdToken(any())).thenReturn(registration.boss.socialInfo.socialId)
 
             val request = SignupRequest(
-                token = "token",
+                token = "apple-access-token",
                 socialType = BossAccountSocialType.APPLE,
-                bossName = "bossName",
+                bossName = "사장님 이름",
                 businessNumber = "000-00-00000",
-                storeName = "가게 이름",
+                storeName = "푸드트럭 가게 이름",
                 storeCategoriesIds = setOf(),
                 contactsNumber = "010-1234-1234",
                 certificationPhotoUrl = "https://photo.png"
@@ -256,11 +256,11 @@ internal class AuthControllerTest(
             `when`(googleAuthApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance("google-social-id"))
 
             val request = SignupRequest(
-                token = "token",
+                token = "google-access-token",
                 socialType = BossAccountSocialType.GOOGLE,
-                bossName = "bossName",
+                bossName = "사장님 이름",
                 businessNumber = "000-00-00000",
-                storeName = "가게 이름",
+                storeName = "푸드트럭 가게 이름",
                 storeCategoriesIds = setOf(),
                 contactsNumber = "010-1234-1234",
                 certificationPhotoUrl = "https://photo.png"
@@ -290,11 +290,11 @@ internal class AuthControllerTest(
             `when`(googleAuthApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance(boss.socialInfo.socialId))
 
             val request = SignupRequest(
-                token = "token",
+                token = "google-access-token",
                 socialType = BossAccountSocialType.GOOGLE,
-                bossName = "bossName",
+                bossName = "사장님 이름",
                 businessNumber = "000-00-00000",
-                storeName = "가게 이름",
+                storeName = "푸드트럭 가게 이름",
                 storeCategoriesIds = setOf(),
                 contactsNumber = "010-1234-1234",
                 certificationPhotoUrl = "https://photo.png"
@@ -325,11 +325,11 @@ internal class AuthControllerTest(
             `when`(googleAuthApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance(registration.boss.socialInfo.socialId))
 
             val request = SignupRequest(
-                token = "token",
+                token = "google-access-token",
                 socialType = BossAccountSocialType.GOOGLE,
-                bossName = "bossName",
+                bossName = "사장님 이름",
                 businessNumber = "000-00-00000",
-                storeName = "가게 이름",
+                storeName = "푸드트럭 가게 이름",
                 storeCategoriesIds = setOf(),
                 contactsNumber = "010-1234-1234",
                 certificationPhotoUrl = "https://photo.png"
@@ -355,9 +355,9 @@ internal class AuthControllerTest(
         fun 네이버_회원가입_요청시_ServiceUnavailable_에러가_발생한다() {
             // given
             val request = SignupRequest(
-                token = "token",
+                token = "naver-access-token",
                 socialType = BossAccountSocialType.NAVER,
-                bossName = "bossName",
+                bossName = "사장님 이름",
                 businessNumber = "000-00-00000",
                 storeName = "가게 이름",
                 storeCategoriesIds = setOf(),
