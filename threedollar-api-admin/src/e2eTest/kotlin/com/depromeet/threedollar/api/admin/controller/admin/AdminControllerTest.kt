@@ -23,14 +23,14 @@ internal class AdminControllerTest : SetupAdminControllerTest() {
         super.cleanup()
     }
 
-    @DisplayName("GET /admin/v1/account/admin/my-info")
+    @DisplayName("GET /admin/v1/account/admin/me")
     @Nested
     inner class GetMyAdminInfoApiTest {
 
         @Test
         fun 관리자가_자신의_관리자_정보를_조회한다() {
             // when & then
-            mockMvc.get("/v1/account/admin/my-info") {
+            mockMvc.get("/v1/account/admin/me") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             }.andDo {
                 print()
@@ -44,7 +44,7 @@ internal class AdminControllerTest : SetupAdminControllerTest() {
         @Test
         fun 잘못된_토큰인경우_401_에러가_발생한다() {
             // when & then
-            mockMvc.get("/v1/account/admin/my-info") {
+            mockMvc.get("/v1/account/admin/me") {
                 header(HttpHeaders.AUTHORIZATION, "Wrong Token")
             }.andDo {
                 print()
@@ -58,7 +58,7 @@ internal class AdminControllerTest : SetupAdminControllerTest() {
         @Test
         fun 토큰을_넘기지_않은경우_401_에러가_발생한다() {
             // when & then
-            mockMvc.get("/v1/account/admin/my-info")
+            mockMvc.get("/v1/account/admin/me")
                 .andDo {
                     print()
                 }
@@ -71,7 +71,7 @@ internal class AdminControllerTest : SetupAdminControllerTest() {
 
     }
 
-    @DisplayName("PUT /admin/v1/account/admin/my-info")
+    @DisplayName("PUT /admin/v1/account/admin/me")
     @Nested
     inner class UpdateMyAdminInfoApiTest {
 
@@ -83,7 +83,7 @@ internal class AdminControllerTest : SetupAdminControllerTest() {
             )
 
             // when & then
-            mockMvc.put("/v1/account/admin/my-info") {
+            mockMvc.put("/v1/account/admin/me") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)

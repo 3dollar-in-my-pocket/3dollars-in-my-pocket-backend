@@ -10,7 +10,7 @@ client.test("200 OK", () => {
 
 
 ### [인증] 나의 활동 정보를 조회합니다.
-GET {{user_api}}/v1/user/activity
+GET {{user_api}}/v1/user/me/activity
 Authorization: {{AUTHORIZATION}}
 
 > {%

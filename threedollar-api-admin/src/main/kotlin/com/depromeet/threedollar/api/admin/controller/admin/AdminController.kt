@@ -24,7 +24,7 @@ class AdminController(
 
     @ApiOperation("자신의 관리자 정보를 조회합니다")
     @Auth
-    @GetMapping("/v1/account/admin/my-info")
+    @GetMapping("/v1/account/admin/me")
     fun getMyAdminInfo(
         @AdminId adminId: Long
     ): ApiResponse<AdminInfoResponse> {
@@ -33,7 +33,7 @@ class AdminController(
 
     @ApiOperation("자신의 관리자 정보를 수정합니다")
     @Auth
-    @PutMapping("/v1/account/admin/my-info")
+    @PutMapping("/v1/account/admin/me")
     fun updateMyAdminInfo(
         @Valid @RequestBody request: UpdateMyAdminInfoRequest,
         @AdminId adminId: Long
