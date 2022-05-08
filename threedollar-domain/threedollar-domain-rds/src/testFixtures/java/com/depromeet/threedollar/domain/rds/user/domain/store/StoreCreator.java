@@ -1,11 +1,15 @@
 package com.depromeet.threedollar.domain.rds.user.domain.store;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.depromeet.threedollar.domain.rds.user.domain.TestFixture;
 
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @TestFixture
 public class StoreCreator {
 
@@ -13,11 +17,11 @@ public class StoreCreator {
     public static Store create(
         @NotNull Long userId,
         @NotNull String storeName,
-        StoreType storeType,
-        Double latitude,
-        Double longitude,
-        Double rating,
-        StoreStatus status
+        @Nullable StoreType storeType,
+        @Nullable Double latitude,
+        @Nullable Double longitude,
+        @Nullable Double rating,
+        @Nullable StoreStatus status
     ) {
         if (latitude == null) {
             latitude = 34.0;

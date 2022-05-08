@@ -34,7 +34,10 @@ internal class AuthControllerTest : SetupAdminControllerTest() {
         fun 구글_로그인_요청이_성공하면_토큰이_반환된다() {
             // given
             val email = "will.seungho@gmail.com"
-            val admin = AdminCreator.create(email, "관리자")
+            val admin = AdminCreator.create(
+                email = email,
+                name = "관리자 계정",
+            )
             adminRepository.save(admin)
 
             `when`(googleAuthApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance("google-social-id", email, "구글 계정 이름"))

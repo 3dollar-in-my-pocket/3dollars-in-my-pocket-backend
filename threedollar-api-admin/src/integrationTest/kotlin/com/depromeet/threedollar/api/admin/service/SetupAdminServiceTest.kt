@@ -18,7 +18,10 @@ internal abstract class SetupAdminServiceTest {
 
     @BeforeEach
     fun setup() {
-        val admin = AdminCreator.create("admin@gmail.com", "name")
+        val admin = AdminCreator.create(
+            email = "will.seungho@gmail.com",
+            name = "관리자 계정"
+        )
         adminRepository.save(admin)
         adminId = admin.id
     }

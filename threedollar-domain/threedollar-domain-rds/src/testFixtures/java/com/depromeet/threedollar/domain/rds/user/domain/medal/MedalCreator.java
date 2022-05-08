@@ -1,24 +1,28 @@
 package com.depromeet.threedollar.domain.rds.user.domain.medal;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.util.StringUtils;
 
 import com.depromeet.threedollar.domain.rds.user.domain.TestFixture;
 
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @TestFixture
 public class MedalCreator {
 
     @Builder
     public static Medal create(
         @NotNull String name,
-        String introduction,
-        String activationIconUrl,
-        String disableIconUrl,
-        MedalAcquisitionConditionType conditionType,
-        Integer conditionCount,
-        String acquisitionDescription
+        @Nullable String introduction,
+        @Nullable String activationIconUrl,
+        @Nullable String disableIconUrl,
+        @Nullable MedalAcquisitionConditionType conditionType,
+        @Nullable Integer conditionCount,
+        @Nullable String acquisitionDescription
     ) {
         if (!StringUtils.hasText(introduction)) {
             introduction = "메달 설명";

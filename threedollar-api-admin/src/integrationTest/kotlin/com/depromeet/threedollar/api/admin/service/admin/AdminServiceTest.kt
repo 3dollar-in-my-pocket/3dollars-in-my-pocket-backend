@@ -45,7 +45,7 @@ internal class AdminServiceTest(
             val name = "끼토끼토"
             val admin = AdminCreator.create(
                 email = "will.seungho@gmail.com",
-                name = "토끼"
+                name = "관리자 계정",
             )
             adminRepository.save(admin)
 
@@ -118,7 +118,7 @@ internal class AdminServiceTest(
 
             val admin = AdminCreator.create(
                 email = email,
-                name = "토끼"
+                name = "토끼",
             )
             adminRepository.save(admin)
 

@@ -42,7 +42,7 @@ internal class GoogleAuthServiceTest(
             // given
             val admin = AdminCreator.create(
                 email = EMAIL,
-                name = "강승호"
+                name = "관리자 계정",
             )
             adminRepository.save(admin)
 

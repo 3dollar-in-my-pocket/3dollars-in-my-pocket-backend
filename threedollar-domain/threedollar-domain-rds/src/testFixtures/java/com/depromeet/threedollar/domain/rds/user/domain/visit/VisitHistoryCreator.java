@@ -7,8 +7,11 @@ import org.jetbrains.annotations.NotNull;
 import com.depromeet.threedollar.domain.rds.user.domain.TestFixture;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @TestFixture
 public class VisitHistoryCreator {
 

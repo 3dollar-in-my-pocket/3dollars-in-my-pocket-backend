@@ -6,18 +6,19 @@ import com.depromeet.threedollar.domain.rds.user.domain.TestFixture
 @TestFixture
 object AdvertisementCreator {
 
+    @JvmOverloads
     @JvmStatic
     fun create(
         positionType: AdvertisementPositionType,
         platformType: AdvertisementPlatformType,
-        title: String?,
-        subTitle: String?,
         imageUrl: String,
-        linkUrl: String?,
-        bgColor: String?,
-        fontColor: String?,
-        startDateTime: LocalDateTime,
-        endDateTime: LocalDateTime
+        title: String? = null,
+        subTitle: String? = null,
+        linkUrl: String? = null,
+        bgColor: String? = null,
+        fontColor: String? = null,
+        startDateTime: LocalDateTime = LocalDateTime.of(2022, 1, 1, 0, 0),
+        endDateTime: LocalDateTime = LocalDateTime.of(2022, 1, 10, 0, 0)
     ): Advertisement {
         return Advertisement.builder()
             .positionType(positionType)
