@@ -65,7 +65,7 @@ class AuthController(
 
     @ApiOperation("[인증] 사장님 계정을 회원탈퇴 합니다")
     @Auth
-    @DeleteMapping("/v1/auth/sign-out")
+    @DeleteMapping("/v1/auth/signout")
     fun signOut(
         @BossId bossId: String
     ): ApiResponse<String> {

@@ -593,7 +593,7 @@ internal class AuthControllerTest(
         @Test
         fun 회원탈퇴_요청이_성공하면_200_OK() {
             // when & then
-            mockMvc.delete("/v1/auth/sign-out") {
+            mockMvc.delete("/v1/auth/signout") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             }
                 .andDo {
