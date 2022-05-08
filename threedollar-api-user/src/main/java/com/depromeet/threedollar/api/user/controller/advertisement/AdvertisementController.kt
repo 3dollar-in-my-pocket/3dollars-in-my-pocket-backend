@@ -15,7 +15,7 @@ class AdvertisementController(
 ) {
 
     @Deprecated(message = "v2.2.3 부터 Deprecated GET /v1/advertisements 로 대체")
-    @ApiOperation("[GET /api/v1/advertisements 로 변경] 활성화중인 광고 목록을 조회합니다")
+    @ApiOperation("활성화중인 광고 목록을 조회합니다 (GET /api/v1/advertisements 로 변경)")
     @GetMapping("/v1/popups")
     fun getAdvertisementsV1(
         @Valid request: RetrieveAdvertisementsRequest

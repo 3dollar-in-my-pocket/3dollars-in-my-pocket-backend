@@ -24,7 +24,7 @@ class UserActivityController(
     }
 
     @Deprecated(message = "v3.0.0부터 GET /v1/user/me/activity 로 대체")
-    @ApiOperation("[인증] 유저의 활동 정보를 조회합니다")
+    @ApiOperation("[인증] 유저의 활동 정보를 조회합니다 (GET /api/v1/user/me/activity로 변경)")
     @Auth
     @GetMapping("/v1/user/activity")
     fun getUserActivityV1(
