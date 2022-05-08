@@ -48,10 +48,8 @@ internal class BossAccountServiceTest(
             )
             bossAccountRepository.save(bossAccount)
 
-            val request = UpdateBossAccountInfoRequest(name, isSetupNotification)
-
             // when
-            bossAccountService.updateBossAccountInfo(bossAccount.id, request)
+            bossAccountService.updateBossAccountInfo(bossAccount.id, UpdateBossAccountInfoRequest(name, isSetupNotification))
 
             // then
             val bossAccounts = bossAccountRepository.findAll()

@@ -1,7 +1,3 @@
-ext {
-    embeddedMongoVersion = "3.4.5"
-}
-
 dependencies {
     api project(":threedollar-common")
 
@@ -9,7 +5,7 @@ dependencies {
     api("org.springframework.boot:spring-boot-starter-data-mongodb")
 
     // Embedded MongoDB
-    implementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:${embeddedMongoVersion}")
+    implementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
 
     // TestFixtures
     testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-mongo")))

@@ -10,6 +10,9 @@ spring:
       host: localhost
       port: ${random.int(49152,65535)}
       database: test
+  mongodb:
+    embedded:
+      version: 3.4.5
 
 
 ---
