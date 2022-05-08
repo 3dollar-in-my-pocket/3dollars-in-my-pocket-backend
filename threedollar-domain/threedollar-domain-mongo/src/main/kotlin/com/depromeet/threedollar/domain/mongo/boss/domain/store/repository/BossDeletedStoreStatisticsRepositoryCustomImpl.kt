@@ -8,7 +8,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossDeletedStore
 
 class BossDeletedStoreStatisticsRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
-): BossDeletedStoreStatisticsRepositoryCustom {
+) : BossDeletedStoreStatisticsRepositoryCustom {
 
     override fun countDeletedBossStoresBetweenDate(startDate: LocalDate, endDate: LocalDate): Long {
         return mongoTemplate.count(Query()

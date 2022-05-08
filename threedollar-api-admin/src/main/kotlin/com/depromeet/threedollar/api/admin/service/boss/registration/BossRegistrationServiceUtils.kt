@@ -2,8 +2,8 @@ package com.depromeet.threedollar.api.admin.service.boss.registration
 
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistration
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
 
 object BossRegistrationServiceUtils {
 

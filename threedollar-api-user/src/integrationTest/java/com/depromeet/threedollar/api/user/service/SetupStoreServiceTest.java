@@ -29,7 +29,6 @@ public abstract class SetupStoreServiceTest extends SetupUserServiceTest {
     private PaymentMethodRepository paymentMethodRepository;
 
     protected Long storeId;
-
     protected Store store;
 
     @BeforeEach
