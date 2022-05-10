@@ -21,10 +21,10 @@ import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
 import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
 
 internal class BossRegistrationAdminServiceTest(
-        private val bossRegistrationAdminService: BossRegistrationAdminService,
-        private val bossRegistrationRepository: BossRegistrationRepository,
-        private val bossAccountRepository: BossAccountRepository,
-        private val bossStoreRepository: BossStoreRepository
+    private val bossRegistrationAdminService: BossRegistrationAdminService,
+    private val bossRegistrationRepository: BossRegistrationRepository,
+    private val bossAccountRepository: BossAccountRepository,
+    private val bossStoreRepository: BossStoreRepository
 ) : SetupAdminServiceTest() {
 
     @AfterEach

@@ -26,10 +26,10 @@ object BossAccountServiceUtils {
     }
 
     fun findBossAccountBySocialIdAndSocialTypeWithCheckWaitingRegistration(
-            bossAccountRepository: BossAccountRepository,
-            bossRegistrationRepository: BossRegistrationRepository,
-            socialId: String,
-            socialType: BossAccountSocialType
+        bossAccountRepository: BossAccountRepository,
+        bossRegistrationRepository: BossRegistrationRepository,
+        socialId: String,
+        socialType: BossAccountSocialType
     ): String {
         return bossAccountRepository.findBossAccountBySocialInfo(socialId, socialType)?.id
             ?: run {
