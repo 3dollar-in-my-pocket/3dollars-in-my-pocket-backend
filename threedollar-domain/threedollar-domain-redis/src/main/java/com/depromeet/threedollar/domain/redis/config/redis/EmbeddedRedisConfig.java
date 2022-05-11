@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 
+import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import com.depromeet.threedollar.common.utils.ProcessUtils;
 import com.depromeet.threedollar.domain.redis.config.redis.property.RedisProperty;
 
@@ -36,15 +37,21 @@ public class EmbeddedRedisConfig {
     private int port;
 
     @PostConstruct
-    public void startRedis() throws IOException {
-        if (redisServer == null || !redisServer.isActive()) {
-            port = ProcessUtils.isRunningPort(port) ? ProcessUtils.findAvailableRandomPort() : port;
-            redisServer = RedisServer.builder()
-                .port(port)
-                .setting("maxmemory 128M")
-                .build();
-            redisServer.start();
-            log.info("임베디드 레디스 서버가 기동되었습니다. port: {}", port);
+    public void startRedis() {
+        try {
+            if (redisServer == null || !redisServer.isActive()) {
+                port = ProcessUtils.isRunningPort(port) ? ProcessUtils.findAvailableRandomPort() : port;
+                redisServer = RedisServer.builder()
+                    .port(port)
+                    .setting("maxmemory 128M")
+                    .setting("daemonize no")
+                    .setting("appendonly no")
+                    .build();
+                redisServer.start();
+                log.info("임베디드 레디스 서버가 기동되었습니다. port: {}", port);
+            }
+        } catch (IOException e) {
+            throw new InternalServerException(String.format("임베디드 서버 시작 중 에러가 발생하였습니다. message: (%s)", e.getMessage()));
         }
     }
 
