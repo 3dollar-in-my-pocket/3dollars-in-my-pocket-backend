@@ -1,8 +1,6 @@
 package com.depromeet.threedollar.api.boss.controller.advice
 
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
-import org.springframework.boot.test.mock.mockito.SpyBean
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.mock.http.MockHttpInputMessage
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
@@ -16,10 +14,12 @@ import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.common.exception.model.ServiceUnAvailableException
 import com.depromeet.threedollar.common.exception.model.TooManyRequestsException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
+import com.ninjasquad.springmockk.SpykBean
+import io.mockk.every
 
 internal class ControllerExceptionAdviceTest : SetupControllerTest() {
 
-    @SpyBean
+    @SpykBean
     private lateinit var healthCheckController: HealthCheckController
 
     @Test
@@ -35,7 +35,7 @@ internal class ControllerExceptionAdviceTest : SetupControllerTest() {
     @Test
     fun 일시적으로_너무_많은_요청이_들어온경우_Too_Many_Requests_응답을_반환한다() {
         // given
-        Mockito.`when`(healthCheckController.healthCheck()).thenThrow(TooManyRequestsException("일시적으로 너무 많은 요청이 들어왔습니다"))
+        every { healthCheckController.healthCheck() }.throws(TooManyRequestsException("일시적으로 너무 많은 요청이 들어왔습니다"))
 
         // when & then
         mockMvc.perform(MockMvcRequestBuilders.get("/ping"))
@@ -46,10 +46,9 @@ internal class ControllerExceptionAdviceTest : SetupControllerTest() {
     }
 
     @Test
-    @Throws(Exception::class)
     fun 서버_내부적으로_에러가_발생한경우_Interanl_Server를_반환한다() {
         // given
-        Mockito.`when`(healthCheckController.healthCheck()).thenThrow(InternalServerException("서버 내부에서 에러가 발생하였습니다"))
+        every { healthCheckController.healthCheck() }.throws(InternalServerException("서버 내부에서 에러가 발생하였습니다"))
 
         // when & then
         mockMvc.perform(MockMvcRequestBuilders.get("/ping"))
@@ -62,7 +61,7 @@ internal class ControllerExceptionAdviceTest : SetupControllerTest() {
     @Test
     fun 외부_시스템_연동중_에러가_발생한경우_Internal_Server를_반환한다() {
         // given
-        Mockito.`when`(healthCheckController.healthCheck()).thenThrow(BadGatewayException("외부 시스템 연동중 에러가 발생하였습니다"))
+        every { healthCheckController.healthCheck() }.throws(BadGatewayException("외부 시스템 연동중 에러가 발생하였습니다"))
 
         // when & then
         mockMvc.perform(MockMvcRequestBuilders.get("/ping"))
@@ -75,7 +74,7 @@ internal class ControllerExceptionAdviceTest : SetupControllerTest() {
     @Test
     fun 해당_API가_점검중인경우_Service_Unavilable_에러가_발생한다() {
         // given
-        Mockito.`when`(healthCheckController.healthCheck()).thenThrow(ServiceUnAvailableException("해당 API는 점검중입니다"))
+        every { healthCheckController.healthCheck() }.throws(ServiceUnAvailableException("해당 API는 점검중입니다"))
 
         // when & then
         mockMvc.perform(MockMvcRequestBuilders.get("/ping"))
@@ -88,7 +87,7 @@ internal class ControllerExceptionAdviceTest : SetupControllerTest() {
     @Test
     fun HttpMessageNotReadable인경우_400에러가_발생한다() {
         // given
-        Mockito.`when`(healthCheckController.healthCheck()).thenThrow(HttpMessageNotReadableException("HttpMessageNotReadable", MockHttpInputMessage(ByteArray(10))))
+        every { healthCheckController.healthCheck() }.throws(HttpMessageNotReadableException("HttpMessageNotReadable", MockHttpInputMessage(ByteArray(10))))
 
         // when & then
         mockMvc.perform(MockMvcRequestBuilders.get("/ping"))
@@ -101,7 +100,7 @@ internal class ControllerExceptionAdviceTest : SetupControllerTest() {
     @Test
     fun 최대_허용가능한_이미지_크기를_넘은경우_400에러가_발생한다() {
         // given
-        Mockito.`when`(healthCheckController.healthCheck()).thenThrow(MaxUploadSizeExceededException(5000))
+        every { healthCheckController.healthCheck() }.throws(MaxUploadSizeExceededException(5000))
 
         // when & then
         mockMvc.perform(MockMvcRequestBuilders.get("/ping"))

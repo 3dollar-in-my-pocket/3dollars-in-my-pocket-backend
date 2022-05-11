@@ -49,6 +49,13 @@ subprojects {
         }
     }
 
+    compileTestKotlin {
+        kotlinOptions {
+            jvmTarget = JavaVersion.VERSION_11
+            freeCompilerArgs = ["-Xjsr305=strict"]
+        }
+    }
+
     repositories {
         mavenCentral()
     }

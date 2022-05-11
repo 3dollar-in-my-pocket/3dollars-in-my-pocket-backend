@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.api.admin.controller.advice
 
 import java.util.stream.Collectors
-import javax.servlet.http.HttpServletRequest
 import org.slf4j.Logger
 import org.springframework.beans.TypeMismatchException
 import org.springframework.http.HttpStatus
@@ -160,7 +159,7 @@ class ControllerExceptionAdvice {
      * ThreeDollars Custom Exception
      */
     @ExceptionHandler(ThreeDollarsBaseException::class)
-    private fun handleBaseException(exception: ThreeDollarsBaseException, request: HttpServletRequest): ResponseEntity<ApiResponse<Nothing>> {
+    private fun handleBaseException(exception: ThreeDollarsBaseException): ResponseEntity<ApiResponse<Nothing>> {
         log.error(exception.message, exception)
         return ResponseEntity.status(exception.status)
             .body(ApiResponse.error(exception.errorCode))
