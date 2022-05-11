@@ -33,7 +33,7 @@
 - **Data(NoSQL, Cache)** - MongoDB, Redis, Caffeine Cache
 - **API Client** - Feign Client
 - **Build Tool** - Gradle
-- **Test** - Junit5, Spring Test
+- **Test** - Junit5, Spring Test, Mockito, SpringMockK
 
 ### 인프라 아키텍처
 

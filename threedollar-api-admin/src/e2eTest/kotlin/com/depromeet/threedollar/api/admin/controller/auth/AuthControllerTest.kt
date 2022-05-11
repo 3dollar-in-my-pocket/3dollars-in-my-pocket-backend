@@ -4,9 +4,6 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.`when`
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.post
@@ -15,10 +12,12 @@ import com.depromeet.threedollar.api.admin.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminCreator
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
 import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse
+import com.ninjasquad.springmockk.MockkBean
+import io.mockk.every
 
 internal class AuthControllerTest : SetupAdminControllerTest() {
 
-    @MockBean
+    @MockkBean
     private lateinit var googleAuthApiClient: GoogleAuthApiClient
 
     @AfterEach
@@ -37,7 +36,7 @@ internal class AuthControllerTest : SetupAdminControllerTest() {
             val admin = AdminCreator.create(email, "관리자")
             adminRepository.save(admin)
 
-            `when`(googleAuthApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance("google-social-id", email, "구글 계정 이름"))
+            every { googleAuthApiClient.getProfileInfo(any()) }.returns(GoogleProfileInfoResponse.testInstance("google-social-id", email, "구글 계정 이름"))
 
             val request = LoginRequest(token = "token")
 
