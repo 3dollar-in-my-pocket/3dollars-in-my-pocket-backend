@@ -105,18 +105,18 @@ spring:
       hikari:
         auto-commit: false
         driver-class-name: org.mariadb.jdbc.Driver
-        jdbc-url: jdbc:mariadb://localhost:3309/threedollar_test
+        jdbc-url: jdbc:mariadb://localhost:3310/threedollar_test
         username: root
-        password: 3dollar
+        password: threedollar
         pool-name: HikariPool-Primary
         connection-test-query: SELECT 1
     secondary:
       hikari:
         auto-commit: false
         driver-class-name: org.mariadb.jdbc.Driver
-        jdbc-url: jdbc:mariadb://localhost:3309/threedollar_test
+        jdbc-url: jdbc:mariadb://localhost:3311/threedollar_test
         username: root
-        password: 3dollar
+        password: threedollar
         pool-name: HikariPool-Seconary
         connection-test-query: SELECT 1
   flyway:

@@ -18,7 +18,7 @@ INSERT INTO medal (id, name, activation_icon_url, created_at, updated_at, disabl
 INSERT INTO medal (id, name, activation_icon_url, created_at, updated_at, disable_icon_url, introduction) VALUES (7, '우리동네 보안관', 'https://storage.prod.threedollars.co.kr/medal/v1-police-default.png', NOW(), NOW(), 'https://storage.prod.threedollars.co.kr/medal/v2-police-disabled.png', '허위 매물 신고에 적극적인 당신, 동네의 보안관이시네요');
 
 
-INSERT INTO medal_acquisition_condition (medal_id, condition_type, count, created_at, updated_at, description) VALUES (1, 'NO_CONDITION', 0, NOW(), NOW(), '2021-12-02 02:08:45.000000');
+INSERT INTO medal_acquisition_condition (medal_id, condition_type, count, created_at, updated_at, description) VALUES (1, 'NO_CONDITION', 0, NOW(), NOW(), '가입시 획득');
 INSERT INTO medal_acquisition_condition (medal_id, condition_type, count, created_at, updated_at, description) VALUES (2, 'VISIT_BUNGEOPPANG_STORE', 3, NOW(), NOW(), '붕어빵 가게 인증 3회 누적');
 INSERT INTO medal_acquisition_condition (medal_id, condition_type, count, created_at, updated_at, description) VALUES (3, 'VISIT_BUNGEOPPANG_STORE', 10, NOW(), NOW(), '붕어빵 가게 인증 10회 누적');
 INSERT INTO medal_acquisition_condition (medal_id, condition_type, count, created_at, updated_at, description) VALUES (4, 'VISIT_NOT_EXISTS_STORE', 5, NOW(), NOW(), '인증 실패 5회 누적 ');
