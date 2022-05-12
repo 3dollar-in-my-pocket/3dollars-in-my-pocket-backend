@@ -9,7 +9,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSoc
 private val authServiceMap: MutableMap<BossAccountSocialType, AuthService> = EnumMap(BossAccountSocialType::class.java)
 
 @Component
-class AuthServiceProvider(
+class AuthServiceFinder(
     private val kaKaoAuthService: KaKaoAuthService,
     private val appleAuthService: AppleAuthService,
     private val googleAuthService: GoogleAuthService,

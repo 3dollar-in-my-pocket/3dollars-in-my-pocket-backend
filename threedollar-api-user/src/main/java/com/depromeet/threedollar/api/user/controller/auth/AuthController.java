@@ -14,7 +14,7 @@ import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.user.config.interceptor.Auth;
 import com.depromeet.threedollar.api.user.config.resolver.UserId;
 import com.depromeet.threedollar.api.user.service.auth.AuthService;
-import com.depromeet.threedollar.api.user.service.auth.AuthServiceProvider;
+import com.depromeet.threedollar.api.user.service.auth.AuthServiceFinder;
 import com.depromeet.threedollar.api.user.service.auth.dto.request.LoginRequest;
 import com.depromeet.threedollar.api.user.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.user.service.auth.dto.response.LoginResponse;
@@ -29,14 +29,14 @@ public class AuthController {
 
     private final HttpSession httpSession;
     private final UserService userService;
-    private final AuthServiceProvider authServiceProvider;
+    private final AuthServiceFinder authServiceFinder;
 
     @ApiOperation("회원가입을 요청합니다")
     @PostMapping("/v2/signup")
     public ApiResponse<LoginResponse> signUp(
         @Valid @RequestBody SignUpRequest request
     ) {
-        AuthService authService = authServiceProvider.getAuthService(request.getSocialType());
+        AuthService authService = authServiceFinder.getAuthService(request.getSocialType());
         Long userId = authService.signUp(request);
         httpSession.setAttribute(USER_ID, userId);
         return ApiResponse.success(LoginResponse.of(httpSession.getId(), userId));
@@ -47,7 +47,7 @@ public class AuthController {
     public ApiResponse<LoginResponse> login(
         @Valid @RequestBody LoginRequest request
     ) {
-        AuthService authService = authServiceProvider.getAuthService(request.getSocialType());
+        AuthService authService = authServiceFinder.getAuthService(request.getSocialType());
         Long userId = authService.login(request);
         httpSession.setAttribute(USER_ID, userId);
         return ApiResponse.success(LoginResponse.of(httpSession.getId(), userId));

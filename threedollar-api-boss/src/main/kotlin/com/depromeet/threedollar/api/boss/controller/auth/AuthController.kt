@@ -10,7 +10,7 @@ import com.depromeet.threedollar.api.boss.config.interceptor.Auth
 import com.depromeet.threedollar.api.boss.config.resolver.BossId
 import com.depromeet.threedollar.api.boss.config.session.SessionConstants.BOSS_ACCOUNT_ID
 import com.depromeet.threedollar.api.boss.service.account.BossAccountService
-import com.depromeet.threedollar.api.boss.service.auth.AuthServiceProvider
+import com.depromeet.threedollar.api.boss.service.auth.AuthServiceFinder
 import com.depromeet.threedollar.api.boss.service.auth.SignupService
 import com.depromeet.threedollar.api.boss.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.api.boss.service.auth.dto.request.SignupRequest
@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiOperation
 @RestController
 class AuthController(
     private val httpSession: HttpSession,
-    private val authServiceProvider: AuthServiceProvider,
+    private val authServiceFinder: AuthServiceFinder,
     private val bossAccountService: BossAccountService,
     private val signupService: SignupService
 ) {
@@ -31,7 +31,7 @@ class AuthController(
     fun applyForBossAccountRegistration(
         @Valid @RequestBody request: SignupRequest
     ): ApiResponse<LoginResponse> {
-        val authService = authServiceProvider.getAuthService(request.socialType)
+        val authService = authServiceFinder.getAuthService(request.socialType)
         val socialId = authService.getSocialId(request.token)
         val bossId = signupService.signUp(request, socialId)
         httpSession.setAttribute(BOSS_ACCOUNT_ID, bossId)
@@ -46,7 +46,7 @@ class AuthController(
     fun login(
         @Valid @RequestBody request: LoginRequest
     ): ApiResponse<LoginResponse> {
-        val authService = authServiceProvider.getAuthService(request.socialType)
+        val authService = authServiceFinder.getAuthService(request.socialType)
         val bossId = authService.login(request)
         httpSession.setAttribute(BOSS_ACCOUNT_ID, bossId)
         return ApiResponse.success(LoginResponse(

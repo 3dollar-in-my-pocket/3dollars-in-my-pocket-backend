@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Component
-public class AuthServiceProvider {
+public class AuthServiceFinder {
 
     private static final EnumMap<UserSocialType, AuthService> authServiceMap = new EnumMap<>(UserSocialType.class);
 
