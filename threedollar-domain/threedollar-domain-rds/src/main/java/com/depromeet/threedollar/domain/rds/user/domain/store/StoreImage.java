@@ -4,13 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.depromeet.threedollar.domain.rds.common.domain.AuditingTimeEntity;
@@ -24,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(
-    indexes = @Index(name = "idx_store_image_1", columnList = "store_id,status")
+    indexes = @Index(name = "idx_store_image_1", columnList = "storeId,status")
 )
 public class StoreImage extends AuditingTimeEntity {
 
@@ -32,9 +29,8 @@ public class StoreImage extends AuditingTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "store_id", nullable = false)
-    private Store store;
+    @Column(nullable = false)
+    private Long storeId;
 
     @Column(nullable = false)
     private Long userId;
@@ -47,16 +43,16 @@ public class StoreImage extends AuditingTimeEntity {
     private StoreImageStatus status;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private StoreImage(Store store, Long userId, String url) {
-        this.store = store;
+    private StoreImage(Long storeId, Long userId, String url) {
+        this.storeId = storeId;
         this.userId = userId;
         this.url = url;
         this.status = StoreImageStatus.ACTIVE;
     }
 
-    public static StoreImage newInstance(Store store, Long userId, String imageUrl) {
+    public static StoreImage newInstance(Long storeId, Long userId, String imageUrl) {
         return StoreImage.builder()
-            .store(store)
+            .storeId(storeId)
             .userId(userId)
             .url(imageUrl)
             .build();

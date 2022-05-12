@@ -2,7 +2,6 @@ package com.depromeet.threedollar.api.user.service.store.dto.request;
 
 import javax.validation.constraints.NotNull;
 
-import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
 
 import lombok.AccessLevel;
@@ -24,8 +23,8 @@ public class AddStoreImageRequest {
         this.storeId = storeId;
     }
 
-    public StoreImage toEntity(Store store, Long userId, String imageUrl) {
-        return StoreImage.newInstance(store, userId, imageUrl);
+    public StoreImage toEntity(Long storeId, Long userId, String imageUrl) {
+        return StoreImage.newInstance(storeId, userId, imageUrl);
     }
 
 }

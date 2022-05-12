@@ -7,12 +7,12 @@ object StoreImageCreator {
 
     @JvmStatic
     fun create(
-        store: Store,
+        storeId: Long,
         userId: Long,
         url: String
     ): StoreImage {
         return StoreImage.builder()
-            .store(store)
+            .storeId(storeId)
             .userId(userId)
             .url(url)
             .build()

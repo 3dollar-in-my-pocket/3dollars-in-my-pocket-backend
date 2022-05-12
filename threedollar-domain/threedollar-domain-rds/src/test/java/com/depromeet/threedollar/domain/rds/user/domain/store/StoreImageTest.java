@@ -10,10 +10,10 @@ class StoreImageTest {
     void 가게이미지의_URL을_수정한다() {
         // given
         long userId = 10000L;
+        long storeId = 99999L;
         String imageUrl = "https://image.png";
 
-        Store store = StoreCreator.createWithDefaultMenu(userId, "가게 이름");
-        StoreImage storeImage = StoreImageCreator.create(store, userId, "https://after-store-image.png");
+        StoreImage storeImage = StoreImageCreator.create(storeId, userId, "https://after-store-image.png");
 
         // when
         storeImage.updateUrl(imageUrl);

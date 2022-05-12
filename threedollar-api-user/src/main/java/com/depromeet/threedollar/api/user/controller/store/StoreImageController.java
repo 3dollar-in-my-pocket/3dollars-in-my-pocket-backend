@@ -18,6 +18,7 @@ import com.depromeet.threedollar.api.user.config.resolver.UserId;
 import com.depromeet.threedollar.api.user.service.store.StoreImageService;
 import com.depromeet.threedollar.api.user.service.store.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreImageResponse;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +46,8 @@ public class StoreImageController {
         @Valid AddStoreImageRequest request,
         @UserId Long userId
     ) {
-        return ApiResponse.success(storeImageService.addStoreImages(request, images, userId));
+        List<StoreImage> storeImages = storeImageService.uploadStoreImages(request, images, userId);
+        return ApiResponse.success(storeImageService.addStoreImages(storeImages));
     }
 
     @ApiOperation("[인증] 가게에 등록된 특정 이미지를 삭제합니다")

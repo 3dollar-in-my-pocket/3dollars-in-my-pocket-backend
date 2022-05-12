@@ -17,7 +17,7 @@ public final class StoreImageAssertions {
 
     public static void assertStoreImage(StoreImage storeImage, Long storeId, Long userId, String imageUrl, StoreImageStatus status) {
         assertAll(
-            () -> assertThat(storeImage.getStore().getId()).isEqualTo(storeId),
+            () -> assertThat(storeImage.getStoreId()).isEqualTo(storeId),
             () -> assertThat(storeImage.getUserId()).isEqualTo(userId),
             () -> assertThat(storeImage.getUrl()).isEqualTo(imageUrl),
             () -> assertThat(storeImage.getStatus()).isEqualTo(status)

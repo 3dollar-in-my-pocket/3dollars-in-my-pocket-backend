@@ -47,8 +47,8 @@ class StoreImageControllerTest extends SetupStoreControllerTest {
             String imageUrl1 = "imageUrl1";
             String imageUrl2 = "imageUrl2";
 
-            StoreImage storeImage1 = StoreImage.newInstance(store, user.getId(), imageUrl1);
-            StoreImage storeImage2 = StoreImage.newInstance(store, user.getId(), imageUrl2);
+            StoreImage storeImage1 = StoreImage.newInstance(storeId, user.getId(), imageUrl1);
+            StoreImage storeImage2 = StoreImage.newInstance(storeId, user.getId(), imageUrl2);
             storeImageRepository.saveAll(List.of(storeImage1, storeImage2));
 
             // when
@@ -71,7 +71,7 @@ class StoreImageControllerTest extends SetupStoreControllerTest {
         @Test
         void 가게_이미지_삭제요청_성공시_200_OK() throws Exception {
             // given
-            StoreImage storeImage = storeImageRepository.save(StoreImage.newInstance(store, user.getId(), "imageUrl"));
+            StoreImage storeImage = storeImageRepository.save(StoreImage.newInstance(storeId, user.getId(), "imageUrl"));
 
             // when
             ApiResponse<String> response = storeImageMockApiCaller.deleteStoreImage(storeImage.getId(), token, 200);
