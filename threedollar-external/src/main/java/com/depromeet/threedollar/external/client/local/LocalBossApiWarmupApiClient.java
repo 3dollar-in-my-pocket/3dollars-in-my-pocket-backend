@@ -1,6 +1,8 @@
 package com.depromeet.threedollar.external.client.local;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 )
 public interface LocalBossApiWarmupApiClient {
 
+    @Retryable(maxAttempts = 5, backoff = @Backoff(value = 1000), value = Exception.class)
     @GetMapping("/v1/boss/stores/around")
     void retrieveNearBossStores(
         @RequestParam double mapLatitude,
@@ -17,6 +20,7 @@ public interface LocalBossApiWarmupApiClient {
         @RequestParam int distanceKm
     );
 
+    @Retryable(maxAttempts = 5, backoff = @Backoff(value = 1000), value = Exception.class)
     @GetMapping("/v1/boss/store/categories")
     void retrieveBossStoreCategories();
 

@@ -2,12 +2,11 @@ package com.depromeet.threedollar.external.client.slack;
 
 import org.springframework.context.annotation.Bean;
 
+import com.depromeet.threedollar.common.exception.model.BadGatewayException;
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
 
 import feign.FeignException;
 import feign.Response;
-import feign.RetryableException;
-import feign.Retryer;
 import feign.codec.ErrorDecoder;
 
 public class SlackFeignConfig {
@@ -15,11 +14,6 @@ public class SlackFeignConfig {
     @Bean
     public ErrorDecoder errorDecoder() {
         return new SlackApiErrorDecoder();
-    }
-
-    @Bean
-    public Retryer retryer() {
-        return new Retryer.Default(1000, 2000, 3);
     }
 
     /**
@@ -35,9 +29,9 @@ public class SlackFeignConfig {
                 case 403:
                 case 404:
                 case 410:
-                    return new InternalServerException(String.format("Slack API 호출 중 클라이언트 에러가 발생하였습니다. status: (%s) message: (%s)", response.status(), response.body()));
+                    throw new InternalServerException(String.format("Slack API 호출 중 클라이언트 에러(%s)가 발생하였습니다. message: (%s)", response.status(), response.body()));
                 default:
-                    return new RetryableException(response.status(), exception.getMessage(), response.request().httpMethod(), exception, null, response.request());
+                    throw new BadGatewayException(String.format("슬랙 API 호출중 에러(%s)가 발생하였습니다. message: (%s) ", response.status(), exception.getMessage()));
             }
         }
 

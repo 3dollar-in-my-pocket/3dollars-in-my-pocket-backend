@@ -3,7 +3,7 @@ package com.depromeet.threedollar.external.config.feign;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.depromeet.threedollar.common.exception.model.InternalServerException;
+import com.depromeet.threedollar.common.exception.model.BadGatewayException;
 import com.depromeet.threedollar.common.exception.model.InvalidException;
 
 import feign.Response;
@@ -27,7 +27,7 @@ public class FeignDefaultConfig {
             if (isClientError(response.status())) {
                 return new InvalidException(String.format("외부 API 호출 중 클라이언트 에러(%s)가 발생하였습니다. message: (%s)", response.status(), response.body()));
             }
-            return new InternalServerException(String.format("외부 API 연동 중 서버 에러(%s)가 발생하였습니다. message: (%s)", response.status(), response.body()));
+            return new BadGatewayException(String.format("외부 API 연동 중 서버 에러(%s)가 발생하였습니다. message: (%s)", response.status(), response.body()));
         }
 
         private boolean isClientError(int status) {
