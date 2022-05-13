@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -26,7 +27,7 @@ public class S3FileStorageClient implements FileStorageClient {
 
     @Override
     public void uploadFile(@NotNull MultipartFile file, @NotNull String fileName) {
-        try (InputStream inputStream = file.getInputStream()) {
+        try (InputStream inputStream = new BufferedInputStream(file.getInputStream())) {
             amazonS3.putObject(new PutObjectRequest(s3Property.getBucket(), fileName, inputStream, createObjectMetadata(file))
                 .withCannedAcl(CannedAccessControlList.PublicRead));
         } catch (IOException e) {
