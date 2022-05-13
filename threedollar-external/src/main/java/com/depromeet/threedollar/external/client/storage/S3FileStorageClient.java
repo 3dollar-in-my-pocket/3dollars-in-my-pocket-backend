@@ -17,6 +17,8 @@ import com.depromeet.threedollar.external.client.storage.property.AmazonS3Proper
 
 import lombok.RequiredArgsConstructor;
 
+import java.io.BufferedInputStream;
+
 @RequiredArgsConstructor
 @Component
 public class S3FileStorageClient implements FileStorageClient {
@@ -28,7 +30,7 @@ public class S3FileStorageClient implements FileStorageClient {
 
     @Override
     public void uploadFile(@NotNull MultipartFile file, @NotNull String fileName) {
-        try (InputStream inputStream = file.getInputStream()) {
+        try (InputStream inputStream = new BufferedInputStream(file.getInputStream())) {
             amazonS3.putObject(new PutObjectRequest(s3Property.getBucket(), fileName, inputStream, createObjectMetadata(file))
                 .withCannedAcl(CannedAccessControlList.PublicRead));
         } catch (IOException e) {
