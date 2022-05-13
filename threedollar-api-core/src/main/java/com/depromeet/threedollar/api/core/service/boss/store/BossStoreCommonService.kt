@@ -13,8 +13,8 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRepository
-import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenTimeRepository
+import com.depromeet.threedollar.domain.redis.domain.boss.feedback.BossStoreFeedbackCountRepository
+import com.depromeet.threedollar.domain.redis.domain.boss.store.BossStoreOpenTimeRepository
 import kotlin.math.min
 
 private const val MAX_DISTANCE_KM = 2.0

@@ -15,7 +15,7 @@ import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedbackCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedbackRepository
-import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRepository
+import com.depromeet.threedollar.domain.redis.domain.boss.feedback.BossStoreFeedbackCountRepository
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest

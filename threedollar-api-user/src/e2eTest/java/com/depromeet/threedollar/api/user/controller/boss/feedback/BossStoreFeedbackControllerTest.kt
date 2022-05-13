@@ -18,7 +18,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeed
 import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedbackRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.domain.redis.boss.domain.feedback.BossStoreFeedbackCountRepository
+import com.depromeet.threedollar.domain.redis.domain.boss.feedback.BossStoreFeedbackCountRepository
 
 internal class BossStoreFeedbackControllerTest(
     private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,

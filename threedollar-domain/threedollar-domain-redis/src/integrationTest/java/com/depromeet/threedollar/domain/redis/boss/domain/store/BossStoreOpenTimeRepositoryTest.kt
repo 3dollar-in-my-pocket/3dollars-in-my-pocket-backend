@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
+import com.depromeet.threedollar.domain.redis.domain.boss.store.BossStoreOpenTimeKey
+import com.depromeet.threedollar.domain.redis.domain.boss.store.BossStoreOpenTimeRepository
 
 private const val BOSS_STORE_ID = "boss-store-id"
 

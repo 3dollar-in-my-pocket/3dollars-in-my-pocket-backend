@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.domain.redis.boss.domain.store
 
+import com.depromeet.threedollar.domain.redis.domain.boss.store.BossStoreOpenTimeKey
 import java.time.Duration
 import java.time.LocalDateTime
 import org.assertj.core.api.Assertions.assertThat

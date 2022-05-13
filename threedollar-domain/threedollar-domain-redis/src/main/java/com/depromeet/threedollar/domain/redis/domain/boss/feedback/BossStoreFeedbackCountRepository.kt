@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.redis.boss.domain.feedback
+package com.depromeet.threedollar.domain.redis.domain.boss.feedback
 
 import org.springframework.stereotype.Repository
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType

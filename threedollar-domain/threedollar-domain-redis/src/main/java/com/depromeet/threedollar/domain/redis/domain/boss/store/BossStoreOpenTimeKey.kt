@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.redis.boss.domain.store
+package com.depromeet.threedollar.domain.redis.domain.boss.store
 
 import java.time.Duration
 import java.time.LocalDateTime

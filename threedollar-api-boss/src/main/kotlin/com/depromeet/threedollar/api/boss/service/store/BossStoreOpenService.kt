@@ -6,7 +6,7 @@ import com.depromeet.threedollar.common.model.CoordinateValue
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenTimeRepository
+import com.depromeet.threedollar.domain.redis.domain.boss.store.BossStoreOpenTimeRepository
 
 @Service
 class BossStoreOpenService(

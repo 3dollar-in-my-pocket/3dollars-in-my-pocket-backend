@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.redis.boss.domain.feedback
+package com.depromeet.threedollar.domain.redis.domain.boss.feedback
 
 import java.time.Duration
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType

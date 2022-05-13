@@ -15,7 +15,7 @@ import com.depromeet.threedollar.common.model.CoordinateValue
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
-import com.depromeet.threedollar.domain.redis.boss.domain.store.BossStoreOpenTimeRepository
+import com.depromeet.threedollar.domain.redis.domain.boss.store.BossStoreOpenTimeRepository
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
