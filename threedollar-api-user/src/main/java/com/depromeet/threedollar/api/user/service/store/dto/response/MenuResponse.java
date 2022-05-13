@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.common.type.MenuCategoryType;
 
 import lombok.AccessLevel;
 import lombok.Builder;

@@ -1,6 +1,6 @@
-package com.depromeet.threedollar.domain.rds.user.domain.store;
+package com.depromeet.threedollar.common.type;
 
-import static com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType.MenuCategoryTypeStatus.ACTIVE;
+import static com.depromeet.threedollar.common.type.MenuCategoryType.MenuCategoryTypeStatus.ACTIVE;
 
 import com.depromeet.threedollar.common.model.EnumModel;
 

@@ -38,7 +38,7 @@ public class VisitHistoriesCursorResponse {
     }
 
     private static List<VisitHistoryWithStoreResponse> convertToResponse(CursorPagingSupporter<VisitHistory> visitHistoriesCursor) {
-        return visitHistoriesCursor.getItemsInCurrentCursor().stream()
+        return visitHistoriesCursor.getCurrentCursorItems().stream()
             .map(VisitHistoryWithStoreResponse::of)
             .collect(Collectors.toList());
     }

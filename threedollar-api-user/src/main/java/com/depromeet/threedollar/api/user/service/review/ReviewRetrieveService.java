@@ -32,7 +32,7 @@ public class ReviewRetrieveService {
         User user = UserServiceUtils.findUserById(userRepository, userId);
         List<Review> reviewsWithNextCursor = reviewRepository.findAllByUserIdUsingCursor(userId, request.getCursor(), request.getSize() + 1);
         CursorPagingSupporter<Review> reviewsCursor = CursorPagingSupporter.of(reviewsWithNextCursor, request.getSize());
-        StoreDictionary storeDictionary = findStoresByReviews(reviewsCursor.getItemsInCurrentCursor());
+        StoreDictionary storeDictionary = findStoresByReviews(reviewsCursor.getCurrentCursorItems());
         return ReviewsCursorResponse.of(reviewsCursor, storeDictionary, user);
     }
 

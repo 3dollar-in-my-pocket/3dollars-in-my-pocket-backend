@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
+import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.common.utils.MathUtils;
 import com.depromeet.threedollar.domain.rds.common.domain.AuditingTimeEntity;
 import com.depromeet.threedollar.domain.rds.common.domain.Location;

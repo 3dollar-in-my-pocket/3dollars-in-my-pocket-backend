@@ -34,7 +34,7 @@ public class ReviewsCursorResponse {
     }
 
     public static ReviewsCursorResponse of(@NotNull CursorPagingSupporter<Review> reviewsCursor, @NotNull StoreDictionary storeDictionary, @NotNull User user) {
-        List<ReviewDetailResponse> reviews = combineReviewDetailResponse(reviewsCursor.getItemsInCurrentCursor(), storeDictionary, user);
+        List<ReviewDetailResponse> reviews = combineReviewDetailResponse(reviewsCursor.getCurrentCursorItems(), storeDictionary, user);
         if (reviewsCursor.hasNext()) {
             return new ReviewsCursorResponse(reviews, reviewsCursor.getNextCursor().getId());
         }

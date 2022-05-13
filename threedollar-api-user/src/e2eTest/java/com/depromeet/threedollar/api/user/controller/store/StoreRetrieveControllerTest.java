@@ -11,8 +11,14 @@ import static com.depromeet.threedollar.api.user.controller.visit.support.VisitH
 import static com.depromeet.threedollar.api.user.controller.visit.support.VisitHistoryAssertions.assertVisitHistoryWithUserResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -22,6 +28,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.user.controller.SetupUserControllerTest;
@@ -36,12 +43,12 @@ import com.depromeet.threedollar.api.user.service.store.dto.response.StoresCurso
 import com.depromeet.threedollar.api.user.service.store.dto.type.UserStoreOrderType;
 import com.depromeet.threedollar.common.model.CoordinateValue;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
+import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDayRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodRepository;
@@ -56,6 +63,8 @@ import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
+import com.depromeet.threedollar.domain.redis.domain.user.store.CachedAroundStoreRepository;
+import com.depromeet.threedollar.domain.redis.domain.user.store.CachedAroundStoreValue;
 
 class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
@@ -82,6 +91,9 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
     @Autowired
     private StoreImageRepository storeImageRepository;
 
+    @MockBean
+    private CachedAroundStoreRepository cachedAroundStoreRepository;
+
     @BeforeEach
     void setUp() {
         storeRetrieveMockApiCaller = new StoreRetrieveMockApiCaller(mockMvc, objectMapper);
@@ -103,8 +115,14 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
     @Nested
     class GetAroundStoresApiTest {
 
+        @BeforeEach
+        void disableCached() {
+            when(cachedAroundStoreRepository.get(anyDouble(), anyDouble(), anyDouble())).thenReturn(null);
+            doNothing().when(cachedAroundStoreRepository).set(anyDouble(), anyDouble(), anyDouble(), anyList());
+        }
+
         @Test
-        void 나의_지도상_주변_가게들을_조회한다() throws Exception {
+        void 현재_위치_기준으로_DB에서_주변_가게들을_조회한다() throws Exception {
             // given
             Store store1 = StoreCreator.createWithDefaultMenu(user.getId(), "붕어빵 가게 1", 34, 126);
             Store store2 = StoreCreator.createWithDefaultMenu(user.getId(), "붕어빵 가게 2", 34, 126);
@@ -285,6 +303,114 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 () -> assertThat(response.getData()).hasSize(2),
                 () -> assertThat(response.getData().get(0).getStoreId()).isEqualTo(store1.getId()),
                 () -> assertThat(response.getData().get(1).getStoreId()).isEqualTo(store2.getId())
+            );
+        }
+
+    }
+
+    @DisplayName("GET /api/v2/stores/near cache check")
+    @Nested
+    class GetNearStoreApiCacheCheck {
+
+        @Test
+        void 캐시에_주변_가게_데이터가_없는경우_DB에서_조회된_데이터들이_캐시에_저장된다() throws Exception {
+            // given
+            double latitude = 34.0;
+            double longitude = 126.0;
+            double distance = 1000;
+
+            when(cachedAroundStoreRepository.get(anyDouble(), anyDouble(), anyDouble())).thenReturn(null);
+
+            Store store = StoreCreator.createWithDefaultMenu(user.getId(), "붕어빵 가게 1", latitude, longitude);
+            storeRepository.save(store);
+
+            RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
+                .distance(distance)
+                .build();
+
+            // when
+            storeRetrieveMockApiCaller.getNearStores(request, CoordinateValue.of(latitude, longitude), CoordinateValue.of(latitude, longitude), 200);
+
+            // then
+            verify(cachedAroundStoreRepository).set(anyDouble(), anyDouble(), anyDouble(), anyList());
+        }
+
+        @Test
+        void 캐시에_주변_가게_데이터가_있다면_캐시에서_조회해서_반환한다() throws Exception {
+            // given
+            double latitude = 34.0;
+            double longitude = 126.0;
+            double distance = 1000;
+
+            CachedAroundStoreValue cachedStore = CachedAroundStoreValue.of(
+                List.of(MenuCategoryType.SUNDAE, MenuCategoryType.WAFFLE),
+                100L,
+                latitude,
+                longitude,
+                "가게 이름",
+                3.4,
+                LocalDateTime.of(2022, 1, 1, 0, 0),
+                LocalDateTime.of(2022, 1, 2, 0, 0)
+            );
+
+            when(cachedAroundStoreRepository.get(anyDouble(), anyDouble(), anyDouble())).thenReturn(List.of(cachedStore));
+
+            RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
+                .distance(distance)
+                .build();
+
+            // when
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, CoordinateValue.of(latitude, longitude), CoordinateValue.of(latitude, longitude), 200);
+
+            // then
+            assertAll(
+                () -> assertThat(response.getData()).hasSize(1),
+                () -> assertStoreWithVisitsAndDistanceResponse(response.getData().get(0), cachedStore.getStoreId(), cachedStore.getLatitude(), cachedStore.getLongitude(), cachedStore.getStoreName(), cachedStore.getRating())
+            );
+        }
+
+        @Test
+        void 캐시에_있는_가게들중_카테고리를_필터링해서_반환한다() throws Exception {
+            // given
+            double latitude = 35.0;
+            double longitude = 127.0;
+            double distance = 1000;
+
+            CachedAroundStoreValue noMatchedStore = CachedAroundStoreValue.of(
+                List.of(MenuCategoryType.SUNDAE, MenuCategoryType.WAFFLE),
+                100L,
+                latitude,
+                longitude,
+                "가게 이름",
+                3.4,
+                LocalDateTime.of(2022, 1, 1, 0, 0),
+                LocalDateTime.of(2022, 1, 2, 0, 0)
+            );
+            CachedAroundStoreValue matchedStore = CachedAroundStoreValue.of(
+                List.of(MenuCategoryType.SUNDAE, MenuCategoryType.BUNGEOPPANG),
+                100L,
+                latitude,
+                longitude,
+                "가게 이름",
+                3.4,
+                LocalDateTime.of(2022, 1, 1, 0, 0),
+                LocalDateTime.of(2022, 1, 2, 0, 0)
+            );
+
+            when(cachedAroundStoreRepository.get(anyDouble(), anyDouble(), anyDouble())).thenReturn(List.of(noMatchedStore, matchedStore));
+
+            RetrieveNearStoresRequest request = RetrieveNearStoresRequest.testBuilder()
+                .distance(distance)
+                .category(MenuCategoryType.BUNGEOPPANG)
+                .build();
+
+            // when
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.getNearStores(request, CoordinateValue.of(latitude, longitude), CoordinateValue.of(latitude, longitude), 200);
+
+            // then
+            assertAll(
+                () -> assertThat(response.getData()).hasSize(1),
+                () -> assertStoreWithVisitsAndDistanceResponse(response.getData().get(0), matchedStore.getStoreId(), matchedStore.getLatitude(), matchedStore.getLongitude(), matchedStore.getStoreName(), matchedStore.getRating())
             );
         }
 

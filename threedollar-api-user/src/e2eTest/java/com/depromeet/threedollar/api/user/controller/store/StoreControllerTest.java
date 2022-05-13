@@ -30,7 +30,7 @@ import com.depromeet.threedollar.api.user.service.store.dto.response.StoreInfoRe
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
 import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDayRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType;

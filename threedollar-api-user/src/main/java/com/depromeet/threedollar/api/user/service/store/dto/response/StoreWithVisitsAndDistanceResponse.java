@@ -9,10 +9,9 @@ import org.jetbrains.annotations.Nullable;
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoryCountsResponse;
 import com.depromeet.threedollar.common.model.CoordinateValue;
+import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
 import com.depromeet.threedollar.domain.rds.user.collection.visit.VisitHistoryCounter;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -38,27 +37,27 @@ public class StoreWithVisitsAndDistanceResponse extends AuditingTimeResponse {
     private VisitHistoryCountsResponse visitHistory;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private StoreWithVisitsAndDistanceResponse(Store store, int distance, long existsVisitsCount, long notExistsVisitsCount, boolean isDeleted) {
-        this.storeId = store.getId();
+    private StoreWithVisitsAndDistanceResponse(StoreInfoResponse store, int distance, long existsVisitsCount, long notExistsVisitsCount, boolean isDeleted) {
+        this.storeId = store.getStoreId();
         this.latitude = store.getLatitude();
         this.longitude = store.getLongitude();
-        this.storeName = store.getName();
+        this.storeName = store.getStoreName();
         this.rating = store.getRating();
         this.distance = distance;
         this.visitHistory = VisitHistoryCountsResponse.of(existsVisitsCount, notExistsVisitsCount);
         this.isDeleted = isDeleted;
     }
 
-    public static StoreWithVisitsAndDistanceResponse of(@NotNull Store store, CoordinateValue geoCoordinate, VisitHistoryCounter visitsCounter) {
+    public static StoreWithVisitsAndDistanceResponse of(@NotNull StoreInfoResponse store, CoordinateValue geoCoordinate, VisitHistoryCounter visitsCounter) {
         StoreWithVisitsAndDistanceResponse response = StoreWithVisitsAndDistanceResponse.builder()
             .store(store)
             .distance(LocationDistanceUtils.getDistance(geoCoordinate, CoordinateValue.of(store.getLatitude(), store.getLongitude())))
-            .existsVisitsCount(visitsCounter.getStoreExistsVisitsCount(store.getId()))
-            .notExistsVisitsCount(visitsCounter.getStoreNotExistsVisitsCount(store.getId()))
-            .isDeleted(store.isDeleted())
+            .existsVisitsCount(visitsCounter.getStoreExistsVisitsCount(store.getStoreId()))
+            .notExistsVisitsCount(visitsCounter.getStoreNotExistsVisitsCount(store.getStoreId()))
+            .isDeleted(store.getIsDeleted())
             .build();
-        response.categories.addAll(store.getMenuCategoriesSortedByCounts());
-        response.setAuditingTimeByEntity(store);
+        response.categories.addAll(store.getCategories());
+        response.setAuditingTime(store.getCreatedAt(), store.getUpdatedAt());
         return response;
     }
 

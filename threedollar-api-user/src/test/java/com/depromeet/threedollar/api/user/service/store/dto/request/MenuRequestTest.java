@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.common.type.MenuCategoryType;
 
 class MenuRequestTest {
 

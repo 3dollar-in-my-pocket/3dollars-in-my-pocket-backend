@@ -12,7 +12,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.advertisement.Advertisem
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPositionType;
 import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCategory;
 import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;

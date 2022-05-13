@@ -6,8 +6,9 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
+import com.depromeet.threedollar.domain.redis.domain.user.store.CachedAroundStoreValue;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -49,6 +50,20 @@ public class StoreInfoResponse extends AuditingTimeResponse {
             .build();
         response.categories.addAll(store.getMenuCategoriesSortedByCounts());
         response.setAuditingTimeByEntity(store);
+        return response;
+    }
+
+    public static StoreInfoResponse of(@NotNull CachedAroundStoreValue cachedStore) {
+        StoreInfoResponse response = StoreInfoResponse.builder()
+            .storeId(cachedStore.getStoreId())
+            .latitude(cachedStore.getLatitude())
+            .longitude(cachedStore.getLongitude())
+            .storeName(cachedStore.getStoreName())
+            .rating(cachedStore.getRating())
+            .isDeleted(false)
+            .build();
+        response.categories.addAll(cachedStore.getCategories());
+        response.setAuditingTime(cachedStore.getCreatedAt(), cachedStore.getUpdatedAt());
         return response;
     }
 

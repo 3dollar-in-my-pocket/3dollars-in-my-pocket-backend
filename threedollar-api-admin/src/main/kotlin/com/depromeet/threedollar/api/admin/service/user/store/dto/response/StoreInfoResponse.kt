@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.admin.service.user.store.dto.response
 
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType
+import com.depromeet.threedollar.common.type.MenuCategoryType
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store
 
 data class StoreInfoResponse(

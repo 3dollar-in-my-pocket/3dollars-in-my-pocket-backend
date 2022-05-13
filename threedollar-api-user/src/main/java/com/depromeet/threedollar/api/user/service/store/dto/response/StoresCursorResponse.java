@@ -33,7 +33,7 @@ public class StoresCursorResponse {
     }
 
     public static StoresCursorResponse of(CursorPagingSupporter<Store> storesCursor, VisitHistoryCounter visitHistoriesCounts, long totalElements) {
-        List<StoreWithVisitCountsResponse> storesWithVisitCounts = combineStoreWithVisitsResponse(storesCursor.getItemsInCurrentCursor(), visitHistoriesCounts);
+        List<StoreWithVisitCountsResponse> storesWithVisitCounts = combineStoreWithVisitsResponse(storesCursor.getCurrentCursorItems(), visitHistoriesCounts);
         if (storesCursor.hasNext()) {
             return new StoresCursorResponse(storesWithVisitCounts, totalElements, storesCursor.getNextCursor().getId());
         }

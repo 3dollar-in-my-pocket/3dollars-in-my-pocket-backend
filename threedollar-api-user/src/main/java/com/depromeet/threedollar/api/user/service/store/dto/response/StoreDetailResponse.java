@@ -21,7 +21,7 @@ import com.depromeet.threedollar.domain.rds.user.collection.user.UserDictionary;
 import com.depromeet.threedollar.domain.rds.user.collection.visit.VisitHistoryCounter;
 import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
@@ -43,11 +43,14 @@ public class StoreDetailResponse extends AuditingTimeResponse {
     private final Set<DayOfTheWeek> appearanceDays = new HashSet<>();
     private final Set<PaymentMethodType> paymentMethods = new HashSet<>();
     private final List<MenuResponse> menus = new ArrayList<>();
+
     // 가게 이미지
     private final List<StoreImageResponse> images = new ArrayList<>();
+
     // 리뷰
     private final List<ReviewWithUserResponse> reviews = new ArrayList<>();
     private final List<VisitHistoryWithUserResponse> visitHistories = new ArrayList<>();
+
     // 가게
     private Long storeId;
     private double latitude;
@@ -57,8 +60,10 @@ public class StoreDetailResponse extends AuditingTimeResponse {
     private StoreType storeType;
     private double rating;
     private int distance;
+
     // 작성자
     private UserInfoResponse user;
+
     // 방문 인증
     private VisitHistoryCountsResponse visitHistory;
 

@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.domain.rds.user.domain.store
 
+import com.depromeet.threedollar.common.type.MenuCategoryType
 import com.depromeet.threedollar.domain.rds.user.domain.TestFixture
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCreator.create
 

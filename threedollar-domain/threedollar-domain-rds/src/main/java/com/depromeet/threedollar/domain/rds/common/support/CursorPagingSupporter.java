@@ -24,7 +24,7 @@ public class CursorPagingSupporter<T> {
         return this.itemsWithNextCursor.size() > sizePerCursor;
     }
 
-    public List<T> getItemsInCurrentCursor() {
+    public List<T> getCurrentCursorItems() {
         if (hasNext()) {
             return this.itemsWithNextCursor.subList(0, sizePerCursor);
         }

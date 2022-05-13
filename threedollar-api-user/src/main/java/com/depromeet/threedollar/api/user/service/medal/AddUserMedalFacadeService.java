@@ -9,7 +9,7 @@ import static com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquis
 import org.springframework.stereotype.Component;
 
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
+import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
