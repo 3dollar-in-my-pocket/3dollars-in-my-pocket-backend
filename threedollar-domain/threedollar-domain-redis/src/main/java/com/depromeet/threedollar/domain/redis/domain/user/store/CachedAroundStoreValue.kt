@@ -14,10 +14,6 @@ data class CachedAroundStoreValue(
     val updatedAt: LocalDateTime
 ) {
 
-    fun hasCategory(categoryType: MenuCategoryType): Boolean {
-        return this.categories.contains(categoryType)
-    }
-
     companion object {
         @JvmStatic
         fun of(

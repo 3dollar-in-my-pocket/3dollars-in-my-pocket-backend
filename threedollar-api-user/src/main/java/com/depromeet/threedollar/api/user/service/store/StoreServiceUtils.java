@@ -46,36 +46,27 @@ public class StoreServiceUtils {
         return store;
     }
 
-    static List<StoreInfoResponse> findNearStoresFilterByCategory(StoreRepository storeRepository, CachedAroundStoreRepository cachedAroundStoreRepository,
-                                                                  double mapLatitude, double mapLongitude, double distance, @Nullable MenuCategoryType categoryType) {
-        List<CachedAroundStoreValue> cachedStores = cachedAroundStoreRepository.get(mapLatitude, mapLongitude, distance);
-        if (cachedStores != null) {
-            return getNearStoresFilerByCategory(cachedStores, categoryType);
-        }
-
-        List<Store> nearStores = storeRepository.findStoresByLocationLessThanDistance(mapLatitude, mapLongitude, distance);
-
-        saveAroundStoresInCached(cachedAroundStoreRepository, nearStores, mapLatitude, mapLongitude, distance);
-
+    static List<StoreInfoResponse> findAroundStoresFilerByCategory(StoreRepository storeRepository, CachedAroundStoreRepository cachedAroundStoreRepository,
+                                                                   double mapLatitude, double mapLongitude, double distance, @Nullable MenuCategoryType categoryType) {
+        List<StoreInfoResponse> aroundStores = findAroundStores(storeRepository, cachedAroundStoreRepository, mapLatitude, mapLongitude, distance);
         if (categoryType == null) {
-            return nearStores.stream()
-                .map(StoreInfoResponse::of)
-                .collect(Collectors.toList());
+            return aroundStores;
         }
-        return nearStores.stream()
+        return aroundStores.stream()
             .filter(store -> store.hasMenuCategory(categoryType))
-            .map(StoreInfoResponse::of)
             .collect(Collectors.toList());
     }
 
-    private static List<StoreInfoResponse> getNearStoresFilerByCategory(List<CachedAroundStoreValue> cachedStores, @Nullable MenuCategoryType categoryType) {
-        if (categoryType == null) {
-            return cachedStores.stream()
+    private static List<StoreInfoResponse> findAroundStores(StoreRepository storeRepository, CachedAroundStoreRepository cachedAroundStoreRepository, double mapLatitude, double mapLongitude, double distance) {
+        List<CachedAroundStoreValue> aroundStoresInCache = cachedAroundStoreRepository.get(mapLatitude, mapLongitude, distance);
+        if (aroundStoresInCache != null) {
+            return aroundStoresInCache.stream()
                 .map(StoreInfoResponse::of)
                 .collect(Collectors.toList());
         }
-        return cachedStores.stream()
-            .filter(store -> store.hasCategory(categoryType))
+        List<Store> aroundStoresInDB = storeRepository.findStoresByLocationLessThanDistance(mapLatitude, mapLongitude, distance);
+        saveAroundStoresInCached(cachedAroundStoreRepository, aroundStoresInDB, mapLatitude, mapLongitude, distance);
+        return aroundStoresInDB.stream()
             .map(StoreInfoResponse::of)
             .collect(Collectors.toList());
     }
@@ -91,8 +82,7 @@ public class StoreServiceUtils {
                 store.getRating(),
                 store.getCreatedAt(),
                 store.getUpdatedAt()
-            ))
-            .collect(Collectors.toList());
+            )).collect(Collectors.toList());
         cachedAroundStoreRepository.set(mapLatitude, mapLongitude, distance, cachedAroundStores);
     }
 

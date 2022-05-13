@@ -67,4 +67,8 @@ public class StoreInfoResponse extends AuditingTimeResponse {
         return response;
     }
 
+    public boolean hasMenuCategory(MenuCategoryType categoryType) {
+        return categories.contains(categoryType);
+    }
+
 }

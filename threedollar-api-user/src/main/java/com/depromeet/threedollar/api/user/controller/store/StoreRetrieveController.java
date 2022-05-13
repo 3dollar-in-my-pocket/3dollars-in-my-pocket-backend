@@ -15,7 +15,7 @@ import com.depromeet.threedollar.api.user.config.resolver.UserId;
 import com.depromeet.threedollar.api.user.service.store.StoreRetrieveService;
 import com.depromeet.threedollar.api.user.service.store.dto.request.CheckExistsStoresNearbyRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveMyStoresRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveNearStoresRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveAroundStoresRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveStoreDetailRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.response.CheckExistStoresNearbyResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDetailResponse;
@@ -34,22 +34,22 @@ public class StoreRetrieveController {
 
     @ApiOperation(value = "주위의 가게 목록을 조회합니다", notes = "orderType: 정렬이 필요한 경우 category: 카테고리 필터링이 필요한 경우")
     @GetMapping("/v2/stores/near")
-    public ApiResponse<List<StoreWithVisitsAndDistanceResponse>> getNearStores(
-        @Valid RetrieveNearStoresRequest request,
+    public ApiResponse<List<StoreWithVisitsAndDistanceResponse>> retrieveAroundStores(
+        @Valid RetrieveAroundStoresRequest request,
         @GeoCoordinate(required = false) CoordinateValue geoCoordinate,
         @MapCoordinate CoordinateValue mapCoordinate
     ) {
-        return ApiResponse.success(storeRetrieveService.getNearStores(request, geoCoordinate, mapCoordinate));
+        return ApiResponse.success(storeRetrieveService.retrieveAroundStores(request, geoCoordinate, mapCoordinate));
     }
 
     @ApiOperation(value = "[인증] 가게의 상세 정보를 조회합니다", notes = "startDate: 특정 날짜부터 방문한 인증 이력들을 조회")
     @Auth
     @GetMapping("/v2/store")
-    public ApiResponse<StoreDetailResponse> getDetailStoreInfo(
+    public ApiResponse<StoreDetailResponse> retrieveStoreDetailInfo(
         @Valid RetrieveStoreDetailRequest request,
         @GeoCoordinate CoordinateValue geoCoordinate
     ) {
-        return ApiResponse.success(storeRetrieveService.getDetailStoreInfo(request, geoCoordinate));
+        return ApiResponse.success(storeRetrieveService.retrieveStoreDetailInfo(request, geoCoordinate));
     }
 
     @ApiOperation("[인증] 내가 제보한 가게 목록들을 조회합니다 (스크롤 페이지네이션)")

@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.user.service.store;
 
-import static com.depromeet.threedollar.api.user.service.store.StoreServiceUtils.findNearStoresFilterByCategory;
+import static com.depromeet.threedollar.api.user.service.store.StoreServiceUtils.findAroundStoresFilerByCategory;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.depromeet.threedollar.api.user.service.store.dto.request.CheckExistsStoresNearbyRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveAroundStoresRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveMyStoresRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveNearStoresRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveStoreDetailRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.response.CheckExistStoresNearbyResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDetailResponse;
@@ -50,19 +50,19 @@ public class StoreRetrieveService {
     private final VisitHistoryRepository visitHistoryRepository;
 
     @Transactional(readOnly = true)
-    public List<StoreWithVisitsAndDistanceResponse> getNearStores(RetrieveNearStoresRequest request, CoordinateValue geoCoordinate, CoordinateValue mapCoordinate) {
-        List<StoreInfoResponse> nearStores = findNearStoresFilterByCategory(storeRepository, cachedAroundStoreRepository, mapCoordinate.getLatitude(), mapCoordinate.getLongitude(), request.getDistance().getAvailableDistance(), request.getCategory());
-        VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(nearStores.stream()
+    public List<StoreWithVisitsAndDistanceResponse> retrieveAroundStores(RetrieveAroundStoresRequest request, CoordinateValue geoCoordinate, CoordinateValue mapCoordinate) {
+        List<StoreInfoResponse> aroundStoresFilerByCategory = findAroundStoresFilerByCategory(storeRepository, cachedAroundStoreRepository, mapCoordinate.getLatitude(), mapCoordinate.getLongitude(), request.getDistance().getAvailableDistance(), request.getCategory());
+        VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(aroundStoresFilerByCategory.stream()
             .map(StoreInfoResponse::getStoreId)
             .collect(Collectors.toList()));
-        return nearStores.stream()
+        return aroundStoresFilerByCategory.stream()
             .map(store -> StoreWithVisitsAndDistanceResponse.of(store, geoCoordinate, visitHistoriesCounter))
             .sorted(request.getSorted())
             .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public StoreDetailResponse getDetailStoreInfo(RetrieveStoreDetailRequest request, CoordinateValue geoCoordinate) {
+    public StoreDetailResponse retrieveStoreDetailInfo(RetrieveStoreDetailRequest request, CoordinateValue geoCoordinate) {
         Store store = StoreServiceUtils.findStoreByIdFetchJoinMenu(storeRepository, request.getStoreId());
         List<Review> reviews = reviewRepository.findAllByStoreId(request.getStoreId());
         List<StoreImage> storeImages = storeImageRepository.findAllByStoreId(request.getStoreId());

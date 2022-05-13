@@ -15,7 +15,7 @@ import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.user.controller.MockMvcUtils;
 import com.depromeet.threedollar.api.user.service.store.dto.request.CheckExistsStoresNearbyRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveMyStoresRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveNearStoresRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveAroundStoresRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveStoreDetailRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.response.CheckExistStoresNearbyResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDetailResponse;
@@ -32,7 +32,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         super(mockMvc, objectMapper);
     }
 
-    ApiResponse<List<StoreWithVisitsAndDistanceResponse>> getNearStores(RetrieveNearStoresRequest request, CoordinateValue coordinate, CoordinateValue mapCoordinate, int expectedStatus) throws Exception {
+    ApiResponse<List<StoreWithVisitsAndDistanceResponse>> retrieveAroundStores(RetrieveAroundStoresRequest request, CoordinateValue coordinate, CoordinateValue mapCoordinate, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/v2/stores/near")
             .param("latitude", String.valueOf(coordinate.getLatitude()))
             .param("longitude", String.valueOf(coordinate.getLongitude()))
@@ -53,7 +53,7 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         );
     }
 
-    ApiResponse<StoreDetailResponse> getStoreDetailInfo(RetrieveStoreDetailRequest request, CoordinateValue coordinate, String token, int expectedStatus) throws Exception {
+    ApiResponse<StoreDetailResponse> retrieveStoreDetailInfo(RetrieveStoreDetailRequest request, CoordinateValue coordinate, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/v2/store")
             .header(HttpHeaders.AUTHORIZATION, token)
             .param("latitude", String.valueOf(coordinate.getLatitude()))

@@ -23,7 +23,7 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class RetrieveNearStoresRequest {
+public class RetrieveAroundStoresRequest {
 
     @PositiveOrZero(message = "{store.distance.positiveOrZero}")
     @NotNull(message = "{store.distance.notNull}")
@@ -36,7 +36,7 @@ public class RetrieveNearStoresRequest {
     private UserStoreOrderType orderType = UserStoreOrderType.DISTANCE_ASC; // 호환성을 위해 기본적으로 거리순으로 정렬한다
 
     @Builder(builderMethodName = "testBuilder")
-    private RetrieveNearStoresRequest(double distance, @Nullable MenuCategoryType category, UserStoreOrderType orderType) {
+    private RetrieveAroundStoresRequest(double distance, @Nullable MenuCategoryType category, UserStoreOrderType orderType) {
         this.distance = distance;
         this.category = category;
         this.orderType = orderType;
