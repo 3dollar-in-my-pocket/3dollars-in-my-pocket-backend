@@ -8,8 +8,10 @@ import org.springframework.data.mongodb.core.findOne
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.data.mongodb.core.query.where
+import org.springframework.stereotype.Repository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
 
+@Repository
 class BossStoreLocationRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : BossStoreLocationRepositoryCustom {

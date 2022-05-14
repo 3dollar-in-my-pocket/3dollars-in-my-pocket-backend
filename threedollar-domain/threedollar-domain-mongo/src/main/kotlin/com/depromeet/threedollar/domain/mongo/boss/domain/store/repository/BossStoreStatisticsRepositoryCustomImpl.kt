@@ -4,8 +4,10 @@ import java.time.LocalDate
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.gte
+import org.springframework.stereotype.Repository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 
+@Repository
 class BossStoreStatisticsRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : BossStoreStatisticsRepositoryCustom {

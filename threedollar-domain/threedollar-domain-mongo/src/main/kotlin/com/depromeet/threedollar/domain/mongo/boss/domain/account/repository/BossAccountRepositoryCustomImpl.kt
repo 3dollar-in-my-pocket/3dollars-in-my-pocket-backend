@@ -4,10 +4,12 @@ import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.findOne
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.isEqualTo
+import org.springframework.stereotype.Repository
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 
+@Repository
 class BossAccountRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : BossAccountRepositoryCustom {

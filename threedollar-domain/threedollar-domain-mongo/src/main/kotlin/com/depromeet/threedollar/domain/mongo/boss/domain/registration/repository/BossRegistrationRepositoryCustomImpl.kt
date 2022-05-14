@@ -9,10 +9,12 @@ import org.springframework.data.mongodb.core.query.Criteria.where
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.data.mongodb.core.query.lt
+import org.springframework.stereotype.Repository
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationStatus
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistration
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationStatus
 
+@Repository
 class BossRegistrationRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate
 ) : BossRegistrationRepositoryCustom {
