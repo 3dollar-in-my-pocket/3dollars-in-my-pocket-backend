@@ -5,6 +5,8 @@ import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
+import org.jetbrains.annotations.NotNull;
+
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -23,12 +25,12 @@ public class SocialInfo {
     @Enumerated(EnumType.STRING)
     private UserSocialType socialType;
 
-    private SocialInfo(String socialId, UserSocialType socialType) {
+    private SocialInfo(@NotNull String socialId, @NotNull UserSocialType socialType) {
         this.socialId = socialId;
         this.socialType = socialType;
     }
 
-    public static SocialInfo of(String socialId, UserSocialType socialType) {
+    public static SocialInfo of(@NotNull String socialId, @NotNull UserSocialType socialType) {
         return new SocialInfo(socialId, socialType);
     }
 

@@ -80,7 +80,15 @@ public class Store extends AuditingTimeEntity {
     private final List<Menu> menus = new ArrayList<>();
 
     @Builder(access = AccessLevel.PACKAGE)
-    private Store(Long userId, double latitude, double longitude, String name, @Nullable StoreType type, double rating, StoreStatus status) {
+    private Store(
+        @NotNull Long userId,
+        double latitude,
+        double longitude,
+        @NotNull String name,
+        @Nullable StoreType type,
+        double rating,
+        @NotNull StoreStatus status
+    ) {
         this.userId = userId;
         this.location = Location.of(latitude, longitude);
         this.name = name;
@@ -89,7 +97,13 @@ public class Store extends AuditingTimeEntity {
         this.status = status;
     }
 
-    public static Store newInstance(Long userId, double latitude, double longitude, String storeName, @Nullable StoreType storeType) {
+    public static Store newInstance(
+        @NotNull Long userId,
+        double latitude,
+        double longitude,
+        @NotNull String storeName,
+        @Nullable StoreType storeType
+    ) {
         return Store.builder()
             .userId(userId)
             .latitude(latitude)
@@ -107,7 +121,7 @@ public class Store extends AuditingTimeEntity {
         }
     }
 
-    private void addPaymentMethod(PaymentMethodType type) {
+    private void addPaymentMethod(@NotNull PaymentMethodType type) {
         this.paymentMethods.add(PaymentMethod.of(this, type));
     }
 
@@ -127,6 +141,7 @@ public class Store extends AuditingTimeEntity {
             .collect(Collectors.toSet()));
     }
 
+    @NotNull
     public Set<PaymentMethodType> getPaymentMethodTypes() {
         return this.paymentMethods.stream()
             .map(PaymentMethod::getMethod)
@@ -139,7 +154,7 @@ public class Store extends AuditingTimeEntity {
         }
     }
 
-    private void addAppearanceDay(DayOfTheWeek dayOfTheWeek) {
+    private void addAppearanceDay(@NotNull DayOfTheWeek dayOfTheWeek) {
         this.appearanceDays.add(AppearanceDay.of(this, dayOfTheWeek));
     }
 
@@ -159,6 +174,7 @@ public class Store extends AuditingTimeEntity {
             .collect(Collectors.toSet()));
     }
 
+    @NotNull
     public Set<DayOfTheWeek> getAppearanceDayTypes() {
         return this.appearanceDays.stream()
             .map(AppearanceDay::getDay)
@@ -171,7 +187,7 @@ public class Store extends AuditingTimeEntity {
         }
     }
 
-    private void addMenu(Menu menu) {
+    private void addMenu(@NotNull Menu menu) {
         this.menus.add(menu);
     }
 
@@ -190,7 +206,7 @@ public class Store extends AuditingTimeEntity {
             .collect(Collectors.toList()));
     }
 
-    public void updateInfo(String name, StoreType type, double latitude, double longitude) {
+    public void updateInfo(@NotNull String name, @Nullable StoreType type, double latitude, double longitude) {
         this.name = name;
         this.type = type;
         this.location = Location.of(latitude, longitude);
@@ -216,6 +232,7 @@ public class Store extends AuditingTimeEntity {
         return this.location.getLongitude();
     }
 
+    @NotNull
     public List<MenuCategoryType> getMenuCategoriesSortedByCounts() {
         Map<MenuCategoryType, Long> counts = getCurrentMenuCategoryGroupByCounts();
         return counts.entrySet().stream()
@@ -229,7 +246,7 @@ public class Store extends AuditingTimeEntity {
             .collect(Collectors.groupingBy(Menu::getCategory, Collectors.counting()));
     }
 
-    public boolean hasMenuCategory(MenuCategoryType category) {
+    public boolean hasMenuCategory(@NotNull MenuCategoryType category) {
         return this.menus.stream()
             .anyMatch(menu -> menu.isCategory(category));
     }

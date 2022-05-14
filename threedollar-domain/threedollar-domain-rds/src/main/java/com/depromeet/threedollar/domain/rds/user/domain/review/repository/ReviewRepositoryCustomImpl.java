@@ -80,7 +80,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
     }
 
     @Override
-    public List<Review> findAllByUserIdUsingCursor(Long userId, Long lastStoreId, int size) {
+    public List<Review> findAllByUserIdUsingCursor(Long userId, @Nullable Long lastStoreId, int size) {
         return queryFactory.selectFrom(review)
             .where(
                 review.userId.eq(userId),
@@ -92,7 +92,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
             .fetch();
     }
 
-    private BooleanExpression lessThanId(Long lastStoreId) {
+    private BooleanExpression lessThanId(@Nullable Long lastStoreId) {
         if (lastStoreId == null) {
             return null;
         }

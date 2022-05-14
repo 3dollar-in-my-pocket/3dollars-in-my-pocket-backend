@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.depromeet.threedollar.domain.rds.common.domain.AuditingTimeEntity;
 
 import lombok.AccessLevel;
@@ -43,14 +45,14 @@ public class StoreImage extends AuditingTimeEntity {
     private StoreImageStatus status;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private StoreImage(Long storeId, Long userId, String url, StoreImageStatus status) {
+    private StoreImage(@NotNull Long storeId, @NotNull Long userId, @NotNull String url, @NotNull StoreImageStatus status) {
         this.storeId = storeId;
         this.userId = userId;
         this.url = url;
         this.status = status;
     }
 
-    public static StoreImage newInstance(Long storeId, Long userId, String imageUrl) {
+    public static StoreImage newInstance(@NotNull Long storeId, @NotNull Long userId, @NotNull String imageUrl) {
         return StoreImage.builder()
             .storeId(storeId)
             .userId(userId)
@@ -63,7 +65,7 @@ public class StoreImage extends AuditingTimeEntity {
         this.status = StoreImageStatus.INACTIVE;
     }
 
-    public void updateUrl(String url) {
+    public void updateUrl(@NotNull String url) {
         this.url = url;
     }
 

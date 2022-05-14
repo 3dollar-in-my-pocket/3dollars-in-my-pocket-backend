@@ -5,7 +5,6 @@ import org.springframework.context.ApplicationListener
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import com.depromeet.threedollar.common.type.FamousPlace
-import com.depromeet.threedollar.common.utils.logger
 import com.depromeet.threedollar.external.client.local.LocalBossApiWarmupApiClient
 
 private const val API_CALL_COUNT = 20
@@ -26,10 +25,6 @@ class ApplicationWarmingUpRunner(
             }
         } catch (ignored: Exception) {
         }
-    }
-
-    companion object {
-        private val log = logger()
     }
 
 }

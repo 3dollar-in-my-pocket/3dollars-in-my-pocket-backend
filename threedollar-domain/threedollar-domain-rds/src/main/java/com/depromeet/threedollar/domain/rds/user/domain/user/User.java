@@ -57,12 +57,12 @@ public class User extends AuditingTimeEntity {
     private final List<UserMedal> userMedals = new ArrayList<>();
 
     @Builder(access = AccessLevel.PACKAGE)
-    private User(String socialId, UserSocialType socialType, String name) {
+    private User(@NotNull String socialId, @NotNull UserSocialType socialType, @NotNull String name) {
         this.socialInfo = SocialInfo.of(socialId, socialType);
         this.name = name;
     }
 
-    public static User newInstance(String socialId, UserSocialType socialType, String name) {
+    public static User newInstance(@NotNull String socialId, @NotNull UserSocialType socialType, @NotNull String name) {
         return User.builder()
             .socialId(socialId)
             .socialType(socialType)
@@ -70,7 +70,7 @@ public class User extends AuditingTimeEntity {
             .build();
     }
 
-    public void updateName(String name) {
+    public void updateName(@NotNull String name) {
         this.name = name;
     }
 
@@ -80,11 +80,11 @@ public class User extends AuditingTimeEntity {
         }
     }
 
-    private void addMedal(Medal medal) {
+    private void addMedal(@NotNull Medal medal) {
         this.userMedals.add(UserMedal.of(medal, this));
     }
 
-    public void updateActivatedMedal(Long medalId) {
+    public void updateActivatedMedal(@NotNull Long medalId) {
         inactivatedAllUserMedals();
         UserMedal userMedal = findUserMedal(medalId);
         userMedal.updateToActive();
@@ -97,7 +97,7 @@ public class User extends AuditingTimeEntity {
     }
 
     @NotNull
-    private UserMedal findUserMedal(Long medalId) {
+    private UserMedal findUserMedal(@NotNull Long medalId) {
         return this.userMedals.stream()
             .filter(userMedal -> userMedal.hasSameMedalId(medalId))
             .findFirst()

@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.depromeet.threedollar.domain.rds.common.domain.AuditingTimeEntity;
@@ -34,20 +35,21 @@ public class Admin extends AuditingTimeEntity {
     private Long creatorAdminId;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private Admin(String email, String name, @Nullable Long creatorAdminId) {
+    private Admin(@NotNull String email, @NotNull String name, @Nullable Long creatorAdminId) {
         this.email = Email.of(email);
         this.name = name;
         this.creatorAdminId = creatorAdminId;
     }
 
-    public static Admin newInstance(String email, String name, @Nullable Long creatorAdminId) {
+    public static Admin newInstance(@NotNull String email, @NotNull String name, @Nullable Long creatorAdminId) {
         return new Admin(email, name, creatorAdminId);
     }
 
-    public void updateName(String name) {
+    public void updateName(@NotNull String name) {
         this.name = name;
     }
 
+    @NotNull
     public String getEmail() {
         return email.getEmail();
     }

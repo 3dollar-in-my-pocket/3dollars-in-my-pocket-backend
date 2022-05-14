@@ -85,7 +85,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
     }
 
     @Override
-    public List<Store> findAllUsingCursor(Long lastStoreId, int size) {
+    public List<Store> findAllUsingCursor(@Nullable Long lastStoreId, int size) {
         List<Long> storeIds = queryFactory.select(store.id).distinct()
             .from(store)
             .innerJoin(menu).on(menu.store.id.eq(store.id))
@@ -105,7 +105,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
      * 이 문제를 해결하기 위해서 StoreId 리스트 조회 후 페치조인하는 방식으로 조회.
      */
     @Override
-    public List<StoreWithMenuProjection> findAllByUserIdUsingCursor(Long userId, Long lastStoreId, int size) {
+    public List<StoreWithMenuProjection> findAllByUserIdUsingCursor(Long userId, @Nullable Long lastStoreId, int size) {
         List<Long> storeIds = queryFactory.select(store.id).distinct()
             .from(store)
             .innerJoin(menu).on(menu.store.id.eq(store.id))
@@ -127,7 +127,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
             .transform(groupBy(store.id).list(getStoreProjection()));
     }
 
-    private BooleanExpression lessThanId(Long lastStoreId) {
+    private BooleanExpression lessThanId(@Nullable Long lastStoreId) {
         if (lastStoreId == null) {
             return null;
         }

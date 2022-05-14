@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
 import com.depromeet.threedollar.domain.rds.common.domain.AuditingTimeEntity;
 
@@ -35,12 +37,12 @@ public class AppearanceDay extends AuditingTimeEntity {
     @Enumerated(value = EnumType.STRING)
     private DayOfTheWeek day;
 
-    private AppearanceDay(Store store, DayOfTheWeek day) {
+    private AppearanceDay(@NotNull Store store, @NotNull DayOfTheWeek day) {
         this.store = store;
         this.day = day;
     }
 
-    static AppearanceDay of(Store store, DayOfTheWeek day) {
+    static AppearanceDay of(@NotNull Store store, @NotNull DayOfTheWeek day) {
         return new AppearanceDay(store, day);
     }
 

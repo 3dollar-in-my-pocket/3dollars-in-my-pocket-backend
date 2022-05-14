@@ -1,5 +1,7 @@
 package com.depromeet.threedollar.common.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -8,7 +10,8 @@ public class HttpHeaderUtils {
 
     private static final String BEARER_TOKEN = "Bearer ";
 
-    public static String withBearerToken(String token) {
+    @NotNull
+    public static String withBearerToken(@NotNull String token) {
         return BEARER_TOKEN.concat(token);
     }
 

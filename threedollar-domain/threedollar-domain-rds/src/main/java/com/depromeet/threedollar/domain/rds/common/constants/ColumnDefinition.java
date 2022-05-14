@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.rds.common.type;
+package com.depromeet.threedollar.domain.rds.common.constants;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

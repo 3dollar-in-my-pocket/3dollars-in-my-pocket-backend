@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.depromeet.threedollar.domain.rds.common.domain.AuditingTimeEntity;
 import com.depromeet.threedollar.domain.rds.user.domain.user.User;
 
@@ -52,13 +54,13 @@ public class UserMedal extends AuditingTimeEntity {
     private UserMedalStatus status;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private UserMedal(Medal medal, User user, UserMedalStatus status) {
+    private UserMedal(@NotNull Medal medal, @NotNull User user, @NotNull UserMedalStatus status) {
         this.medal = medal;
         this.user = user;
         this.status = status;
     }
 
-    public static UserMedal of(Medal medal, User user) {
+    public static UserMedal of(@NotNull Medal medal, @NotNull User user) {
         return new UserMedal(medal, user, UserMedalStatus.IN_ACTIVE);
     }
 
@@ -78,6 +80,7 @@ public class UserMedal extends AuditingTimeEntity {
         return this.getMedalId().equals(medalId);
     }
 
+    @NotNull
     public Long getMedalId() {
         return this.medal.getId();
     }

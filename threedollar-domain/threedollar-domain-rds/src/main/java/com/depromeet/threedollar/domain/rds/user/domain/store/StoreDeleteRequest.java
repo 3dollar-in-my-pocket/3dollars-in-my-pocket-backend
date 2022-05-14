@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.depromeet.threedollar.domain.rds.common.domain.AuditingTimeEntity;
 
 import lombok.AccessLevel;
@@ -51,13 +53,13 @@ public class StoreDeleteRequest extends AuditingTimeEntity {
     private DeleteReasonType reason;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private StoreDeleteRequest(Store store, Long userId, DeleteReasonType reason) {
+    private StoreDeleteRequest(@NotNull Store store, @NotNull Long userId, @NotNull DeleteReasonType reason) {
         this.store = store;
         this.userId = userId;
         this.reason = reason;
     }
 
-    public static StoreDeleteRequest of(Store store, Long userId, DeleteReasonType reason) {
+    public static StoreDeleteRequest of(@NotNull Store store, @NotNull Long userId, @NotNull DeleteReasonType reason) {
         return StoreDeleteRequest.builder()
             .store(store)
             .userId(userId)

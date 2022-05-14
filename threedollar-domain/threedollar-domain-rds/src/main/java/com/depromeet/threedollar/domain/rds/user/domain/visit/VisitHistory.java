@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.depromeet.threedollar.domain.rds.common.domain.AuditingTimeEntity;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 
@@ -58,14 +60,14 @@ public class VisitHistory extends AuditingTimeEntity {
     private LocalDate dateOfVisit;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private VisitHistory(Store store, Long userId, VisitType type, LocalDate dateOfVisit) {
+    private VisitHistory(@NotNull Store store, @NotNull Long userId, @NotNull VisitType type, @NotNull LocalDate dateOfVisit) {
         this.store = store;
         this.userId = userId;
         this.type = type;
         this.dateOfVisit = dateOfVisit;
     }
 
-    public static VisitHistory of(Store store, Long userId, VisitType type, LocalDate dateOfVisit) {
+    public static VisitHistory of(@NotNull Store store, @NotNull Long userId, @NotNull VisitType type, @NotNull LocalDate dateOfVisit) {
         return VisitHistory.builder()
             .store(store)
             .userId(userId)

@@ -13,6 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.common.domain.AuditingTimeEntity;
 
@@ -45,14 +48,14 @@ public class Menu extends AuditingTimeEntity {
     private MenuCategoryType category;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private Menu(Store store, String name, String price, MenuCategoryType category) {
+    private Menu(@NotNull Store store, @Nullable String name, @Nullable String price, @NotNull MenuCategoryType category) {
         this.store = store;
         this.name = name;
         this.price = price;
         this.category = category;
     }
 
-    public static Menu of(Store store, String name, String price, MenuCategoryType category) {
+    public static Menu of(@NotNull Store store, @Nullable String name, @Nullable String price, @NotNull MenuCategoryType category) {
         return Menu.builder()
             .store(store)
             .name(name)
@@ -61,7 +64,7 @@ public class Menu extends AuditingTimeEntity {
             .build();
     }
 
-    boolean isCategory(MenuCategoryType category) {
+    boolean isCategory(@NotNull MenuCategoryType category) {
         return this.category.equals(category);
     }
 

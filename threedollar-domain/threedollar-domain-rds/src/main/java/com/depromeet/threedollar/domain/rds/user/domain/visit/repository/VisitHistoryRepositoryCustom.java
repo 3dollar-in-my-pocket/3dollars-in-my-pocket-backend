@@ -17,7 +17,7 @@ public interface VisitHistoryRepositoryCustom {
 
     List<VisitHistoryWithUserProjection> findAllVisitWithUserByStoreIdAfterDate(Long storeId, LocalDate startDate);
 
-    List<VisitHistory> findAllByUserIdUsingCursor(Long userId, Long lastHistoryId, int size);
+    List<VisitHistory> findAllByUserIdUsingCursor(Long userId, @Nullable Long lastHistoryId, int size);
 
     List<VisitHistoryCountProjection> countGroupingByStoreId(List<Long> storeIds, LocalDate startDate);
 

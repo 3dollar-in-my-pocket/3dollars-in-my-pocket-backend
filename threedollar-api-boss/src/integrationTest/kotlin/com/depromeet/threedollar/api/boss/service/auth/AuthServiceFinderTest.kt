@@ -20,7 +20,7 @@ internal class AuthServiceFinderTest(
 
     @MethodSource("bossSocialTypeAndServices")
     @ParameterizedTest
-    fun `각_소셜타입의_AuthService를_가져온다`(socialType: BossAccountSocialType, expectedAuthServiceClass: Class<AuthService>) {
+    fun `각 소셜타입의 AuthService를 가져온다`(socialType: BossAccountSocialType, expectedAuthServiceClass: Class<AuthService>) {
         // when
         val authService = authServiceFinder.getAuthService(socialType)
 
@@ -40,7 +40,7 @@ internal class AuthServiceFinderTest(
     }
 
     @Test
-    fun `네이버_인증방식은_아직_지원하지_않는다`() {
+    fun `네이버 인증방식은 아직 지원하지 않는다`() {
         // given
         val socialType = BossAccountSocialType.NAVER
 

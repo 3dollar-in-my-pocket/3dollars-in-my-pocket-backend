@@ -20,6 +20,6 @@ public interface ReviewRepositoryCustom {
 
     long countByUserId(Long userId);
 
-    List<Review> findAllByUserIdUsingCursor(Long userId, Long lastStoreId, int size);
+    List<Review> findAllByUserIdUsingCursor(Long userId, @Nullable Long lastStoreId, int size);
 
 }

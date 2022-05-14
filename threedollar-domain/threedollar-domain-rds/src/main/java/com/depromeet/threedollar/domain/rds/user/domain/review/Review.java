@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.depromeet.threedollar.domain.rds.common.domain.AuditingTimeEntity;
 
 import lombok.AccessLevel;
@@ -49,7 +51,7 @@ public class Review extends AuditingTimeEntity {
     private ReviewStatus status;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private Review(Long storeId, Long userId, String contents, int rating, ReviewStatus status) {
+    private Review(@NotNull Long storeId, @NotNull Long userId, @NotNull String contents, int rating, @NotNull ReviewStatus status) {
         this.storeId = storeId;
         this.userId = userId;
         this.contents = contents;
@@ -57,7 +59,7 @@ public class Review extends AuditingTimeEntity {
         this.status = status;
     }
 
-    public static Review of(Long storeId, Long userId, String contents, int rating) {
+    public static Review of(@NotNull Long storeId, @NotNull Long userId, @NotNull String contents, int rating) {
         return Review.builder()
             .storeId(storeId)
             .userId(userId)
@@ -67,7 +69,7 @@ public class Review extends AuditingTimeEntity {
             .build();
     }
 
-    public void update(String contents, int rating) {
+    public void update(@NotNull String contents, int rating) {
         this.contents = contents;
         this.rating = ReviewRating.of(rating);
     }

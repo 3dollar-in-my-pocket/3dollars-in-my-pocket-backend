@@ -18,6 +18,7 @@ public class ClientIpUtils {
     /**
      * 실제 클라이언트의 IP를 가져온다.
      */
+    @NotNull
     public static String getClientIp(String remoteAddress, @Nullable String forwarded) {
         if (isPublicIp(remoteAddress) || StringUtils.isBlank(forwarded)) {
             return remoteAddress;
@@ -34,6 +35,7 @@ public class ClientIpUtils {
         }
     }
 
+    @NotNull
     private static String extractClientIP(@NotNull String forwarded) {
         if (forwarded.contains(",")) {
             return forwarded.split(",")[0].trim();

@@ -52,15 +52,26 @@ public class Advertisement extends AuditingTimeEntity {
     private AdvertisementDetail detail;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private Advertisement(AdvertisementPositionType positionType, AdvertisementPlatformType platformType, LocalDateTime startDateTime, LocalDateTime endDateTime, AdvertisementDetail detail) {
+    private Advertisement(
+        @NotNull AdvertisementPositionType positionType,
+        @NotNull AdvertisementPlatformType platformType,
+        @NotNull LocalDateTime startDateTime,
+        @NotNull LocalDateTime endDateTime,
+        @NotNull AdvertisementDetail detail
+    ) {
         this.positionType = positionType;
         this.platformType = platformType;
         this.dateTimeInterval = DateTimeInterval.of(startDateTime, endDateTime);
         this.detail = detail;
     }
 
-    public static Advertisement newInstance(AdvertisementPositionType positionType, AdvertisementPlatformType platformType,
-                                            LocalDateTime startDateTime, LocalDateTime endDateTime, AdvertisementDetail detail) {
+    public static Advertisement newInstance(
+        @NotNull AdvertisementPositionType positionType,
+        @NotNull AdvertisementPlatformType platformType,
+        @NotNull LocalDateTime startDateTime,
+        @NotNull LocalDateTime endDateTime,
+        @NotNull AdvertisementDetail detail
+    ) {
         return Advertisement.builder()
             .positionType(positionType)
             .platformType(platformType)
@@ -70,7 +81,13 @@ public class Advertisement extends AuditingTimeEntity {
             .build();
     }
 
-    public void update(AdvertisementPositionType positionType, AdvertisementPlatformType platformType, LocalDateTime startDateTime, LocalDateTime endDateTime, AdvertisementDetail detail) {
+    public void update(
+        @NotNull AdvertisementPositionType positionType,
+        @NotNull AdvertisementPlatformType platformType,
+        @NotNull LocalDateTime startDateTime,
+        @NotNull LocalDateTime endDateTime,
+        @NotNull AdvertisementDetail detail
+    ) {
         this.positionType = positionType;
         this.platformType = platformType;
         this.dateTimeInterval = DateTimeInterval.of(startDateTime, endDateTime);

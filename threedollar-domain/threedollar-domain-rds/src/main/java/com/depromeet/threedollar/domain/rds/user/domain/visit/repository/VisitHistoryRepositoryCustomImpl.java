@@ -62,7 +62,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
     }
 
     @Override
-    public List<VisitHistory> findAllByUserIdUsingCursor(Long userId, Long lastHistoryId, int size) {
+    public List<VisitHistory> findAllByUserIdUsingCursor(Long userId, @Nullable Long lastHistoryId, int size) {
         List<Long> visitHistoriesIds = queryFactory.select(visitHistory.id)
             .from(visitHistory)
             .where(
@@ -83,7 +83,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
             .fetch();
     }
 
-    private BooleanExpression lessThanId(Long lastHistoryId) {
+    private BooleanExpression lessThanId(@Nullable Long lastHistoryId) {
         if (lastHistoryId == null) {
             return null;
         }

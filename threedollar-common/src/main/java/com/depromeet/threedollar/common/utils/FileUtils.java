@@ -19,6 +19,7 @@ public class FileUtils {
      * @param fileName ex) image.png
      * @return ex) .png
      */
+    @NotNull
     public static String getFileExtension(@NotNull String fileName) {
         try {
             String extension = fileName.substring(fileName.lastIndexOf("."));

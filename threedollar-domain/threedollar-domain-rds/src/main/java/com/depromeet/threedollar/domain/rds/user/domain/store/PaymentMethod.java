@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.depromeet.threedollar.domain.rds.common.domain.AuditingTimeEntity;
 
 import lombok.AccessLevel;
@@ -34,12 +36,12 @@ public class PaymentMethod extends AuditingTimeEntity {
     @Enumerated(value = EnumType.STRING)
     private PaymentMethodType method;
 
-    private PaymentMethod(Store store, PaymentMethodType method) {
+    private PaymentMethod(@NotNull Store store, @NotNull PaymentMethodType method) {
         this.store = store;
         this.method = method;
     }
 
-    static PaymentMethod of(Store store, PaymentMethodType type) {
+    static PaymentMethod of(@NotNull Store store, @NotNull PaymentMethodType type) {
         return new PaymentMethod(store, type);
     }
 

@@ -3,6 +3,8 @@ package com.depromeet.threedollar.domain.rds.user.domain.medal;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import org.jetbrains.annotations.NotNull;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -22,13 +24,13 @@ public class MedalImage {
     private String disableIconUrl;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private MedalImage(String activationIconUrl, String disableIconUrl) {
+    private MedalImage(@NotNull String activationIconUrl, @NotNull String disableIconUrl) {
         this.activationIconUrl = activationIconUrl;
         this.disableIconUrl = disableIconUrl;
     }
 
     @Builder(toBuilder = true)
-    static MedalImage of(String activationIconUrl, String disableIconUrl) {
+    static MedalImage of(@NotNull String activationIconUrl, @NotNull String disableIconUrl) {
         return MedalImage.builder()
             .activationIconUrl(activationIconUrl)
             .disableIconUrl(disableIconUrl)

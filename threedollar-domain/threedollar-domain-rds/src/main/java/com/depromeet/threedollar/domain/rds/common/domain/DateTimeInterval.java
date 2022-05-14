@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.depromeet.threedollar.common.exception.model.InvalidException;
 import com.depromeet.threedollar.common.exception.type.ErrorCode;
 
@@ -27,12 +29,12 @@ public class DateTimeInterval {
     private LocalDateTime endDateTime;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private DateTimeInterval(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    private DateTimeInterval(@NotNull LocalDateTime startDateTime, @NotNull LocalDateTime endDateTime) {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
     }
 
-    public static DateTimeInterval of(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public static DateTimeInterval of(@NotNull LocalDateTime startDateTime, @NotNull LocalDateTime endDateTime) {
         validateDateTimeInterval(startDateTime, endDateTime);
         return DateTimeInterval.builder()
             .startDateTime(startDateTime)
@@ -40,7 +42,7 @@ public class DateTimeInterval {
             .build();
     }
 
-    private static void validateDateTimeInterval(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    private static void validateDateTimeInterval(@NotNull LocalDateTime startDateTime, @NotNull LocalDateTime endDateTime) {
         if (startDateTime.isAfter(endDateTime)) {
             throw new InvalidException(String.format("시작 날짜(%s) 가 종료 날짜(%s)보다 이후 일 수 없습니", startDateTime, endDateTime), ErrorCode.INVALID_DATE_TIME_INTERVAL);
         }

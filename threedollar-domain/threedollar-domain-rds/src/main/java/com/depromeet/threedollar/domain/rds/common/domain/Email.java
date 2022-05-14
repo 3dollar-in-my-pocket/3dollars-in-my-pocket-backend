@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.depromeet.threedollar.common.exception.model.InvalidException;
 import com.depromeet.threedollar.common.exception.type.ErrorCode;
 
@@ -24,16 +26,16 @@ public class Email {
     @Column(nullable = false, length = 50)
     private String email;
 
-    private Email(String email) {
+    private Email(@NotNull String email) {
         verifyEmailFormat(email);
         this.email = email;
     }
 
-    public static Email of(String email) {
+    public static Email of(@NotNull String email) {
         return new Email(email);
     }
 
-    private void verifyEmailFormat(String email) {
+    private void verifyEmailFormat(@NotNull String email) {
         if (!EMAIL_REGEX.matcher(email).matches()) {
             throw new InvalidException(String.format("(%s)은 이메일 형식에 어긋납니다", email), ErrorCode.INVALID_EMAIL_FORMAT);
         }

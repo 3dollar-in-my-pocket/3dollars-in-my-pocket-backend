@@ -19,9 +19,9 @@ public interface StoreRepositoryCustom {
 
     long countByUserId(Long userId);
 
-    List<Store> findAllUsingCursor(Long lastStoreId, int size);
+    List<Store> findAllUsingCursor(@Nullable Long lastStoreId, int size);
 
-    List<StoreWithMenuProjection> findAllByUserIdUsingCursor(Long userId, Long lastStoreId, int size);
+    List<StoreWithMenuProjection> findAllByUserIdUsingCursor(Long userId, @Nullable Long lastStoreId, int size);
 
     List<StoreWithMenuProjection> findStoresByLocationLessThanDistance(double latitude, double longitude, double distance);
 

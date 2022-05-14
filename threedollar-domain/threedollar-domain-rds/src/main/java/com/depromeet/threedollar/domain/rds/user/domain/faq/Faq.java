@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.depromeet.threedollar.domain.rds.common.domain.AuditingTimeEntity;
 
 import lombok.AccessLevel;
@@ -42,17 +44,17 @@ public class Faq extends AuditingTimeEntity {
     private String answer;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private Faq(FaqCategory category, String question, String answer) {
+    private Faq(@NotNull FaqCategory category, @NotNull String question, @NotNull String answer) {
         this.category = category;
         this.question = question;
         this.answer = answer;
     }
 
-    public static Faq newInstance(FaqCategory category, String question, String answer) {
+    public static Faq newInstance(@NotNull FaqCategory category, @NotNull String question, @NotNull String answer) {
         return new Faq(category, question, answer);
     }
 
-    public void update(String question, String answer, FaqCategory category) {
+    public void update(@NotNull String question, @NotNull String answer, @NotNull FaqCategory category) {
         this.question = question;
         this.answer = answer;
         this.category = category;

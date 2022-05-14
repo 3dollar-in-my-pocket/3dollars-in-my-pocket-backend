@@ -3,9 +3,10 @@ package com.depromeet.threedollar.domain.rds.user.domain.advertisement;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.depromeet.threedollar.domain.rds.common.type.ColumnDefinition;
+import com.depromeet.threedollar.domain.rds.common.constants.ColumnDefinition;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -36,7 +37,14 @@ public class AdvertisementDetail {
     private String fontColor;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private AdvertisementDetail(@Nullable String title, @Nullable String subTitle, String imageUrl, @Nullable String linkUrl, @Nullable String bgColor, @Nullable String fontColor) {
+    private AdvertisementDetail(
+        @Nullable String title,
+        @Nullable String subTitle,
+        @NotNull String imageUrl,
+        @Nullable String linkUrl,
+        @Nullable String bgColor,
+        @Nullable String fontColor
+    ) {
         this.title = title;
         this.subTitle = subTitle;
         this.imageUrl = imageUrl;
@@ -45,7 +53,14 @@ public class AdvertisementDetail {
         this.fontColor = fontColor;
     }
 
-    public static AdvertisementDetail of(@Nullable String title, @Nullable String subTitle, String imageUrl, @Nullable String linkUrl, @Nullable String bgColor, @Nullable String fontColor) {
+    public static AdvertisementDetail of(
+        @Nullable String title,
+        @Nullable String subTitle,
+        @NotNull String imageUrl,
+        @Nullable String linkUrl,
+        @Nullable String bgColor,
+        @Nullable String fontColor
+    ) {
         return AdvertisementDetail.builder()
             .title(title)
             .subTitle(subTitle)
