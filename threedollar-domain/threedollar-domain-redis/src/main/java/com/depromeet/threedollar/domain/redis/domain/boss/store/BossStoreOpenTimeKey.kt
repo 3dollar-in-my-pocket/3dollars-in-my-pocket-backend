@@ -10,7 +10,7 @@ data class BossStoreOpenTimeKey(
 ) : StringRedisKey<LocalDateTime> {
 
     override fun getKey(): String {
-        return "boss:store:$bossStoreId:open:time:v1"
+        return "boss:v1:store:$bossStoreId:open:time"
     }
 
     override fun deserializeValue(value: String?): LocalDateTime? {

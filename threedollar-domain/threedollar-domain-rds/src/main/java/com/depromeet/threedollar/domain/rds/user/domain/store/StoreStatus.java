@@ -16,4 +16,8 @@ public enum StoreStatus {
     private final String description;
     private final boolean isActivated;
 
+    public boolean isDeleted() {
+        return !this.isActivated;
+    }
+
 }

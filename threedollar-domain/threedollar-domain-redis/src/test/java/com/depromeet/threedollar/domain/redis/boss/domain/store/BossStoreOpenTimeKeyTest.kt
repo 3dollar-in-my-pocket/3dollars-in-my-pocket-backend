@@ -11,18 +11,6 @@ private const val BOSS_STORE_ID = "bossStoreId"
 internal class BossStoreOpenTimeKeyTest {
 
     @Test
-    fun `가게 오픈 정보의 키를 가져온다`() {
-        // given
-        val bossStoreOpenTimeKey = BossStoreOpenTimeKey(BOSS_STORE_ID)
-
-        // when
-        val key = bossStoreOpenTimeKey.getKey()
-
-        // then
-        assertThat(key).isEqualTo("boss:store:bossStoreId:open:time:v1")
-    }
-
-    @Test
     fun `가게 오픈 정보 키의 값을 직렬화한다`() {
         // given
         val bossStoreOpenTimeKey = BossStoreOpenTimeKey(BOSS_STORE_ID)

@@ -48,15 +48,15 @@ public enum CacheType {
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static class CacheKey {
 
-        public static final String FAQS = "user:common:faqs:v1";
-        public static final String MEDALS = "user:common:medals:v1";
-        public static final String ADVERTISEMENTS = "user:common:advertisements:v1";
+        public static final String FAQS = "user:v1:common:faqs";
+        public static final String MEDALS = "user:v1:common:medals";
+        public static final String ADVERTISEMENTS = "user:v1:common:advertisements";
 
-        public static final String USER_STORES_COUNTS = "user:my:stores:count:v1";
-        public static final String USER_REVIEWS_COUNTS = "user:my:reviews:count:v1";
-        public static final String USER_MEDALS = "user:my:medals:v1";
+        public static final String USER_STORES_COUNTS = "user:v1:my:stores:count";
+        public static final String USER_REVIEWS_COUNTS = "user:v1:my:reviews:count";
+        public static final String USER_MEDALS = "user:v1:my:medals";
 
-        public static final String BOSS_STORE_CATEGORIES = "boss:store:categories:v1";
+        public static final String BOSS_STORE_CATEGORIES = "boss:v1:store:categories";
 
     }
 

@@ -3,6 +3,8 @@ package com.depromeet.threedollar.domain.rds.user.domain.store.repository;
 import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_STORES_COUNTS;
 import static com.depromeet.threedollar.domain.rds.user.domain.store.QMenu.menu;
 import static com.depromeet.threedollar.domain.rds.user.domain.store.QStore.store;
+import static com.querydsl.core.group.GroupBy.groupBy;
+import static com.querydsl.core.group.GroupBy.list;
 import static com.querydsl.core.types.dsl.MathExpressions.acos;
 import static com.querydsl.core.types.dsl.MathExpressions.cos;
 import static com.querydsl.core.types.dsl.MathExpressions.radians;
@@ -16,6 +18,9 @@ import org.springframework.cache.annotation.Cacheable;
 import com.depromeet.threedollar.domain.rds.common.support.OrderByNull;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreStatus;
+import com.depromeet.threedollar.domain.rds.user.domain.store.projection.QStoreWithMenuProjection;
+import com.depromeet.threedollar.domain.rds.user.domain.store.projection.QStoreWithMenuProjection_MenuProjection;
+import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreWithMenuProjection;
 import com.querydsl.core.types.Ops;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
@@ -100,7 +105,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
      * 이 문제를 해결하기 위해서 StoreId 리스트 조회 후 페치조인하는 방식으로 조회.
      */
     @Override
-    public List<Store> findAllByUserIdUsingCursor(Long userId, Long lastStoreId, int size) {
+    public List<StoreWithMenuProjection> findAllByUserIdUsingCursor(Long userId, Long lastStoreId, int size) {
         List<Long> storeIds = queryFactory.select(store.id).distinct()
             .from(store)
             .innerJoin(menu).on(menu.store.id.eq(store.id))
@@ -112,7 +117,14 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
             .limit(size)
             .fetch();
 
-        return findAllByIds(storeIds);
+        return queryFactory
+            .from(store)
+            .innerJoin(menu).on(menu.store.id.eq(store.id))
+            .where(
+                store.id.in(storeIds)
+            )
+            .orderBy(store.id.desc())
+            .transform(groupBy(store.id).list(getStoreProjection()));
     }
 
     private BooleanExpression lessThanId(Long lastStoreId) {
@@ -130,7 +142,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
      * (커버링 인덱스 + Range 실행계획)
      */
     @Override
-    public List<Store> findStoresByLocationLessThanDistance(double latitude, double longitude, double distance) {
+    public List<StoreWithMenuProjection> findStoresByLocationLessThanDistance(double latitude, double longitude, double distance) {
         List<Long> storeIds = queryFactory.select(store.id)
             .from(store)
             .where(
@@ -144,13 +156,29 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
             .orderBy(OrderByNull.DEFAULT)
             .fetch();
 
-        return queryFactory.selectFrom(store).distinct()
-            .innerJoin(store.menus, menu).fetchJoin()
+        return queryFactory
+            .from(store)
+            .innerJoin(menu).on(menu.store.id.eq(store.id))
             .where(
                 store.id.in(storeIds),
                 store.status.eq(StoreStatus.ACTIVE)
             )
-            .fetch();
+            .transform(groupBy(store.id).list(getStoreProjection()));
+    }
+
+    private QStoreWithMenuProjection getStoreProjection() {
+        return new QStoreWithMenuProjection(
+            store.id,
+            store.userId,
+            store.location.latitude,
+            store.location.longitude,
+            store.name,
+            store.rating,
+            store.status,
+            list(new QStoreWithMenuProjection_MenuProjection(menu.name, menu.price, menu.category)),
+            store.createdAt,
+            store.updatedAt
+        );
     }
 
     /**

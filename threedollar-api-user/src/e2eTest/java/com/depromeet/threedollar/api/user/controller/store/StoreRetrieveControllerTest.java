@@ -63,8 +63,8 @@ import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
-import com.depromeet.threedollar.domain.redis.domain.user.store.CachedAroundStoreRepository;
-import com.depromeet.threedollar.domain.redis.domain.user.store.dto.UserStoreRedisDto;
+import com.depromeet.threedollar.domain.redis.domain.user.store.CachedAroundStoresRepository;
+import com.depromeet.threedollar.domain.redis.domain.user.store.dto.CachedUserStoreDto;
 
 class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
@@ -92,7 +92,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
     private StoreImageRepository storeImageRepository;
 
     @MockBean
-    private CachedAroundStoreRepository cachedAroundStoreRepository;
+    private CachedAroundStoresRepository cachedAroundStoresRepository;
 
     @BeforeEach
     void setUp() {
@@ -117,8 +117,8 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
         @BeforeEach
         void disableCached() {
-            when(cachedAroundStoreRepository.get(anyDouble(), anyDouble(), anyDouble())).thenReturn(null);
-            doNothing().when(cachedAroundStoreRepository).set(anyDouble(), anyDouble(), anyDouble(), anyList());
+            when(cachedAroundStoresRepository.get(anyDouble(), anyDouble(), anyDouble())).thenReturn(null);
+            doNothing().when(cachedAroundStoresRepository).set(anyDouble(), anyDouble(), anyDouble(), anyList());
         }
 
         @Test
@@ -319,7 +319,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             double longitude = 126.0;
             double distance = 1000;
 
-            when(cachedAroundStoreRepository.get(anyDouble(), anyDouble(), anyDouble())).thenReturn(null);
+            when(cachedAroundStoresRepository.get(anyDouble(), anyDouble(), anyDouble())).thenReturn(null);
 
             Store store = StoreCreator.createWithDefaultMenu(user.getId(), "붕어빵 가게 1", latitude, longitude);
             storeRepository.save(store);
@@ -332,7 +332,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             storeRetrieveMockApiCaller.retrieveAroundStores(request, CoordinateValue.of(latitude, longitude), CoordinateValue.of(latitude, longitude), 200);
 
             // then
-            verify(cachedAroundStoreRepository).set(anyDouble(), anyDouble(), anyDouble(), anyList());
+            verify(cachedAroundStoresRepository).set(anyDouble(), anyDouble(), anyDouble(), anyList());
         }
 
         @Test
@@ -342,7 +342,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             double longitude = 126.0;
             double distance = 1000;
 
-            UserStoreRedisDto cachedStore = UserStoreRedisDto.of(
+            CachedUserStoreDto cachedStore = CachedUserStoreDto.of(
                 List.of(MenuCategoryType.SUNDAE, MenuCategoryType.WAFFLE),
                 100L,
                 latitude,
@@ -353,7 +353,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 LocalDateTime.of(2022, 1, 2, 0, 0)
             );
 
-            when(cachedAroundStoreRepository.get(anyDouble(), anyDouble(), anyDouble())).thenReturn(List.of(cachedStore));
+            when(cachedAroundStoresRepository.get(anyDouble(), anyDouble(), anyDouble())).thenReturn(List.of(cachedStore));
 
             RetrieveAroundStoresRequest request = RetrieveAroundStoresRequest.testBuilder()
                 .distance(distance)
@@ -376,7 +376,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             double longitude = 127.0;
             double distance = 1000;
 
-            UserStoreRedisDto noMatchedStore = UserStoreRedisDto.of(
+            CachedUserStoreDto noMatchedStore = CachedUserStoreDto.of(
                 List.of(MenuCategoryType.SUNDAE, MenuCategoryType.WAFFLE),
                 100L,
                 latitude,
@@ -386,7 +386,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 LocalDateTime.of(2022, 1, 1, 0, 0),
                 LocalDateTime.of(2022, 1, 2, 0, 0)
             );
-            UserStoreRedisDto matchedStore = UserStoreRedisDto.of(
+            CachedUserStoreDto matchedStore = CachedUserStoreDto.of(
                 List.of(MenuCategoryType.SUNDAE, MenuCategoryType.BUNGEOPPANG),
                 100L,
                 latitude,
@@ -397,7 +397,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 LocalDateTime.of(2022, 1, 2, 0, 0)
             );
 
-            when(cachedAroundStoreRepository.get(anyDouble(), anyDouble(), anyDouble())).thenReturn(List.of(noMatchedStore, matchedStore));
+            when(cachedAroundStoresRepository.get(anyDouble(), anyDouble(), anyDouble())).thenReturn(List.of(noMatchedStore, matchedStore));
 
             RetrieveAroundStoresRequest request = RetrieveAroundStoresRequest.testBuilder()
                 .distance(distance)

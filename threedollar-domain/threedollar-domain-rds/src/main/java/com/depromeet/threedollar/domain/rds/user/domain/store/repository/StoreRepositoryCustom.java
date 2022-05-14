@@ -5,6 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.Nullable;
 
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
+import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreWithMenuProjection;
 
 public interface StoreRepositoryCustom {
 
@@ -20,9 +21,9 @@ public interface StoreRepositoryCustom {
 
     List<Store> findAllUsingCursor(Long lastStoreId, int size);
 
-    List<Store> findAllByUserIdUsingCursor(Long userId, Long lastStoreId, int size);
+    List<StoreWithMenuProjection> findAllByUserIdUsingCursor(Long userId, Long lastStoreId, int size);
 
-    List<Store> findStoresByLocationLessThanDistance(double latitude, double longitude, double distance);
+    List<StoreWithMenuProjection> findStoresByLocationLessThanDistance(double latitude, double longitude, double distance);
 
     boolean existsStoreAroundInDistance(double latitude, double longitude, double distance);
 

@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoryCountsResponse;
 import com.depromeet.threedollar.common.type.MenuCategoryType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
+import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreWithMenuProjection;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -31,7 +31,7 @@ public class StoreWithVisitCountsResponse extends AuditingTimeResponse {
     private VisitHistoryCountsResponse visitHistory;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private StoreWithVisitCountsResponse(Store store, long existsVisitsCount, long notExistsVisitsCount) {
+    private StoreWithVisitCountsResponse(StoreWithMenuProjection store, long existsVisitsCount, long notExistsVisitsCount) {
         this.storeId = store.getId();
         this.latitude = store.getLatitude();
         this.longitude = store.getLongitude();
@@ -41,14 +41,14 @@ public class StoreWithVisitCountsResponse extends AuditingTimeResponse {
         this.visitHistory = VisitHistoryCountsResponse.of(existsVisitsCount, notExistsVisitsCount);
     }
 
-    public static StoreWithVisitCountsResponse of(@NotNull Store store, long existsVisitsCount, long notExistsVisitsCount) {
+    public static StoreWithVisitCountsResponse of(@NotNull StoreWithMenuProjection store, long existsVisitsCount, long notExistsVisitsCount) {
         StoreWithVisitCountsResponse response = StoreWithVisitCountsResponse.builder()
             .store(store)
             .existsVisitsCount(existsVisitsCount)
             .notExistsVisitsCount(notExistsVisitsCount)
             .build();
-        response.categories.addAll(store.getMenuCategoriesSortedByCounts());
-        response.setAuditingTimeByEntity(store);
+        response.categories.addAll(store.getMenuCategories());
+        response.setAuditingTime(store.getCreatedAt(), store.getUpdatedAt());
         return response;
     }
 

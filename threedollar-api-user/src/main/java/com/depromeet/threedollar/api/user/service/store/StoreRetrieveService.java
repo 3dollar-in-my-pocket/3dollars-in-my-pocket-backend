@@ -30,10 +30,11 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreImageProjection;
+import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreWithMenuProjection;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryWithUserProjection;
-import com.depromeet.threedollar.domain.redis.domain.user.store.CachedAroundStoreRepository;
+import com.depromeet.threedollar.domain.redis.domain.user.store.CachedAroundStoresRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -42,7 +43,7 @@ import lombok.RequiredArgsConstructor;
 public class StoreRetrieveService {
 
     private final StoreRepository storeRepository;
-    private final CachedAroundStoreRepository cachedAroundStoreRepository;
+    private final CachedAroundStoresRepository cachedAroundStoresRepository;
 
     private final StoreImageRepository storeImageRepository;
     private final UserRepository userRepository;
@@ -51,7 +52,7 @@ public class StoreRetrieveService {
 
     @Transactional(readOnly = true)
     public List<StoreWithVisitsAndDistanceResponse> retrieveAroundStores(RetrieveAroundStoresRequest request, CoordinateValue geoCoordinate, CoordinateValue mapCoordinate) {
-        List<StoreInfoResponse> aroundStoresFilerByCategory = findAroundStoresFilerByCategory(storeRepository, cachedAroundStoreRepository, mapCoordinate.getLatitude(), mapCoordinate.getLongitude(), request.getDistance().getAvailableDistance(), request.getCategory());
+        List<StoreInfoResponse> aroundStoresFilerByCategory = findAroundStoresFilerByCategory(storeRepository, cachedAroundStoresRepository, mapCoordinate.getLatitude(), mapCoordinate.getLongitude(), request.getDistance().getAvailableDistance(), request.getCategory());
         VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(aroundStoresFilerByCategory.stream()
             .map(StoreInfoResponse::getStoreId)
             .collect(Collectors.toList()));
@@ -87,10 +88,10 @@ public class StoreRetrieveService {
 
     @Transactional(readOnly = true)
     public StoresCursorResponse retrieveMyReportedStoreHistories(RetrieveMyStoresRequest request, Long userId) {
-        List<Store> storesWithNextCursor = storeRepository.findAllByUserIdUsingCursor(userId, request.getCursor(), request.getSize() + 1);
-        CursorPagingSupporter<Store> storesCursor = CursorPagingSupporter.of(storesWithNextCursor, request.getSize());
+        List<StoreWithMenuProjection> storesWithNextCursor = storeRepository.findAllByUserIdUsingCursor(userId, request.getCursor(), request.getSize() + 1);
+        CursorPagingSupporter<StoreWithMenuProjection> storesCursor = CursorPagingSupporter.of(storesWithNextCursor, request.getSize());
         VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(storesCursor.getCurrentCursorItems().stream()
-            .map(Store::getId)
+            .map(StoreWithMenuProjection::getId)
             .collect(Collectors.toList())
         );
         return StoresCursorResponse.of(storesCursor, visitHistoriesCounter, storeRepository.countByUserId(userId));

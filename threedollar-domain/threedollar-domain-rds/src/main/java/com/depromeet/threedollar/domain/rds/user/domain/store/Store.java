@@ -247,7 +247,7 @@ public class Store extends AuditingTimeEntity {
     }
 
     public boolean isDeleted() {
-        return !this.status.isActivated();
+        return this.status.isDeleted();
     }
 
 }

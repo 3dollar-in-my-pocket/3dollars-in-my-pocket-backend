@@ -3,7 +3,7 @@ package com.depromeet.threedollar.domain.redis.domain.user.store.dto
 import java.time.LocalDateTime
 import com.depromeet.threedollar.common.type.MenuCategoryType
 
-data class UserStoreRedisDto(
+data class CachedUserStoreDto(
     val categories: List<MenuCategoryType>,
     val storeId: Long,
     val latitude: Double,
@@ -25,8 +25,8 @@ data class UserStoreRedisDto(
             rating: Double,
             createdAt: LocalDateTime,
             updatedAt: LocalDateTime,
-        ): UserStoreRedisDto {
-            return UserStoreRedisDto(
+        ): CachedUserStoreDto {
+            return CachedUserStoreDto(
                 categories = categories,
                 storeId = storeId,
                 latitude = latitude,

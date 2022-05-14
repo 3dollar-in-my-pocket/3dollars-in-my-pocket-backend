@@ -8,7 +8,8 @@ import org.jetbrains.annotations.NotNull;
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import com.depromeet.threedollar.domain.redis.domain.user.store.dto.UserStoreRedisDto;
+import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreWithMenuProjection;
+import com.depromeet.threedollar.domain.redis.domain.user.store.dto.CachedUserStoreDto;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -53,7 +54,21 @@ public class StoreInfoResponse extends AuditingTimeResponse {
         return response;
     }
 
-    public static StoreInfoResponse of(@NotNull UserStoreRedisDto cachedStore) {
+    public static StoreInfoResponse of(@NotNull StoreWithMenuProjection store) {
+        StoreInfoResponse response = StoreInfoResponse.builder()
+            .storeId(store.getId())
+            .latitude(store.getLatitude())
+            .longitude(store.getLongitude())
+            .storeName(store.getName())
+            .rating(store.getRating())
+            .isDeleted(store.isDeleted())
+            .build();
+        response.categories.addAll(store.getMenuCategories());
+        response.setAuditingTime(store.getCreatedAt(), store.getUpdatedAt());
+        return response;
+    }
+
+    public static StoreInfoResponse of(@NotNull CachedUserStoreDto cachedStore) {
         StoreInfoResponse response = StoreInfoResponse.builder()
             .storeId(cachedStore.getStoreId())
             .latitude(cachedStore.getLatitude())
