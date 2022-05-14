@@ -22,6 +22,7 @@ public enum ErrorCode {
     INVALID_MISSING_MAP_LATITUDE(BAD_REQUEST, OFF, "BR103", "지도 위도를 입력해주세요 (mapLatitude)"),
     INVALID_MISSING_MAP_LONGITUDE(BAD_REQUEST, OFF, "BR104", "지도 경도를 입력해주세요 (mapLongitude)"),
     INVALID_MISSING_AUTH_TOKEN(BAD_REQUEST, OFF, "BR105", "인증 토큰을 입력해주세요"),
+    INVALID_EMPTY_FILES(BAD_REQUEST, OFF, "BR106", "파일을 업로드해주세요"),
 
     INVALID_AUTH_TOKEN(BAD_REQUEST, OFF, "BR200", "만료되거나 유효하지 않은 인증 토큰입니다"),
     INVALID_CONTACTS_NUMBER_FORMAT(BAD_REQUEST, OFF, "BR201", "잘못된 연락처 번호입니다."),

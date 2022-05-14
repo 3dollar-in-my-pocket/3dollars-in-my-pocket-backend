@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import com.depromeet.threedollar.domain.redis.domain.user.store.CachedAroundStoreValue;
+import com.depromeet.threedollar.domain.redis.domain.user.store.dto.UserStoreRedisDto;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -53,7 +53,7 @@ public class StoreInfoResponse extends AuditingTimeResponse {
         return response;
     }
 
-    public static StoreInfoResponse of(@NotNull CachedAroundStoreValue cachedStore) {
+    public static StoreInfoResponse of(@NotNull UserStoreRedisDto cachedStore) {
         StoreInfoResponse response = StoreInfoResponse.builder()
             .storeId(cachedStore.getStoreId())
             .latitude(cachedStore.getLatitude())

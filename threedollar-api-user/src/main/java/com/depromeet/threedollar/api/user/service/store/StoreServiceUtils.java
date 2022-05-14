@@ -14,7 +14,7 @@ import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.redis.domain.user.store.CachedAroundStoreRepository;
-import com.depromeet.threedollar.domain.redis.domain.user.store.CachedAroundStoreValue;
+import com.depromeet.threedollar.domain.redis.domain.user.store.dto.UserStoreRedisDto;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -58,7 +58,7 @@ public class StoreServiceUtils {
     }
 
     private static List<StoreInfoResponse> findAroundStores(StoreRepository storeRepository, CachedAroundStoreRepository cachedAroundStoreRepository, double mapLatitude, double mapLongitude, double distance) {
-        List<CachedAroundStoreValue> aroundStoresInCache = cachedAroundStoreRepository.get(mapLatitude, mapLongitude, distance);
+        List<UserStoreRedisDto> aroundStoresInCache = cachedAroundStoreRepository.get(mapLatitude, mapLongitude, distance);
         if (aroundStoresInCache != null) {
             return aroundStoresInCache.stream()
                 .map(StoreInfoResponse::of)
@@ -72,8 +72,8 @@ public class StoreServiceUtils {
     }
 
     private static void saveAroundStoresInCached(CachedAroundStoreRepository cachedAroundStoreRepository, List<Store> nearStores, double mapLatitude, double mapLongitude, double distance) {
-        List<CachedAroundStoreValue> cachedAroundStores = nearStores.stream()
-            .map(store -> CachedAroundStoreValue.of(
+        List<UserStoreRedisDto> cachedAroundStores = nearStores.stream()
+            .map(store -> UserStoreRedisDto.of(
                 store.getMenuCategoriesSortedByCounts(),
                 store.getId(),
                 store.getLatitude(),

@@ -1,5 +1,5 @@
 ### [인증] 가게에 등록된 이미지 목록을 조회합니다
-GET {{user_api}}/v2/store/images/{{STORE_ID}}
+GET {{user_api}}/v2/store/{{STORE_ID}}/images
 Authorization: {{AUTHORIZATION}}
 
 > {%

@@ -16,16 +16,16 @@ import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistor
 import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoryWithUserResponse;
 import com.depromeet.threedollar.common.model.CoordinateValue;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
+import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
 import com.depromeet.threedollar.domain.rds.user.collection.user.UserDictionary;
 import com.depromeet.threedollar.domain.rds.user.collection.visit.VisitHistoryCounter;
 import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
-import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreImageProjection;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryWithUserProjection;
 
 import lombok.AccessLevel;
@@ -80,7 +80,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
         this.visitHistory = visitHistory;
     }
 
-    public static StoreDetailResponse of(Store store, CoordinateValue geoCoordinate, List<StoreImage> storeImages, UserDictionary userDictionary,
+    public static StoreDetailResponse of(Store store, CoordinateValue geoCoordinate, List<StoreImageProjection> storeImages, UserDictionary userDictionary,
                                          List<Review> reviews, VisitHistoryCounter visitHistoriesCollection, List<VisitHistoryWithUserProjection> visitHistories) {
         StoreDetailResponse response = StoreDetailResponse.builder()
             .store(store)
@@ -118,7 +118,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
             .collect(Collectors.toList());
     }
 
-    private static List<StoreImageResponse> toImageResponse(List<StoreImage> storeImages) {
+    private static List<StoreImageResponse> toImageResponse(List<StoreImageProjection> storeImages) {
         return storeImages.stream()
             .map(StoreImageResponse::of)
             .collect(Collectors.toList());

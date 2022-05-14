@@ -64,7 +64,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryCreato
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
 import com.depromeet.threedollar.domain.redis.domain.user.store.CachedAroundStoreRepository;
-import com.depromeet.threedollar.domain.redis.domain.user.store.CachedAroundStoreValue;
+import com.depromeet.threedollar.domain.redis.domain.user.store.dto.UserStoreRedisDto;
 
 class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
@@ -342,7 +342,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             double longitude = 126.0;
             double distance = 1000;
 
-            CachedAroundStoreValue cachedStore = CachedAroundStoreValue.of(
+            UserStoreRedisDto cachedStore = UserStoreRedisDto.of(
                 List.of(MenuCategoryType.SUNDAE, MenuCategoryType.WAFFLE),
                 100L,
                 latitude,
@@ -376,7 +376,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             double longitude = 127.0;
             double distance = 1000;
 
-            CachedAroundStoreValue noMatchedStore = CachedAroundStoreValue.of(
+            UserStoreRedisDto noMatchedStore = UserStoreRedisDto.of(
                 List.of(MenuCategoryType.SUNDAE, MenuCategoryType.WAFFLE),
                 100L,
                 latitude,
@@ -386,7 +386,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 LocalDateTime.of(2022, 1, 1, 0, 0),
                 LocalDateTime.of(2022, 1, 2, 0, 0)
             );
-            CachedAroundStoreValue matchedStore = CachedAroundStoreValue.of(
+            UserStoreRedisDto matchedStore = UserStoreRedisDto.of(
                 List.of(MenuCategoryType.SUNDAE, MenuCategoryType.BUNGEOPPANG),
                 100L,
                 latitude,

@@ -18,6 +18,8 @@ import com.depromeet.threedollar.api.user.config.resolver.UserId;
 import com.depromeet.threedollar.api.user.service.store.StoreImageService;
 import com.depromeet.threedollar.api.user.service.store.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreImageResponse;
+import com.depromeet.threedollar.common.exception.model.InvalidException;
+import com.depromeet.threedollar.common.exception.type.ErrorCode;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
 
 import io.swagger.annotations.ApiOperation;
@@ -46,6 +48,9 @@ public class StoreImageController {
         @Valid AddStoreImageRequest request,
         @UserId Long userId
     ) {
+        if (images.isEmpty()) {
+            throw new InvalidException(String.format("유저(%s)가 업로드 한 가게(%s) 이미지 업로드를 위한 파일이 비어있습니다", userId, request.getStoreId()), ErrorCode.INVALID_EMPTY_FILES);
+        }
         List<StoreImage> storeImages = storeImageService.uploadStoreImages(request, images, userId);
         return ApiResponse.success(storeImageService.addStoreImages(storeImages));
     }

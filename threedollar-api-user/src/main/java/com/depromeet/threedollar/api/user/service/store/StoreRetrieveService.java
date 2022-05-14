@@ -27,9 +27,9 @@ import com.depromeet.threedollar.domain.rds.user.collection.visit.VisitHistoryCo
 import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreImageProjection;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryWithUserProjection;
@@ -65,7 +65,7 @@ public class StoreRetrieveService {
     public StoreDetailResponse retrieveStoreDetailInfo(RetrieveStoreDetailRequest request, CoordinateValue geoCoordinate) {
         Store store = StoreServiceUtils.findStoreByIdFetchJoinMenu(storeRepository, request.getStoreId());
         List<Review> reviews = reviewRepository.findAllByStoreId(request.getStoreId());
-        List<StoreImage> storeImages = storeImageRepository.findAllByStoreId(request.getStoreId());
+        List<StoreImageProjection> storeImages = storeImageRepository.findAllByStoreId(request.getStoreId());
         List<VisitHistoryWithUserProjection> visitHistories = visitHistoryRepository.findAllVisitWithUserByStoreIdAfterDate(request.getStoreId(), request.getStartDate());
         UserDictionary userDictionary = UserDictionary.of(userRepository.findAllByUserId(concatUserIds(reviews, visitHistories, store)));
         VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(List.of(store.getId()));
