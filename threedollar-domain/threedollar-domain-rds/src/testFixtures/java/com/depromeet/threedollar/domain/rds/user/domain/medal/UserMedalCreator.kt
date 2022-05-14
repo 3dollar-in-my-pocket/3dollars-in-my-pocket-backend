@@ -6,27 +6,17 @@ import com.depromeet.threedollar.domain.rds.user.domain.user.User
 @TestFixture
 object UserMedalCreator {
 
+    @JvmOverloads
     @JvmStatic
-    fun createActive(
+    fun create(
         medal: Medal,
-        user: User
+        user: User,
+        status: UserMedalStatus = UserMedalStatus.ACTIVE
     ): UserMedal {
         return UserMedal.builder()
             .medal(medal)
             .user(user)
-            .status(UserMedalStatus.ACTIVE)
-            .build()
-    }
-
-    @JvmStatic
-    fun createInActive(
-        medal: Medal,
-        user: User
-    ): UserMedal {
-        return UserMedal.builder()
-            .medal(medal)
-            .user(user)
-            .status(UserMedalStatus.IN_ACTIVE)
+            .status(status)
             .build()
     }
 

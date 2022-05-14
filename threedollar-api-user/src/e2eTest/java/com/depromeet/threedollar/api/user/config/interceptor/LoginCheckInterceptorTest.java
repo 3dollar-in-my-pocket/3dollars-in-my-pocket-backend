@@ -22,7 +22,7 @@ class LoginCheckInterceptorTest extends SetupUserControllerTest {
     }
 
     @Test
-    void 로그인_테스트_로그인이_성공하면_200OK() throws Exception {
+    void 로그인_테스트_로그인이_성공하면_200_OK() throws Exception {
         // when & then
         mockMvc.perform(get("/v2/user/me")
                 .header(HttpHeaders.AUTHORIZATION, token)
@@ -39,7 +39,7 @@ class LoginCheckInterceptorTest extends SetupUserControllerTest {
         "",
         "wrong-token"
     })
-    void 로그인_테스트_토큰이_없는경우_401에러가_발생한다() throws Exception {
+    void 로그인_테스트_토큰이_없는경우_401_에러가_발생한다() throws Exception {
         // when & then
         mockMvc.perform(get("/v2/user/me")
                 .header(HttpHeaders.AUTHORIZATION, "")

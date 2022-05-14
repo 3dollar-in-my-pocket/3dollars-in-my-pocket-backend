@@ -68,7 +68,7 @@ class GoogleAuthServiceTest {
     class GoogleLoginTest {
 
         @Test
-        void 구글_로그인_성공시_ID가_반환된다() {
+        void 구글_로그인_성공시_USER_ID가_반환된다() {
             // given
             User user = UserCreator.create(SOCIAL_ID, SOCIAL_TYPE, "닉네임");
             userRepository.save(user);

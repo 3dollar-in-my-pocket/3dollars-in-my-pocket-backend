@@ -59,7 +59,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
     class AddVisitHistoryApiTest {
 
         @Test
-        void 가게_방문_인증_등록시_성공시_200_OK() throws Exception {
+        void 가게에_방문_인증을_등록한다() throws Exception {
             // given
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testBuilder()
                 .storeId(store.getId())
@@ -74,7 +74,7 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
         }
 
         @Test
-        void 가게_방문시_메달을_획득하는_작업이_수행된다() throws Exception {
+        void 가게에_방문_인증을_등록하면_메달_획득_작업이_실행된다() throws Exception {
             // given
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testBuilder()
                 .storeId(store.getId())

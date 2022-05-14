@@ -25,7 +25,7 @@ class StoreMenuControllerTest extends SetupControllerTest {
 
     @DisplayName("GET /api/v2/store/menu/categories")
     @Test
-    void 활성화된_메뉴_카테고리의_정보들을_조회한다() throws Exception {
+    void 유저_가게의_메뉴_카테고리_목록을_조회합니다() throws Exception {
         // when & then
         ApiResponse<List<MenuCategoryResponse>> response = objectMapper.readValue(
             mockMvc.perform(get("/v2/store/menu/categories"))

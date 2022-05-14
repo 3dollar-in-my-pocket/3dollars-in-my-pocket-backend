@@ -34,7 +34,7 @@ internal class BossStoreFeedbackControllerTest(
 
     @DisplayName("GET /api/v1/boss/store/{{BOSS_STORE_ID}/feedbacks/full")
     @Test
-    fun `전체 기간동안의 특정 사장님의 가게의 피드백 갯수를 조회한다`() {
+    fun `사장님 가게의 각 피드백 별 전체 카운트를 조회한다`() {
         // given
         val feedbackType = BossStoreFeedbackType.BOSS_IS_KIND
 
@@ -81,7 +81,7 @@ internal class BossStoreFeedbackControllerTest(
 
     @DisplayName("GET /api/v1/boss/store/feedback/types")
     @Test
-    fun `사장님 가게 피드백의 타입 목록을 조회한다`() {
+    fun `사장님 가게 피드백 종류를 조회합니다`() {
         // when & then
         mockMvc.get("/v1/boss/store/feedback/types")
             .andDo { print() }
@@ -97,7 +97,7 @@ internal class BossStoreFeedbackControllerTest(
 
     @DisplayName("POST /api/v1/boss/store/{bossStoreId}/feedback")
     @Test
-    fun `사장님 가게에 피드백을 추가합니다`() {
+    fun `사장님 가게에 새로운 피드백을 추가합니다`() {
         // given
         val bossStore = BossStoreCreator.create(
             bossId = "bossId",

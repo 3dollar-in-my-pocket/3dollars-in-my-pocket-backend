@@ -34,4 +34,18 @@ class DateTimeIntervalTest {
         assertThat(sut.getEndDateTime()).isEqualTo(dateTime);
     }
 
+    @Test
+    void 시작날짜가_종료날짜보다_이전인경우_에러가_발생하지_않는다() {
+        // given
+        LocalDateTime startDateTime = LocalDateTime.of(2021, 11, 25, 0, 0);
+        LocalDateTime endDateTime = LocalDateTime.of(2021, 11, 26, 0, 0);
+
+        // when
+        DateTimeInterval sut = DateTimeInterval.of(startDateTime, endDateTime);
+
+        // then
+        assertThat(sut.getStartDateTime()).isEqualTo(startDateTime);
+        assertThat(sut.getEndDateTime()).isEqualTo(endDateTime);
+    }
+
 }

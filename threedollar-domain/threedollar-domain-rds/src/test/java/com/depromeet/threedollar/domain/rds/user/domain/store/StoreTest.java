@@ -7,13 +7,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import com.depromeet.threedollar.common.type.MenuCategoryType;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
+import com.depromeet.threedollar.common.type.MenuCategoryType;
 
 class StoreTest {
 
@@ -21,7 +21,7 @@ class StoreTest {
     class UpdateAppearanceDaysTest {
 
         @Test
-        void 개시일을_수정한다() {
+        void 가게의_영업일_정보를_수정한다() {
             // given
             Store store = StoreCreator.createWithDefaultMenu(100L, "가게");
             store.addAppearanceDays(Set.of(DayOfTheWeek.MONDAY));
@@ -37,7 +37,7 @@ class StoreTest {
         }
 
         @Test
-        void 개시일을_모두_삭제하는_경우_빈_배열이_된다() {
+        void 가게의_영업일_정보를_모두_삭제한다() {
             // given
             Store store = StoreCreator.createWithDefaultMenu(100L, "가게");
             store.addAppearanceDays(Set.of(DayOfTheWeek.MONDAY));
@@ -57,7 +57,7 @@ class StoreTest {
     class UpdatePaymentMethodsTest {
 
         @Test
-        void 결제방법을_수정한다() {
+        void 가게의_결제방법을_수정한다() {
             // given
             Store store = StoreCreator.createWithDefaultMenu(100L, "가게");
             store.addPaymentMethods(Set.of(PaymentMethodType.CARD));
@@ -73,7 +73,7 @@ class StoreTest {
         }
 
         @Test
-        void 결제방법을_모두_삭제하는_경우() {
+        void 가게의_결제방법을_모두_삭제한다() {
             // given
             Store store = StoreCreator.createWithDefaultMenu(100L, "가게");
             store.addPaymentMethods(Set.of(PaymentMethodType.CARD));

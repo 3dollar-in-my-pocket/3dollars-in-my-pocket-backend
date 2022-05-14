@@ -28,9 +28,9 @@ import com.depromeet.threedollar.api.user.service.store.dto.request.UpdateStoreR
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDeleteResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreInfoResponse;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
+import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDayRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
-import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType;
@@ -85,7 +85,7 @@ class StoreControllerTest extends SetupUserControllerTest {
     class AddStoreApiTest {
 
         @Test
-        void 가게_등록_성공시_가게_정보를_반환한다() throws Exception {
+        void 새로운_가게를_등록합니다() throws Exception {
             // given
             String storeName = "가게 이름";
             StoreType storeType = StoreType.STORE;
@@ -112,7 +112,7 @@ class StoreControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 가게_등록시_메달을_획득하는_작업이_수행된다() throws Exception {
+        void 새로운_가게_등록시_획득할_수_있는_메달_체크_이벤트가_발생됩니다() throws Exception {
             // given
             RegisterStoreRequest request = RegisterStoreRequest.testBuilder()
                 .latitude(34.0)
@@ -138,7 +138,7 @@ class StoreControllerTest extends SetupUserControllerTest {
     class UpdateStoreInfoApiTest {
 
         @Test
-        void 가게_수정_성공시_수정된_가게_정보를_반환한다() throws Exception {
+        void 가게의_정보를_수정합니다() throws Exception {
             // given
             String storeName = "가게 이름";
             StoreType storeType = StoreType.STORE;
@@ -217,7 +217,7 @@ class StoreControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 가게_삭제_요청시_메달을_획득하는_작업이_수행된다() throws Exception {
+        void 가게_삭제_요청시_획득할_수_있는_메달_체크_이벤트가_발생됩니다() throws Exception {
             // given
             Store store = StoreCreator.create(user.getId(), "가슴속 3천원 붕어빵");
             storeRepository.save(store);

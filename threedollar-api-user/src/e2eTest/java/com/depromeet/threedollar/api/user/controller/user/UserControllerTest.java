@@ -58,7 +58,7 @@ class UserControllerTest extends SetupUserControllerTest {
 
             Medal medal = MedalCreator.create(medalName, description, activationIconUrl, disableIconUrl);
             medalRepository.save(medal);
-            userMedalRepository.save(UserMedalCreator.createActive(medal, user));
+            userMedalRepository.save(UserMedalCreator.create(medal, user));
 
             // when & then
             getUserInfoApi(token)

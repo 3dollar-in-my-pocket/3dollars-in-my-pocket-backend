@@ -22,6 +22,7 @@ import com.depromeet.threedollar.api.user.service.medal.dto.request.ChangeRepres
 import com.depromeet.threedollar.domain.rds.user.domain.medal.Medal;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalStatus;
 
 class UserMedalControllerTest extends SetupUserControllerTest {
 
@@ -35,15 +36,15 @@ class UserMedalControllerTest extends SetupUserControllerTest {
     class GetMyObtainedMedalsApiTest {
 
         @Test
-        void 보유중인_칭호들을_모두_조회한다() throws Exception {
+        void 유저가_보유중인_메달을_모두_조회합니다() throws Exception {
             // given.
             Medal medalActive = MedalCreator.create("활성화중인 메달", "활성중인 메달 설명", "https://active-medal.png", "https://disable-medal.png");
             Medal medalInActive = MedalCreator.create("비활성화중인 메달", "비활성화중인 메달 설명", "https://active-medal-two.png", "https://disable-medal-two.png");
             medalRepository.saveAll(List.of(medalActive, medalInActive));
 
             userMedalRepository.saveAll(List.of(
-                UserMedalCreator.createActive(medalActive, user),
-                UserMedalCreator.createInActive(medalInActive, user)
+                UserMedalCreator.create(medalActive, user),
+                UserMedalCreator.create(medalInActive, user, UserMedalStatus.IN_ACTIVE)
             ));
 
             // when & then
@@ -74,12 +75,12 @@ class UserMedalControllerTest extends SetupUserControllerTest {
     class ChangeRepresentativeMedalTest {
 
         @Test
-        void 장착중인_훈장을_변경한다() throws Exception {
+        void 유저가_대표_메달을_변경합니다() throws Exception {
             // given
             Medal medal = MedalCreator.create("활성화중인 메달", "활성중인 메달 설명", "https://active-medal.jpeg", "https://disable-medal.jpeg");
             medalRepository.save(medal);
 
-            userMedalRepository.save(UserMedalCreator.createInActive(medal, user));
+            userMedalRepository.save(UserMedalCreator.create(medal, user, UserMedalStatus.IN_ACTIVE));
 
             ChangeRepresentativeMedalRequest request = ChangeRepresentativeMedalRequest.testBuilder()
                 .medalId(medal.getId())

@@ -22,7 +22,7 @@ internal class MedalControllerTest(
     }
 
     @Test
-    fun 모든_메달_목록을_조회한다() {
+    fun `전체 메달 목록을 조회합니다`() {
         // given
         val medalOne = MedalCreator.create("붕어빵 챌린저")
         val medalTwo = MedalCreator.create("붕어빵 전문가")

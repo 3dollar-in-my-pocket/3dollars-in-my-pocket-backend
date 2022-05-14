@@ -20,7 +20,7 @@ class AuthServiceFinderTest {
 
     @MethodSource("userSocialTypeAndServices")
     @ParameterizedTest
-    void 각_소셜타입의_AuthService를_가져온다(UserSocialType socialType, Class<AuthService> expectedAuthServiceClass) {
+    void 각_소셜의_AuthService_구현체를_가져옵니다(UserSocialType socialType, Class<AuthService> expectedAuthServiceClass) {
         // when
         AuthService authService = authServiceFinder.getAuthService(socialType);
 

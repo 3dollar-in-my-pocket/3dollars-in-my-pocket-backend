@@ -42,7 +42,7 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
     class AddStoreVisitHistoryTest {
 
         @Test
-        void 유저가_가게_방문_인증_정보를_추가한다() {
+        void 새로운_가게_방문_인증_정보를_추가한다() {
             // given
             LocalDate dateOfVisit = LocalDate.of(2021, 12, 1);
             VisitType visitType = VisitType.EXISTS;

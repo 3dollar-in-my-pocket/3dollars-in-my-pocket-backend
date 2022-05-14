@@ -41,10 +41,10 @@ class FaqControllerTest extends SetupUserControllerTest {
 
     @DisplayName("GET /api/v2/faqs")
     @Nested
-    class AddFaqApiTest {
+    class RetrieveFaqsApiTest {
 
         @Test
-        void FAQ_전체_리스트를_조회한다() throws Exception {
+        void FAQ_목록을_조회합니다() throws Exception {
             // given
             Faq faq1 = FaqCreator.create("앱 이름이 뭔가요?", "가슴속 3천원입니다", FaqCategory.CATEGORY);
             Faq faq2 = FaqCreator.create("가게 등록이 안되요", "가게 등록은 어찌어찌 할 수 있습니다", FaqCategory.BOARD);
@@ -59,14 +59,8 @@ class FaqControllerTest extends SetupUserControllerTest {
             assertFaqResponse(response.getData().get(1), faq1.getId(), faq1.getQuestion(), faq1.getAnswer(), faq1.getCategory());
         }
 
-    }
-
-    @DisplayName("GET /api/v2/faqs?category=BOARD")
-    @Nested
-    class GetFaqsApiTest {
-
         @Test
-        void 특정_카테고리의_FAQ_리스트를_조회한다() throws Exception {
+        void 특정_카테고리를_필터링해서_FAQ_목록을_조회합니다() throws Exception {
             // given
             Faq faq1 = FaqCreator.create("가게 삭제를 하려면 어떻게 하나요?", "가게 삭제를 하려면 어찌저찌 해야합니다", FaqCategory.CATEGORY);
             Faq faq2 = FaqCreator.create("리뷰 등록은 어떻게 하나요?", "리뷰 등록은 어찌저찌 하면 됩니다", FaqCategory.BOARD);
@@ -87,7 +81,7 @@ class FaqControllerTest extends SetupUserControllerTest {
     class GetFaqCategoriesApiTest {
 
         @Test
-        void FAQ_카테고리_리스트를_조회한다K() throws Exception {
+        void FAQ_카테고리_목록을_조회합니다() throws Exception {
             // when
             ApiResponse<List<FaqCategoryResponse>> response = faqMockApiCaller.retrieveFaqCategories(200);
 

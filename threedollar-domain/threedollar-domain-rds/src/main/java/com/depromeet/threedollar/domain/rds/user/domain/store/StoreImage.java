@@ -43,11 +43,11 @@ public class StoreImage extends AuditingTimeEntity {
     private StoreImageStatus status;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private StoreImage(Long storeId, Long userId, String url) {
+    private StoreImage(Long storeId, Long userId, String url, StoreImageStatus status) {
         this.storeId = storeId;
         this.userId = userId;
         this.url = url;
-        this.status = StoreImageStatus.ACTIVE;
+        this.status = status;
     }
 
     public static StoreImage newInstance(Long storeId, Long userId, String imageUrl) {
@@ -55,6 +55,7 @@ public class StoreImage extends AuditingTimeEntity {
             .storeId(storeId)
             .userId(userId)
             .url(imageUrl)
+            .status(StoreImageStatus.ACTIVE)
             .build();
     }
 

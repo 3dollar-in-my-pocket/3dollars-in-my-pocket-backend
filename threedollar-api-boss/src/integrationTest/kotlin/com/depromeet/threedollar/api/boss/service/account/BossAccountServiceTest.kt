@@ -10,10 +10,12 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.api.boss.service.account.dto.request.UpdateBossAccountInfoRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossWithdrawalAccount
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossWithdrawalAccountRepository
 import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
 
@@ -57,13 +59,14 @@ internal class BossAccountServiceTest(
             val bossAccounts = bossAccountRepository.findAll()
             assertAll({
                 assertThat(bossAccounts).hasSize(1)
-                bossAccounts[0]?.let {
-                    assertThat(it.name).isEqualTo(name)
-                    assertThat(it.isSetupNotification).isEqualTo(isSetupNotification)
-                    assertThat(it.id).isEqualTo(bossAccount.id)
-                    assertThat(it.socialInfo).isEqualTo(bossAccount.socialInfo)
-                    assertThat(it.businessNumber).isEqualTo(bossAccount.businessNumber)
-                }
+                assertBossAccount(
+                    bossAccount = bossAccounts[0],
+                    name = name,
+                    isSetupNotification = isSetupNotification,
+                    bossAccountId = bossAccount.id,
+                    socialInfo = bossAccount.socialInfo,
+                    businessNumber = bossAccount.businessNumber
+                )
             })
         }
 
@@ -129,18 +132,36 @@ internal class BossAccountServiceTest(
             val withdrawalAccounts = bossWithdrawalAccountRepository.findAll()
             assertAll({
                 assertThat(withdrawalAccounts).hasSize(1)
-                withdrawalAccounts[0].let {
-                    assertThat(it.name).isEqualTo(name)
-                    assertThat(it.socialInfo).isEqualTo(BossAccountSocialInfo.of(socialId, socialType))
-                    assertThat(it.isSetupNotification).isEqualTo(isSetupNotification)
-                    assertThat(it.businessNumber).isEqualTo(businessNumber)
-
+                assertWithdrawalAccount(
+                    withdrawalAccount = withdrawalAccounts[0],
+                    name = name,
+                    socialInfo = BossAccountSocialInfo.of(socialId, socialType),
+                    isSetupNotification = isSetupNotification,
+                    businessNumber = businessNumber,
+                )
+                withdrawalAccounts[0]?.let {
                     assertThat(it.backupInfo.bossId).isEqualTo(bossAccount.id)
                     assertThat(it.backupInfo.bossCreatedAt).isEqualToIgnoringNanos(bossAccount.createdAt)
                 }
             })
         }
 
+    }
+
+    private fun assertBossAccount(bossAccount: BossAccount, name: String, isSetupNotification: Boolean, bossAccountId: String, socialInfo: BossAccountSocialInfo, businessNumber: BusinessNumber) {
+        assertThat(bossAccount.name).isEqualTo(name)
+        assertThat(bossAccount.isSetupNotification).isEqualTo(isSetupNotification)
+        assertThat(bossAccount.id).isEqualTo(bossAccountId)
+        assertThat(bossAccount.socialInfo).isEqualTo(socialInfo)
+        assertThat(bossAccount.businessNumber).isEqualTo(businessNumber)
+    }
+
+
+    private fun assertWithdrawalAccount(withdrawalAccount: BossWithdrawalAccount, name: String, socialInfo: BossAccountSocialInfo, isSetupNotification: Boolean, businessNumber: BusinessNumber) {
+        assertThat(withdrawalAccount.name).isEqualTo(name)
+        assertThat(withdrawalAccount.socialInfo).isEqualTo(socialInfo)
+        assertThat(withdrawalAccount.isSetupNotification).isEqualTo(isSetupNotification)
+        assertThat(withdrawalAccount.businessNumber).isEqualTo(businessNumber)
     }
 
 }

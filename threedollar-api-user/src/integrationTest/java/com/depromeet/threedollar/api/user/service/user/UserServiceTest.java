@@ -50,7 +50,7 @@ class UserServiceTest {
     class AddUserTest {
 
         @Test
-        void 새로운_유저가_회원가입하면_새로운_데이터가_추가된다() {
+        void 새로운_유저가_회원가입한다() {
             // given
             String socialId = "user-social-id";
             UserSocialType socialType = UserSocialType.APPLE;
@@ -74,7 +74,7 @@ class UserServiceTest {
         }
 
         @Test
-        void 회원가입시_중복되는_닉네임인경우_Conflict_에러가_발생한다() {
+        void 회원가입시_중복된_닉네임인경우_CONFLICT_에러가_발생합니다() {
             // given
             String name = "will";
             userRepository.save(UserCreator.create("social-id", UserSocialType.KAKAO, name));
@@ -90,7 +90,7 @@ class UserServiceTest {
         }
 
         @Test
-        void 회원가입시_중복되는_소셜정보면_Conflict_에러가_발생한다() {
+        void 회원가입시_중복된_소셜_정보인경우_CONFLICT_에러가_발생합니다() {
             // given
             String socialId = "conflict-social-id";
             UserSocialType socialType = UserSocialType.GOOGLE;
@@ -113,7 +113,7 @@ class UserServiceTest {
     class GetUserAccountInfoTest {
 
         @Test
-        void 존재하지_않는_유저을_회원_조회하면_NOT_FOUND_USER_EXCEPTION() {
+        void 유저_정보_조회시_존재하지_않는_유저인경우_NOTFOUNDEXCEPTION이_발생합니다() {
             // given
             Long notFoundUserId = -1L;
 
@@ -127,7 +127,7 @@ class UserServiceTest {
     class CheckDuplicateNicknameTest {
 
         @Test
-        void 중복된_닉네임인경우_Conflcit_에러가_발생한다() {
+        void 닉네임_사용가능_확인시_중복된_닉네임인경우_CONFLICT_에러가_발생합니다() {
             // given
             String name = "토끼";
             User user = UserCreator.create("social-id", UserSocialType.KAKAO, name);
@@ -142,7 +142,7 @@ class UserServiceTest {
         }
 
         @Test
-        void 중복되지_않은_닉네임이면_통과한다() {
+        void 닉네임_사용가능_확인시_중복되지_않는_닉네임인경우_통과합니다() {
             // given
             CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
                 .name("토끼")
@@ -158,7 +158,7 @@ class UserServiceTest {
     class UpdateUserAccountInfoTest {
 
         @Test
-        void 나의_회원정보를_수정시_해당_회원의_데이터가_수정된다() {
+        void 나의_유저_정보를_수정합니다() {
             // given
             String socialId = "social-id";
             UserSocialType socialType = UserSocialType.APPLE;
@@ -183,7 +183,7 @@ class UserServiceTest {
         }
 
         @Test
-        void 존재하지_않는_유저의_회원정보_수정시_NotFound_에러가_발생한다() {
+        void 나의_유저_정보를_수정할때_존재하지_않는_유저인경우_NOTFOUND_에러가_발생합니다() {
             // given
             Long notFoundUserId = -1L;
 

@@ -13,7 +13,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHi
 class VisitHistoriesCountCollectionTest {
 
     @Test
-    void 가게별로_방문_성공및_실패_횟수를_보관한다() {
+    void 가게별로_방문_성공_및_실패_카운트를_반환한다() {
         // given
         Long storeOneId = 333333L;
         Long storeTwoId = 777777L;

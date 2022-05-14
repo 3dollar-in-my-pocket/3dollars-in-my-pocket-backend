@@ -29,7 +29,7 @@ class AddUserMedalServiceTest extends SetupUserServiceTest {
     }
 
     @Test
-    void 기본_메달을_유저에게_부여하면_새로운_유저_메달이_추가되고_활성화된다() {
+    void 기본_메달을_유저에게_부여하면_대표_메달로_등록되고_보유중인_메달에_추가된다() {
         // given
         Medal medal = MedalCreator.create("기본 메달", MedalAcquisitionConditionType.NO_CONDITION, 0);
         medalRepository.save(medal);
@@ -42,13 +42,29 @@ class AddUserMedalServiceTest extends SetupUserServiceTest {
         assertAll(
             () -> assertThat(userMedals).hasSize(1),
             () -> assertThat(userMedals.get(0).getMedal().getId()).isEqualTo(medal.getId()),
-            () -> assertThat(userMedals.get(0).getStatus()).isEqualTo(UserMedalStatus.ACTIVE),
             () -> assertThat(userMedals.get(0).getUser().getId()).isEqualTo(userId)
         );
     }
 
     @Test
-    void 여러_기본_메달이_있는경우_첫번째_메달만_활성화된다() {
+    void 기본_메달을_유저에게_부여하면_대표_메달로_등록된다() {
+        // given
+        Medal medal = MedalCreator.create("기본 메달", MedalAcquisitionConditionType.NO_CONDITION, 0);
+        medalRepository.save(medal);
+
+        // when
+        addUserMedalService.addAndActivateDefaultMedals(userId);
+
+        // then
+        List<UserMedal> userMedals = userMedalRepository.findAll();
+        assertAll(
+            () -> assertThat(userMedals).hasSize(1),
+            () -> assertThat(userMedals.get(0).getStatus()).isEqualTo(UserMedalStatus.ACTIVE)
+        );
+    }
+
+    @Test
+    void 기본_메달을_둘_이상_획득하면_획득한_첫번째_메달이_대표_메달로_등록된다() {
         // given
         Medal medalFirst = MedalCreator.create("첫번째 메달", MedalAcquisitionConditionType.NO_CONDITION, 0);
         Medal medalSecond = MedalCreator.create("두번째 메달", MedalAcquisitionConditionType.NO_CONDITION, 0);

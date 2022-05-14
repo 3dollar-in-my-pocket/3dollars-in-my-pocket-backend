@@ -21,7 +21,7 @@ internal class BossStoreCategoryControllerTest(
 
     @DisplayName("GET /api/v1/boss/store/categories")
     @Test
-    fun `등록된 사장님 가게의 카테고리 목록을 조회한다 priority가 낮은 거부터 조회된다`() {
+    fun `사장님 가게의 카테고리 목록을 priority가 낮은것 부터 먼저 조회한다`() {
         // given
         val category1 = BossStoreCategoryCreator.create(title = "한식", sequencePriority = 1)
         val category2 = BossStoreCategoryCreator.create(title = "중식", sequencePriority = 2)

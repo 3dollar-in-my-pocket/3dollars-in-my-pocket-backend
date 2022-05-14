@@ -28,11 +28,11 @@ import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDelete
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
+import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDay;
 import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDayRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
-import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethod;
@@ -94,7 +94,7 @@ class StoreServiceTest extends SetupUserServiceTest {
     class AddStoreTest {
 
         @Test
-        void 새로운_가게를_등록하면_새로운_가게_데이터가_추가된다() {
+        void 새로운_가게를_등록합니다() {
             // given
             String storeName = "토끼의 붕어빵";
             StoreType storeType = StoreType.STORE;
@@ -243,7 +243,7 @@ class StoreServiceTest extends SetupUserServiceTest {
     class UpdateStoreTest {
 
         @Test
-        void 가게의_기본_정보를_수정한다() {
+        void 가게의_기본_정보를_수정합니다() {
             // given
             String menuName = "슈크림 붕어빵";
             String price = "5개에 2천원";
@@ -311,7 +311,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         }
 
         @Test
-        void 가게의_개시일을_수정한다() {
+        void 가게의_영업일_정보를_수정한다() {
             // given
             Set<DayOfTheWeek> appearanceDays = Set.of(DayOfTheWeek.SATURDAY, DayOfTheWeek.FRIDAY);
 
@@ -441,11 +441,9 @@ class StoreServiceTest extends SetupUserServiceTest {
         }
 
         @Test
-        void 내가_등록하지_않은_가게도_수정할수있다_단_제보자는_최초_제보자로_유지된다() {
+        void 내가_등록하지_않은_가게도_수정할수_있고_제보자는_최초_제보자로_유지된다() {
             // given
-            long creatorUserId = 100L;
-
-            Store store = StoreCreator.createWithDefaultMenu(creatorUserId, "storeName");
+            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 
             double latitude = 34.0;
@@ -470,7 +468,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             List<Store> stores = storeRepository.findAll();
             assertAll(
                 () -> assertThat(stores).hasSize(1),
-                () -> assertStore(stores.get(0), latitude, longitude, storeName, storeType, creatorUserId)
+                () -> assertStore(stores.get(0), latitude, longitude, storeName, storeType, userId)
             );
         }
 

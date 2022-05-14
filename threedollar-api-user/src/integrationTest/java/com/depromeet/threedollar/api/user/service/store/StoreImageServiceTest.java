@@ -20,8 +20,6 @@ import org.springframework.mock.web.MockMultipartFile;
 import com.depromeet.threedollar.api.core.provider.upload.UploadProvider;
 import com.depromeet.threedollar.api.user.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.AddStoreImageRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.response.StoreImageResponse;
-import com.depromeet.threedollar.api.user.service.store.support.StoreImageAssertions;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageCreator;
@@ -89,7 +87,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
     class AddStoreImageTest {
 
         @Test
-        void 가게에_새로운_이미지를_등록한다() {
+        void 가게에_새로운_이미지를을_등록한다() {
             // given
             String storeImageUrl1 = "https://store-image1.png";
             String storeImageUrl2 = "https://store-image2.png";
@@ -115,10 +113,10 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
     class DeleteStoreImageTest {
 
         @Test
-        void 가게_이미지_삭제_성공시_해당_이미지가_IN_ACTIVE_로_변경된다() {
+        void 가게_이미지_삭제시_해당_이미지가_IN_ACTIVE_로_변경된다() {
             // given
             String imageUrl = "https://store-image.png";
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, imageUrl);
+            StoreImage storeImage = StoreImageCreator.create(storeId, userId, imageUrl);
             storeImageRepository.save(storeImage);
 
             // when
@@ -142,50 +140,13 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
         }
 
         @Test
-        void 가게_이미지_삭제_요청시_해당하는_가게_이미지가_INACTIVE_삭제일경우_NOT_FOUND_STORE_EXCEPTION() {
+        void 가게_이미지_삭제_요청시_해당하는_가게_이미지가_이미_삭제된경우_NOT_FOUND_STORE_EXCEPTION() {
             // given
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, "https://profile.com");
-            storeImage.delete();
+            StoreImage storeImage = StoreImageCreator.create(store.getId(), userId, "https://profile.png", StoreImageStatus.INACTIVE);
             storeImageRepository.save(storeImage);
 
             // when & then
             assertThatThrownBy(() -> storeImageService.deleteStoreImage(storeImage.getId())).isInstanceOf(NotFoundException.class);
-        }
-
-    }
-
-    @Nested
-    class GetStoreImagesTest {
-
-        @Test
-        void 가게에_등록된_이미지_목록을_조회한다() {
-            // given
-            String imageUrl = "https://store-good-image.png";
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, imageUrl);
-            storeImageRepository.save(storeImage);
-
-            // when
-            List<StoreImageResponse> responses = storeImageService.getStoreImages(store.getId());
-
-            // then
-            assertAll(
-                () -> assertThat(responses).hasSize(1),
-                () -> StoreImageAssertions.assertStoreImageResponse(responses.get(0), storeImage.getId(), imageUrl)
-            );
-        }
-
-        @Test
-        void 가게에_등록된_이미지_목록을_조회시_삭제된_이미지는_조회되지_않는다() {
-            // given
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), userId, "https://store-image.com");
-            storeImage.delete();
-            storeImageRepository.save(storeImage);
-
-            // when
-            List<StoreImageResponse> responses = storeImageService.getStoreImages(store.getId());
-
-            // then
-            assertThat(responses).isEmpty();
         }
 
     }

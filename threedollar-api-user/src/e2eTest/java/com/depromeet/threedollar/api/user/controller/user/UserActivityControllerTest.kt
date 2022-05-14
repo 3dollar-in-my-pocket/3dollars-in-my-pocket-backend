@@ -9,6 +9,7 @@ import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.user.controller.SetupUserControllerTest
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator
 import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalCreator
+import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalStatus
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator
@@ -55,7 +56,7 @@ internal class UserActivityControllerTest(
                 disableIconUrl = "http://medal-image-disable.png"
             )
             medalRepository.save(medal)
-            userMedalRepository.save(UserMedalCreator.createActive(medal, user))
+            userMedalRepository.save(UserMedalCreator.create(medal, user))
 
             // when & then
             mockMvc.get("/v1/user/me/activity") {
@@ -71,7 +72,7 @@ internal class UserActivityControllerTest(
         }
 
         @Test
-        fun `유저의 제보한 가게 개수 조회한다`() {
+        fun `유저가 제보한 가게 개수 조회한다`() {
             // given
             storeRepository.saveAll(
                 listOf(
@@ -92,7 +93,7 @@ internal class UserActivityControllerTest(
         }
 
         @Test
-        fun `유저가 작성한 리뷰 개수 조회한다`() {
+        fun `유저가 작성한 리뷰 개수도 조회한다`() {
             // given
             val store = StoreCreator.create(user.id, "가게")
             storeRepository.save(store)
@@ -117,7 +118,7 @@ internal class UserActivityControllerTest(
         }
 
         @Test
-        fun `유저가 보유한 메달 개수 조회한다`() {
+        fun `유저가 보유한 메달 개수도 조회한다`() {
             // given
             val medalOne = MedalCreator.create(
                 name = "붕어빵 전문가",
@@ -135,8 +136,8 @@ internal class UserActivityControllerTest(
 
             userMedalRepository.saveAll(
                 listOf(
-                    UserMedalCreator.createActive(medalOne, user),
-                    UserMedalCreator.createInActive(medalTwo, user)
+                    UserMedalCreator.create(medalOne, user),
+                    UserMedalCreator.create(medalTwo, user, UserMedalStatus.IN_ACTIVE)
                 )
             )
 
@@ -182,7 +183,7 @@ internal class UserActivityControllerTest(
                 disableIconUrl = "http://medal-image-disable.png"
             )
             medalRepository.save(medal)
-            userMedalRepository.save(UserMedalCreator.createActive(medal, user))
+            userMedalRepository.save(UserMedalCreator.create(medal, user))
 
             // when & then
             mockMvc.get("/v1/user/activity") {
@@ -198,7 +199,7 @@ internal class UserActivityControllerTest(
         }
 
         @Test
-        fun `유저의 제보한 가게 개수 조회한다`() {
+        fun `유저의 제보한 가게 개수도 조회한다`() {
             // given
             storeRepository.saveAll(
                 listOf(
@@ -219,7 +220,7 @@ internal class UserActivityControllerTest(
         }
 
         @Test
-        fun `유저가 작성한 리뷰 개수 조회한다`() {
+        fun `유저가 작성한 리뷰 개수도 조회한다`() {
             // given
             val store = StoreCreator.create(user.id, "가게")
             storeRepository.save(store)
@@ -244,7 +245,7 @@ internal class UserActivityControllerTest(
         }
 
         @Test
-        fun `유저가 보유한 메달 개수 조회한다`() {
+        fun `유저가 보유한 메달 개수도 조회한다`() {
             // given
             val medalOne = MedalCreator.create(
                 name = "붕어빵 전문가",
@@ -262,8 +263,8 @@ internal class UserActivityControllerTest(
 
             userMedalRepository.saveAll(
                 listOf(
-                    UserMedalCreator.createActive(medalOne, user),
-                    UserMedalCreator.createInActive(medalTwo, user)
+                    UserMedalCreator.create(medalOne, user),
+                    UserMedalCreator.create(medalTwo, user, UserMedalStatus.IN_ACTIVE)
                 )
             )
 

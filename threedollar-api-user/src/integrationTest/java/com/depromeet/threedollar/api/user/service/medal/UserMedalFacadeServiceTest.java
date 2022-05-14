@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.depromeet.threedollar.api.user.service.SetupUserServiceTest;
 import com.depromeet.threedollar.api.user.service.medal.support.UserMedalAssertions;
+import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.Medal;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionType;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator;
@@ -24,7 +25,6 @@ import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalStatus;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
-import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
@@ -68,7 +68,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
 
         @DisplayName("[가게 추가 2] - 가게 추가 2 -> 메달 획득 성공")
         @Test
-        void 가게_추가_조건을_만족하면_해당_메달을_획득한다() {
+        void 가게_등록_관련_메달_조건을_만족하면_해당_메달을_획득한다() {
             // given
             Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.ADD_STORE, 2);
             medalRepository.save(medal);

@@ -42,7 +42,7 @@ internal class BossStoreControllerTest(
 
     @DisplayName("GET /boss/v1/boss/store/{BOSS_STORE_ID}")
     @Test
-    fun `특정 사장님 가게를 조회합니다 오픈 정보가 레디스에 저장되어 있으면 영업중인 가게로 표시된다`() {
+    fun `특정 사장님 가게를 조회할때, Redis에 영업 정보가 있으면 영업중인 가게로 표기된다`() {
         // given
         val category = BossStoreCategoryCreator.create(title = "한식", sequencePriority = 1)
         bossStoreCategoryRepository.save(category)

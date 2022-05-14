@@ -19,6 +19,15 @@ internal class TimeIntervalTest {
     }
 
     @Test
+    fun `시작시간이 종료시간과 동일한경우 에러가 발생하지 않는다`() {
+        // given
+        val dateTime = LocalTime.of(8, 0)
+
+        // when & then
+        assertDoesNotThrow { TimeInterval(dateTime, dateTime) }
+    }
+
+    @Test
     fun 시작시간이_종료시간보다_느릴경우_INVALID_EXCEPTION() {
         // given
         val startTime = LocalTime.of(8, 0)

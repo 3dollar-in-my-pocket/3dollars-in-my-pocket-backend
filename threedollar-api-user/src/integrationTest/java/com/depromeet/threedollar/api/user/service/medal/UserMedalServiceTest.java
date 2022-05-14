@@ -39,12 +39,12 @@ class UserMedalServiceTest extends SetupUserServiceTest {
     class ActivateUserMedalTest {
 
         @Test
-        void 장착중인_대표_칭호를_변경한다() {
+        void 대표_메달을_변경합니다() {
             // given
             Medal medal = MedalCreator.create("붕친맨");
             medalRepository.save(medal);
 
-            UserMedal userMedal = UserMedalCreator.createInActive(medal, user);
+            UserMedal userMedal = UserMedalCreator.create(medal, user, UserMedalStatus.IN_ACTIVE);
             userMedalRepository.save(userMedal);
 
             ChangeRepresentativeMedalRequest request = ChangeRepresentativeMedalRequest.testBuilder()
@@ -63,7 +63,7 @@ class UserMedalServiceTest extends SetupUserServiceTest {
         }
 
         @Test
-        void 대표_칭호_변경시_보유하지_않은_칭호를_장착하려하면_NotFound_에러가_발생한다() {
+        void 대표_메달을_수정할때_보유하지_않은_메달을_장착하려하면_NOTFOUND_에러가_발생합니다() {
             // given
             Long notFoundMedalId = -1L;
 

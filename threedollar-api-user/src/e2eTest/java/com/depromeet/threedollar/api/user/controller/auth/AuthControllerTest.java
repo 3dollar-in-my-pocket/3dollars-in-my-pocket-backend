@@ -54,7 +54,7 @@ class AuthControllerTest extends SetupUserControllerTest {
     class SignUpApiTest {
 
         @Test
-        void 카카오_회원가입_요청이_성공하면_토큰이_반환된다() throws Exception {
+        void 카카오_회원가입_요청이_성공하면_인증_토큰이_반환된다() throws Exception {
             // given
             when(kaKaoAuthApiClient.getProfileInfo(any())).thenReturn(KaKaoProfileResponse.testInstance("kakao-social-id"));
 
@@ -76,7 +76,7 @@ class AuthControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 애플_회원가입_요청이_성공하면_토큰이_반환된다() throws Exception {
+        void 애플_회원가입_요청이_성공하면_인증_토큰이_반환된다() throws Exception {
             // given
             when(appleTokenDecoder.getSocialIdFromIdToken(any())).thenReturn("apple-social-id");
 
@@ -98,7 +98,7 @@ class AuthControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 구글_회원가입_요청이_성공하면_토큰이_반환된다() throws Exception {
+        void 구글_회원가입_요청이_성공하면_인증_토큰이_반환된다() throws Exception {
             // given
             when(googleAuthApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance("google-social-id"));
 
@@ -126,7 +126,7 @@ class AuthControllerTest extends SetupUserControllerTest {
     class LoginApiTest {
 
         @Test
-        void 카카오_로그인_요청이_성공하면_토큰이_반환된다() throws Exception {
+        void 카카오_로그인_요청이_성공하면_인증_토큰이_반환된다() throws Exception {
             // given
             User user = UserCreator.create("kakao-social-id", UserSocialType.KAKAO, "카카오 계정");
             userRepository.save(user);
@@ -150,7 +150,7 @@ class AuthControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 애플_로그인_요청이_성공하면_토큰이_반환된다() throws Exception {
+        void 애플_로그인_요청이_성공하면_인증_토큰이_반환된다() throws Exception {
             // given
             User user = UserCreator.create("apple-social-id", UserSocialType.APPLE, "애플 계정");
             userRepository.save(user);
@@ -174,7 +174,7 @@ class AuthControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 구글_로그인_요청이_성공하면_토큰이_반환된다() throws Exception {
+        void 구글_로그인_요청이_성공하면_인증_토큰이_반환된다() throws Exception {
             // given
             User user = UserCreator.create("google-social-id", UserSocialType.GOOGLE, "구글 계정");
             userRepository.save(user);

@@ -33,8 +33,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.user.controller.SetupUserControllerTest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.CheckExistsStoresNearbyRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveMyStoresRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveAroundStoresRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveMyStoresRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveStoreDetailRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.response.CheckExistStoresNearbyResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDetailResponse;
@@ -56,6 +56,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreStatus;
@@ -122,7 +123,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 현재_위치_기준으로_DB에서_주변_가게들을_조회한다() throws Exception {
+        void 현재_위치_주변의_거리내_가게_목록을_조회합니다() throws Exception {
             // given
             Store store1 = StoreCreator.createWithDefaultMenu(user.getId(), "붕어빵 가게 1", 34, 126);
             Store store2 = StoreCreator.createWithDefaultMenu(user.getId(), "붕어빵 가게 2", 34, 126);
@@ -144,7 +145,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 주변_가게들을_조회할때_메뉴_카테고리_목록도_반환된다() throws Exception {
+        void 현재_위치_주변의_거리내_가게_목록을_조회시_메뉴_카테고리_목록도_반환된다() throws Exception {
             // given
             Store store = StoreCreator.create(user.getId(), "붕세권 가게", 34.0, 126.0);
             store.addMenus(List.of(
@@ -170,7 +171,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 주변_가게들을_조회할때_삭제된_가게는_포함되지_않는다() throws Exception {
+        void 주변_가게_목록을_조회할때_삭제된_가게는_포함되지_않는다() throws Exception {
             // given
             Store deletedStoreByUser = StoreCreator.create(user.getId(), "타코야키 다 내꺼야", 34.0, 126.0, 1.0, StoreStatus.DELETED);
             Store deletedStoreByAdmin = StoreCreator.create(user.getId(), "타코야키 다 내꺼야", 34.0, 126.0, 1.0, StoreStatus.FILTERED);
@@ -188,7 +189,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 주변_가게_목록_조회시_한달간의_방문_목록_카운트를_반환한다() throws Exception {
+        void 주변_가게_목록_조회시_한달내의_방문_목록_카운트를_반환한다() throws Exception {
             // given
             Store store = StoreCreator.createWithDefaultMenu(user.getId(), "가게 이름", 34.0, 126.0);
             storeRepository.save(store);
@@ -235,7 +236,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 주변_가게들을_조회할때_카테고리를_넘기면_해당_카테고리_메뉴를_판매하는_가게들_내에서_조회된다() throws Exception {
+        void 내_주변의_가게_목록을_조회할때_특정_메뉴_카테고리만_필터링해서_조회합니다() throws Exception {
             // given
             Store store1 = StoreCreator.create(user.getId(), "가게1", 34, 126);
             store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", MenuCategoryType.DALGONA)));
@@ -261,7 +262,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 주변_가게들을_거리가_가까운_순으로_정렬해서_조회한다_DISTANCE_ASC() throws Exception {
+        void 내_주변의_가게_목록을_조회할때_정렬방식을_DISTANCE_ASC로_조회시_거리가_가까운_순으로_정렬해서_조회합니다() throws Exception {
             // given
             Store store1 = StoreCreator.createWithDefaultMenu(user.getId(), "가게1", 34.00015, 126);
             Store store2 = StoreCreator.createWithDefaultMenu(user.getId(), "가게2", 34.0001, 126);
@@ -284,7 +285,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 주변_가게들을_리뷰_평점이_높은순으로_정렬해서_조회한다_REVIEW_DESC() throws Exception {
+        void 내_주변의_가게_목록을_조회할때_정렬방식을_REVIEW_DESC로_조회시_평균_리뷰_점수가가_높은것부터_정렬해서_조회합니다() throws Exception {
             // given
             Store store1 = StoreCreator.createWithDefaultMenu(user.getId(), "가게1", 34.00015, 126, 5);
             Store store2 = StoreCreator.createWithDefaultMenu(user.getId(), "가게2", 34.0001, 126, 1);
@@ -336,7 +337,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 캐시에_주변_가게_데이터가_있다면_캐시에서_조회해서_반환한다() throws Exception {
+        void 캐시에_주변_가게_데이터가_있다면_DB_조회없이_캐시에서_조회해서_반환한다() throws Exception {
             // given
             double latitude = 34.0;
             double longitude = 126.0;
@@ -421,7 +422,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
     class RetrieveStoreDetailApiTest {
 
         @Test
-        void 특정_가게에_대한_상세_가게_정보를_조회한다() throws Exception {
+        void 가게_상세_정보를_조회한다() throws Exception {
             // given
             Store store = StoreCreator.createWithDefaultMenu(user.getId(), "가게 이름");
             DayOfTheWeek day = DayOfTheWeek.FRIDAY;
@@ -446,7 +447,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 특정_가게에_대한_상세_정보를_조회할때_메뉴_목록_에_대한_정보가_반환된다() throws Exception {
+        void 가게_상세_정보_조회시_메뉴_정보도_함께_조회된다() throws Exception {
             // given
             Store store = StoreCreator.create(user.getId(), "가게 이름");
             Menu menu1 = MenuCreator.create(store, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG);
@@ -472,7 +473,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 특정_가게에_대한_상세_정보를_조회할떄_제보자_정보도_함께_반환된다() throws Exception {
+        void 가게_상세_정보_조회시_제보자_정보도_함께_반환된다() throws Exception {
             // given
             Store store = StoreCreator.createWithDefaultMenu(user.getId(), "가게 이름");
             storeRepository.save(store);
@@ -490,7 +491,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 특정_가게에_대한_상세_정보를_조회할떄_개장일_정보도_반환된다() throws Exception {
+        void 가게_상세_정보_조회시_영업일_정보도_함께_반환된다() throws Exception {
             // given
             Set<DayOfTheWeek> dayOfTheWeeks = Set.of(DayOfTheWeek.SATURDAY, DayOfTheWeek.FRIDAY, DayOfTheWeek.THURSDAY);
             Store store = StoreCreator.createWithDefaultMenu(user.getId(), "가게 이름");
@@ -513,7 +514,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 특정_가게에_대한_상세_정보를_조회할때_결제방법_정보도_반환된다() throws Exception {
+        void 가게_상세_정보_조회시_결제_방법_정보도_함께_반환된다() throws Exception {
             // given
             Set<PaymentMethodType> paymentMethodTypes = Set.of(PaymentMethodType.CASH, PaymentMethodType.CARD);
             Store store = StoreCreator.createWithDefaultMenu(user.getId(), "가게 이름");
@@ -536,7 +537,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 제보자가_회원탈퇴했을경우_사라진_제보자라고_표기된다() throws Exception {
+        void 가게_상세_정보_조회시_회원탈퇴한_제보자인경우_사라진_제보자로_표기된다() throws Exception {
             // given
             long notFoundUserId = -1L;
 
@@ -557,14 +558,14 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 가게에_등록된_이미지_목록을_조회한다() throws Exception {
+        void 가게_상세_정보_조회시_가게에_등록된_이미지_목록도_조회한다() throws Exception {
             // given
             String imageUrl = "https://image.url";
 
             Store store = StoreCreator.createWithDefaultMenu(user.getId(), "가게 이름");
             storeRepository.save(store);
 
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), user.getId(), imageUrl);
+            StoreImage storeImage = StoreImageCreator.create(store.getId(), user.getId(), imageUrl);
             storeImageRepository.save(storeImage);
 
             RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testBuilder()
@@ -583,12 +584,12 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 가게에_등록된_이미지_목록을_조회시_삭제된_이미지는_조회되지_않는다() throws Exception {
+        void 가게_상세_정보_조회시_삭제된_이미지는_조회되지_않는다() throws Exception {
             // given
             Store store = StoreCreator.createWithDefaultMenu(user.getId(), "가게 이름");
             storeRepository.save(store);
 
-            StoreImage storeImage = StoreImage.newInstance(store.getId(), user.getId(), "https://store-image.com");
+            StoreImage storeImage = StoreImageCreator.create(store.getId(), user.getId(), "https://store-image.com");
             storeImage.delete();
             storeImageRepository.save(storeImage);
 
@@ -605,7 +606,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 가게_상세조회시_작성된_리뷰_와_작성자_정보가_최근_생성순으로_조회된다() throws Exception {
+        void 가게_상세_조회시_리뷰와_리뷰_작성자_정보가_최신것부터_정렬되서_조회된다() throws Exception {
             // given
             long notFoundUserId = -1L;
 
@@ -896,7 +897,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
     class CheckExistsStoreAroundApiTest {
 
         @Test
-        void 주변에_가게가_존재하는_경우_return_True() throws Exception {
+        void 주변에_가게가_있는지_조회한다_하나라도_있는경우_True를_반환한다() throws Exception {
             // given
             Store store = StoreCreator.create(user.getId(), "붕어빵 가게", 34, 126, 1.1);
             store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵", "2개에 천원", MenuCategoryType.BUNGEOPPANG)));
@@ -914,7 +915,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         }
 
         @Test
-        void 주변에_어떤_가게도_존재하지_않으면_return_False() throws Exception {
+        void 주변에_가게가_있는지_조회한다_없는경우_False를_반환한다() throws Exception {
             // given
             CheckExistsStoresNearbyRequest request = CheckExistsStoresNearbyRequest.testBuilder()
                 .distance(2000.0)
