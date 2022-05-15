@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.core.service.boss.feedback.dto.request.AddBossStoreFeedbackRequest
 import com.depromeet.threedollar.api.core.service.boss.feedback.dto.request.GetBossStoreFeedbacksCountsBetweenDateRequest
-import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackCountResponse
+import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackCountWithRatioResponse
 import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackCursorResponse
 import com.depromeet.threedollar.api.core.service.boss.store.BossStoreCommonServiceUtils
 import com.depromeet.threedollar.common.exception.model.ConflictException
@@ -37,11 +37,12 @@ class BossStoreFeedbackService(
     }
 
     @Transactional(readOnly = true)
-    fun getBossStoreFeedbacksCounts(bossStoreId: String): List<BossStoreFeedbackCountResponse> {
+    fun getBossStoreFeedbacksCounts(bossStoreId: String): List<BossStoreFeedbackCountWithRatioResponse> {
         BossStoreCommonServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
         val feedbackCountsGroupingByFeedbackType: Map<BossStoreFeedbackType, Int> = bossStoreFeedbackCountRepository.getAllCountsGroupByFeedbackType(bossStoreId)
+        val totalCount = feedbackCountsGroupingByFeedbackType.values.sum()
         return feedbackCountsGroupingByFeedbackType
-            .map { BossStoreFeedbackCountResponse.of(it.key, it.value) }
+            .map { BossStoreFeedbackCountWithRatioResponse.of(feedbackType = it.key, count = it.value, totalCount = totalCount) }
     }
 
     @Transactional(readOnly = true)

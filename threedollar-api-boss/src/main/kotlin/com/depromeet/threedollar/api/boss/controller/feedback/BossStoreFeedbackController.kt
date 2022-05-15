@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.core.service.boss.feedback.BossStoreFeedbackService
 import com.depromeet.threedollar.api.core.service.boss.feedback.dto.request.GetBossStoreFeedbacksCountsBetweenDateRequest
-import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackCountResponse
+import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackCountWithRatioResponse
 import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackCursorResponse
 import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackTypeResponse
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
@@ -23,7 +23,7 @@ class BossStoreFeedbackController(
     @GetMapping("/v1/boss/store/{bossStoreId}/feedbacks/full")
     fun getBossStoreFeedbacksCounts(
         @PathVariable bossStoreId: String
-    ): ApiResponse<List<BossStoreFeedbackCountResponse>> {
+    ): ApiResponse<List<BossStoreFeedbackCountWithRatioResponse>> {
         return ApiResponse.success(bossStoreFeedbackService.getBossStoreFeedbacksCounts(bossStoreId))
     }
 

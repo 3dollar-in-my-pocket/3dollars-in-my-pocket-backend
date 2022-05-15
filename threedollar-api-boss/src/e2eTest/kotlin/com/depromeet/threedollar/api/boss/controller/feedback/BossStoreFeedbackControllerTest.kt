@@ -32,24 +32,17 @@ internal class BossStoreFeedbackControllerTest(
 
     @DisplayName("GET /boss/v1/boss/store/{{BOSS_STORE_ID}/feedbacks/full")
     @Test
-    fun `전체 기간동안의 특정 사장님의 가게의 피드백 갯수를 조회한다`() {
+    fun `전체 기간동안의 특정 사장님의 가게의 피드백 갯수와 총 개수 중 해당 피드백의 비율을 조회합니다`() {
         // given
-        val feedbackType = BossStoreFeedbackType.BOSS_IS_KIND
-
         val bossStore = BossStoreCreator.create(
             bossId = "bossId",
             name = "가슴속 3천원"
         )
         bossStoreRepository.save(bossStore)
 
-        bossStoreFeedbackCountRepository.increase(bossStore.id, feedbackType)
-        val bossStoreFeedback = BossStoreFeedbackCreator.create(
-            storeId = bossStore.id,
-            userId = 10000L,
-            feedbackType = feedbackType,
-            date = LocalDate.of(2022, 1, 1)
-        )
-        bossStoreFeedbackRepository.save(bossStoreFeedback)
+        bossStoreFeedbackCountRepository.increase(bossStore.id, BossStoreFeedbackType.BOSS_IS_KIND)
+        bossStoreFeedbackCountRepository.increase(bossStore.id, BossStoreFeedbackType.BOSS_IS_KIND)
+        bossStoreFeedbackCountRepository.increase(bossStore.id, BossStoreFeedbackType.FOOD_IS_DELICIOUS)
 
         // when & then
         mockMvc.get("/v1/boss/store/${bossStore.id}/feedbacks/full")
@@ -59,22 +52,28 @@ internal class BossStoreFeedbackControllerTest(
                 jsonPath("$.data", hasSize<BossStoreFeedbackCountResponse>(BossStoreFeedbackType.values().size))
 
                 jsonPath("$.data[0].feedbackType") { value(BossStoreFeedbackType.FOOD_IS_DELICIOUS.name) }
-                jsonPath("$.data[0].count") { value(0) }
+                jsonPath("$.data[0].count") { value(1) }
+                jsonPath("$.data[0].ratio") { value(0.33) }
 
-                jsonPath("$.data[1].feedbackType") { value(feedbackType.name) }
-                jsonPath("$.data[1].count") { value(1) }
+                jsonPath("$.data[1].feedbackType") { value(BossStoreFeedbackType.BOSS_IS_KIND.name) }
+                jsonPath("$.data[1].count") { value(2) }
+                jsonPath("$.data[1].ratio") { value(0.67) }
 
                 jsonPath("$.data[2].feedbackType") { value(BossStoreFeedbackType.EASY_TO_EAT.name) }
                 jsonPath("$.data[2].count") { value(0) }
+                jsonPath("$.data[2].ratio") { value(0.0) }
 
                 jsonPath("$.data[3].feedbackType") { value(BossStoreFeedbackType.PRICE_IS_CHEAP.name) }
                 jsonPath("$.data[3].count") { value(0) }
+                jsonPath("$.data[3].ratio") { value(0.0) }
 
                 jsonPath("$.data[4].feedbackType") { value(BossStoreFeedbackType.THERE_ARE_PLACES_TO_EAT_AROUND.name) }
                 jsonPath("$.data[4].count") { value(0) }
+                jsonPath("$.data[4].ratio") { value(0.0) }
 
                 jsonPath("$.data[5].feedbackType") { value(BossStoreFeedbackType.PLATING_IS_BEAUTIFUL.name) }
                 jsonPath("$.data[5].count") { value(0) }
+                jsonPath("$.data[5].ratio") { value(0.0) }
             }
     }
 

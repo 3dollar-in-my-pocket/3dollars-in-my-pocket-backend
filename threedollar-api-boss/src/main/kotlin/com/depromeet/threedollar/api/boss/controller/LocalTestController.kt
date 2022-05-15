@@ -109,12 +109,13 @@ class LocalTestController(
         @BossId bossId: String,
         @RequestParam latitude: Double,
         @RequestParam longitude: Double,
-        @RequestParam categoriesIds: Set<String>
+        @RequestParam categoriesIds: Set<String>,
+        @RequestParam randomBossId: String?
     ): ApiResponse<String> {
         BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, categoriesIds)
         val bossStore = bossStoreRepository.save(
             BossStore(
-                bossId = "test${UUID.randomUUID()}",
+                bossId = randomBossId?.let { "test${UUID.randomUUID()}" } ?: bossId,
                 name = "행복한 붕어빵",
                 imageUrl = "https://image.com",
                 introduction = "소개",

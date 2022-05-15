@@ -19,4 +19,15 @@ public class MathUtils {
         return Math.round(value * pow) / pow;
     }
 
+    public static double divide(int dividend, int divisor) {
+        return divide(dividend, (double) divisor);
+    }
+
+    public static double divide(double dividend, double divisor) {
+        if (divisor == 0) {
+            return 0.0;
+        }
+        return dividend / divisor;
+    }
+
 }
