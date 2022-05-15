@@ -17,7 +17,7 @@ import com.depromeet.threedollar.common.type.ApplicationType;
 
 import lombok.RequiredArgsConstructor;
 
-@Profile({"dev", "prod"})
+@Profile("prod")
 @RequiredArgsConstructor
 @Component
 public class ApplicationEventRunner implements CommandLineRunner, ApplicationListener<ContextClosedEvent> {

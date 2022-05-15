@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 import com.depromeet.threedollar.common.model.event.ApplicationStateChangedEvent
 import com.depromeet.threedollar.common.type.ApplicationType
 
-@Profile("dev", "prod")
+@Profile("prod")
 @Component
 class ApplicationEventRunner(
     private val eventPublisher: ApplicationEventPublisher,
