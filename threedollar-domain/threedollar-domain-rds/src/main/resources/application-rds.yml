@@ -59,7 +59,7 @@ spring:
         show_sql: true
         format_sql: true
         use_sql_comments: true
-        dialect: org.hibernate.dialect.MariaDB102Dialect
+        dialect: org.hibernate.dialect.MariaDB103Dialect
   datasource:
     primary:
       hikari:
@@ -104,7 +104,7 @@ spring:
         show_sql: true
         format_sql: true
         use_sql_comments: true
-        dialect: org.hibernate.dialect.MariaDB102Dialect
+        dialect: org.hibernate.dialect.MariaDB103Dialect
         connection.provider_disables_autocommit: true
   datasource:
     primary:
@@ -146,7 +146,7 @@ spring:
       ddl-auto: validate
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MariaDB102Dialect
+        dialect: org.hibernate.dialect.MariaDB103Dialect
         connection.provider_disables_autocommit: true
   datasource:
     primary:

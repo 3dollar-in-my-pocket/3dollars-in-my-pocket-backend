@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.domain.rds.user.domain.user.repository;
 
+import static com.depromeet.threedollar.domain.rds.common.constants.RDBPackageConstants.PERSISTENCE_LOCK_TIMEOUT;
 import static com.depromeet.threedollar.domain.rds.user.domain.medal.QMedal.medal;
 import static com.depromeet.threedollar.domain.rds.user.domain.medal.QMedalAcquisitionCondition.medalAcquisitionCondition;
 import static com.depromeet.threedollar.domain.rds.user.domain.medal.QUserMedal.userMedal;
@@ -27,7 +28,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
     public boolean existsByName(String name) {
         return queryFactory.selectOne()
             .setLockMode(LockModeType.PESSIMISTIC_WRITE)
-            .setHint("javax.persistence.lock.timeout", 3000)
+            .setHint(PERSISTENCE_LOCK_TIMEOUT, 3000)
             .from(user)
             .where(user.name.eq(name))
             .fetchFirst() != null;

@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.domain.rds.user.domain.review.repository;
 
 import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_REVIEWS_COUNTS;
+import static com.depromeet.threedollar.domain.rds.common.constants.RDBPackageConstants.PERSISTENCE_LOCK_TIMEOUT;
 import static com.depromeet.threedollar.domain.rds.user.domain.review.QReview.review;
 import static com.depromeet.threedollar.domain.rds.user.domain.store.QStore.store;
 
@@ -58,7 +59,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
     public List<Review> findAllByStoreIdWithLock(Long storeId) {
         return queryFactory.selectFrom(review)
             .setLockMode(LockModeType.PESSIMISTIC_WRITE)
-            .setHint("javax.persistence.lock.timeout", 3000)
+            .setHint(PERSISTENCE_LOCK_TIMEOUT, 3000)
             .where(
                 review.storeId.eq(storeId),
                 review.status.eq(ReviewStatus.POSTED)

@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.domain.rds.user.domain.store.repository;
 
+import static com.depromeet.threedollar.domain.rds.common.constants.RDBPackageConstants.PERSISTENCE_LOCK_TIMEOUT;
 import static com.depromeet.threedollar.domain.rds.user.domain.store.QStoreDeleteRequest.storeDeleteRequest;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class StoreDeleteRequestRepositoryCustomImpl implements StoreDeleteReques
     public List<Long> findAllUserIdByStoreIdWithLock(Long storeId) {
         return queryFactory.select(storeDeleteRequest.userId)
             .setLockMode(LockModeType.PESSIMISTIC_WRITE)
-            .setHint("javax.persistence.lock.timeout", 3000)
+            .setHint(PERSISTENCE_LOCK_TIMEOUT, 3000)
             .from(storeDeleteRequest)
             .where(
                 storeDeleteRequest.store.id.eq(storeId)
