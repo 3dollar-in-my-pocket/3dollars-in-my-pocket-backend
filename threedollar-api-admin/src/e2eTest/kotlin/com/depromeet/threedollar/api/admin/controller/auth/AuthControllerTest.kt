@@ -42,7 +42,6 @@ internal class AuthControllerTest : SetupAdminControllerTest() {
 
             // when & then
             mockMvc.post("/v1/auth/login") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
             }

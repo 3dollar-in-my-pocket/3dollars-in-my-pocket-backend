@@ -65,7 +65,6 @@ internal class AuthControllerTest(
 
             // when & then
             mockMvc.post("/v1/auth/signup") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
             }
@@ -99,7 +98,6 @@ internal class AuthControllerTest(
 
             // when & then
             mockMvc.post("/v1/auth/signup") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
             }
@@ -134,7 +132,6 @@ internal class AuthControllerTest(
 
             // when & then
             mockMvc.post("/v1/auth/signup") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
             }
@@ -166,7 +163,6 @@ internal class AuthControllerTest(
 
             // when & then
             mockMvc.post("/v1/auth/signup") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
             }
@@ -200,7 +196,6 @@ internal class AuthControllerTest(
 
             // when & then
             mockMvc.post("/v1/auth/signup") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
             }
@@ -235,7 +230,6 @@ internal class AuthControllerTest(
 
             // when & then
             mockMvc.post("/v1/auth/signup") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
             }
@@ -267,7 +261,6 @@ internal class AuthControllerTest(
 
             // when & then
             mockMvc.post("/v1/auth/signup") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
             }
@@ -301,7 +294,6 @@ internal class AuthControllerTest(
 
             // when & then
             mockMvc.post("/v1/auth/signup") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
             }
@@ -336,7 +328,6 @@ internal class AuthControllerTest(
 
             // when & then
             mockMvc.post("/v1/auth/signup") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
             }
@@ -366,7 +357,6 @@ internal class AuthControllerTest(
 
             // when & then
             mockMvc.post("/v1/auth/signup") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
             }
@@ -398,7 +388,6 @@ internal class AuthControllerTest(
 
             // when & then
             mockMvc.post("/v1/auth/login") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
             }
@@ -424,7 +413,6 @@ internal class AuthControllerTest(
 
             // when & then
             mockMvc.post("/v1/auth/login") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
             }
@@ -450,7 +438,6 @@ internal class AuthControllerTest(
 
             // when & then
             mockMvc.post("/v1/auth/login") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
             }
@@ -476,7 +463,6 @@ internal class AuthControllerTest(
 
             // when & then
             mockMvc.post("/v1/auth/login") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
             }
@@ -502,7 +488,6 @@ internal class AuthControllerTest(
 
             // when & then
             mockMvc.post("/v1/auth/login") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
             }
@@ -528,7 +513,6 @@ internal class AuthControllerTest(
 
             // when & then
             mockMvc.post("/v1/auth/login") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
             }
@@ -549,7 +533,6 @@ internal class AuthControllerTest(
 
             // when & then
             mockMvc.post("/v1/auth/login") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
             }
