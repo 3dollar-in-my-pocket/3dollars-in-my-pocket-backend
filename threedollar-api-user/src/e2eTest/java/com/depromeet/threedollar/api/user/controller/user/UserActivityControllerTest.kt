@@ -52,8 +52,8 @@ internal class UserActivityControllerTest(
             val medal = MedalCreator.create(
                 name = "붕어빵 전문가",
                 introduction = "우리 동네 붕어에 대해서는 내가 척척 박사",
-                activationIconUrl = "http://medal-image.png",
-                disableIconUrl = "http://medal-image-disable.png"
+                activationIconUrl = "https://medal-image.png",
+                disableIconUrl = "https://medal-image-disable.png"
             )
             medalRepository.save(medal)
             userMedalRepository.save(UserMedalCreator.create(medal, user))
@@ -123,14 +123,14 @@ internal class UserActivityControllerTest(
             val medalOne = MedalCreator.create(
                 name = "붕어빵 전문가",
                 introduction = "우리 동네 붕어에 대해서는 내가 척척 박사",
-                activationIconUrl = "http://medal-image.png",
-                disableIconUrl = "http://medal-image-disable.png"
+                activationIconUrl = "https://medal-image.png",
+                disableIconUrl = "https://medal-image-disable.png"
             )
             val medalTwo = MedalCreator.create(
                 name = "붕친맨",
                 introduction = "앗, 이정도면 붕어빵 척척박사는 넘어섰네요",
-                activationIconUrl = "http://medal-image.png",
-                disableIconUrl = "http://medal-image-disable.png"
+                activationIconUrl = "https://medal-image.png",
+                disableIconUrl = "https://medal-image-disable.png"
             )
             medalRepository.saveAll(listOf(medalOne, medalTwo))
 
@@ -179,8 +179,8 @@ internal class UserActivityControllerTest(
             val medal = MedalCreator.create(
                 name = "붕어빵 전문가",
                 introduction = "우리 동네 붕어에 대해서는 내가 척척 박사",
-                activationIconUrl = "http://medal-image.png",
-                disableIconUrl = "http://medal-image-disable.png"
+                activationIconUrl = "https://activation--image.png",
+                disableIconUrl = "https://disable-image-disable.png"
             )
             medalRepository.save(medal)
             userMedalRepository.save(UserMedalCreator.create(medal, user))
@@ -250,14 +250,14 @@ internal class UserActivityControllerTest(
             val medalOne = MedalCreator.create(
                 name = "붕어빵 전문가",
                 introduction = "우리 동네 붕어에 대해서는 내가 척척 박사",
-                activationIconUrl = "http://medal-image.png",
-                disableIconUrl = "http://medal-image-disable.png"
+                activationIconUrl = "https://medal-image.png",
+                disableIconUrl = "https://medal-image-disable.png"
             )
             val medalTwo = MedalCreator.create(
                 name = "붕친맨",
                 introduction = "앗, 이정도면 붕어빵 척척박사는 넘어섰네요",
-                activationIconUrl = "http://medal-image.png",
-                disableIconUrl = "http://medal-image-disable.png"
+                activationIconUrl = "https://medal-image-active-medal-image.png",
+                disableIconUrl = "https://medal-image-disable.png"
             )
             medalRepository.saveAll(listOf(medalOne, medalTwo))
 
