@@ -21,7 +21,7 @@ class ApplicationWarmingUpRunner(
     private val googleAuthApiClient: GoogleAuthApiClient
 ) {
 
-    @Scheduled(fixedDelay = 30, timeUnit = TimeUnit.MINUTES)
+    @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.MINUTES)
     fun warmingUp() {
         try {
             for (i in 0 until API_CALL_COUNT) {

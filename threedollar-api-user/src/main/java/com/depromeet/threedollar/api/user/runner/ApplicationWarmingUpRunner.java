@@ -29,7 +29,7 @@ public class ApplicationWarmingUpRunner {
     private final KaKaoAuthApiClient kaKaoAuthApiClient;
     private final GoogleAuthApiClient googleAuthApiClient;
 
-    @Scheduled(fixedDelay = 30, timeUnit = TimeUnit.MINUTES)
+    @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.MINUTES)
     public void warmingUp() {
         try {
             for (int i = 0; i < API_CALL_COUNT; i++) {
