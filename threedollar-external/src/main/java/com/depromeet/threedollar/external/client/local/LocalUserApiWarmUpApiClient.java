@@ -15,11 +15,11 @@ public interface LocalUserApiWarmUpApiClient {
     @Retryable(maxAttempts = 5, backoff = @Backoff(value = 1000), value = Exception.class)
     @GetMapping("/v2/stores/near")
     void retrieveNearUserStores(
-        @RequestParam double latitude,
-        @RequestParam double longitude,
-        @RequestParam double mapLatitude,
-        @RequestParam double mapLongitude,
-        @RequestParam int distance
+        @RequestParam("latitude") double latitude,
+        @RequestParam("longitude") double longitude,
+        @RequestParam("mapLatitude") double mapLatitude,
+        @RequestParam("mapLongitude") double mapLongitude,
+        @RequestParam("distance") int distance
     );
 
     @Retryable(maxAttempts = 5, backoff = @Backoff(value = 1000), value = Exception.class)
@@ -28,7 +28,7 @@ public interface LocalUserApiWarmUpApiClient {
 
     @Retryable(maxAttempts = 5, backoff = @Backoff(value = 1000), value = Exception.class)
     @GetMapping("/v1/advertisements")
-    void getAdvertisements(@RequestParam String platform);
+    void getAdvertisements(@RequestParam("platform") String platform);
 
     @Retryable(maxAttempts = 5, backoff = @Backoff(value = 1000), value = Exception.class)
     @GetMapping("/v1/medals")

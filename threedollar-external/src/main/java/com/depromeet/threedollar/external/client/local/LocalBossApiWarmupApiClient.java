@@ -15,9 +15,9 @@ public interface LocalBossApiWarmupApiClient {
     @Retryable(maxAttempts = 5, backoff = @Backoff(value = 1000), value = Exception.class)
     @GetMapping("/v1/boss/stores/around")
     void retrieveNearBossStores(
-        @RequestParam double mapLatitude,
-        @RequestParam double mapLongitude,
-        @RequestParam int distanceKm
+        @RequestParam("mapLatitude") double mapLatitude,
+        @RequestParam("mapLongitude") double mapLongitude,
+        @RequestParam("distance") int distanceKm
     );
 
     @Retryable(maxAttempts = 5, backoff = @Backoff(value = 1000), value = Exception.class)

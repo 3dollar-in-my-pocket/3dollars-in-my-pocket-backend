@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.user.runner;
 
-import org.jetbrains.annotations.NotNull;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.ApplicationListener;
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.context.annotation.Profile;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.depromeet.threedollar.common.type.FamousPlace;
@@ -17,14 +17,14 @@ import lombok.extern.slf4j.Slf4j;
 @Profile({"dev", "staging", "prod"})
 @RequiredArgsConstructor
 @Component
-public class ApplicationWarmingUpRunner implements ApplicationListener<ApplicationReadyEvent> {
+public class ApplicationWarmingUpRunner {
 
-    private static final int API_CALL_COUNT = 20;
+    private static final int API_CALL_COUNT = 10;
 
     private final LocalUserApiWarmUpApiClient apiClient;
 
-    @Override
-    public void onApplicationEvent(@NotNull ApplicationReadyEvent event) {
+    @Scheduled(fixedDelay = 30, timeUnit = TimeUnit.MINUTES)
+    public void warmingUp() {
         try {
             for (int i = 0; i < API_CALL_COUNT; i++) {
                 for (FamousPlace place : FamousPlace.values()) {
