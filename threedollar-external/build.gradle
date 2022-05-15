@@ -1,8 +1,3 @@
-ext {
-    jjwtVersion = "0.11.2"
-    springCloudAwsVersion = "2.2.6.RELEASE"
-}
-
 dependencies {
     implementation project(":threedollar-common")
 
