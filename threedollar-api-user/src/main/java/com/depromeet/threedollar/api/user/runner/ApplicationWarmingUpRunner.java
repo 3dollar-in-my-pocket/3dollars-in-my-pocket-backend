@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 
 import com.depromeet.threedollar.common.type.FamousPlace;
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPlatformType;
+import com.depromeet.threedollar.external.client.apple.AppleAuthApiClient;
+import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient;
+import com.depromeet.threedollar.external.client.kakao.KaKaoAuthApiClient;
 import com.depromeet.threedollar.external.client.local.LocalUserApiWarmUpApiClient;
 
 import lombok.RequiredArgsConstructor;
@@ -19,9 +22,12 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class ApplicationWarmingUpRunner {
 
-    private static final int API_CALL_COUNT = 10;
+    private static final int API_CALL_COUNT = 5;
 
     private final LocalUserApiWarmUpApiClient apiClient;
+    private final AppleAuthApiClient appleAuthApiClient;
+    private final KaKaoAuthApiClient kaKaoAuthApiClient;
+    private final GoogleAuthApiClient googleAuthApiClient;
 
     @Scheduled(fixedDelay = 30, timeUnit = TimeUnit.MINUTES)
     public void warmingUp() {
@@ -36,6 +42,9 @@ public class ApplicationWarmingUpRunner {
                 for (AdvertisementPlatformType platformType : AdvertisementPlatformType.values()) {
                     apiClient.getAdvertisements(platformType.name());
                 }
+                appleAuthApiClient.getAppleAuthPublicKey();
+                kaKaoAuthApiClient.getProfileInfo("Dummy Kakao Auth Token");
+                googleAuthApiClient.getProfileInfo("Dummy Google Auth Token");
             }
         } catch (Exception ignored) {
         }
