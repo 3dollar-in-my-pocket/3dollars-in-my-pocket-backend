@@ -1,6 +1,8 @@
 package com.depromeet.threedollar.api.core.service.boss.feedback
 
 import java.time.LocalDate
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.core.service.boss.feedback.dto.request.AddBossStoreFeedbackRequest
@@ -11,6 +13,7 @@ import com.depromeet.threedollar.api.core.service.boss.store.BossStoreCommonServ
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
+import com.depromeet.threedollar.common.type.CacheType.CacheKey.BOSS_STORE_FEEDBACKS_TOTAL_COUNTS
 import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedbackRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.domain.boss.feedback.BossStoreFeedbackCountRepository
@@ -22,6 +25,7 @@ class BossStoreFeedbackService(
     private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository
 ) {
 
+    @CacheEvict(cacheNames = [BOSS_STORE_FEEDBACKS_TOTAL_COUNTS], key = "#bossStoreId")
     @Transactional
     fun addFeedback(bossStoreId: String, request: AddBossStoreFeedbackRequest, userId: Long, date: LocalDate) {
         BossStoreCommonServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
@@ -36,6 +40,7 @@ class BossStoreFeedbackService(
         }
     }
 
+    @Cacheable(cacheNames = [BOSS_STORE_FEEDBACKS_TOTAL_COUNTS], key = "#bossStoreId")
     @Transactional(readOnly = true)
     fun getBossStoreFeedbacksCounts(bossStoreId: String): List<BossStoreFeedbackCountWithRatioResponse> {
         BossStoreCommonServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
