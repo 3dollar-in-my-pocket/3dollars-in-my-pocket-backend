@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.user.service.store;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -18,22 +19,42 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageReposito
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class StoreImageService {
+
+    private static final FileType FILE_TYPE = FileType.STORE_IMAGE;
+    private static final ApplicationType APPLICATION_TYPE = ApplicationType.USER_API;
 
     private final StoreRepository storeRepository;
     private final StoreImageRepository storeImageRepository;
 
     private final UploadProvider uploadProvider;
 
-    public List<StoreImage> uploadStoreImages(AddStoreImageRequest request, List<MultipartFile> images, Long userId) {
+    public List<StoreImage> uploadStoreImages(AddStoreImageRequest request, List<MultipartFile> imageFiles, Long userId) {
         StoreServiceUtils.validateExistsStore(storeRepository, request.getStoreId());
-        return images.stream()
-            .map(imageFile -> uploadProvider.uploadFile(ImageUploadFileRequest.of(imageFile, FileType.STORE_IMAGE, ApplicationType.USER_API)))
-            .map(imageUrl -> request.toEntity(request.getStoreId(), userId, imageUrl))
+        if (imageFiles.size() <= 1) {
+            return imageFiles.stream()
+                .map(imageFile -> uploadProvider.uploadFile(ImageUploadFileRequest.of(imageFile, FILE_TYPE, APPLICATION_TYPE)))
+                .map(imageUrl -> request.toEntity(request.getStoreId(), userId, imageUrl))
+                .collect(Collectors.toList());
+        }
+
+        List<CompletableFuture<StoreImage>> storeImageFutures = imageFiles.stream()
+            .map(imageFile -> CompletableFuture.supplyAsync(() -> {
+                String imageUrl = uploadProvider.uploadFile(ImageUploadFileRequest.of(imageFile, FILE_TYPE, APPLICATION_TYPE));
+                return request.toEntity(request.getStoreId(), userId, imageUrl);
+            }))
             .collect(Collectors.toList());
+
+        return CompletableFuture.allOf(storeImageFutures.toArray(new CompletableFuture[0]))
+            .thenApply(storeImage -> storeImageFutures.stream()
+                .map(CompletableFuture::join)
+                .collect(Collectors.toList())
+            ).join();
     }
 
     @Transactional
