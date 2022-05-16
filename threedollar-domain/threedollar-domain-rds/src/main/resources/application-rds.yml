@@ -159,7 +159,7 @@ spring:
         password: ${secret.jdbc.password}
         pool-name: HikariPool-Primary
         connection-test-query: SELECT 1
-        connection-timeout: 5000
+        connection-timeout: 10000
     secondary:
       hikari:
         auto-commit: false
@@ -169,7 +169,7 @@ spring:
         password: ${secret.jdbc.password}
         pool-name: HikariPool-Seconary
         connection-test-query: SELECT 1
-        connection-timeout: 5000
+        connection-timeout: 10000
         read-only: true
   flyway:
     enabled: true

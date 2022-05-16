@@ -9,7 +9,7 @@ server:
       force: true
     context-path: /admin
   tomcat:
-    connection-timeout: 30s
+    connection-timeout: 10s
 
 spring:
   profiles:

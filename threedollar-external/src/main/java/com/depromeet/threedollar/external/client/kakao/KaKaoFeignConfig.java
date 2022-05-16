@@ -7,10 +7,16 @@ import com.depromeet.threedollar.common.exception.model.InvalidException;
 import com.depromeet.threedollar.common.exception.type.ErrorCode;
 
 import feign.FeignException;
+import feign.Logger;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 
 public class KaKaoFeignConfig {
+
+    @Bean
+    Logger.Level feignLoggerLevel() {
+        return Logger.Level.FULL;
+    }
 
     @Bean
     public ErrorDecoder errorDecoder() {

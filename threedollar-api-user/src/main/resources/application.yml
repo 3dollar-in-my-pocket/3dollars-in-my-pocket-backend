@@ -11,7 +11,7 @@ server:
   tomcat:
     threads:
       max: 200
-    connection-timeout: 30s
+    connection-timeout: 10s
 
 spring:
   profiles:
