@@ -59,6 +59,7 @@ public class StoreRetrieveService {
         return aroundStoresFilerByCategory.stream()
             .map(store -> StoreWithVisitsAndDistanceResponse.of(store, geoCoordinate, visitHistoriesCounter))
             .sorted(request.getSorted())
+            .limit(request.getSize())
             .collect(Collectors.toList());
     }
 

@@ -307,6 +307,52 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             );
         }
 
+        @Test
+        void 내_주변의_가게를_조회할때_거리가_가까운_가게부터_최대_파라미터로_넘긴_SIZE_만큼_조회한다() throws Exception {
+            // given
+            Store store1 = StoreCreator.createWithDefaultMenu(user.getId(), "가게1", 34.00015, 126, 5);
+            Store store2 = StoreCreator.createWithDefaultMenu(user.getId(), "가게2", 34.0001, 126, 1);
+            storeRepository.saveAll(List.of(store1, store2));
+
+            RetrieveAroundStoresRequest request = RetrieveAroundStoresRequest.testBuilder()
+                .distance(2000)
+                .orderType(UserStoreOrderType.REVIEW_DESC)
+                .size(1)
+                .build();
+
+            // when
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.retrieveAroundStores(request, CoordinateValue.of(34.0, 126.0), CoordinateValue.of(34.0, 126.0), 200);
+
+            // then
+            assertAll(
+                () -> assertThat(response.getData()).hasSize(1),
+                () -> assertThat(response.getData().get(0).getStoreId()).isEqualTo(store1.getId())
+            );
+        }
+
+        @Test
+        void 내_주변의_가게를_조회할때_평균_리뷰점수가_높은것부터_최대_파라미터로_넘긴_SIZE_만큼_조회한다() throws Exception {
+            // given
+            Store store1 = StoreCreator.createWithDefaultMenu(user.getId(), "가게1", 34.00015, 126, 5);
+            Store store2 = StoreCreator.createWithDefaultMenu(user.getId(), "가게2", 34.0001, 126, 1);
+            storeRepository.saveAll(List.of(store1, store2));
+
+            RetrieveAroundStoresRequest request = RetrieveAroundStoresRequest.testBuilder()
+                .distance(2000)
+                .orderType(UserStoreOrderType.REVIEW_DESC)
+                .size(1)
+                .build();
+
+            // when
+            ApiResponse<List<StoreWithVisitsAndDistanceResponse>> response = storeRetrieveMockApiCaller.retrieveAroundStores(request, CoordinateValue.of(34.0, 126.0), CoordinateValue.of(34.0, 126.0), 200);
+
+            // then
+            assertAll(
+                () -> assertThat(response.getData()).hasSize(1),
+                () -> assertThat(response.getData().get(0).getStoreId()).isEqualTo(store1.getId())
+            );
+        }
+
     }
 
     @DisplayName("GET /api/v2/stores/near cache check")

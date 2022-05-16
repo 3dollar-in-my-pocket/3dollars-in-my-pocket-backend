@@ -1,7 +1,10 @@
 package com.depromeet.threedollar.api.user.service.store.dto.request;
 
 import java.util.Comparator;
+import java.util.Optional;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
@@ -35,11 +38,16 @@ public class RetrieveAroundStoresRequest {
     @NotNull(message = "{store.orderType.notNull}")
     private UserStoreOrderType orderType = UserStoreOrderType.DISTANCE_ASC; // 호환성을 위해 기본적으로 거리순으로 정렬한다
 
+    @Min(value = 1, message = "{common.size.min}")
+    @Max(value = 100, message = "{common.size.max}")
+    private int size = 100;
+
     @Builder(builderMethodName = "testBuilder")
-    private RetrieveAroundStoresRequest(double distance, @Nullable MenuCategoryType category, UserStoreOrderType orderType) {
+    private RetrieveAroundStoresRequest(double distance, @Nullable MenuCategoryType category, UserStoreOrderType orderType, Integer size) {
         this.distance = distance;
         this.category = category;
         this.orderType = orderType;
+        this.size = Optional.ofNullable(size).orElse(100);
     }
 
     public StoreRadiusDistance getDistance() {

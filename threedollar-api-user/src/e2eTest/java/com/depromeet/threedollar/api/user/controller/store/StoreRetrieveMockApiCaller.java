@@ -40,7 +40,8 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
             .param("mapLongitude", String.valueOf(mapCoordinate.getLongitude()))
             .param("distance", String.valueOf(request.getDistance().getAvailableDistance() * 1000))
             .param("category", request.getCategory() == null ? null : String.valueOf(request.getCategory()))
-            .param("orderType", request.getOrderType() == null ? String.valueOf(UserStoreOrderType.DISTANCE_ASC) : String.valueOf(request.getOrderType()));
+            .param("orderType", request.getOrderType() == null ? String.valueOf(UserStoreOrderType.DISTANCE_ASC) : String.valueOf(request.getOrderType()))
+            .param("size", String.valueOf(request.getSize()));
 
         return objectMapper.readValue(
             mockMvc.perform(builder)
