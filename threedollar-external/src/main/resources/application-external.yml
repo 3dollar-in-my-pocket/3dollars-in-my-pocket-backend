@@ -60,6 +60,11 @@ slack:
     monitoring: dummy-token
     boss-manager: dummy-token
 
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: FULL
 
 ---
 spring.config:
