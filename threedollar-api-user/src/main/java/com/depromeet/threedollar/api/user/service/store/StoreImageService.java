@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.user.service.store;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -36,13 +37,9 @@ public class StoreImageService {
 
     public List<StoreImage> uploadStoreImages(AddStoreImageRequest request, List<MultipartFile> imageFiles, Long userId) {
         StoreServiceUtils.validateExistsStore(storeRepository, request.getStoreId());
-        if (imageFiles.size() <= 1) {
-            return imageFiles.stream()
-                .map(imageFile -> uploadProvider.uploadFile(ImageUploadFileRequest.of(imageFile, FILE_TYPE, APPLICATION_TYPE)))
-                .map(imageUrl -> request.toEntity(request.getStoreId(), userId, imageUrl))
-                .collect(Collectors.toList());
+        if (imageFiles.size() == 1) {
+            return Collections.singletonList(uploadStoreImage(request, imageFiles.get(0), userId));
         }
-
         List<CompletableFuture<StoreImage>> storeImageFutures = imageFiles.stream()
             .map(imageFile -> CompletableFuture.supplyAsync(() -> {
                 String imageUrl = uploadProvider.uploadFile(ImageUploadFileRequest.of(imageFile, FILE_TYPE, APPLICATION_TYPE));
@@ -55,6 +52,11 @@ public class StoreImageService {
                 .map(CompletableFuture::join)
                 .collect(Collectors.toList())
             ).join();
+    }
+
+    private StoreImage uploadStoreImage(AddStoreImageRequest request, MultipartFile imageFile, Long userId) {
+        String imageUrl = uploadProvider.uploadFile(ImageUploadFileRequest.of(imageFile, FILE_TYPE, APPLICATION_TYPE));
+        return request.toEntity(request.getStoreId(), userId, imageUrl);
     }
 
     @Transactional
