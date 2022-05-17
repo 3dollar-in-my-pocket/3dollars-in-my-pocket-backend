@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.type.UserStoreOrderType;
 import com.depromeet.threedollar.common.type.MenuCategoryType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRadiusDistance;
+import com.depromeet.threedollar.common.utils.distance.LookupRadiusDistanceLimiter;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -50,8 +50,8 @@ public class RetrieveAroundStoresRequest {
         this.size = Optional.ofNullable(size).orElse(100);
     }
 
-    public StoreRadiusDistance getDistance() {
-        return StoreRadiusDistance.of(this.distance / 1000);
+    public Double getDistance() {
+        return LookupRadiusDistanceLimiter.fromMtoKm(distance);
     }
 
     public Comparator<StoreWithVisitsAndDistanceResponse> getSorted() {

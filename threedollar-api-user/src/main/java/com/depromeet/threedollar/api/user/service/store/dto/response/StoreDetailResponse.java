@@ -17,7 +17,7 @@ import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistor
 import com.depromeet.threedollar.common.model.LocationValue;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
 import com.depromeet.threedollar.common.type.MenuCategoryType;
-import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
+import com.depromeet.threedollar.common.utils.distance.LocationDistanceUtils;
 import com.depromeet.threedollar.domain.rds.user.collection.user.UserDictionary;
 import com.depromeet.threedollar.domain.rds.user.collection.visit.VisitHistoryCounter;
 import com.depromeet.threedollar.domain.rds.user.domain.review.Review;

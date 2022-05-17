@@ -7,6 +7,7 @@ import com.depromeet.threedollar.api.core.service.boss.store.dto.request.GetArou
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAroundInfoResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreInfoResponse
 import com.depromeet.threedollar.common.model.LocationValue
+import com.depromeet.threedollar.common.utils.distance.LookupRadiusDistanceLimiter
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
@@ -15,9 +16,6 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocatio
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.domain.boss.feedback.BossStoreFeedbackCountRepository
 import com.depromeet.threedollar.domain.redis.domain.boss.store.BossStoreOpenTimeRepository
-import kotlin.math.min
-
-private const val MAX_DISTANCE_KM = 2.0
 
 @Service
 class BossStoreCommonService(
@@ -42,7 +40,7 @@ class BossStoreCommonService(
         val storeLocations: List<BossStoreLocation> = bossStoreLocationRepository.findAllNearBossStoreLocations(
             latitude = mapLocation.latitude,
             longitude = mapLocation.longitude,
-            maxDistance = min(request.distanceKm, MAX_DISTANCE_KM),
+            maxDistance = LookupRadiusDistanceLimiter.fromKmToKm(request.distanceKm),
             size = request.size
         )
 

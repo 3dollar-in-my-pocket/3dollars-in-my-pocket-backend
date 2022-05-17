@@ -6,7 +6,7 @@ import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
 import com.depromeet.threedollar.api.core.service.boss.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.common.model.LocationValue
 import com.depromeet.threedollar.common.type.DayOfTheWeek
-import com.depromeet.threedollar.common.utils.LocationDistanceUtils
+import com.depromeet.threedollar.common.utils.distance.LocationDistanceUtils
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppearanceDay

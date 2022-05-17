@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.common.utils;
+package com.depromeet.threedollar.common.utils.distance;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import com.depromeet.threedollar.common.model.CoordinateValue;
+import com.depromeet.threedollar.common.model.LocationValue;
 
 class LocationDistanceUtilsTest {
 
@@ -43,27 +43,27 @@ class LocationDistanceUtilsTest {
         "34, 126, 34, 126, 0"
     })
     @ParameterizedTest
-    void 두_Coordinate_지점_간의_거리를_계산한다(double sourceLatitude, double sourceLongitude, double targetLatitude, double targetLongitude, int distance) {
+    void 두_Location_지점_간의_거리를_계산한다(double sourceLatitude, double sourceLongitude, double targetLatitude, double targetLongitude, int distance) {
         // when
-        int result = LocationDistanceUtils.getDistance(CoordinateValue.of(sourceLatitude, sourceLongitude), CoordinateValue.of(targetLatitude, targetLongitude));
+        int result = LocationDistanceUtils.getDistance(LocationValue.of(sourceLatitude, sourceLongitude), LocationValue.of(targetLatitude, targetLongitude));
 
         // then
         assertThat(result).isEqualTo(distance);
     }
 
     @Test
-    void source_Coordinate가_null인경우_마이너스1을_반환한다() {
+    void source_위치_정보가_null인경우_마이너스1을_반환한다() {
         // when
-        int result = LocationDistanceUtils.getDistance(null, CoordinateValue.of(38.0, 124.0));
+        int result = LocationDistanceUtils.getDistance(null, LocationValue.of(38.0, 124.0));
 
         // then
         assertThat(result).isEqualTo(-1);
     }
 
     @Test
-    void target_Coordinate가_null인경우_마이너스1을_반환한다() {
+    void target_위치_정보가_null인경우_마이너스1을_반환한다() {
         // when
-        int result = LocationDistanceUtils.getDistance(CoordinateValue.of(38.0, 124.0), null);
+        int result = LocationDistanceUtils.getDistance(LocationValue.of(38.0, 124.0), null);
 
         // then
         assertThat(result).isEqualTo(-1);

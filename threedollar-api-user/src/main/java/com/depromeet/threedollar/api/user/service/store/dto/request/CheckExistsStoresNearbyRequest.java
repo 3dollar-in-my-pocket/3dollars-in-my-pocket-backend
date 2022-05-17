@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.user.service.store.dto.request;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRadiusDistance;
+import com.depromeet.threedollar.common.utils.distance.LookupRadiusDistanceLimiter;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -25,8 +25,8 @@ public class CheckExistsStoresNearbyRequest {
         this.distance = distance;
     }
 
-    public StoreRadiusDistance getDistance() {
-        return StoreRadiusDistance.of(this.distance / 1000);
+    public double getDistance() {
+        return LookupRadiusDistanceLimiter.fromMtoKm(distance);
     }
 
 }

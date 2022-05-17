@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.common.utils;
+package com.depromeet.threedollar.common.utils.distance;
 
 import org.jetbrains.annotations.Nullable;
 
