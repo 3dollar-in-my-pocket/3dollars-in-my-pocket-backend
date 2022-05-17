@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface MapCoordinate {
+public @interface DeviceLocation {
 
     boolean required() default true;
 

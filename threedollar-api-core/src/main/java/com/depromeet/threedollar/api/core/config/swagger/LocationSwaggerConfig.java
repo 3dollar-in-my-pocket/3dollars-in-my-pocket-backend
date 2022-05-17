@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.user.config.swagger;
+package com.depromeet.threedollar.api.core.config.swagger;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
@@ -9,8 +9,8 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.depromeet.threedollar.api.core.config.resolver.GeoCoordinate;
-import com.depromeet.threedollar.api.core.config.resolver.MapCoordinate;
+import com.depromeet.threedollar.api.core.config.resolver.DeviceLocation;
+import com.depromeet.threedollar.api.core.config.resolver.MapLocation;
 
 import springfox.documentation.builders.RequestParameterBuilder;
 import springfox.documentation.service.ParameterType;
@@ -23,17 +23,17 @@ import springfox.documentation.swagger.common.SwaggerPluginSupport;
 
 @Component
 @Order(SwaggerPluginSupport.SWAGGER_PLUGIN_ORDER + 1001)
-public class CoordinateSwaggerConfig implements OperationBuilderPlugin {
+public class LocationSwaggerConfig implements OperationBuilderPlugin {
 
     @Override
     public void apply(OperationContext context) {
         List<ResolvedMethodParameter> parameters = context.getParameters();
-        if (hasAnnotation(parameters, GeoCoordinate.class)) {
+        if (hasAnnotation(parameters, DeviceLocation.class)) {
             context.operationBuilder()
                 .requestParameters(queryParameter("latitude", "longitude"))
                 .build();
         }
-        if (hasAnnotation(parameters, MapCoordinate.class)) {
+        if (hasAnnotation(parameters, MapLocation.class)) {
             context.operationBuilder()
                 .requestParameters(queryParameter("mapLatitude", "mapLongitude"))
                 .build();

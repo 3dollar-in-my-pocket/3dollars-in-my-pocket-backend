@@ -14,15 +14,15 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.user.controller.MockMvcUtils;
 import com.depromeet.threedollar.api.user.service.store.dto.request.CheckExistsStoresNearbyRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveMyStoresRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveAroundStoresRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveMyStoresRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.RetrieveStoreDetailRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.response.CheckExistStoresNearbyResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDetailResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoresCursorResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.type.UserStoreOrderType;
-import com.depromeet.threedollar.common.model.CoordinateValue;
+import com.depromeet.threedollar.common.model.LocationValue;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -32,13 +32,13 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         super(mockMvc, objectMapper);
     }
 
-    ApiResponse<List<StoreWithVisitsAndDistanceResponse>> retrieveAroundStores(RetrieveAroundStoresRequest request, CoordinateValue coordinate, CoordinateValue mapCoordinate, int expectedStatus) throws Exception {
+    ApiResponse<List<StoreWithVisitsAndDistanceResponse>> retrieveAroundStores(RetrieveAroundStoresRequest request, LocationValue deviceLocation, LocationValue mapLocation, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/v2/stores/near")
-            .param("latitude", String.valueOf(coordinate.getLatitude()))
-            .param("longitude", String.valueOf(coordinate.getLongitude()))
-            .param("mapLatitude", String.valueOf(mapCoordinate.getLatitude()))
-            .param("mapLongitude", String.valueOf(mapCoordinate.getLongitude()))
-            .param("distance", String.valueOf(request.getDistance().getAvailableDistance() * 1000))
+            .param("latitude", String.valueOf(deviceLocation.getLatitude()))
+            .param("longitude", String.valueOf(deviceLocation.getLongitude()))
+            .param("mapLatitude", String.valueOf(mapLocation.getLatitude()))
+            .param("mapLongitude", String.valueOf(mapLocation.getLongitude()))
+            .param("distance", String.valueOf(request.getDistance() * 1000))
             .param("category", request.getCategory() == null ? null : String.valueOf(request.getCategory()))
             .param("orderType", request.getOrderType() == null ? String.valueOf(UserStoreOrderType.DISTANCE_ASC) : String.valueOf(request.getOrderType()))
             .param("size", String.valueOf(request.getSize()));
@@ -54,11 +54,11 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         );
     }
 
-    ApiResponse<StoreDetailResponse> retrieveStoreDetailInfo(RetrieveStoreDetailRequest request, CoordinateValue coordinate, String token, int expectedStatus) throws Exception {
+    ApiResponse<StoreDetailResponse> retrieveStoreDetailInfo(RetrieveStoreDetailRequest request, LocationValue deviceLocation, String token, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/v2/store")
             .header(HttpHeaders.AUTHORIZATION, token)
-            .param("latitude", String.valueOf(coordinate.getLatitude()))
-            .param("longitude", String.valueOf(coordinate.getLongitude()))
+            .param("latitude", String.valueOf(deviceLocation.getLatitude()))
+            .param("longitude", String.valueOf(deviceLocation.getLongitude()))
             .param("storeId", String.valueOf(request.getStoreId()))
             .param("startDate", request.getStartDate() == null ? null : String.valueOf(request.getStartDate()));
 
@@ -90,11 +90,11 @@ class StoreRetrieveMockApiCaller extends MockMvcUtils {
         );
     }
 
-    ApiResponse<CheckExistStoresNearbyResponse> checkExistStoresNearby(CheckExistsStoresNearbyRequest request, CoordinateValue mapCoordinate, int expectedStatus) throws Exception {
+    ApiResponse<CheckExistStoresNearbyResponse> checkExistStoresNearby(CheckExistsStoresNearbyRequest request, LocationValue mapLocation, int expectedStatus) throws Exception {
         MockHttpServletRequestBuilder builder = get("/v1/stores/near/exists")
-            .param("mapLatitude", String.valueOf(mapCoordinate.getLatitude()))
-            .param("mapLongitude", String.valueOf(mapCoordinate.getLongitude()))
-            .param("distance", String.valueOf(request.getDistance().getAvailableDistance() * 1000));
+            .param("mapLatitude", String.valueOf(mapLocation.getLatitude()))
+            .param("mapLongitude", String.valueOf(mapLocation.getLongitude()))
+            .param("distance", String.valueOf(request.getDistance() * 1000));
 
         return objectMapper.readValue(
             mockMvc.perform(builder)

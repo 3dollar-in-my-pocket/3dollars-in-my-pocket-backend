@@ -11,7 +11,7 @@ import org.springframework.data.geo.Point
 import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.api.boss.service.SetupBossStoreServiceTest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.common.model.CoordinateValue
+import com.depromeet.threedollar.common.model.LocationValue
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
@@ -38,7 +38,7 @@ internal class BossStoreOpenServiceTest(
         bossStoreOpenService.openBossStore(
             bossStoreId = bossStoreId,
             bossId = bossId,
-            mapCoordinate = CoordinateValue.of(38.0, 127.0)
+            mapLocation = LocationValue.of(38.0, 127.0)
         )
 
         // then
@@ -56,7 +56,7 @@ internal class BossStoreOpenServiceTest(
         bossStoreOpenService.openBossStore(
             bossStoreId = bossStoreId,
             bossId = bossId,
-            mapCoordinate = CoordinateValue.of(38.0, 127.0)
+            mapLocation = LocationValue.of(38.0, 127.0)
         )
 
         // then
@@ -74,7 +74,7 @@ internal class BossStoreOpenServiceTest(
         bossStoreOpenService.openBossStore(
             bossStoreId = bossStoreId,
             bossId = bossId,
-            mapCoordinate = CoordinateValue.of(latitude, longitude)
+            mapLocation = LocationValue.of(latitude, longitude)
         )
 
         // then
@@ -102,7 +102,7 @@ internal class BossStoreOpenServiceTest(
         ))
 
         // when
-        bossStoreOpenService.openBossStore(bossStoreId, bossId, CoordinateValue.of(latitude, longitude))
+        bossStoreOpenService.openBossStore(bossStoreId, bossId, LocationValue.of(latitude, longitude))
 
         // then
         val bossStoreLocations = bossStoreLocationRepository.findAll()
@@ -129,7 +129,7 @@ internal class BossStoreOpenServiceTest(
         ))
 
         // when
-        bossStoreOpenService.openBossStore(bossStoreId, bossId, CoordinateValue.of(latitude, longitude))
+        bossStoreOpenService.openBossStore(bossStoreId, bossId, LocationValue.of(latitude, longitude))
 
         // then
         val bossStoreLocations = bossStoreLocationRepository.findAll()
@@ -150,7 +150,7 @@ internal class BossStoreOpenServiceTest(
             bossStoreOpenService.openBossStore(
                 bossStoreId = "Not Found Boss StoreId",
                 bossId = bossId,
-                mapCoordinate = CoordinateValue.of(38.0, 128.0)
+                mapLocation = LocationValue.of(38.0, 128.0)
             )
         }.isInstanceOf(NotFoundException::class.java)
     }
@@ -162,7 +162,7 @@ internal class BossStoreOpenServiceTest(
             bossStoreOpenService.openBossStore(
                 bossStoreId = bossStoreId,
                 bossId = "Not Owner BossId",
-                mapCoordinate = CoordinateValue.of(38.0, 128.0)
+                mapLocation = LocationValue.of(38.0, 128.0)
             )
         }.isInstanceOf(NotFoundException::class.java)
     }

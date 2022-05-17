@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 import org.springframework.data.geo.Point
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
 import com.depromeet.threedollar.api.core.service.boss.category.dto.response.BossStoreCategoryResponse
-import com.depromeet.threedollar.common.model.CoordinateValue
+import com.depromeet.threedollar.common.model.LocationValue
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.common.utils.LocationDistanceUtils
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
@@ -35,7 +35,7 @@ data class BossStoreInfoResponse(
             location: Point?,
             categories: List<BossStoreCategory>,
             openStartDateTime: LocalDateTime?,
-            geoCoordinate: CoordinateValue = CoordinateValue.of(0.0, 0.0)
+            deviceLocation: LocationValue = LocationValue.of(0.0, 0.0)
         ): BossStoreInfoResponse {
             val response = BossStoreInfoResponse(
                 bossStoreId = bossStore.id,
@@ -51,8 +51,8 @@ data class BossStoreInfoResponse(
                 openStatus = openStartDateTime?.let { BossStoreOpenStatusResponse.of(it) }
                     ?: BossStoreOpenStatusResponse.close(),
                 distance = LocationDistanceUtils.getDistance(
-                    CoordinateValue.of(location?.y ?: 0.0, location?.x ?: 0.0),
-                    geoCoordinate
+                    LocationValue.of(location?.y ?: 0.0, location?.x ?: 0.0),
+                    deviceLocation
                 )
             )
             response.setAuditingTimeByDocument(bossStore)
@@ -81,7 +81,7 @@ data class BossStoreAroundInfoResponse(
             categories: List<BossStoreCategory>,
             openStartDateTime: LocalDateTime?,
             totalFeedbacksCounts: Int,
-            geoCoordinate: CoordinateValue = CoordinateValue.of(0.0, 0.0),
+            deviceLocation: LocationValue = LocationValue.of(0.0, 0.0),
         ): BossStoreAroundInfoResponse {
             val response = BossStoreAroundInfoResponse(
                 bossStoreId = bossStore.id,
@@ -93,8 +93,8 @@ data class BossStoreAroundInfoResponse(
                     ?: BossStoreOpenStatusResponse.close(),
                 totalFeedbacksCounts = totalFeedbacksCounts,
                 distance = LocationDistanceUtils.getDistance(
-                    CoordinateValue.of(location?.y ?: 0.0, location?.x ?: 0.0),
-                    geoCoordinate
+                    LocationValue.of(location?.y ?: 0.0, location?.x ?: 0.0),
+                    deviceLocation
                 )
             )
             response.setAuditingTimeByDocument(bossStore)

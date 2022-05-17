@@ -10,17 +10,17 @@ import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.common.exception.model.InvalidException
 import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_MISSING_MAP_LATITUDE
 import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_MISSING_MAP_LONGITUDE
-import com.depromeet.threedollar.common.model.CoordinateValue
+import com.depromeet.threedollar.common.model.LocationValue
 
 private const val MAP_LATITUDE = "mapLatitude"
 private const val MAP_LONGITUDE = "mapLongitude"
 
 @Component
-class MapCoordinateArgumentResolver : HandlerMethodArgumentResolver {
+class MapLocationArgumentResolver : HandlerMethodArgumentResolver {
 
     override fun supportsParameter(parameter: MethodParameter): Boolean {
-        return parameter.hasParameterAnnotation(MapCoordinate::class.java)
-            && CoordinateValue::class.java == parameter.parameterType
+        return parameter.hasParameterAnnotation(MapLocation::class.java)
+            && LocationValue::class.java == parameter.parameterType
     }
 
     override fun resolveArgument(
@@ -32,15 +32,15 @@ class MapCoordinateArgumentResolver : HandlerMethodArgumentResolver {
         val mapLatitude = webRequest.getParameter(MAP_LATITUDE)?.toDoubleOrNull()
         val mapLongitude = webRequest.getParameter(MAP_LONGITUDE)?.toDoubleOrNull()
 
-        val annotation = parameter.getParameterAnnotation(MapCoordinate::class.java)
-            ?: throw InternalServerException("예상치 못한 에러가 발생하였습니다. 컨트롤러(${parameter.declaringClass.simpleName} - ${parameter.method?.name})에 @MapCoordinate 어노테이션을 추가해주세요")
+        val annotation = parameter.getParameterAnnotation(MapLocation::class.java)
+            ?: throw InternalServerException("예상치 못한 에러가 발생하였습니다. 컨트롤러(${parameter.declaringClass.simpleName} - ${parameter.method?.name})에 @MapLocation 어노테이션을 추가해주세요")
 
         if (annotation.required) {
             mapLatitude ?: throw InvalidException("${MAP_LATITUDE}를 입력해주세요", INVALID_MISSING_MAP_LATITUDE)
             mapLongitude ?: throw InvalidException("${MAP_LONGITUDE}를 입력해주세요", INVALID_MISSING_MAP_LONGITUDE)
         }
 
-        return CoordinateValue.of(mapLatitude ?: 0.0, mapLongitude ?: 0.0)
+        return LocationValue.of(mapLatitude ?: 0.0, mapLongitude ?: 0.0)
     }
 
 }

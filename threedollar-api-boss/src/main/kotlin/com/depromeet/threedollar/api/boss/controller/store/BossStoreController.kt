@@ -14,12 +14,12 @@ import com.depromeet.threedollar.api.boss.service.store.BossStoreService
 import com.depromeet.threedollar.api.boss.service.store.dto.request.PatchBossStoreInfoRequest
 import com.depromeet.threedollar.api.boss.service.store.dto.request.UpdateBossStoreInfoRequest
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.config.resolver.MapCoordinate
+import com.depromeet.threedollar.api.core.config.resolver.MapLocation
 import com.depromeet.threedollar.api.core.service.boss.store.BossStoreCommonService
 import com.depromeet.threedollar.api.core.service.boss.store.dto.request.GetAroundBossStoresRequest
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAroundInfoResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreInfoResponse
-import com.depromeet.threedollar.common.model.CoordinateValue
+import com.depromeet.threedollar.common.model.LocationValue
 import io.swagger.annotations.ApiOperation
 
 @RestController
@@ -33,13 +33,13 @@ class BossStoreController(
     @Auth(optional = true)
     @GetMapping("/v1/boss/stores/around")
     fun getAroundBossStores(
-        @MapCoordinate mapCoordinate: CoordinateValue,
+        @MapLocation mapLocation: LocationValue,
         @Valid request: GetAroundBossStoresRequest,
         @BossId bossId: String?
     ): ApiResponse<List<BossStoreAroundInfoResponse>> {
         return ApiResponse.success(bossStoreCommonService.getAroundBossStores(
             request = request,
-            mapCoordinate = mapCoordinate,
+            mapLocation = mapLocation,
             bossId = bossId
         ))
     }
@@ -50,9 +50,9 @@ class BossStoreController(
     fun openBossStore(
         @PathVariable bossStoreId: String,
         @BossId bossId: String,
-        @MapCoordinate mapCoordinate: CoordinateValue
+        @MapLocation mapLocation: LocationValue
     ): ApiResponse<String> {
-        bossStoreOpenService.openBossStore(bossStoreId, bossId, mapCoordinate)
+        bossStoreOpenService.openBossStore(bossStoreId, bossId, mapLocation)
         return ApiResponse.OK
     }
 
@@ -81,9 +81,9 @@ class BossStoreController(
     @GetMapping("/v1/boss/store/{bossStoreId}")
     fun getBossStoreDetail(
         @PathVariable bossStoreId: String,
-        @MapCoordinate(required = false) mapCoordinate: CoordinateValue
+        @MapLocation(required = false) mapLocation: LocationValue
     ): ApiResponse<BossStoreInfoResponse> {
-        return ApiResponse.success(bossStoreCommonService.getBossStore(bossStoreId, mapCoordinate))
+        return ApiResponse.success(bossStoreCommonService.getBossStore(bossStoreId, mapLocation))
     }
 
     @ApiOperation("[인증] 사장님 자신의 가게의 정보를 수정합니다 (전체 수정)")

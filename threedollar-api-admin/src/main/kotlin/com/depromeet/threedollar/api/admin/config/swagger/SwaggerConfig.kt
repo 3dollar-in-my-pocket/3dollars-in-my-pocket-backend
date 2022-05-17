@@ -9,7 +9,7 @@ import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.admin.config.resolver.AdminId
-import com.depromeet.threedollar.common.model.CoordinateValue
+import com.depromeet.threedollar.common.model.LocationValue
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration
 import springfox.documentation.builders.ApiInfoBuilder
 import springfox.documentation.builders.PathSelectors
@@ -43,7 +43,7 @@ class SwaggerConfig {
         return Docket(DocumentationType.SWAGGER_2)
             .apiInfo(apiInfo())
             .securitySchemes(authorization())
-            .ignoredParameterTypes(AdminId::class.java, CoordinateValue::class.java)
+            .ignoredParameterTypes(AdminId::class.java, LocationValue::class.java)
             .select()
             .apis(RequestHandlerSelectors.withClassAnnotation(RestController::class.java))
             .paths(PathSelectors.ant("/**"))

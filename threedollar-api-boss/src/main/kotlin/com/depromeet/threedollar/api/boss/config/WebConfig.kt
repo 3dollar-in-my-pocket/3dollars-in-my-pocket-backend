@@ -12,15 +12,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import com.depromeet.threedollar.api.boss.config.interceptor.AuthInterceptor
 import com.depromeet.threedollar.api.boss.config.interceptor.UserMetadataInterceptor
 import com.depromeet.threedollar.api.boss.config.resolver.BossIdResolver
-import com.depromeet.threedollar.api.core.config.resolver.GeoCoordinateArgumentResolver
-import com.depromeet.threedollar.api.core.config.resolver.MapCoordinateArgumentResolver
+import com.depromeet.threedollar.api.core.config.resolver.DeviceLocationArgumentResolver
+import com.depromeet.threedollar.api.core.config.resolver.MapLocationArgumentResolver
 
 @Configuration
 class WebConfig(
     private val authInterceptor: AuthInterceptor,
     private val bossIdResolver: BossIdResolver,
-    private val mapCoordinateArgumentResolver: MapCoordinateArgumentResolver,
-    private val geoCoordinateArgumentResolver: GeoCoordinateArgumentResolver,
+    private val mapLocationArgumentResolver: MapLocationArgumentResolver,
+    private val deviceLocationArgumentResolver: DeviceLocationArgumentResolver,
     private val userMetadataInterceptor: UserMetadataInterceptor
 ) : WebMvcConfigurer {
 
@@ -30,7 +30,7 @@ class WebConfig(
     }
 
     override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {
-        resolvers.addAll(listOf(bossIdResolver, mapCoordinateArgumentResolver, geoCoordinateArgumentResolver))
+        resolvers.addAll(listOf(bossIdResolver, mapLocationArgumentResolver, deviceLocationArgumentResolver))
     }
 
     override fun getValidator(): Validator {

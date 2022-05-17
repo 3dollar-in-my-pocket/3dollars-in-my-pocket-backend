@@ -10,17 +10,17 @@ import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.common.exception.model.InvalidException
 import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_MISSING_LATITUDE
 import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_MISSING_LONGITUDE
-import com.depromeet.threedollar.common.model.CoordinateValue
+import com.depromeet.threedollar.common.model.LocationValue
 
 private const val LATITUDE = "latitude"
 private const val LONGITUDE = "longitude"
 
 @Component
-class GeoCoordinateArgumentResolver : HandlerMethodArgumentResolver {
+class DeviceLocationArgumentResolver : HandlerMethodArgumentResolver {
 
     override fun supportsParameter(parameter: MethodParameter): Boolean {
-        return parameter.hasParameterAnnotation(GeoCoordinate::class.java)
-            && CoordinateValue::class.java == parameter.parameterType
+        return parameter.hasParameterAnnotation(DeviceLocation::class.java)
+            && LocationValue::class.java == parameter.parameterType
     }
 
     override fun resolveArgument(
@@ -32,15 +32,15 @@ class GeoCoordinateArgumentResolver : HandlerMethodArgumentResolver {
         val latitude = webRequest.getParameter(LATITUDE)?.toDoubleOrNull()
         val longitude = webRequest.getParameter(LONGITUDE)?.toDoubleOrNull()
 
-        val annotation = parameter.getParameterAnnotation(GeoCoordinate::class.java)
-            ?: throw InternalServerException("예상치 못한 에러가 발생하였습니다. 컨트롤러(${parameter.declaringClass.simpleName}-${parameter.method?.name})에 @GeoCoordinate 어노테이션을 추가해주세요")
+        val annotation = parameter.getParameterAnnotation(DeviceLocation::class.java)
+            ?: throw InternalServerException("예상치 못한 에러가 발생하였습니다. 컨트롤러(${parameter.declaringClass.simpleName}-${parameter.method?.name})에 @DeviceLocation 어노테이션을 추가해주세요")
 
         if (annotation.required) {
             latitude ?: throw InvalidException("${LATITUDE}를 입력해주세요", INVALID_MISSING_LATITUDE)
             longitude ?: throw InvalidException("${LONGITUDE}를 입력해주세요", INVALID_MISSING_LONGITUDE)
         }
 
-        return CoordinateValue.of(latitude ?: 0.0, longitude ?: 0.0)
+        return LocationValue.of(latitude ?: 0.0, longitude ?: 0.0)
     }
 
 }

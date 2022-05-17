@@ -12,8 +12,8 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.depromeet.threedollar.api.core.config.resolver.GeoCoordinateArgumentResolver;
-import com.depromeet.threedollar.api.core.config.resolver.MapCoordinateArgumentResolver;
+import com.depromeet.threedollar.api.core.config.resolver.DeviceLocationArgumentResolver;
+import com.depromeet.threedollar.api.core.config.resolver.MapLocationArgumentResolver;
 import com.depromeet.threedollar.api.user.config.interceptor.AuthInterceptor;
 import com.depromeet.threedollar.api.user.config.interceptor.UserMetadataInterceptor;
 import com.depromeet.threedollar.api.user.config.resolver.UserIdResolver;
@@ -28,8 +28,8 @@ public class WebConfig implements WebMvcConfigurer {
     private final UserMetadataInterceptor userMetaDataInterceptor;
 
     private final UserIdResolver userIdResolver;
-    private final GeoCoordinateArgumentResolver geoCoordinateArgumentResolver;
-    private final MapCoordinateArgumentResolver mapCoordinateArgumentResolver;
+    private final DeviceLocationArgumentResolver deviceLocationArgumentResolver;
+    private final MapLocationArgumentResolver mapLocationArgumentResolver;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -39,7 +39,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.addAll(List.of(userIdResolver, geoCoordinateArgumentResolver, mapCoordinateArgumentResolver));
+        resolvers.addAll(List.of(userIdResolver, deviceLocationArgumentResolver, mapLocationArgumentResolver));
     }
 
     @Override

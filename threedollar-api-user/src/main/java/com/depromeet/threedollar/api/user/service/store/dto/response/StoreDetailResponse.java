@@ -14,7 +14,7 @@ import com.depromeet.threedollar.api.user.service.review.dto.response.ReviewWith
 import com.depromeet.threedollar.api.user.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoryCountsResponse;
 import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoryWithUserResponse;
-import com.depromeet.threedollar.common.model.CoordinateValue;
+import com.depromeet.threedollar.common.model.LocationValue;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
 import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
@@ -80,11 +80,11 @@ public class StoreDetailResponse extends AuditingTimeResponse {
         this.visitHistory = visitHistory;
     }
 
-    public static StoreDetailResponse of(Store store, CoordinateValue geoCoordinate, List<StoreImageProjection> storeImages, UserDictionary userDictionary,
+    public static StoreDetailResponse of(Store store, LocationValue deviceLocation, List<StoreImageProjection> storeImages, UserDictionary userDictionary,
                                          List<Review> reviews, VisitHistoryCounter visitHistoriesCollection, List<VisitHistoryWithUserProjection> visitHistories) {
         StoreDetailResponse response = StoreDetailResponse.builder()
             .store(store)
-            .distance(LocationDistanceUtils.getDistance(CoordinateValue.of(store.getLatitude(), store.getLongitude()), geoCoordinate))
+            .distance(LocationDistanceUtils.getDistance(LocationValue.of(store.getLatitude(), store.getLongitude()), deviceLocation))
             .user(UserInfoResponse.of(userDictionary.getUser(store.getUserId())))
             .visitHistory(VisitHistoryCountsResponse.of(visitHistoriesCollection.getStoreExistsVisitsCount(store.getId()), visitHistoriesCollection.getStoreNotExistsVisitsCount(store.getId())))
             .build();

@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.boss.service.store
 
 import java.time.LocalDateTime
 import org.springframework.stereotype.Service
-import com.depromeet.threedollar.common.model.CoordinateValue
+import com.depromeet.threedollar.common.model.LocationValue
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
@@ -15,9 +15,9 @@ class BossStoreOpenService(
     private val bossStoreLocationRepository: BossStoreLocationRepository,
 ) {
 
-    fun openBossStore(bossStoreId: String, bossId: String, mapCoordinate: CoordinateValue) {
+    fun openBossStore(bossStoreId: String, bossId: String, mapLocation: LocationValue) {
         BossStoreServiceUtils.validateExistsBossStoreByBoss(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
-        updateStoreLocation(bossStoreId, latitude = mapCoordinate.latitude, longitude = mapCoordinate.longitude)
+        updateStoreLocation(bossStoreId, latitude = mapLocation.latitude, longitude = mapLocation.longitude)
         upsertStoreOpenInfo(bossStoreId = bossStoreId)
     }
 

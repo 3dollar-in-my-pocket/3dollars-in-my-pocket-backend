@@ -6,7 +6,7 @@ import com.depromeet.threedollar.api.core.service.boss.category.BossStoreCategor
 import com.depromeet.threedollar.api.core.service.boss.store.dto.request.GetAroundBossStoresRequest
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAroundInfoResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreInfoResponse
-import com.depromeet.threedollar.common.model.CoordinateValue
+import com.depromeet.threedollar.common.model.LocationValue
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
@@ -31,8 +31,8 @@ class BossStoreCommonService(
     @Transactional(readOnly = true)
     fun getAroundBossStores(
         request: GetAroundBossStoresRequest,
-        mapCoordinate: CoordinateValue,
-        geoCoordinate: CoordinateValue = CoordinateValue.of(0.0, 0.0),
+        mapLocation: LocationValue,
+        deviceLocation: LocationValue = LocationValue.of(0.0, 0.0),
         bossId: String? = null
     ): List<BossStoreAroundInfoResponse> {
         request.categoryId?.let {
@@ -40,8 +40,8 @@ class BossStoreCommonService(
         }
 
         val storeLocations: List<BossStoreLocation> = bossStoreLocationRepository.findAllNearBossStoreLocations(
-            latitude = mapCoordinate.latitude,
-            longitude = mapCoordinate.longitude,
+            latitude = mapLocation.latitude,
+            longitude = mapLocation.longitude,
             maxDistance = min(request.distanceKm, MAX_DISTANCE_KM),
             size = request.size
         )
@@ -58,7 +58,7 @@ class BossStoreCommonService(
                     categories = getCategory(it, categoriesDictionary),
                     openStartDateTime = bossStoreOpenTimeRepository.get(it.id),
                     location = locationsDictionary[it.id]?.location,
-                    geoCoordinate = geoCoordinate,
+                    deviceLocation = deviceLocation,
                     totalFeedbacksCounts = bossStoreFeedbackCountRepository.getTotalCounts(it.id)
                 )
             }
@@ -73,7 +73,7 @@ class BossStoreCommonService(
     @Transactional(readOnly = true)
     fun getBossStore(
         storeId: String,
-        geoCoordinate: CoordinateValue = CoordinateValue.of(0.0, 0.0)
+        deviceLocation: LocationValue = LocationValue.of(0.0, 0.0)
     ): BossStoreInfoResponse {
         val bossStore = BossStoreCommonServiceUtils.findBossStoreById(bossStoreRepository, storeId)
         return BossStoreInfoResponse.of(
@@ -81,7 +81,7 @@ class BossStoreCommonService(
             location = bossStoreLocationRepository.findBossStoreLocationByBossStoreId(bossStore.id)?.location,
             categories = bossStoreCategoryRepository.findAllCategoriesByIds(bossStore.categoriesIds),
             openStartDateTime = bossStoreOpenTimeRepository.get(bossStore.id),
-            geoCoordinate = geoCoordinate
+            deviceLocation = deviceLocation
         )
     }
 

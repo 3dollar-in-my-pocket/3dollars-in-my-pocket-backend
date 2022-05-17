@@ -2,7 +2,7 @@ package com.depromeet.threedollar.common.utils;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.depromeet.threedollar.common.model.CoordinateValue;
+import com.depromeet.threedollar.common.model.LocationValue;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,7 @@ public class LocationDistanceUtils {
     /**
      * 두 위도/경도간의 거리를 계산해주는 유틸성 메소드.
      */
-    public static int getDistance(@Nullable CoordinateValue source, @Nullable CoordinateValue target) {
+    public static int getDistance(@Nullable LocationValue source, @Nullable LocationValue target) {
         if (source == null || target == null) {
             return UNKNOWN_DISTANCE;
         }

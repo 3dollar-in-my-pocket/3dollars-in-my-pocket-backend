@@ -20,7 +20,7 @@ import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDetail
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreInfoResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoresCursorResponse;
-import com.depromeet.threedollar.common.model.CoordinateValue;
+import com.depromeet.threedollar.common.model.LocationValue;
 import com.depromeet.threedollar.domain.rds.common.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.rds.user.collection.user.UserDictionary;
 import com.depromeet.threedollar.domain.rds.user.collection.visit.VisitHistoryCounter;
@@ -51,27 +51,27 @@ public class StoreRetrieveService {
     private final VisitHistoryRepository visitHistoryRepository;
 
     @Transactional(readOnly = true)
-    public List<StoreWithVisitsAndDistanceResponse> retrieveAroundStores(RetrieveAroundStoresRequest request, CoordinateValue geoCoordinate, CoordinateValue mapCoordinate) {
-        List<StoreInfoResponse> aroundStoresFilerByCategory = findAroundStoresFilerByCategory(storeRepository, cachedAroundStoresRepository, mapCoordinate.getLatitude(), mapCoordinate.getLongitude(), request.getDistance().getAvailableDistance(), request.getCategory());
+    public List<StoreWithVisitsAndDistanceResponse> retrieveAroundStores(RetrieveAroundStoresRequest request, LocationValue deviceLocation, LocationValue mapLocation) {
+        List<StoreInfoResponse> aroundStoresFilerByCategory = findAroundStoresFilerByCategory(storeRepository, cachedAroundStoresRepository, mapLocation.getLatitude(), mapLocation.getLongitude(), request.getDistance(), request.getCategory());
         VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(aroundStoresFilerByCategory.stream()
             .map(StoreInfoResponse::getStoreId)
             .collect(Collectors.toList()));
         return aroundStoresFilerByCategory.stream()
-            .map(store -> StoreWithVisitsAndDistanceResponse.of(store, geoCoordinate, visitHistoriesCounter))
+            .map(store -> StoreWithVisitsAndDistanceResponse.of(store, deviceLocation, visitHistoriesCounter))
             .sorted(request.getSorted())
             .limit(request.getSize())
             .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public StoreDetailResponse retrieveStoreDetailInfo(RetrieveStoreDetailRequest request, CoordinateValue geoCoordinate) {
+    public StoreDetailResponse retrieveStoreDetailInfo(RetrieveStoreDetailRequest request, LocationValue deviceLocation) {
         Store store = StoreServiceUtils.findStoreByIdFetchJoinMenu(storeRepository, request.getStoreId());
         List<Review> reviews = reviewRepository.findAllByStoreId(request.getStoreId());
         List<StoreImageProjection> storeImages = storeImageRepository.findAllByStoreId(request.getStoreId());
         List<VisitHistoryWithUserProjection> visitHistories = visitHistoryRepository.findAllVisitWithUserByStoreIdAfterDate(request.getStoreId(), request.getStartDate());
         UserDictionary userDictionary = UserDictionary.of(userRepository.findAllByUserId(concatUserIds(reviews, visitHistories, store)));
         VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(List.of(store.getId()));
-        return StoreDetailResponse.of(store, geoCoordinate, storeImages, userDictionary, reviews, visitHistoriesCounter, visitHistories);
+        return StoreDetailResponse.of(store, deviceLocation, storeImages, userDictionary, reviews, visitHistoriesCounter, visitHistories);
     }
 
     private List<Long> concatUserIds(List<Review> reviews, List<VisitHistoryWithUserProjection> visitHistories, Store store) {
@@ -104,8 +104,8 @@ public class StoreRetrieveService {
     }
 
     @Transactional(readOnly = true)
-    public CheckExistStoresNearbyResponse checkExistStoresNearby(CheckExistsStoresNearbyRequest request, CoordinateValue mapCoordinate) {
-        boolean isExists = storeRepository.existsStoreAroundInDistance(mapCoordinate.getLatitude(), mapCoordinate.getLongitude(), request.getDistance().getAvailableDistance());
+    public CheckExistStoresNearbyResponse checkExistStoresNearby(CheckExistsStoresNearbyRequest request, LocationValue mapLocation) {
+        boolean isExists = storeRepository.existsStoreAroundInDistance(mapLocation.getLatitude(), mapLocation.getLongitude(), request.getDistance());
         return CheckExistStoresNearbyResponse.of(isExists);
     }
 

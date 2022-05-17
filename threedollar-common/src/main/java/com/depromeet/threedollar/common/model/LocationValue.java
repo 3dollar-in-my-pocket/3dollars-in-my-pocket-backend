@@ -11,20 +11,20 @@ import lombok.ToString;
 @EqualsAndHashCode
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class CoordinateValue {
+public class LocationValue {
 
     private double latitude;
 
     private double longitude;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private CoordinateValue(double latitude, double longitude) {
+    private LocationValue(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public static CoordinateValue of(double latitude, double longitude) {
-        return CoordinateValue.builder()
+    public static LocationValue of(double latitude, double longitude) {
+        return LocationValue.builder()
             .latitude(latitude)
             .longitude(longitude)
             .build();
