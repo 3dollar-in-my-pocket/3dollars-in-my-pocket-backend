@@ -2,7 +2,6 @@ package com.depromeet.threedollar.api.user.service.store.dto.response;
 
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImage;
-
 import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreImageProjection;
 
 import lombok.AccessLevel;

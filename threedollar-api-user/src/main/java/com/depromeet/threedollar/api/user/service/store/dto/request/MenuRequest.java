@@ -3,8 +3,8 @@ package com.depromeet.threedollar.api.user.service.store.dto.request;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
 import com.depromeet.threedollar.common.type.MenuCategoryType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 
 import lombok.AccessLevel;

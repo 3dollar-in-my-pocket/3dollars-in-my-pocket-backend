@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class DistanceUnitConvertUtils {
+class DistanceUnitConvertUtils {
 
     private static final int MULTIPLES_KM_TO_M = 1000;
 

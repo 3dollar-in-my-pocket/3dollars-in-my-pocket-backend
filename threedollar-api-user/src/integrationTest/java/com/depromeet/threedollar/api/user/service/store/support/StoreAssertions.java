@@ -3,11 +3,11 @@ package com.depromeet.threedollar.api.user.service.store.support;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.common.domain.Location;
 import com.depromeet.threedollar.domain.rds.user.domain.TestHelper;
 import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
-import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequest;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
