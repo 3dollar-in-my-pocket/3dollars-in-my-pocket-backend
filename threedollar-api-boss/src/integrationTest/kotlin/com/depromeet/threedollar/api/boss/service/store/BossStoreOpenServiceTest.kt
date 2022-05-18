@@ -7,7 +7,6 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.data.geo.Point
 import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.api.boss.service.SetupBossStoreServiceTest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
@@ -67,8 +66,8 @@ internal class BossStoreOpenServiceTest(
     @Test
     fun `가게 오픈시 아직 위치 정보가 없는경우 위치 정보가 생성된다`() {
         // given
-        val latitude = 37.3
-        val longitude = 129.2
+        val latitude = 37.0
+        val longitude = 127.0
 
         // when
         bossStoreOpenService.openBossStore(
@@ -93,7 +92,7 @@ internal class BossStoreOpenServiceTest(
     fun `가게 오픈 갱신시 가게 위치가 변경되었을 경우 수정된다`() {
         // given
         val latitude = 37.3
-        val longitude = 129.2
+        val longitude = 126.0
 
         bossStoreLocationRepository.save(BossStoreLocationCreator.create(
             bossStoreId = bossStoreId,
@@ -189,5 +188,6 @@ private fun assertBossStoreLocation(
     latitude: Double,
     longitude: Double
 ) {
-    assertThat(bossStoreLocation.location).isEqualTo(Point(longitude, latitude))
+    assertThat(bossStoreLocation.location.latitude).isEqualTo(latitude)
+    assertThat(bossStoreLocation.location.longitude).isEqualTo(longitude)
 }
