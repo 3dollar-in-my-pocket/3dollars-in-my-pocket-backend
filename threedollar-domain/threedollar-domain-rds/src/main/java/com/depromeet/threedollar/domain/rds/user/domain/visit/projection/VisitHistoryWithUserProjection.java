@@ -5,7 +5,9 @@ import java.time.LocalDateTime;
 
 import org.jetbrains.annotations.Nullable;
 
+import com.depromeet.threedollar.domain.rds.user.domain.user.User;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
 import com.querydsl.core.annotations.QueryProjection;
 
@@ -33,18 +35,16 @@ public class VisitHistoryWithUserProjection {
     private final UserSocialType socialType;
 
     @QueryProjection
-    public VisitHistoryWithUserProjection(Long visitHistoryId, Long storeId, VisitType type, LocalDate dateOfVisit,
-                                          LocalDateTime visitCreatedAt, LocalDateTime visitUpdatedAt,
-                                          @Nullable Long userId, @Nullable String userName, @Nullable UserSocialType socialType) {
-        this.visitHistoryId = visitHistoryId;
-        this.storeId = storeId;
-        this.type = type;
-        this.dateOfVisit = dateOfVisit;
-        this.visitCreatedAt = visitCreatedAt;
-        this.visitUpdatedAt = visitUpdatedAt;
-        this.userId = userId;
-        this.userName = userName;
-        this.socialType = socialType;
+    public VisitHistoryWithUserProjection(VisitHistory visitHistory, User user) {
+        this.visitHistoryId = visitHistory.getId();
+        this.storeId = visitHistory.getStore().getId();
+        this.type = visitHistory.getType();
+        this.dateOfVisit = visitHistory.getDateOfVisit();
+        this.visitCreatedAt = visitHistory.getCreatedAt();
+        this.visitUpdatedAt = visitHistory.getUpdatedAt();
+        this.userId = user.getId();
+        this.userName = user.getName();
+        this.socialType = user.getSocialType();
     }
 
 }
