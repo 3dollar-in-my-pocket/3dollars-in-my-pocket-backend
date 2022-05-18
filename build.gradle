@@ -24,6 +24,7 @@ ext {
     embeddedRedisVersion = "0.7.2"
     embeddedMongoVersion = "3.4.5"
     commonsLang3Version = "3.12.0"
+    commonsCodecVersion = "1.15"
 }
 
 allprojects {

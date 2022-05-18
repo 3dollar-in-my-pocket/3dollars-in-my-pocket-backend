@@ -4,6 +4,7 @@ import org.springframework.context.MessageSource
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.support.ReloadableResourceBundleMessageSource
+import org.springframework.format.FormatterRegistry
 import org.springframework.validation.Validator
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
@@ -12,11 +13,13 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import com.depromeet.threedollar.api.admin.config.interceptor.AuthInterceptor
 import com.depromeet.threedollar.api.admin.config.resolver.AccountIdResolver
+import com.depromeet.threedollar.api.core.config.converter.DecodeIdConverter
 
 @Configuration
 class WebConfig(
     private val authInterceptor: AuthInterceptor,
-    private val adminIdResolver: AccountIdResolver
+    private val adminIdResolver: AccountIdResolver,
+    private val decodeIdConverter: DecodeIdConverter
 ) : WebMvcConfigurer {
 
     override fun addInterceptors(registry: InterceptorRegistry) {
@@ -48,6 +51,10 @@ class WebConfig(
         messageSource.setDefaultEncoding("UTF-8")
         messageSource.setCacheSeconds(60)
         return messageSource
+    }
+
+    override fun addFormatters(registry: FormatterRegistry) {
+        registry.addConverter(decodeIdConverter)
     }
 
 }

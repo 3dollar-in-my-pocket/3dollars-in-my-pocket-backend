@@ -15,6 +15,7 @@ public enum ErrorCode {
     // 400 Bad Request
     INVALID(BAD_REQUEST, OFF, "BR000", "잘못된 요청입니다"),
     INVALID_TYPE(BAD_REQUEST, OFF, "BR001", "잘못된 타입이 입력되었습니다"),
+    INVALID_ENCODING_ID(BAD_REQUEST, OFF, "BR002", "잘못된 id가 입력되었습니다"),
 
     INVALID_MISSING_PARAMETER(BAD_REQUEST, OFF, "BR100", "필수 파라미터가 입력되지 않았습니다"),
     INVALID_MISSING_LATITUDE(BAD_REQUEST, OFF, "BR101", "디바이스의 위도를 입력해주세요 (latitude)"),

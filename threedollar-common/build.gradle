@@ -1,6 +1,9 @@
 dependencies {
     // Commons-Lang3
     implementation("org.apache.commons:commons-lang3:${commonsLang3Version}")
+
+    // Commons-codec
+    implementation("commons-codec:commons-codec:${commonsCodecVersion}")
 }
 
 bootJar {
