@@ -48,7 +48,7 @@ public class User extends AuditingTimeEntity {
     private Long id;
 
     @Embedded
-    private SocialInfo socialInfo;
+    private UserSocialInfo socialInfo;
 
     @Column(length = 50, nullable = false)
     private String name;
@@ -58,7 +58,7 @@ public class User extends AuditingTimeEntity {
 
     @Builder(access = AccessLevel.PACKAGE)
     private User(@NotNull String socialId, @NotNull UserSocialType socialType, @NotNull String name) {
-        this.socialInfo = SocialInfo.of(socialId, socialType);
+        this.socialInfo = UserSocialInfo.of(socialId, socialType);
         this.name = name;
     }
 

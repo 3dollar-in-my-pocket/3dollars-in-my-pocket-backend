@@ -15,7 +15,7 @@ object WithdrawalUserCreator {
     ): WithdrawalUser {
         return WithdrawalUser.builder()
             .userId(userId)
-            .socialInfo(SocialInfo.of(socialId, socialType))
+            .socialInfo(UserSocialInfo.of(socialId, socialType))
             .name(name)
             .build()
     }

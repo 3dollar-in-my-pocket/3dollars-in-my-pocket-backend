@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode
 @Embeddable
-public class SocialInfo {
+public class UserSocialInfo {
 
     @Column(nullable = false, length = 200)
     private String socialId;
@@ -25,13 +25,13 @@ public class SocialInfo {
     @Enumerated(EnumType.STRING)
     private UserSocialType socialType;
 
-    private SocialInfo(@NotNull String socialId, @NotNull UserSocialType socialType) {
+    private UserSocialInfo(@NotNull String socialId, @NotNull UserSocialType socialType) {
         this.socialId = socialId;
         this.socialType = socialType;
     }
 
-    public static SocialInfo of(@NotNull String socialId, @NotNull UserSocialType socialType) {
-        return new SocialInfo(socialId, socialType);
+    public static UserSocialInfo of(@NotNull String socialId, @NotNull UserSocialType socialType) {
+        return new UserSocialInfo(socialId, socialType);
     }
 
 }

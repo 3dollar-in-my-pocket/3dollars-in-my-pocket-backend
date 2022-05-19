@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.depromeet.threedollar.domain.rds.user.domain.TestHelper;
-import com.depromeet.threedollar.domain.rds.user.domain.user.SocialInfo;
+import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialInfo;
 import com.depromeet.threedollar.domain.rds.user.domain.user.User;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
 import com.depromeet.threedollar.domain.rds.user.domain.user.WithdrawalUser;
@@ -18,7 +18,7 @@ public final class UserAssertions {
 
     public static void assertUser(User user, String socialId, UserSocialType socialType, String name) {
         assertAll(
-            () -> assertThat(user.getSocialInfo()).isEqualTo(SocialInfo.of(socialId, socialType)),
+            () -> assertThat(user.getSocialInfo()).isEqualTo(UserSocialInfo.of(socialId, socialType)),
             () -> assertThat(user.getName()).isEqualTo(name)
         );
     }
@@ -32,7 +32,7 @@ public final class UserAssertions {
         );
     }
 
-    public static void assertWithdrawalUser(WithdrawalUser withdrawalUser, Long userId, String name, SocialInfo socialInfo) {
+    public static void assertWithdrawalUser(WithdrawalUser withdrawalUser, Long userId, String name, UserSocialInfo socialInfo) {
         assertAll(
             () -> assertThat(withdrawalUser.getUserId()).isEqualTo(userId),
             () -> assertThat(withdrawalUser.getName()).isEqualTo(name),

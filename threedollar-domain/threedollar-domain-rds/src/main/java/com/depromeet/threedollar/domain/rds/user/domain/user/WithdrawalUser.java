@@ -35,12 +35,12 @@ public class WithdrawalUser extends AuditingTimeEntity {
     private String name;
 
     @Embedded
-    private SocialInfo socialInfo;
+    private UserSocialInfo socialInfo;
 
     private LocalDateTime userCreatedAt;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private WithdrawalUser(@NotNull Long userId, @NotNull String name, @NotNull SocialInfo socialInfo, @Nullable LocalDateTime userCreatedAt) {
+    private WithdrawalUser(@NotNull Long userId, @NotNull String name, @NotNull UserSocialInfo socialInfo, @Nullable LocalDateTime userCreatedAt) {
         this.userId = userId;
         this.name = name;
         this.socialInfo = socialInfo;
@@ -51,7 +51,7 @@ public class WithdrawalUser extends AuditingTimeEntity {
         return WithdrawalUser.builder()
             .userId(signOutUser.getId())
             .name(signOutUser.getName())
-            .socialInfo(SocialInfo.of(signOutUser.getSocialId(), signOutUser.getSocialType()))
+            .socialInfo(UserSocialInfo.of(signOutUser.getSocialId(), signOutUser.getSocialType()))
             .userCreatedAt(signOutUser.getCreatedAt())
             .build();
     }
