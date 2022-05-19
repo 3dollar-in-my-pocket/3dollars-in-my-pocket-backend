@@ -9,7 +9,7 @@ data class BossAccountInfoResponse(
     val socialType: BossAccountSocialType,
     val name: String,
     val businessNumber: String,
-    val isSetupNotification: Boolean
+    val isSetupNotification: Boolean,
 ) : AuditingTimeResponse() {
 
     companion object {

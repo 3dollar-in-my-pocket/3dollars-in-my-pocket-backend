@@ -13,13 +13,13 @@ import io.swagger.annotations.ApiOperation
 
 @RestController
 class FaqController(
-    private val faqService: FaqService
+    private val faqService: FaqService,
 ) {
 
     @ApiOperation("특정 카테고리의 FAQ 목록을 조회합니다")
     @GetMapping("/v2/faqs")
     fun retrieveFaqsByCategory(
-        @Valid request: RetrieveFaqsRequest
+        @Valid request: RetrieveFaqsRequest,
     ): ApiResponse<List<FaqResponse>> {
         return ApiResponse.success(faqService.retrieveFaqsByCategory(request))
     }

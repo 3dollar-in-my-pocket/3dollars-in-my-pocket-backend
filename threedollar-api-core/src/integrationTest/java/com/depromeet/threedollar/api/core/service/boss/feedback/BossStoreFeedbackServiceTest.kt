@@ -22,7 +22,7 @@ import com.depromeet.threedollar.domain.redis.domain.boss.feedback.BossStoreFeed
 internal class BossStoreFeedbackServiceTest(
     private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,
     private val bossStoreFeedbackService: BossStoreFeedbackService,
-    private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository
+    private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository,
 ) : SetupBossStoreServiceTest() {
 
     @AfterEach

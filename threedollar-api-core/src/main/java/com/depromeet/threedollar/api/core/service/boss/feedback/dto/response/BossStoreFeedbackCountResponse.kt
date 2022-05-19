@@ -4,7 +4,7 @@ import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 
 data class BossStoreFeedbackCountResponse(
     val feedbackType: BossStoreFeedbackType,
-    val count: Int
+    val count: Int,
 ) {
 
     companion object {

@@ -10,7 +10,7 @@ data class StoreInfoResponse(
     val longitude: Double,
     val storeName: String,
     val rating: Double,
-    val categories: List<UserMenuCategoryType>
+    val categories: List<UserMenuCategoryType>,
 ) : AuditingTimeResponse() {
 
     companion object {

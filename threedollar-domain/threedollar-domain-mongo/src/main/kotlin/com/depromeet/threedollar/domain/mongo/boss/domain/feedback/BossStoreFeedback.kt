@@ -10,7 +10,7 @@ class BossStoreFeedback(
     val bossStoreId: String,
     val userId: Long,
     val feedbackType: BossStoreFeedbackType,
-    val date: LocalDate
+    val date: LocalDate,
 ) : BaseDocument() {
 
     companion object {
@@ -18,7 +18,7 @@ class BossStoreFeedback(
             bossStoreId: String,
             userId: Long,
             feedbackType: BossStoreFeedbackType,
-            date: LocalDate
+            date: LocalDate,
         ): BossStoreFeedback {
             return BossStoreFeedback(
                 bossStoreId = bossStoreId,

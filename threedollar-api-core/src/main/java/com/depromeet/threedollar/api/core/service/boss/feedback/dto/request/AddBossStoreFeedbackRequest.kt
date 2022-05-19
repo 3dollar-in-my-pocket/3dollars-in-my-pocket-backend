@@ -7,7 +7,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeed
 
 data class AddBossStoreFeedbackRequest(
     @field:Size(min = 1, message = "{feedback.size.min}")
-    val feedbackTypes: Set<BossStoreFeedbackType> = setOf()
+    val feedbackTypes: Set<BossStoreFeedbackType> = setOf(),
 ) {
 
     fun toDocuments(storeId: String, userId: Long, date: LocalDate): List<BossStoreFeedback> {

@@ -16,6 +16,7 @@ import com.depromeet.threedollar.api.boss.service.store.dto.request.MenuRequest
 import com.depromeet.threedollar.api.boss.service.store.dto.request.PatchBossStoreInfoRequest
 import com.depromeet.threedollar.api.boss.service.store.dto.request.UpdateBossStoreInfoRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
@@ -28,7 +29,6 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenu
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenuCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.common.model.ContactsNumber
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
@@ -36,7 +36,7 @@ internal class BossStoreSetupBossAccountServiceTest(
     private val bossStoreService: BossStoreService,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-    private val bossDeletedStoreRepository: BossDeletedStoreRepository
+    private val bossDeletedStoreRepository: BossDeletedStoreRepository,
 ) : SetupBossAccountServiceTest() {
 
     @AfterEach
@@ -374,7 +374,7 @@ internal class BossStoreSetupBossAccountServiceTest(
 
 private fun createMockCategory(
     bossStoreCategoryRepository: BossStoreCategoryRepository,
-    vararg titles: String
+    vararg titles: String,
 ): Set<String> {
     return titles.asSequence()
         .map { bossStoreCategoryRepository.save(BossStoreCategoryCreator.create(it)).id }
@@ -386,16 +386,16 @@ private fun createMockCategory(
  * AssertionsHelper
  */
 private fun assertBossStore(
-        bossStore: BossStore,
-        bossId: String? = null,
-        name: String? = null,
-        imageUrl: String? = null,
-        introduction: String? = null,
-        contactsNumber: ContactsNumber? = null,
-        snsUrl: String? = null,
-        categoriesIds: Set<String>? = null,
-        menus: List<BossStoreMenu>? = null,
-        appearanceDays: Set<BossStoreAppearanceDay>? = null,
+    bossStore: BossStore,
+    bossId: String? = null,
+    name: String? = null,
+    imageUrl: String? = null,
+    introduction: String? = null,
+    contactsNumber: ContactsNumber? = null,
+    snsUrl: String? = null,
+    categoriesIds: Set<String>? = null,
+    menus: List<BossStoreMenu>? = null,
+    appearanceDays: Set<BossStoreAppearanceDay>? = null,
 ) {
     assertAll({
         bossId?.let { assertThat(bossStore.bossId).isEqualTo(it) }
@@ -411,18 +411,18 @@ private fun assertBossStore(
 }
 
 private fun assertBossDeletedStore(
-        bossDeletedStore: BossDeletedStore,
-        backUpBossStoreId: String? = null,
-        backUpBossStoreCreatedAt: LocalDateTime? = null,
-        bossId: String? = null,
-        name: String? = null,
-        imageUrl: String? = null,
-        introduction: String? = null,
-        contactsNumber: ContactsNumber? = null,
-        snsUrl: String? = null,
-        categoriesIds: Set<String>? = null,
-        menus: List<BossStoreMenu>? = null,
-        appearanceDays: Set<BossStoreAppearanceDay>? = null,
+    bossDeletedStore: BossDeletedStore,
+    backUpBossStoreId: String? = null,
+    backUpBossStoreCreatedAt: LocalDateTime? = null,
+    bossId: String? = null,
+    name: String? = null,
+    imageUrl: String? = null,
+    introduction: String? = null,
+    contactsNumber: ContactsNumber? = null,
+    snsUrl: String? = null,
+    categoriesIds: Set<String>? = null,
+    menus: List<BossStoreMenu>? = null,
+    appearanceDays: Set<BossStoreAppearanceDay>? = null,
 ) {
     assertAll({
         backUpBossStoreId?.let { assertThat(bossDeletedStore.backupInfo.bossStoreId).isEqualTo(it) }

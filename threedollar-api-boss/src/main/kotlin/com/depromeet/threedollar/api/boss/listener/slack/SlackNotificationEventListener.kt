@@ -16,7 +16,7 @@ import com.depromeet.threedollar.external.client.slack.type.SlackNotificationMes
 @Component
 class SlackNotificationEventListener(
     private val slackNotificationApiClient: SlackWebhookApiClient,
-    private val bossStoreCategoryRepository: BossStoreCategoryRepository
+    private val bossStoreCategoryRepository: BossStoreCategoryRepository,
 ) {
 
     @Async

@@ -7,11 +7,11 @@ import com.depromeet.threedollar.domain.mongo.common.domain.BaseDocument
 
 @Document("boss_withdrawal_account_v1")
 class BossWithdrawalAccount(
-        val backupInfo: BackupBossAccountInfo,
-        val name: String,
-        val socialInfo: BossAccountSocialInfo,
-        val businessNumber: BusinessNumber,
-        val isSetupNotification: Boolean,
+    val backupInfo: BackupBossAccountInfo,
+    val name: String,
+    val socialInfo: BossAccountSocialInfo,
+    val businessNumber: BusinessNumber,
+    val isSetupNotification: Boolean,
 ) : BaseDocument() {
 
     companion object {
@@ -31,7 +31,7 @@ class BossWithdrawalAccount(
 
 data class BackupBossAccountInfo(
     val bossId: String,
-    val bossCreatedAt: LocalDateTime
+    val bossCreatedAt: LocalDateTime,
 ) {
 
     companion object {

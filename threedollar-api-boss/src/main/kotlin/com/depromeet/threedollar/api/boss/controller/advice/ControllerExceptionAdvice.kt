@@ -44,7 +44,7 @@ import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 
 @RestControllerAdvice
 class ControllerExceptionAdvice(
-    private val eventPublisher: ApplicationEventPublisher
+    private val eventPublisher: ApplicationEventPublisher,
 ) {
 
     /**

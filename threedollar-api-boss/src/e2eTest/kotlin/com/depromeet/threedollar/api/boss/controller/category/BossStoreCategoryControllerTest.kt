@@ -11,7 +11,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCate
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 
 internal class BossStoreCategoryControllerTest(
-    private val bossStoreCategoryRepository: BossStoreCategoryRepository
+    private val bossStoreCategoryRepository: BossStoreCategoryRepository,
 ) : SetupControllerTest() {
 
     @AfterEach

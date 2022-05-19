@@ -8,7 +8,7 @@ import com.depromeet.threedollar.domain.mongo.boss.event.registration.BossSignOu
 
 @Component
 class BossStoreEventListener(
-    private val bossStoreService: BossStoreService
+    private val bossStoreService: BossStoreService,
 ) {
 
     @Async

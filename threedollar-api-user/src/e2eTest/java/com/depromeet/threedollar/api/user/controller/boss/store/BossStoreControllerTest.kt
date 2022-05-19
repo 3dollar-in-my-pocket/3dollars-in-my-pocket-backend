@@ -12,6 +12,7 @@ import com.depromeet.threedollar.api.core.service.boss.category.dto.response.Bos
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAppearanceDayResponse
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreMenuResponse
 import com.depromeet.threedollar.api.user.controller.SetupUserControllerTest
+import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
@@ -21,13 +22,12 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocatio
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenuCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreOpenType
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.domain.redis.domain.boss.store.BossStoreOpenTimeRepository
 
 internal class BossStoreControllerTest(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-    private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository
+    private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository,
 ) : SetupUserControllerTest() {
 
     @AfterEach

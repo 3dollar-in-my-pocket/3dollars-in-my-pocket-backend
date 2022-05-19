@@ -16,7 +16,7 @@ private const val TEST_ADMIN_NAME = "테스트 관리자"
 @RestController
 class LocalTestController(
     private val adminRepository: AdminRepository,
-    private val httpSession: HttpSession
+    private val httpSession: HttpSession,
 ) {
 
     @GetMapping("/test-token")

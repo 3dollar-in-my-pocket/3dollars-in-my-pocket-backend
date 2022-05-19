@@ -14,10 +14,10 @@ import com.depromeet.threedollar.domain.mongo.common.domain.BaseDocument
  */
 @Document("boss_account_v1")
 class BossAccount(
-        var name: String,
-        val socialInfo: BossAccountSocialInfo,
-        val businessNumber: BusinessNumber,
-        var isSetupNotification: Boolean
+    var name: String,
+    val socialInfo: BossAccountSocialInfo,
+    val businessNumber: BusinessNumber,
+    var isSetupNotification: Boolean,
 ) : BaseDocument() {
 
     fun updateInfo(name: String, isSetupNotification: Boolean) {
@@ -27,12 +27,12 @@ class BossAccount(
 
     companion object {
         fun of(
-                bossId: String,
-                name: String,
-                socialId: String,
-                socialType: BossAccountSocialType,
-                businessNumber: BusinessNumber,
-                isSetupNotification: Boolean = false
+            bossId: String,
+            name: String,
+            socialId: String,
+            socialType: BossAccountSocialType,
+            businessNumber: BusinessNumber,
+            isSetupNotification: Boolean = false,
         ): BossAccount {
             val bossAccount = BossAccount(
                 name = name,

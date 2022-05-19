@@ -11,7 +11,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSoc
 
 @Repository
 class BossAccountRepositoryCustomImpl(
-    private val mongoTemplate: MongoTemplate
+    private val mongoTemplate: MongoTemplate,
 ) : BossAccountRepositoryCustom {
 
     override fun existsBossAccountById(id: String): Boolean {

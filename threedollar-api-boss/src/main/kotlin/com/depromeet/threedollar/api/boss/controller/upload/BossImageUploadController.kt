@@ -15,14 +15,14 @@ import io.swagger.annotations.ApiOperation
 
 @RestController
 class BossImageUploadController(
-    private val uploadProvider: UploadProvider
+    private val uploadProvider: UploadProvider,
 ) {
 
     @ApiOperation("파일을 업로드하고 스토리지의 URL을 받아옵니다.", notes = "파일을 스토리지에 저장하고 URI만 받아옵니다 (차후 해당 URI을 API 호출할때 URL로 전송)")
     @PostMapping("/v1/upload/{fileType}")
     fun uploadFile(
         @RequestPart file: MultipartFile,
-        @PathVariable fileType: FileType
+        @PathVariable fileType: FileType,
     ): ApiResponse<BossImageUploadResponse> {
         val imageUrl = uploadProvider.uploadFile(ImageUploadFileRequest.of(file, fileType, ApplicationType.BOSS_API))
         return ApiResponse.success(BossImageUploadResponse.of(imageUrl))

@@ -23,13 +23,13 @@ class AuthController(
     private val httpSession: HttpSession,
     private val authServiceFinder: AuthServiceFinder,
     private val bossAccountService: BossAccountService,
-    private val signupService: SignupService
+    private val signupService: SignupService,
 ) {
 
     @ApiOperation("사장님 계정의 회원가입을 요청합니다. (차후 승인이 필요합니다)", notes = "https://github.com/3dollar-in-my-pocket/3dollars-in-my-pocket-backend/issues/118")
     @PostMapping("/v1/auth/signup")
     fun applyForBossAccountRegistration(
-        @Valid @RequestBody request: SignupRequest
+        @Valid @RequestBody request: SignupRequest,
     ): ApiResponse<LoginResponse> {
         val authService = authServiceFinder.getAuthService(request.socialType)
         val socialId = authService.getSocialId(request.token)
@@ -44,7 +44,7 @@ class AuthController(
     @ApiOperation("사장님 계정으로 로그인을 요청합니다.", notes = "https://github.com/3dollar-in-my-pocket/3dollars-in-my-pocket-backend/issues/118")
     @PostMapping("/v1/auth/login")
     fun login(
-        @Valid @RequestBody request: LoginRequest
+        @Valid @RequestBody request: LoginRequest,
     ): ApiResponse<LoginResponse> {
         val authService = authServiceFinder.getAuthService(request.socialType)
         val bossId = authService.login(request)
@@ -67,7 +67,7 @@ class AuthController(
     @Auth
     @DeleteMapping("/v1/auth/signout")
     fun signOut(
-        @BossId bossId: String
+        @BossId bossId: String,
     ): ApiResponse<String> {
         bossAccountService.signOut(bossId)
         httpSession.invalidate()

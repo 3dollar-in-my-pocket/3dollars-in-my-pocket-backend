@@ -11,7 +11,7 @@ object MenuCreator {
         store: Store,
         name: String,
         price: String,
-        category: UserMenuCategoryType
+        category: UserMenuCategoryType,
     ): Menu {
         return Menu.builder()
             .store(store)

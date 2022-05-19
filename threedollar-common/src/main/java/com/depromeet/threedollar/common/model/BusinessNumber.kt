@@ -14,7 +14,7 @@ private const val SEPARATOR: String = "-"
 data class BusinessNumber(
     private val first: String,
     private val second: String,
-    private val third: String
+    private val third: String,
 ) {
 
     fun getNumberWithSeparator(): String {

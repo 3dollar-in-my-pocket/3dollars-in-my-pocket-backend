@@ -16,7 +16,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegis
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
 
 internal class BossRegistrationAdminControllerTest(
-    private val bossRegistrationRepository: BossRegistrationRepository
+    private val bossRegistrationRepository: BossRegistrationRepository,
 ) : SetupAdminControllerTest() {
 
     @AfterEach

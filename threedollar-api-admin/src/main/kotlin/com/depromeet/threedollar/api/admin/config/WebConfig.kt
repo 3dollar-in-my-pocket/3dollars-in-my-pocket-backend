@@ -19,7 +19,7 @@ import com.depromeet.threedollar.api.core.config.converter.DecodeIdConverter
 class WebConfig(
     private val authInterceptor: AuthInterceptor,
     private val adminIdResolver: AccountIdResolver,
-    private val decodeIdConverter: DecodeIdConverter
+    private val decodeIdConverter: DecodeIdConverter,
 ) : WebMvcConfigurer {
 
     override fun addInterceptors(registry: InterceptorRegistry) {

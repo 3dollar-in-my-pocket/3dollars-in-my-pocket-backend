@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -29,6 +28,7 @@ import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDelete
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDay;
 import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDayRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;

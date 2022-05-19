@@ -14,7 +14,7 @@ private const val SOUTH_KOREA_MAX_LONGITUDE = 131.87
 
 data class BossStoreLocation(
     val longitude: Double,
-    val latitude: Double
+    val latitude: Double,
 ) {
 
     init {

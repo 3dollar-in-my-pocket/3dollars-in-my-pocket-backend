@@ -6,7 +6,7 @@ import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
 
 @Repository
 class BossStoreOpenTimeRepository(
-    private val bossStoreOpenRedisRepository: StringRedisRepository<BossStoreOpenTimeKey, LocalDateTime>
+    private val bossStoreOpenRedisRepository: StringRedisRepository<BossStoreOpenTimeKey, LocalDateTime>,
 ) {
 
     fun get(bossStoreId: String): LocalDateTime? {

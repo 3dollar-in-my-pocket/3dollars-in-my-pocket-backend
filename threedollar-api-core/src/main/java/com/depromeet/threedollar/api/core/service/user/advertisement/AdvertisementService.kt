@@ -11,7 +11,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.advertisement.Advertisem
 
 @Service
 class AdvertisementService(
-    private val advertisementRepository: AdvertisementRepository
+    private val advertisementRepository: AdvertisementRepository,
 ) {
 
     @Cacheable(cacheNames = [ADVERTISEMENTS], key = "{#request.position, #request.platform}")

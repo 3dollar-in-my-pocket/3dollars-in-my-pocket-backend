@@ -21,7 +21,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.advertisement.Advertisem
 @SpringBootTest
 internal class AdminAdvertisementServiceTest(
     private val adminAdvertisementService: AdminAdvertisementService,
-    private val advertisementRepository: AdvertisementRepository
+    private val advertisementRepository: AdvertisementRepository,
 ) {
 
     @AfterEach

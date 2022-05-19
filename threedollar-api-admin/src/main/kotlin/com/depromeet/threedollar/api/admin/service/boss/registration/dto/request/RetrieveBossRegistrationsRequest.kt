@@ -8,5 +8,5 @@ data class RetrieveBossRegistrationsRequest(
 
     @field:Max(value = 50, message = "{common.size.min}")
     @field:Min(value = 1, message = "{common.size.min}")
-    val size: Int = 20
+    val size: Int = 20,
 )

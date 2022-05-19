@@ -6,7 +6,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.Store
 
 data class StoreInfosWithCursorResponse(
     val contents: List<StoreInfoResponse>,
-    val cursor: CursorResponse<Long>
+    val cursor: CursorResponse<Long>,
 ) {
 
     companion object {

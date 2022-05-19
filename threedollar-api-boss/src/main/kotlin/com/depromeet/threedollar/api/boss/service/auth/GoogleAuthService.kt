@@ -15,7 +15,7 @@ private val SOCIAL_TYPE = BossAccountSocialType.GOOGLE
 class GoogleAuthService(
     private val bossAccountRepository: BossAccountRepository,
     private val bossRegistrationRepository: BossRegistrationRepository,
-    private val googleAuthApiClient: GoogleAuthApiClient
+    private val googleAuthApiClient: GoogleAuthApiClient,
 ) : AuthService {
 
     override fun login(request: LoginRequest): String {

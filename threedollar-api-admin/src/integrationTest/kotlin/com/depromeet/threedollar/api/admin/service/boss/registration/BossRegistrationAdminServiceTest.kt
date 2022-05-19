@@ -9,6 +9,8 @@ import org.junit.jupiter.api.assertAll
 import com.depromeet.threedollar.api.admin.service.SetupAdminServiceTest
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.common.model.BusinessNumber
+import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo
@@ -17,14 +19,12 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegis
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationStatus
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.common.model.BusinessNumber
-import com.depromeet.threedollar.common.model.ContactsNumber
 
 internal class BossRegistrationAdminServiceTest(
     private val bossRegistrationAdminService: BossRegistrationAdminService,
     private val bossRegistrationRepository: BossRegistrationRepository,
     private val bossAccountRepository: BossAccountRepository,
-    private val bossStoreRepository: BossStoreRepository
+    private val bossStoreRepository: BossStoreRepository,
 ) : SetupAdminServiceTest() {
 
     @AfterEach

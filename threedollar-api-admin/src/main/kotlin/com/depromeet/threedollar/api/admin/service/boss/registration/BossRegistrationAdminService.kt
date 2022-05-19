@@ -20,7 +20,7 @@ class BossRegistrationAdminService(
     private val bossRegistrationRepository: BossRegistrationRepository,
     private val bossAccountRepository: BossAccountRepository,
     private val bossStoreRepository: BossStoreRepository,
-    private val bossStoreCategoryRepository: BossStoreCategoryRepository
+    private val bossStoreCategoryRepository: BossStoreCategoryRepository,
 ) {
 
     @Transactional

@@ -9,7 +9,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
 
 @Service
 class MedalService(
-    private val medalRepository: MedalRepository
+    private val medalRepository: MedalRepository,
 ) {
 
     @Cacheable(cacheNames = [MEDALS], key = "'ALL'")

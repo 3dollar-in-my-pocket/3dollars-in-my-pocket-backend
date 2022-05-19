@@ -8,7 +8,7 @@ data class UserMetaValue(
     val userAgent: String?,
     val clientIp: String?,
     val applicationType: ApplicationType,
-    val appVersion: String?
+    val appVersion: String?,
 ) {
 
     companion object {
@@ -17,7 +17,7 @@ data class UserMetaValue(
             userAgent: String? = null,
             clientIp: String? = null,
             applicationType: ApplicationType,
-            appVersion: String? = null
+            appVersion: String? = null,
         ): UserMetaValue {
             return UserMetaValue(
                 osPlatform = osPlatform,

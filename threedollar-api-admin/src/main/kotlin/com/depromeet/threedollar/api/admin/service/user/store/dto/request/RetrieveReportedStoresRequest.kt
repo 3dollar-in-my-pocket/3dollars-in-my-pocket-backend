@@ -12,5 +12,5 @@ data class RetrieveReportedStoresRequest(
 
     @field:Min(value = 1, message = "{common.size.min}")
     @field:Max(value = 100, message = "{common.size.max}")
-    val size: Int = 10
+    val size: Int = 10,
 )

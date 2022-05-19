@@ -14,7 +14,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
 
 @Service
 class AdminMedalService(
-    private val medalRepository: MedalRepository
+    private val medalRepository: MedalRepository,
 ) {
 
     @CacheEvict(cacheNames = [MEDALS], allEntries = true)

@@ -6,7 +6,7 @@ import com.depromeet.threedollar.common.utils.JsonUtils
 import com.depromeet.threedollar.domain.redis.core.StringRedisKey
 
 data class BossStoreOpenTimeKey(
-    private val bossStoreId: String
+    private val bossStoreId: String,
 ) : StringRedisKey<LocalDateTime> {
 
     override fun getKey(): String {

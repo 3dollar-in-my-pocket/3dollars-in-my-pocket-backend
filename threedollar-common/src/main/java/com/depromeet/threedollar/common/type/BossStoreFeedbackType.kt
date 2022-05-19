@@ -4,7 +4,7 @@ import com.depromeet.threedollar.common.model.EnumModel
 
 enum class BossStoreFeedbackType(
     private val description: String,
-    val emoji: String
+    val emoji: String,
 ) : EnumModel {
 
     FOOD_IS_DELICIOUS("음식이 맛있어요", "\uD83C\uDF55"),

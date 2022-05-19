@@ -14,14 +14,14 @@ import io.swagger.annotations.ApiOperation
 
 @RestController
 class BossRegistrationAdminController(
-    private val bossRegistrationAdminService: BossRegistrationAdminService
+    private val bossRegistrationAdminService: BossRegistrationAdminService,
 ) {
 
     @ApiOperation("사장님 계정 가입 신청을 승인합니다")
     @Auth
     @PutMapping("/v1/boss/account/registration/{registrationId}/apply")
     fun applyBossRegistration(
-        @PathVariable registrationId: String
+        @PathVariable registrationId: String,
     ): ApiResponse<String> {
         bossRegistrationAdminService.applyBossRegistration(registrationId)
         return ApiResponse.OK
@@ -31,7 +31,7 @@ class BossRegistrationAdminController(
     @Auth
     @PutMapping("/v1/boss/account/registration/{registrationId}/reject")
     fun rejectBossRegistration(
-        @PathVariable registrationId: String
+        @PathVariable registrationId: String,
     ): ApiResponse<String> {
         bossRegistrationAdminService.rejectBossRegistration(registrationId)
         return ApiResponse.OK
@@ -41,7 +41,7 @@ class BossRegistrationAdminController(
     @Auth
     @GetMapping("/v1/boss/account/registrations")
     fun getBossAccountRegistrations(
-        @Valid request: RetrieveBossRegistrationsRequest
+        @Valid request: RetrieveBossRegistrationsRequest,
     ): ApiResponse<List<BossAccountRegistrationResponse>> {
         return ApiResponse.success(bossRegistrationAdminService.retrieveBossRegistrations(request))
     }

@@ -25,7 +25,7 @@ import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 
 internal class AuthControllerTest(
-    private val bossRegistrationRepository: BossRegistrationRepository
+    private val bossRegistrationRepository: BossRegistrationRepository,
 ) : SetupBossAccountControllerTest() {
 
     @MockkBean

@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 @Getter
 public class StoreImageProjection {
-    
+
     private final Long id;
     private final Long storeId;
     private final Long userId;

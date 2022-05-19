@@ -8,7 +8,7 @@ data class FaqResponse(
     val faqId: Long,
     val question: String,
     val answer: String,
-    val category: FaqCategory
+    val category: FaqCategory,
 ) : AuditingTimeResponse() {
 
     companion object {

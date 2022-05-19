@@ -12,7 +12,7 @@ data class AddAdminRequest(
 
     @field:Size(min = 1, max = 30, message = "{admin.name.size}")
     @field:NotBlank(message = "{admin.name.notBlank}")
-    val name: String = ""
+    val name: String = "",
 ) {
 
     fun toEntity(adminId: Long): Admin {

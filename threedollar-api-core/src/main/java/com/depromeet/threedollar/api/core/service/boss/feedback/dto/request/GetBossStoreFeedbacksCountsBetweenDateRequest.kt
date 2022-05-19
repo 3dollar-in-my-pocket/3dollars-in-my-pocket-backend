@@ -8,7 +8,7 @@ private const val MAX_AVAILABLE_DAY_DIFFERENCE = 15L
 
 data class GetBossStoreFeedbacksCountsBetweenDateRequest(
     val startDate: LocalDate,
-    val endDate: LocalDate
+    val endDate: LocalDate,
 ) {
 
     init {

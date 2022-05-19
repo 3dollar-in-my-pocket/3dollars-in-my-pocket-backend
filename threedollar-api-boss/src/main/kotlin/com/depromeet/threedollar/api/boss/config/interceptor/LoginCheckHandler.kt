@@ -18,7 +18,7 @@ private const val HEADER_BEARER_PREFIX = "Bearer "
 class LoginCheckHandler(
     private val sessionRepository: SessionRepository<out Session?>,
     private val bossAccountRepository: BossAccountRepository,
-    private val bossRegistrationRepository: BossRegistrationRepository
+    private val bossRegistrationRepository: BossRegistrationRepository,
 ) {
 
     fun checkAuthOptional(request: HttpServletRequest): Boolean {

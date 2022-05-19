@@ -5,7 +5,7 @@ import com.depromeet.threedollar.common.exception.model.InvalidException
 
 data class TimeInterval(
     val startTime: LocalTime,
-    val endTime: LocalTime
+    val endTime: LocalTime,
 ) {
 
     init {
@@ -17,7 +17,7 @@ data class TimeInterval(
     companion object {
         fun of(
             startTime: LocalTime,
-            endTime: LocalTime
+            endTime: LocalTime,
         ): TimeInterval {
             return TimeInterval(
                 startTime = startTime,

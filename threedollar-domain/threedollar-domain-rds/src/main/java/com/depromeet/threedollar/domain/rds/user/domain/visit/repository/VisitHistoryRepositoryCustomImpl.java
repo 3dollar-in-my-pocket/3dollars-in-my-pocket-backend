@@ -8,10 +8,9 @@ import static com.depromeet.threedollar.domain.rds.user.domain.visit.QVisitHisto
 import java.time.LocalDate;
 import java.util.List;
 
-import com.depromeet.threedollar.common.type.UserMenuCategoryType;
-
 import org.jetbrains.annotations.Nullable;
 
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.QVisitHistoryCountProjection;

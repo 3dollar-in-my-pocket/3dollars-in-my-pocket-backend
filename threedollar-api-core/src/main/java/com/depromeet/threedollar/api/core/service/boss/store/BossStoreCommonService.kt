@@ -20,7 +20,7 @@ class BossStoreCommonService(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository,
-    private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository
+    private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository,
 ) {
 
     @Transactional(readOnly = true)
@@ -28,7 +28,7 @@ class BossStoreCommonService(
         request: GetAroundBossStoresRequest,
         mapLocation: LocationValue,
         deviceLocation: LocationValue = LocationValue.of(0.0, 0.0),
-        bossId: String? = null
+        bossId: String? = null,
     ): List<BossStoreAroundInfoResponse> {
         request.categoryId?.let {
             BossStoreCategoryServiceUtils.validateExistsCategory(bossStoreCategoryRepository, it)
@@ -66,7 +66,7 @@ class BossStoreCommonService(
     @Transactional(readOnly = true)
     fun getBossStore(
         storeId: String,
-        deviceLocation: LocationValue = LocationValue.of(0.0, 0.0)
+        deviceLocation: LocationValue = LocationValue.of(0.0, 0.0),
     ): BossStoreInfoResponse {
         val bossStore = BossStoreCommonServiceUtils.findBossStoreById(bossStoreRepository, storeId)
         return BossStoreInfoResponse.of(

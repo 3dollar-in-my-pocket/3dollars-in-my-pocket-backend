@@ -8,7 +8,7 @@ import org.springframework.web.servlet.HandlerInterceptor
 
 @Component
 class AuthInterceptor(
-    private val loginCheckHandler: LoginCheckHandler
+    private val loginCheckHandler: LoginCheckHandler,
 ) : HandlerInterceptor {
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {

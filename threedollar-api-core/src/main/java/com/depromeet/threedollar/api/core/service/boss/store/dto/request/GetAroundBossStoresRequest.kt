@@ -15,5 +15,5 @@ data class GetAroundBossStoresRequest(
 
     @field:Min(value = 1, message = "{common.size.min}")
     @field:Max(value = 30, message = "{common.size.max}")
-    val size: Int = 30
+    val size: Int = 30,
 )

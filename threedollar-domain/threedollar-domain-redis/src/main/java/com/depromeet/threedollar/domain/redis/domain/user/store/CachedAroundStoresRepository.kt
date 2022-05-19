@@ -6,7 +6,7 @@ import com.depromeet.threedollar.domain.redis.domain.user.store.dto.CachedUserSt
 
 @Repository
 class CachedAroundStoresRepository(
-    private val aroundStoresRedisRepository: StringRedisRepository<CachedAroundStoresKey, List<CachedUserStoreDto>>
+    private val aroundStoresRedisRepository: StringRedisRepository<CachedAroundStoresKey, List<CachedUserStoreDto>>,
 ) {
 
     fun get(mapLatitude: Double, mapLongitude: Double, distance: Double): List<CachedUserStoreDto>? {

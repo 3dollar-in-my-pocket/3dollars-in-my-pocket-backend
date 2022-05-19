@@ -8,7 +8,7 @@ object BossStoreMenuCreator {
     fun create(
         name: String,
         price: Int,
-        imageUrl: String?
+        imageUrl: String?,
     ): BossStoreMenu {
         return BossStoreMenu(
             name = name,

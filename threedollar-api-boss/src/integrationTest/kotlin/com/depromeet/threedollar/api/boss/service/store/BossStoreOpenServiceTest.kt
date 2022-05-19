@@ -18,7 +18,7 @@ import com.depromeet.threedollar.domain.redis.domain.boss.store.BossStoreOpenTim
 @SpringBootTest
 internal class BossStoreOpenServiceTest(
     private val bossStoreOpenService: BossStoreOpenService,
-    private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository
+    private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository,
 ) : SetupBossStoreServiceTest() {
 
     @AfterEach
@@ -149,7 +149,7 @@ internal class BossStoreOpenServiceTest(
 private fun assertBossStoreLocation(
     bossStoreLocation: BossStore,
     latitude: Double,
-    longitude: Double
+    longitude: Double,
 ) {
     assertThat(bossStoreLocation.location?.latitude).isEqualTo(latitude)
     assertThat(bossStoreLocation.location?.longitude).isEqualTo(longitude)

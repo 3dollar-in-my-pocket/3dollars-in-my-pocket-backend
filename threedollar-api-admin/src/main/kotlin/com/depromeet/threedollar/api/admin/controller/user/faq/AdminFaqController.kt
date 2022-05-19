@@ -23,14 +23,14 @@ import io.swagger.annotations.ApiOperation
 @RestController
 class AdminFaqController(
     private val faqAdminService: FaqAdminService,
-    private val faqService: FaqService
+    private val faqService: FaqService,
 ) {
 
     @ApiOperation("새로운 FAQ를 등록합니다")
     @Auth
     @PostMapping("/v1/user/faq")
     fun addFaq(
-        @Valid @RequestBody request: AddFaqRequest
+        @Valid @RequestBody request: AddFaqRequest,
     ): ApiResponse<FaqResponse> {
         return ApiResponse.success(faqAdminService.addFaq(request))
     }
@@ -40,7 +40,7 @@ class AdminFaqController(
     @PutMapping("/v1/user/faq/{faqId}")
     fun updateFaq(
         @PathVariable faqId: Long,
-        @Valid @RequestBody request: UpdateFaqRequest
+        @Valid @RequestBody request: UpdateFaqRequest,
     ): ApiResponse<FaqResponse> {
         return ApiResponse.success(faqAdminService.updateFaq(faqId, request))
     }
@@ -49,7 +49,7 @@ class AdminFaqController(
     @Auth
     @DeleteMapping("/v1/user/faq/{faqId}")
     fun deleteFaq(
-        @PathVariable faqId: Long
+        @PathVariable faqId: Long,
     ): ApiResponse<String> {
         faqAdminService.deleteFaq(faqId)
         return ApiResponse.OK
@@ -58,7 +58,7 @@ class AdminFaqController(
     @ApiOperation("FAQ 목록을 조회합니다")
     @GetMapping("/v1/user/faqs")
     fun retrieveFaqs(
-        @Valid request: RetrieveFaqsRequest
+        @Valid request: RetrieveFaqsRequest,
     ): ApiResponse<List<FaqResponse>> {
         return ApiResponse.success(faqService.retrieveFaqsByCategory(request))
     }

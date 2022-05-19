@@ -3,7 +3,7 @@ package com.depromeet.threedollar.common.type
 enum class FamousPlace(
     val description: String,
     val latitude: Double,
-    val longitude: Double
+    val longitude: Double,
 ) {
 
     GANGNAM("강남역", 37.498095, 127.02761),

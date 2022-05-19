@@ -19,13 +19,13 @@ import io.swagger.annotations.ApiOperation
 
 @RestController
 class BossStoreFeedbackController(
-    private val bossStoreFeedbackService: BossStoreFeedbackService
+    private val bossStoreFeedbackService: BossStoreFeedbackService,
 ) {
 
     @ApiOperation("전체 기간동안의 특정 사장님 가게의 피드백 갯수를 조회합니다.")
     @GetMapping("/v1/boss/store/{bossStoreId}/feedbacks/full")
     fun getBossStoreFeedbacksCounts(
-        @PathVariable bossStoreId: String
+        @PathVariable bossStoreId: String,
     ): ApiResponse<List<BossStoreFeedbackCountWithRatioResponse>> {
         return ApiResponse.success(bossStoreFeedbackService.getBossStoreFeedbacksCounts(bossStoreId))
     }
@@ -44,7 +44,7 @@ class BossStoreFeedbackController(
     fun addBossStoreFeedback(
         @PathVariable bossStoreId: String,
         @Valid @RequestBody request: AddBossStoreFeedbackRequest,
-        @UserId userId: Long?
+        @UserId userId: Long?,
     ): ApiResponse<String> {
         bossStoreFeedbackService.addFeedback(
             bossStoreId = bossStoreId,

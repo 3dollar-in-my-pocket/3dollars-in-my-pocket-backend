@@ -9,14 +9,14 @@ data class UserWithActivityResponse(
     val name: String,
     val socialType: UserSocialType,
     val medal: UserMedalResponse?,
-    val activity: ActivityResponse
+    val activity: ActivityResponse,
 ) : AuditingTimeResponse() {
 
     companion object {
         fun of(
             user: User,
             storesCount: Long,
-            reviewsCount: Long
+            reviewsCount: Long,
         ): UserWithActivityResponse {
             val response = UserWithActivityResponse(
                 userId = user.id,
@@ -37,5 +37,5 @@ data class UserWithActivityResponse(
 data class ActivityResponse(
     val storesCount: Long,
     val reviewsCount: Long,
-    val medalsCounts: Int
+    val medalsCounts: Int,
 )

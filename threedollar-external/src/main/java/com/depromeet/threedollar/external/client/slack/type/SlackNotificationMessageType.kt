@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.external.client.slack.type
 
 enum class SlackNotificationMessageType(
-    private val template: String
+    private val template: String,
 ) {
 
     ERROR_MESSAGE("""

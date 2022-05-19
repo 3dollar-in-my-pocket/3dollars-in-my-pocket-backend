@@ -14,7 +14,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.StoreStatus
 
 internal class AdminUserStoreServiceTest(
     private val adminUserStoreService: AdminUserStoreService,
-    private val storeRepository: StoreRepository
+    private val storeRepository: StoreRepository,
 ) : SetupAdminServiceTest() {
 
     @AfterEach

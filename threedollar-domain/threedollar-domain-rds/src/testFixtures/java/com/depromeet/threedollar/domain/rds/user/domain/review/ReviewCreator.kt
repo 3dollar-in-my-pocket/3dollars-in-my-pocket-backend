@@ -12,7 +12,7 @@ object ReviewCreator {
         userId: Long,
         contents: String,
         rating: Int,
-        status: ReviewStatus = ReviewStatus.POSTED
+        status: ReviewStatus = ReviewStatus.POSTED,
     ): Review {
         return Review.builder()
             .storeId(storeId)

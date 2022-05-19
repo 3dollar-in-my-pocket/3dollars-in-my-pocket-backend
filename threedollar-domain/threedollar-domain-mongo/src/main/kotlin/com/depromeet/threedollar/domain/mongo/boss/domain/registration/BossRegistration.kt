@@ -13,7 +13,7 @@ import com.depromeet.threedollar.domain.mongo.common.domain.BaseDocument
 class BossRegistration(
     val boss: RegistrationBossForm,
     val store: RegistrationStoreForm,
-    var status: BossRegistrationStatus
+    var status: BossRegistrationStatus,
 ) : BaseDocument() {
 
     fun toBossAccount(): BossAccount {
@@ -36,7 +36,7 @@ class BossRegistration(
         fun of(
             boss: RegistrationBossForm,
             store: RegistrationStoreForm,
-            status: BossRegistrationStatus = BossRegistrationStatus.WAITING
+            status: BossRegistrationStatus = BossRegistrationStatus.WAITING,
         ): BossRegistration {
             return BossRegistration(
                 boss = boss,
@@ -52,7 +52,7 @@ class BossRegistration(
 data class RegistrationBossForm(
     val socialInfo: BossAccountSocialInfo,
     val name: String,
-    val businessNumber: BusinessNumber
+    val businessNumber: BusinessNumber,
 ) {
 
     fun toBossAccount(registrationId: String): BossAccount {
@@ -70,7 +70,7 @@ data class RegistrationBossForm(
             socialId: String,
             socialType: BossAccountSocialType,
             name: String,
-            businessNumber: String
+            businessNumber: String,
         ): RegistrationBossForm {
             return RegistrationBossForm(
                 socialInfo = BossAccountSocialInfo.of(socialId = socialId, socialType = socialType),
@@ -84,10 +84,10 @@ data class RegistrationBossForm(
 
 
 data class RegistrationStoreForm(
-        val name: String,
-        val categoriesIds: Set<String> = setOf(),
-        val contactsNumber: ContactsNumber,
-        val certificationPhotoUrl: String
+    val name: String,
+    val categoriesIds: Set<String> = setOf(),
+    val contactsNumber: ContactsNumber,
+    val certificationPhotoUrl: String,
 ) {
 
     fun toBossStore(bossId: String): BossStore {
@@ -104,7 +104,7 @@ data class RegistrationStoreForm(
             name: String,
             categoriesIds: Set<String> = setOf(),
             contactsNumber: String,
-            certificationPhotoUrl: String
+            certificationPhotoUrl: String,
         ): RegistrationStoreForm {
             return RegistrationStoreForm(
                 name = name,

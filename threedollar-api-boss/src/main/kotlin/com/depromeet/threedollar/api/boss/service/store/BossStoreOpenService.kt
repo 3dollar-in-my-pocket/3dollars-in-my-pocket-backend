@@ -9,7 +9,7 @@ import com.depromeet.threedollar.domain.redis.domain.boss.store.BossStoreOpenTim
 @Service
 class BossStoreOpenService(
     private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository,
-    private val bossStoreRepository: BossStoreRepository
+    private val bossStoreRepository: BossStoreRepository,
 ) {
 
     fun openBossStore(bossStoreId: String, bossId: String, mapLocation: LocationValue) {

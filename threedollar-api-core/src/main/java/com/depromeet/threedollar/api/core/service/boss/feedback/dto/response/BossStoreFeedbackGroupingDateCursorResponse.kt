@@ -6,7 +6,7 @@ import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 
 data class BossStoreFeedbackCursorResponse(
     val cursor: CursorResponse<LocalDate>,
-    val contents: List<BossStoreFeedbackGroupingDateResponse>
+    val contents: List<BossStoreFeedbackGroupingDateResponse>,
 ) {
 
     companion object {
@@ -26,7 +26,7 @@ data class BossStoreFeedbackCursorResponse(
 
 data class BossStoreFeedbackGroupingDateResponse(
     val date: LocalDate,
-    val feedbacks: List<BossStoreFeedbackCountResponse>
+    val feedbacks: List<BossStoreFeedbackCountResponse>,
 ) {
 
     companion object {

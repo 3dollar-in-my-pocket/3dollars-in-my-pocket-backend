@@ -11,7 +11,7 @@ object BossStoreFeedbackCreator {
         storeId: String,
         userId: Long,
         feedbackType: BossStoreFeedbackType,
-        date: LocalDate
+        date: LocalDate,
     ): BossStoreFeedback {
         return BossStoreFeedback(
             bossStoreId = storeId,

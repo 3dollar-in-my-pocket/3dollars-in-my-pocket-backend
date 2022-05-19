@@ -9,7 +9,6 @@ import static org.mockito.Mockito.verify;
 import java.util.List;
 import java.util.Set;
 
-import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,6 +28,7 @@ import com.depromeet.threedollar.api.user.service.store.dto.request.UpdateStoreR
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDeleteResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreInfoResponse;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDayRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository;

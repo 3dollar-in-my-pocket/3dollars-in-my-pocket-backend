@@ -19,7 +19,7 @@ class BossIdResolver : HandlerMethodArgumentResolver {
         parameter: MethodParameter,
         mavContainer: ModelAndViewContainer?,
         webRequest: NativeWebRequest,
-        binderFactory: WebDataBinderFactory?
+        binderFactory: WebDataBinderFactory?,
     ): Any? {
         return webRequest.getAttribute(BOSS_ACCOUNT_ID, 0)
     }

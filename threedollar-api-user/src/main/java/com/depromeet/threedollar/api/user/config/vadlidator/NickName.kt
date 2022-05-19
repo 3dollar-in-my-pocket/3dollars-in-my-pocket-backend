@@ -9,5 +9,5 @@ import kotlin.reflect.KClass
 annotation class NickName(
     val message: String = "{user.name.format}",
     val groups: Array<KClass<*>> = [],
-    val payload: Array<KClass<out Payload>> = []
+    val payload: Array<KClass<out Payload>> = [],
 )

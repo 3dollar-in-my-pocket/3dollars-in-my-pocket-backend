@@ -15,7 +15,7 @@ import io.swagger.annotations.ApiOperation
 
 @RestController
 class AdminFileUploadController(
-    private val uploadProvider: UploadProvider
+    private val uploadProvider: UploadProvider,
 ) {
 
     @ApiOperation("파일을 업로드합니다")
@@ -23,7 +23,7 @@ class AdminFileUploadController(
     @PostMapping("/v1/upload/{fileType}")
     fun uploadFile(
         @RequestPart file: MultipartFile,
-        @PathVariable fileType: FileType
+        @PathVariable fileType: FileType,
     ): ApiResponse<String> {
         val imageUrl = uploadProvider.uploadFile(ImageUploadFileRequest.of(file, fileType, ApplicationType.ADMIN_API))
         return ApiResponse.success(imageUrl)

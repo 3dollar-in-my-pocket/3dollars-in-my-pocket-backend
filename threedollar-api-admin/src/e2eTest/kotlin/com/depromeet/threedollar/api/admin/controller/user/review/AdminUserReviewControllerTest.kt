@@ -21,7 +21,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType
 internal class AdminUserReviewControllerTest(
     private val reviewRepository: ReviewRepository,
     private val storeRepository: StoreRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) : SetupAdminControllerTest() {
 
     @AfterEach

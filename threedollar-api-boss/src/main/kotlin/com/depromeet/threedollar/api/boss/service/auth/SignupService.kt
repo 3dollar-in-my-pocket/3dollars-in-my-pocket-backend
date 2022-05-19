@@ -19,7 +19,7 @@ class SignupService(
     private val bossAccountRepository: BossAccountRepository,
     private val bossRegistrationRepository: BossRegistrationRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-    private val eventPublisher: ApplicationEventPublisher
+    private val eventPublisher: ApplicationEventPublisher,
 ) {
 
     @Transactional

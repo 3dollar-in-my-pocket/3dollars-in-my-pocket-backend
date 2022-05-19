@@ -6,7 +6,7 @@ import com.depromeet.threedollar.common.utils.MathUtils
 data class BossStoreFeedbackCountWithRatioResponse(
     val feedbackType: BossStoreFeedbackType,
     val count: Int,
-    val ratio: Double
+    val ratio: Double,
 ) {
 
     companion object {

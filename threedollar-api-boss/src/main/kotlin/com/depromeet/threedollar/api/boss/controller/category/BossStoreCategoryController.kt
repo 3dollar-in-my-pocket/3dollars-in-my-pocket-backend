@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiOperation
 
 @RestController
 class BossStoreCategoryController(
-    private val bossStoreCategoryService: BossStoreCategoryService
+    private val bossStoreCategoryService: BossStoreCategoryService,
 ) {
 
     @ApiOperation("사장님 가게의 카테고리 목록을 조회합니다")

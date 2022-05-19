@@ -9,7 +9,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeed
 
 @Repository
 class BossStoreFeedbackStatisticsRepositoryCustomImpl(
-    private val mongoTemplate: MongoTemplate
+    private val mongoTemplate: MongoTemplate,
 ) : BossStoreFeedbackStatisticsRepositoryCustom {
 
     override fun countBossStoreFeedbacksBetweenDate(startDate: LocalDate, endDate: LocalDate): Long {

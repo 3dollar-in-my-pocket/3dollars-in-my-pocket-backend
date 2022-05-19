@@ -16,7 +16,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.advertisement.Advertisem
 
 @Service
 class AdminAdvertisementService(
-    private val advertisementRepository: AdvertisementRepository
+    private val advertisementRepository: AdvertisementRepository,
 ) {
 
     @CacheEvict(cacheNames = [ADVERTISEMENTS], key = "{#request.position, #request.platform}")

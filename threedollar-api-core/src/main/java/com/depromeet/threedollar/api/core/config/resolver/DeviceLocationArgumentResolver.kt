@@ -27,7 +27,7 @@ class DeviceLocationArgumentResolver : HandlerMethodArgumentResolver {
         parameter: MethodParameter,
         mavContainer: ModelAndViewContainer?,
         webRequest: NativeWebRequest,
-        binderFactory: WebDataBinderFactory?
+        binderFactory: WebDataBinderFactory?,
     ): Any? {
         val latitude = webRequest.getParameter(LATITUDE)?.toDoubleOrNull()
         val longitude = webRequest.getParameter(LONGITUDE)?.toDoubleOrNull()

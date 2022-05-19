@@ -51,7 +51,7 @@ class DailyStatisticsJobConfiguration(
     private val medalRepository: MedalRepository,
     private val storeDeleteRequestRepository: StoreDeleteRequestRepository,
 
-    private val slackNotificationApiClient: SlackWebhookApiClient
+    private val slackNotificationApiClient: SlackWebhookApiClient,
 ) {
 
     @Bean
@@ -239,7 +239,7 @@ class DailyStatisticsJobConfiguration(
         messageType: UserDailyStatisticsMessageFormat,
         totalCounts: Long,
         todayCounts: Long,
-        weekendCounts: Long
+        weekendCounts: Long,
     ) {
         slackNotificationApiClient.postStatisticsMessage(
             PostSlackMessageRequest.of(messageType.messageFormat.format(totalCounts, todayCounts, weekendCounts))

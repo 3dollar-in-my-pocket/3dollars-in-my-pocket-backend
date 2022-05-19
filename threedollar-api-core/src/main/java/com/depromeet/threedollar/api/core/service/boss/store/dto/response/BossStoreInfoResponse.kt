@@ -4,6 +4,7 @@ import java.time.LocalDateTime
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
 import com.depromeet.threedollar.api.core.service.boss.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.common.model.LocationValue
+import com.depromeet.threedollar.common.model.TimeInterval
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.common.utils.distance.LocationDistanceUtils
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
@@ -12,7 +13,6 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppeara
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenu
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreOpenType
-import com.depromeet.threedollar.common.model.TimeInterval
 
 data class BossStoreInfoResponse(
     val bossStoreId: String,
@@ -26,7 +26,7 @@ data class BossStoreInfoResponse(
     val appearanceDays: Set<BossStoreAppearanceDayResponse>,
     val categories: Set<BossStoreCategoryResponse>,
     val openStatus: BossStoreOpenStatusResponse,
-    val distance: Int
+    val distance: Int,
 ) : AuditingTimeResponse() {
 
     companion object {
@@ -34,7 +34,7 @@ data class BossStoreInfoResponse(
             bossStore: BossStore,
             categories: List<BossStoreCategory>,
             openStartDateTime: LocalDateTime?,
-            deviceLocation: LocationValue = LocationValue.of(0.0, 0.0)
+            deviceLocation: LocationValue = LocationValue.of(0.0, 0.0),
         ): BossStoreInfoResponse {
             val response = BossStoreInfoResponse(
                 bossStoreId = bossStore.id,
@@ -104,7 +104,7 @@ data class BossStoreAroundInfoResponse(
 
 data class LocationResponse(
     val latitude: Double,
-    val longitude: Double
+    val longitude: Double,
 ) {
 
     companion object {
@@ -139,9 +139,9 @@ data class BossStoreMenuResponse(
 
 
 data class BossStoreAppearanceDayResponse(
-        val dayOfTheWeek: DayOfTheWeek,
-        val openingHours: TimeInterval,
-        val locationDescription: String
+    val dayOfTheWeek: DayOfTheWeek,
+    val openingHours: TimeInterval,
+    val locationDescription: String,
 ) {
 
     companion object {
@@ -159,7 +159,7 @@ data class BossStoreAppearanceDayResponse(
 
 data class BossStoreOpenStatusResponse(
     val status: BossStoreOpenType,
-    val openStartDateTime: LocalDateTime?
+    val openStartDateTime: LocalDateTime?,
 ) {
 
     companion object {

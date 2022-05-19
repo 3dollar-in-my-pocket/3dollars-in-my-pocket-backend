@@ -9,7 +9,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCate
 
 @Repository
 class BossStoreCategoryRepositoryCustomImpl(
-    private val mongoTemplate: MongoTemplate
+    private val mongoTemplate: MongoTemplate,
 ) : BossStoreCategoryRepositoryCustom {
 
     override fun findAllCategoriesByIds(categoriesIds: Set<String>): List<BossStoreCategory> {

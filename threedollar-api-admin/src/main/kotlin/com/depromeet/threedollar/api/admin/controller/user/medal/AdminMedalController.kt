@@ -17,14 +17,14 @@ import io.swagger.annotations.ApiOperation
 
 @RestController
 class AdminMedalController(
-    private val adminMedalService: AdminMedalService
+    private val adminMedalService: AdminMedalService,
 ) {
 
     @ApiOperation("새로운 메달을 추가합니다")
     @Auth
     @PostMapping("/v1/user/medal")
     fun addMedal(
-        @Valid @RequestBody request: AddMedalRequest
+        @Valid @RequestBody request: AddMedalRequest,
     ): ApiResponse<String> {
         adminMedalService.addMedal(request)
         return ApiResponse.OK
@@ -35,7 +35,7 @@ class AdminMedalController(
     @PutMapping("/v1/user/medal/{medalId}")
     fun updateMedal(
         @PathVariable medalId: Long,
-        @Valid @RequestBody request: UpdateMedalRequest
+        @Valid @RequestBody request: UpdateMedalRequest,
     ): ApiResponse<String> {
         adminMedalService.updateMedal(medalId, request)
         return ApiResponse.OK

@@ -3,7 +3,7 @@ package com.depromeet.threedollar.domain.mongo.boss.domain.account
 import com.depromeet.threedollar.common.model.EnumModel
 
 enum class BossAccountSocialType(
-    private val description: String
+    private val description: String,
 ) : EnumModel {
 
     KAKAO("카카오"),

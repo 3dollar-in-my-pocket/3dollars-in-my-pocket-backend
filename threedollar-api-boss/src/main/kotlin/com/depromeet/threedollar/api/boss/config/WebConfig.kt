@@ -24,7 +24,7 @@ class WebConfig(
     private val mapLocationArgumentResolver: MapLocationArgumentResolver,
     private val deviceLocationArgumentResolver: DeviceLocationArgumentResolver,
     private val userMetadataInterceptor: UserMetadataInterceptor,
-    private val decodeIdConverter: DecodeIdConverter
+    private val decodeIdConverter: DecodeIdConverter,
 ) : WebMvcConfigurer {
 
     override fun addInterceptors(registry: InterceptorRegistry) {

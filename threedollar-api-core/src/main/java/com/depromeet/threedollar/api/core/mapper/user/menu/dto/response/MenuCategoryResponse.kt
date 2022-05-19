@@ -4,11 +4,11 @@ import com.depromeet.threedollar.common.type.UserMenuCategoryType
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class MenuCategoryResponse(
-        val category: UserMenuCategoryType,
-        val name: String,
-        val description: String,
-        @get:JsonProperty("isNew")
-    val isNew: Boolean
+    val category: UserMenuCategoryType,
+    val name: String,
+    val description: String,
+    @get:JsonProperty("isNew")
+    val isNew: Boolean,
 ) {
 
     companion object {

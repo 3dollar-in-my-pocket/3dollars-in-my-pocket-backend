@@ -14,7 +14,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository
 class AdminUserReviewService(
     private val reviewRepository: ReviewRepository,
     private val storeRepository: StoreRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) {
 
     @Transactional

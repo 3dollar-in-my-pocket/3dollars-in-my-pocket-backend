@@ -4,5 +4,5 @@ import javax.validation.constraints.NotBlank
 
 data class LoginRequest(
     @field:NotBlank(message = "{auth.token.notBlank}")
-    val token: String = ""
+    val token: String = "",
 )

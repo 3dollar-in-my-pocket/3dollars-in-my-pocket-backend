@@ -18,7 +18,7 @@ import com.mongodb.ReadPreference
 @Configuration
 class MongoConfig(
     private val mongoDbFactory: MongoDatabaseFactory,
-    private val mongoMappingContext: MongoMappingContext
+    private val mongoMappingContext: MongoMappingContext,
 ) {
 
     @Bean

@@ -16,7 +16,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegis
 
 @Repository
 class BossRegistrationRepositoryCustomImpl(
-    private val mongoTemplate: MongoTemplate
+    private val mongoTemplate: MongoTemplate,
 ) : BossRegistrationRepositoryCustom {
 
     override fun existsWaitingRegistrationBySocialIdAndSocialType(socialId: String, socialType: BossAccountSocialType): Boolean {

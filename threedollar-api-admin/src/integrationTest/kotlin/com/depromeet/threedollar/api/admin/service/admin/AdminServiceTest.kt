@@ -19,7 +19,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminRepository
 @SpringBootTest
 internal class AdminServiceTest(
     private val adminService: AdminService,
-    private val adminRepository: AdminRepository
+    private val adminRepository: AdminRepository,
 ) {
 
     @AfterEach

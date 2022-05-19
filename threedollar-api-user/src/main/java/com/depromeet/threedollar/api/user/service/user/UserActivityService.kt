@@ -11,7 +11,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository
 class UserActivityService(
     private val userRepository: UserRepository,
     private val storeRepository: StoreRepository,
-    private val reviewRepository: ReviewRepository
+    private val reviewRepository: ReviewRepository,
 ) {
 
     @Transactional(readOnly = true)

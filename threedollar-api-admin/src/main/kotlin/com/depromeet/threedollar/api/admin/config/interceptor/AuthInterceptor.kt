@@ -18,7 +18,7 @@ private const val TOKEN_PREFIX = "Bearer "
 @Component
 class AuthInterceptor(
     private val sessionRepository: SessionRepository<out Session?>,
-    private val adminRepository: AdminRepository
+    private val adminRepository: AdminRepository,
 ) : HandlerInterceptor {
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {

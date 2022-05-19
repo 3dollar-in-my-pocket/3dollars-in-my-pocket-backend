@@ -9,7 +9,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount
 
 @Repository
 class BossAccountStatisticsRepositoryCustomImpl(
-    private val mongoTemplate: MongoTemplate
+    private val mongoTemplate: MongoTemplate,
 ) : BossAccountStatisticsRepositoryCustom {
 
     override fun countBossAccountsBetweenDate(startDate: LocalDate, endDate: LocalDate): Long {

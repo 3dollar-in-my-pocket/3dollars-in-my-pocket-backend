@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiOperation
 
 @RestController
 class EnumMapperController(
-    private val enumMapper: EnumMapper
+    private val enumMapper: EnumMapper,
 ) {
 
     @ApiOperation("클라이언트에서 사용되는 Enum 목록을 조회합니다.")

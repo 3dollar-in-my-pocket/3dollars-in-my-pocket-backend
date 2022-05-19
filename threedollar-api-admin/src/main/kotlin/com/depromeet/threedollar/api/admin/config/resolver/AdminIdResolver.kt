@@ -20,7 +20,7 @@ class AccountIdResolver : HandlerMethodArgumentResolver {
         parameter: MethodParameter,
         mavContainer: ModelAndViewContainer?,
         webRequest: NativeWebRequest,
-        binderFactory: WebDataBinderFactory?
+        binderFactory: WebDataBinderFactory?,
     ): Any {
         return webRequest.getAttribute(SessionConstants.ADMIN_ID, 0)
             ?: throw InternalServerException("예상치 못한 에러가 발생하였습니다. 컨트롤러(${parameter.declaringClass.simpleName} - ${parameter.method?.name})에서 adminId를 받아오지 못했습니다")

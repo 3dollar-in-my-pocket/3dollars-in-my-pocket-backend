@@ -14,7 +14,7 @@ import com.depromeet.threedollar.domain.mongo.boss.event.registration.BossSignOu
 class BossAccountService(
     private val bossAccountRepository: BossAccountRepository,
     private val bossWithdrawalAccountRepository: BossWithdrawalAccountRepository,
-    private val eventPublisher: ApplicationEventPublisher
+    private val eventPublisher: ApplicationEventPublisher,
 ) {
 
     @Transactional(readOnly = true)

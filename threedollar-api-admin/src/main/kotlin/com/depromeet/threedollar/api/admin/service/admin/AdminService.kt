@@ -11,7 +11,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminRepository
 
 @Service
 class AdminService(
-    private val adminRepository: AdminRepository
+    private val adminRepository: AdminRepository,
 ) {
 
     @Transactional(readOnly = true)

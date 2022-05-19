@@ -21,7 +21,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqRepository
 @SpringBootTest
 internal class FaqAdminServiceTest(
     private val faqAdminService: FaqAdminService,
-    private val faqRepository: FaqRepository
+    private val faqRepository: FaqRepository,
 ) {
 
     @AfterEach

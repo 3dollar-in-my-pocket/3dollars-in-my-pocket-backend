@@ -27,7 +27,7 @@ data class AddMedalRequest(
     val conditionCount: Int,
 
     @field:Size(max = 200, message = "{medal.acquisitionDescription.size}")
-    val acquisitionDescription: String?
+    val acquisitionDescription: String?,
 ) {
 
     fun toEntity(): Medal {

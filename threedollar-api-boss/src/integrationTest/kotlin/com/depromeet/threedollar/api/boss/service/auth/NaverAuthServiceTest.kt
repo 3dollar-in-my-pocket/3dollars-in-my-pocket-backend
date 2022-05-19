@@ -25,7 +25,7 @@ private val SOCIAL_TYPE = BossAccountSocialType.NAVER
 @SpringBootTest
 internal class NaverAuthServiceTest(
     private val bossAccountRepository: BossAccountRepository,
-    private val bossRegistrationRepository: BossRegistrationRepository
+    private val bossRegistrationRepository: BossRegistrationRepository,
 ) {
 
     private lateinit var authService: AuthService

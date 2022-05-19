@@ -13,7 +13,7 @@ private val CONTACTS_NUMBER_REGEX = Pattern.compile("^\\d{2,3}-\\d{3,4}-\\d{4}\$
 data class ContactsNumber(
     private val first: String,
     private val second: String,
-    private val third: String
+    private val third: String,
 ) {
 
     fun getNumberWithSeparator(): String {

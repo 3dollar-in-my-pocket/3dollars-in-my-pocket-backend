@@ -7,7 +7,7 @@ object BossStoreCategoryCreator {
 
     fun create(
         title: String,
-        sequencePriority: Int = 0
+        sequencePriority: Int = 0,
     ): BossStoreCategory {
         return BossStoreCategory(
             name = title,

@@ -8,7 +8,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.advertisement.Advertisem
 
 data class AdvertisementsWithPagingResponse(
     val contents: List<AdvertisementResponse>,
-    val totalCounts: Long
+    val totalCounts: Long,
 ) {
 
     companion object {
@@ -31,7 +31,7 @@ data class AdvertisementResponse(
     val imageUrl: String,
     val linkUrl: String?,
     val startDateTime: LocalDateTime,
-    val endDateTime: LocalDateTime
+    val endDateTime: LocalDateTime,
 ) : AuditingTimeResponse() {
 
     companion object {

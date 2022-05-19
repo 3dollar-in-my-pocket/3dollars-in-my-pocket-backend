@@ -24,7 +24,7 @@ private val SOCIAL_TYPE = BossAccountSocialType.KAKAO
 @SpringBootTest
 internal class KaKaoAuthServiceTest(
     private val bossAccountRepository: BossAccountRepository,
-    private val bossRegistrationRepository: BossRegistrationRepository
+    private val bossRegistrationRepository: BossRegistrationRepository,
 ) {
 
     private lateinit var authService: AuthService

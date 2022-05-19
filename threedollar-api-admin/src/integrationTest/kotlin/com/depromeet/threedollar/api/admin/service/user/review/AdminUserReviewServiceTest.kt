@@ -13,7 +13,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewStatus
 
 internal class AdminUserReviewServiceTest(
     private val adminUserReviewService: AdminUserReviewService,
-    private val reviewRepository: ReviewRepository
+    private val reviewRepository: ReviewRepository,
 ) : SetupAdminServiceTest() {
 
     @AfterEach

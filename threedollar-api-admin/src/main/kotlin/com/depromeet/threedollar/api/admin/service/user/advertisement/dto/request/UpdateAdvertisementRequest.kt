@@ -33,5 +33,5 @@ data class UpdateAdvertisementRequest(
 
     val startDateTime: LocalDateTime,
 
-    val endDateTime: LocalDateTime
+    val endDateTime: LocalDateTime,
 )

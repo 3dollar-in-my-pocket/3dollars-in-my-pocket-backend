@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiOperation
 
 @RestController
 class MedalController(
-    private val medalService: MedalService
+    private val medalService: MedalService,
 ) {
 
     @ApiOperation("전체 메달 목록을 조회합니다.")

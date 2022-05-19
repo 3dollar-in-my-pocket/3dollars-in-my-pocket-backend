@@ -10,7 +10,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registrat
 data class BossAccountRegistrationResponse(
     val registrationId: String,
     val boss: BossAccountRegistrationBossResponse,
-    val store: BossAccountRegistrationStoreResponse
+    val store: BossAccountRegistrationStoreResponse,
 ) : AuditingTimeResponse() {
 
     companion object {
@@ -31,7 +31,7 @@ data class BossAccountRegistrationResponse(
 data class BossAccountRegistrationBossResponse(
     val socialType: BossAccountSocialType,
     val name: String,
-    val businessNumber: String
+    val businessNumber: String,
 ) {
 
     companion object {
@@ -51,7 +51,7 @@ data class BossAccountRegistrationStoreResponse(
     val name: String,
     val categories: Set<String> = setOf(),
     val contactsNumber: String,
-    val certificationPhotoUrl: String
+    val certificationPhotoUrl: String,
 ) {
 
     companion object {

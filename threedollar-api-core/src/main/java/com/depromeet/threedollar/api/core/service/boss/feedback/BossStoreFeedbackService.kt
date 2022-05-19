@@ -22,7 +22,7 @@ import com.depromeet.threedollar.domain.redis.domain.boss.feedback.BossStoreFeed
 class BossStoreFeedbackService(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,
-    private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository
+    private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository,
 ) {
 
     @CacheEvict(cacheNames = [BOSS_STORE_FEEDBACKS_TOTAL_COUNTS], key = "#bossStoreId")

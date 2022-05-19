@@ -29,7 +29,7 @@ data class UpdateBossStoreInfoRequest(
     val appearanceDays: Set<AppearanceDayRequest>,
 
     @field:Size(max = 3, message = "{store.categoriesIds.size}")
-    val categoriesIds: Set<String>
+    val categoriesIds: Set<String>,
 ) {
 
     fun toMenus(): List<BossStoreMenu> {
@@ -68,7 +68,7 @@ data class AppearanceDayRequest(
     val dayOfTheWeek: DayOfTheWeek,
     val startTime: LocalTime,
     val endTime: LocalTime,
-    val locationDescription: String = ""
+    val locationDescription: String = "",
 ) {
 
     fun toAppearanceDay(): BossStoreAppearanceDay {

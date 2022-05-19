@@ -5,8 +5,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDayRepository;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDayRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodRepository;

@@ -4,7 +4,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCate
 
 data class BossStoreCategoryResponse(
     val categoryId: String,
-    val name: String
+    val name: String,
 ) {
 
     companion object {

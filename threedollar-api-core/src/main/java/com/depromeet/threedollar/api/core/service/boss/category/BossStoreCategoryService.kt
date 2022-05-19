@@ -9,7 +9,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCate
 
 @Service
 class BossStoreCategoryService(
-    private val bossStoreCategoryRepository: BossStoreCategoryRepository
+    private val bossStoreCategoryRepository: BossStoreCategoryRepository,
 ) {
 
     @Cacheable(cacheNames = [BOSS_STORE_CATEGORIES], key = "'ALL'")

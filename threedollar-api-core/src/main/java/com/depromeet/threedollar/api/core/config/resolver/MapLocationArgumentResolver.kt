@@ -27,7 +27,7 @@ class MapLocationArgumentResolver : HandlerMethodArgumentResolver {
         parameter: MethodParameter,
         mavContainer: ModelAndViewContainer?,
         webRequest: NativeWebRequest,
-        binderFactory: WebDataBinderFactory?
+        binderFactory: WebDataBinderFactory?,
     ): Any? {
         val mapLatitude = webRequest.getParameter(MAP_LATITUDE)?.toDoubleOrNull()
         val mapLongitude = webRequest.getParameter(MAP_LONGITUDE)?.toDoubleOrNull()

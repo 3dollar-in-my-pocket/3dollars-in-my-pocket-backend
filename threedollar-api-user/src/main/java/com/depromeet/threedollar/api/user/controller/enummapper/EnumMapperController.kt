@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiOperation
 
 @RestController
 class EnumMapperController(
-    private val enumMapper: EnumMapper
+    private val enumMapper: EnumMapper,
 ) {
 
     @GetMapping("/v1/enums")

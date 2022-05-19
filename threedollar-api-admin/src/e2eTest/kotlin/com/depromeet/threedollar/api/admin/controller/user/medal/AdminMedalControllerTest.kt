@@ -19,7 +19,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
 
 internal class AdminMedalControllerTest(
-    private val medalRepository: MedalRepository
+    private val medalRepository: MedalRepository,
 ) : SetupAdminControllerTest() {
 
     @AfterEach

@@ -5,7 +5,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.admin.Admin
 
 data class AdminListInfoWithPagingResponse(
     val admins: List<AdminInfoResponse>,
-    val page: PagingResponse
+    val page: PagingResponse,
 ) {
 
     companion object {

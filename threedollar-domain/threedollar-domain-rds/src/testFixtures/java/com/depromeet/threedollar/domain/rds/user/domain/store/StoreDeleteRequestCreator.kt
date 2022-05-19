@@ -9,7 +9,7 @@ object StoreDeleteRequestCreator {
     fun create(
         store: Store,
         userId: Long,
-        reasonType: DeleteReasonType
+        reasonType: DeleteReasonType,
     ): StoreDeleteRequest {
         return StoreDeleteRequest.builder()
             .store(store)

@@ -17,7 +17,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
 
 internal class UserActivityControllerTest(
     private val storeRepository: StoreRepository,
-    private val reviewRepository: ReviewRepository
+    private val reviewRepository: ReviewRepository,
 ) : SetupUserControllerTest() {
 
     @AfterEach

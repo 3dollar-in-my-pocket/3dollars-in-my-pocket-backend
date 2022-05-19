@@ -22,7 +22,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -44,6 +43,7 @@ import com.depromeet.threedollar.api.user.service.store.dto.response.StoresCurso
 import com.depromeet.threedollar.api.user.service.store.dto.type.UserStoreOrderType;
 import com.depromeet.threedollar.common.model.LocationValue;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;

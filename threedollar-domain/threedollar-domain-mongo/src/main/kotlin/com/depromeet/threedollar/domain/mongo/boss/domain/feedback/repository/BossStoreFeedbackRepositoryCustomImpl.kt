@@ -12,7 +12,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeed
 
 @Repository
 class BossStoreFeedbackRepositoryCustomImpl(
-    private val mongoTemplate: MongoTemplate
+    private val mongoTemplate: MongoTemplate,
 ) : BossStoreFeedbackRepositoryCustom {
 
     override fun existsByStoreIdAndUserIdAndDate(storeId: String, userId: Long, date: LocalDate): Boolean {

@@ -26,7 +26,7 @@ internal class SignupServiceTest(
     private val signupService: SignupService,
     private val bossRegistrationRepository: BossRegistrationRepository,
     private val bossAccountRepository: BossAccountRepository,
-    private val bossStoreCategoryRepository: BossStoreCategoryRepository
+    private val bossStoreCategoryRepository: BossStoreCategoryRepository,
 ) {
 
     @AfterEach
@@ -177,7 +177,7 @@ internal class SignupServiceTest(
 
 private fun createCategory(
     bossStoreCategoryRepository: BossStoreCategoryRepository,
-    vararg titles: String
+    vararg titles: String,
 ): Set<String> {
     return titles.asSequence()
         .map { bossStoreCategoryRepository.save(BossStoreCategoryCreator.create(it)).id }

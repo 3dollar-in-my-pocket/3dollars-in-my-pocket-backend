@@ -11,7 +11,7 @@ object UserMedalCreator {
     fun create(
         medal: Medal,
         user: User,
-        status: UserMedalStatus = UserMedalStatus.ACTIVE
+        status: UserMedalStatus = UserMedalStatus.ACTIVE,
     ): UserMedal {
         return UserMedal.builder()
             .medal(medal)

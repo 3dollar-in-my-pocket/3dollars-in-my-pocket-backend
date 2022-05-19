@@ -18,7 +18,7 @@ class ApplicationEventRunner(
     private val eventPublisher: ApplicationEventPublisher,
 
     @Value("\${threedollars.aplication.uid}")
-    private val applicationUid: String
+    private val applicationUid: String,
 ) : CommandLineRunner, ApplicationListener<ContextClosedEvent> {
 
     override fun run(vararg args: String) {

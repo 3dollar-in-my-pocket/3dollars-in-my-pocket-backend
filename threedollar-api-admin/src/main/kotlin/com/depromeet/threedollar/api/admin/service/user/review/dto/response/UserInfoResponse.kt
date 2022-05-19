@@ -8,7 +8,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType
 data class UserInfoResponse(
     val userId: Long?,
     val socialType: UserSocialType?,
-    val name: String
+    val name: String,
 ) : AuditingTimeResponse() {
 
     companion object {

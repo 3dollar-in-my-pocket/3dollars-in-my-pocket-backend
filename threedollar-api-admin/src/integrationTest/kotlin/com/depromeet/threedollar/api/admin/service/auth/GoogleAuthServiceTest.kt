@@ -19,7 +19,7 @@ private const val EMAIL = "will.seunho@gmail.com"
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class GoogleAuthServiceTest(
-    private val adminRepository: AdminRepository
+    private val adminRepository: AdminRepository,
 ) {
 
     private lateinit var authService: AuthService

@@ -15,7 +15,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSoc
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class AuthServiceFinderTest(
-    private val authServiceFinder: AuthServiceFinder
+    private val authServiceFinder: AuthServiceFinder,
 ) {
 
     @MethodSource("bossSocialTypeAndServices")

@@ -19,14 +19,14 @@ import io.swagger.annotations.ApiOperation
 
 @RestController
 class AdminAdvertisementController(
-    private val adminAdvertisementService: AdminAdvertisementService
+    private val adminAdvertisementService: AdminAdvertisementService,
 ) {
 
     @ApiOperation("광고를 추가합니다")
     @Auth
     @PostMapping("/v1/user/advertisement")
     fun addAdvertisement(
-        @Valid @RequestBody request: AddAdvertisementRequest
+        @Valid @RequestBody request: AddAdvertisementRequest,
     ): ApiResponse<String> {
         adminAdvertisementService.addAdvertisement(request)
         return ApiResponse.OK
@@ -37,7 +37,7 @@ class AdminAdvertisementController(
     @PutMapping("/v1/user/advertisement/{advertisementId}")
     fun updateAdvertisement(
         @PathVariable advertisementId: Long,
-        @Valid @RequestBody request: UpdateAdvertisementRequest
+        @Valid @RequestBody request: UpdateAdvertisementRequest,
     ): ApiResponse<String> {
         adminAdvertisementService.updateAdvertisement(advertisementId, request)
         return ApiResponse.OK
@@ -47,7 +47,7 @@ class AdminAdvertisementController(
     @Auth
     @DeleteMapping("/v1/user/advertisement/{advertisementId}")
     fun deleteAdvertisement(
-        @PathVariable advertisementId: Long
+        @PathVariable advertisementId: Long,
     ): ApiResponse<String> {
         adminAdvertisementService.deleteAdvertisement(advertisementId)
         return ApiResponse.OK
@@ -57,7 +57,7 @@ class AdminAdvertisementController(
     @Auth
     @GetMapping("/v1/user/advertisements")
     fun retrieveAdvertisements(
-        @Valid request: RetrieveAdvertisementsRequest
+        @Valid request: RetrieveAdvertisementsRequest,
     ): ApiResponse<AdvertisementsWithPagingResponse> {
         return ApiResponse.success(adminAdvertisementService.retrieveAdvertisements(request))
     }

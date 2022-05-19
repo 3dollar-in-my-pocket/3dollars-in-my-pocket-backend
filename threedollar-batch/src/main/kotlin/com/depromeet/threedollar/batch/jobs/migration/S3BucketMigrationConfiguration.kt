@@ -21,7 +21,7 @@ private const val JOB_NAME = "migrationS3BucketJob"
 class S3BucketMigrationConfiguration(
     private val jobBuilderFactory: JobBuilderFactory,
     private val stepBuilderFactory: StepBuilderFactory,
-    private val storeImageRepository: StoreImageRepository
+    private val storeImageRepository: StoreImageRepository,
 ) {
 
     @Bean(name = [JOB_NAME])
@@ -36,7 +36,7 @@ class S3BucketMigrationConfiguration(
     @JobScope
     fun migrationS3BucketStep(
         @Value("#{jobParameters[beforePrefix]}") beforePrefix: String,
-        @Value("#{jobParameters[afterPrefix]}") afterPrefix: String
+        @Value("#{jobParameters[afterPrefix]}") afterPrefix: String,
     ): Step {
         return stepBuilderFactory[JOB_NAME + "_step"]
             .tasklet { _, _ ->

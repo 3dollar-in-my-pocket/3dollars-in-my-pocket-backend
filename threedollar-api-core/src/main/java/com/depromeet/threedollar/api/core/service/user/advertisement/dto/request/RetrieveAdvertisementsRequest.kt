@@ -9,5 +9,5 @@ data class RetrieveAdvertisementsRequest(
     val platform: AdvertisementPlatformType?,
 
     @field:NotNull(message = "{advertisement.position.notnull}")
-    val position: AdvertisementPositionType = AdvertisementPositionType.SPLASH
+    val position: AdvertisementPositionType = AdvertisementPositionType.SPLASH,
 )

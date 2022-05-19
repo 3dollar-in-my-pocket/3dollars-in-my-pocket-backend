@@ -8,5 +8,5 @@ data class RetrieveLatestStoresRequest(
     @field:Max(value = 100, message = "{common.size.max}")
     val size: Int = 0,
 
-    val cursor: Long?
+    val cursor: Long?,
 )

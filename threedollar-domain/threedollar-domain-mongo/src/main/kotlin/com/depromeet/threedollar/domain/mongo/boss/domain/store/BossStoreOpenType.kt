@@ -3,7 +3,7 @@ package com.depromeet.threedollar.domain.mongo.boss.domain.store
 import com.depromeet.threedollar.common.model.EnumModel
 
 enum class BossStoreOpenType(
-    private val description: String
+    private val description: String,
 ) : EnumModel {
 
     OPEN("영업중"),

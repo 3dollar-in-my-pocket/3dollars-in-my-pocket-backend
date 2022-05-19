@@ -15,7 +15,7 @@ private val SOCIAL_TYPE = BossAccountSocialType.KAKAO
 class KaKaoAuthService(
     private val bossAccountRepository: BossAccountRepository,
     private val bossRegistrationRepository: BossRegistrationRepository,
-    private val kaKaoAuthApiClient: KaKaoAuthApiClient
+    private val kaKaoAuthApiClient: KaKaoAuthApiClient,
 ) : AuthService {
 
     override fun login(request: LoginRequest): String {

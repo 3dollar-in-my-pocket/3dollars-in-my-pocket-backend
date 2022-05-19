@@ -24,7 +24,7 @@ import com.fasterxml.jackson.core.type.TypeReference
 
 internal class StoreControllerTest(
     private val storeRepository: StoreRepository,
-    private val storeDeleteRequestRepository: StoreDeleteRequestRepository
+    private val storeDeleteRequestRepository: StoreDeleteRequestRepository,
 ) : SetupAdminControllerTest() {
 
     @AfterEach

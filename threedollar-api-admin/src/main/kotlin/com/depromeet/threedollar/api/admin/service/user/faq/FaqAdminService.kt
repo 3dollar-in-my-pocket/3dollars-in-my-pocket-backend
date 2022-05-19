@@ -14,7 +14,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqRepository
 
 @Service
 class FaqAdminService(
-    private val faqRepository: FaqRepository
+    private val faqRepository: FaqRepository,
 ) {
 
     @CacheEvict(cacheNames = [FAQS], allEntries = true)

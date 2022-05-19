@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.common.type
 
 enum class ApplicationType(
-    val description: String
+    val description: String,
 ) {
 
     USER_API("유저 API 서버"),

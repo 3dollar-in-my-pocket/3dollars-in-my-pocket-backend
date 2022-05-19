@@ -16,14 +16,14 @@ import io.swagger.annotations.ApiOperation
 
 @RestController
 class AdminUserStoreController(
-    private val adminUserStoreService: AdminUserStoreService
+    private val adminUserStoreService: AdminUserStoreService,
 ) {
 
     @ApiOperation("N개 이상 삭제 요청된 유저 가게 목록을 조회합니다")
     @Auth
     @GetMapping("/v1/user/stores/reported")
     fun retrieveReportedStores(
-        @Valid request: RetrieveReportedStoresRequest
+        @Valid request: RetrieveReportedStoresRequest,
     ): ApiResponse<List<ReportedStoreInfoResponse>> {
         return ApiResponse.success(adminUserStoreService.retrieveReportedStores(request))
     }
@@ -32,7 +32,7 @@ class AdminUserStoreController(
     @Auth
     @GetMapping("/v1/user/stores/latest")
     fun retrieveLatestStores(
-        @Valid request: RetrieveLatestStoresRequest
+        @Valid request: RetrieveLatestStoresRequest,
     ): ApiResponse<StoreInfosWithCursorResponse> {
         return ApiResponse.success(adminUserStoreService.retrieveLatestStores(request))
     }
@@ -41,7 +41,7 @@ class AdminUserStoreController(
     @Auth
     @DeleteMapping("/v1/user/store/{storeId}")
     fun deleteStoreByForce(
-        @PathVariable storeId: Long
+        @PathVariable storeId: Long,
     ): ApiResponse<String> {
         adminUserStoreService.deleteStoreByForce(storeId)
         return ApiResponse.OK

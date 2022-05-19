@@ -4,7 +4,7 @@ import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossSt
 
 enum class BossStoreOrderType(
     val description: String,
-    val sorted: Comparator<BossStoreAroundInfoResponse>
+    val sorted: Comparator<BossStoreAroundInfoResponse>,
 ) {
 
     DISTANCE_ASC("가까운 거리순", Comparator.comparing<BossStoreAroundInfoResponse, Int> { it.distance }),

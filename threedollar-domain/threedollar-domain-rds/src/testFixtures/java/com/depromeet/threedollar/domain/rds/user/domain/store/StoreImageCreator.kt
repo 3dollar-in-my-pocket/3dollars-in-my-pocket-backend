@@ -11,7 +11,7 @@ object StoreImageCreator {
         storeId: Long,
         userId: Long,
         url: String,
-        status: StoreImageStatus = StoreImageStatus.ACTIVE
+        status: StoreImageStatus = StoreImageStatus.ACTIVE,
     ): StoreImage {
         return StoreImage.builder()
             .storeId(storeId)

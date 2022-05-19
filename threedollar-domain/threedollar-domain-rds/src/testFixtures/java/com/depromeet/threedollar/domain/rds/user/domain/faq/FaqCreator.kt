@@ -9,7 +9,7 @@ object FaqCreator {
     fun create(
         question: String,
         answer: String,
-        category: FaqCategory
+        category: FaqCategory,
     ): Faq {
         return Faq.builder()
             .question(question)

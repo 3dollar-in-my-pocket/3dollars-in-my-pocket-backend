@@ -10,7 +10,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqRepository
 
 @Service
 class FaqService(
-    private val faqRepository: FaqRepository
+    private val faqRepository: FaqRepository,
 ) {
 
     @Cacheable(cacheNames = [FAQS], key = "#request.category?:'ALL'")

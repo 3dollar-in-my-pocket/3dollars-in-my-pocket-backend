@@ -11,7 +11,7 @@ data class AddFaqRequest(
     @field:Size(max = 200, message = "{faq.answer.size}")
     val answer: String,
 
-    val category: FaqCategory
+    val category: FaqCategory,
 ) {
 
     fun toEntity(): Faq {

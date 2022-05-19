@@ -15,7 +15,7 @@ class BossStore(
     var snsUrl: String?,
     var menus: List<BossStoreMenu> = listOf(),
     var appearanceDays: Set<BossStoreAppearanceDay> = setOf(),
-    var categoriesIds: Set<String> = setOf()
+    var categoriesIds: Set<String> = setOf(),
 ) : BaseDocument() {
 
     fun updateInfo(
@@ -23,7 +23,7 @@ class BossStore(
         imageUrl: String?,
         introduction: String?,
         contactsNumber: String?,
-        snsUrl: String?
+        snsUrl: String?,
     ) {
         this.name = name
         this.imageUrl = imageUrl
@@ -37,7 +37,7 @@ class BossStore(
         imageUrl: String?,
         introduction: String?,
         contactsNumber: String?,
-        snsUrl: String?
+        snsUrl: String?,
     ) {
         name?.let { this.name = it }
         imageUrl?.let { this.imageUrl = it }
@@ -96,7 +96,7 @@ class BossStore(
             snsUrl: String? = null,
             menus: List<BossStoreMenu> = listOf(),
             appearanceDays: Set<BossStoreAppearanceDay> = setOf(),
-            categoriesIds: Set<String> = setOf()
+            categoriesIds: Set<String> = setOf(),
         ): BossStore {
             return BossStore(
                 bossId = bossId,

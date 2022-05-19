@@ -11,14 +11,14 @@ import io.swagger.annotations.ApiOperation
 
 @RestController
 class UserActivityController(
-    private val userActivityService: UserActivityService
+    private val userActivityService: UserActivityService,
 ) {
 
     @ApiOperation("[인증] 유저의 활동 정보를 조회합니다")
     @Auth
     @GetMapping("/v1/user/me/activity")
     fun getMyUserActivity(
-        @UserId userId: Long?
+        @UserId userId: Long?,
     ): ApiResponse<UserWithActivityResponse> {
         return ApiResponse.success(userActivityService.getUserActivity(userId))
     }
@@ -28,7 +28,7 @@ class UserActivityController(
     @Auth
     @GetMapping("/v1/user/activity")
     fun getUserActivityV1(
-        @UserId userId: Long?
+        @UserId userId: Long?,
     ): ApiResponse<UserWithActivityResponse> {
         return ApiResponse.success(userActivityService.getUserActivity(userId))
     }

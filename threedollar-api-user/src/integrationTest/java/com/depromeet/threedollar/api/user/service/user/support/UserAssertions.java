@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.depromeet.threedollar.domain.rds.user.domain.TestHelper;
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialInfo;
 import com.depromeet.threedollar.domain.rds.user.domain.user.User;
+import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialInfo;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
 import com.depromeet.threedollar.domain.rds.user.domain.user.WithdrawalUser;
 

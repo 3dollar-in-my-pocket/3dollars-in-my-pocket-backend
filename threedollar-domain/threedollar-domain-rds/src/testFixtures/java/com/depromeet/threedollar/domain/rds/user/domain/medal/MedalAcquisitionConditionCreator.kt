@@ -10,7 +10,7 @@ object MedalAcquisitionConditionCreator {
         medal: Medal,
         conditionType: MedalAcquisitionConditionType,
         count: Int,
-        description: String
+        description: String,
     ): MedalAcquisitionCondition {
         return MedalAcquisitionCondition.builder()
             .medal(medal)

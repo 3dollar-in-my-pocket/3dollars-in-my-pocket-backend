@@ -8,7 +8,7 @@ private const val DEFAULT_COUNT = 0
 
 @Repository
 class BossStoreFeedbackCountRepository(
-    private val bossStoreFeedbackCountRepository: StringRedisRepository<BossStoreFeedbackCountKey, Int>
+    private val bossStoreFeedbackCountRepository: StringRedisRepository<BossStoreFeedbackCountKey, Int>,
 ) {
 
     fun getTotalCounts(bossStoreId: String): Int {

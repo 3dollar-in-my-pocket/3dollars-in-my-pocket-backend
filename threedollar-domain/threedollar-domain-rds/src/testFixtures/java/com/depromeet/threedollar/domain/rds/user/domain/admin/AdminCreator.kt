@@ -8,7 +8,7 @@ object AdminCreator {
     @JvmStatic
     fun create(
         email: String,
-        name: String
+        name: String,
     ): Admin {
         return Admin.builder()
             .email(email)

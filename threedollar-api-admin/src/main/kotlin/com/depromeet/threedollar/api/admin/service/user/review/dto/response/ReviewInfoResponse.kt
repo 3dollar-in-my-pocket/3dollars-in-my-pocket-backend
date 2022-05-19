@@ -11,7 +11,7 @@ data class ReviewInfoResponse(
     val contents: String,
     val rating: Int,
     val user: UserInfoResponse?,
-    val store: StoreInfoResponse?
+    val store: StoreInfoResponse?,
 ) : AuditingTimeResponse() {
 
     companion object {

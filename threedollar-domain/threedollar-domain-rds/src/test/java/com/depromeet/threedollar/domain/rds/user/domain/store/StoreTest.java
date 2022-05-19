@@ -7,13 +7,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 
 class StoreTest {
 

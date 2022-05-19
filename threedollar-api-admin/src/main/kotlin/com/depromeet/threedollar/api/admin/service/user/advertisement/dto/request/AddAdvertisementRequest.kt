@@ -35,7 +35,7 @@ data class AddAdvertisementRequest(
 
     val startDateTime: LocalDateTime,
 
-    val endDateTime: LocalDateTime
+    val endDateTime: LocalDateTime,
 ) {
 
     fun toEntity(): Advertisement {

@@ -3,13 +3,13 @@ package com.depromeet.threedollar.api.user.service.store.dto.response;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoryCountsResponse;
 import com.depromeet.threedollar.common.model.LocationValue;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.common.utils.distance.LocationDistanceUtils;
 import com.depromeet.threedollar.domain.rds.user.collection.visit.VisitHistoryCounter;
 
@@ -24,14 +24,21 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StoreWithVisitsAndDistanceResponse extends AuditingTimeResponse {
 
-    private final List<UserMenuCategoryType> categories = new ArrayList<>();
     private Long storeId;
+
     private double latitude;
+
     private double longitude;
+
     private String storeName;
+
     private double rating;
+
     @Nullable
     private Boolean isDeleted;
+
+    private final List<UserMenuCategoryType> categories = new ArrayList<>();
+
     private int distance;
 
     private VisitHistoryCountsResponse visitHistory;

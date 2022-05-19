@@ -23,7 +23,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCreator
 import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqRepository
 
 internal class AdminFaqControllerTest(
-    private val faqRepository: FaqRepository
+    private val faqRepository: FaqRepository,
 ) : SetupAdminControllerTest() {
 
     @AfterEach

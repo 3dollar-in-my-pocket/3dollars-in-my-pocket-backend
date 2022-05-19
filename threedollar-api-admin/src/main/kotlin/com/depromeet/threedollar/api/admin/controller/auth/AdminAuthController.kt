@@ -16,13 +16,13 @@ import io.swagger.annotations.ApiOperation
 @RestController
 class AdminAuthController(
     private val authService: AuthService,
-    private val httpSession: HttpSession
+    private val httpSession: HttpSession,
 ) {
 
     @ApiOperation("관리자 계정으로 로그인을 요청합니다")
     @PostMapping("/v1/auth/login")
     fun login(
-        @Valid @RequestBody request: LoginRequest
+        @Valid @RequestBody request: LoginRequest,
     ): ApiResponse<LoginResponse> {
         val adminId = authService.login(request)
         httpSession.setAttribute(ADMIN_ID, adminId)

@@ -12,7 +12,7 @@ object VisitHistoryCreator {
         store: Store,
         userId: Long,
         type: VisitType,
-        dateOfVisit: LocalDate
+        dateOfVisit: LocalDate,
     ): VisitHistory {
         return VisitHistory.builder()
             .store(store)

@@ -4,7 +4,7 @@ private const val LAST_CURSOR = -1L
 
 data class CursorResponse<T>(
     val nextCursor: T?,
-    val hasMore: Boolean
+    val hasMore: Boolean,
 ) {
 
     companion object {

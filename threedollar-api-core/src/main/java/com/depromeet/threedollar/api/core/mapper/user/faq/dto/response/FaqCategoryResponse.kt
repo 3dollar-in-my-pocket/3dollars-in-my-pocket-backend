@@ -5,7 +5,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCategory
 data class FaqCategoryResponse(
     val category: FaqCategory,
     val description: String,
-    val displayOrder: Int
+    val displayOrder: Int,
 ) {
 
     companion object {

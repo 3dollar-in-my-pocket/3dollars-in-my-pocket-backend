@@ -29,7 +29,7 @@ data class PatchBossStoreInfoRequest(
     val appearanceDays: Set<AppearanceDayRequest>? = null,
 
     @field:Size(max = 3, message = "{store.categoriesIds.size}")
-    val categoriesIds: Set<String>? = null
+    val categoriesIds: Set<String>? = null,
 ) {
 
     fun toMenus(): List<BossStoreMenu>? {

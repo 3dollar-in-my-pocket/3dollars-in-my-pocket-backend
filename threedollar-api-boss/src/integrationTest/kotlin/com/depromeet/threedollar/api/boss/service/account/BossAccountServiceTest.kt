@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.api.boss.service.account.dto.request.UpdateBossAccountInfoRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.common.model.BusinessNumber
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
@@ -17,7 +18,6 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSoc
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossWithdrawalAccount
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossWithdrawalAccountRepository
-import com.depromeet.threedollar.common.model.BusinessNumber
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest

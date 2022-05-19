@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.domain.mongo.boss.event.registration
 
 data class BossSignOutEvent(
-    val bossId: String
+    val bossId: String,
 ) {
 
     companion object {

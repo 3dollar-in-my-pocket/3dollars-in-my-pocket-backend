@@ -17,7 +17,7 @@ private const val BOSS_STORE_ID = "boss-store-id"
 @SpringBootTest
 internal class BossStoreFeedbackCountRepositoryTest(
     private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository,
-    private val stringRedisRepository: StringRedisRepository<BossStoreFeedbackCountKey, Int>
+    private val stringRedisRepository: StringRedisRepository<BossStoreFeedbackCountKey, Int>,
 ) {
 
     @AfterEach

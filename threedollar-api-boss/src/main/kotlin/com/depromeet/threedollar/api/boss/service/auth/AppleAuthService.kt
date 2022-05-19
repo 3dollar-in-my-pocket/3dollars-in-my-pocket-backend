@@ -14,7 +14,7 @@ private val SOCIAL_TYPE = APPLE
 class AppleAuthService(
     private val bossAccountRepository: BossAccountRepository,
     private val bossRegistrationRepository: BossRegistrationRepository,
-    private val appleTokenDecoder: AppleTokenDecoder
+    private val appleTokenDecoder: AppleTokenDecoder,
 ) : AuthService {
 
     override fun login(request: LoginRequest): String {

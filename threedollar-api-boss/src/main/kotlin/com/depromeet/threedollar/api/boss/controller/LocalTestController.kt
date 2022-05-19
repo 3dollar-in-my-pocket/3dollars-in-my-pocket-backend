@@ -22,6 +22,8 @@ import com.depromeet.threedollar.api.core.service.boss.feedback.dto.request.AddB
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.common.model.BusinessNumber
+import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount
@@ -39,8 +41,6 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppeara
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenu
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.common.model.BusinessNumber
-import com.depromeet.threedollar.common.model.ContactsNumber
 import io.swagger.annotations.ApiOperation
 
 private val BOSS = BossAccount.of(
@@ -60,7 +60,7 @@ class LocalTestController(
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossRegistrationRepository: BossRegistrationRepository,
     private val bossStoreFeedbackService: BossStoreFeedbackService,
-    private val httpSession: HttpSession
+    private val httpSession: HttpSession,
 ) {
 
     @ApiOperation("[개발용] 사장님 서버용 테스트 토큰을 발급 받습니다.")
@@ -80,7 +80,7 @@ class LocalTestController(
         @RequestParam categoriesIds: Set<String>,
         @RequestParam certificationPhotoUrl: String,
         @RequestParam contactsNumber: String,
-        @RequestParam businessNumber: String
+        @RequestParam businessNumber: String,
     ): ApiResponse<String> {
         val bossRegistration = BossRegistration.of(
             boss = RegistrationBossForm.of(
@@ -108,7 +108,7 @@ class LocalTestController(
         @RequestParam latitude: Double,
         @RequestParam longitude: Double,
         @RequestParam categoriesIds: Set<String>,
-        @RequestParam randomBossId: String?
+        @RequestParam randomBossId: String?,
     ): ApiResponse<String> {
         BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, categoriesIds)
         val bossStore = bossStoreRepository.save(
@@ -161,7 +161,7 @@ class LocalTestController(
     @PostMapping("/test-category")
     fun addMockStoreCategory(
         @RequestParam name: String,
-        @RequestParam priority: Int
+        @RequestParam priority: Int,
     ): ApiResponse<String> {
         val category = BossStoreCategory.of(
             name = name,
@@ -183,7 +183,7 @@ class LocalTestController(
         @PathVariable bossStoreId: String,
         @RequestParam feedbackTypes: Set<BossStoreFeedbackType>,
         @RequestParam date: LocalDate,
-        @RequestParam userId: Long
+        @RequestParam userId: Long,
     ): ApiResponse<String> {
         bossStoreFeedbackService.addFeedback(bossStoreId, AddBossStoreFeedbackRequest(feedbackTypes), userId, date)
         return ApiResponse.OK
@@ -192,7 +192,7 @@ class LocalTestController(
     @ApiOperation("[개발 서버용] 가입 신청을 승인합니다")
     @PutMapping("/test-registration/{registrationId}/apply")
     fun applyRegistrationForTest(
-        @PathVariable registrationId: String
+        @PathVariable registrationId: String,
     ): ApiResponse<String> {
         val registration = bossRegistrationRepository.findWaitingRegistrationById(registrationId)
             ?: throw NotFoundException("해당하는 가입 신청($registrationId)은 존재하지 않습니다.")

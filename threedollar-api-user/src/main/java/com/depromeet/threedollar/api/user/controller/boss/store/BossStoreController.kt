@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiOperation
 
 @RestController
 class BossStoreController(
-    private val bossStoreCommonService: BossStoreCommonService
+    private val bossStoreCommonService: BossStoreCommonService,
 ) {
 
     @ApiOperation("주변의 사장님 가게 목록을 조회합니다")
@@ -25,7 +25,7 @@ class BossStoreController(
     fun retrieveAroundBossStores(
         @Valid request: GetAroundBossStoresRequest,
         @MapLocation mapLocation: LocationValue,
-        @DeviceLocation(required = false) deviceLocation: LocationValue
+        @DeviceLocation(required = false) deviceLocation: LocationValue,
     ): ApiResponse<List<BossStoreAroundInfoResponse>> {
         return ApiResponse.success(bossStoreCommonService.getAroundBossStores(
             request = request,
@@ -39,7 +39,7 @@ class BossStoreController(
     @GetMapping("/v1/boss/store/{bossStoreId}")
     fun getBossStoreDetail(
         @PathVariable bossStoreId: String,
-        @DeviceLocation(required = false) deviceLocation: LocationValue
+        @DeviceLocation(required = false) deviceLocation: LocationValue,
     ): ApiResponse<BossStoreInfoResponse> {
         return ApiResponse.success(bossStoreCommonService.getBossStore(bossStoreId, deviceLocation))
     }

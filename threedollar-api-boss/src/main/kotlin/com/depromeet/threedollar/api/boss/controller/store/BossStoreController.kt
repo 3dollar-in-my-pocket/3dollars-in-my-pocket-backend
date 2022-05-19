@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiOperation
 class BossStoreController(
     private val bossStoreCommonService: BossStoreCommonService,
     private val bossStoreOpenService: BossStoreOpenService,
-    private val bossStoreService: BossStoreService
+    private val bossStoreService: BossStoreService,
 ) {
 
     @ApiOperation("특정 거리 안에 위치한 가게 목록을 조회합니다.", notes = "distanceKm=1: 반경 1km 이내의 가게 목록을 조회 (최대 2km 제한 중)")
@@ -35,7 +35,7 @@ class BossStoreController(
     fun getAroundBossStores(
         @MapLocation mapLocation: LocationValue,
         @Valid request: GetAroundBossStoresRequest,
-        @BossId bossId: String?
+        @BossId bossId: String?,
     ): ApiResponse<List<BossStoreAroundInfoResponse>> {
         return ApiResponse.success(bossStoreCommonService.getAroundBossStores(
             request = request,
@@ -50,7 +50,7 @@ class BossStoreController(
     fun openBossStore(
         @PathVariable bossStoreId: String,
         @BossId bossId: String,
-        @MapLocation mapLocation: LocationValue
+        @MapLocation mapLocation: LocationValue,
     ): ApiResponse<String> {
         bossStoreOpenService.openBossStore(bossStoreId, bossId, mapLocation)
         return ApiResponse.OK
@@ -61,7 +61,7 @@ class BossStoreController(
     @PutMapping("/v1/boss/store/{bossStoreId}/close")
     fun closeBossStore(
         @PathVariable bossStoreId: String,
-        @BossId bossId: String
+        @BossId bossId: String,
     ): ApiResponse<String> {
         bossStoreOpenService.closeBossStore(bossStoreId, bossId)
         return ApiResponse.OK
@@ -71,7 +71,7 @@ class BossStoreController(
     @Auth
     @GetMapping("/v1/boss/store/me")
     fun getMyBossStore(
-        @BossId bossId: String
+        @BossId bossId: String,
     ): ApiResponse<BossStoreInfoResponse> {
         return ApiResponse.success(bossStoreService.getMyBossStore(bossId))
     }
@@ -81,7 +81,7 @@ class BossStoreController(
     @GetMapping("/v1/boss/store/{bossStoreId}")
     fun getBossStoreDetail(
         @PathVariable bossStoreId: String,
-        @MapLocation(required = false) mapLocation: LocationValue
+        @MapLocation(required = false) mapLocation: LocationValue,
     ): ApiResponse<BossStoreInfoResponse> {
         return ApiResponse.success(bossStoreCommonService.getBossStore(bossStoreId, mapLocation))
     }
@@ -92,7 +92,7 @@ class BossStoreController(
     fun updateBossStoreInfo(
         @PathVariable bossStoreId: String,
         @Valid @RequestBody request: UpdateBossStoreInfoRequest,
-        @BossId bossId: String
+        @BossId bossId: String,
     ): ApiResponse<String> {
         bossStoreService.updateBossStoreInfo(bossStoreId, request, bossId)
         return ApiResponse.OK
@@ -104,7 +104,7 @@ class BossStoreController(
     fun patchBossStoreInfo(
         @PathVariable bossStoreId: String,
         @Valid @RequestBody request: PatchBossStoreInfoRequest,
-        @BossId bossId: String
+        @BossId bossId: String,
     ): ApiResponse<String> {
         bossStoreService.patchBossStoreInfo(bossStoreId, request, bossId)
         return ApiResponse.OK

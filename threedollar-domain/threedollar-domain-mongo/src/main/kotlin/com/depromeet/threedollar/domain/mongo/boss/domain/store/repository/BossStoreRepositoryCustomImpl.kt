@@ -14,7 +14,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 
 @Repository
 class BossStoreRepositoryCustomImpl(
-    private val mongoTemplate: MongoTemplate
+    private val mongoTemplate: MongoTemplate,
 ) : BossStoreRepositoryCustom {
 
     override fun findBossStoreById(bossStoreId: String): BossStore? {

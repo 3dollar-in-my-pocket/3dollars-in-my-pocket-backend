@@ -18,7 +18,7 @@ object BossAccountServiceUtils {
     fun validateNotExistsBossAccount(
         bossAccountRepository: BossAccountRepository,
         socialId: String,
-        socialType: BossAccountSocialType
+        socialType: BossAccountSocialType,
     ) {
         if (bossAccountRepository.existsBossAccountBySocialInfo(socialId, socialType)) {
             throw ConflictException("이미 가입한 사장님 계정(${socialId} - $socialType 입니다.", ErrorCode.CONFLICT_BOSS_ACCOUNT)
@@ -29,7 +29,7 @@ object BossAccountServiceUtils {
         bossAccountRepository: BossAccountRepository,
         bossRegistrationRepository: BossRegistrationRepository,
         socialId: String,
-        socialType: BossAccountSocialType
+        socialType: BossAccountSocialType,
     ): String {
         return bossAccountRepository.findBossAccountBySocialInfo(socialId, socialType)?.id
             ?: run {

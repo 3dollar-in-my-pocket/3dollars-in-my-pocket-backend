@@ -18,7 +18,7 @@ class ApplicationWarmingUpRunner(
     private val apiClient: LocalBossApiWarmupApiClient,
     private val appleAuthApiClient: AppleAuthApiClient,
     private val kakaoAuthApiClient: KaKaoAuthApiClient,
-    private val googleAuthApiClient: GoogleAuthApiClient
+    private val googleAuthApiClient: GoogleAuthApiClient,
 ) {
 
     @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.MINUTES)

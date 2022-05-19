@@ -28,7 +28,7 @@ class GiveDefaultMedalsToAllUserJobConfiguration(
     private val jobBuilderFactory: JobBuilderFactory,
     private val stepBuilderFactory: StepBuilderFactory,
     private val entityManagerFactory: EntityManagerFactory,
-    private val medalRepository: MedalRepository
+    private val medalRepository: MedalRepository,
 ) {
 
     @Bean(name = [JOB_NAME])

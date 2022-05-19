@@ -14,7 +14,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.advertisement.Advertisem
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementRepository
 
 internal class AdvertisementControllerTest(
-    private val advertisementRepository: AdvertisementRepository
+    private val advertisementRepository: AdvertisementRepository,
 ) : SetupControllerTest() {
 
     @AfterEach

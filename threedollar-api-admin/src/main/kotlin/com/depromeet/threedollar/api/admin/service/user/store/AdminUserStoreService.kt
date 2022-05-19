@@ -13,7 +13,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
 
 @Service
 class AdminUserStoreService(
-    private val storeRepository: StoreRepository
+    private val storeRepository: StoreRepository,
 ) {
 
     @Transactional(readOnly = true)

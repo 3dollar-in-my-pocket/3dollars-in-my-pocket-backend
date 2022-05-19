@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.external.client.storage;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -16,8 +17,6 @@ import com.depromeet.threedollar.external.client.storage.property.AmazonCloudFro
 import com.depromeet.threedollar.external.client.storage.property.AmazonS3Property;
 
 import lombok.RequiredArgsConstructor;
-
-import java.io.BufferedInputStream;
 
 @RequiredArgsConstructor
 @Component

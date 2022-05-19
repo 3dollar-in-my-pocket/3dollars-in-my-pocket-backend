@@ -9,7 +9,7 @@ object UserCreator {
     fun create(
         socialId: String,
         socialType: UserSocialType,
-        name: String
+        name: String,
     ): User {
         return User.builder()
             .socialId(socialId)

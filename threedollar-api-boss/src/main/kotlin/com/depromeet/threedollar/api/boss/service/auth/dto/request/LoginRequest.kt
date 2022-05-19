@@ -4,5 +4,5 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSoc
 
 data class LoginRequest(
     val token: String,
-    val socialType: BossAccountSocialType
+    val socialType: BossAccountSocialType,
 )

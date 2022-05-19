@@ -31,7 +31,7 @@ class BossDailyStatisticsJobConfiguration(
     private val bossRegistrationRepository: BossRegistrationRepository,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,
-    private val bossDeletedStoreRepository: BossDeletedStoreRepository
+    private val bossDeletedStoreRepository: BossDeletedStoreRepository,
 ) {
 
     @Bean(name = [BOSS_DAILY_STATISTICS_JOB])
@@ -144,7 +144,7 @@ class BossDailyStatisticsJobConfiguration(
         messageType: BossDailyStatisticsMessageFormat,
         totalCounts: Long,
         todayCounts: Long,
-        weekendCounts: Long
+        weekendCounts: Long,
     ) {
         slackNotificationApiClient.postStatisticsMessage(
             PostSlackMessageRequest.of(messageType.messageFormat.format(totalCounts, todayCounts, weekendCounts))

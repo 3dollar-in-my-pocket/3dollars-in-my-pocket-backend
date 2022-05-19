@@ -10,7 +10,7 @@ object MedalCreator {
     fun create(
         name: String,
         conditionType: MedalAcquisitionConditionType = MedalAcquisitionConditionType.ADD_STORE,
-        conditionCount: Int = 3
+        conditionCount: Int = 3,
     ): Medal {
         return Medal.builder()
             .name(name)
@@ -31,7 +31,7 @@ object MedalCreator {
         disableIconUrl: String,
         conditionType: MedalAcquisitionConditionType = MedalAcquisitionConditionType.ADD_STORE,
         conditionCount: Int = 3,
-        acquisitionDescription: String? = null
+        acquisitionDescription: String? = null,
     ): Medal {
         return Medal.builder()
             .name(name)

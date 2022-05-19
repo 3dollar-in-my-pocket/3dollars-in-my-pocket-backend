@@ -15,5 +15,5 @@ data class RetrieveAdvertisementsRequest(
 
     val platform: AdvertisementPlatformType?,
 
-    val position: AdvertisementPositionType?
+    val position: AdvertisementPositionType?,
 )

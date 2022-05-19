@@ -19,14 +19,14 @@ import io.swagger.annotations.ApiOperation
 
 @RestController
 class AdminController(
-    private val adminService: AdminService
+    private val adminService: AdminService,
 ) {
 
     @ApiOperation("자신의 관리자 정보를 조회합니다")
     @Auth
     @GetMapping("/v1/account/admin/me")
     fun getMyAdminInfo(
-        @AdminId adminId: Long
+        @AdminId adminId: Long,
     ): ApiResponse<AdminInfoResponse> {
         return ApiResponse.success(adminService.getMyAdminInfo(adminId))
     }
@@ -36,7 +36,7 @@ class AdminController(
     @PutMapping("/v1/account/admin/me")
     fun updateMyAdminInfo(
         @Valid @RequestBody request: UpdateMyAdminInfoRequest,
-        @AdminId adminId: Long
+        @AdminId adminId: Long,
     ): ApiResponse<AdminInfoResponse> {
         return ApiResponse.success(adminService.updateMyAdminInfo(adminId = adminId, request = request))
     }
@@ -46,7 +46,7 @@ class AdminController(
     @PostMapping("/v1/account/admin")
     fun addAdmin(
         @RequestBody request: AddAdminRequest,
-        @AdminId adminId: Long
+        @AdminId adminId: Long,
     ): ApiResponse<String> {
         adminService.addAdmin(request, adminId)
         return ApiResponse.OK
@@ -56,7 +56,7 @@ class AdminController(
     @Auth
     @GetMapping("/v1/account/admins")
     fun retrieveAdminsWithPaging(
-        @Valid request: RetrieveAdminsWithPagingRequest
+        @Valid request: RetrieveAdminsWithPagingRequest,
     ): ApiResponse<AdminListInfoWithPagingResponse> {
         return ApiResponse.success(adminService.retrieveAdminsWithPaging(request))
     }

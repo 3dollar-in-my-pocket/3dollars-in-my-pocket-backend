@@ -7,7 +7,7 @@ import com.depromeet.threedollar.domain.redis.core.StringRedisKey
 
 data class BossStoreFeedbackCountKey(
     val bossStoreId: String,
-    val feedbackType: BossStoreFeedbackType
+    val feedbackType: BossStoreFeedbackType,
 ) : StringRedisKey<Int> {
 
     override fun getKey(): String {

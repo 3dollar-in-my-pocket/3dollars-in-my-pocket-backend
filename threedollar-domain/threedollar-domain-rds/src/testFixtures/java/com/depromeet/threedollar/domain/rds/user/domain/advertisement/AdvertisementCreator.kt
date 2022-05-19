@@ -17,7 +17,7 @@ object AdvertisementCreator {
         bgColor: String?,
         fontColor: String?,
         startDateTime: LocalDateTime,
-        endDateTime: LocalDateTime
+        endDateTime: LocalDateTime,
     ): Advertisement {
         return Advertisement.builder()
             .positionType(positionType)

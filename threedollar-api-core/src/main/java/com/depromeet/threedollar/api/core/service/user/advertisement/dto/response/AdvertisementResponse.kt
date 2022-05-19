@@ -8,7 +8,7 @@ data class AdvertisementResponse(
     val imageUrl: String,
     val linkUrl: String?,
     val bgColor: String?,
-    val fontColor: String?
+    val fontColor: String?,
 ) {
 
     companion object {

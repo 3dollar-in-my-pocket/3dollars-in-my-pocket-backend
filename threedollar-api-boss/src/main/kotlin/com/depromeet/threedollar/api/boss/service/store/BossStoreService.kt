@@ -17,14 +17,14 @@ class BossStoreService(
     private val bossStoreRepository: BossStoreRepository,
     private val bossDeleteBossStoreRepository: BossDeletedStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-    private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository
+    private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository,
 ) {
 
     @Transactional
     fun updateBossStoreInfo(
         bossStoreId: String,
         request: UpdateBossStoreInfoRequest,
-        bossId: String
+        bossId: String,
     ) {
         val bossStore = BossStoreServiceUtils.findBossStoreByIdAndBossId(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
         BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, request.categoriesIds)
@@ -47,7 +47,7 @@ class BossStoreService(
     fun patchBossStoreInfo(
         bossStoreId: String,
         request: PatchBossStoreInfoRequest,
-        bossId: String
+        bossId: String,
     ) {
         val bossStore = BossStoreServiceUtils.findBossStoreByIdAndBossId(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
         request.let {

@@ -15,7 +15,7 @@ object StoreCreator {
         latitude: Double = 36.0,
         longitude: Double = 126.0,
         rating: Double = 0.0,
-        status: StoreStatus = StoreStatus.ACTIVE
+        status: StoreStatus = StoreStatus.ACTIVE,
     ): Store {
         return Store.builder()
             .userId(userId)
@@ -37,7 +37,7 @@ object StoreCreator {
         longitude: Double = 126.0,
         rating: Double = 0.0,
         storeType: StoreType = StoreType.STORE,
-        status: StoreStatus = StoreStatus.ACTIVE
+        status: StoreStatus = StoreStatus.ACTIVE,
     ): Store {
         val store = Store.builder()
             .userId(userId)
@@ -57,7 +57,7 @@ object StoreCreator {
     fun createDefault(
         userId: Long,
         storeName: String,
-        status: StoreStatus = StoreStatus.ACTIVE
+        status: StoreStatus = StoreStatus.ACTIVE,
     ): Store {
         return create(
             userId = userId,
@@ -74,7 +74,7 @@ object StoreCreator {
     fun createDefaultWithMenu(
         userId: Long,
         storeName: String,
-        status: StoreStatus = StoreStatus.ACTIVE
+        status: StoreStatus = StoreStatus.ACTIVE,
     ): Store {
         val store = createDefault(
             userId = userId,

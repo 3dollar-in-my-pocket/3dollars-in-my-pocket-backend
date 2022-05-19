@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.domain.mongo.boss.domain.registration
 
 enum class BossRegistrationStatus(
-    private val description: String
+    private val description: String,
 ) {
 
     WAITING("대기"),

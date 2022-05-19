@@ -15,7 +15,7 @@ object RegistrationCreator {
         contactsNumber: String = "010-1234-1234",
         certificationPhotoUrl: String = "https://sample-photo.png",
         categoriesIds: Set<String> = setOf(),
-        status: BossRegistrationStatus = BossRegistrationStatus.WAITING
+        status: BossRegistrationStatus = BossRegistrationStatus.WAITING,
     ): BossRegistration {
         return BossRegistration(
             boss = RegistrationBossForm.of(
