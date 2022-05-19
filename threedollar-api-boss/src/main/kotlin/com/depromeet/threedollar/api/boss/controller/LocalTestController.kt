@@ -113,7 +113,7 @@ class LocalTestController(
         BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, categoriesIds)
         val bossStore = bossStoreRepository.save(
             BossStore.of(
-                bossId = randomBossId?.let { "test${UUID.randomUUID()}" } ?: bossId,
+                bossId = randomBossId?.let { randomBossId } ?: "test${UUID.randomUUID()}",
                 name = "행복한 붕어빵",
                 location = BossStoreLocation.of(latitude = latitude, longitude = longitude),
                 imageUrl = "https://image.com",

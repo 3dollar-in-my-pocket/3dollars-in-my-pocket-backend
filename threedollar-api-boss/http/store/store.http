@@ -129,7 +129,7 @@ Content-Type: application/json
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 {
-    "name": "PATCH NAME",
+    "name": "",
     "menus": [],
     "appearanceDays": [],
     "categoriesIds": []
