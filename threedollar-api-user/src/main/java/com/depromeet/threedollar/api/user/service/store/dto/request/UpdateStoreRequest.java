@@ -35,7 +35,7 @@ public class UpdateStoreRequest {
     @NotNull(message = "{store.longitude.notNull}")
     private Double longitude;
 
-    @Size(max = 300, message = "{store.name.size}")
+    @Size(max = 150, message = "{store.name.size}")
     @NotBlank(message = "{store.name.notBlank}")
     private String storeName;
 

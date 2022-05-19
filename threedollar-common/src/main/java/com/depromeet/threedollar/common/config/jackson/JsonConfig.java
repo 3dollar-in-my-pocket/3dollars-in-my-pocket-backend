@@ -2,6 +2,7 @@ package com.depromeet.threedollar.common.config.jackson;
 
 import static com.depromeet.threedollar.common.config.jackson.ExternalIdJsonModule.decodeIdModule;
 import static com.depromeet.threedollar.common.config.jackson.JavaTimeJsonModule.javaTimeModule;
+import static com.depromeet.threedollar.common.config.jackson.StringJsonModule.stringJsonModule;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +20,7 @@ public class JsonConfig {
     @Bean
     public ObjectMapper objectMapper() {
         return new ObjectMapper()
-            .registerModules(javaTimeModule(), decodeIdModule(), new ParameterNamesModule(), new Jdk8Module(), new KotlinModule())
+            .registerModules(javaTimeModule(), decodeIdModule(), stringJsonModule(), new ParameterNamesModule(), new Jdk8Module(), new KotlinModule())
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
             .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
             .configure(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL, true)

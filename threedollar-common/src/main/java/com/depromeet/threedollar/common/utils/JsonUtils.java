@@ -1,5 +1,9 @@
 package com.depromeet.threedollar.common.utils;
 
+import static com.depromeet.threedollar.common.config.jackson.ExternalIdJsonModule.decodeIdModule;
+import static com.depromeet.threedollar.common.config.jackson.JavaTimeJsonModule.javaTimeModule;
+import static com.depromeet.threedollar.common.config.jackson.StringJsonModule.stringJsonModule;
+
 import java.io.IOException;
 
 import org.jetbrains.annotations.NotNull;
@@ -10,7 +14,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.kotlin.KotlinModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
@@ -25,7 +28,7 @@ public class JsonUtils {
         .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
         .configure(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL, true)
         .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
-        .registerModules(new JavaTimeModule(), new ParameterNamesModule(), new Jdk8Module(), new KotlinModule());
+        .registerModules(javaTimeModule(), decodeIdModule(), stringJsonModule(), new ParameterNamesModule(), new Jdk8Module(), new KotlinModule());
 
     @NotNull
     public static <T> T toObject(@NotNull String input, Class<T> toClass) {
