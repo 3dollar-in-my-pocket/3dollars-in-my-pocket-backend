@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import org.jetbrains.annotations.Nullable;
 
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
@@ -16,7 +17,6 @@ import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistor
 import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoryWithUserResponse;
 import com.depromeet.threedollar.common.model.LocationValue;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
-import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.common.utils.distance.LocationDistanceUtils;
 import com.depromeet.threedollar.domain.rds.user.collection.user.UserDictionary;
 import com.depromeet.threedollar.domain.rds.user.collection.visit.VisitHistoryCounter;
@@ -39,7 +39,7 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StoreDetailResponse extends AuditingTimeResponse {
 
-    private final List<MenuCategoryType> categories = new ArrayList<>();
+    private final List<UserMenuCategoryType> categories = new ArrayList<>();
     private final Set<DayOfTheWeek> appearanceDays = new HashSet<>();
     private final Set<PaymentMethodType> paymentMethods = new HashSet<>();
     private final List<MenuResponse> menus = new ArrayList<>();

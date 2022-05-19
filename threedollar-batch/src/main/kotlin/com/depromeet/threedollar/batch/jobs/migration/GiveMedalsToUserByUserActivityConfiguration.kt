@@ -16,7 +16,7 @@ import com.depromeet.threedollar.domain.rds.user.collection.medal.MedalObtainCol
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionType
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository
-import com.depromeet.threedollar.common.type.MenuCategoryType
+import com.depromeet.threedollar.common.type.UserMenuCategoryType
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
 import com.depromeet.threedollar.domain.rds.user.domain.user.User
@@ -120,7 +120,7 @@ class GiveMedalsToUserByUserActivity(
                     medalsCanBeObtainedByVisitStore.getSatisfyMedalsCanBeObtained(
                         visitHistoryRepository.countByUserIdAndMenuCategoryType(
                             user.id,
-                            MenuCategoryType.BUNGEOPPANG
+                            UserMenuCategoryType.BUNGEOPPANG
                         )
                     )
                 )

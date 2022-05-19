@@ -7,13 +7,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
-import com.depromeet.threedollar.common.type.MenuCategoryType;
 
 class StoreTest {
 
@@ -96,10 +96,10 @@ class StoreTest {
         void 가게에_해당_카테고리를판매중인지_여부_확인시_메뉴_카테고리_존재하면_true를_반환한다() {
             // given
             Store store = StoreCreator.create(100L, "가게");
-            store.addMenus(List.of(MenuCreator.create(store, "name", "price", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "name", "price", UserMenuCategoryType.BUNGEOPPANG)));
 
             // when
-            boolean result = store.hasMenuCategory(MenuCategoryType.BUNGEOPPANG);
+            boolean result = store.hasMenuCategory(UserMenuCategoryType.BUNGEOPPANG);
 
             // then
             assertThat(result).isTrue();
@@ -109,10 +109,10 @@ class StoreTest {
         void 게에_해당_카테고리를판매중인지_여부_확인시_해당하는_메뉴_카테고리가_존재하지_않으면_false를_반환한다() {
             // given
             Store store = StoreCreator.create(100L, "가게");
-            store.addMenus(List.of(MenuCreator.create(store, "name", "price", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "name", "price", UserMenuCategoryType.BUNGEOPPANG)));
 
             // when
-            boolean result = store.hasMenuCategory(MenuCategoryType.DALGONA);
+            boolean result = store.hasMenuCategory(UserMenuCategoryType.DALGONA);
 
             // then
             assertThat(result).isFalse();
@@ -128,17 +128,17 @@ class StoreTest {
             // given
             Store store = StoreCreator.create(100L, "가게");
             store.addMenus(List.of(
-                MenuCreator.create(store, "name", "price", MenuCategoryType.BUNGEOPPANG),
-                MenuCreator.create(store, "name", "price", MenuCategoryType.BUNGEOPPANG),
-                MenuCreator.create(store, "name", "price", MenuCategoryType.EOMUK)
+                MenuCreator.create(store, "name", "price", UserMenuCategoryType.BUNGEOPPANG),
+                MenuCreator.create(store, "name", "price", UserMenuCategoryType.BUNGEOPPANG),
+                MenuCreator.create(store, "name", "price", UserMenuCategoryType.EOMUK)
             ));
 
             // when
-            List<MenuCategoryType> categories = store.getMenuCategoriesSortedByCounts();
+            List<UserMenuCategoryType> categories = store.getMenuCategoriesSortedByCounts();
 
             // then
-            assertThat(categories.get(0)).isEqualTo(MenuCategoryType.BUNGEOPPANG);
-            assertThat(categories.get(1)).isEqualTo(MenuCategoryType.EOMUK);
+            assertThat(categories.get(0)).isEqualTo(UserMenuCategoryType.BUNGEOPPANG);
+            assertThat(categories.get(1)).isEqualTo(UserMenuCategoryType.EOMUK);
         }
 
         @Test
@@ -147,7 +147,7 @@ class StoreTest {
             Store store = StoreCreator.create(100L, "가게");
 
             // when
-            List<MenuCategoryType> categories = store.getMenuCategoriesSortedByCounts();
+            List<UserMenuCategoryType> categories = store.getMenuCategoriesSortedByCounts();
 
             // then
             assertThat(categories).isEmpty();

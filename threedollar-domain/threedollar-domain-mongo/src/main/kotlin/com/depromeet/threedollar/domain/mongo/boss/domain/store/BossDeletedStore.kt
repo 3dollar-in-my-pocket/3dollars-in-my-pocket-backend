@@ -2,21 +2,21 @@ package com.depromeet.threedollar.domain.mongo.boss.domain.store
 
 import java.time.LocalDateTime
 import org.springframework.data.mongodb.core.mapping.Document
+import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.domain.mongo.common.domain.BaseDocument
-import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
 
 @Document("boss_deleted_store_v1")
 class BossDeletedStore(
-    val backupInfo: BackupBossStoreInfo,
-    val bossId: String,
-    var name: String,
-    var imageUrl: String?,
-    var introduction: String?,
-    var contactsNumber: ContactsNumber?,
-    var snsUrl: String?,
-    var menus: List<BossStoreMenu> = listOf(),
-    var appearanceDays: Set<BossStoreAppearanceDay> = setOf(),
-    var categoriesIds: Set<String> = setOf()
+        val backupInfo: BackupBossStoreInfo,
+        val bossId: String,
+        var name: String,
+        var imageUrl: String?,
+        var introduction: String?,
+        var contactsNumber: ContactsNumber?,
+        var snsUrl: String?,
+        var menus: List<BossStoreMenu> = listOf(),
+        var appearanceDays: Set<BossStoreAppearanceDay> = setOf(),
+        var categoriesIds: Set<String> = setOf()
 ) : BaseDocument() {
 
     companion object {

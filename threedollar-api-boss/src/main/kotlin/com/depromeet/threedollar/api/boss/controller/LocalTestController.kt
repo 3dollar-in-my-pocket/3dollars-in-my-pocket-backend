@@ -39,8 +39,8 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppeara
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenu
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
-import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
+import com.depromeet.threedollar.common.model.BusinessNumber
+import com.depromeet.threedollar.common.model.ContactsNumber
 import io.swagger.annotations.ApiOperation
 
 private val BOSS = BossAccount.of(

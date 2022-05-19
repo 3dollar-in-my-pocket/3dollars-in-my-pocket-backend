@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,6 @@ import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDelete
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
-import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDay;
 import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDayRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
@@ -108,7 +108,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .storeType(storeType)
                 .appearanceDays(Set.of(DayOfTheWeek.FRIDAY))
                 .paymentMethods(Set.of(PaymentMethodType.CARD))
-                .menus(Set.of(MenuRequest.of("메뉴 이름", "한 개에 만원", MenuCategoryType.BUNGEOPPANG)))
+                .menus(Set.of(MenuRequest.of("메뉴 이름", "한 개에 만원", UserMenuCategoryType.BUNGEOPPANG)))
                 .build();
 
             // when
@@ -179,7 +179,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             // given
             String menuName = "팥 붕어빵";
             String price = "3개에 천원";
-            MenuCategoryType type = MenuCategoryType.BUNGEOPPANG;
+            UserMenuCategoryType type = UserMenuCategoryType.BUNGEOPPANG;
 
             Set<MenuRequest> menus = Set.of(MenuRequest.of(menuName, price, type));
 
@@ -209,7 +209,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             // given
             String menuName = "슈크림 붕어빵";
             String price = "2개에 천원";
-            MenuCategoryType type = MenuCategoryType.BUNGEOPPANG;
+            UserMenuCategoryType type = UserMenuCategoryType.BUNGEOPPANG;
 
             Set<MenuRequest> menus = new HashSet<>(List.of(
                 MenuRequest.of(menuName, price, type),
@@ -247,7 +247,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             // given
             String menuName = "슈크림 붕어빵";
             String price = "5개에 2천원";
-            MenuCategoryType type = MenuCategoryType.BUNGEOPPANG;
+            UserMenuCategoryType type = UserMenuCategoryType.BUNGEOPPANG;
 
             Store store = StoreCreator.createWithDefaultMenu(userId, "붕어빵 가게");
             storeRepository.save(store);
@@ -345,18 +345,18 @@ class StoreServiceTest extends SetupUserServiceTest {
             // given
             String menuName = "슈크림 붕어빵";
             String price = "2개에 천원";
-            MenuCategoryType type = MenuCategoryType.BUNGEOPPANG;
+            UserMenuCategoryType type = UserMenuCategoryType.BUNGEOPPANG;
 
             Store store = StoreCreator.create(userId, "storeName");
             store.addMenus(List.of(
-                MenuCreator.create(store, "메뉴 1", "1000원", MenuCategoryType.DALGONA),
+                MenuCreator.create(store, "메뉴 1", "1000원", UserMenuCategoryType.DALGONA),
                 MenuCreator.create(store, menuName, price, type))
             );
             storeRepository.save(store);
 
             String newMenuName = "신규 추가된 메뉴";
             String newMenuPrice = "2000원";
-            MenuCategoryType newMenuCategory = MenuCategoryType.DALGONA;
+            UserMenuCategoryType newMenuCategory = UserMenuCategoryType.DALGONA;
 
             Set<MenuRequest> menuRequests = Set.of(
                 MenuRequest.of(menuName, price, type),
@@ -390,7 +390,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             // given
             String menuName = "슈크림 붕어빵";
             String price = "2개에 천원";
-            MenuCategoryType type = MenuCategoryType.BUNGEOPPANG;
+            UserMenuCategoryType type = UserMenuCategoryType.BUNGEOPPANG;
 
             Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
@@ -433,7 +433,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .storeType(StoreType.STORE)
                 .appearanceDays(Set.of(DayOfTheWeek.TUESDAY))
                 .paymentMethods(Set.of(PaymentMethodType.CARD))
-                .menus(Set.of(MenuRequest.of("메뉴 이름", "메뉴 가격", MenuCategoryType.BUNGEOPPANG)))
+                .menus(Set.of(MenuRequest.of("메뉴 이름", "메뉴 가격", UserMenuCategoryType.BUNGEOPPANG)))
                 .build();
 
             // when & then
@@ -458,7 +458,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .storeType(storeType)
                 .appearanceDays(Set.of(DayOfTheWeek.FRIDAY))
                 .paymentMethods(Set.of(PaymentMethodType.CARD))
-                .menus(Set.of(MenuRequest.of("메뉴 이름", "가격", MenuCategoryType.BUNGEOPPANG)))
+                .menus(Set.of(MenuRequest.of("메뉴 이름", "가격", UserMenuCategoryType.BUNGEOPPANG)))
                 .build();
 
             // when

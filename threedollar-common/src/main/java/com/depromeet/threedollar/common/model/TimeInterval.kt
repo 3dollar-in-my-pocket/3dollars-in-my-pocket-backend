@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.mongo.common.domain
+package com.depromeet.threedollar.common.model
 
 import java.time.LocalTime
 import com.depromeet.threedollar.common.exception.model.InvalidException

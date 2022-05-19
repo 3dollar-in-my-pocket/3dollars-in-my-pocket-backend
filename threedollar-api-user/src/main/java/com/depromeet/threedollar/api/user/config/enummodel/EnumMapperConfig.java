@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import com.depromeet.threedollar.api.user.service.store.dto.type.UserStoreOrderType;
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
-import com.depromeet.threedollar.common.type.MenuCategoryType;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.common.utils.EnumMapper;
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreOpenType;
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPlatformType;
@@ -35,7 +35,7 @@ public class EnumMapperConfig {
         enumMapper.put("StoreType", StoreType.class);
         enumMapper.put("DeleteReasonType", DeleteReasonType.class);
         enumMapper.put("StoreOrderType", UserStoreOrderType.class);
-        enumMapper.put("MenuCategoryType", MenuCategoryType.class);
+        enumMapper.put("MenuCategoryType", UserMenuCategoryType.class);
 
         // faq
         enumMapper.put("FaqCategory", FaqCategory.class);

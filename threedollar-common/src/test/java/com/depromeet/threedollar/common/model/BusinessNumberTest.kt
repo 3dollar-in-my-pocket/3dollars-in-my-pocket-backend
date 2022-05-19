@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.mongo.common.domain
+package com.depromeet.threedollar.common.model
 
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test

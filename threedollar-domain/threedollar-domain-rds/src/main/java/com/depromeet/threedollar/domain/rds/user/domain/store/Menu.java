@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.depromeet.threedollar.common.type.MenuCategoryType;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.common.domain.AuditingTimeEntity;
 
 import lombok.AccessLevel;
@@ -45,17 +45,17 @@ public class Menu extends AuditingTimeEntity {
 
     @Column(nullable = false, length = 30)
     @Enumerated(EnumType.STRING)
-    private MenuCategoryType category;
+    private UserMenuCategoryType category;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private Menu(@NotNull Store store, @Nullable String name, @Nullable String price, @NotNull MenuCategoryType category) {
+    private Menu(@NotNull Store store, @Nullable String name, @Nullable String price, @NotNull UserMenuCategoryType category) {
         this.store = store;
         this.name = name;
         this.price = price;
         this.category = category;
     }
 
-    public static Menu of(@NotNull Store store, @Nullable String name, @Nullable String price, @NotNull MenuCategoryType category) {
+    public static Menu of(@NotNull Store store, @Nullable String name, @Nullable String price, @NotNull UserMenuCategoryType category) {
         return Menu.builder()
             .store(store)
             .name(name)
@@ -64,7 +64,7 @@ public class Menu extends AuditingTimeEntity {
             .build();
     }
 
-    boolean isCategory(@NotNull MenuCategoryType category) {
+    boolean isCategory(@NotNull UserMenuCategoryType category) {
         return this.category.equals(category);
     }
 

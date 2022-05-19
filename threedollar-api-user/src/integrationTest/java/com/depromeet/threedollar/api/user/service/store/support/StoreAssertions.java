@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.user.service.store.support;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import com.depromeet.threedollar.common.type.MenuCategoryType;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.common.domain.Location;
 import com.depromeet.threedollar.domain.rds.user.domain.TestHelper;
 import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
@@ -30,7 +30,7 @@ public class StoreAssertions {
         );
     }
 
-    public static void assertMenu(Menu menu, String menuName, String price, MenuCategoryType type) {
+    public static void assertMenu(Menu menu, String menuName, String price, UserMenuCategoryType type) {
         assertAll(
             () -> assertThat(menu.getName()).isEqualTo(menuName),
             () -> assertThat(menu.getPrice()).isEqualTo(price),
@@ -38,7 +38,7 @@ public class StoreAssertions {
         );
     }
 
-    public static void assertMenu(Menu menu, Long storeId, String menuName, String price, MenuCategoryType type) {
+    public static void assertMenu(Menu menu, Long storeId, String menuName, String price, UserMenuCategoryType type) {
         assertAll(
             () -> assertThat(menu.getStore().getId()).isEqualTo(storeId),
             () -> assertThat(menu.getName()).isEqualTo(menuName),

@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.common.type;
 
-import static com.depromeet.threedollar.common.type.MenuCategoryType.MenuCategoryTypeStatus.ACTIVE;
+import static com.depromeet.threedollar.common.type.UserMenuCategoryType.MenuCategoryTypeStatus.ACTIVE;
 
 import com.depromeet.threedollar.common.model.EnumModel;
 
@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public enum MenuCategoryType implements EnumModel {
+public enum UserMenuCategoryType implements EnumModel {
 
     BUNGEOPPANG("붕어빵", "붕어빵 만나기 30초 전", false, ACTIVE, 1),
     HOTTEOK("호떡", "호떡아 기다려", false, ACTIVE, 2),

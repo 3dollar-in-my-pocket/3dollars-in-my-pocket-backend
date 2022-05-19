@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 import java.util.List;
 import java.util.Set;
 
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -28,7 +29,6 @@ import com.depromeet.threedollar.api.user.service.store.dto.request.UpdateStoreR
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDeleteResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreInfoResponse;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
-import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDayRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository;
@@ -101,14 +101,14 @@ class StoreControllerTest extends SetupUserControllerTest {
                 .storeType(storeType)
                 .appearanceDays(appearanceDays)
                 .paymentMethods(paymentMethods)
-                .menus(Set.of(MenuRequest.of("팥 붕어빵", "2개에 천원", MenuCategoryType.BUNGEOPPANG)))
+                .menus(Set.of(MenuRequest.of("팥 붕어빵", "2개에 천원", UserMenuCategoryType.BUNGEOPPANG)))
                 .build();
 
             // when
             ApiResponse<StoreInfoResponse> response = storeMockApiCaller.registerStore(request, token, 200);
 
             // then
-            StoreAssertions.assertStoreInfoResponse(response.getData(), latitude, longitude, storeName, List.of(MenuCategoryType.BUNGEOPPANG));
+            StoreAssertions.assertStoreInfoResponse(response.getData(), latitude, longitude, storeName, List.of(UserMenuCategoryType.BUNGEOPPANG));
         }
 
         @Test
@@ -121,7 +121,7 @@ class StoreControllerTest extends SetupUserControllerTest {
                 .storeType(StoreType.STORE)
                 .appearanceDays(Set.of(DayOfTheWeek.FRIDAY))
                 .paymentMethods(Set.of(PaymentMethodType.CARD))
-                .menus(Set.of(MenuRequest.of("슈크림 붕어빵", "5개에 2천원", MenuCategoryType.BUNGEOPPANG)))
+                .menus(Set.of(MenuRequest.of("슈크림 붕어빵", "5개에 2천원", UserMenuCategoryType.BUNGEOPPANG)))
                 .build();
 
             // when
@@ -158,7 +158,7 @@ class StoreControllerTest extends SetupUserControllerTest {
                 .storeType(storeType)
                 .appearanceDays(appearanceDays)
                 .paymentMethods(paymentMethods)
-                .menus(Set.of(MenuRequest.of("팥붕 슈붕", "5개에 2천원", MenuCategoryType.BUNGEOPPANG)))
+                .menus(Set.of(MenuRequest.of("팥붕 슈붕", "5개에 2천원", UserMenuCategoryType.BUNGEOPPANG)))
                 .build();
 
             // when
@@ -167,7 +167,7 @@ class StoreControllerTest extends SetupUserControllerTest {
             // then
             assertAll(
                 () -> assertThat(response.getData().getStoreId()).isEqualTo(store.getId()),
-                () -> StoreAssertions.assertStoreInfoResponse(response.getData(), latitude, longitude, storeName, List.of(MenuCategoryType.BUNGEOPPANG))
+                () -> StoreAssertions.assertStoreInfoResponse(response.getData(), latitude, longitude, storeName, List.of(UserMenuCategoryType.BUNGEOPPANG))
             );
         }
 

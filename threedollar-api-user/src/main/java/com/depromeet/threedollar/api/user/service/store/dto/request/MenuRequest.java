@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.user.service.store.dto.request;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.depromeet.threedollar.common.type.MenuCategoryType;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 
@@ -30,9 +30,9 @@ public class MenuRequest {
     private String price;
 
     @NotNull(message = "{menu.category.notNull}")
-    private MenuCategoryType category;
+    private UserMenuCategoryType category;
 
-    public static MenuRequest of(String name, String price, MenuCategoryType category) {
+    public static MenuRequest of(String name, String price, UserMenuCategoryType category) {
         return new MenuRequest(name, price, category);
     }
 

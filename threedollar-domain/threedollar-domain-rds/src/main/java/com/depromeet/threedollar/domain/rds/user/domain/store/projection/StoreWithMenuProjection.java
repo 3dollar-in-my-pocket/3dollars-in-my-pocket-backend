@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.depromeet.threedollar.common.type.MenuCategoryType;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreStatus;
 import com.querydsl.core.annotations.QueryProjection;
 
@@ -46,7 +46,7 @@ public class StoreWithMenuProjection {
         return this.status.isDeleted();
     }
 
-    public List<MenuCategoryType> getMenuCategories() {
+    public List<UserMenuCategoryType> getMenuCategories() {
         return this.menus.stream()
             .map(MenuProjection::getCategory)
             .collect(Collectors.toList());
@@ -65,10 +65,10 @@ public class StoreWithMenuProjection {
 
         private final String name;
         private final String price;
-        private final MenuCategoryType category;
+        private final UserMenuCategoryType category;
 
         @QueryProjection
-        public MenuProjection(String name, String price, MenuCategoryType category) {
+        public MenuProjection(String name, String price, UserMenuCategoryType category) {
             this.name = name;
             this.price = price;
             this.category = category;

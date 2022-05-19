@@ -3,10 +3,10 @@ package com.depromeet.threedollar.api.user.service.store.dto.response;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import org.jetbrains.annotations.NotNull;
 
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
-import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreWithMenuProjection;
 import com.depromeet.threedollar.domain.redis.domain.user.store.dto.CachedUserStoreDto;
@@ -22,7 +22,7 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StoreInfoResponse extends AuditingTimeResponse {
 
-    private final List<MenuCategoryType> categories = new ArrayList<>();
+    private final List<UserMenuCategoryType> categories = new ArrayList<>();
     private Long storeId;
     private double latitude;
     private double longitude;
@@ -82,7 +82,7 @@ public class StoreInfoResponse extends AuditingTimeResponse {
         return response;
     }
 
-    public boolean hasMenuCategory(MenuCategoryType categoryType) {
+    public boolean hasMenuCategory(UserMenuCategoryType categoryType) {
         return categories.contains(categoryType);
     }
 

@@ -17,7 +17,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSoc
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossWithdrawalAccount
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossWithdrawalAccountRepository
-import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
+import com.depromeet.threedollar.common.model.BusinessNumber
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest

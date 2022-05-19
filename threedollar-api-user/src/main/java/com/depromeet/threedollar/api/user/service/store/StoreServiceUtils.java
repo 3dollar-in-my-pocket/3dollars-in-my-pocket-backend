@@ -5,12 +5,12 @@ import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOTFOUND
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreInfoResponse;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
-import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreWithMenuProjection;
@@ -48,7 +48,7 @@ public class StoreServiceUtils {
     }
 
     static List<StoreInfoResponse> findAroundStoresFilerByCategory(StoreRepository storeRepository, CachedAroundStoresRepository cachedAroundStoresRepository,
-                                                                   double mapLatitude, double mapLongitude, double distance, @Nullable MenuCategoryType categoryType) {
+                                                                   double mapLatitude, double mapLongitude, double distance, @Nullable UserMenuCategoryType categoryType) {
         List<StoreInfoResponse> aroundStores = findAroundStores(storeRepository, cachedAroundStoresRepository, mapLatitude, mapLongitude, distance);
         if (categoryType == null) {
             return aroundStores;

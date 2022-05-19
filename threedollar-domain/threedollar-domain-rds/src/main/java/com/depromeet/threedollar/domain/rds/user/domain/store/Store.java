@@ -19,11 +19,11 @@ import javax.persistence.Index;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
-import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.common.utils.MathUtils;
 import com.depromeet.threedollar.domain.rds.common.domain.AuditingTimeEntity;
 import com.depromeet.threedollar.domain.rds.common.domain.Location;
@@ -233,20 +233,20 @@ public class Store extends AuditingTimeEntity {
     }
 
     @NotNull
-    public List<MenuCategoryType> getMenuCategoriesSortedByCounts() {
-        Map<MenuCategoryType, Long> counts = getCurrentMenuCategoryGroupByCounts();
+    public List<UserMenuCategoryType> getMenuCategoriesSortedByCounts() {
+        Map<UserMenuCategoryType, Long> counts = getCurrentMenuCategoryGroupByCounts();
         return counts.entrySet().stream()
-            .sorted(Map.Entry.<MenuCategoryType, Long>comparingByValue().reversed())
+            .sorted(Map.Entry.<UserMenuCategoryType, Long>comparingByValue().reversed())
             .map(Map.Entry::getKey)
             .collect(Collectors.toList());
     }
 
-    private Map<MenuCategoryType, Long> getCurrentMenuCategoryGroupByCounts() {
+    private Map<UserMenuCategoryType, Long> getCurrentMenuCategoryGroupByCounts() {
         return this.menus.stream()
             .collect(Collectors.groupingBy(Menu::getCategory, Collectors.counting()));
     }
 
-    public boolean hasMenuCategory(@NotNull MenuCategoryType category) {
+    public boolean hasMenuCategory(@NotNull UserMenuCategoryType category) {
         return this.menus.stream()
             .anyMatch(menu -> menu.isCategory(category));
     }

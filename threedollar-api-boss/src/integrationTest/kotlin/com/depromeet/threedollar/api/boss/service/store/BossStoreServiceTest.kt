@@ -28,7 +28,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenu
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenuCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
+import com.depromeet.threedollar.common.model.ContactsNumber
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
@@ -386,16 +386,16 @@ private fun createMockCategory(
  * AssertionsHelper
  */
 private fun assertBossStore(
-    bossStore: BossStore,
-    bossId: String? = null,
-    name: String? = null,
-    imageUrl: String? = null,
-    introduction: String? = null,
-    contactsNumber: ContactsNumber? = null,
-    snsUrl: String? = null,
-    categoriesIds: Set<String>? = null,
-    menus: List<BossStoreMenu>? = null,
-    appearanceDays: Set<BossStoreAppearanceDay>? = null,
+        bossStore: BossStore,
+        bossId: String? = null,
+        name: String? = null,
+        imageUrl: String? = null,
+        introduction: String? = null,
+        contactsNumber: ContactsNumber? = null,
+        snsUrl: String? = null,
+        categoriesIds: Set<String>? = null,
+        menus: List<BossStoreMenu>? = null,
+        appearanceDays: Set<BossStoreAppearanceDay>? = null,
 ) {
     assertAll({
         bossId?.let { assertThat(bossStore.bossId).isEqualTo(it) }
@@ -411,18 +411,18 @@ private fun assertBossStore(
 }
 
 private fun assertBossDeletedStore(
-    bossDeletedStore: BossDeletedStore,
-    backUpBossStoreId: String? = null,
-    backUpBossStoreCreatedAt: LocalDateTime? = null,
-    bossId: String? = null,
-    name: String? = null,
-    imageUrl: String? = null,
-    introduction: String? = null,
-    contactsNumber: ContactsNumber? = null,
-    snsUrl: String? = null,
-    categoriesIds: Set<String>? = null,
-    menus: List<BossStoreMenu>? = null,
-    appearanceDays: Set<BossStoreAppearanceDay>? = null,
+        bossDeletedStore: BossDeletedStore,
+        backUpBossStoreId: String? = null,
+        backUpBossStoreCreatedAt: LocalDateTime? = null,
+        bossId: String? = null,
+        name: String? = null,
+        imageUrl: String? = null,
+        introduction: String? = null,
+        contactsNumber: ContactsNumber? = null,
+        snsUrl: String? = null,
+        categoriesIds: Set<String>? = null,
+        menus: List<BossStoreMenu>? = null,
+        appearanceDays: Set<BossStoreAppearanceDay>? = null,
 ) {
     assertAll({
         backUpBossStoreId?.let { assertThat(bossDeletedStore.backupInfo.bossStoreId).isEqualTo(it) }

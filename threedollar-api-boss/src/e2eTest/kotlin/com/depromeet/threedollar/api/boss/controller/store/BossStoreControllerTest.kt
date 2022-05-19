@@ -31,7 +31,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocatio
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenuCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreOpenType
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
-import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
+import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.domain.redis.domain.boss.store.BossStoreOpenTimeRepository
 
 internal class BossStoreControllerTest(

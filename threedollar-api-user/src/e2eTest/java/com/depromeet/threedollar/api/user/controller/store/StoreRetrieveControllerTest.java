@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -43,7 +44,6 @@ import com.depromeet.threedollar.api.user.service.store.dto.response.StoresCurso
 import com.depromeet.threedollar.api.user.service.store.dto.type.UserStoreOrderType;
 import com.depromeet.threedollar.common.model.LocationValue;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
-import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
@@ -149,8 +149,8 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // given
             Store store = StoreCreator.create(user.getId(), "붕세권 가게", 34.0, 126.0);
             store.addMenus(List.of(
-                MenuCreator.create(store, "팥붕", "2개 천원", MenuCategoryType.SUNDAE),
-                MenuCreator.create(store, "슈붕", "2개 천원", MenuCategoryType.DALGONA)
+                MenuCreator.create(store, "팥붕", "2개 천원", UserMenuCategoryType.SUNDAE),
+                MenuCreator.create(store, "슈붕", "2개 천원", UserMenuCategoryType.DALGONA)
             ));
             storeRepository.save(store);
 
@@ -166,7 +166,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 () -> assertThat(response.getData()).hasSize(1),
 
                 () -> assertThat(response.getData().get(0).getCategories()).hasSize(2),
-                () -> assertThat(response.getData().get(0).getCategories()).containsExactlyInAnyOrder(MenuCategoryType.SUNDAE, MenuCategoryType.DALGONA)
+                () -> assertThat(response.getData().get(0).getCategories()).containsExactlyInAnyOrder(UserMenuCategoryType.SUNDAE, UserMenuCategoryType.DALGONA)
             );
         }
 
@@ -239,16 +239,16 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 내_주변의_가게_목록을_조회할때_특정_메뉴_카테고리만_필터링해서_조회합니다() throws Exception {
             // given
             Store store1 = StoreCreator.create(user.getId(), "가게1", 34, 126);
-            store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", MenuCategoryType.DALGONA)));
+            store1.addMenus(List.of(MenuCreator.create(store1, "메뉴2", "가격2", UserMenuCategoryType.DALGONA)));
 
             Store store2 = StoreCreator.create(user.getId(), "가게1", 34, 126);
-            store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", MenuCategoryType.BUNGEOPPANG)));
+            store2.addMenus(List.of(MenuCreator.create(store2, "메뉴2", "가격2", UserMenuCategoryType.BUNGEOPPANG)));
 
             storeRepository.saveAll(List.of(store1, store2));
 
             RetrieveAroundStoresRequest request = RetrieveAroundStoresRequest.testBuilder()
                 .distance(1000)
-                .category(MenuCategoryType.DALGONA)
+                .category(UserMenuCategoryType.DALGONA)
                 .build();
 
             // when
@@ -390,7 +390,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             double distance = 1000;
 
             CachedUserStoreDto cachedStore = CachedUserStoreDto.of(
-                List.of(MenuCategoryType.SUNDAE, MenuCategoryType.WAFFLE),
+                List.of(UserMenuCategoryType.SUNDAE, UserMenuCategoryType.WAFFLE),
                 100L,
                 latitude,
                 longitude,
@@ -424,7 +424,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             double distance = 1000;
 
             CachedUserStoreDto noMatchedStore = CachedUserStoreDto.of(
-                List.of(MenuCategoryType.SUNDAE, MenuCategoryType.WAFFLE),
+                List.of(UserMenuCategoryType.SUNDAE, UserMenuCategoryType.WAFFLE),
                 100L,
                 latitude,
                 longitude,
@@ -434,7 +434,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 LocalDateTime.of(2022, 1, 2, 0, 0)
             );
             CachedUserStoreDto matchedStore = CachedUserStoreDto.of(
-                List.of(MenuCategoryType.SUNDAE, MenuCategoryType.BUNGEOPPANG),
+                List.of(UserMenuCategoryType.SUNDAE, UserMenuCategoryType.BUNGEOPPANG),
                 100L,
                 latitude,
                 longitude,
@@ -448,7 +448,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             RetrieveAroundStoresRequest request = RetrieveAroundStoresRequest.testBuilder()
                 .distance(distance)
-                .category(MenuCategoryType.BUNGEOPPANG)
+                .category(UserMenuCategoryType.BUNGEOPPANG)
                 .build();
 
             // when
@@ -496,8 +496,8 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 가게_상세_정보_조회시_메뉴_정보도_함께_조회된다() throws Exception {
             // given
             Store store = StoreCreator.create(user.getId(), "가게 이름");
-            Menu menu1 = MenuCreator.create(store, "메뉴1", "가격1", MenuCategoryType.BUNGEOPPANG);
-            Menu menu2 = MenuCreator.create(store, "메뉴2", "가격2", MenuCategoryType.GUKWAPPANG);
+            Menu menu1 = MenuCreator.create(store, "메뉴1", "가격1", UserMenuCategoryType.BUNGEOPPANG);
+            Menu menu2 = MenuCreator.create(store, "메뉴2", "가격2", UserMenuCategoryType.GUKWAPPANG);
             store.addMenus(List.of(menu1, menu2));
             storeRepository.save(store);
 
@@ -511,7 +511,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             // then
             assertAll(
-                () -> assertThat(response.getData().getCategories()).containsExactlyInAnyOrderElementsOf(List.of(MenuCategoryType.BUNGEOPPANG, MenuCategoryType.GUKWAPPANG)),
+                () -> assertThat(response.getData().getCategories()).containsExactlyInAnyOrderElementsOf(List.of(UserMenuCategoryType.BUNGEOPPANG, UserMenuCategoryType.GUKWAPPANG)),
                 () -> assertThat(response.getData().getMenus()).hasSize(2),
                 () -> assertMenuResponse(response.getData().getMenus().get(0), menu1),
                 () -> assertMenuResponse(response.getData().getMenus().get(1), menu2)
@@ -900,11 +900,11 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
                 () -> assertStoreWithVisitsResponse(response.getData().getContents().get(0), storeDeletedByAdmin.getId(), storeDeletedByAdmin.getLatitude(), storeDeletedByAdmin.getLongitude(), storeDeletedByAdmin.getName(), storeDeletedByAdmin.getRating()),
                 () -> assertThat(response.getData().getContents().get(1).getCategories()).hasSize(1),
-                () -> assertThat(response.getData().getContents().get(1).getCategories()).containsExactlyInAnyOrder(MenuCategoryType.BUNGEOPPANG),
+                () -> assertThat(response.getData().getContents().get(1).getCategories()).containsExactlyInAnyOrder(UserMenuCategoryType.BUNGEOPPANG),
 
                 () -> assertStoreWithVisitsResponse(response.getData().getContents().get(1), storeDeletedByUser.getId(), storeDeletedByUser.getLatitude(), storeDeletedByUser.getLongitude(), storeDeletedByUser.getName(), storeDeletedByUser.getRating()),
                 () -> assertThat(response.getData().getContents().get(0).getCategories()).hasSize(1),
-                () -> assertThat(response.getData().getContents().get(0).getCategories()).containsExactlyInAnyOrder(MenuCategoryType.BUNGEOPPANG)
+                () -> assertThat(response.getData().getContents().get(0).getCategories()).containsExactlyInAnyOrder(UserMenuCategoryType.BUNGEOPPANG)
             );
         }
 
@@ -946,7 +946,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 주변에_가게가_있는지_조회한다_하나라도_있는경우_True를_반환한다() throws Exception {
             // given
             Store store = StoreCreator.create(user.getId(), "붕어빵 가게", 34, 126, 1.1);
-            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵", "2개에 천원", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵", "2개에 천원", UserMenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             CheckExistsStoresNearbyRequest request = CheckExistsStoresNearbyRequest.testBuilder()

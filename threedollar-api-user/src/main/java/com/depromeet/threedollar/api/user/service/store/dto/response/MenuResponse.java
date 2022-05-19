@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.user.service.store.dto.response;
 import org.jetbrains.annotations.NotNull;
 
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
-import com.depromeet.threedollar.common.type.MenuCategoryType;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
 
 import lombok.AccessLevel;
@@ -18,12 +18,12 @@ import lombok.ToString;
 public class MenuResponse extends AuditingTimeResponse {
 
     private Long menuId;
-    private MenuCategoryType category;
+    private UserMenuCategoryType category;
     private String name;
     private String price;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private MenuResponse(Long menuId, MenuCategoryType category, String name, String price) {
+    private MenuResponse(Long menuId, UserMenuCategoryType category, String name, String price) {
         this.menuId = menuId;
         this.category = category;
         this.name = name;

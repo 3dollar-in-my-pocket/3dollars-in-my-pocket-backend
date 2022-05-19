@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.type.UserStoreOrderType;
-import com.depromeet.threedollar.common.type.MenuCategoryType;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.common.utils.distance.LookupRadiusDistanceLimiter;
 
 import lombok.AccessLevel;
@@ -33,7 +33,7 @@ public class RetrieveAroundStoresRequest {
     private Double distance;
 
     @Nullable
-    private MenuCategoryType category;
+    private UserMenuCategoryType category;
 
     @NotNull(message = "{store.orderType.notNull}")
     private UserStoreOrderType orderType = UserStoreOrderType.DISTANCE_ASC; // 호환성을 위해 기본적으로 거리순으로 정렬한다
@@ -43,7 +43,7 @@ public class RetrieveAroundStoresRequest {
     private int size = 100;
 
     @Builder(builderMethodName = "testBuilder")
-    private RetrieveAroundStoresRequest(double distance, @Nullable MenuCategoryType category, UserStoreOrderType orderType, Integer size) {
+    private RetrieveAroundStoresRequest(double distance, @Nullable UserMenuCategoryType category, UserStoreOrderType orderType, Integer size) {
         this.distance = distance;
         this.category = category;
         this.orderType = orderType;

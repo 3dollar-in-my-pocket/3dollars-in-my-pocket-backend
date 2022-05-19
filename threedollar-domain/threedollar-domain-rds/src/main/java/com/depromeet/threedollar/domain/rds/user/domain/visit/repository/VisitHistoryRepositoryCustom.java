@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.depromeet.threedollar.common.type.MenuCategoryType;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryCountProjection;
@@ -21,7 +21,7 @@ public interface VisitHistoryRepositoryCustom {
 
     List<VisitHistoryCountProjection> countGroupingByStoreId(List<Long> storeIds, LocalDate startDate);
 
-    long countByUserIdAndMenuCategoryType(Long userId, @Nullable MenuCategoryType menuCategoryType);
+    long countByUserIdAndMenuCategoryType(Long userId, @Nullable UserMenuCategoryType menuCategoryType);
 
     long countByUserIdAndVisitType(Long userId, VisitType visitType);
 

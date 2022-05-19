@@ -2,11 +2,12 @@ package com.depromeet.threedollar.api.user.controller;
 
 import java.util.List;
 
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDayRepository;
-import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodRepository;
@@ -35,7 +36,7 @@ public abstract class SetupStoreControllerTest extends SetupUserControllerTest {
     @BeforeEach
     void setUpStore() {
         store = StoreCreator.create(user.getId(), "디프만 붕어빵");
-        store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", MenuCategoryType.BUNGEOPPANG)));
+        store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", UserMenuCategoryType.BUNGEOPPANG)));
         storeRepository.save(store);
         storeId = store.getId();
     }

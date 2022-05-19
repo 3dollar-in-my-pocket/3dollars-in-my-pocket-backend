@@ -8,9 +8,10 @@ import static com.depromeet.threedollar.domain.rds.user.domain.visit.QVisitHisto
 import java.time.LocalDate;
 import java.util.List;
 
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
+
 import org.jetbrains.annotations.Nullable;
 
-import com.depromeet.threedollar.common.type.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.QVisitHistoryCountProjection;
@@ -96,7 +97,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
     }
 
     @Override
-    public long countByUserIdAndMenuCategoryType(Long userId, @Nullable MenuCategoryType menuCategoryType) {
+    public long countByUserIdAndMenuCategoryType(Long userId, @Nullable UserMenuCategoryType menuCategoryType) {
         return queryFactory.select(visitHistory.id)
             .from(visitHistory)
             .innerJoin(visitHistory.store, store).fetchJoin()
@@ -107,7 +108,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
             ).fetchCount();
     }
 
-    private BooleanExpression eqMenuCategory(@Nullable MenuCategoryType menuCategoryType) {
+    private BooleanExpression eqMenuCategory(@Nullable UserMenuCategoryType menuCategoryType) {
         if (menuCategoryType == null) {
             return null;
         }

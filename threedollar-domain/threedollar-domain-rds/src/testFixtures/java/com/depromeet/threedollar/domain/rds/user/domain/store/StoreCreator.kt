@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.rds.user.domain.store
 
-import com.depromeet.threedollar.common.type.MenuCategoryType
+import com.depromeet.threedollar.common.type.UserMenuCategoryType
 import com.depromeet.threedollar.domain.rds.user.domain.TestFixture
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCreator.create
 
@@ -48,7 +48,7 @@ object StoreCreator {
             .rating(rating)
             .status(status)
             .build()
-        store.addMenus(listOf(create(store, "메뉴 이름", "메뉴 가격", MenuCategoryType.BUNGEOPPANG)))
+        store.addMenus(listOf(create(store, "메뉴 이름", "메뉴 가격", UserMenuCategoryType.BUNGEOPPANG)))
         return store
     }
 
@@ -81,7 +81,7 @@ object StoreCreator {
             storeName = storeName,
             status = status
         )
-        store.addMenus(listOf(create(store, "메뉴 이름", "메뉴 가격", MenuCategoryType.BUNGEOPPANG)))
+        store.addMenus(listOf(create(store, "메뉴 이름", "메뉴 가격", UserMenuCategoryType.BUNGEOPPANG)))
         return store
     }
 

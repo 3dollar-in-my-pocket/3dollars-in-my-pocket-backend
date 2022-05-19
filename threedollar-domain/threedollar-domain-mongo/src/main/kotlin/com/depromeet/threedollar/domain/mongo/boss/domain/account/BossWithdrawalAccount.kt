@@ -2,16 +2,16 @@ package com.depromeet.threedollar.domain.mongo.boss.domain.account
 
 import java.time.LocalDateTime
 import org.springframework.data.mongodb.core.mapping.Document
+import com.depromeet.threedollar.common.model.BusinessNumber
 import com.depromeet.threedollar.domain.mongo.common.domain.BaseDocument
-import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
 
 @Document("boss_withdrawal_account_v1")
 class BossWithdrawalAccount(
-    val backupInfo: BackupBossAccountInfo,
-    val name: String,
-    val socialInfo: BossAccountSocialInfo,
-    val businessNumber: BusinessNumber,
-    val isSetupNotification: Boolean,
+        val backupInfo: BackupBossAccountInfo,
+        val name: String,
+        val socialInfo: BossAccountSocialInfo,
+        val businessNumber: BusinessNumber,
+        val isSetupNotification: Boolean,
 ) : BaseDocument() {
 
     companion object {

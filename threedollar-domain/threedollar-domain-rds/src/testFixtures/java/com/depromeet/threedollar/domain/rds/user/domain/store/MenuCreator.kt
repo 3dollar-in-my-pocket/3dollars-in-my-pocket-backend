@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.rds.user.domain.store
 
-import com.depromeet.threedollar.common.type.MenuCategoryType
+import com.depromeet.threedollar.common.type.UserMenuCategoryType
 import com.depromeet.threedollar.domain.rds.user.domain.TestFixture
 
 @TestFixture
@@ -11,7 +11,7 @@ object MenuCreator {
         store: Store,
         name: String,
         price: String,
-        category: MenuCategoryType
+        category: UserMenuCategoryType
     ): Menu {
         return Menu.builder()
             .store(store)

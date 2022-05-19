@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.core.mapper.user.menu.dto.response.MenuCategoryResponse;
 import com.depromeet.threedollar.api.user.controller.SetupControllerTest;
-import com.depromeet.threedollar.common.type.MenuCategoryType;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 class StoreMenuControllerTest extends SetupControllerTest {
@@ -39,9 +39,9 @@ class StoreMenuControllerTest extends SetupControllerTest {
 
         // then
         assertAll(
-            () -> assertThat(response.getData()).hasSize(MenuCategoryType.values().length),
-            () -> assertThat(response.getData()).containsExactlyElementsOf(Arrays.stream(MenuCategoryType.values())
-                .sorted(Comparator.comparing(MenuCategoryType::getDisplayOrder))
+            () -> assertThat(response.getData()).hasSize(UserMenuCategoryType.values().length),
+            () -> assertThat(response.getData()).containsExactlyElementsOf(Arrays.stream(UserMenuCategoryType.values())
+                .sorted(Comparator.comparing(UserMenuCategoryType::getDisplayOrder))
                 .map(MenuCategoryResponse::of)
                 .collect(Collectors.toList()))
         );

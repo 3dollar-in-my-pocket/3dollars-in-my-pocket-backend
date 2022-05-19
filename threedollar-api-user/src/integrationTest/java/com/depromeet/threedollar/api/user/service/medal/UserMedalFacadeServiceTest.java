@@ -16,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.depromeet.threedollar.api.user.service.SetupUserServiceTest;
 import com.depromeet.threedollar.api.user.service.medal.support.UserMedalAssertions;
-import com.depromeet.threedollar.common.type.MenuCategoryType;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.Medal;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionType;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator;
@@ -219,7 +219,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
             medalRepository.save(medal);
 
             Store store = StoreCreator.create(userId, "가게");
-            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵 2개", "천원", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵 2개", "천원", UserMenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             visitHistoryRepository.saveAll(List.of(
@@ -246,7 +246,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
             medalRepository.save(medal);
 
             Store store = StoreCreator.create(userId, "가게");
-            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵 2개", "천원", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵 2개", "천원", UserMenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 1, 1)));
@@ -267,7 +267,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
             medalRepository.save(medal);
 
             Store store = StoreCreator.create(userId, "가게");
-            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵 2개", "천원", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵 2개", "천원", UserMenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             visitHistoryRepository.saveAll(List.of(

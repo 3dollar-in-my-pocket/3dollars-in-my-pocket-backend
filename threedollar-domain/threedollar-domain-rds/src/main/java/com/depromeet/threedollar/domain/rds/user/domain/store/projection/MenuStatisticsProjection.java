@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.rds.user.domain.store.projection;
 
-import com.depromeet.threedollar.common.type.MenuCategoryType;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.querydsl.core.annotations.QueryProjection;
 
 import lombok.Getter;
@@ -10,11 +10,11 @@ import lombok.ToString;
 @Getter
 public class MenuStatisticsProjection {
 
-    private final MenuCategoryType category;
+    private final UserMenuCategoryType category;
     private final long counts;
 
     @QueryProjection
-    public MenuStatisticsProjection(MenuCategoryType category, long counts) {
+    public MenuStatisticsProjection(UserMenuCategoryType category, long counts) {
         this.category = category;
         this.counts = counts;
     }

@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.mongo.common.domain
+package com.depromeet.threedollar.common.model
 
 import java.util.regex.Pattern
 import com.depromeet.threedollar.common.exception.model.InvalidException
@@ -7,7 +7,6 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode
 /**
  * 연락처 번호 (핸드폰 및 일반 전화 번호)
  */
-
 private const val SEPARATOR = "-"
 private val CONTACTS_NUMBER_REGEX = Pattern.compile("^\\d{2,3}-\\d{3,4}-\\d{4}\$")
 

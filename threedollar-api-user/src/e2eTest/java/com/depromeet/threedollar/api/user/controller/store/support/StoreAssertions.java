@@ -11,7 +11,7 @@ import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDetail
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreInfoResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreWithVisitCountsResponse;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
-import com.depromeet.threedollar.common.type.MenuCategoryType;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.TestHelper;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
@@ -33,7 +33,7 @@ public final class StoreAssertions {
         );
     }
 
-    public static void assertStoreInfoResponse(StoreInfoResponse response, double latitude, double longitude, String storeName, List<MenuCategoryType> categories) {
+    public static void assertStoreInfoResponse(StoreInfoResponse response, double latitude, double longitude, String storeName, List<UserMenuCategoryType> categories) {
         assertAll(
             () -> assertThat(response.getLatitude()).isEqualTo(latitude),
             () -> assertThat(response.getLongitude()).isEqualTo(longitude),

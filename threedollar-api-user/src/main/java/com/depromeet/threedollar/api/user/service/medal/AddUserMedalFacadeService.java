@@ -8,7 +8,7 @@ import static com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquis
 
 import org.springframework.stereotype.Component;
 
-import com.depromeet.threedollar.common.type.MenuCategoryType;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
@@ -41,7 +41,7 @@ public class AddUserMedalFacadeService {
     }
 
     public void addObtainableMedalsByVisitStore(Long userId) {
-        userMedalService.addMedalsIfSatisfyCondition(userId, VISIT_BUNGEOPPANG_STORE, () -> visitHistoryRepository.countByUserIdAndMenuCategoryType(userId, MenuCategoryType.BUNGEOPPANG));
+        userMedalService.addMedalsIfSatisfyCondition(userId, VISIT_BUNGEOPPANG_STORE, () -> visitHistoryRepository.countByUserIdAndMenuCategoryType(userId, UserMenuCategoryType.BUNGEOPPANG));
         userMedalService.addMedalsIfSatisfyCondition(userId, VISIT_NOT_EXISTS_STORE, () -> visitHistoryRepository.countByUserIdAndVisitType(userId, VisitType.NOT_EXISTS));
     }
 

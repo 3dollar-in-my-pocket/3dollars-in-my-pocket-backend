@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.admin.service.user.store.dto.response
 
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
-import com.depromeet.threedollar.common.type.MenuCategoryType
+import com.depromeet.threedollar.common.type.UserMenuCategoryType
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store
 
 data class StoreInfoResponse(
@@ -10,7 +10,7 @@ data class StoreInfoResponse(
     val longitude: Double,
     val storeName: String,
     val rating: Double,
-    val categories: List<MenuCategoryType>
+    val categories: List<UserMenuCategoryType>
 ) : AuditingTimeResponse() {
 
     companion object {

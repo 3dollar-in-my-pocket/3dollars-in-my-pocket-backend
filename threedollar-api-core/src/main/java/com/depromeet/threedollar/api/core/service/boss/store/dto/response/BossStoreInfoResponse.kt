@@ -12,7 +12,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppeara
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenu
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreOpenType
-import com.depromeet.threedollar.domain.mongo.common.domain.TimeInterval
+import com.depromeet.threedollar.common.model.TimeInterval
 
 data class BossStoreInfoResponse(
     val bossStoreId: String,
@@ -139,9 +139,9 @@ data class BossStoreMenuResponse(
 
 
 data class BossStoreAppearanceDayResponse(
-    val dayOfTheWeek: DayOfTheWeek,
-    val openingHours: TimeInterval,
-    val locationDescription: String
+        val dayOfTheWeek: DayOfTheWeek,
+        val openingHours: TimeInterval,
+        val locationDescription: String
 ) {
 
     companion object {

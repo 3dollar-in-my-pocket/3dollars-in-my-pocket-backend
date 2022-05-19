@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.mongo.common.domain
+package com.depromeet.threedollar.common.model
 
 import java.util.regex.Pattern
 import com.depromeet.threedollar.common.exception.model.InvalidException
