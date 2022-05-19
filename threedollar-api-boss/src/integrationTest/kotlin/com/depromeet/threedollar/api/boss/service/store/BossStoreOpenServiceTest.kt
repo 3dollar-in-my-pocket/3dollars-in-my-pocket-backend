@@ -11,16 +11,13 @@ import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.api.boss.service.SetupBossStoreServiceTest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.model.LocationValue
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 import com.depromeet.threedollar.domain.redis.domain.boss.store.BossStoreOpenTimeRepository
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class BossStoreOpenServiceTest(
     private val bossStoreOpenService: BossStoreOpenService,
-    private val bossStoreLocationRepository: BossStoreLocationRepository,
     private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository
 ) : SetupBossStoreServiceTest() {
 
@@ -28,7 +25,6 @@ internal class BossStoreOpenServiceTest(
     fun cleanUp() {
         super.cleanup()
         bossStoreRepository.deleteAll()
-        bossStoreLocationRepository.deleteAll()
     }
 
     @Test
@@ -77,7 +73,7 @@ internal class BossStoreOpenServiceTest(
         )
 
         // then
-        val bossStoreLocations = bossStoreLocationRepository.findAll()
+        val bossStoreLocations = bossStoreRepository.findAll()
         assertAll({
             assertThat(bossStoreLocations).hasSize(1)
             assertBossStoreLocation(
@@ -94,44 +90,11 @@ internal class BossStoreOpenServiceTest(
         val latitude = 37.3
         val longitude = 126.0
 
-        bossStoreLocationRepository.save(BossStoreLocationCreator.create(
-            bossStoreId = bossStoreId,
-            latitude = 36.0,
-            longitude = 128.0
-        ))
-
         // when
         bossStoreOpenService.openBossStore(bossStoreId, bossId, LocationValue.of(latitude, longitude))
 
         // then
-        val bossStoreLocations = bossStoreLocationRepository.findAll()
-        assertAll({
-            assertThat(bossStoreLocations).hasSize(1)
-            assertBossStoreLocation(
-                bossStoreLocation = bossStoreLocations[0],
-                latitude = latitude,
-                longitude = longitude
-            )
-        })
-    }
-
-    @Test
-    fun `가게 오픈 갱신시 가게 위치가 그대로인경우 위치 정보가 유지된다`() {
-        // given
-        val latitude = 36.3
-        val longitude = 128.2
-
-        bossStoreLocationRepository.save(BossStoreLocationCreator.create(
-            bossStoreId = bossStoreId,
-            latitude = latitude,
-            longitude = longitude
-        ))
-
-        // when
-        bossStoreOpenService.openBossStore(bossStoreId, bossId, LocationValue.of(latitude, longitude))
-
-        // then
-        val bossStoreLocations = bossStoreLocationRepository.findAll()
+        val bossStoreLocations = bossStoreRepository.findAll()
         assertAll({
             assertThat(bossStoreLocations).hasSize(1)
             assertBossStoreLocation(
@@ -184,10 +147,10 @@ internal class BossStoreOpenServiceTest(
 
 
 private fun assertBossStoreLocation(
-    bossStoreLocation: BossStoreLocation,
+    bossStoreLocation: BossStore,
     latitude: Double,
     longitude: Double
 ) {
-    assertThat(bossStoreLocation.location.latitude).isEqualTo(latitude)
-    assertThat(bossStoreLocation.location.longitude).isEqualTo(longitude)
+    assertThat(bossStoreLocation.location?.latitude).isEqualTo(latitude)
+    assertThat(bossStoreLocation.location?.longitude).isEqualTo(longitude)
 }

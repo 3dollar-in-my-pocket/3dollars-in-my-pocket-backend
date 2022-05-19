@@ -9,7 +9,7 @@ import com.depromeet.threedollar.common.utils.distance.LocationDistanceUtils
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppearanceDay
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCoordinate
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenu
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreOpenType
 import com.depromeet.threedollar.domain.mongo.common.domain.TimeInterval
@@ -32,7 +32,6 @@ data class BossStoreInfoResponse(
     companion object {
         fun of(
             bossStore: BossStore,
-            location: BossStoreCoordinate?,
             categories: List<BossStoreCategory>,
             openStartDateTime: LocalDateTime?,
             deviceLocation: LocationValue = LocationValue.of(0.0, 0.0)
@@ -40,7 +39,7 @@ data class BossStoreInfoResponse(
             val response = BossStoreInfoResponse(
                 bossStoreId = bossStore.id,
                 name = bossStore.name,
-                location = location?.let { LocationResponse.of(it) },
+                location = bossStore.location?.let { LocationResponse.of(it) },
                 imageUrl = bossStore.imageUrl,
                 introduction = bossStore.introduction,
                 contactsNumber = bossStore.contactsNumber?.getNumberWithSeparator(),
@@ -51,9 +50,9 @@ data class BossStoreInfoResponse(
                 openStatus = openStartDateTime?.let { BossStoreOpenStatusResponse.of(it) }
                     ?: BossStoreOpenStatusResponse.close(),
                 distance = LocationDistanceUtils.getDistance(
-                    LocationValue.of(location?.latitude ?: 0.0, location?.longitude ?: 0.0),
-                    deviceLocation
-                )
+                    LocationValue.of(bossStore.location?.latitude ?: 0.0,
+                        bossStore.location?.longitude ?: 0.0
+                    ), deviceLocation)
             )
             response.setAuditingTimeByDocument(bossStore)
             return response
@@ -77,7 +76,6 @@ data class BossStoreAroundInfoResponse(
     companion object {
         fun of(
             bossStore: BossStore,
-            location: BossStoreCoordinate?,
             categories: List<BossStoreCategory>,
             openStartDateTime: LocalDateTime?,
             totalFeedbacksCounts: Int,
@@ -86,16 +84,16 @@ data class BossStoreAroundInfoResponse(
             val response = BossStoreAroundInfoResponse(
                 bossStoreId = bossStore.id,
                 name = bossStore.name,
-                location = location?.let { LocationResponse.of(it) },
+                location = bossStore.location?.let { LocationResponse.of(it) },
                 menus = bossStore.menus.map { BossStoreMenuResponse.of(it) },
                 categories = categories.asSequence().map { BossStoreCategoryResponse.of(it) }.toSet(),
                 openStatus = openStartDateTime?.let { BossStoreOpenStatusResponse.of(it) }
                     ?: BossStoreOpenStatusResponse.close(),
                 totalFeedbacksCounts = totalFeedbacksCounts,
                 distance = LocationDistanceUtils.getDistance(
-                    LocationValue.of(location?.latitude ?: 0.0, location?.longitude ?: 0.0),
-                    deviceLocation
-                )
+                    LocationValue.of(bossStore.location?.latitude ?: 0.0,
+                        bossStore.location?.longitude ?: 0.0
+                    ), deviceLocation)
             )
             response.setAuditingTimeByDocument(bossStore)
             return response
@@ -110,7 +108,7 @@ data class LocationResponse(
 ) {
 
     companion object {
-        fun of(location: BossStoreCoordinate): LocationResponse {
+        fun of(location: BossStoreLocation): LocationResponse {
             return LocationResponse(
                 latitude = location.latitude,
                 longitude = location.longitude

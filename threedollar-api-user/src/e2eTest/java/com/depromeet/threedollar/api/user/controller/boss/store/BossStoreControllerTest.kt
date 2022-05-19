@@ -17,8 +17,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCate
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppearanceDayCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenuCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreOpenType
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
@@ -28,7 +27,6 @@ import com.depromeet.threedollar.domain.redis.domain.boss.store.BossStoreOpenTim
 internal class BossStoreControllerTest(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-    private val bossStoreLocationRepository: BossStoreLocationRepository,
     private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository
 ) : SetupUserControllerTest() {
 
@@ -37,7 +35,6 @@ internal class BossStoreControllerTest(
         super.cleanup()
         bossStoreCategoryRepository.deleteAll()
         bossStoreRepository.deleteAll()
-        bossStoreLocationRepository.deleteAll()
     }
 
     @DisplayName("GET /boss/v1/boss/store/{BOSS_STORE_ID}")
@@ -50,6 +47,7 @@ internal class BossStoreControllerTest(
         val bossStore = BossStoreCreator.create(
             bossId = "anotherBossId",
             name = "사장님 가게",
+            location = BossStoreLocation.of(latitude = 38.0, longitude = 128.0),
             imageUrl = "https://image.png",
             introduction = "introduction",
             snsUrl = "https://sns.com",
@@ -61,12 +59,6 @@ internal class BossStoreControllerTest(
         bossStoreRepository.save(bossStore)
 
         bossStoreOpenTimeRepository.set(bossStore.id, LocalDateTime.of(2022, 2, 1, 0, 0))
-
-        bossStoreLocationRepository.save(BossStoreLocationCreator.create(
-            bossStoreId = bossStore.id,
-            latitude = 38.0,
-            longitude = 128.0
-        ))
 
         // when & then
         mockMvc.get("/v1/boss/store/${bossStore.id}") {

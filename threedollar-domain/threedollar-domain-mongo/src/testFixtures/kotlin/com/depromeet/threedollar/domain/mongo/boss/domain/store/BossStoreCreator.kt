@@ -9,6 +9,7 @@ object BossStoreCreator {
     fun create(
         bossId: String,
         name: String,
+        location: BossStoreLocation? = null,
         imageUrl: String = "https://image.png",
         introduction: String = "introduction",
         contactsNumber: ContactsNumber? = null,
@@ -26,7 +27,8 @@ object BossStoreCreator {
             snsUrl = snsUrl,
             menus = menus,
             appearanceDays = appearanceDays,
-            categoriesIds = categoriesIds
+            categoriesIds = categoriesIds,
+            location = location
         )
     }
 

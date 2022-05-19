@@ -16,4 +16,6 @@ interface BossStoreRepositoryCustom {
 
     fun findAllByIdByCategory(bossStoreIds: List<String>, categoryId: String?): List<BossStore>
 
+    fun findAllNearBossStoresFilterByCategoryId(latitude: Double, longitude: Double, categoryId: String?, maxDistance: Double, size: Int): List<BossStore>
+
 }

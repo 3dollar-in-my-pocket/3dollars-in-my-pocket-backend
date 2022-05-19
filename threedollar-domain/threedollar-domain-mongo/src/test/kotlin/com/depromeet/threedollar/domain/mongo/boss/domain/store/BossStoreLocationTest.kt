@@ -13,7 +13,7 @@ internal class BossStoreLocationTest {
         val longitude = -1.0
 
         // when & then
-        assertThatThrownBy { BossStoreLocation.of(bossStoreId = "bossStoreId", latitude = latitude, longitude) }.isInstanceOf(InvalidException::class.java)
+        assertThatThrownBy { BossStoreLocation.of(latitude = latitude, longitude) }.isInstanceOf(InvalidException::class.java)
     }
 
     @Test
@@ -22,10 +22,10 @@ internal class BossStoreLocationTest {
         val latitude = -1.0
         val longitude = -1.0
 
-        val bossStoreLocation = BossStoreLocationCreator.create(bossStoreId = "bossStoreId", latitude = 38.0, longitude = 128.0)
+        val bossStore = BossStoreCreator.create("bossId", "가게 이름")
 
         // when & then
-        assertThatThrownBy { bossStoreLocation.updateLocation(latitude = latitude, longitude = longitude) }.isInstanceOf(InvalidException::class.java)
+        assertThatThrownBy { bossStore.updateLocation(latitude = latitude, longitude = longitude) }.isInstanceOf(InvalidException::class.java)
     }
 
 }

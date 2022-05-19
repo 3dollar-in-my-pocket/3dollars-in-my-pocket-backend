@@ -37,7 +37,6 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registrat
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppearanceDay
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenu
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
 import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
@@ -59,7 +58,6 @@ class LocalTestController(
     private val bossAccountRepository: BossAccountRepository,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-    private val bossStoreLocationRepository: BossStoreLocationRepository,
     private val bossRegistrationRepository: BossRegistrationRepository,
     private val bossStoreFeedbackService: BossStoreFeedbackService,
     private val httpSession: HttpSession
@@ -114,9 +112,10 @@ class LocalTestController(
     ): ApiResponse<String> {
         BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, categoriesIds)
         val bossStore = bossStoreRepository.save(
-            BossStore(
+            BossStore.of(
                 bossId = randomBossId?.let { "test${UUID.randomUUID()}" } ?: bossId,
                 name = "행복한 붕어빵",
+                location = BossStoreLocation.of(latitude = latitude, longitude = longitude),
                 imageUrl = "https://image.com",
                 introduction = "소개",
                 contactsNumber = ContactsNumber.of("010-1234-1234"),
@@ -153,14 +152,6 @@ class LocalTestController(
                     )
                 ),
                 categoriesIds = categoriesIds
-            )
-        )
-
-        bossStoreLocationRepository.save(
-            BossStoreLocation.of(
-                bossStoreId = bossStore.id,
-                longitude = longitude,
-                latitude = latitude
             )
         )
         return ApiResponse.success(bossStore.id)

@@ -8,6 +8,7 @@ import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
 class BossStore(
     val bossId: String,
     var name: String,
+    var location: BossStoreLocation?,
     var imageUrl: String?,
     var introduction: String?,
     var contactsNumber: ContactsNumber?,
@@ -73,17 +74,29 @@ class BossStore(
         return this.bossId == bossId
     }
 
+    fun hasChangedLocation(latitude: Double, longitude: Double): Boolean {
+        this.location?.let {
+            return it.hasSameLocation(latitude = latitude, longitude = longitude)
+        }
+        return true
+    }
+
+    fun updateLocation(latitude: Double, longitude: Double) {
+        this.location = BossStoreLocation.of(latitude = latitude, longitude = longitude)
+    }
+
     companion object {
         fun of(
             bossId: String,
             name: String,
+            location: BossStoreLocation? = null,
             imageUrl: String? = null,
             introduction: String? = null,
             contactsNumber: ContactsNumber? = null,
             snsUrl: String? = null,
             menus: List<BossStoreMenu> = listOf(),
             appearanceDays: Set<BossStoreAppearanceDay> = setOf(),
-            categoriesIds: Set<String> = setOf(),
+            categoriesIds: Set<String> = setOf()
         ): BossStore {
             return BossStore(
                 bossId = bossId,
@@ -94,7 +107,8 @@ class BossStore(
                 snsUrl = snsUrl,
                 menus = menus,
                 appearanceDays = appearanceDays,
-                categoriesIds = categoriesIds
+                categoriesIds = categoriesIds,
+                location = location
             )
         }
     }

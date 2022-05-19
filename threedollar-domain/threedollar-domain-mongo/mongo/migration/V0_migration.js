@@ -1,15 +1,3 @@
-// boss_store_location_v1
-db.boss_store_location_v1.createIndex({
-    "location": "2dsphere"
-});
-
-db.boss_store_location_v1.createIndex({
-    "bossStoreId": 1
-}, {
-    unique: true
-})
-
-
 // boss_store_v1
 db.boss_store_v1.createIndex({
     "bossId": 1
@@ -17,6 +5,9 @@ db.boss_store_v1.createIndex({
     unique: true
 })
 
+db.boss_store_v1.createIndex({
+    "location": "2dsphere"
+});
 
 // boss_account_v1
 db.boss_account_v1.createIndex({
