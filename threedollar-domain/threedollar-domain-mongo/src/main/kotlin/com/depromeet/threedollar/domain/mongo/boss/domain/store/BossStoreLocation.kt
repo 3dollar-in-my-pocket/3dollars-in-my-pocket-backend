@@ -14,7 +14,11 @@ data class BossStoreLocation(
         LocationValidator.validate(latitude = latitude, longitude = longitude)
     }
 
-    fun hasSameLocation(latitude: Double, longitude: Double): Boolean {
+    fun hasChangedLocation(latitude: Double, longitude: Double): Boolean {
+        return !hasSameLocation(latitude = latitude, longitude = longitude)
+    }
+
+    private fun hasSameLocation(latitude: Double, longitude: Double): Boolean {
         return this.latitude == latitude && this.longitude == longitude
     }
 

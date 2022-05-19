@@ -26,7 +26,7 @@ client.global.set("BOSS_STORE_ID", response.body["data"]["bossStoreId"])
 
 
 ### 가게의 영업을 시작/갱신 합니다.
-PUT {{boss_api}}/v1/boss/store/{{BOSS_STORE_ID}}/open
+PUT {{boss_api}}/v1/boss/store/{{BOSS_STORE_ID}}/open?mapLatitude=38&mapLongitude=127
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 > {%

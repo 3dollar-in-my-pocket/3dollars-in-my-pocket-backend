@@ -76,7 +76,7 @@ class BossStore(
 
     fun hasChangedLocation(latitude: Double, longitude: Double): Boolean {
         this.location?.let {
-            return it.hasSameLocation(latitude = latitude, longitude = longitude)
+            return it.hasChangedLocation(latitude = latitude, longitude = longitude)
         }
         return true
     }
