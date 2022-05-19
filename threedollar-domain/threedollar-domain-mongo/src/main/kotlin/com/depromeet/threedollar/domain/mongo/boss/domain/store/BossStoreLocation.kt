@@ -34,9 +34,12 @@ class BossStoreLocation(
 }
 
 
+/**
+ * (longitude, latitude) 순서로 저장되어야 합니다.
+ */
 data class BossStoreCoordinate(
-    val latitude: Double,
-    val longitude: Double
+    val longitude: Double,
+    val latitude: Double
 ) {
 
     init {
