@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.domain.rds.user.domain.advertisement.repository;
 
+import static com.depromeet.threedollar.domain.rds.common.support.QuerydslSupport.predicate;
 import static com.depromeet.threedollar.domain.rds.user.domain.advertisement.QAdvertisement.advertisement;
 
 import java.time.LocalDateTime;
@@ -10,7 +11,6 @@ import org.jetbrains.annotations.Nullable;
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.Advertisement;
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPlatformType;
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPositionType;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
@@ -46,27 +46,13 @@ public class AdvertisementRepositoryCustomImpl implements AdvertisementRepositor
     public List<Advertisement> findAllByPositionAndPlatformWithPaging(long size, int page, AdvertisementPlatformType platformType, AdvertisementPositionType positionType) {
         return queryFactory.selectFrom(advertisement)
             .where(
-                eqPlatform(platformType),
-                eqPosition(positionType)
+                predicate(platformType != null, () -> advertisement.platformType.eq(platformType)),
+                predicate(positionType != null, () -> advertisement.positionType.eq(positionType))
             )
             .orderBy(advertisement.id.desc())
             .offset(page * size)
             .limit(size)
             .fetch();
-    }
-
-    private BooleanExpression eqPosition(AdvertisementPositionType positionType) {
-        if (positionType == null) {
-            return null;
-        }
-        return advertisement.positionType.eq(positionType);
-    }
-
-    private BooleanExpression eqPlatform(AdvertisementPlatformType platformType) {
-        if (platformType == null) {
-            return null;
-        }
-        return advertisement.platformType.eq(platformType);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.domain.rds.user.domain.store.repository;
 
 import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_STORES_COUNTS;
+import static com.depromeet.threedollar.domain.rds.common.support.QuerydslSupport.predicate;
 import static com.depromeet.threedollar.domain.rds.user.domain.store.QMenu.menu;
 import static com.depromeet.threedollar.domain.rds.user.domain.store.QStore.store;
 import static com.querydsl.core.group.GroupBy.groupBy;
@@ -22,7 +23,6 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.projection.QStoreW
 import com.depromeet.threedollar.domain.rds.user.domain.store.projection.QStoreWithMenuProjection_MenuProjection;
 import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreWithMenuProjection;
 import com.querydsl.core.types.Ops;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -90,7 +90,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
             .from(store)
             .innerJoin(menu).on(menu.store.id.eq(store.id))
             .where(
-                lessThanId(lastStoreId)
+                predicate(lastStoreId != null, () -> store.id.lt(lastStoreId))
             )
             .orderBy(store.id.desc())
             .limit(size)
@@ -111,7 +111,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
             .innerJoin(menu).on(menu.store.id.eq(store.id))
             .where(
                 store.userId.eq(userId),
-                lessThanId(lastStoreId)
+                predicate(lastStoreId != null, () -> store.id.lt(lastStoreId))
             )
             .orderBy(store.id.desc())
             .limit(size)
@@ -125,13 +125,6 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
             )
             .orderBy(store.id.desc())
             .transform(groupBy(store.id).list(getStoreProjection()));
-    }
-
-    private BooleanExpression lessThanId(@Nullable Long lastStoreId) {
-        if (lastStoreId == null) {
-            return null;
-        }
-        return store.id.lt(lastStoreId);
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.domain.rds.user.domain.visit.repository;
 
+import static com.depromeet.threedollar.domain.rds.common.support.QuerydslSupport.predicate;
 import static com.depromeet.threedollar.domain.rds.user.domain.store.QMenu.menu;
 import static com.depromeet.threedollar.domain.rds.user.domain.store.QStore.store;
 import static com.depromeet.threedollar.domain.rds.user.domain.user.QUser.user;
@@ -17,7 +18,6 @@ import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.QVisitH
 import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.QVisitHistoryWithUserProjection;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryCountProjection;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryWithUserProjection;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
@@ -60,7 +60,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
             .from(visitHistory)
             .where(
                 visitHistory.userId.eq(userId),
-                lessThanId(lastHistoryId)
+                predicate(lastHistoryId != null, () -> visitHistory.id.lt(lastHistoryId))
             )
             .orderBy(visitHistory.id.desc())
             .limit(size)
@@ -74,13 +74,6 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
             )
             .orderBy(visitHistory.id.desc())
             .fetch();
-    }
-
-    private BooleanExpression lessThanId(@Nullable Long lastHistoryId) {
-        if (lastHistoryId == null) {
-            return null;
-        }
-        return visitHistory.id.lt(lastHistoryId);
     }
 
     @Override
@@ -103,15 +96,8 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
             .innerJoin(store.menus, menu).fetchJoin()
             .where(
                 visitHistory.userId.eq(userId),
-                eqMenuCategory(menuCategoryType)
+                predicate(menuCategoryType != null, () -> menu.category.eq(menuCategoryType))
             ).fetchCount();
-    }
-
-    private BooleanExpression eqMenuCategory(@Nullable UserMenuCategoryType menuCategoryType) {
-        if (menuCategoryType == null) {
-            return null;
-        }
-        return menu.category.eq(menuCategoryType);
     }
 
     @Override

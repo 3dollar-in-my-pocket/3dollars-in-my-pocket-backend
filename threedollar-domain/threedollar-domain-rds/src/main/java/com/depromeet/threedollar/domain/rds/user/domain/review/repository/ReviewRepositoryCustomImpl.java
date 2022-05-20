@@ -2,6 +2,7 @@ package com.depromeet.threedollar.domain.rds.user.domain.review.repository;
 
 import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_REVIEWS_COUNTS;
 import static com.depromeet.threedollar.domain.rds.common.constants.RDBPackageConstants.PERSISTENCE_LOCK_TIMEOUT;
+import static com.depromeet.threedollar.domain.rds.common.support.QuerydslSupport.predicate;
 import static com.depromeet.threedollar.domain.rds.user.domain.review.QReview.review;
 import static com.depromeet.threedollar.domain.rds.user.domain.store.QStore.store;
 
@@ -14,7 +15,6 @@ import org.springframework.cache.annotation.Cacheable;
 
 import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewStatus;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
@@ -86,18 +86,11 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
             .where(
                 review.userId.eq(userId),
                 review.status.eq(ReviewStatus.POSTED),
-                lessThanId(lastStoreId)
+                predicate(lastStoreId != null, () -> review.id.lt(lastStoreId))
             )
             .orderBy(review.id.desc())
             .limit(size)
             .fetch();
-    }
-
-    private BooleanExpression lessThanId(@Nullable Long lastStoreId) {
-        if (lastStoreId == null) {
-            return null;
-        }
-        return review.id.lt(lastStoreId);
     }
 
 }

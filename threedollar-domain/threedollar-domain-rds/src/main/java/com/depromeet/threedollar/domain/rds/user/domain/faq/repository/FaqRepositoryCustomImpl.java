@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.domain.rds.user.domain.faq.repository;
 
+import static com.depromeet.threedollar.domain.rds.common.support.QuerydslSupport.predicate;
 import static com.depromeet.threedollar.domain.rds.user.domain.faq.QFaq.faq;
 
 import java.util.List;
@@ -8,7 +9,6 @@ import org.jetbrains.annotations.Nullable;
 
 import com.depromeet.threedollar.domain.rds.user.domain.faq.Faq;
 import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCategory;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
@@ -22,15 +22,8 @@ public class FaqRepositoryCustomImpl implements FaqRepositoryCustom {
     public List<Faq> findAllByCategory(FaqCategory category) {
         return queryFactory.selectFrom(faq)
             .where(
-                eqCategory(category)
+                predicate(category != null, () -> faq.category.eq(category))
             ).fetch();
-    }
-
-    private BooleanExpression eqCategory(FaqCategory category) {
-        if (category == null) {
-            return null;
-        }
-        return faq.category.eq(category);
     }
 
     @Nullable
