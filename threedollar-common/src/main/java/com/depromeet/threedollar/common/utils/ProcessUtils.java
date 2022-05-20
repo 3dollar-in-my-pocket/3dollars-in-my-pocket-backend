@@ -33,9 +33,7 @@ public final class ProcessUtils {
     private static Process executeGrepProcessCommand(int port) throws IOException {
         // 윈도우일 경우
         if (isWindows()) {
-            String command = String.format("netstat -nao | find \"LISTEN\" | find \"%d\"", port);
-            String[] shell = {"cmd.exe", "/y", "/c", command};
-            return Runtime.getRuntime().exec(shell);
+            throw new InternalServerException("프로세스 실행 여부 확인 메소드는 Windows OS는 지원하지 않습니다");
         }
         String command = String.format("netstat -nat | grep LISTEN|grep %d", port);
         String[] shell = {"/bin/sh", "-c", command};

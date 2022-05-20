@@ -95,7 +95,7 @@ class MathUtilsTest {
             double result = MathUtils.divide(dividend, divisor);
 
             // then
-            assertThat(result).isEqualTo(0);
+            assertThat(result).isZero();
         }
 
     }
