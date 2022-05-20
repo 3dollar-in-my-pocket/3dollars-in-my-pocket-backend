@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ThreeDollarAdminApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" value="local-docker" />
+    <module name="threedollar.threedollar-api-admin.main" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.depromeet.threedollar.api.admin.ThreeDollarAdminApplication" />
+    <option name="VM_PARAMETERS" value="-server -Xms4G -Xmx4G -XX:+UseG1GC" />
+    <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
+      <option name="credential" />
+      <option name="region" />
+      <option name="useCurrentConnection" value="false" />
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
