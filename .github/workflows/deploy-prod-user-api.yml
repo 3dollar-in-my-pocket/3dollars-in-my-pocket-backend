@@ -51,7 +51,7 @@ jobs:
         id: build
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          DOCKER_REPOSITORY: 3dollar-api
+          DOCKER_REPOSITORY: threedollars-in-my-pocket-user-api-prod
           IMAGE_TAG: ${{ steps.version.outputs.version }}
         run: |
           docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG -f ./threedollar-api-user/Dockerfile .
@@ -65,7 +65,7 @@ jobs:
       - name: Download task definition
         id: download-task-definition
         run: |
-          aws ecs describe-task-definition --task-definition threedollar-api-prod --query taskDefinition > task-definition-prod.json
+          aws ecs describe-task-definition --task-definition threedollars-in-my-pocket-user-api-prod --query taskDefinition > task-definition-prod.json
           echo "::set-output name=task-definition::$GITHUB_WORKSPACE/task-definition-prod.json"
 
       - name: Update Amazon ECS task definition
@@ -80,6 +80,6 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.render-web-container.outputs.task-definition }}
-          cluster: threedollar-prod
-          service: threedollar-api-prod
+          cluster: threedollars-in-my-pocket-prod
+          service: threedollars-in-my-pocket-user-api-prod
           wait-for-service-stability: true

@@ -51,7 +51,7 @@ jobs:
         id: build
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          DOCKER_REPOSITORY: 3dollar-api
+          DOCKER_REPOSITORY: threedollars-in-my-pocket-user-api-prod
           IMAGE_TAG: ${{ steps.version.outputs.version }}
         run: |
           docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG -f ./threedollar-api-user/Dockerfile .
