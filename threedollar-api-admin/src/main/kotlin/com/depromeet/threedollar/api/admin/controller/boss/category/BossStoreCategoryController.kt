@@ -17,7 +17,7 @@ class BossStoreCategoryController(
     @Auth
     @GetMapping("/v1/boss/store/categories")
     fun getBossCategories(): ApiResponse<List<BossStoreCategoryResponse>> {
-        return ApiResponse.success(bossStoreCategoryService.getBossStoreCategories())
+        return ApiResponse.success(bossStoreCategoryService.retrieveBossStoreCategories())
     }
 
 }

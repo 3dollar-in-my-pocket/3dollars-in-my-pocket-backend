@@ -9,7 +9,7 @@ import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreWithMenuProjection;
-import com.depromeet.threedollar.domain.redis.domain.user.store.dto.CachedUserStoreDto;
+import com.depromeet.threedollar.domain.redis.domain.user.store.model.UserStoreCacheModel;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -74,7 +74,7 @@ public class StoreInfoResponse extends AuditingTimeResponse {
         return response;
     }
 
-    public static StoreInfoResponse of(@NotNull CachedUserStoreDto cachedStore) {
+    public static StoreInfoResponse of(@NotNull UserStoreCacheModel cachedStore) {
         StoreInfoResponse response = StoreInfoResponse.builder()
             .storeId(cachedStore.getStoreId())
             .latitude(cachedStore.getLatitude())

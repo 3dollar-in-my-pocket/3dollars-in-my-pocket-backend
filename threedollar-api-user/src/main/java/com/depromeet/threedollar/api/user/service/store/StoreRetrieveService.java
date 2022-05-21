@@ -34,7 +34,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreWi
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryWithUserProjection;
-import com.depromeet.threedollar.domain.redis.domain.user.store.CachedAroundStoresRepository;
+import com.depromeet.threedollar.domain.redis.domain.user.store.AroundUserStoresCacheRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -43,7 +43,7 @@ import lombok.RequiredArgsConstructor;
 public class StoreRetrieveService {
 
     private final StoreRepository storeRepository;
-    private final CachedAroundStoresRepository cachedAroundStoresRepository;
+    private final AroundUserStoresCacheRepository aroundUserStoresCacheRepository;
 
     private final StoreImageRepository storeImageRepository;
     private final UserRepository userRepository;
@@ -52,7 +52,7 @@ public class StoreRetrieveService {
 
     @Transactional(readOnly = true)
     public List<StoreWithVisitsAndDistanceResponse> retrieveAroundStores(RetrieveAroundStoresRequest request, LocationValue deviceLocation, LocationValue mapLocation) {
-        List<StoreInfoResponse> aroundStoresFilerByCategory = findAroundStoresFilerByCategory(storeRepository, cachedAroundStoresRepository, mapLocation.getLatitude(), mapLocation.getLongitude(), request.getDistance(), request.getCategory());
+        List<StoreInfoResponse> aroundStoresFilerByCategory = findAroundStoresFilerByCategory(storeRepository, aroundUserStoresCacheRepository, mapLocation.getLatitude(), mapLocation.getLongitude(), request.getDistance(), request.getCategory());
         VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(aroundStoresFilerByCategory.stream()
             .map(StoreInfoResponse::getStoreId)
             .collect(Collectors.toList()));

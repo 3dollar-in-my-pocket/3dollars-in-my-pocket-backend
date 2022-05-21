@@ -7,7 +7,6 @@ import com.depromeet.threedollar.common.model.LocationValue
 import com.depromeet.threedollar.common.model.TimeInterval
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.common.utils.distance.LocationDistanceUtils
-import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppearanceDay
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
@@ -32,7 +31,7 @@ data class BossStoreInfoResponse(
     companion object {
         fun of(
             bossStore: BossStore,
-            categories: List<BossStoreCategory>,
+            categories: List<BossStoreCategoryResponse>,
             openStartDateTime: LocalDateTime?,
             deviceLocation: LocationValue = LocationValue.of(0.0, 0.0),
         ): BossStoreInfoResponse {
@@ -46,7 +45,7 @@ data class BossStoreInfoResponse(
                 snsUrl = bossStore.snsUrl,
                 menus = bossStore.menus.map { BossStoreMenuResponse.of(it) },
                 appearanceDays = bossStore.appearanceDays.asSequence().map { BossStoreAppearanceDayResponse.of(it) }.toSet(),
-                categories = categories.asSequence().map { BossStoreCategoryResponse.of(it) }.toSet(),
+                categories = categories.toSet(),
                 openStatus = openStartDateTime?.let { BossStoreOpenStatusResponse.of(it) }
                     ?: BossStoreOpenStatusResponse.close(),
                 distance = LocationDistanceUtils.getDistance(
@@ -76,7 +75,7 @@ data class BossStoreAroundInfoResponse(
     companion object {
         fun of(
             bossStore: BossStore,
-            categories: List<BossStoreCategory>,
+            categories: List<BossStoreCategoryResponse>,
             openStartDateTime: LocalDateTime?,
             totalFeedbacksCounts: Int,
             deviceLocation: LocationValue = LocationValue.of(0.0, 0.0),
@@ -86,7 +85,7 @@ data class BossStoreAroundInfoResponse(
                 name = bossStore.name,
                 location = bossStore.location?.let { LocationResponse.of(it) },
                 menus = bossStore.menus.map { BossStoreMenuResponse.of(it) },
-                categories = categories.asSequence().map { BossStoreCategoryResponse.of(it) }.toSet(),
+                categories = categories.toSet(),
                 openStatus = openStartDateTime?.let { BossStoreOpenStatusResponse.of(it) }
                     ?: BossStoreOpenStatusResponse.close(),
                 totalFeedbacksCounts = totalFeedbacksCounts,

@@ -6,4 +6,6 @@ interface BossStoreCategoryRepositoryCustom {
 
     fun findAllCategoriesByIds(categoriesIds: Set<String>): List<BossStoreCategory>
 
+    fun findCategoryById(categoryId: String): BossStoreCategory?
+
 }

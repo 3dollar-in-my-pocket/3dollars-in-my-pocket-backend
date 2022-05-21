@@ -129,7 +129,7 @@ Content-Type: application/json
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 {
-    "name": "",
+    "name": "가게 이름",
     "menus": [],
     "appearanceDays": [],
     "categoriesIds": []

@@ -15,6 +15,7 @@ import com.depromeet.threedollar.api.boss.config.interceptor.Auth
 import com.depromeet.threedollar.api.boss.config.resolver.BossId
 import com.depromeet.threedollar.api.boss.config.session.SessionConstants
 import com.depromeet.threedollar.api.boss.service.auth.dto.response.LoginResponse
+import com.depromeet.threedollar.api.boss.service.store.BossStoreServiceUtils
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.core.service.boss.category.BossStoreCategoryServiceUtils
 import com.depromeet.threedollar.api.core.service.boss.feedback.BossStoreFeedbackService
@@ -110,6 +111,7 @@ class LocalTestController(
         @RequestParam categoriesIds: Set<String>,
         @RequestParam randomBossId: String?,
     ): ApiResponse<String> {
+        BossStoreServiceUtils.findBossStoreByBossId(bossStoreRepository, bossId)
         BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, categoriesIds)
         val bossStore = bossStoreRepository.save(
             BossStore.of(

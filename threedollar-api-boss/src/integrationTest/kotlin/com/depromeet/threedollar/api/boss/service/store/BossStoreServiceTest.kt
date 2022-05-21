@@ -5,6 +5,7 @@ import java.time.LocalTime
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -29,6 +30,9 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenu
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenuCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
+import com.depromeet.threedollar.domain.redis.domain.boss.category.BossStoreCategoryCacheRepository
+import com.ninjasquad.springmockk.MockkBean
+import io.mockk.every
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
@@ -38,6 +42,14 @@ internal class BossStoreSetupBossAccountServiceTest(
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossDeletedStoreRepository: BossDeletedStoreRepository,
 ) : SetupBossAccountServiceTest() {
+
+    @MockkBean
+    private lateinit var bossStoreCategoryCacheRepository: BossStoreCategoryCacheRepository
+
+    @BeforeEach
+    fun disableCacheCategories() {
+        every { bossStoreCategoryCacheRepository.getBossStoreCategories() }.returns(null)
+    }
 
     @AfterEach
     fun cleanUp() {

@@ -39,7 +39,9 @@ class BossStore(
         contactsNumber: String?,
         snsUrl: String?,
     ) {
-        name?.let { this.name = it }
+        if (!name.isNullOrBlank()) {
+            this.name = name
+        }
         imageUrl?.let { this.imageUrl = it }
         introduction?.let { this.introduction = it }
         contactsNumber?.let { this.contactsNumber = ContactsNumber.of(it) }

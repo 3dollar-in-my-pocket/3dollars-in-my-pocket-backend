@@ -2,6 +2,7 @@ package com.depromeet.threedollar.api.user.controller.boss.category
 
 import org.hamcrest.collection.IsCollectionWithSize.hasSize
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
@@ -9,10 +10,22 @@ import com.depromeet.threedollar.api.core.service.boss.category.dto.response.Bos
 import com.depromeet.threedollar.api.user.controller.SetupControllerTest
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
+import com.depromeet.threedollar.domain.redis.domain.boss.category.BossStoreCategoryCacheRepository
+import com.ninjasquad.springmockk.MockkBean
+import io.mockk.every
 
 internal class BossStoreCategoryControllerTest(
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
 ) : SetupControllerTest() {
+
+    @MockkBean
+    private lateinit var bossStoreCategoryCacheRepository: BossStoreCategoryCacheRepository
+
+    @BeforeEach
+    fun disableCacheCategories() {
+        every { bossStoreCategoryCacheRepository.set(any()) } returns Unit
+        every { bossStoreCategoryCacheRepository.getBossStoreCategories() }.returns(null)
+    }
 
     @AfterEach
     fun cleanUp() {

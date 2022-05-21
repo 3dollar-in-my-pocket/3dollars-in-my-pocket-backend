@@ -14,8 +14,8 @@ import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreWithMenuProjection;
-import com.depromeet.threedollar.domain.redis.domain.user.store.CachedAroundStoresRepository;
-import com.depromeet.threedollar.domain.redis.domain.user.store.dto.CachedUserStoreDto;
+import com.depromeet.threedollar.domain.redis.domain.user.store.AroundUserStoresCacheRepository;
+import com.depromeet.threedollar.domain.redis.domain.user.store.model.UserStoreCacheModel;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -47,9 +47,9 @@ public class StoreServiceUtils {
         return store;
     }
 
-    static List<StoreInfoResponse> findAroundStoresFilerByCategory(StoreRepository storeRepository, CachedAroundStoresRepository cachedAroundStoresRepository,
+    static List<StoreInfoResponse> findAroundStoresFilerByCategory(StoreRepository storeRepository, AroundUserStoresCacheRepository aroundUserStoresCacheRepository,
                                                                    double mapLatitude, double mapLongitude, double distance, @Nullable UserMenuCategoryType categoryType) {
-        List<StoreInfoResponse> aroundStores = findAroundStores(storeRepository, cachedAroundStoresRepository, mapLatitude, mapLongitude, distance);
+        List<StoreInfoResponse> aroundStores = findAroundStores(storeRepository, aroundUserStoresCacheRepository, mapLatitude, mapLongitude, distance);
         if (categoryType == null) {
             return aroundStores;
         }
@@ -58,23 +58,23 @@ public class StoreServiceUtils {
             .collect(Collectors.toList());
     }
 
-    private static List<StoreInfoResponse> findAroundStores(StoreRepository storeRepository, CachedAroundStoresRepository cachedAroundStoresRepository, double mapLatitude, double mapLongitude, double distance) {
-        List<CachedUserStoreDto> aroundStoresInCache = cachedAroundStoresRepository.get(mapLatitude, mapLongitude, distance);
+    private static List<StoreInfoResponse> findAroundStores(StoreRepository storeRepository, AroundUserStoresCacheRepository aroundUserStoresCacheRepository, double mapLatitude, double mapLongitude, double distance) {
+        List<UserStoreCacheModel> aroundStoresInCache = aroundUserStoresCacheRepository.get(mapLatitude, mapLongitude, distance);
         if (aroundStoresInCache != null) {
             return aroundStoresInCache.stream()
                 .map(StoreInfoResponse::of)
                 .collect(Collectors.toList());
         }
         List<StoreWithMenuProjection> aroundStoresInDB = storeRepository.findStoresByLocationLessThanDistance(mapLatitude, mapLongitude, distance);
-        saveAroundStoresInCached(cachedAroundStoresRepository, aroundStoresInDB, mapLatitude, mapLongitude, distance);
+        saveAroundStoresInCached(aroundUserStoresCacheRepository, aroundStoresInDB, mapLatitude, mapLongitude, distance);
         return aroundStoresInDB.stream()
             .map(StoreInfoResponse::of)
             .collect(Collectors.toList());
     }
 
-    private static void saveAroundStoresInCached(CachedAroundStoresRepository cachedAroundStoresRepository, List<StoreWithMenuProjection> nearStores, double mapLatitude, double mapLongitude, double distance) {
-        List<CachedUserStoreDto> cachedAroundStores = nearStores.stream()
-            .map(store -> CachedUserStoreDto.of(
+    private static void saveAroundStoresInCached(AroundUserStoresCacheRepository aroundUserStoresCacheRepository, List<StoreWithMenuProjection> nearStores, double mapLatitude, double mapLongitude, double distance) {
+        List<UserStoreCacheModel> cachedAroundStores = nearStores.stream()
+            .map(store -> UserStoreCacheModel.of(
                 store.getMenuCategories(),
                 store.getId(),
                 store.getLatitude(),
@@ -84,7 +84,7 @@ public class StoreServiceUtils {
                 store.getCreatedAt(),
                 store.getUpdatedAt()
             )).collect(Collectors.toList());
-        cachedAroundStoresRepository.set(mapLatitude, mapLongitude, distance, cachedAroundStores);
+        aroundUserStoresCacheRepository.set(mapLatitude, mapLongitude, distance, cachedAroundStores);
     }
 
 }

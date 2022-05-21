@@ -4,6 +4,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import org.hamcrest.Matchers.hasSize
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
@@ -22,13 +23,25 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocatio
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenuCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreOpenType
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
+import com.depromeet.threedollar.domain.redis.domain.boss.category.BossStoreCategoryCacheRepository
 import com.depromeet.threedollar.domain.redis.domain.boss.store.BossStoreOpenTimeRepository
+import com.ninjasquad.springmockk.MockkBean
+import io.mockk.every
 
 internal class BossStoreControllerTest(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository,
 ) : SetupUserControllerTest() {
+
+    @MockkBean
+    private lateinit var bossStoreCategoryCacheRepository: BossStoreCategoryCacheRepository
+
+    @BeforeEach
+    fun disableCacheCategories() {
+        every { bossStoreCategoryCacheRepository.set(any()) } returns Unit
+        every { bossStoreCategoryCacheRepository.getBossStoreCategories() }.returns(null)
+    }
 
     @AfterEach
     fun cleanUp() {

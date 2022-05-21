@@ -5,14 +5,25 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
+import com.depromeet.threedollar.domain.redis.domain.boss.category.BossStoreCategoryCacheRepository
+import com.ninjasquad.springmockk.MockkBean
+import io.mockk.every
 
 internal abstract class SetupBossStoreServiceTest : SetupBossAccountServiceTest() {
 
     @Autowired
     protected lateinit var bossStoreRepository: BossStoreRepository
 
+    @MockkBean
+    private lateinit var bossStoreCategoryCacheRepository: BossStoreCategoryCacheRepository
+
     protected lateinit var bossStore: BossStore
     protected lateinit var bossStoreId: String
+
+    @BeforeEach
+    fun disableCacheCategories() {
+        every { bossStoreCategoryCacheRepository.getBossStoreCategories() }.returns(null)
+    }
 
     @BeforeEach
     override fun setup() {

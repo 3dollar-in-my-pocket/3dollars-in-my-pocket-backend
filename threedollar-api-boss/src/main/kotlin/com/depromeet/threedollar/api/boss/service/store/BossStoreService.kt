@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.boss.service.store.dto.request.PatchBossStoreInfoRequest
 import com.depromeet.threedollar.api.boss.service.store.dto.request.UpdateBossStoreInfoRequest
+import com.depromeet.threedollar.api.core.service.boss.category.BossStoreCategoryService
 import com.depromeet.threedollar.api.core.service.boss.category.BossStoreCategoryServiceUtils
 import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreInfoResponse
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
@@ -18,6 +19,7 @@ class BossStoreService(
     private val bossDeleteBossStoreRepository: BossDeletedStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository,
+    private val bossStoreCategoryService: BossStoreCategoryService,
 ) {
 
     @Transactional
@@ -81,7 +83,7 @@ class BossStoreService(
         val bossStore = BossStoreServiceUtils.findBossStoreByBossId(bossStoreRepository, bossId)
         return BossStoreInfoResponse.of(
             bossStore = bossStore,
-            categories = bossStoreCategoryRepository.findAllCategoriesByIds(bossStore.categoriesIds),
+            categories = bossStoreCategoryService.retrieveBossStoreCategoriesByIds(bossStore.categoriesIds),
             openStartDateTime = bossStoreOpenTimeRepository.get(bossStore.id)
         )
     }
