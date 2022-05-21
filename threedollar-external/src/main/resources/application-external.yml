@@ -90,7 +90,7 @@ spring.config:
 cloud:
   aws:
     s3:
-      bucket: 3dollar-api-bucket-prod
+      bucket: threedollars-in-my-pocket-prod-s3
     cloudfront:
       url: ${secret.aws.cloudfront.url}
     credentials:
