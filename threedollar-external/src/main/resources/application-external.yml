@@ -66,42 +66,19 @@ feign:
       default:
         loggerLevel: FULL
 
----
-spring.config:
-  activate:
-    on-profile: dev
-
-cloud:
-  aws:
-    s3:
-      bucket: 3dollar-api-bucket-dev
-    cloudfront:
-      url: ${secret.aws.cloudfront.url}
-    credentials:
-      instance-profile: true
-
-apple:
-  client_id: ${secret.apple.client_id}
-  issuer: https://appleid.apple.com
-
-slack:
-  token:
-    daily-statistics: ${secret.slack.token.daily-statistics}
-    monitoring: ${secret.slack.token.monitoring}
-    boss-manager: ${secret.slack.token.boss-manager}
-
 
 ---
 spring.config:
   activate:
     on-profile:
+      - dev
       - prod
       - staging
 
 cloud:
   aws:
     s3:
-      bucket: threedollars-in-my-pocket-prod-s3
+      bucket: ${secret.aws.s3.bucket}
     cloudfront:
       url: ${secret.aws.cloudfront.url}
     credentials:
