@@ -50,7 +50,7 @@ internal class AuthControllerTest(
         @Test
         fun 카카오_회원가입_요청이_성공하면_토큰이_반환된다() {
             // given
-            every { kaKaoAuthApiClient.getProfileInfo(any()) }.returns(KaKaoProfileResponse.testInstance("kakao-socialId"))
+            every { kaKaoAuthApiClient.getProfileInfo(any()) } returns KaKaoProfileResponse.testInstance("kakao-socialId")
 
             val request = SignupRequest(
                 token = "token",
@@ -83,7 +83,7 @@ internal class AuthControllerTest(
             val boss = BossAccountCreator.create("google-social-id", BossAccountSocialType.KAKAO, "카카오 계정")
             bossAccountRepository.save(boss)
 
-            every { kaKaoAuthApiClient.getProfileInfo(any()) }.returns(KaKaoProfileResponse.testInstance(boss.socialInfo.socialId))
+            every { kaKaoAuthApiClient.getProfileInfo(any()) } returns KaKaoProfileResponse.testInstance(boss.socialInfo.socialId)
 
             val request = SignupRequest(
                 token = "token",
@@ -117,7 +117,7 @@ internal class AuthControllerTest(
             val registration = RegistrationCreator.create("google-social-id", BossAccountSocialType.KAKAO)
             bossRegistrationRepository.save(registration)
 
-            every { kaKaoAuthApiClient.getProfileInfo(any()) }.returns(KaKaoProfileResponse.testInstance(registration.boss.socialInfo.socialId))
+            every { kaKaoAuthApiClient.getProfileInfo(any()) } returns KaKaoProfileResponse.testInstance(registration.boss.socialInfo.socialId)
 
             val request = SignupRequest(
                 token = "token",
@@ -148,7 +148,7 @@ internal class AuthControllerTest(
         @Test
         fun 애플_회원가입_요청이_성공하면_토큰이_반환된다() {
             // given
-            every { appleTokenDecoder.getSocialIdFromIdToken(any()) }.returns("apple-social-id")
+            every { appleTokenDecoder.getSocialIdFromIdToken(any()) } returns "apple-social-id"
 
             val request = SignupRequest(
                 token = "token",
@@ -181,7 +181,7 @@ internal class AuthControllerTest(
             val boss = BossAccountCreator.create("apple-social-id", BossAccountSocialType.APPLE, "애플 계정")
             bossAccountRepository.save(boss)
 
-            every { appleTokenDecoder.getSocialIdFromIdToken(any()) }.returns(boss.socialInfo.socialId)
+            every { appleTokenDecoder.getSocialIdFromIdToken(any()) } returns boss.socialInfo.socialId
 
             val request = SignupRequest(
                 token = "token",
@@ -215,7 +215,7 @@ internal class AuthControllerTest(
             val registration = RegistrationCreator.create("apple-social-id", BossAccountSocialType.APPLE)
             bossRegistrationRepository.save(registration)
 
-            every { appleTokenDecoder.getSocialIdFromIdToken(any()) }.returns(registration.boss.socialInfo.socialId)
+            every { appleTokenDecoder.getSocialIdFromIdToken(any()) } returns registration.boss.socialInfo.socialId
 
             val request = SignupRequest(
                 token = "token",
@@ -246,7 +246,7 @@ internal class AuthControllerTest(
         @Test
         fun 구글_회원가입_요청이_성공하면_토큰이_반환된다() {
             // given
-            every { googleAuthApiClient.getProfileInfo(any()) }.returns(GoogleProfileInfoResponse.testInstance("google-social-id"))
+            every { googleAuthApiClient.getProfileInfo(any()) } returns GoogleProfileInfoResponse.testInstance("google-social-id")
 
             val request = SignupRequest(
                 token = "token",
@@ -279,7 +279,7 @@ internal class AuthControllerTest(
             val boss = BossAccountCreator.create("google-social-id", BossAccountSocialType.GOOGLE, "구글 계정")
             bossAccountRepository.save(boss)
 
-            every { googleAuthApiClient.getProfileInfo(any()) }.returns(GoogleProfileInfoResponse.testInstance(boss.socialInfo.socialId))
+            every { googleAuthApiClient.getProfileInfo(any()) } returns GoogleProfileInfoResponse.testInstance(boss.socialInfo.socialId)
 
             val request = SignupRequest(
                 token = "token",
@@ -313,7 +313,7 @@ internal class AuthControllerTest(
             val registration = RegistrationCreator.create("google-social-id", BossAccountSocialType.GOOGLE)
             bossRegistrationRepository.save(registration)
 
-            every { googleAuthApiClient.getProfileInfo(any()) }.returns(GoogleProfileInfoResponse.testInstance(registration.boss.socialInfo.socialId))
+            every { googleAuthApiClient.getProfileInfo(any()) } returns GoogleProfileInfoResponse.testInstance(registration.boss.socialInfo.socialId)
 
             val request = SignupRequest(
                 token = "token",
@@ -382,7 +382,7 @@ internal class AuthControllerTest(
             val boss = BossAccountCreator.create("google-social-id", BossAccountSocialType.KAKAO, "카카오 계정")
             bossAccountRepository.save(boss)
 
-            every { kaKaoAuthApiClient.getProfileInfo(any()) }.returns(KaKaoProfileResponse.testInstance(boss.socialInfo.socialId))
+            every { kaKaoAuthApiClient.getProfileInfo(any()) } returns KaKaoProfileResponse.testInstance(boss.socialInfo.socialId)
 
             val request = LoginRequest(token = "token", socialType = BossAccountSocialType.KAKAO)
 
@@ -407,7 +407,7 @@ internal class AuthControllerTest(
             val registration = RegistrationCreator.create("google-social-id", BossAccountSocialType.KAKAO)
             bossRegistrationRepository.save(registration)
 
-            every { kaKaoAuthApiClient.getProfileInfo(any()) }.returns(KaKaoProfileResponse.testInstance(registration.boss.socialInfo.socialId))
+            every { kaKaoAuthApiClient.getProfileInfo(any()) } returns KaKaoProfileResponse.testInstance(registration.boss.socialInfo.socialId)
 
             val request = LoginRequest(token = "token", socialType = BossAccountSocialType.KAKAO)
 
@@ -432,7 +432,7 @@ internal class AuthControllerTest(
             val boss = BossAccountCreator.create("google-social-id", BossAccountSocialType.APPLE, "애플 계정")
             bossAccountRepository.save(boss)
 
-            every { appleTokenDecoder.getSocialIdFromIdToken(any()) }.returns(boss.socialInfo.socialId)
+            every { appleTokenDecoder.getSocialIdFromIdToken(any()) } returns boss.socialInfo.socialId
 
             val request = LoginRequest(token = "token", socialType = BossAccountSocialType.APPLE)
 
@@ -457,7 +457,7 @@ internal class AuthControllerTest(
             val registration = RegistrationCreator.create("google-social-id", BossAccountSocialType.APPLE)
             bossRegistrationRepository.save(registration)
 
-            every { appleTokenDecoder.getSocialIdFromIdToken(any()) }.returns(registration.boss.socialInfo.socialId)
+            every { appleTokenDecoder.getSocialIdFromIdToken(any()) } returns registration.boss.socialInfo.socialId
 
             val request = LoginRequest(token = "token", socialType = BossAccountSocialType.APPLE)
 
@@ -482,7 +482,7 @@ internal class AuthControllerTest(
             val boss = BossAccountCreator.create("google-social-id", BossAccountSocialType.GOOGLE, "구글 계정")
             bossAccountRepository.save(boss)
 
-            every { googleAuthApiClient.getProfileInfo(any()) }.returns(GoogleProfileInfoResponse.testInstance(boss.socialInfo.socialId))
+            every { googleAuthApiClient.getProfileInfo(any()) } returns GoogleProfileInfoResponse.testInstance(boss.socialInfo.socialId)
 
             val request = LoginRequest(token = "token", socialType = BossAccountSocialType.GOOGLE)
 
@@ -507,7 +507,7 @@ internal class AuthControllerTest(
             val registration = RegistrationCreator.create("google-social-id", BossAccountSocialType.GOOGLE)
             bossRegistrationRepository.save(registration)
 
-            every { googleAuthApiClient.getProfileInfo(any()) }.returns(GoogleProfileInfoResponse.testInstance(registration.boss.socialInfo.socialId))
+            every { googleAuthApiClient.getProfileInfo(any()) } returns GoogleProfileInfoResponse.testInstance(registration.boss.socialInfo.socialId)
 
             val request = LoginRequest(token = "token", socialType = BossAccountSocialType.GOOGLE)
 

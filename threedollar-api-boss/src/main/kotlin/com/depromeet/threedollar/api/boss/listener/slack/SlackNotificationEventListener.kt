@@ -30,7 +30,9 @@ class SlackNotificationEventListener(
                     event.bossRegistration.boss.socialInfo.socialType,
                     event.bossRegistration.boss.businessNumber.getNumberWithSeparator(),
                     event.bossRegistration.store.name,
-                    bossStoreCategoryRepository.findAllCategoriesByIds(event.bossRegistration.store.categoriesIds).stream().map { it.name }.collect(Collectors.joining(", ")),
+                    bossStoreCategoryRepository.findAllCategoriesByIds(event.bossRegistration.store.categoriesIds).stream()
+                        .map { it.name }
+                        .collect(Collectors.joining(", ")),
                     event.bossRegistration.store.contactsNumber.getNumberWithSeparator(),
                     event.bossRegistration.store.certificationPhotoUrl
                 )

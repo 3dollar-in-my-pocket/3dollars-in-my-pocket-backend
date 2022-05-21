@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.boss.service.auth
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -68,19 +69,19 @@ internal class SignupServiceTest(
             // then
             val registrations = bossRegistrationRepository.findAll()
             assertAll({
-                Assertions.assertThat(registrations).hasSize(1)
-                Assertions.assertThat(registrations[0].status).isEqualTo(BossRegistrationStatus.WAITING)
+                assertThat(registrations).hasSize(1)
+                assertThat(registrations[0].status).isEqualTo(BossRegistrationStatus.WAITING)
                 registrations[0].boss.let {
-                    Assertions.assertThat(it.name).isEqualTo(bossName)
-                    Assertions.assertThat(it.socialInfo.socialId).isEqualTo(socialId)
-                    Assertions.assertThat(it.socialInfo.socialType).isEqualTo(socialType)
-                    Assertions.assertThat(it.businessNumber.getNumberWithSeparator()).isEqualTo(businessNumber)
+                    assertThat(it.name).isEqualTo(bossName)
+                    assertThat(it.socialInfo.socialId).isEqualTo(socialId)
+                    assertThat(it.socialInfo.socialType).isEqualTo(socialType)
+                    assertThat(it.businessNumber.getNumberWithSeparator()).isEqualTo(businessNumber)
                 }
                 registrations[0].store.let {
-                    Assertions.assertThat(it.name).isEqualTo(storeName)
-                    Assertions.assertThat(it.categoriesIds).containsExactlyInAnyOrderElementsOf(categoriesIds)
-                    Assertions.assertThat(it.contactsNumber.getNumberWithSeparator()).isEqualTo(contactsNumber)
-                    Assertions.assertThat(it.certificationPhotoUrl).isEqualTo(certificationPhotoUrl)
+                    assertThat(it.name).isEqualTo(storeName)
+                    assertThat(it.categoriesIds).containsExactlyInAnyOrderElementsOf(categoriesIds)
+                    assertThat(it.contactsNumber.getNumberWithSeparator()).isEqualTo(contactsNumber)
+                    assertThat(it.certificationPhotoUrl).isEqualTo(certificationPhotoUrl)
                 }
             })
         }
@@ -116,7 +117,7 @@ internal class SignupServiceTest(
             )
 
             // when & then
-            Assertions.assertThatThrownBy { signupService.signUp(request, socialId) }.isInstanceOf(ForbiddenException::class.java)
+            assertThatThrownBy { signupService.signUp(request, socialId) }.isInstanceOf(ForbiddenException::class.java)
         }
 
         @Test
@@ -145,7 +146,7 @@ internal class SignupServiceTest(
             )
 
             // when & then
-            Assertions.assertThatThrownBy { signupService.signUp(request, socialId) }.isInstanceOf(ConflictException::class.java)
+            assertThatThrownBy { signupService.signUp(request, socialId) }.isInstanceOf(ConflictException::class.java)
         }
 
         @Test
@@ -165,7 +166,7 @@ internal class SignupServiceTest(
             )
 
             // when & then
-            Assertions.assertThatThrownBy {
+            assertThatThrownBy {
                 signupService.signUp(request, socialId = "socialId")
             }.isInstanceOf(NotFoundException::class.java)
         }

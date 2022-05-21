@@ -65,7 +65,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryCreato
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
 import com.depromeet.threedollar.domain.redis.domain.user.store.AroundUserStoresCacheRepository;
-import com.depromeet.threedollar.domain.redis.domain.user.store.model.UserStoreCacheModel;
+import com.depromeet.threedollar.domain.redis.domain.user.store.UserStoreCacheModel;
 
 class StoreRetrieveControllerTest extends SetupUserControllerTest {
 

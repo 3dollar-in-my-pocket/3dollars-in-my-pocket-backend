@@ -1,6 +1,6 @@
-package com.depromeet.threedollar.domain.redis.boss.domain.feedback
+package com.depromeet.threedollar.domain.redis.domain.boss.feedback
 
-import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -8,8 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
-import com.depromeet.threedollar.domain.redis.domain.boss.feedback.BossStoreFeedbackCountKey
-import com.depromeet.threedollar.domain.redis.domain.boss.feedback.BossStoreFeedbackCountRepository
 
 private const val BOSS_STORE_ID = "boss-store-id"
 
@@ -38,7 +36,7 @@ internal class BossStoreFeedbackCountRepositoryTest(
         val totalCounts = bossStoreFeedbackCountRepository.getTotalCounts(BOSS_STORE_ID)
 
         // then
-        assertThat(totalCounts).isEqualTo(6)
+        Assertions.assertThat(totalCounts).isEqualTo(6)
     }
 
     @Test
@@ -54,7 +52,7 @@ internal class BossStoreFeedbackCountRepositoryTest(
         val feedbackCount = bossStoreFeedbackCountRepository.getCount(BOSS_STORE_ID, feedbackType)
 
         // then
-        assertThat(feedbackCount).isEqualTo(count)
+        Assertions.assertThat(feedbackCount).isEqualTo(count)
     }
 
     @Test
@@ -63,7 +61,7 @@ internal class BossStoreFeedbackCountRepositoryTest(
         val feedbackCount = bossStoreFeedbackCountRepository.getCount(BOSS_STORE_ID, BossStoreFeedbackType.FOOD_IS_DELICIOUS)
 
         // then
-        assertThat(feedbackCount).isEqualTo(0)
+        Assertions.assertThat(feedbackCount).isEqualTo(0)
     }
 
     @Test
@@ -78,7 +76,7 @@ internal class BossStoreFeedbackCountRepositoryTest(
 
         // then
         val count = stringRedisRepository.get(key)
-        assertThat(count).isEqualTo(4)
+        Assertions.assertThat(count).isEqualTo(4)
     }
 
     @Test
@@ -92,7 +90,7 @@ internal class BossStoreFeedbackCountRepositoryTest(
 
         // then
         val count = stringRedisRepository.get(key)
-        assertThat(count).isEqualTo(1)
+        Assertions.assertThat(count).isEqualTo(1)
     }
 
     @Test
@@ -105,10 +103,10 @@ internal class BossStoreFeedbackCountRepositoryTest(
 
         // then
         val bossisKindCount = stringRedisRepository.get(BossStoreFeedbackCountKey(BOSS_STORE_ID, BossStoreFeedbackType.BOSS_IS_KIND))
-        assertThat(bossisKindCount).isEqualTo(4)
+        Assertions.assertThat(bossisKindCount).isEqualTo(4)
 
         val platingCount = stringRedisRepository.get(BossStoreFeedbackCountKey(BOSS_STORE_ID, BossStoreFeedbackType.PLATING_IS_BEAUTIFUL))
-        assertThat(platingCount).isEqualTo(1)
+        Assertions.assertThat(platingCount).isEqualTo(1)
     }
 
     @Test
@@ -123,12 +121,12 @@ internal class BossStoreFeedbackCountRepositoryTest(
 
         // then
         assertAll({
-            assertThat(counts[BossStoreFeedbackType.BOSS_IS_KIND]).isEqualTo(3)
-            assertThat(counts[BossStoreFeedbackType.PLATING_IS_BEAUTIFUL]).isEqualTo(2)
-            assertThat(counts[BossStoreFeedbackType.FOOD_IS_DELICIOUS]).isEqualTo(1)
-            assertThat(counts[BossStoreFeedbackType.PRICE_IS_CHEAP]).isEqualTo(0)
-            assertThat(counts[BossStoreFeedbackType.THERE_ARE_PLACES_TO_EAT_AROUND]).isEqualTo(0)
-            assertThat(counts[BossStoreFeedbackType.EASY_TO_EAT]).isEqualTo(0)
+            Assertions.assertThat(counts[BossStoreFeedbackType.BOSS_IS_KIND]).isEqualTo(3)
+            Assertions.assertThat(counts[BossStoreFeedbackType.PLATING_IS_BEAUTIFUL]).isEqualTo(2)
+            Assertions.assertThat(counts[BossStoreFeedbackType.FOOD_IS_DELICIOUS]).isEqualTo(1)
+            Assertions.assertThat(counts[BossStoreFeedbackType.PRICE_IS_CHEAP]).isEqualTo(0)
+            Assertions.assertThat(counts[BossStoreFeedbackType.THERE_ARE_PLACES_TO_EAT_AROUND]).isEqualTo(0)
+            Assertions.assertThat(counts[BossStoreFeedbackType.EASY_TO_EAT]).isEqualTo(0)
         })
     }
 

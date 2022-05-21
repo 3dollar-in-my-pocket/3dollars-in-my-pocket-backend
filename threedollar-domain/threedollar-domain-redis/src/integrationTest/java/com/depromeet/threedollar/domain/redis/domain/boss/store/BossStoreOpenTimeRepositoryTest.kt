@@ -1,15 +1,13 @@
-package com.depromeet.threedollar.domain.redis.boss.domain.store
+package com.depromeet.threedollar.domain.redis.domain.boss.store
 
 import java.time.LocalDateTime
-import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
-import com.depromeet.threedollar.domain.redis.domain.boss.store.BossStoreOpenTimeKey
-import com.depromeet.threedollar.domain.redis.domain.boss.store.BossStoreOpenTimeRepository
 
 private const val BOSS_STORE_ID = "boss-store-id"
 
@@ -37,7 +35,7 @@ internal class BossStoreOpenTimeRepositoryTest(
         val openStartDateTime = bossStoreOpenTimeRepository.get(BOSS_STORE_ID)
 
         // then
-        assertThat(openStartDateTime).isEqualTo(dateTime)
+        Assertions.assertThat(openStartDateTime).isEqualTo(dateTime)
     }
 
     @Test
@@ -46,7 +44,7 @@ internal class BossStoreOpenTimeRepositoryTest(
         val openStartDateTime = bossStoreOpenTimeRepository.get(BOSS_STORE_ID)
 
         // then
-        assertThat(openStartDateTime).isNull()
+        Assertions.assertThat(openStartDateTime).isNull()
     }
 
     @Test
@@ -59,7 +57,7 @@ internal class BossStoreOpenTimeRepositoryTest(
 
         // then
         val openStartDateTime = stringRepository.get(BossStoreOpenTimeKey.of(BOSS_STORE_ID))
-        assertThat(openStartDateTime).isEqualTo(dateTime)
+        Assertions.assertThat(openStartDateTime).isEqualTo(dateTime)
     }
 
     @Test
@@ -72,7 +70,7 @@ internal class BossStoreOpenTimeRepositoryTest(
 
         // then
         val openStartDateTime = stringRepository.get(BossStoreOpenTimeKey.of(BOSS_STORE_ID))
-        assertThat(openStartDateTime).isNull()
+        Assertions.assertThat(openStartDateTime).isNull()
     }
 
 }

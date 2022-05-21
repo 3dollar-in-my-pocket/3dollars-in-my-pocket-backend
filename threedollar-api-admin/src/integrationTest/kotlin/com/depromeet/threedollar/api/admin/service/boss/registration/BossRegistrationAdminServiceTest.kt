@@ -168,7 +168,7 @@ internal class BossRegistrationAdminServiceTest(
         @Test
         fun `해당하는 가입 정보가 없는 경우 NotFoundException`() {
             // when & then
-            assertThatThrownBy { bossRegistrationAdminService.applyBossRegistration("Not Found Registration Id") }.isInstanceOf(NotFoundException::class.java)
+            assertThatThrownBy { bossRegistrationAdminService.applyBossRegistration("NotFound Id") }.isInstanceOf(NotFoundException::class.java)
         }
 
         @Test

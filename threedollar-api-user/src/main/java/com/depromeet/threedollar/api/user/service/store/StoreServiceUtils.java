@@ -15,7 +15,7 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreWithMenuProjection;
 import com.depromeet.threedollar.domain.redis.domain.user.store.AroundUserStoresCacheRepository;
-import com.depromeet.threedollar.domain.redis.domain.user.store.model.UserStoreCacheModel;
+import com.depromeet.threedollar.domain.redis.domain.user.store.UserStoreCacheModel;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

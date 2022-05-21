@@ -3,9 +3,8 @@ package com.depromeet.threedollar.domain.redis.domain.boss.category
 import java.time.Duration
 import com.depromeet.threedollar.common.utils.JsonUtils
 import com.depromeet.threedollar.domain.redis.core.StringRedisKey
-import com.depromeet.threedollar.domain.redis.domain.boss.category.model.BossStoreCategoryCacheModel
 
-class BossStoreCategoryKey : StringRedisKey<List<BossStoreCategoryCacheModel>> {
+class BossStoreCategoriesCacheKey : StringRedisKey<List<BossStoreCategoryCacheModel>> {
 
     override fun getKey(): String {
         return "boss:v2:store:categories"
@@ -24,8 +23,8 @@ class BossStoreCategoryKey : StringRedisKey<List<BossStoreCategoryCacheModel>> {
     }
 
     companion object {
-        fun of(): BossStoreCategoryKey {
-            return BossStoreCategoryKey()
+        fun of(): BossStoreCategoriesCacheKey {
+            return BossStoreCategoriesCacheKey()
         }
     }
 

@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.boss.service.auth
 
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -61,7 +61,7 @@ internal class NaverAuthServiceTest(
     @Test
     fun `네이버 로그인시 가입한 유저가 아니면 404 에러 발생`() {
         // when & then
-        Assertions.assertThatThrownBy {
+        assertThatThrownBy {
             authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
         }.isInstanceOf(NotFoundException::class.java)
     }

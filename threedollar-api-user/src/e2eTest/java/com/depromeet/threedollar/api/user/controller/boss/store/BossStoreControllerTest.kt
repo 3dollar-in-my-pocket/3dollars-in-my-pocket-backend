@@ -40,7 +40,7 @@ internal class BossStoreControllerTest(
     @BeforeEach
     fun disableCacheCategories() {
         every { bossStoreCategoryCacheRepository.set(any()) } returns Unit
-        every { bossStoreCategoryCacheRepository.getBossStoreCategories() }.returns(null)
+        every { bossStoreCategoryCacheRepository.getAll() } returns null
     }
 
     @AfterEach

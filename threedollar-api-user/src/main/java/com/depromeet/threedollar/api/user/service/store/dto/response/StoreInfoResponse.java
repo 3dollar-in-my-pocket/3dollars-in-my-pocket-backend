@@ -9,7 +9,7 @@ import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreWithMenuProjection;
-import com.depromeet.threedollar.domain.redis.domain.user.store.model.UserStoreCacheModel;
+import com.depromeet.threedollar.domain.redis.domain.user.store.UserStoreCacheModel;
 
 import lombok.AccessLevel;
 import lombok.Builder;

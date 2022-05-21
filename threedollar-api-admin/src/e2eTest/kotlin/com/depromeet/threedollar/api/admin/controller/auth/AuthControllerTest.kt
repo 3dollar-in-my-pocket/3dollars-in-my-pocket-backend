@@ -36,7 +36,7 @@ internal class AuthControllerTest : SetupAdminControllerTest() {
             val admin = AdminCreator.create(email, "관리자")
             adminRepository.save(admin)
 
-            every { googleAuthApiClient.getProfileInfo(any()) }.returns(GoogleProfileInfoResponse.testInstance("google-social-id", email, "구글 계정 이름"))
+            every { googleAuthApiClient.getProfileInfo(any()) } returns GoogleProfileInfoResponse.testInstance("google-social-id", email, "구글 계정 이름")
 
             val request = LoginRequest(token = "token")
 

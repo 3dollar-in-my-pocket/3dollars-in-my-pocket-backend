@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.core.service.boss.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
+import com.depromeet.threedollar.domain.redis.domain.boss.category.BossStoreCategoryCacheModel
 import com.depromeet.threedollar.domain.redis.domain.boss.category.BossStoreCategoryCacheRepository
-import com.depromeet.threedollar.domain.redis.domain.boss.category.model.BossStoreCategoryCacheModel
 
 @Service
 class BossStoreCategoryService(
@@ -15,7 +15,7 @@ class BossStoreCategoryService(
 
     @Transactional(readOnly = true)
     fun retrieveBossStoreCategories(): List<BossStoreCategoryResponse> {
-        val cachedCategories = bossStoreCategoryCacheRepository.getBossStoreCategories()
+        val cachedCategories = bossStoreCategoryCacheRepository.getAll()
         cachedCategories?.let {
             return cachedCategories.map { BossStoreCategoryResponse.of(it) }
         }
@@ -24,7 +24,6 @@ class BossStoreCategoryService(
             BossStoreCategoryCacheModel.of(
                 categoryId = it.id,
                 name = it.name,
-                sequencePriority = it.sequencePriority
             )
         })
         return originCategories.map { BossStoreCategoryResponse.of(it) }

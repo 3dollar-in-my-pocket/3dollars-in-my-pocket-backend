@@ -2,7 +2,6 @@ package com.depromeet.threedollar.domain.redis.domain.user.store
 
 import org.springframework.stereotype.Repository
 import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
-import com.depromeet.threedollar.domain.redis.domain.user.store.model.UserStoreCacheModel
 
 @Repository
 class AroundUserStoresCacheRepository(

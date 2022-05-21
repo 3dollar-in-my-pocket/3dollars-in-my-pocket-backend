@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.redis.domain.user.store.model
+package com.depromeet.threedollar.domain.redis.domain.user.store
 
 import java.time.LocalDateTime
 import com.depromeet.threedollar.common.type.UserMenuCategoryType

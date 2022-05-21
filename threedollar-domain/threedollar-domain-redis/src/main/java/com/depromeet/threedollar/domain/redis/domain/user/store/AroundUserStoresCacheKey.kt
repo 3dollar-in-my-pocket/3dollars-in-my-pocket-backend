@@ -4,7 +4,6 @@ import java.time.Duration
 import com.depromeet.threedollar.common.utils.JsonUtils
 import com.depromeet.threedollar.common.utils.decode
 import com.depromeet.threedollar.domain.redis.core.StringRedisKey
-import com.depromeet.threedollar.domain.redis.domain.user.store.model.UserStoreCacheModel
 
 data class AroundUserStoresCacheKey(
     private val mapLatitude: Double,
