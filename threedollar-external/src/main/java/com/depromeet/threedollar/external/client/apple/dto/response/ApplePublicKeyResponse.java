@@ -1,13 +1,18 @@
 package com.depromeet.threedollar.external.client.apple.dto.response;
 
-import com.depromeet.threedollar.common.exception.model.InvalidException;
-import lombok.*;
-
 import java.util.List;
+
+import com.depromeet.threedollar.common.exception.model.InvalidException;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * GET Apple Public Key
- * https://developer.apple.com/documentation/sign_in_with_apple/jwkset/keys
+ * <a href="https://developer.apple.com/documentation/sign_in_with_apple/jwkset/keys">https://developer.apple.com/documentation/sign_in_with_apple/jwkset/keys</a>
  */
 @ToString
 @Getter

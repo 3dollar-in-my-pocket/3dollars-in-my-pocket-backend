@@ -1,0 +1,31 @@
+### 사장님 계정 가입 신청을 승인합니다.
+PUT {{admin}}/v1/boss/account/registration/{{REGISTRATION_ID}}/apply
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 사장님 계정 가입 신청을 반려합니다.
+PUT {{admin}}/v1/boss/account/registration/{{REGISTRATION_ID}}/reject
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 사장님 게정 가입 신청 목록을 조회합니다
+GET {{admin}}/v1/boss/account/registrations?size=10
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}

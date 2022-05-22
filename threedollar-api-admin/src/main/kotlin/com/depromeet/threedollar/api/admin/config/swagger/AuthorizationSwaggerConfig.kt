@@ -1,8 +1,9 @@
 package com.depromeet.threedollar.api.admin.config.swagger
 
-import com.depromeet.threedollar.api.admin.config.interceptor.Auth
 import org.springframework.core.annotation.Order
+import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
+import com.depromeet.threedollar.api.admin.config.interceptor.Auth
 import springfox.documentation.builders.RequestParameterBuilder
 import springfox.documentation.service.AuthorizationScope
 import springfox.documentation.service.ParameterType
@@ -31,7 +32,7 @@ class AuthorizationSwaggerConfig : OperationBuilderPlugin {
 
     private fun authorizationHeader(): RequestParameter {
         return RequestParameterBuilder()
-            .name("Authorization")
+            .name(HttpHeaders.AUTHORIZATION)
             .required(false)
             .`in`(ParameterType.HEADER)
             .build()

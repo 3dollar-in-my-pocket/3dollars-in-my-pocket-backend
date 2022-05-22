@@ -1,44 +1,43 @@
 package com.depromeet.threedollar.api.boss.service.auth
 
-import com.depromeet.threedollar.api.boss.service.auth.dto.request.LoginRequest
-import com.depromeet.threedollar.api.boss.service.auth.policy.NaverAuthService
-import com.depromeet.threedollar.common.exception.model.ForbiddenException
-import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
-import com.depromeet.threedollar.external.client.naver.NaverAuthApiClient
-import com.depromeet.threedollar.external.client.naver.dto.response.NaverProfileInfoResponse
-import com.depromeet.threedollar.external.client.naver.dto.response.NaverProfileResponse
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
+import com.depromeet.threedollar.api.boss.service.auth.dto.request.LoginRequest
+import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
+import com.depromeet.threedollar.external.client.naver.NaverAuthApiClient
+import com.depromeet.threedollar.external.client.naver.dto.response.NaverProfileInfoResponse
+import com.depromeet.threedollar.external.client.naver.dto.response.NaverProfileResponse
 
 private const val SOCIAL_ID = "social-id"
 private val SOCIAL_TYPE = BossAccountSocialType.NAVER
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
-class NaverAuthServiceTest(
+internal class NaverAuthServiceTest(
     private val bossAccountRepository: BossAccountRepository,
-    private val registrationRepository: RegistrationRepository
+    private val bossRegistrationRepository: BossRegistrationRepository,
 ) {
 
     private lateinit var authService: AuthService
 
     @BeforeEach
     fun setUp() {
-        authService = NaverAuthService(bossAccountRepository, registrationRepository, StubNaverAuthApiClient())
+        authService = NaverAuthService(bossAccountRepository, bossRegistrationRepository, StubNaverAuthApiClient())
     }
 
     @AfterEach
     fun cleanUp() {
-        registrationRepository.deleteAll()
+        bossRegistrationRepository.deleteAll()
         bossAccountRepository.deleteAll()
     }
 
@@ -56,28 +55,28 @@ class NaverAuthServiceTest(
         val accountId = authService.login(LoginRequest("token", SOCIAL_TYPE))
 
         // then
-        Assertions.assertThat(accountId).isEqualTo(bossAccount.id)
+        assertThat(accountId).isEqualTo(bossAccount.id)
     }
 
     @Test
     fun `네이버 로그인시 가입한 유저가 아니면 404 에러 발생`() {
         // when & then
-        Assertions.assertThatThrownBy {
+        assertThatThrownBy {
             authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
         }.isInstanceOf(NotFoundException::class.java)
     }
 
     @Test
-    fun `네이버 로그인시 가입 승인 대기중인 유저면 403 Forbidden 에러 발생`() {
+    fun `네이버 로그인시 가입 승인 대기중인 유저면 Registration의 ID를 반환한다`() {
         // given
-        val socialId = "social-id"
-
-        registrationRepository.save(RegistrationCreator.create(socialId, SOCIAL_TYPE))
+        val registration = RegistrationCreator.create(SOCIAL_ID, SOCIAL_TYPE)
+        bossRegistrationRepository.save(registration)
 
         // when
-        Assertions.assertThatThrownBy {
-            authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
-        }.isInstanceOf(ForbiddenException::class.java)
+        val bossId = authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
+
+        // then
+        assertThat(bossId).isEqualTo(registration.id)
     }
 
     private class StubNaverAuthApiClient : NaverAuthApiClient {

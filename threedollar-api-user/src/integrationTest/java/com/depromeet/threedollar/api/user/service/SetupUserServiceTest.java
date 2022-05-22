@@ -1,5 +1,9 @@
 package com.depromeet.threedollar.api.user.service;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalRepository;
@@ -7,12 +11,9 @@ import com.depromeet.threedollar.domain.rds.user.domain.user.User;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
-import org.junit.jupiter.api.BeforeEach;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class SetupUserServiceTest {
+public abstract class SetupUserServiceTest {
 
     @Autowired
     protected UserRepository userRepository;

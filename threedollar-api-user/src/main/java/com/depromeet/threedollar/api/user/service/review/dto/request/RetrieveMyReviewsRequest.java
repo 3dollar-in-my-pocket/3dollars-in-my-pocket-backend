@@ -1,14 +1,18 @@
 package com.depromeet.threedollar.api.user.service.review.dto.request;
 
-import lombok.*;
-import org.jetbrains.annotations.Nullable;
-
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
+import org.jetbrains.annotations.Nullable;
+
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 @ToString
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RetrieveMyReviewsRequest {
 
@@ -19,8 +23,10 @@ public class RetrieveMyReviewsRequest {
     @Nullable
     private Long cursor;
 
-    public static RetrieveMyReviewsRequest testInstance(int size, Long cursor) {
-        return new RetrieveMyReviewsRequest(size, cursor);
+    @Builder(builderMethodName = "testBuilder")
+    private RetrieveMyReviewsRequest(int size, @Nullable Long cursor) {
+        this.size = size;
+        this.cursor = cursor;
     }
 
 }

@@ -1,47 +1,94 @@
-version: "3"
+version: '3.7'
+
 services:
-  mariadb:
-    image: mariadb:10.4
-    container_name: threedollars-api-mariadb
+  mariadb-master:
+    container_name: threedollars-mariadb-master
+    image: docker.io/bitnami/mariadb:10.4
     ports:
-      - "3309:3306"
+      - '3310:3306'
+    volumes:
+      - mariadb-volume:/bitnami/mariadb
     restart: unless-stopped
     environment:
-      - MYSQL_DATABASE=threedollar_test
-      - MYSQL_ROOT_PASSWORD=3dollar
-    volumes:
-      - ./mariadb:/etc/mysql/conf.d
-      - threedollar-mariadb-volume:/var/lib/mysql
+      - MARIADB_REPLICATION_MODE=master
+      - MARIADB_REPLICATION_USER=repl_user
+      - MARIADB_USER=threedollar
+      - MARIADB_DATABASE=threedollar_test
+      - MARIADB_ROOT_PASSWORD=threedollar
+      - ALLOW_EMPTY_PASSWORD=yes
+    healthcheck:
+      test: [ 'CMD', '/opt/bitnami/scripts/mariadb/healthcheck.sh' ]
+      interval: 15s
+      timeout: 5s
+      retries: 6
+    networks:
+      - threedollar-network
+
+  mariadb-slave:
+    container_name: threedollars-mariadb-slave
+    image: docker.io/bitnami/mariadb:10.4
+    ports:
+      - '3311:3306'
+    depends_on:
+      - mariadb-master
+    restart: unless-stopped
+    environment:
+      - MARIADB_REPLICATION_MODE=slave
+      - MARIADB_REPLICATION_USER=repl_user
+      - MARIADB_USER=threedollar
+      - MARIADB_DATABASE=threedollar_test
+      - MARIADB_MASTER_HOST=mariadb-master
+      - MARIADB_MASTER_PORT_NUMBER=3306
+      - MARIADB_MASTER_ROOT_PASSWORD=threedollar
+      - ALLOW_EMPTY_PASSWORD=yes
+    healthcheck:
+      test: [ 'CMD', '/opt/bitnami/scripts/mariadb/healthcheck.sh' ]
+      interval: 15s
+      timeout: 5s
+      retries: 6
     networks:
       - threedollar-network
 
   redis:
-    image: redis
-    container_name: threedollar-api-redis
+    image: redis:6.0
+    container_name: threedollar-redis
     command: redis-server --port 6379
     ports:
-      - "6380:6379"
+      - '6380:6379'
     restart: unless-stopped
     volumes:
-      - threedollar-cache-volume:/data
+      - cache-volume:/data
     networks:
       - threedollar-network
+    healthcheck:
+      test: [ 'CMD', 'redis-cli', 'ping' ]
+      interval: 15s
+      timeout: 5s
+      retries: 6
 
   mongodb:
-    image: mongo
-    container_name: threedollar-api-mongo
+    image: mongo:5.0
+    container_name: threedollar-mongodb
     ports:
-      - "27018:27017"
+      - '27018:27017'
     restart: unless-stopped
     volumes:
-      - threedollar-mongodb-volume:/data/db
+      - mongodb-volume:/data/db
     networks:
       - threedollar-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
+      interval: 15s
+      timeout: 5s
+      retries: 6
 
 volumes:
-  threedollar-cache-volume:
-  threedollar-mariadb-volume:
-  threedollar-mongodb-volume:
+  mariadb-volume:
+    driver: local
+  mongodb-volume:
+    driver: local
+  cache-volume:
+    driver: local
 
 networks:
   threedollar-network:

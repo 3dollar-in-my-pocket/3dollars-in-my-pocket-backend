@@ -1,14 +1,14 @@
 package com.depromeet.threedollar.api.admin.service.user.faq.dto.request
 
+import javax.validation.constraints.Size
 import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCategory
-import org.hibernate.validator.constraints.Length
 
 data class UpdateFaqRequest(
-    @field:Length(max = 100, message = "{faq.question.length}")
+    @field:Size(max = 100, message = "{faq.question.size}")
     val question: String,
 
-    @field:Length(max = 200, message = "{faq.answer.length}")
+    @field:Size(max = 200, message = "{faq.answer.size}")
     val answer: String,
 
-    val category: FaqCategory
+    val category: FaqCategory,
 )

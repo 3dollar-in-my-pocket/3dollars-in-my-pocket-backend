@@ -1,5 +1,11 @@
 package com.depromeet.threedollar.api.user.service.visit;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.depromeet.threedollar.api.user.service.store.StoreServiceUtils;
 import com.depromeet.threedollar.api.user.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.user.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
@@ -9,12 +15,8 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
 import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service

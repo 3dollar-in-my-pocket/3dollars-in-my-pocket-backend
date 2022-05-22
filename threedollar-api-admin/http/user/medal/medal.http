@@ -1,0 +1,44 @@
+### 메달을 추가한다
+POST {{admin}}/v1/user/medal
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+Content-Type: application/json
+
+{
+    "name": "우리동네 보안관",
+    "introduction": "허위 매물 신고에 적극적인 당신, 동네의 보안관이시네요",
+    "activationIconUrl": "https://storage.dev.threedollars.co.kr/medal/v1-police-default.png",
+    "disableIconUrl": "https://dev-storage.threedollars.co.kr/medal/v2-police-disabled.png",
+    "conditionType": "DELETE_STORE",
+    "conditionCount": 3,
+    "acquisitionDescription": "삭제 요청 3회 누적"
+}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 특정 메달을 수정한다
+PUT {{admin}}/v1/user/medal/1
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+Content-Type: application/json
+
+{
+    "name": "우리동네 보안관",
+    "introduction": "허위 매물 신고에 적극적인 당신, 동네의 보안관이시네요",
+    "activationIconUrl": "https://storage.dev.threedollars.co.kr/medal/v1-police-default.png",
+    "disableIconUrl": "https://dev-storage.threedollars.co.kr/medal/v2-police-disabled.png"
+}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 전체 메달을 조회한다
+GET {{admin}}/v1/user/medals
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}

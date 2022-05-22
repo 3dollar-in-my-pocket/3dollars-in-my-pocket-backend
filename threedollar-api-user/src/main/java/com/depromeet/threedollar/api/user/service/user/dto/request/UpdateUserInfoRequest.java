@@ -1,19 +1,24 @@
 package com.depromeet.threedollar.api.user.service.user.dto.request;
 
 import com.depromeet.threedollar.api.user.config.vadlidator.NickName;
-import lombok.*;
+
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @ToString
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UpdateUserInfoRequest {
 
     @NickName
     private String name;
 
-    public static UpdateUserInfoRequest testInstance(String name) {
-        return new UpdateUserInfoRequest(name);
+    @Builder(builderMethodName = "testBuilder")
+    private UpdateUserInfoRequest(String name) {
+        this.name = name;
     }
 
 }

@@ -1,20 +1,24 @@
 package com.depromeet.threedollar.api.user.service.medal.dto.request;
 
-import lombok.*;
-
 import javax.validation.constraints.NotNull;
+
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @ToString
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ChangeRepresentativeMedalRequest {
 
     @NotNull(message = "{user.medalId.notNull}")
     private Long medalId;
 
-    public static ChangeRepresentativeMedalRequest testInstance(Long medalId) {
-        return new ChangeRepresentativeMedalRequest(medalId);
+    @Builder(builderMethodName = "testBuilder")
+    private ChangeRepresentativeMedalRequest(Long medalId) {
+        this.medalId = medalId;
     }
 
 }

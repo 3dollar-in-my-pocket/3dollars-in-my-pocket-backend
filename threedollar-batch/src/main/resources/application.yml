@@ -3,7 +3,8 @@ spring:
     active: local
     default: local
     include:
-      - domain
+      - rds
+      - mongo
       - secret
       - external
       - dummy
@@ -12,7 +13,3 @@ spring:
       names: ${job.name:NONE}
   main:
     web-application-type: none
-
-logging:
-  level:
-    org.springframework.batch: DEBUG

@@ -1,16 +1,20 @@
 # 가슴속 삼천원 백엔드
 
 ![Version](https://img.shields.io/github/v/release/depromeet/3dollars-in-my-pocket-backend?include_prereleases)
-[![codecov](https://codecov.io/gh/3dollar-in-my-pocket/3dollars-in-my-pocket-backend/branch/develop/graph/badge.svg?token=QZPVF6VGHA)](https://codecov.io/gh/3dollar-in-my-pocket/3dollars-in-my-pocket-backend)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fgjbae1212%2Fhit-counterhttps%3A%2F%2Fgithub.com%2F3dollar-in-my-pocket%2F3dollars-in-my-pocket-backend&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=3dollar-in-my-pocket_3dollars-in-my-pocket-backend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=3dollar-in-my-pocket_3dollars-in-my-pocket-backend)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=3dollar-in-my-pocket_3dollars-in-my-pocket-backend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=3dollar-in-my-pocket_3dollars-in-my-pocket-backend)
 
 ![img.png](images/logo.png)
 
 ### 프로젝트 설명
-전국 붕어빵파는 곳을 알려주는 [**가슴속 3천원**](https://intro.threedollars.co.kr/)
 
-**"가슴 속 3천원"** 은 겨울철 우리 가슴속에 지니고 다니는 3천원을 털어가는 붕어빵, 문어빵, 계란빵, 호떡 등을 파는 곳을 포함해 길거리 음식점들을 알려드립니다.
+전국 붕어빵 등 길거리 음식을 파는 곳을 알려주는 [**가슴속 3천원**](https://intro.threedollars.co.kr/)
+
+**"가슴 속 3천원"** 은 겨울철 우리 가슴속에 지니고 다니는 3천원을 털어가는 붕어빵, 문어빵, 계란빵, 호떡 등을 파는 곳을 포함해 길거리 음식점들을 알려주는 사용자 기반 서비스입니다.
 
 ### 앱 다운로드
+
 - [AppStore](https://apps.apple.com/kr/app/%EA%B0%80%EC%8A%B4%EC%86%8D3%EC%B2%9C%EC%9B%90-%EB%82%98%EC%99%80-%EA%B0%80%EA%B9%8C%EC%9A%B4-%EB%B6%95%EC%96%B4%EB%B9%B5/id1496099467)
 - [PlayStore](https://play.google.com/store/apps/details?id=com.zion830.threedollars)
 
@@ -20,44 +24,31 @@
 </p>
 
 ## 기술 스택
-> 백엔드에서는 v2.0.0부터 마이그레이션을 통해 새롭게 프로젝트를 진행하고 있습니다.
+
 ### 애플리케이션 (Language & Framework)
-- Java 11, Kotlin 1.5
-- Spring Framework (Spring MVC)
-- JPA/Hibernate, QueryDSL
-- MariaDB, flyway
-- Redis, Caffeine Cache
-- Spring Batch
-- Feign Client
-- Gradle
-- Junit5, AssertJ, Mockito
 
-### 인프라 (Production)
-![img.png](images/3dollars-architecture-20211211.png)
+- **Language** - Java 11, Kotlin 1.6
+- **Framework** - Spring Framework (Spring Boot, Spring MVC, Spring Batch)
+- **Data(RDBMS)** - JPA/Hibernate, QueryDSL, MariaDB, flyway
+- **Data(NoSQL, Cache)** - MongoDB, Redis, Caffeine Cache
+- **API Client** - Feign Client
+- **Build Tool** - Gradle
+- **Test** - Junit5, Spring Test, Mockito, SpringMockK
 
-- ECS Fargate
-- RDS
-- Elastic Cache
-- S3, CloudFront
-- Application LoadBalancer
-- GitHub Actions CI/CD
+### 인프라 아키텍처
 
-### 운영 툴
-- 로그 관리: AWS CloudWatch
-- 오류 수집 & 알림: Sentry, Slack
-- APM 도구: NewRelic
-- 부하 테스트: locust
+![img.png](images/3dollars-architecture-20220409.png)
 
+- **Infra** - ECS Fargate (API, Batch), ALB, S3, CloudFront
+- **DB** - MariaDB(RDS), MongoDB(EC2), Redis Cluster(Elastic Cache)
+- **CI/CD** - Git, GitHub Actions CI/CD
+- **Operations** - CloudWatch, Sentry, Slack, NewRelic, Locust
 
 ### 멀티 모듈 구조
+
 ![img.png](images/modules-20220307.png)
 
-| 서비스     | 운영 환경                                                                                                                               | 개발 환경                                                                                                                                     |
-|---------|-------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| 유저 서비스  | ![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://threedollars.co.kr/api/ping) | ![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://dev.threedollars.co.kr/api/ping)   |
-| 사장님 서비스 | 개발 중                                                                                                                                | ![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://dev.threedollars.co.kr/boss/ping)  |
-| 관리자 서비스 | 개발 중                                                                                                                                | ![Health](https://img.shields.io/website?down_message=DOWN&style=flat-square&up_message=UP&url=https://dev.threedollars.co.kr/admin/ping) |
+## Developers & Contacts
 
-## Contacts
+- will.seungho@gmail.com (백엔드 개발자, [강승호](https://github.com/seungh0))
 - 3dollarinmypocket@gmail.com (가슴속 삼천원 대표 메일)
-- will.seungho@gmail.com (백엔드 개발자)

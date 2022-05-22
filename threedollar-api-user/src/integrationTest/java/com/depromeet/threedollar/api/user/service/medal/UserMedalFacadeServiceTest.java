@@ -1,24 +1,12 @@
 package com.depromeet.threedollar.api.user.service.medal;
 
-import com.depromeet.threedollar.api.user.service.SetupUserServiceTest;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.Medal;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionType;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedal;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalStatus;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.storedelete.DeleteReasonType;
-import com.depromeet.threedollar.domain.rds.user.domain.storedelete.StoreDeleteRequestCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.storedelete.StoreDeleteRequestRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
+import static com.depromeet.threedollar.api.user.service.medal.support.UserMedalAssertions.assertUserMedal;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+import java.time.LocalDate;
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -26,12 +14,26 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
-import java.util.List;
-
-import static com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper.assertUserMedal;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import com.depromeet.threedollar.api.user.service.SetupUserServiceTest;
+import com.depromeet.threedollar.api.user.service.medal.support.UserMedalAssertions;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
+import com.depromeet.threedollar.domain.rds.user.domain.medal.Medal;
+import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionType;
+import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedal;
+import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalStatus;
+import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
 
 @SpringBootTest
 class UserMedalFacadeServiceTest extends SetupUserServiceTest {
@@ -62,11 +64,11 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
 
     @DisplayName("가게 추가 조건 메달 획득")
     @Nested
-    class addObtainableMedalsByAddStore {
+    class AddObtainableMedalsByAddStoreTest {
 
         @DisplayName("[가게 추가 2] - 가게 추가 2 -> 메달 획득 성공")
         @Test
-        void 가게_추가_조건을_만족하면_해당_메달을_획득한다() {
+        void 가게_등록_관련_메달_조건을_만족하면_해당_메달을_획득한다() {
             // given
             Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.ADD_STORE, 2);
             medalRepository.save(medal);
@@ -83,7 +85,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
             List<UserMedal> userMedals = userMedalRepository.findAll();
             assertAll(
                 () -> assertThat(userMedals).hasSize(1),
-                () -> assertUserMedal(userMedals.get(0), userId, medal.getId(), UserMedalStatus.IN_ACTIVE)
+                () -> UserMedalAssertions.assertUserMedal(userMedals.get(0), userId, medal.getId(), UserMedalStatus.IN_ACTIVE)
             );
         }
 
@@ -108,7 +110,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
 
     @DisplayName("가게 삭제 조건 메달 획득")
     @Nested
-    class addObtainableMedalsByDeleteStore {
+    class AddObtainableMedalsByDeleteStoreTest {
 
         @DisplayName("[가게 삭제 1] - 가게 삭제 1 -> 메달 획득 성공")
         @Test
@@ -155,7 +157,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
 
     @DisplayName("리뷰 작성 조건 메달 획득")
     @Nested
-    class addObtainableMedalsByAddReview {
+    class AddObtainableMedalsByAddReviewTest {
 
         @DisplayName("[리뷰 2] - 리뷰 2 -> 메달 획득 성공")
         @Test
@@ -207,7 +209,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
 
     @DisplayName("방문 인증 조건 메달 획득")
     @Nested
-    class addObtainableMedalsByVisitStore {
+    class AddObtainableMedalsByVisitStoreTest {
 
         @DisplayName("[붕어빵 가게 방문 2] - 붕어빵 가게 방문 2 -> 메달 획득 성공")
         @Test
@@ -217,7 +219,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
             medalRepository.save(medal);
 
             Store store = StoreCreator.create(userId, "가게");
-            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵 2개", "천원", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵 2개", "천원", UserMenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             visitHistoryRepository.saveAll(List.of(
@@ -244,7 +246,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
             medalRepository.save(medal);
 
             Store store = StoreCreator.create(userId, "가게");
-            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵 2개", "천원", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵 2개", "천원", UserMenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 1, 1)));
@@ -265,7 +267,7 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
             medalRepository.save(medal);
 
             Store store = StoreCreator.create(userId, "가게");
-            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵 2개", "천원", MenuCategoryType.BUNGEOPPANG)));
+            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵 2개", "천원", UserMenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             visitHistoryRepository.saveAll(List.of(

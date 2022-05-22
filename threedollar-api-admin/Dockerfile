@@ -9,4 +9,4 @@ ENV HOME=/usr/app
 COPY --from=BUILD  $HOME/threedollar-api-admin/build/libs/threedollar-api-admin.jar /threedollar-api-admin.jar
 EXPOSE 5100
 
-ENTRYPOINT ["java", "-XX:CompileThreshold=100", "-XX:+TieredCompilation", "-Duser.timezone=Asia/Seoul", "-jar", "/threedollar-api-admin.jar"]
+ENTRYPOINT ["java", "-server", "-XX:+UseG1GC", "-Duser.timezone=Asia/Seoul", "-jar", "/threedollar-api-admin.jar"]

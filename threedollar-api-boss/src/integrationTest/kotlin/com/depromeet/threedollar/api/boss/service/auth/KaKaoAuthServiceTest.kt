@@ -1,16 +1,5 @@
 package com.depromeet.threedollar.api.boss.service.auth
 
-import com.depromeet.threedollar.api.boss.service.auth.dto.request.LoginRequest
-import com.depromeet.threedollar.api.boss.service.auth.policy.KaKaoAuthService
-import com.depromeet.threedollar.common.exception.model.ForbiddenException
-import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
-import com.depromeet.threedollar.external.client.kakao.KaKaoAuthApiClient
-import com.depromeet.threedollar.external.client.kakao.dto.response.KaKaoProfileResponse
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
@@ -18,6 +7,15 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
+import com.depromeet.threedollar.api.boss.service.auth.dto.request.LoginRequest
+import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
+import com.depromeet.threedollar.external.client.kakao.KaKaoAuthApiClient
+import com.depromeet.threedollar.external.client.kakao.dto.response.KaKaoProfileResponse
 
 private const val SOCIAL_ID = "social-id"
 private val SOCIAL_TYPE = BossAccountSocialType.KAKAO
@@ -25,21 +23,21 @@ private val SOCIAL_TYPE = BossAccountSocialType.KAKAO
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class KaKaoAuthServiceTest(
-        private val bossAccountRepository: BossAccountRepository,
-        private val registrationRepository: RegistrationRepository
+    private val bossAccountRepository: BossAccountRepository,
+    private val bossRegistrationRepository: BossRegistrationRepository,
 ) {
 
     private lateinit var authService: AuthService
 
     @BeforeEach
     fun setUp() {
-        authService = KaKaoAuthService(bossAccountRepository, registrationRepository, StubKaKaoApiClient())
+        authService = KaKaoAuthService(bossAccountRepository, bossRegistrationRepository, StubKaKaoApiClient())
     }
 
     @AfterEach
     fun cleanUp() {
         bossAccountRepository.deleteAll()
-        registrationRepository.deleteAll()
+        bossRegistrationRepository.deleteAll()
     }
 
     @Test
@@ -53,10 +51,10 @@ internal class KaKaoAuthServiceTest(
         bossAccountRepository.save(bossAccount)
 
         // when
-        val accountId = authService.login(LoginRequest("token", SOCIAL_TYPE))
+        val bossId = authService.login(LoginRequest("token", SOCIAL_TYPE))
 
         // then
-        assertThat(accountId).isEqualTo(bossAccount.id)
+        assertThat(bossId).isEqualTo(bossAccount.id)
     }
 
     @Test
@@ -68,16 +66,16 @@ internal class KaKaoAuthServiceTest(
     }
 
     @Test
-    fun `카카오 로그인시 가입 승인 대기중인 유저면 403 Forbidden 에러 발생`() {
+    fun `카카오 로그인시 가입 승인 대기중인 유저면 Registration의 ID를 반환한다`() {
         // given
-        val socialId = "social-id"
-
-        registrationRepository.save(RegistrationCreator.create(socialId, SOCIAL_TYPE))
+        val registration = RegistrationCreator.create(SOCIAL_ID, SOCIAL_TYPE)
+        bossRegistrationRepository.save(registration)
 
         // when
-        assertThatThrownBy {
-            authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
-        }.isInstanceOf(ForbiddenException::class.java)
+        val bossId = authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
+
+        // then
+        assertThat(bossId).isEqualTo(registration.id)
     }
 
     private class StubKaKaoApiClient : KaKaoAuthApiClient {

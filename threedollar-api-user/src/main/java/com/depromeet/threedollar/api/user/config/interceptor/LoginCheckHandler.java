@@ -1,15 +1,17 @@
 package com.depromeet.threedollar.api.user.config.interceptor;
 
-import com.depromeet.threedollar.api.user.config.session.SessionConstants;
-import com.depromeet.threedollar.common.exception.model.UnAuthorizedException;
-import lombok.RequiredArgsConstructor;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.session.Session;
 import org.springframework.session.SessionRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
+import com.depromeet.threedollar.api.user.config.session.SessionConstants;
+import com.depromeet.threedollar.common.exception.model.UnAuthorizedException;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Component
@@ -26,13 +28,13 @@ public class LoginCheckHandler {
                 return userId;
             }
         }
-        throw new UnAuthorizedException(String.format("잘못된 세션 (%S) 입니다", sessionId));
+        throw new UnAuthorizedException(String.format("인증이 실패하였습니다 - 빈 헤더 (%s) 입니다", sessionId));
     }
 
     private Session findSessionBySessionId(String sessionId) {
         Session session = sessionRepository.findById(sessionId);
         if (session == null) {
-            throw new UnAuthorizedException(String.format("잘못된 세션 (%S) 입니다", sessionId));
+            throw new UnAuthorizedException(String.format("인증이 실패하였습니다 - 해당 하는 세션(%s)은 존재하지 않습니다", sessionId));
         }
         return session;
     }

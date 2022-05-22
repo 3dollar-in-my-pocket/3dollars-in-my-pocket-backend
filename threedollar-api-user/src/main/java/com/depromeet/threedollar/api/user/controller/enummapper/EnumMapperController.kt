@@ -1,15 +1,15 @@
 package com.depromeet.threedollar.api.user.controller.enummapper
 
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.common.model.EnumValue
 import com.depromeet.threedollar.common.utils.EnumMapper
 import io.swagger.annotations.ApiOperation
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class EnumMapperController(
-    private val enumMapper: EnumMapper
+    private val enumMapper: EnumMapper,
 ) {
 
     @GetMapping("/v1/enums")

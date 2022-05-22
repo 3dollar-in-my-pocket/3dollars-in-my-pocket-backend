@@ -1,13 +1,19 @@
 package com.depromeet.threedollar.api.user.service.visit.dto.response;
 
-import com.depromeet.threedollar.api.user.service.store.dto.response.StoreInfoResponse;
-import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
-import lombok.*;
+import java.time.LocalDate;
+
 import org.jetbrains.annotations.NotNull;
 
-import java.time.LocalDate;
+import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreInfoResponse;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistory;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
+
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @ToString
 @Getter
@@ -35,7 +41,7 @@ public class VisitHistoryWithStoreResponse extends AuditingTimeResponse {
             .dateOfVisit(visitHistory.getDateOfVisit())
             .store(StoreInfoResponse.of(visitHistory.getStore()))
             .build();
-        response.setBaseTime(visitHistory.getCreatedAt(), visitHistory.getUpdatedAt());
+        response.setAuditingTime(visitHistory.getCreatedAt(), visitHistory.getUpdatedAt());
         return response;
     }
 

@@ -1,27 +1,29 @@
 package com.depromeet.threedollar.api.user.controller;
 
-import com.depromeet.threedollar.api.user.service.auth.dto.response.LoginResponse;
-import com.depromeet.threedollar.api.user.service.store.StoreServiceUtils;
-import com.depromeet.threedollar.api.user.service.user.UserService;
-import com.depromeet.threedollar.api.user.service.user.dto.request.CreateUserRequest;
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.common.exception.model.InternalServerException;
-import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.user.User;
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
-import io.swagger.annotations.ApiOperation;
-import lombok.RequiredArgsConstructor;
+import static com.depromeet.threedollar.api.user.config.session.SessionConstants.USER_ID;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpSession;
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
+import com.depromeet.threedollar.api.user.service.auth.dto.response.LoginResponse;
+import com.depromeet.threedollar.api.user.service.store.StoreServiceUtils;
+import com.depromeet.threedollar.api.user.service.user.UserService;
+import com.depromeet.threedollar.api.user.service.user.dto.request.CreateUserRequest;
+import com.depromeet.threedollar.common.exception.model.InternalServerException;
+import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.user.User;
+import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
 
-import static com.depromeet.threedollar.api.user.config.session.SessionConstants.USER_ID;
+import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 
 @Profile({"local", "local-docker", "dev", "integration-test"})
 @RequiredArgsConstructor
@@ -42,7 +44,12 @@ public class LocalTestController {
     public ApiResponse<LoginResponse> getTestSession() {
         User user = userRepository.findUserBySocialIdAndSocialType(testUser.getSocialId(), testUser.getSocialType());
         if (user == null) {
-            CreateUserRequest request = CreateUserRequest.of("test-uid", UserSocialType.KAKAO, "관리자 계정");
+            CreateUserRequest request = CreateUserRequest.builder()
+                .socialId("test-uid")
+                .socialType(UserSocialType.KAKAO)
+                .name("관리자 계정")
+                .build();
+
             Long userId = userService.registerUser(request);
             httpSession.setAttribute(USER_ID, userId);
             return ApiResponse.success(LoginResponse.of(httpSession.getId(), userId));
@@ -57,9 +64,9 @@ public class LocalTestController {
         @RequestParam Long storeId
     ) {
         Store store = StoreServiceUtils.findStoreById(storeRepository, storeId);
-        store.delete();
+        store.deleteByUser();
         storeRepository.save(store);
-        return ApiResponse.SUCCESS;
+        return ApiResponse.OK;
     }
 
     @ApiOperation("[개발 서버용] 서버 에러를 발생시킵니다.")

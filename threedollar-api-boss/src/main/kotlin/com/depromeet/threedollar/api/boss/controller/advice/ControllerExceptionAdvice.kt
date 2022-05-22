@@ -1,16 +1,9 @@
 package com.depromeet.threedollar.api.boss.controller.advice
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.utils.HttpServletRequestUtils
-import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseException
-import com.depromeet.threedollar.common.exception.type.ErrorCode
-import com.depromeet.threedollar.common.exception.type.ErrorCode.*
-import com.depromeet.threedollar.common.model.event.ServerExceptionOccurredEvent
-import com.depromeet.threedollar.common.type.ApplicationType
-import com.depromeet.threedollar.common.utils.UserMetaSessionUtils
-import com.depromeet.threedollar.common.utils.logger
-import com.fasterxml.jackson.databind.exc.InvalidFormatException
-import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.util.stream.Collectors
+import javax.servlet.http.HttpServletRequest
 import org.slf4j.Logger
 import org.springframework.beans.TypeMismatchException
 import org.springframework.context.ApplicationEventPublisher
@@ -30,14 +23,28 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.multipart.MaxUploadSizeExceededException
 import org.springframework.web.multipart.support.MissingServletRequestPartException
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.util.stream.Collectors
-import javax.servlet.http.HttpServletRequest
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.utils.HttpServletRequestUtils
+import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseException
+import com.depromeet.threedollar.common.exception.type.ErrorCode
+import com.depromeet.threedollar.common.exception.type.ErrorCode.INTERNAL_SERVER
+import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID
+import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_MISSING_PARAMETER
+import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_TYPE
+import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_UPLOAD_FILE_SIZE
+import com.depromeet.threedollar.common.exception.type.ErrorCode.METHOD_NOT_ALLOWED
+import com.depromeet.threedollar.common.exception.type.ErrorCode.NOT_ACCEPTABLE
+import com.depromeet.threedollar.common.exception.type.ErrorCode.UNSUPPORTED_MEDIA_TYPE
+import com.depromeet.threedollar.common.model.event.ServerExceptionOccurredEvent
+import com.depromeet.threedollar.common.type.ApplicationType
+import com.depromeet.threedollar.common.utils.UserMetaSessionUtils
+import com.depromeet.threedollar.common.utils.logger
+import com.fasterxml.jackson.databind.exc.InvalidFormatException
+import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 
 @RestControllerAdvice
 class ControllerExceptionAdvice(
-    private val eventPublisher: ApplicationEventPublisher
+    private val eventPublisher: ApplicationEventPublisher,
 ) {
 
     /**

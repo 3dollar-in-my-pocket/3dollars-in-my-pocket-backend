@@ -1,15 +1,15 @@
 package com.depromeet.threedollar.api.user.config.interceptor
 
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
+import org.springframework.stereotype.Component
+import org.springframework.web.servlet.HandlerInterceptor
+import org.springframework.web.servlet.ModelAndView
 import com.depromeet.threedollar.common.model.UserMetaValue
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.common.type.OsPlatformType
 import com.depromeet.threedollar.common.utils.ClientIpUtils
 import com.depromeet.threedollar.common.utils.UserMetaSessionUtils
-import org.springframework.stereotype.Component
-import org.springframework.web.servlet.HandlerInterceptor
-import org.springframework.web.servlet.ModelAndView
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 private const val USER_AGENT_HEADER = "User-Agent"
 private const val X_FORWARDED_FOR_HEADER = "X-Forwarded-For"
@@ -23,7 +23,7 @@ class UserMetadataInterceptor : HandlerInterceptor {
         val userAgent = request.getHeader(USER_AGENT_HEADER)
         val platform = OsPlatformType.findByUserAgent(userAgent)
 
-        UserMetaSessionUtils.set(UserMetaValue(
+        UserMetaSessionUtils.set(UserMetaValue.of(
             osPlatform = platform,
             userAgent = userAgent,
             clientIp = ClientIpUtils.getClientIp(request.remoteAddr, request.getHeader(X_FORWARDED_FOR_HEADER)),

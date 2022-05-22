@@ -1,34 +1,41 @@
 package com.depromeet.threedollar.api.admin.service.user.medal
 
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.admin.service.user.medal.dto.request.AddMedalRequest
 import com.depromeet.threedollar.api.admin.service.user.medal.dto.request.UpdateMedalRequest
+import com.depromeet.threedollar.api.core.service.user.medal.dto.response.MedalResponse
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.type.CacheType.CacheKey.MEDALS
 import com.depromeet.threedollar.domain.rds.user.domain.medal.Medal
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
-import org.springframework.cache.annotation.CacheEvict
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 class AdminMedalService(
-    private val medalRepository: MedalRepository
+    private val medalRepository: MedalRepository,
 ) {
 
-    @CacheEvict(allEntries = true, value = [MEDALS])
+    @CacheEvict(cacheNames = [MEDALS], allEntries = true)
     @Transactional
     fun addMedal(request: AddMedalRequest) {
         medalRepository.save(request.toEntity())
     }
 
-    @CacheEvict(allEntries = true, value = [MEDALS])
+    @CacheEvict(cacheNames = [MEDALS], allEntries = true)
     @Transactional
     fun updateMedal(medalId: Long, request: UpdateMedalRequest) {
         val medal = findMedalById(medalId)
         request.let {
             medal.update(it.name, it.introduction, it.activationIconUrl, it.disableIconUrl)
         }
+    }
+
+    @Transactional(readOnly = true)
+    fun retrieveMedals(): List<MedalResponse> {
+        return medalRepository.findAllActiveMedals()
+            .map { MedalResponse.of(it) }
     }
 
     private fun findMedalById(medalId: Long): Medal {

@@ -1,12 +1,13 @@
 package com.depromeet.threedollar.external.client.slack;
 
+import org.springframework.context.annotation.Bean;
+
+import com.depromeet.threedollar.common.exception.model.BadGatewayException;
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
+
 import feign.FeignException;
 import feign.Response;
-import feign.RetryableException;
-import feign.Retryer;
 import feign.codec.ErrorDecoder;
-import org.springframework.context.annotation.Bean;
 
 public class SlackFeignConfig {
 
@@ -15,15 +16,10 @@ public class SlackFeignConfig {
         return new SlackApiErrorDecoder();
     }
 
-    @Bean
-    public Retryer retryer() {
-        return new Retryer.Default(1000, 2000, 3);
-    }
-
     /**
-     * https://api.slack.com/changelog/2016-05-17-changes-to-errors-for-incoming-webhooks
+     * <a href="https://api.slack.com/changelog/2016-05-17-changes-to-errors-for-incoming-webhooks">https://api.slack.com/changelog/2016-05-17-changes-to-errors-for-incoming-webhooks</a>
      */
-    public static class SlackApiErrorDecoder implements ErrorDecoder {
+    private static class SlackApiErrorDecoder implements ErrorDecoder {
 
         @Override
         public Exception decode(String methodKey, Response response) {
@@ -33,9 +29,9 @@ public class SlackFeignConfig {
                 case 403:
                 case 404:
                 case 410:
-                    return new InternalServerException(String.format("Slack API 호출 중 클라이언트 에러가 발생하였습니다. status: (%s) message: (%s)", response.status(), response.body()));
+                    throw new InternalServerException(String.format("Slack API 호출 중 클라이언트 에러(%s)가 발생하였습니다. message: (%s)", response.status(), response.body()));
                 default:
-                    return new RetryableException(response.status(), exception.getMessage(), response.request().httpMethod(), exception, null, response.request());
+                    throw new BadGatewayException(String.format("슬랙 API 호출중 에러(%s)가 발생하였습니다. message: (%s) ", response.status(), exception.getMessage()));
             }
         }
 

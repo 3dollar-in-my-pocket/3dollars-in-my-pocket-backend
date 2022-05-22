@@ -1,14 +1,14 @@
 package com.depromeet.threedollar.api.admin.service.user.advertisement.dto.response
 
+import java.time.LocalDateTime
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.Advertisement
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPositionType
-import java.time.LocalDateTime
 
 data class AdvertisementsWithPagingResponse(
-        val contents: List<AdvertisementResponse>,
-        val totalCounts: Long
+    val contents: List<AdvertisementResponse>,
+    val totalCounts: Long,
 ) {
 
     companion object {
@@ -23,15 +23,15 @@ data class AdvertisementsWithPagingResponse(
 }
 
 data class AdvertisementResponse(
-        val advertisementId: Long,
-        val positionType: AdvertisementPositionType,
-        val platformType: AdvertisementPlatformType,
-        val title: String?,
-        val subTitle: String?,
-        val imageUrl: String,
-        val linkUrl: String?,
-        val startDateTime: LocalDateTime,
-        val endDateTime: LocalDateTime
+    val advertisementId: Long,
+    val positionType: AdvertisementPositionType,
+    val platformType: AdvertisementPlatformType,
+    val title: String?,
+    val subTitle: String?,
+    val imageUrl: String,
+    val linkUrl: String?,
+    val startDateTime: LocalDateTime,
+    val endDateTime: LocalDateTime,
 ) : AuditingTimeResponse() {
 
     companion object {
@@ -47,7 +47,7 @@ data class AdvertisementResponse(
                 startDateTime = advertisement.startDateTime,
                 endDateTime = advertisement.endDateTime
             )
-            response.setBaseTime(advertisement)
+            response.setAuditingTimeByEntity(advertisement)
             return response
         }
     }

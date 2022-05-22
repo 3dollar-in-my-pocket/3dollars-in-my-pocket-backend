@@ -1,28 +1,28 @@
 ### 모든 FAQ를 조회합니다.
-GET {{host_api}}/v2/faqs
+GET {{user_api}}/v2/faqs
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
 
 
 ### 특정 카테고리의 FAQ를 조회합니다.
-GET {{host_api}}/v2/faqs?category=STORE
+GET {{user_api}}/v2/faqs?category=STORE
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
 
 
 ### 모든 FAQ 카테고리를 조회합니다.
-GET {{host_api}}/v2/faq/categories
+GET {{user_api}}/v2/faq/categories
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}

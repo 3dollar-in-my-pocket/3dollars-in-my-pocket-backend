@@ -1,5 +1,24 @@
 package com.depromeet.threedollar.api.user.service.store;
 
+import static com.depromeet.threedollar.api.user.service.store.support.StoreAssertions.assertMenu;
+import static com.depromeet.threedollar.api.user.service.store.support.StoreAssertions.assertStore;
+import static com.depromeet.threedollar.api.user.service.store.support.StoreAssertions.assertStoreDeleteRequest;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import com.depromeet.threedollar.api.user.service.SetupUserServiceTest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.DeleteStoreRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.MenuRequest;
@@ -9,10 +28,11 @@ import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDelete
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDay;
 import com.depromeet.threedollar.domain.rds.user.domain.store.AppearanceDayRepository;
+import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethod;
@@ -20,30 +40,12 @@ import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodRepos
 import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequest;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestCreator;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreStatus;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
-import com.depromeet.threedollar.domain.rds.user.domain.storedelete.DeleteReasonType;
-import com.depromeet.threedollar.domain.rds.user.domain.storedelete.StoreDeleteRequest;
-import com.depromeet.threedollar.domain.rds.user.domain.storedelete.StoreDeleteRequestCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.storedelete.StoreDeleteRequestRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import static com.depromeet.threedollar.api.user.testhelper.assertions.StoreAssertionHelper.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
 class StoreServiceTest extends SetupUserServiceTest {
@@ -76,11 +78,23 @@ class StoreServiceTest extends SetupUserServiceTest {
         storeRepository.deleteAllInBatch();
     }
 
+    private List<DayOfTheWeek> getDayOfTheWeeks(List<AppearanceDay> appearanceDays) {
+        return appearanceDays.stream()
+            .map(AppearanceDay::getDay)
+            .collect(Collectors.toList());
+    }
+
+    private List<PaymentMethodType> getPaymentMethodTypes(List<PaymentMethod> paymentMethods) {
+        return paymentMethods.stream()
+            .map(PaymentMethod::getMethod)
+            .collect(Collectors.toList());
+    }
+
     @Nested
-    class 가게_정보_등록 {
+    class AddStoreTest {
 
         @Test
-        void 새로운_가게를_등록하면_새로운_가게_데이터가_추가된다() {
+        void 새로운_가게를_등록합니다() {
             // given
             String storeName = "토끼의 붕어빵";
             StoreType storeType = StoreType.STORE;
@@ -94,7 +108,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .storeType(storeType)
                 .appearanceDays(Set.of(DayOfTheWeek.FRIDAY))
                 .paymentMethods(Set.of(PaymentMethodType.CARD))
-                .menus(Set.of(MenuRequest.of("메뉴 이름", "한 개에 만원", MenuCategoryType.BUNGEOPPANG)))
+                .menus(Set.of(MenuRequest.of("메뉴 이름", "한 개에 만원", UserMenuCategoryType.BUNGEOPPANG)))
                 .build();
 
             // when
@@ -163,9 +177,9 @@ class StoreServiceTest extends SetupUserServiceTest {
         @Test
         void 가게_등록시_메뉴_데이터도_추가된다() {
             // given
-            String menuName = "슈크림 붕어빵";
-            String price = "2개에 천원";
-            MenuCategoryType type = MenuCategoryType.BUNGEOPPANG;
+            String menuName = "팥 붕어빵";
+            String price = "3개에 천원";
+            UserMenuCategoryType type = UserMenuCategoryType.BUNGEOPPANG;
 
             Set<MenuRequest> menus = Set.of(MenuRequest.of(menuName, price, type));
 
@@ -195,7 +209,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             // given
             String menuName = "슈크림 붕어빵";
             String price = "2개에 천원";
-            MenuCategoryType type = MenuCategoryType.BUNGEOPPANG;
+            UserMenuCategoryType type = UserMenuCategoryType.BUNGEOPPANG;
 
             Set<MenuRequest> menus = new HashSet<>(List.of(
                 MenuRequest.of(menuName, price, type),
@@ -226,17 +240,16 @@ class StoreServiceTest extends SetupUserServiceTest {
     }
 
     @Nested
-    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-    class 가게_정보_수정 {
+    class UpdateStoreTest {
 
         @Test
-        void 가게의_기본_정보를_수정한다() {
+        void 가게의_기본_정보를_수정합니다() {
             // given
             String menuName = "슈크림 붕어빵";
-            String price = "2개에 천원";
-            MenuCategoryType type = MenuCategoryType.BUNGEOPPANG;
+            String price = "5개에 2천원";
+            UserMenuCategoryType type = UserMenuCategoryType.BUNGEOPPANG;
 
-            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
+            Store store = StoreCreator.createWithDefaultMenu(userId, "붕어빵 가게");
             storeRepository.save(store);
 
             double latitude = 34.0;
@@ -298,7 +311,7 @@ class StoreServiceTest extends SetupUserServiceTest {
         }
 
         @Test
-        void 가게의_개시일을_수정한다() {
+        void 가게의_영업일_정보를_수정한다() {
             // given
             Set<DayOfTheWeek> appearanceDays = Set.of(DayOfTheWeek.SATURDAY, DayOfTheWeek.FRIDAY);
 
@@ -332,18 +345,18 @@ class StoreServiceTest extends SetupUserServiceTest {
             // given
             String menuName = "슈크림 붕어빵";
             String price = "2개에 천원";
-            MenuCategoryType type = MenuCategoryType.BUNGEOPPANG;
+            UserMenuCategoryType type = UserMenuCategoryType.BUNGEOPPANG;
 
             Store store = StoreCreator.create(userId, "storeName");
             store.addMenus(List.of(
-                MenuCreator.create(store, "메뉴 1", "1000원", MenuCategoryType.DALGONA),
+                MenuCreator.create(store, "메뉴 1", "1000원", UserMenuCategoryType.DALGONA),
                 MenuCreator.create(store, menuName, price, type))
             );
             storeRepository.save(store);
 
             String newMenuName = "신규 추가된 메뉴";
             String newMenuPrice = "2000원";
-            MenuCategoryType newMenuCategory = MenuCategoryType.DALGONA;
+            UserMenuCategoryType newMenuCategory = UserMenuCategoryType.DALGONA;
 
             Set<MenuRequest> menuRequests = Set.of(
                 MenuRequest.of(menuName, price, type),
@@ -377,7 +390,7 @@ class StoreServiceTest extends SetupUserServiceTest {
             // given
             String menuName = "슈크림 붕어빵";
             String price = "2개에 천원";
-            MenuCategoryType type = MenuCategoryType.BUNGEOPPANG;
+            UserMenuCategoryType type = UserMenuCategoryType.BUNGEOPPANG;
 
             Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
@@ -420,7 +433,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .storeType(StoreType.STORE)
                 .appearanceDays(Set.of(DayOfTheWeek.TUESDAY))
                 .paymentMethods(Set.of(PaymentMethodType.CARD))
-                .menus(Set.of(MenuRequest.of("메뉴 이름", "메뉴 가격", MenuCategoryType.BUNGEOPPANG)))
+                .menus(Set.of(MenuRequest.of("메뉴 이름", "메뉴 가격", UserMenuCategoryType.BUNGEOPPANG)))
                 .build();
 
             // when & then
@@ -428,11 +441,9 @@ class StoreServiceTest extends SetupUserServiceTest {
         }
 
         @Test
-        void 내가_등록하지_않은_가게도_수정할수있다_단_제보자는_최초_제보자로_유지된다() {
+        void 내가_등록하지_않은_가게도_수정할수_있고_제보자는_최초_제보자로_유지된다() {
             // given
-            long creatorUserId = 100L;
-
-            Store store = StoreCreator.createWithDefaultMenu(creatorUserId, "storeName");
+            Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 
             double latitude = 34.0;
@@ -447,7 +458,7 @@ class StoreServiceTest extends SetupUserServiceTest {
                 .storeType(storeType)
                 .appearanceDays(Set.of(DayOfTheWeek.FRIDAY))
                 .paymentMethods(Set.of(PaymentMethodType.CARD))
-                .menus(Set.of(MenuRequest.of("메뉴 이름", "가격", MenuCategoryType.BUNGEOPPANG)))
+                .menus(Set.of(MenuRequest.of("메뉴 이름", "가격", UserMenuCategoryType.BUNGEOPPANG)))
                 .build();
 
             // when
@@ -457,14 +468,14 @@ class StoreServiceTest extends SetupUserServiceTest {
             List<Store> stores = storeRepository.findAll();
             assertAll(
                 () -> assertThat(stores).hasSize(1),
-                () -> assertStore(stores.get(0), latitude, longitude, storeName, storeType, creatorUserId)
+                () -> assertStore(stores.get(0), latitude, longitude, storeName, storeType, userId)
             );
         }
 
     }
 
     @Nested
-    class 가게_삭제_요청 {
+    class DeleteStoreTest {
 
         @Test
         void 삭제_요청이_1개_쌓이면_실제로_가게정보가_삭제되지_않는다() {
@@ -474,8 +485,11 @@ class StoreServiceTest extends SetupUserServiceTest {
             Store store = StoreCreator.createWithDefaultMenu(userId, "storeName");
             storeRepository.save(store);
 
+            DeleteStoreRequest request = DeleteStoreRequest.testBuilder()
+                .deleteReasonType(deleteReasonType).build();
+
             // when
-            StoreDeleteResponse response = storeService.deleteStore(store.getId(), DeleteStoreRequest.testInstance(deleteReasonType), userId);
+            StoreDeleteResponse response = storeService.deleteStore(store.getId(), request, userId);
 
             // then
             List<Store> stores = storeRepository.findAll();
@@ -500,8 +514,12 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             storeDeleteRequestRepository.save(StoreDeleteRequestCreator.create(store, 90L, DeleteReasonType.WRONG_CONTENT));
 
+            DeleteStoreRequest request = DeleteStoreRequest.testBuilder()
+                .deleteReasonType(deleteReasonType)
+                .build();
+
             // when
-            StoreDeleteResponse response = storeService.deleteStore(store.getId(), DeleteStoreRequest.testInstance(deleteReasonType), userId);
+            StoreDeleteResponse response = storeService.deleteStore(store.getId(), request, userId);
 
             // then
             List<Store> stores = storeRepository.findAll();
@@ -532,8 +550,12 @@ class StoreServiceTest extends SetupUserServiceTest {
                 StoreDeleteRequestCreator.create(store, 1001L, DeleteReasonType.NOSTORE))
             );
 
+            DeleteStoreRequest request = DeleteStoreRequest.testBuilder()
+                .deleteReasonType(deleteReasonType)
+                .build();
+
             // when
-            StoreDeleteResponse response = storeService.deleteStore(store.getId(), DeleteStoreRequest.testInstance(deleteReasonType), userId);
+            StoreDeleteResponse response = storeService.deleteStore(store.getId(), request, userId);
 
             // then
             List<Store> stores = storeRepository.findAll();
@@ -561,23 +583,15 @@ class StoreServiceTest extends SetupUserServiceTest {
 
             storeDeleteRequestRepository.save(StoreDeleteRequestCreator.create(store, userId, DeleteReasonType.NOSTORE));
 
+            DeleteStoreRequest request = DeleteStoreRequest.testBuilder()
+                .deleteReasonType(reasonType)
+                .build();
+
             // when & then
-            assertThatThrownBy(() -> storeService.deleteStore(store.getId(), DeleteStoreRequest.testInstance(reasonType), userId))
+            assertThatThrownBy(() -> storeService.deleteStore(store.getId(), request, userId))
                 .isInstanceOf(ConflictException.class);
         }
 
-    }
-
-    private List<DayOfTheWeek> getDayOfTheWeeks(List<AppearanceDay> appearanceDays) {
-        return appearanceDays.stream()
-            .map(AppearanceDay::getDay)
-            .collect(Collectors.toList());
-    }
-
-    private List<PaymentMethodType> getPaymentMethodTypes(List<PaymentMethod> paymentMethods) {
-        return paymentMethods.stream()
-            .map(PaymentMethod::getMethod)
-            .collect(Collectors.toList());
     }
 
 }

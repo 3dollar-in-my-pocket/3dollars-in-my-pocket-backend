@@ -1,19 +1,26 @@
 package com.depromeet.threedollar.api.user.service.store.dto.request;
 
-import com.depromeet.threedollar.common.type.DayOfTheWeek;
-import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
-import lombok.*;
-import org.hibernate.validator.constraints.Length;
-import org.jetbrains.annotations.Nullable;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
-import java.util.stream.Collectors;
+import javax.validation.constraints.Size;
+
+import org.jetbrains.annotations.Nullable;
+
+import com.depromeet.threedollar.common.type.DayOfTheWeek;
+import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
+
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @ToString
 @Getter
@@ -26,7 +33,7 @@ public class RegisterStoreRequest {
     @NotNull(message = "{store.longitude.notNull}")
     private Double longitude;
 
-    @Length(max = 300, message = "{store.name.length}")
+    @Size(max = 150, message = "{store.name.size}")
     @NotBlank(message = "{store.name.notBlank}")
     private String storeName;
 

@@ -1,18 +1,18 @@
 ### 특정 위치에 활성화 중인 광고 목록을 조회한다 (AOS)
-GET {{host_api}}/v1/advertisements?platform=AOS&position=MENU_CATEGORY_BANNER
+GET {{user_api}}/v1/advertisements?platform=AOS&position=MENU_CATEGORY_BANNER
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
 
 
 ### 특정 위치에 활성화 중인 광고 목록을 조회한다 (IOS)
-GET {{host_api}}/v1/advertisements?platform=IOS
+GET {{user_api}}/v1/advertisements?platform=IOS
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}

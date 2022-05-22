@@ -1,7 +1,8 @@
 package com.depromeet.threedollar.api.core.provider.upload.dto.request;
 
-import com.depromeet.threedollar.common.type.FileType;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.depromeet.threedollar.common.type.FileType;
 
 public interface UploadFileRequest {
 

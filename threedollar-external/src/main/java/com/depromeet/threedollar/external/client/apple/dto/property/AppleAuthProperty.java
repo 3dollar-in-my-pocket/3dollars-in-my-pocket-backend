@@ -1,8 +1,12 @@
 package com.depromeet.threedollar.external.client.apple.dto.property;
 
-import lombok.*;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
+
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 @ToString
 @Getter

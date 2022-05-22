@@ -1,34 +1,41 @@
 package com.depromeet.threedollar.external.client.local;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(
-    name = "localWarmUpApiClient",
-    url = "http://localhost:${server.port}"
+    name = "localWarmUpUserApiClient",
+    url = "http://localhost:${server.port}/api"
 )
 public interface LocalUserApiWarmUpApiClient {
 
-    @GetMapping("/api/v2/stores/near")
-    void retrieveNearStores(
-        @RequestParam double latitude,
-        @RequestParam double longitude,
-        @RequestParam double mapLatitude,
-        @RequestParam double mapLongitude,
-        @RequestParam int distance
+    @Retryable(maxAttempts = 5, backoff = @Backoff(value = 1000), value = Exception.class)
+    @GetMapping("/v2/stores/near")
+    void retrieveNearUserStores(
+        @RequestParam("latitude") double latitude,
+        @RequestParam("longitude") double longitude,
+        @RequestParam("mapLatitude") double mapLatitude,
+        @RequestParam("mapLongitude") double mapLongitude,
+        @RequestParam("distance") int distance
     );
 
-    @GetMapping("/api/v2/faqs")
+    @Retryable(maxAttempts = 5, backoff = @Backoff(value = 1000), value = Exception.class)
+    @GetMapping("/v2/faqs")
     void getFaqs();
 
-    @GetMapping("/api/v1/advertisements")
-    void getAdvertisements(@RequestParam String platform);
+    @Retryable(maxAttempts = 5, backoff = @Backoff(value = 1000), value = Exception.class)
+    @GetMapping("/v1/advertisements")
+    void getAdvertisements(@RequestParam("platform") String platform);
 
-    @GetMapping("/api/v1/medals")
+    @Retryable(maxAttempts = 5, backoff = @Backoff(value = 1000), value = Exception.class)
+    @GetMapping("/v1/medals")
     void getMedals();
 
-    @GetMapping("/api/v2/store/menu/categories")
+    @Retryable(maxAttempts = 5, backoff = @Backoff(value = 1000), value = Exception.class)
+    @GetMapping("/v2/store/menu/categories")
     void getStoreMenuCategories();
 
 }

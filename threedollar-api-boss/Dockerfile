@@ -2,7 +2,7 @@ FROM adoptopenjdk/openjdk11:alpine-slim AS BUILD
 ENV HOME=/usr/app
 WORKDIR $HOME
 COPY . $HOME
-RUN ./gradlew clean :threedollar-api-boss:buildNeeded --parallel
+RUN ./gradlew clean :threedollar-api-boss:buildNeeded
 
 FROM adoptopenjdk/openjdk11:alpine-jre
 ENV HOME=/usr/app
@@ -18,4 +18,4 @@ COPY ./infrastructure/newrelic.yml $HOME/newrelic/newrelic.yml
 
 EXPOSE 4000
 
-ENTRYPOINT ["java", "-XX:CompileThreshold=100", "-XX:+TieredCompilation", "-javaagent:/usr/app/newrelic/newrelic.jar", "-Duser.timezone=Asia/Seoul", "-jar", "/threedollar-api-boss.jar"]
+ENTRYPOINT ["java", "-server", "-XX:+UseG1GC", "-javaagent:/usr/app/newrelic/newrelic.jar", "-Duser.timezone=Asia/Seoul", "-jar", "/threedollar-api-boss.jar"]

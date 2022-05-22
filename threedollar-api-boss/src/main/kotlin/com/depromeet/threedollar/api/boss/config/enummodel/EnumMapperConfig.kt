@@ -1,12 +1,13 @@
 package com.depromeet.threedollar.api.boss.config.enummodel
 
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.common.type.FileType
 import com.depromeet.threedollar.common.utils.EnumMapper
-import com.depromeet.threedollar.common.type.BossStoreFeedbackType
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreOpenType
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 
 @Configuration
 class EnumMapperConfig {
@@ -19,8 +20,7 @@ class EnumMapperConfig {
         enumMapper.put("FileType", FileType::class.java)
 
         // bossAccount
-        enumMapper.put("BossAccountSocialType", com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType::class.java)
-        enumMapper.put("PushSeetingStatus", com.depromeet.threedollar.domain.mongo.boss.domain.account.PushSettingsStatus::class.java)
+        enumMapper.put("BossAccountSocialType", BossAccountSocialType::class.java)
 
         // bossStore
         enumMapper.put("BossStoreOpenType", BossStoreOpenType::class.java)

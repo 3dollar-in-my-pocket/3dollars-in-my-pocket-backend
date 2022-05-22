@@ -3,12 +3,16 @@ package com.depromeet.threedollar.external.client.google.dto.response;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.*;
+
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class GoogleProfileInfoResponse {
@@ -19,12 +23,27 @@ public class GoogleProfileInfoResponse {
 
     private String name;
 
+    @Builder(access = AccessLevel.PRIVATE)
+    private GoogleProfileInfoResponse(String id, String email, String name) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+    }
+
     public static GoogleProfileInfoResponse testInstance(String id, String email, String name) {
-        return new GoogleProfileInfoResponse(id, email, name);
+        return GoogleProfileInfoResponse.builder()
+            .id(id)
+            .email(email)
+            .name(name)
+            .build();
     }
 
     public static GoogleProfileInfoResponse testInstance(String id) {
-        return testInstance(id, "test@gmail.com", "테스트");
+        return GoogleProfileInfoResponse.builder()
+            .id(id)
+            .email("test@gmail.com")
+            .name("테스트")
+            .build();
     }
 
 }

@@ -1,14 +1,20 @@
 package com.depromeet.threedollar.api.user.service.store.dto.response;
 
-import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoryCountsResponse;
-import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import lombok.*;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+
+import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
+import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoryCountsResponse;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.projection.StoreWithMenuProjection;
+
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @ToString
 @Getter
@@ -16,39 +22,40 @@ import java.util.List;
 public class StoreWithVisitCountsResponse extends AuditingTimeResponse {
 
     private Long storeId;
+
     private double latitude;
+
     private double longitude;
+
     private String storeName;
+
     private double rating;
+
     private Boolean isDeleted;
-    private final List<MenuCategoryType> categories = new ArrayList<>();
+
+    private final List<UserMenuCategoryType> categories = new ArrayList<>();
 
     private VisitHistoryCountsResponse visitHistory;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private StoreWithVisitCountsResponse(Long storeId, double latitude, double longitude, String storeName, double rating, Boolean isDeleted, long existsVisitsCount, long notExistsVisitsCount) {
-        this.storeId = storeId;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.storeName = storeName;
-        this.rating = rating;
-        this.isDeleted = isDeleted;
+    private StoreWithVisitCountsResponse(StoreWithMenuProjection store, long existsVisitsCount, long notExistsVisitsCount) {
+        this.storeId = store.getId();
+        this.latitude = store.getLatitude();
+        this.longitude = store.getLongitude();
+        this.storeName = store.getName();
+        this.rating = store.getRating();
+        this.isDeleted = store.isDeleted();
         this.visitHistory = VisitHistoryCountsResponse.of(existsVisitsCount, notExistsVisitsCount);
     }
 
-    public static StoreWithVisitCountsResponse of(@NotNull Store store, long existsVisitsCount, long notExistsVisitsCount) {
+    public static StoreWithVisitCountsResponse of(@NotNull StoreWithMenuProjection store, long existsVisitsCount, long notExistsVisitsCount) {
         StoreWithVisitCountsResponse response = StoreWithVisitCountsResponse.builder()
-            .storeId(store.getId())
-            .latitude(store.getLatitude())
-            .longitude(store.getLongitude())
-            .storeName(store.getName())
-            .rating(store.getRating())
+            .store(store)
             .existsVisitsCount(existsVisitsCount)
             .notExistsVisitsCount(notExistsVisitsCount)
-            .isDeleted(store.isDeleted())
             .build();
-        response.categories.addAll(store.getMenuCategoriesSortedByCounts());
-        response.setBaseTime(store);
+        response.categories.addAll(store.getMenuCategories());
+        response.setAuditingTime(store.getCreatedAt(), store.getUpdatedAt());
         return response;
     }
 

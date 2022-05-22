@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <springProfile name="local,local-docker,integration-test,staging,dev,prod">
+        <logger name="com.depromeet.threedollar" level="DEBUG"/>
+        <logger name="org.springframework.batch" level="DEBUG"/>
+        <logger name="org.springframework.web" level="INFO"/>
+        <logger name="org.springframework.data.mongodb.core.MongoTemplate" level="DEBUG"/>
+        <logger name="org.springframework.data.mongodb.repository.query" level="DEBUG"/>
+        <logger name="com.amazonaws.util.EC2MetadataUtils" level="ERROR"/>
+        <logger name="com.amazonaws.internal.InstanceMetadataServiceResourceFetcher" level="ERROR"/>
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+</configuration>

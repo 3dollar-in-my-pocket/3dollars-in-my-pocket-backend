@@ -1,26 +1,33 @@
 package com.depromeet.threedollar.api.user.controller.store;
 
-import com.depromeet.threedollar.api.user.config.interceptor.Auth;
-import com.depromeet.threedollar.api.user.config.resolver.UserId;
-import com.depromeet.threedollar.api.user.service.store.StoreService;
-import com.depromeet.threedollar.api.user.service.store.dto.request.RegisterStoreRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.request.DeleteStoreRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.request.UpdateStoreRequest;
-import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDeleteResponse;
-import com.depromeet.threedollar.api.user.service.store.dto.response.StoreInfoResponse;
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.common.exception.model.InternalServerException;
-import com.depromeet.threedollar.domain.rds.user.event.store.StoreCreatedEvent;
-import com.depromeet.threedollar.domain.rds.user.event.store.StoreDeletedEvent;
-import io.swagger.annotations.ApiOperation;
-import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.orm.ObjectOptimisticLockingFailureException;
-import org.springframework.web.bind.annotation.*;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.INTERNAL_SERVER_UPDATE_STORE_OPTIMISTIC_LOCK_FAILED;
 
 import javax.validation.Valid;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.INTERNAL_SERVER_UPDATE_STORE_OPTIMISTIC_LOCK_FAILED;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
+import com.depromeet.threedollar.api.user.config.interceptor.Auth;
+import com.depromeet.threedollar.api.user.config.resolver.UserId;
+import com.depromeet.threedollar.api.user.service.store.StoreService;
+import com.depromeet.threedollar.api.user.service.store.dto.request.DeleteStoreRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.request.RegisterStoreRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.request.UpdateStoreRequest;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreDeleteResponse;
+import com.depromeet.threedollar.api.user.service.store.dto.response.StoreInfoResponse;
+import com.depromeet.threedollar.common.exception.model.InternalServerException;
+import com.depromeet.threedollar.domain.rds.user.event.store.StoreCreatedEvent;
+import com.depromeet.threedollar.domain.rds.user.event.store.StoreDeletedEvent;
+
+import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController

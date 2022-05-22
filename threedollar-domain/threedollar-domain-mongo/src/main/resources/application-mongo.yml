@@ -1,0 +1,47 @@
+spring.config:
+  activate:
+    on-profile:
+      - integration-test
+      - local
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:${random.int(49152,65535)}/test?connectTimeoutMS=${spring.data.mongodb.connection-timeout}&maxPoolSize=${spring.data.mongodb.connection-pool-size}&minPoolSize=${spring.data.mongodb.connection-pool-size}
+      connection-pool-size: 10
+      connection-timeout: 5000
+  mongodb:
+    embedded:
+      version: 3.4.5
+
+
+---
+spring.config:
+  activate:
+    on-profile: local-docker
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27018/threedollar?connectTimeoutMS=${spring.data.mongodb.connection-timeout}&maxPoolSize=${spring.data.mongodb.connection-pool-size}&minPoolSize=${spring.data.mongodb.connection-pool-size}
+      connection-pool-size: 10
+      connection-timeout: 5000
+
+
+---
+spring.config:
+  activate:
+    on-profile:
+      - dev
+      - staging
+      - prod
+
+spring:
+  data:
+    mongodb:
+      uri: ${secret.mongodb.uri}?connectTimeoutMS=${spring.data.mongodb.connection-timeout}&maxPoolSize=${spring.data.mongodb.connection-pool-size}&minPoolSize=${spring.data.mongodb.connection-pool-size}&replicaSet=${spring.data.mongodb.replicaSet}
+      connection-pool-size: 10
+      connection-timeout: 5000
+      replicaSet: threedollar-replication-1
+
+---

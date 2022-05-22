@@ -1,5 +1,19 @@
 package com.depromeet.threedollar.api.user.service.medal;
 
+import static com.depromeet.threedollar.api.user.service.medal.support.UserMedalAssertions.assertUserMedal;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import com.depromeet.threedollar.api.user.service.SetupUserServiceTest;
 import com.depromeet.threedollar.api.user.service.medal.dto.request.ChangeRepresentativeMedalRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
@@ -8,19 +22,6 @@ import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedal;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalStatus;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
-
-import static com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper.assertUserMedal;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
 class UserMedalServiceTest extends SetupUserServiceTest {
@@ -35,18 +36,20 @@ class UserMedalServiceTest extends SetupUserServiceTest {
 
     @DisplayName("유저의 장착중인 대표 칭호를 변경한다")
     @Nested
-    class ActivateUserMedal {
+    class ActivateUserMedalTest {
 
         @Test
-        void 장착중인_대표_칭호를_변경한다() {
+        void 대표_메달을_변경합니다() {
             // given
             Medal medal = MedalCreator.create("붕친맨");
             medalRepository.save(medal);
 
-            UserMedal userMedal = UserMedalCreator.createInActive(medal, user);
+            UserMedal userMedal = UserMedalCreator.create(medal, user, UserMedalStatus.IN_ACTIVE);
             userMedalRepository.save(userMedal);
 
-            ChangeRepresentativeMedalRequest request = ChangeRepresentativeMedalRequest.testInstance(medal.getId());
+            ChangeRepresentativeMedalRequest request = ChangeRepresentativeMedalRequest.testBuilder()
+                .medalId(medal.getId())
+                .build();
 
             // when
             userMedalService.updateRepresentativeMedal(request, userId);
@@ -60,10 +63,13 @@ class UserMedalServiceTest extends SetupUserServiceTest {
         }
 
         @Test
-        void 대표_칭호_변경시_보유하지_않은_칭호를_장착하려하면_NotFound_에러가_발생한다() {
+        void 대표_메달을_수정할때_보유하지_않은_메달을_장착하려하면_NOTFOUND_에러가_발생합니다() {
             // given
             Long notFoundMedalId = -1L;
-            ChangeRepresentativeMedalRequest request = ChangeRepresentativeMedalRequest.testInstance(notFoundMedalId);
+
+            ChangeRepresentativeMedalRequest request = ChangeRepresentativeMedalRequest.testBuilder()
+                .medalId(notFoundMedalId)
+                .build();
 
             // when & then
             assertThatThrownBy(() -> userMedalService.updateRepresentativeMedal(request, userId)).isInstanceOfAny(NotFoundException.class);

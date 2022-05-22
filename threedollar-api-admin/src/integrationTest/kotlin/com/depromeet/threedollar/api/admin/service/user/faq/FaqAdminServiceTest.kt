@@ -1,5 +1,14 @@
 package com.depromeet.threedollar.api.admin.service.user.faq
 
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.api.admin.service.user.faq.dto.request.AddFaqRequest
 import com.depromeet.threedollar.api.admin.service.user.faq.dto.request.UpdateFaqRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
@@ -7,17 +16,12 @@ import com.depromeet.threedollar.domain.rds.user.domain.faq.Faq
 import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCategory
 import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCreator
 import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqRepository
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.*
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class FaqAdminServiceTest(
     private val faqAdminService: FaqAdminService,
-    private val faqRepository: FaqRepository
+    private val faqRepository: FaqRepository,
 ) {
 
     @AfterEach
@@ -27,7 +31,7 @@ internal class FaqAdminServiceTest(
 
     @DisplayName("신규 FAQ 등록")
     @Nested
-    inner class AddFAQ {
+    inner class AddFAQTest {
 
         @Test
         fun 새로운_FAQ_를_등록하면_FAQ_데이터가_추가된다() {
@@ -53,7 +57,7 @@ internal class FaqAdminServiceTest(
 
     @DisplayName("FAQ 수정")
     @Nested
-    inner class UpdateFaq {
+    inner class UpdateFaqTest {
 
         @Test
         fun 등록된_FAQ를_수정하면_FAQ_데이터가_수정된다() {
@@ -65,7 +69,11 @@ internal class FaqAdminServiceTest(
             val faq = FaqCreator.create("기존의 질문", "기존의 답변", FaqCategory.CATEGORY)
             faqRepository.save(faq)
 
-            val request = UpdateFaqRequest(question, answer, category)
+            val request = UpdateFaqRequest(
+                question = question,
+                answer = answer,
+                category = category
+            )
 
             // when
             faqAdminService.updateFaq(faq.id, request)
@@ -87,8 +95,8 @@ internal class FaqAdminServiceTest(
             // when & then
             assertThatThrownBy {
                 faqAdminService.updateFaq(
-                    notFoundFaqId,
-                    request
+                    faqId = notFoundFaqId,
+                    request = request
                 )
             }.isInstanceOf(NotFoundException::class.java)
         }
@@ -97,12 +105,12 @@ internal class FaqAdminServiceTest(
 
     @DisplayName("FAQ 삭제")
     @Nested
-    inner class DeleteFaq {
+    inner class DeleteFaqTest {
 
         @Test
         fun 특정_FAQ_를_삭제하면_해당_데이터가_삭제된다() {
             // given
-            val faq = faqRepository.save(FaqCreator.create("질문", "답변", FaqCategory.CATEGORY))
+            val faq = faqRepository.save(FaqCreator.create(question = "질문", answer = "답변", category = FaqCategory.CATEGORY))
 
             // when
             faqAdminService.deleteFaq(faq.id)

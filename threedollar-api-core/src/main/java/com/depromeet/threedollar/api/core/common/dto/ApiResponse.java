@@ -1,7 +1,12 @@
 package com.depromeet.threedollar.api.core.common.dto;
 
 import com.depromeet.threedollar.common.exception.type.ErrorCode;
-import lombok.*;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @ToString
 @Getter
@@ -9,7 +14,7 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ApiResponse<T> {
 
-    public static final ApiResponse<String> SUCCESS = success("OK");
+    public static final ApiResponse<String> OK = success("OK");
 
     private String resultCode;
 

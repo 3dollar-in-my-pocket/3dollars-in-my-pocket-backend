@@ -1,6 +1,9 @@
 package com.depromeet.threedollar.external.client.slack.type
 
-enum class SlackNotificationMessageType(private val template: String) {
+enum class SlackNotificationMessageType(
+    private val template: String,
+) {
+
     ERROR_MESSAGE("""
     %s에서 에러가 발생하였습니다
 
@@ -21,18 +24,24 @@ enum class SlackNotificationMessageType(private val template: String) {
 
     [유저 메타 정보]
     %s
+    -------------------------------------
     """.trimIndent()
     ),
+
     INFO_MESSAGE("""
     %s에서 발생한 이벤트 정보를 알려드립니다
+    [애플리케이션 id]
+    %s
 
     [이벤트 내용]
     %s
 
     [발생 시간]
     %s
+    -------------------------------------
     """.trimIndent()
     ),
+
     NEW_BOSS_REGISTRATION_MESSAGE("""
     새로운 사장님이 가입 신청하였습니다. (%s)
 
@@ -56,10 +65,12 @@ enum class SlackNotificationMessageType(private val template: String) {
 
     [가게 인증사진]
     %s
+    -------------------------------------
     """.trimIndent()
     );
 
     fun generateMessage(vararg args: Any?): String {
         return String.format(template, *args)
     }
+
 }

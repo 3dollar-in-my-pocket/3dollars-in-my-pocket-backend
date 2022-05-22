@@ -1,14 +1,16 @@
 package com.depromeet.threedollar.common.utils;
 
-import com.depromeet.threedollar.common.exception.model.InternalServerException;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import org.springframework.util.StringUtils;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
+
+import org.springframework.util.StringUtils;
+
+import com.depromeet.threedollar.common.exception.model.InternalServerException;
+
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ProcessUtils {
@@ -31,9 +33,7 @@ public final class ProcessUtils {
     private static Process executeGrepProcessCommand(int port) throws IOException {
         // 윈도우일 경우
         if (isWindows()) {
-            String command = String.format("netstat -nao | find \"LISTEN\" | find \"%d\"", port);
-            String[] shell = {"cmd.exe", "/y", "/c", command};
-            return Runtime.getRuntime().exec(shell);
+            throw new InternalServerException("프로세스 실행 여부 확인 메소드는 Windows OS는 지원하지 않습니다");
         }
         String command = String.format("netstat -nat | grep LISTEN|grep %d", port);
         String[] shell = {"/bin/sh", "-c", command};
@@ -52,7 +52,7 @@ public final class ProcessUtils {
                 pidInfo.append(line);
             }
         } catch (Exception e) {
-            throw new InternalServerException("포트를 사용 여부를 확인 중 에러가 발생하였습니다.");
+            throw new InternalServerException(String.format("프로세스 사용 여부를 확인 중 에러가 발생하였습니다. message: (%s)", e.getMessage()));
         }
         return StringUtils.hasLength(pidInfo.toString());
     }

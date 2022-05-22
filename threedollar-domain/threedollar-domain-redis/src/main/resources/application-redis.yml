@@ -1,0 +1,43 @@
+spring.config:
+  activate:
+    on-profile:
+      - local
+      - integration-test
+
+spring:
+  redis:
+    host: localhost
+    port: ${random.int(49152,65535)}
+    timeout: 5000
+  cache:
+    type: none
+
+
+---
+spring.config:
+  activate:
+    on-profile: local-docker
+
+spring:
+  redis:
+    host: localhost
+    port: 6380
+    timeout: 5000
+
+
+---
+spring.config:
+  activate:
+    on-profile:
+      - dev
+      - prod
+      - staging
+
+spring:
+  redis:
+    host: ${secret.spring.redis.host}
+    port: ${secret.spring.redis.port}
+    timeout: 5000
+
+
+---

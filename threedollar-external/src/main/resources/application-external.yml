@@ -11,29 +11,29 @@ feign:
       default:
         connectTimeout: 5000
         readTimeout: 5000
-        loggerLevel: FULL
+        loggerLevel: BASIC
 
 external:
   client:
     kakao:
       profile:
-        base-url: "https://kapi.kakao.com"
-        url: "/v2/user/me"
+        base-url: https://kapi.kakao.com
+        url: /v2/user/me
     google:
       profile:
-        base-url: "https://www.googleapis.com"
-        url: "/oauth2/v2/userinfo"
+        base-url: https://www.googleapis.com
+        url: /oauth2/v2/userinfo
     apple:
       profile:
-        base-url: "https://appleid.apple.com"
-        url: "/auth/keys"
+        base-url: https://appleid.apple.com
+        url: /auth/keys
     naver:
       profile:
-        base-url: "https://openapi.naver.com"
-        url: "/v1/nid/me"
+        base-url: https://openapi.naver.com
+        url: /v1/nid/me
     slack:
       webhook:
-        base-url: "https://hooks.slack.com/services"
+        base-url: https://hooks.slack.com/services
 
 ---
 spring.config:
@@ -55,42 +55,30 @@ apple:
   issuer: dummy-apple-issue
 
 slack:
-  token: dummy-slack-token
+  token:
+    daily-statistics: dummy-token
+    monitoring: dummy-token
+    boss-manager: dummy-token
 
-
----
-spring.config:
-  activate:
-    on-profile: dev
-
-cloud:
-  aws:
-    s3:
-      bucket: 3dollar-api-bucket-dev
-    cloudfront:
-      url: ${secret.aws.cloudfront.url}
-    credentials:
-      instance-profile: true
-
-apple:
-  client_id: ${secret.apple.client_id}
-  issuer: https://appleid.apple.com
-
-slack:
-  token: ${secret.slack.token}
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: FULL
 
 
 ---
 spring.config:
   activate:
     on-profile:
+      - dev
       - prod
-      - stage
+      - staging
 
 cloud:
   aws:
     s3:
-      bucket: threedollars-in-my-pocket-prod-s3
+      bucket: ${secret.aws.s3.bucket}
     cloudfront:
       url: ${secret.aws.cloudfront.url}
     credentials:
@@ -101,7 +89,10 @@ apple:
   issuer: https://appleid.apple.com
 
 slack:
-  token: ${secret.slack.token}
+  token:
+    daily-statistics: ${secret.slack.token.daily-statistics}
+    monitoring: ${secret.slack.token.monitoring}
+    boss-manager: ${secret.slack.token.boss-manager}
 
 
 ---

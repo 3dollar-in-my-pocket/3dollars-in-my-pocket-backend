@@ -1,66 +1,104 @@
 package com.depromeet.threedollar.api.boss.controller
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.boss.config.interceptor.Auth
-import com.depromeet.threedollar.api.boss.config.resolver.BossId
-import com.depromeet.threedollar.api.boss.config.session.SessionConstants
-import com.depromeet.threedollar.api.boss.service.auth.dto.response.LoginResponse
-import com.depromeet.threedollar.api.boss.service.category.BossStoreCategoryServiceUtils
-import com.depromeet.threedollar.api.boss.service.feedback.BossStoreFeedbackService
-import com.depromeet.threedollar.api.boss.service.feedback.dto.request.AddBossStoreFeedbackRequest
-import com.depromeet.threedollar.common.exception.model.ConflictException
-import com.depromeet.threedollar.common.exception.model.InternalServerException
-import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.common.type.DayOfTheWeek
-import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
-import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
-import com.depromeet.threedollar.common.type.BossStoreFeedbackType
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.Registration
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.*
-import com.depromeet.threedollar.domain.mongo.common.domain.BusinessNumber
-import com.depromeet.threedollar.domain.mongo.common.domain.ContactsNumber
-import com.depromeet.threedollar.domain.mongo.common.domain.TimeInterval
-import io.swagger.annotations.ApiOperation
+import java.time.LocalDate
+import java.time.LocalTime
+import java.util.*
+import javax.servlet.http.HttpSession
 import org.springframework.context.annotation.Profile
-import org.springframework.data.geo.Point
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import java.time.LocalDate
-import java.time.LocalTime
-import javax.servlet.http.HttpSession
+import com.depromeet.threedollar.api.boss.config.interceptor.Auth
+import com.depromeet.threedollar.api.boss.config.resolver.BossId
+import com.depromeet.threedollar.api.boss.config.session.SessionConstants
+import com.depromeet.threedollar.api.boss.service.auth.dto.response.LoginResponse
+import com.depromeet.threedollar.api.boss.service.store.BossStoreServiceUtils
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.service.boss.category.BossStoreCategoryServiceUtils
+import com.depromeet.threedollar.api.core.service.boss.feedback.BossStoreFeedbackService
+import com.depromeet.threedollar.api.core.service.boss.feedback.dto.request.AddBossStoreFeedbackRequest
+import com.depromeet.threedollar.common.exception.model.ConflictException
+import com.depromeet.threedollar.common.exception.model.InternalServerException
+import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.common.model.BusinessNumber
+import com.depromeet.threedollar.common.model.ContactsNumber
+import com.depromeet.threedollar.common.type.BossStoreFeedbackType
+import com.depromeet.threedollar.common.type.DayOfTheWeek
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
+import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
+import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistration
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationBossForm
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStoreForm
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppearanceDay
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenu
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
+import io.swagger.annotations.ApiOperation
 
-private val BOSS = com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount(
+private val BOSS = BossAccount.of(
+    bossId = "test" + UUID.randomUUID().toString(),
     name = "테스트 계정",
-    socialInfo = com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo("test-social-id", com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType.KAKAO),
-    businessNumber = BusinessNumber.of("000-12-12345"),
-    pushSettingsStatus = com.depromeet.threedollar.domain.mongo.boss.domain.account.PushSettingsStatus.OFF
+    socialId = "test-social-id",
+    socialType = BossAccountSocialType.KAKAO,
+    businessNumber = BusinessNumber.of("000-00-00000"),
+    isSetupNotification = false
 )
 
 @Profile("local", "local-docker", "integration-test", "dev")
 @RestController
 class LocalTestController(
-    private val bossAccountRepository: com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository,
+    private val bossAccountRepository: BossAccountRepository,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-    private val bossStoreLocationRepository: BossStoreLocationRepository,
-    private val registrationRepository: RegistrationRepository,
+    private val bossRegistrationRepository: BossRegistrationRepository,
     private val bossStoreFeedbackService: BossStoreFeedbackService,
-    private val httpSession: HttpSession
+    private val httpSession: HttpSession,
 ) {
 
     @ApiOperation("[개발용] 사장님 서버용 테스트 토큰을 발급 받습니다.")
     @GetMapping("/test-token")
     fun getTestBossAccountToken(): ApiResponse<LoginResponse> {
-        val bossAccount =
-            bossAccountRepository.findBossAccountBySocialInfo(BOSS.socialInfo.socialId, BOSS.socialInfo.socialType)
-                ?: bossAccountRepository.save(BOSS)
+        val bossAccount = bossAccountRepository.findBossAccountBySocialInfo(BOSS.socialInfo.socialId, BOSS.socialInfo.socialType)
+            ?: bossAccountRepository.save(BOSS)
         httpSession.setAttribute(SessionConstants.BOSS_ACCOUNT_ID, bossAccount.id)
         return ApiResponse.success(LoginResponse(httpSession.id, bossAccount.id))
+    }
+
+    @ApiOperation("[개발용] 사장님 서버용 테스트 토큰을 발급 받습니다.")
+    @PostMapping("/test-registration")
+    fun addMockRegistration(
+        @RequestParam bossName: String,
+        @RequestParam storeName: String,
+        @RequestParam categoriesIds: Set<String>,
+        @RequestParam certificationPhotoUrl: String,
+        @RequestParam contactsNumber: String,
+        @RequestParam businessNumber: String,
+    ): ApiResponse<String> {
+        val bossRegistration = BossRegistration.of(
+            boss = RegistrationBossForm.of(
+                socialId = UUID.randomUUID().toString(),
+                socialType = BossAccountSocialType.KAKAO,
+                name = bossName,
+                businessNumber = businessNumber,
+            ),
+            store = RegistrationStoreForm.of(
+                name = "가게 이름",
+                contactsNumber = contactsNumber,
+                categoriesIds = categoriesIds,
+                certificationPhotoUrl = certificationPhotoUrl
+            )
+        )
+        bossRegistrationRepository.save(bossRegistration)
+        return ApiResponse.OK
     }
 
     @ApiOperation("[개발 서버용] 가게 목 데이터를 추가합니다.")
@@ -70,67 +108,52 @@ class LocalTestController(
         @BossId bossId: String,
         @RequestParam latitude: Double,
         @RequestParam longitude: Double,
-        @RequestParam categoriesIds: Set<String>
+        @RequestParam categoriesIds: Set<String>,
+        @RequestParam randomBossId: String?,
     ): ApiResponse<String> {
+        BossStoreServiceUtils.findBossStoreByBossId(bossStoreRepository, bossId)
         BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, categoriesIds)
-        if (bossStoreRepository.findBossStoreByBossId(bossId) != null) {
-            throw ConflictException("이미 존재합니다")
-        }
-
         val bossStore = bossStoreRepository.save(
-            BossStore(
-                bossId = bossId,
+            BossStore.of(
+                bossId = randomBossId?.let { randomBossId } ?: bossId,
                 name = "행복한 붕어빵",
+                location = BossStoreLocation.of(latitude = latitude, longitude = longitude),
                 imageUrl = "https://image.com",
                 introduction = "소개",
                 contactsNumber = ContactsNumber.of("010-1234-1234"),
                 snsUrl = "https://sns.example.com",
                 menus = listOf(
-                    BossStoreMenu(
+                    BossStoreMenu.of(
                         name = "아저씨 못난이 핫도그",
                         price = 5000,
-                        imageUrl = "menu.img",
-                        groupName = "아저씨 핫도그"
+                        imageUrl = "https://menu-one.png"
                     ),
-                    BossStoreMenu(
+                    BossStoreMenu.of(
                         name = "팥 붕어빵 2개",
                         price = 1000,
-                        imageUrl = "menu.img",
-                        groupName = "붕어빵"
+                        imageUrl = "https://menu-two.png"
                     ),
-                    BossStoreMenu(
+                    BossStoreMenu.of(
                         name = "슈크림 붕어빵 2개",
                         price = 1000,
-                        imageUrl = "menu.img",
-                        groupName = "붕어빵"
+                        imageUrl = "https://menu-three.png"
                     ),
                 ),
                 appearanceDays = setOf(
-                    BossStoreAppearanceDay(
+                    BossStoreAppearanceDay.of(
                         dayOfTheWeek = DayOfTheWeek.MONDAY,
-                        openingHours = TimeInterval(
-                            startTime = LocalTime.of(10, 0),
-                            endTime = LocalTime.of(20, 0)
-                        ),
+                        startTime = LocalTime.of(10, 0),
+                        endTime = LocalTime.of(20, 0),
                         locationDescription = "서울특별시 강남역 0번 출구"
                     ),
-                    BossStoreAppearanceDay(
+                    BossStoreAppearanceDay.of(
                         dayOfTheWeek = DayOfTheWeek.WEDNESDAY,
-                        openingHours = TimeInterval(
-                            startTime = LocalTime.of(10, 0),
-                            endTime = LocalTime.of(20, 0)
-                        ),
+                        startTime = LocalTime.of(10, 0),
+                        endTime = LocalTime.of(20, 0),
                         locationDescription = "서울특별시 강남역 0번 출구"
                     )
                 ),
                 categoriesIds = categoriesIds
-            )
-        )
-
-        bossStoreLocationRepository.save(
-            BossStoreLocation(
-                bossStoreId = bossStore.id,
-                location = Point(longitude, latitude),
             )
         )
         return ApiResponse.success(bossStore.id)
@@ -140,9 +163,9 @@ class LocalTestController(
     @PostMapping("/test-category")
     fun addMockStoreCategory(
         @RequestParam name: String,
-        @RequestParam priority: Int
+        @RequestParam priority: Int,
     ): ApiResponse<String> {
-        val category = BossStoreCategory(
+        val category = BossStoreCategory.of(
             name = name,
             sequencePriority = priority
         )
@@ -160,33 +183,34 @@ class LocalTestController(
     @PostMapping("/test-feedback/{bossStoreId}")
     fun addTestFeedback(
         @PathVariable bossStoreId: String,
-        @RequestParam feedbackType: BossStoreFeedbackType,
-        @RequestParam date: LocalDate
+        @RequestParam feedbackTypes: Set<BossStoreFeedbackType>,
+        @RequestParam date: LocalDate,
+        @RequestParam userId: Long,
     ): ApiResponse<String> {
-        bossStoreFeedbackService.addFeedback(bossStoreId, AddBossStoreFeedbackRequest(feedbackType), 0L, date)
-        return ApiResponse.SUCCESS
+        bossStoreFeedbackService.addFeedback(bossStoreId, AddBossStoreFeedbackRequest(feedbackTypes), userId, date)
+        return ApiResponse.OK
     }
 
     @ApiOperation("[개발 서버용] 가입 신청을 승인합니다")
     @PutMapping("/test-registration/{registrationId}/apply")
     fun applyRegistrationForTest(
-        @PathVariable registrationId: String
+        @PathVariable registrationId: String,
     ): ApiResponse<String> {
-        val registration = registrationRepository.findWaitingRegistrationById(registrationId)
-            ?: throw NotFoundException("존재하지 않는 Registration")
+        val registration = bossRegistrationRepository.findWaitingRegistrationById(registrationId)
+            ?: throw NotFoundException("해당하는 가입 신청($registrationId)은 존재하지 않습니다.")
         val bossAccount = registerNewBossAccount(registration)
         bossStoreRepository.save(registration.toBossStore(bossAccount.id))
         registration.approve()
-        registrationRepository.save(registration)
-        return ApiResponse.SUCCESS
+        bossRegistrationRepository.save(registration)
+        return ApiResponse.OK
     }
 
-    private fun registerNewBossAccount(registration: Registration): com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccount {
-        validateDuplicateRegistration(registration.boss.socialInfo)
-        return bossAccountRepository.save(registration.toBossAccount())
+    private fun registerNewBossAccount(bossRegistration: BossRegistration): BossAccount {
+        validateDuplicateRegistration(bossRegistration.boss.socialInfo)
+        return bossAccountRepository.save(bossRegistration.toBossAccount())
     }
 
-    private fun validateDuplicateRegistration(socialInfo: com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialInfo) {
+    private fun validateDuplicateRegistration(socialInfo: BossAccountSocialInfo) {
         if (bossAccountRepository.existsBossAccountBySocialInfo(socialId = socialInfo.socialId, socialType = socialInfo.socialType)) {
             throw ConflictException("이미 가입한 사장님(${socialInfo.socialId} - ${socialInfo.socialType})입니다")
         }

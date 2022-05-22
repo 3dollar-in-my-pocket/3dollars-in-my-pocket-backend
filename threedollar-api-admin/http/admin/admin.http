@@ -1,9 +1,54 @@
 ### [인증] 자신의 관리자 정보를 불러옵니다.
-GET {{host_admin}}/v1/account/admin/my-info
+GET {{admin}}/v1/account/admin/me
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 자신의 관리자 정보를 수정합니다
+PUT {{admin}}/v1/account/admin/me
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+Content-Type: application/json
+
+{
+    "name": "tokkito"
+}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 새로운 관리자를 등록합니다
+POST {{admin}}/v1/account/admin
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+Content-Type: application/json
+
+{
+    "email": "will.seungho@gmail.com",
+    "name": "토끼토끼"
+}
+
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 등록된 관리자 목록을 조회합니다
+GET {{admin}}/v1/account/admins?size=5&page=1
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}

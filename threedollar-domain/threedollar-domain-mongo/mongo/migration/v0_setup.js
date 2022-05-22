@@ -1,0 +1,1 @@
+db.getMongo().setReadPref('secondaryPreferred')

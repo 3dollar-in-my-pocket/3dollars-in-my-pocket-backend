@@ -11,7 +11,7 @@ data class AdminInfoResponse(
     companion object {
         fun of(admin: Admin): AdminInfoResponse {
             val response = AdminInfoResponse(admin.email, admin.name)
-            response.setBaseTime(admin)
+            response.setAuditingTimeByEntity(admin)
             return response
         }
     }

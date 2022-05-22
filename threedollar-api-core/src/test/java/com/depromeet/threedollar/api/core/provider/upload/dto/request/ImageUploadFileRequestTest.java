@@ -1,13 +1,14 @@
 package com.depromeet.threedollar.api.core.provider.upload.dto.request;
 
-import com.depromeet.threedollar.common.exception.model.ForbiddenException;
-import com.depromeet.threedollar.common.type.ApplicationType;
-import com.depromeet.threedollar.common.type.FileType;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import com.depromeet.threedollar.common.exception.model.ForbiddenException;
+import com.depromeet.threedollar.common.type.ApplicationType;
+import com.depromeet.threedollar.common.type.FileType;
 
 class ImageUploadFileRequestTest {
 

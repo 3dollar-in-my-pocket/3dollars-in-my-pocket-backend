@@ -1,22 +1,26 @@
 package com.depromeet.threedollar.api.user.config;
 
-import com.depromeet.threedollar.api.user.config.interceptor.AuthInterceptor;
-import com.depromeet.threedollar.api.user.config.interceptor.UserMetadataInterceptor;
-import com.depromeet.threedollar.api.user.config.resolver.GeoCoordinateArgumentResolver;
-import com.depromeet.threedollar.api.user.config.resolver.MapCoordinateArgumentResolver;
-import com.depromeet.threedollar.api.user.config.resolver.UserIdResolver;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.List;
+import com.depromeet.threedollar.api.core.config.converter.DecodeIdConverter;
+import com.depromeet.threedollar.api.core.config.resolver.DeviceLocationArgumentResolver;
+import com.depromeet.threedollar.api.core.config.resolver.MapLocationArgumentResolver;
+import com.depromeet.threedollar.api.user.config.interceptor.AuthInterceptor;
+import com.depromeet.threedollar.api.user.config.interceptor.UserMetadataInterceptor;
+import com.depromeet.threedollar.api.user.config.resolver.UserIdResolver;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Configuration
@@ -26,8 +30,10 @@ public class WebConfig implements WebMvcConfigurer {
     private final UserMetadataInterceptor userMetaDataInterceptor;
 
     private final UserIdResolver userIdResolver;
-    private final GeoCoordinateArgumentResolver geoCoordinateArgumentResolver;
-    private final MapCoordinateArgumentResolver mapCoordinateArgumentResolver;
+    private final DeviceLocationArgumentResolver deviceLocationArgumentResolver;
+    private final MapLocationArgumentResolver mapLocationArgumentResolver;
+
+    private final DecodeIdConverter decodeIdConverter;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -37,7 +43,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.addAll(List.of(userIdResolver, geoCoordinateArgumentResolver, mapCoordinateArgumentResolver));
+        resolvers.addAll(List.of(userIdResolver, deviceLocationArgumentResolver, mapLocationArgumentResolver));
     }
 
     @Override
@@ -54,6 +60,11 @@ public class WebConfig implements WebMvcConfigurer {
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setCacheSeconds(60);
         return messageSource;
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(decodeIdConverter);
     }
 
 }

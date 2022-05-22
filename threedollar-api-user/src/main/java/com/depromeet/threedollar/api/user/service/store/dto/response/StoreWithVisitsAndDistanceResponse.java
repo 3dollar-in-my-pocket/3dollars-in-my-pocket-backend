@@ -1,17 +1,23 @@
 package com.depromeet.threedollar.api.user.service.store.dto.response;
 
-import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoryCountsResponse;
-import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
-import com.depromeet.threedollar.common.utils.LocationDistanceUtils;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import com.depromeet.threedollar.domain.rds.user.collection.visit.VisitHistoryCounter;
-import lombok.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
+import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoryCountsResponse;
+import com.depromeet.threedollar.common.model.LocationValue;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
+import com.depromeet.threedollar.common.utils.distance.LocationDistanceUtils;
+import com.depromeet.threedollar.domain.rds.user.collection.visit.VisitHistoryCounter;
+
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @ToString
 @Getter
@@ -19,8 +25,11 @@ import java.util.List;
 public class StoreWithVisitsAndDistanceResponse extends AuditingTimeResponse {
 
     private Long storeId;
+
     private double latitude;
+
     private double longitude;
+
     private String storeName;
 
     private double rating;
@@ -28,39 +37,34 @@ public class StoreWithVisitsAndDistanceResponse extends AuditingTimeResponse {
     @Nullable
     private Boolean isDeleted;
 
-    private final List<MenuCategoryType> categories = new ArrayList<>();
+    private final List<UserMenuCategoryType> categories = new ArrayList<>();
 
     private int distance;
 
     private VisitHistoryCountsResponse visitHistory;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private StoreWithVisitsAndDistanceResponse(Long storeId, double latitude, double longitude, String storeName, double rating, int distance,
-                                               long existsVisitsCount, long notExistsVisitsCount, boolean isDeleted) {
-        this.storeId = storeId;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.storeName = storeName;
-        this.rating = rating;
+    private StoreWithVisitsAndDistanceResponse(StoreInfoResponse store, int distance, long existsVisitsCount, long notExistsVisitsCount, boolean isDeleted) {
+        this.storeId = store.getStoreId();
+        this.latitude = store.getLatitude();
+        this.longitude = store.getLongitude();
+        this.storeName = store.getStoreName();
+        this.rating = store.getRating();
         this.distance = distance;
         this.visitHistory = VisitHistoryCountsResponse.of(existsVisitsCount, notExistsVisitsCount);
         this.isDeleted = isDeleted;
     }
 
-    public static StoreWithVisitsAndDistanceResponse of(@NotNull Store store, double latitude, double longitude, VisitHistoryCounter visitsCounter) {
+    public static StoreWithVisitsAndDistanceResponse of(@NotNull StoreInfoResponse store, LocationValue deviceLocation, VisitHistoryCounter visitsCounter) {
         StoreWithVisitsAndDistanceResponse response = StoreWithVisitsAndDistanceResponse.builder()
-            .storeId(store.getId())
-            .latitude(store.getLatitude())
-            .longitude(store.getLongitude())
-            .storeName(store.getName())
-            .rating(store.getRating())
-            .distance(LocationDistanceUtils.getDistance(latitude, longitude, store.getLatitude(), store.getLongitude()))
-            .existsVisitsCount(visitsCounter.getStoreExistsVisitsCount(store.getId()))
-            .notExistsVisitsCount(visitsCounter.getStoreNotExistsVisitsCount(store.getId()))
-            .isDeleted(store.isDeleted())
+            .store(store)
+            .distance(LocationDistanceUtils.getDistance(deviceLocation, LocationValue.of(store.getLatitude(), store.getLongitude())))
+            .existsVisitsCount(visitsCounter.getStoreExistsVisitsCount(store.getStoreId()))
+            .notExistsVisitsCount(visitsCounter.getStoreNotExistsVisitsCount(store.getStoreId()))
+            .isDeleted(store.getIsDeleted())
             .build();
-        response.categories.addAll(store.getMenuCategoriesSortedByCounts());
-        response.setBaseTime(store);
+        response.categories.addAll(store.getCategories());
+        response.setAuditingTime(store.getCreatedAt(), store.getUpdatedAt());
         return response;
     }
 

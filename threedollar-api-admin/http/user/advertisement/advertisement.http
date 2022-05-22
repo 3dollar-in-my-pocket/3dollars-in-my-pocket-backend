@@ -1,0 +1,70 @@
+### 광고를 저장합니다.
+POST {{admin}}/v1/user/advertisement
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+Content-Type: application/json
+
+{
+    "position": "SPLASH",
+    "platform": "MENU_CATEGORY_BANNER",
+    "imageUrl": "https://image.png",
+    "linkUrl": "https://storage.dev.threedollars.co.kr/popup/adv_offline_menu_banner_20220206.png",
+    "title": "붕어빵 먹고! 굿즈도 받고!",
+    "subTitle": "가3팀 익선동에서 붕어빵 팔러 갑니다=3\n오셔서 붕어빵 먹고 굿즈도 받아가세요!",
+    "bgColor": "#F3848D",
+    "fontColor": "#FAFAFA",
+    "startDateTime": "2022-01-01T00:00:00",
+    "endDateTime": "2022-03-01T00:00:00"
+}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 전체 광고 목록을 조회합니다.
+GET {{admin}}/v1/user/advertisements?page=1&size=3
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 특정 광고 정보를 수정합니다
+PUT {{admin}}/v1/user/advertisement/1
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+Content-Type: application/json
+
+{
+    "position": "SPLASH",
+    "platform": "MENU_CATEGORY_BANNER",
+    "imageUrl": "https://image.png",
+    "linkUrl": "https://storage.dev.threedollars.co.kr/popup/adv_offline_menu_banner_20220206.png",
+    "title": "붕어빵 먹고! 굿즈도 받고!",
+    "subTitle": "가3팀 익선동에서 붕어빵 팔러 갑니다=3\n오셔서 붕어빵 먹고 굿즈도 받아가세요!",
+    "bgColor": "#F3848D",
+    "fontColor": "#FAFAFA",
+    "startDateTime": "2022-02-01T00:00:00",
+    "endDateTime": "2022-04-01T00:00:00"
+}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 특정 광고를 삭제한다
+DELETE {{admin}}/v1/user/advertisement/1
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}

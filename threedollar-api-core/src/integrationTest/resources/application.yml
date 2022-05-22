@@ -1,0 +1,15 @@
+spring:
+  config:
+    import:
+      - classpath:/application-rds.yml
+      - classpath:/application-external.yml
+      - classpath:/application-redis.yml
+      - classpath:/application-mongo.yml
+  profiles:
+    active: integration-test
+
+
+---
+spring.config:
+  activate:
+    on-profile: integration-test

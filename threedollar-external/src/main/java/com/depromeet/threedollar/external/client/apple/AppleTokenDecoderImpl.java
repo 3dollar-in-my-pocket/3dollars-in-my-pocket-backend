@@ -1,15 +1,6 @@
 package com.depromeet.threedollar.external.client.apple;
 
-import com.depromeet.threedollar.common.exception.model.InvalidException;
-import com.depromeet.threedollar.external.client.apple.dto.property.AppleAuthProperty;
-import com.depromeet.threedollar.external.client.apple.dto.response.ApplePublicKeyResponse;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.*;
-import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Component;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_AUTH_TOKEN;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -21,10 +12,24 @@ import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
 import java.util.Map;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.*;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.stereotype.Component;
+
+import com.depromeet.threedollar.common.exception.model.InvalidException;
+import com.depromeet.threedollar.external.client.apple.dto.property.AppleAuthProperty;
+import com.depromeet.threedollar.external.client.apple.dto.response.ApplePublicKeyResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.InvalidClaimException;
+import io.jsonwebtoken.Jwts;
+import lombok.RequiredArgsConstructor;
 
 /**
- * https://developer.apple.com/documentation/sign_in_with_apple/sign_in_with_apple_rest_api/verifying_a_user
+ * <a href="https://developer.apple.com/documentation/sign_in_with_apple/sign_in_with_apple_rest_api/verifying_a_user">https://developer.apple.com/documentation/sign_in_with_apple/sign_in_with_apple_rest_api/verifying_a_user</a>
  */
 @RequiredArgsConstructor
 @Component
@@ -50,9 +55,10 @@ public class AppleTokenDecoderImpl implements AppleTokenDecoder {
                 .getBody();
             return claims.getSubject();
         } catch (ExpiredJwtException e) {
-            throw new InvalidException(String.format("만료된 애플 idToken (%s) 입니다 (reason: %s)", idToken, e.getMessage()), INVALID_AUTH_TOKEN);
-        } catch (JsonProcessingException | InvalidKeySpecException | InvalidClaimException | NoSuchAlgorithmException | IllegalArgumentException e) {
-            throw new InvalidException(String.format("잘못된 애플 idToken (%s) 입니다 (reason: %s)", idToken, e.getMessage()), INVALID_AUTH_TOKEN);
+            throw new InvalidException(String.format("만료된 애플 idToken(%s) 입니다 (reason: %s)", idToken, e.getMessage()), INVALID_AUTH_TOKEN);
+        } catch (JsonProcessingException | InvalidKeySpecException | InvalidClaimException | NoSuchAlgorithmException |
+                 IllegalArgumentException e) {
+            throw new InvalidException(String.format("잘못된 애플 idToken(%s) 입니다 (reason: %s)", idToken, e.getMessage()), INVALID_AUTH_TOKEN);
         }
     }
 

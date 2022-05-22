@@ -1,10 +1,11 @@
 package com.depromeet.threedollar.api.user.config.async;
 
-import lombok.extern.slf4j.Slf4j;
+import java.lang.reflect.Method;
+
 import org.jetbrains.annotations.NotNull;
 import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
 
-import java.lang.reflect.Method;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 class AsyncTaskExceptionHandler extends SimpleAsyncUncaughtExceptionHandler {

@@ -1,19 +1,22 @@
 package com.depromeet.threedollar.api.user.config.enummodel;
 
-import com.depromeet.threedollar.api.user.service.store.dto.type.StoreOrderType;
-import com.depromeet.threedollar.common.type.DayOfTheWeek;
-import com.depromeet.threedollar.common.utils.EnumMapper;
-import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCategory;
-import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPlatformType;
-import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPositionType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
-import com.depromeet.threedollar.domain.rds.user.domain.storedelete.DeleteReasonType;
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.depromeet.threedollar.api.user.service.store.dto.type.UserStoreOrderType;
+import com.depromeet.threedollar.common.type.BossStoreFeedbackType;
+import com.depromeet.threedollar.common.type.DayOfTheWeek;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
+import com.depromeet.threedollar.common.utils.EnumMapper;
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreOpenType;
+import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPlatformType;
+import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPositionType;
+import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCategory;
+import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType;
+import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
+import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
 
 @Configuration
 public class EnumMapperConfig {
@@ -31,8 +34,8 @@ public class EnumMapperConfig {
         enumMapper.put("PaymentMethodType", PaymentMethodType.class);
         enumMapper.put("StoreType", StoreType.class);
         enumMapper.put("DeleteReasonType", DeleteReasonType.class);
-        enumMapper.put("StoreOrderType", StoreOrderType.class);
-        enumMapper.put("MenuCategoryType", MenuCategoryType.class);
+        enumMapper.put("StoreOrderType", UserStoreOrderType.class);
+        enumMapper.put("MenuCategoryType", UserMenuCategoryType.class);
 
         // faq
         enumMapper.put("FaqCategory", FaqCategory.class);
@@ -43,6 +46,11 @@ public class EnumMapperConfig {
 
         // visit
         enumMapper.put("VisitType", VisitType.class);
+
+        // bossStore
+        enumMapper.put("BossStoreOpenType", BossStoreOpenType.class);
+        enumMapper.put("BossStoreFeedbackType", BossStoreFeedbackType.class);
+
         return enumMapper;
     }
 

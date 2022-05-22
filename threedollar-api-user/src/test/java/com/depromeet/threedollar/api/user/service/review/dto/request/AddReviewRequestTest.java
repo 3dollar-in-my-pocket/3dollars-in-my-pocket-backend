@@ -1,18 +1,19 @@
 package com.depromeet.threedollar.api.user.service.review.dto.request;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-import java.util.Set;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class AddReviewRequestTest {
 
-    private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+    private static final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     @ValueSource(ints = {0, 6})
     @ParameterizedTest
@@ -21,7 +22,11 @@ class AddReviewRequestTest {
         Long storeId = 100L;
         String contents = "댓글";
 
-        AddReviewRequest request = AddReviewRequest.testInstance(storeId, contents, rating);
+        AddReviewRequest request = AddReviewRequest.testBuilder()
+            .storeId(storeId)
+            .contents(contents)
+            .rating(rating)
+            .build();
 
         // when
         Set<ConstraintViolation<AddReviewRequest>> constraintViolations = validator.validate(request);
@@ -37,7 +42,11 @@ class AddReviewRequestTest {
         Long storeId = 100L;
         String contents = "댓글";
 
-        AddReviewRequest request = AddReviewRequest.testInstance(storeId, contents, rating);
+        AddReviewRequest request = AddReviewRequest.testBuilder()
+            .storeId(storeId)
+            .contents(contents)
+            .rating(rating)
+            .build();
 
         // when
         Set<ConstraintViolation<AddReviewRequest>> constraintViolations = validator.validate(request);

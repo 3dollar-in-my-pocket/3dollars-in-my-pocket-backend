@@ -1,12 +1,18 @@
 package com.depromeet.threedollar.api.user.service.store.dto.request;
 
-import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
-import lombok.*;
-import org.hibernate.validator.constraints.Length;
-
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
+import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @EqualsAndHashCode
 @ToString
@@ -15,18 +21,18 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MenuRequest {
 
-    @Length(max = 50, message = "{menu.name.length}")
+    @Size(max = 50, message = "{menu.name.size}")
     @NotNull(message = "{menu.name.notNull}")
     private String name;
 
-    @Length(max = 100, message = "{menu.price.length}")
+    @Size(max = 100, message = "{menu.price.size}")
     @NotNull(message = "{menu.price.notNull}")
     private String price;
 
     @NotNull(message = "{menu.category.notNull}")
-    private MenuCategoryType category;
+    private UserMenuCategoryType category;
 
-    public static MenuRequest of(String name, String price, MenuCategoryType category) {
+    public static MenuRequest of(String name, String price, UserMenuCategoryType category) {
         return new MenuRequest(name, price, category);
     }
 

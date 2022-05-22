@@ -6,6 +6,6 @@ interface AuthService {
 
     fun login(request: LoginRequest): String
 
-    fun getSocialId(request: LoginRequest): String
+    fun getSocialId(token: String): String
 
 }

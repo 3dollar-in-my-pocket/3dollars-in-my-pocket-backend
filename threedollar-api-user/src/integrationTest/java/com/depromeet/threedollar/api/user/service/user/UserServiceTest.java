@@ -1,8 +1,23 @@
 package com.depromeet.threedollar.api.user.service.user;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import com.depromeet.threedollar.api.user.service.user.dto.request.CheckAvailableNameRequest;
 import com.depromeet.threedollar.api.user.service.user.dto.request.CreateUserRequest;
 import com.depromeet.threedollar.api.user.service.user.dto.request.UpdateUserInfoRequest;
+import com.depromeet.threedollar.api.user.service.user.support.UserAssertions;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.user.domain.user.User;
@@ -12,20 +27,6 @@ import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType;
 import com.depromeet.threedollar.domain.rds.user.domain.user.WithdrawalUser;
 import com.depromeet.threedollar.domain.rds.user.domain.user.WithdrawalUserCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.user.WithdrawalUserRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
-
-import static com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper.assertUser;
-import static com.depromeet.threedollar.api.user.testhelper.assertions.UserAssertionHelper.assertWithdrawalUser;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
 class UserServiceTest {
@@ -46,16 +47,20 @@ class UserServiceTest {
     }
 
     @Nested
-    class 신규_유저_생성 {
+    class AddUserTest {
 
         @Test
-        void 새로운_유저가_회원가입하면_새로운_데이터가_추가된다() {
+        void 새로운_유저가_회원가입한다() {
             // given
-            String socialId = "social-id";
+            String socialId = "user-social-id";
             UserSocialType socialType = UserSocialType.APPLE;
             String name = "토끼";
 
-            CreateUserRequest request = CreateUserRequest.testInstance(socialId, socialType, name);
+            CreateUserRequest request = CreateUserRequest.builder()
+                .socialId(socialId)
+                .socialType(socialType)
+                .name(name)
+                .build();
 
             // when
             userService.registerUser(request);
@@ -64,31 +69,39 @@ class UserServiceTest {
             List<User> users = userRepository.findAll();
             assertAll(
                 () -> assertThat(users).hasSize(1),
-                () -> assertUser(users.get(0), socialId, socialType, name)
+                () -> UserAssertions.assertUser(users.get(0), socialId, socialType, name)
             );
         }
 
         @Test
-        void 회원가입시_중복되는_닉네임인경우_Conflict_에러가_발생한다() {
+        void 회원가입시_중복된_닉네임인경우_CONFLICT_에러가_발생합니다() {
             // given
             String name = "will";
             userRepository.save(UserCreator.create("social-id", UserSocialType.KAKAO, name));
 
-            CreateUserRequest request = CreateUserRequest.testInstance("another-id", UserSocialType.APPLE, name);
+            CreateUserRequest request = CreateUserRequest.builder()
+                .socialId("another-social-id")
+                .socialType(UserSocialType.APPLE)
+                .name(name)
+                .build();
 
             // when & then
             assertThatThrownBy(() -> userService.registerUser(request)).isInstanceOf(ConflictException.class);
         }
 
         @Test
-        void 회원가입시_중복되는_소셜정보면_Conflict_에러가_발생한다() {
+        void 회원가입시_중복된_소셜_정보인경우_CONFLICT_에러가_발생합니다() {
             // given
-            String socialId = "social-id";
+            String socialId = "conflict-social-id";
             UserSocialType socialType = UserSocialType.GOOGLE;
 
             userRepository.save(UserCreator.create(socialId, socialType, "기존의 닉네임"));
 
-            CreateUserRequest request = CreateUserRequest.testInstance(socialId, socialType, "새로운 닉네임");
+            CreateUserRequest request = CreateUserRequest.builder()
+                .socialId(socialId)
+                .socialType(socialType)
+                .name("새로운 닉네임")
+                .build();
 
             // when & then
             assertThatThrownBy(() -> userService.registerUser(request)).isInstanceOf(ConflictException.class);
@@ -97,10 +110,10 @@ class UserServiceTest {
     }
 
     @Nested
-    class 회원_정보_조회 {
+    class GetUserAccountInfoTest {
 
         @Test
-        void 존재하지_않는_유저을_회원_조회하면_NOT_FOUND_USER_EXCEPTION() {
+        void 유저_정보_조회시_존재하지_않는_유저인경우_NOTFOUNDEXCEPTION이_발생합니다() {
             // given
             Long notFoundUserId = -1L;
 
@@ -111,39 +124,41 @@ class UserServiceTest {
     }
 
     @Nested
-    class 중복된_닉네임_체크 {
+    class CheckDuplicateNicknameTest {
 
         @Test
-        void 중복된_닉네임인경우_Conflcit_에러가_발생한다() {
+        void 닉네임_사용가능_확인시_중복된_닉네임인경우_CONFLICT_에러가_발생합니다() {
             // given
             String name = "토끼";
             User user = UserCreator.create("social-id", UserSocialType.KAKAO, name);
             userRepository.save(user);
 
-            CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
+            CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
+                .name(name)
+                .build();
 
             // when & then
             assertThatThrownBy(() -> userService.checkIsAvailableName(request)).isInstanceOf(ConflictException.class);
         }
 
         @Test
-        void 중복되지_않은_닉네임이면_통과한다() {
+        void 닉네임_사용가능_확인시_중복되지_않는_닉네임인경우_통과합니다() {
             // given
-            String name = "토끼";
-
-            CheckAvailableNameRequest request = CheckAvailableNameRequest.testInstance(name);
+            CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
+                .name("토끼")
+                .build();
 
             // when & then
-            userService.checkIsAvailableName(request);
+            assertDoesNotThrow(() -> userService.checkIsAvailableName(request));
         }
 
     }
 
     @Nested
-    class 회원정보_수정 {
+    class UpdateUserAccountInfoTest {
 
         @Test
-        void 나의_회원정보를_수정시_해당_회원의_데이터가_수정된다() {
+        void 나의_유저_정보를_수정합니다() {
             // given
             String socialId = "social-id";
             UserSocialType socialType = UserSocialType.APPLE;
@@ -152,7 +167,9 @@ class UserServiceTest {
             User user = UserCreator.create(socialId, socialType, "기존의 닉네임");
             userRepository.save(user);
 
-            UpdateUserInfoRequest request = UpdateUserInfoRequest.testInstance(name);
+            UpdateUserInfoRequest request = UpdateUserInfoRequest.testBuilder()
+                .name(name)
+                .build();
 
             // when
             userService.updateUserInfo(request, user.getId());
@@ -161,15 +178,18 @@ class UserServiceTest {
             List<User> users = userRepository.findAll();
             assertAll(
                 () -> assertThat(users).hasSize(1),
-                () -> assertUser(users.get(0), socialId, socialType, name)
+                () -> UserAssertions.assertUser(users.get(0), socialId, socialType, name)
             );
         }
 
         @Test
-        void 존재하지_않는_유저의_회원정보_수정시_NotFound_에러가_발생한다() {
+        void 나의_유저_정보를_수정할때_존재하지_않는_유저인경우_NOTFOUND_에러가_발생합니다() {
             // given
             Long notFoundUserId = -1L;
-            UpdateUserInfoRequest request = UpdateUserInfoRequest.testInstance("name");
+
+            UpdateUserInfoRequest request = UpdateUserInfoRequest.testBuilder()
+                .name("name")
+                .build();
 
             // when & then
             assertThatThrownBy(() -> userService.updateUserInfo(request, notFoundUserId)).isInstanceOf(NotFoundException.class);
@@ -178,7 +198,7 @@ class UserServiceTest {
     }
 
     @Nested
-    class 회원탈퇴 {
+    class SignOutTest {
 
         @Test
         void 회원탈퇴시_유저의_백업데이터가_생성된다() {
@@ -196,7 +216,7 @@ class UserServiceTest {
             List<WithdrawalUser> withdrawalUsers = withdrawalUserRepository.findAll();
             assertAll(
                 () -> assertThat(withdrawalUsers).hasSize(1),
-                () -> assertWithdrawalUser(withdrawalUsers.get(0), user)
+                () -> UserAssertions.assertWithdrawalUser(withdrawalUsers.get(0), user)
             );
         }
 
@@ -216,7 +236,7 @@ class UserServiceTest {
             List<User> users = userRepository.findAll();
             assertAll(
                 () -> assertThat(users).hasSize(1),
-                () -> assertUser(users.get(0), user2.getSocialId(), user2.getSocialType(), user2.getName())
+                () -> UserAssertions.assertUser(users.get(0), user2.getSocialId(), user2.getSocialType(), user2.getName())
             );
         }
 
@@ -248,8 +268,8 @@ class UserServiceTest {
             List<WithdrawalUser> withdrawalUsers = withdrawalUserRepository.findAll();
             assertAll(
                 () -> assertThat(withdrawalUsers).hasSize(2),
-                () -> assertWithdrawalUser(withdrawalUsers.get(0), withdrawalUser.getUserId(), withdrawalUser.getName(), withdrawalUser.getSocialInfo()),
-                () -> assertWithdrawalUser(withdrawalUsers.get(1), user.getId(), user.getName(), user.getSocialInfo())
+                () -> UserAssertions.assertWithdrawalUser(withdrawalUsers.get(0), withdrawalUser.getUserId(), withdrawalUser.getName(), withdrawalUser.getSocialInfo()),
+                () -> UserAssertions.assertWithdrawalUser(withdrawalUsers.get(1), user.getId(), user.getName(), user.getSocialInfo())
             );
         }
 

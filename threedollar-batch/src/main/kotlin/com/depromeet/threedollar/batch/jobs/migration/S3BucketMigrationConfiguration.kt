@@ -1,7 +1,5 @@
 package com.depromeet.threedollar.batch.jobs.migration
 
-import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
-import com.depromeet.threedollar.domain.rds.user.domain.storeimage.StoreImageRepository
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
@@ -11,32 +9,36 @@ import org.springframework.batch.repeat.RepeatStatus
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
+import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository
 
 /**
  * S3 버킷을 마이그레이션 하는 배치.
  */
+private const val JOB_NAME = "migrationS3BucketJob"
+
 @Configuration
 class S3BucketMigrationConfiguration(
     private val jobBuilderFactory: JobBuilderFactory,
     private val stepBuilderFactory: StepBuilderFactory,
-    private val storeImageRepository: StoreImageRepository
+    private val storeImageRepository: StoreImageRepository,
 ) {
 
-    @Bean
+    @Bean(name = [JOB_NAME])
     fun migrationS3BucketJob(): Job {
-        return jobBuilderFactory.get("migrationS3BucketJob")
+        return jobBuilderFactory.get(JOB_NAME)
             .incrementer(UniqueRunIdIncrementer())
             .start(migrationS3BucketStep("beforePrefix", "afterPrefix"))
             .build()
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_step"])
     @JobScope
     fun migrationS3BucketStep(
         @Value("#{jobParameters[beforePrefix]}") beforePrefix: String,
-        @Value("#{jobParameters[afterPrefix]}") afterPrefix: String
+        @Value("#{jobParameters[afterPrefix]}") afterPrefix: String,
     ): Step {
-        return stepBuilderFactory["migrationS3BucketStep"]
+        return stepBuilderFactory[JOB_NAME + "_step"]
             .tasklet { _, _ ->
                 val storeImages = storeImageRepository.findAll().asSequence()
                     .filter { it.url.startsWith(beforePrefix) }

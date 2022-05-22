@@ -1,5 +1,18 @@
 package com.depromeet.threedollar.api.user.service.review;
 
+import static com.depromeet.threedollar.api.user.service.review.support.ReviewAssertions.assertReview;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import com.depromeet.threedollar.api.user.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.user.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.user.service.review.dto.request.UpdateReviewRequest;
@@ -8,18 +21,6 @@ import com.depromeet.threedollar.domain.rds.user.domain.review.Review;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewStatus;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
-
-import static com.depromeet.threedollar.api.user.testhelper.assertions.ReviewAssertionHelper.assertReview;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
 class ReviewServiceTest extends SetupStoreServiceTest {
@@ -37,14 +38,19 @@ class ReviewServiceTest extends SetupStoreServiceTest {
     }
 
     @Nested
-    class 가게_리뷰_등록 {
+    class AddReviewTest {
 
         @Test
-        void 가게에_새로운_리뷰를_작성한다() {
+        void 가게에_새로운_리뷰를_작성합니다() {
             // given
             String contents = "우와 맛있어요";
             int rating = 4;
-            AddReviewRequest request = AddReviewRequest.testInstance(store.getId(), contents, rating);
+
+            AddReviewRequest request = AddReviewRequest.testBuilder()
+                .storeId(store.getId())
+                .contents(contents)
+                .rating(rating)
+                .build();
 
             // when
             reviewService.addReview(request, userId);
@@ -58,10 +64,15 @@ class ReviewServiceTest extends SetupStoreServiceTest {
         }
 
         @Test
-        void 없는_가게에_리뷰를_작성하면_NOT_FOUND_STORE_EXCEPTION() {
+        void 가게에_새로운_리뷰를_작성할때_가게가_없는경우_NOTFOUND_에러가_발생합니다() {
             // given
             Long notFoundStoreId = -1L;
-            AddReviewRequest request = AddReviewRequest.testInstance(notFoundStoreId, "리뷰", 3);
+
+            AddReviewRequest request = AddReviewRequest.testBuilder()
+                .storeId(notFoundStoreId)
+                .contents("리뷰 내용\n음식이 너무 맛있어요")
+                .rating(5)
+                .build();
 
             // when & then
             assertThatThrownBy(() -> reviewService.addReview(request, userId)).isInstanceOf(NotFoundException.class);
@@ -70,10 +81,10 @@ class ReviewServiceTest extends SetupStoreServiceTest {
     }
 
     @Nested
-    class 가게_리뷰_수정 {
+    class UpdateStoreReviewTest {
 
         @Test
-        void 가게에_사용자가_작성한_리뷰를_수정한다() {
+        void 내가_작성한_리뷰를_수정합니다() {
             // given
             String contents = "우와 맛있어요";
             int rating = 4;
@@ -81,7 +92,10 @@ class ReviewServiceTest extends SetupStoreServiceTest {
             Review review = ReviewCreator.create(store.getId(), userId, "너무 맛있어요", 3);
             reviewRepository.save(review);
 
-            UpdateReviewRequest request = UpdateReviewRequest.testInstance(contents, rating);
+            UpdateReviewRequest request = UpdateReviewRequest.testBuilder()
+                .contents(contents)
+                .rating(rating)
+                .build();
 
             // when
             reviewService.updateReview(review.getId(), request, userId);
@@ -95,23 +109,30 @@ class ReviewServiceTest extends SetupStoreServiceTest {
         }
 
         @Test
-        void 없는_리뷰에_수정하려하면_NOT_FOUND_REVIEW_EXCEPTION() {
+        void 존재하지_않는_리뷰를_수정하는경우_NOTFOUND_에러가_발생합니다() {
             // given
             long notFoundReviewId = -1L;
-            UpdateReviewRequest request = UpdateReviewRequest.testInstance("content", 5);
+
+            UpdateReviewRequest request = UpdateReviewRequest.testBuilder()
+                .contents("contents")
+                .rating(5)
+                .build();
 
             // when & then
             assertThatThrownBy(() -> reviewService.updateReview(notFoundReviewId, request, userId)).isInstanceOf(NotFoundException.class);
         }
 
         @Test
-        void 내가_작성하지_않은_리뷰를_수정하려하면_NOT_FOUND_REVIEW_EXCEPTION() {
+        void 내가_작성하지_않은_리뷰를_수정하는_경우_NOT_FOUND_에러가_발생한다() {
             // given
             long creatorId = 10000L;
             Review review = ReviewCreator.create(store.getId(), creatorId, "너무 맛있어요", 3);
             reviewRepository.save(review);
 
-            UpdateReviewRequest request = UpdateReviewRequest.testInstance("content", 5);
+            UpdateReviewRequest request = UpdateReviewRequest.testBuilder()
+                .contents("contents")
+                .rating(5)
+                .build();
 
             // when & then
             assertThatThrownBy(() -> reviewService.updateReview(review.getId(), request, userId)).isInstanceOf(NotFoundException.class);
@@ -120,10 +141,10 @@ class ReviewServiceTest extends SetupStoreServiceTest {
     }
 
     @Nested
-    class 가게_리뷰_삭제 {
+    class DeleteStoreReviewTest {
 
         @Test
-        void 사용자가_작성한_가게_삭제시_DELETED로_변경된다() {
+        void 내가_작성한_리뷰를_삭제하면_DELETED로_표기되고_삭제처리된다() {
             // given
             Review review = ReviewCreator.create(store.getId(), userId, "너무 맛있어요", 3);
             reviewRepository.save(review);
@@ -140,7 +161,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
         }
 
         @Test
-        void 없는_리뷰에_삭제요청시_NOT_FOUND_EXCEPTION() {
+        void 없는_리뷰를_삭제하려하면_NOT_FOUND_에러가_발생한다() {
             // given
             Long notFoundReviewId = -1L;
 
@@ -149,7 +170,7 @@ class ReviewServiceTest extends SetupStoreServiceTest {
         }
 
         @Test
-        void 내가_작성하지_않은_리뷰에_삭제요청시_NOT_FOUND_EXCEPTION() {
+        void 내가_작성하지_않은_리뷰를_삭제하려하면_NOT_FOUND에러가_발생한다() {
             // given
             Long notFoundUserId = -1L;
             Review review = ReviewCreator.create(store.getId(), userId, "너무 맛있어요", 3);

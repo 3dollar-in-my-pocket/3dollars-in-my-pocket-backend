@@ -1,10 +1,16 @@
 package com.depromeet.threedollar.api.user.service.store.dto.response;
 
-import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
-import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCategoryType;
-import lombok.*;
 import org.jetbrains.annotations.NotNull;
+
+import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
+import com.depromeet.threedollar.domain.rds.user.domain.store.Menu;
+
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @ToString
 @Getter
@@ -12,12 +18,12 @@ import org.jetbrains.annotations.NotNull;
 public class MenuResponse extends AuditingTimeResponse {
 
     private Long menuId;
-    private MenuCategoryType category;
+    private UserMenuCategoryType category;
     private String name;
     private String price;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private MenuResponse(Long menuId, MenuCategoryType category, String name, String price) {
+    private MenuResponse(Long menuId, UserMenuCategoryType category, String name, String price) {
         this.menuId = menuId;
         this.category = category;
         this.name = name;
@@ -31,7 +37,7 @@ public class MenuResponse extends AuditingTimeResponse {
             .name(menu.getName())
             .price(menu.getPrice())
             .build();
-        response.setBaseTime(menu);
+        response.setAuditingTimeByEntity(menu);
         return response;
     }
 

@@ -1,27 +1,47 @@
 package com.depromeet.threedollar.api.admin.service.admin
 
-import com.depromeet.threedollar.api.admin.service.admin.dto.response.AdminInfoResponse
-import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.common.exception.type.ErrorCode
-import com.depromeet.threedollar.domain.rds.user.domain.admin.Admin
-import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import com.depromeet.threedollar.api.admin.service.admin.dto.request.AddAdminRequest
+import com.depromeet.threedollar.api.admin.service.admin.dto.request.RetrieveAdminsWithPagingRequest
+import com.depromeet.threedollar.api.admin.service.admin.dto.request.UpdateMyAdminInfoRequest
+import com.depromeet.threedollar.api.admin.service.admin.dto.response.AdminInfoResponse
+import com.depromeet.threedollar.api.admin.service.admin.dto.response.AdminListInfoWithPagingResponse
+import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminRepository
 
 @Service
 class AdminService(
-    private val adminRepository: AdminRepository
+    private val adminRepository: AdminRepository,
 ) {
 
     @Transactional(readOnly = true)
     fun getMyAdminInfo(adminId: Long): AdminInfoResponse {
-        val admin = findAdminById(adminId)
+        val admin = AdminServiceUtils.findAdminById(adminRepository, adminId)
         return AdminInfoResponse.of(admin)
     }
 
-    private fun findAdminById(adminId: Long): Admin {
-        return adminRepository.findAdminById(adminId)
-            ?: throw NotFoundException("해당하는 관리자 ($adminId)는 존재하지 않습니다", ErrorCode.NOTFOUND_ADMIN)
+    @Transactional
+    fun updateMyAdminInfo(adminId: Long, request: UpdateMyAdminInfoRequest): AdminInfoResponse {
+        val admin = AdminServiceUtils.findAdminById(adminRepository, adminId)
+        request.let {
+            admin.updateName(it.name)
+        }
+        return AdminInfoResponse.of(admin)
+    }
+
+    @Transactional
+    fun addAdmin(request: AddAdminRequest, adminId: Long) {
+        AdminServiceUtils.validateNotExistsEmail(adminRepository, request.email)
+        adminRepository.save(request.toEntity(adminId))
+    }
+
+    @Transactional(readOnly = true)
+    fun retrieveAdminsWithPaging(request: RetrieveAdminsWithPagingRequest): AdminListInfoWithPagingResponse {
+        return AdminListInfoWithPagingResponse.of(
+            admins = adminRepository.findAllWithPagination(request.page - 1, request.size),
+            totalSize = adminRepository.count(),
+            perSize = request.size
+        )
     }
 
 }

@@ -1,5 +1,5 @@
 ### 테스트를 위한 세션
-GET {{host_api}}/test-token
+GET {{user_api}}/test-token
 
 > {%
 client.global.set("AUTHORIZATION", response.body["data"]["token"])
@@ -7,7 +7,7 @@ client.global.set("AUTHORIZATION", response.body["data"]["token"])
 
 
 ### 회원가입
-POST {{host_api}}/v2/signup
+POST {{user_api}}/v2/signup
 Content-Type: application/json
 Authorization: {{AUTHORIZATION}}
 
@@ -19,7 +19,7 @@ Authorization: {{AUTHORIZATION}}
 
 
 ### 로그인
-POST {{host_api}}/v2/login
+POST {{user_api}}/v2/login
 Content-Type: application/json
 Authorization: {{AUTHORIZATION}}
 
@@ -30,18 +30,18 @@ Authorization: {{AUTHORIZATION}}
 
 
 ### [인증] 회원탈퇴를 요청합니다
-DELETE {{host_api}}/v2/signout
+DELETE {{user_api}}/v2/signout
 Authorization: {{AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
 
 
 ### 테스트를 위한 세션
-GET {{host_api}}/test-token
+GET {{user_api}}/test-token
 
 > {%
 client.global.set("AUTHORIZATION", response.body["data"]["token"])
@@ -49,12 +49,12 @@ client.global.set("AUTHORIZATION", response.body["data"]["token"])
 
 
 ### [인증] 로그아웃
-POST {{host_api}}/v2/logout
+POST {{user_api}}/v2/logout
 Content-Type: application/json
 Authorization: {{AUTHORIZATION}}
 
 > {%
-client.test("200 OK", function() {
+client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}

@@ -31,9 +31,7 @@ jobs:
         id: version
         run: |
           VERSION=${GITHUB_REF_NAME#v}
-          GIT_COMMIT_MSG=`git show -s`
           echo "::set-output name=version::$VERSION"
-          echo "::set-output name=git-commit-msg::$GIT_COMMIT_MSG"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -46,7 +44,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build Boss API
+      - name: Build Boss API Image
         id: build
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}

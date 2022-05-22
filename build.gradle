@@ -1,10 +1,11 @@
 plugins {
-    id 'org.springframework.boot' version '2.5.10'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'org.jetbrains.kotlin.jvm' version '1.5.32'
-    id 'org.jetbrains.kotlin.plugin.spring' version '1.5.32'
-    id 'application'
-    id 'jacoco'
+    id "org.springframework.boot" version "2.5.13"
+    id "io.spring.dependency-management" version "1.0.11.RELEASE"
+    id "org.jetbrains.kotlin.jvm" version "1.6.20"
+    id "org.jetbrains.kotlin.plugin.spring" version "1.6.20"
+    id "application"
+    id "jacoco"
+    id "org.sonarqube" version "3.3"
 }
 
 repositories {
@@ -14,7 +15,16 @@ repositories {
 ext {
     springCloudVersion = "2020.0.4"
     swaggerVersion = "3.0.0"
-    sentryVersion = "5.6.1"
+    sentryVersion = "5.7.4"
+    jacocoVersion = "0.8.8"
+    springRetryVersion = "1.3.3"
+    springmockkVersion = "3.1.1"
+    jjwtVersion = "0.11.5"
+    springCloudAwsVersion = "2.2.6.RELEASE"
+    embeddedRedisVersion = "0.7.2"
+    embeddedMongoVersion = "3.4.5"
+    commonsLang3Version = "3.12.0"
+    commonsCodecVersion = "1.15"
 }
 
 allprojects {
@@ -23,14 +33,14 @@ allprojects {
 
 subprojects {
     apply {
-        plugin("java-library")
-        plugin("kotlin")
-        plugin("org.springframework.boot")
-        plugin("io.spring.dependency-management")
-        plugin("org.jetbrains.kotlin.jvm")
-        plugin("org.jetbrains.kotlin.plugin.spring")
-        plugin("jacoco")
-        plugin("java-test-fixtures")
+        plugin "java-library"
+        plugin "kotlin"
+        plugin "org.springframework.boot"
+        plugin "io.spring.dependency-management"
+        plugin "org.jetbrains.kotlin.jvm"
+        plugin "org.jetbrains.kotlin.plugin.spring"
+        plugin "jacoco"
+        plugin "java-test-fixtures"
     }
 
     java {
@@ -39,6 +49,13 @@ subprojects {
     }
 
     compileKotlin {
+        kotlinOptions {
+            jvmTarget = JavaVersion.VERSION_11
+            freeCompilerArgs = ["-Xjsr305=strict"]
+        }
+    }
+
+    compileTestKotlin {
         kotlinOptions {
             jvmTarget = JavaVersion.VERSION_11
             freeCompilerArgs = ["-Xjsr305=strict"]
@@ -56,9 +73,13 @@ subprojects {
     }
 
     dependencies {
+        // Spring Boot
         implementation("org.springframework.boot:spring-boot-starter-validation")
         annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
         implementation("org.springframework.boot:spring-boot-starter-json")
+
+        // Spring Retry
+        implementation("org.springframework.retry:spring-retry:${springRetryVersion}")
 
         // Test
         testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -66,36 +87,70 @@ subprojects {
         // Lombok
         compileOnly("org.projectlombok:lombok")
         annotationProcessor("org.projectlombok:lombok")
+        testCompileOnly("org.projectlombok:lombok")
+        testAnnotationProcessor("org.projectlombok:lombok")
 
-        // kotlin
+        // Kotlin
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    }
 
-    configurations {
-        compileOnly {
-            extendsFrom annotationProcessor
-        }
-        integrationTestImplementation {
-            extendsFrom implementation, testImplementation
-        }
-        integrationTestRuntimeOnly {
-            extendsFrom testRuntimeOnly
-        }
+        // Spring MockK
+        testImplementation("com.ninja-squad:springmockk:${springmockkVersion}")
     }
 
     sourceSets {
         integrationTest {
             compileClasspath += main.output + test.output
             runtimeClasspath += main.output + test.output
-            resources {
-                "src/integrationTest/resources"
-            }
+        }
+        e2eTest {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
         }
     }
 
-    task integrationTest(type: Test, group: 'verification', description: 'Integration Tests') {
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+
+        integrationTestImplementation {
+            extendsFrom implementation, testImplementation
+        }
+        integrationTestRuntimeOnly {
+            extendsFrom testRuntimeOnly
+        }
+        integrationTestCompileOnly {
+            extendsFrom testCompileOnly, testAnnotationProcessor
+        }
+
+        e2eTestImplementation {
+            extendsFrom implementation, testImplementation
+        }
+        e2eTestRuntimeOnly {
+            extendsFrom testRuntimeOnly
+        }
+        e2eTestCompileOnly {
+            extendsFrom testCompileOnly, testAnnotationProcessor
+        }
+    }
+
+    tasks.withType(Test) {
+        reports {
+            html.enabled = false
+            junitXml.enabled = false
+        }
+    }
+
+    task unitTest(type: Test, group: "verification", description: "Execute Unit Tests") {
+        useJUnitPlatform()
+        jacoco {
+            destinationFile = file("$buildDir/jacoco/unitTest.exec")
+        }
+    }
+
+    task integrationTest(type: Test, group: "verification", description: "Execute Integration Tests") {
         testClassesDirs = sourceSets.integrationTest.output.classesDirs
         classpath = sourceSets.integrationTest.runtimeClasspath
         useJUnitPlatform()
@@ -104,25 +159,54 @@ subprojects {
         }
     }
 
-    task unitTest(type: Test, group: 'verification', description: 'Unit Tests') {
+    task e2eTest(type: Test, group: "verification", description: "Execute E2E Tests") {
+        testClassesDirs = sourceSets.e2eTest.output.classesDirs
+        classpath = sourceSets.e2eTest.runtimeClasspath
         useJUnitPlatform()
         jacoco {
-            destinationFile = file("$buildDir/jacoco/unitTest.exec")
+            destinationFile = file("$buildDir/jacoco/e2eTest.exec")
         }
+    }
+
+    task ci(type: Test, group: "verification", description: "CI") {
+        dependsOn unitTest
+        dependsOn integrationTest
+        dependsOn e2eTest
+        finalizedBy jacocoTestReport
     }
 
     test {
         dependsOn unitTest
         dependsOn integrationTest
-        finalizedBy jacocoTestReport
+    }
+
+    task e2eTestNeeded(type: Test, group: "verification", description: "E2E Test Needed") {
+        configurations {
+            testRunime.getTaskDependencyFromProjectDependency(true, "e2eTestNeeded")
+        }
+        dependsOn e2eTest
+    }
+
+    buildNeeded {
+        finalizedBy e2eTestNeeded
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "3dollar-in-my-pocket_3dollars-in-my-pocket-backend"
+        property "sonar.organization", "3dollar-in-my-pocket"
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.java.coveragePlugin", "jacoco"
+        property "sonar.coverage.jacoco.xmlReportPaths", "$buildDir/reports/jacoco/testCoverage/testCoverage.xml"
     }
 }
 
 jacoco {
-    toolVersion = "0.8.7"
+    toolVersion = "$jacocoVersion"
 }
 
-task testCoverage(type: JacocoReport, group: 'verification', description: 'Report Test Coverage') {
+task testCoverage(type: JacocoReport, group: "verification", description: "Report Test Coverage") {
     executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
 
     subprojects.forEach {

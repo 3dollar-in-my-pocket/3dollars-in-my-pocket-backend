@@ -1,13 +1,13 @@
 package com.depromeet.threedollar.common.utils;
 
-import com.depromeet.threedollar.common.model.EnumModel;
-import com.depromeet.threedollar.common.model.EnumValue;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import com.depromeet.threedollar.common.model.EnumModel;
+import com.depromeet.threedollar.common.model.EnumValue;
 
 public class EnumMapper {
 
@@ -15,7 +15,7 @@ public class EnumMapper {
 
     private List<EnumValue> toEnumValues(Class<? extends EnumModel> e) {
         return Arrays.stream(e.getEnumConstants())
-            .map(EnumValue::new)
+            .map(EnumValue::of)
             .collect(Collectors.toList());
     }
 

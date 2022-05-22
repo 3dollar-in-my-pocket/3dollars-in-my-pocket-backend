@@ -1,15 +1,5 @@
 package com.depromeet.threedollar.api.boss.service.auth
 
-import com.depromeet.threedollar.api.boss.service.auth.dto.request.LoginRequest
-import com.depromeet.threedollar.api.boss.service.auth.policy.AppleAuthService
-import com.depromeet.threedollar.common.exception.model.ForbiddenException
-import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationRepository
-import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
@@ -17,6 +7,14 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
+import com.depromeet.threedollar.api.boss.service.auth.dto.request.LoginRequest
+import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
+import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder
 
 private const val SOCIAL_ID = "social-id"
 private val SOCIAL_TYPE = BossAccountSocialType.APPLE
@@ -25,19 +23,19 @@ private val SOCIAL_TYPE = BossAccountSocialType.APPLE
 @SpringBootTest
 internal class AppleAuthServiceTest(
     private val bossAccountRepository: BossAccountRepository,
-    private val registrationRepository: RegistrationRepository
+    private val bossRegistrationRepository: BossRegistrationRepository,
 ) {
 
     private lateinit var authService: AuthService
 
     @BeforeEach
     fun setUp() {
-        authService = AppleAuthService(bossAccountRepository, registrationRepository, StubAppleTokenDecoder())
+        authService = AppleAuthService(bossAccountRepository, bossRegistrationRepository, StubAppleTokenDecoder())
     }
 
     @AfterEach
     fun cleanUp() {
-        registrationRepository.deleteAll()
+        bossRegistrationRepository.deleteAll()
         bossAccountRepository.deleteAll()
     }
 
@@ -67,16 +65,16 @@ internal class AppleAuthServiceTest(
     }
 
     @Test
-    fun `애플 로그인시 가입 승인 대기중인 유저면 403 Forbidden 에러 발생`() {
+    fun `애플 로그인시 가입 승인 대기중인 유저면 Registration Id를 반환한다`() {
         // given
-        val socialId = "social-id"
-
-        registrationRepository.save(RegistrationCreator.create(socialId, SOCIAL_TYPE))
+        val registration = RegistrationCreator.create(SOCIAL_ID, SOCIAL_TYPE)
+        bossRegistrationRepository.save(registration)
 
         // when
-        assertThatThrownBy {
-            authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
-        }.isInstanceOf(ForbiddenException::class.java)
+        val bossId = authService.login(LoginRequest(token = "token", socialType = SOCIAL_TYPE))
+
+        // then
+        assertThat(bossId).isEqualTo(registration.id)
     }
 
     private class StubAppleTokenDecoder : AppleTokenDecoder {

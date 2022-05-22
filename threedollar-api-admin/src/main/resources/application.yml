@@ -1,3 +1,5 @@
+threedollars.aplication.uid: ${random.uuid}
+
 server:
   port: 5100
   shutdown: graceful
@@ -7,18 +9,20 @@ server:
       force: true
     context-path: /admin
   tomcat:
-    connection-timeout: 30s
+    connection-timeout: 10s
 
 spring:
   profiles:
     active: local
     default: local
     include:
-      - domain
+      - rds
       - redis
       - mongo
       - external
       - swagger
+      - sentry
+      - actuator
       - secret
 
   servlet:
@@ -34,29 +38,6 @@ spring:
     servlet:
       load-on-startup: 1
 
-  security:
-    user:
-      name: ${secret.security.user.name}
-      password: ${secret.security.user.password}
-
-management:
-  endpoints:
-    web:
-      base-path: /monitoring
-      exposure:
-        include:
-          - health
-          - metrics
-          - threaddump
-          - heapdump
-          - loggers
-          - configprops
-  endpoint:
-    health:
-      show-details: always
-    logfile:
-      external-file: /logs/threedollar-admin/info.log
-
 
 ---
 spring.config:
@@ -65,21 +46,28 @@ spring.config:
 
 spring:
   datasource:
-    hikari:
-      maximum-pool-size: 5
-
+    primary:
+      hikari:
+        maximum-pool-size: 5
+    secondary:
+      hikari:
+        maximum-pool-size: 5
 
 ---
 spring.config:
   activate:
     on-profile:
       - prod
-      - stage
+      - staging
 
 spring:
   datasource:
-    hikari:
-      maximum-pool-size: 5
+    primary:
+      hikari:
+        maximum-pool-size: 5
+    secondary:
+      hikari:
+        maximum-pool-size: 5
 
 
 ---

@@ -1,9 +1,11 @@
 package com.depromeet.threedollar.api.core.provider.upload;
 
+import org.springframework.stereotype.Component;
+
 import com.depromeet.threedollar.api.core.provider.upload.dto.request.UploadFileRequest;
 import com.depromeet.threedollar.external.client.storage.FileStorageClient;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component

@@ -1,10 +1,13 @@
 package com.depromeet.threedollar.common.exception.type;
 
-import com.depromeet.threedollar.common.type.HttpStatusCode;
-import lombok.Getter;
+import static com.depromeet.threedollar.common.exception.type.ErrorAlarmOptionType.OFF;
+import static com.depromeet.threedollar.common.exception.type.ErrorAlarmOptionType.ON;
+import static com.depromeet.threedollar.common.type.HttpStatusCode.BAD_REQUEST;
+import static com.depromeet.threedollar.common.type.HttpStatusCode.NOT_FOUND;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorAlarmOptionType.*;
-import static com.depromeet.threedollar.common.type.HttpStatusCode.*;
+import com.depromeet.threedollar.common.type.HttpStatusCode;
+
+import lombok.Getter;
 
 @Getter
 public enum ErrorCode {
@@ -12,6 +15,7 @@ public enum ErrorCode {
     // 400 Bad Request
     INVALID(BAD_REQUEST, OFF, "BR000", "잘못된 요청입니다"),
     INVALID_TYPE(BAD_REQUEST, OFF, "BR001", "잘못된 타입이 입력되었습니다"),
+    INVALID_ENCODING_ID(BAD_REQUEST, OFF, "BR002", "잘못된 id가 입력되었습니다"),
 
     INVALID_MISSING_PARAMETER(BAD_REQUEST, OFF, "BR100", "필수 파라미터가 입력되지 않았습니다"),
     INVALID_MISSING_LATITUDE(BAD_REQUEST, OFF, "BR101", "디바이스의 위도를 입력해주세요 (latitude)"),
@@ -19,6 +23,7 @@ public enum ErrorCode {
     INVALID_MISSING_MAP_LATITUDE(BAD_REQUEST, OFF, "BR103", "지도 위도를 입력해주세요 (mapLatitude)"),
     INVALID_MISSING_MAP_LONGITUDE(BAD_REQUEST, OFF, "BR104", "지도 경도를 입력해주세요 (mapLongitude)"),
     INVALID_MISSING_AUTH_TOKEN(BAD_REQUEST, OFF, "BR105", "인증 토큰을 입력해주세요"),
+    INVALID_EMPTY_FILES(BAD_REQUEST, OFF, "BR106", "파일을 업로드해주세요"),
 
     INVALID_AUTH_TOKEN(BAD_REQUEST, OFF, "BR200", "만료되거나 유효하지 않은 인증 토큰입니다"),
     INVALID_CONTACTS_NUMBER_FORMAT(BAD_REQUEST, OFF, "BR201", "잘못된 연락처 번호입니다."),
@@ -31,6 +36,7 @@ public enum ErrorCode {
     INVALID_UPLOAD_FILE_SIZE(BAD_REQUEST, ON, "BR208", "업로드 가능한 파일 크기를 초과했습니다"),
     INVALID_DATE_TIME_INTERVAL(BAD_REQUEST, OFF, "BR209", "시작 날짜가 종료 날짜보다 이후일 수 없습니다"),
     INVALID_EXCESS_MAX_BETWEEN_DAY_DIFFERENCE(BAD_REQUEST, OFF, "BR210", "시작 날짜와 종료날짜 간 차이는 최대 15일 이내로 조회해주세요"),
+    INVALID_EMAIL_FORMAT(BAD_REQUEST, OFF, "BR211", "잘못된 이메일 포맷입니다"),
 
 
     // 401 UnAuthorized
@@ -39,8 +45,8 @@ public enum ErrorCode {
 
     // 403 Forbidden
     FORBIDDEN(HttpStatusCode.FORBIDDEN, OFF, "FB000", "허용하지 않는 요청입니다"),
-    FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT(HttpStatusCode.CONFLICT, OFF, "FB001", "현재 계정 승인 대기 중입니다."),
-    FORBIDDEN_UPLOAD_FILE_IN_MODULE(HttpStatusCode.CONFLICT, OFF, "FB002", "해당 서버에서 업로드할 수 없는 파일 타입 입니다"),
+    FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT(HttpStatusCode.FORBIDDEN, OFF, "FB001", "가입 신청이 승인 대기 중입니다\n가입 승인 절차 이후 이용하실 수 있습니다."),
+    FORBIDDEN_UPLOAD_FILE_IN_MODULE(HttpStatusCode.FORBIDDEN, OFF, "FB002", "해당 서버에서 업로드할 수 없는 파일 타입 입니다"),
 
 
     // 404 Not Found
@@ -53,11 +59,10 @@ public enum ErrorCode {
     NOTFOUND_MEDAL(NOT_FOUND, OFF, "N006", "존재하지 않은 메달입니다"),
     NOTFOUND_USER_MEDAL(NOT_FOUND, OFF, "N007", "보유하지 않은 메달입니다"),
     NOTFOUND_CATEGORY(NOT_FOUND, OFF, "N008", "존재하지 않는 카테고리 입니다"),
-    NOTFOUND_BOSS(NOT_FOUND, OFF, "N009", "존재하지 않는 사장님 계정입니다"),
-    NOTFOUND_BOSS_OWNED_STORE(NOT_FOUND, OFF, "NF0010", "현재 사장님이 운영하는 가게는 존재하지 않습니다."),
-    NOTFOUND_SIGNUP_REGISTRATION(NOT_FOUND, OFF, "NF011", "해당하는 가입 신청은 존재하지 않습니다"),
-    NOTFOUND_ADMIN(NOT_FOUND, OFF, "NF012", "해당하는 관리자는 존재하지 않습니다"),
-    NOTFOUND_ADVERTISEMENT(NOT_FOUND, OFF, "NF013", "해당하는 광고는 존재하지 않습니다"),
+    NOTFOUND_BOSS_ACCOUNT(NOT_FOUND, OFF, "N009", "존재하지 않는 사장님 계정입니다"),
+    NOTFOUND_SIGNUP_REGISTRATION(NOT_FOUND, OFF, "NF010", "해당하는 가입 신청은 존재하지 않습니다"),
+    NOTFOUND_ADMIN(NOT_FOUND, OFF, "NF011", "해당하는 관리자는 존재하지 않습니다"),
+    NOTFOUND_ADVERTISEMENT(NOT_FOUND, OFF, "NF012", "해당하는 광고는 존재하지 않습니다"),
 
 
     // 405 Method Not Allowed
@@ -75,7 +80,8 @@ public enum ErrorCode {
     CONFLICT_DELETE_REQUEST_STORE(HttpStatusCode.CONFLICT, OFF, "CF003", "이미 해당 가게를 삭제 요청 하였습니다."),
     CONFLICT_VISIT_HISTORY(HttpStatusCode.CONFLICT, OFF, "CF004", "오늘 이미 방문 인증한 가게입니다.\n내일 다시 방문 인증해주세요 :)"),
     CONFLICT_BOSS_STORE_FEEDBACK(HttpStatusCode.CONFLICT, OFF, "CF005", "오늘 이미 피드백을 추가한 가게입니다.\n내일 다시 인증해주세요 :)"),
-    CONFLICT_EXISTS_BOSS(HttpStatusCode.CONFLICT, OFF, "CF006", "이미 가입 완료한 사장님입니다"),
+    CONFLICT_BOSS_ACCOUNT(HttpStatusCode.CONFLICT, OFF, "CF006", "이미 가입 완료한 사장님입니다"),
+    CONFLICT_EMAIL(HttpStatusCode.CONFLICT, OFF, "CF007", "이미 존재하는 이메일 입니다"),
 
 
     // 415 Unsupported Media Type
@@ -95,7 +101,7 @@ public enum ErrorCode {
 
 
     // 503 Service UnAvailable
-    SERVICE_UNAVAILABLE(HttpStatusCode.SERVICE_UNAVAILABLE, OFF, "SU000", "현재 해당 기능은 점검 중입니다.\n점검 후 다시 이용 부탁드립니다ㅠ.ㅠ"),
+    SERVICE_UNAVAILABLE(HttpStatusCode.SERVICE_UNAVAILABLE, OFF, "SU000", "해당 기능은 현재 사용할 수 없습니다"),
     ;
 
     private final HttpStatusCode statusCode;
