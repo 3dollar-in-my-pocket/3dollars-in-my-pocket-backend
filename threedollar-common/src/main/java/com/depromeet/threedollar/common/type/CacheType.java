@@ -15,7 +15,7 @@ public enum CacheType {
     USER_STORES_COUNTS("유저가 등록한 가게 수", CacheKey.USER_STORES_COUNTS, Duration.ofMinutes(10), CacheRange.GLOBAL),
     USER_REVIEWS_COUNTS("유저가 작성한 리뷰 수", CacheKey.USER_REVIEWS_COUNTS, Duration.ofMinutes(10), CacheRange.GLOBAL),
     USER_MEDALS("유저가 보유중인 메달 목록", CacheKey.USER_MEDALS, Duration.ofMinutes(10), CacheRange.GLOBAL),
-    BOSS_STORE_FEEDBACK_TOTAL_COUNT("사장님 가게의 피드백 종류별 총 카운트 수", CacheKey.BOSS_STORE_FEEDBACKS_TOTAL_COUNTS, Duration.ofHours(1), CacheRange.GLOBAL),
+    BOSS_STORE_FEEDBACK_TOTAL_COUNT("푸드트럭의 피드백 종류별 총 카운트 수", CacheKey.BOSS_STORE_FEEDBACKS_TOTAL_COUNTS, Duration.ofHours(1), CacheRange.GLOBAL),
     ;
 
     private final String description;

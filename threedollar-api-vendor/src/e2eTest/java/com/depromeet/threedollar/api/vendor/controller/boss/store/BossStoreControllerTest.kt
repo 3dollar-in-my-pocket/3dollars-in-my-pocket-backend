@@ -9,20 +9,20 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
 import org.springframework.test.web.servlet.get
-import com.depromeet.threedollar.api.core.service.boss.category.dto.response.BossStoreCategoryResponse
-import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreAppearanceDayResponse
-import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossStoreMenuResponse
+import com.depromeet.threedollar.api.core.service.foodtruck.category.dto.response.BossStoreCategoryResponse
+import com.depromeet.threedollar.api.core.service.foodtruck.store.dto.response.BossStoreAppearanceDayResponse
+import com.depromeet.threedollar.api.core.service.foodtruck.store.dto.response.BossStoreMenuResponse
 import com.depromeet.threedollar.api.vendor.controller.SetupUserControllerTest
 import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.common.type.DayOfTheWeek
-import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppearanceDayCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenuCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreOpenType
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
+import com.depromeet.threedollar.domain.mongo.foodtruck.domain.category.BossStoreCategoryCreator
+import com.depromeet.threedollar.domain.mongo.foodtruck.domain.category.BossStoreCategoryRepository
+import com.depromeet.threedollar.domain.mongo.foodtruck.domain.store.BossStoreAppearanceDayCreator
+import com.depromeet.threedollar.domain.mongo.foodtruck.domain.store.BossStoreCreator
+import com.depromeet.threedollar.domain.mongo.foodtruck.domain.store.BossStoreLocation
+import com.depromeet.threedollar.domain.mongo.foodtruck.domain.store.BossStoreMenuCreator
+import com.depromeet.threedollar.domain.mongo.foodtruck.domain.store.BossStoreOpenType
+import com.depromeet.threedollar.domain.mongo.foodtruck.domain.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.domain.boss.category.BossStoreCategoryCacheRepository
 import com.depromeet.threedollar.domain.redis.domain.boss.store.BossStoreOpenTimeRepository
 import com.ninjasquad.springmockk.MockkBean
@@ -52,14 +52,14 @@ internal class BossStoreControllerTest(
 
     @DisplayName("GET /boss/v1/boss/store/{BOSS_STORE_ID}")
     @Test
-    fun `특정 사장님 가게를 조회할때, Redis에 영업 정보가 있으면 영업중인 가게로 표기된다`() {
+    fun `특정 푸드트럭를 조회할때, Redis에 영업 정보가 있으면 영업중인 가게로 표기된다`() {
         // given
         val category = BossStoreCategoryCreator.create(title = "한식", sequencePriority = 1)
         bossStoreCategoryRepository.save(category)
 
         val bossStore = BossStoreCreator.create(
             bossId = "anotherBossId",
-            name = "사장님 가게",
+            name = "푸드트럭",
             location = BossStoreLocation.of(latitude = 38.0, longitude = 128.0),
             imageUrl = "https://image.png",
             introduction = "introduction",
@@ -83,7 +83,7 @@ internal class BossStoreControllerTest(
                 status { isOk() }
 
                 jsonPath("$.data.bossStoreId") { value(bossStore.id) }
-                jsonPath("$.data.name") { value("사장님 가게") }
+                jsonPath("$.data.name") { value("푸드트럭") }
 
                 jsonPath("$.data.location.latitude") { value(38.0) }
                 jsonPath("$.data.location.longitude") { value(128.0) }

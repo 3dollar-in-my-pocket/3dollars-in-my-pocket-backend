@@ -29,7 +29,7 @@ class BossStoreCategoryCacheRepositoryTest(
     }
 
     @Test
-    fun `사장님 가게 카테고리 목록을 조회한다`() {
+    fun `푸드트럭 카테고리 목록을 조회한다`() {
         // given
         val category1 = BossStoreCategoryCacheModel(categoryId = "categoryId1", name = "한식")
         val category2 = BossStoreCategoryCacheModel(categoryId = "categoryId2", name = "중식")
@@ -45,7 +45,7 @@ class BossStoreCategoryCacheRepositoryTest(
     }
 
     @Test
-    fun `사장님 가게 카테고리 목록을 저장한다`() {
+    fun `푸드트럭 카테고리 목록을 저장한다`() {
         // given
         val category = BossStoreCategoryCacheModel(categoryId = "categoryId1", name = "한식")
 

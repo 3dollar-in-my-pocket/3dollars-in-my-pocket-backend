@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.service.boss.feedback.BossStoreFeedbackService
-import com.depromeet.threedollar.api.core.service.boss.feedback.dto.request.AddBossStoreFeedbackRequest
-import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackCountWithRatioResponse
-import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackTypeResponse
+import com.depromeet.threedollar.api.core.service.foodtruck.feedback.BossStoreFeedbackService
+import com.depromeet.threedollar.api.core.service.foodtruck.feedback.dto.request.AddBossStoreFeedbackRequest
+import com.depromeet.threedollar.api.core.service.foodtruck.feedback.dto.response.BossStoreFeedbackCountWithRatioResponse
+import com.depromeet.threedollar.api.core.service.foodtruck.feedback.dto.response.BossStoreFeedbackTypeResponse
 import com.depromeet.threedollar.api.vendor.config.interceptor.Auth
 import com.depromeet.threedollar.api.vendor.config.resolver.UserId
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
@@ -22,7 +22,7 @@ class BossStoreFeedbackController(
     private val bossStoreFeedbackService: BossStoreFeedbackService,
 ) {
 
-    @ApiOperation("전체 기간동안의 특정 사장님 가게의 피드백 갯수를 조회합니다.")
+    @ApiOperation("전체 기간동안의 특정 푸드트럭의 피드백 갯수를 조회합니다.")
     @GetMapping("/v1/boss/store/{bossStoreId}/feedbacks/full")
     fun getBossStoreFeedbacksCounts(
         @PathVariable bossStoreId: String,
@@ -30,7 +30,7 @@ class BossStoreFeedbackController(
         return ApiResponse.success(bossStoreFeedbackService.getBossStoreFeedbacksCounts(bossStoreId))
     }
 
-    @ApiOperation("사장님 가게 피드백의 타입 목록을 조회합니다")
+    @ApiOperation("푸드트럭 피드백의 타입 목록을 조회합니다")
     @GetMapping("/v1/boss/store/feedback/types")
     fun getBossStoreFeedbackTypes(): ApiResponse<List<BossStoreFeedbackTypeResponse>> {
         return ApiResponse.success(BossStoreFeedbackType.values().asSequence()
@@ -38,7 +38,7 @@ class BossStoreFeedbackController(
             .toList())
     }
 
-    @ApiOperation("특정 사장님 가게에 피드백을 추가합니다")
+    @ApiOperation("특정 푸드트럭에 피드백을 추가합니다")
     @Auth
     @PostMapping("/v1/boss/store/{bossStoreId}/feedback")
     fun addBossStoreFeedback(

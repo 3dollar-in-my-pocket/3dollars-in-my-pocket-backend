@@ -4,10 +4,10 @@ import org.hamcrest.collection.IsCollectionWithSize.hasSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
-import com.depromeet.threedollar.api.core.service.boss.category.dto.response.BossStoreCategoryResponse
+import com.depromeet.threedollar.api.core.service.foodtruck.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.api.vendor.controller.SetupControllerTest
-import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
+import com.depromeet.threedollar.domain.mongo.foodtruck.domain.category.BossStoreCategoryCreator
+import com.depromeet.threedollar.domain.mongo.foodtruck.domain.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.redis.domain.boss.category.BossStoreCategoryCacheModel
 import com.depromeet.threedollar.domain.redis.domain.boss.category.BossStoreCategoryCacheRepository
 import com.ninjasquad.springmockk.SpykBean

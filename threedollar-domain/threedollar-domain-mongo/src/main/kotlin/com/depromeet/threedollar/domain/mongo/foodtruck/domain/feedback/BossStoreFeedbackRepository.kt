@@ -1,0 +1,7 @@
+package com.depromeet.threedollar.domain.mongo.foodtruck.domain.feedback
+
+import org.springframework.data.mongodb.repository.MongoRepository
+import com.depromeet.threedollar.domain.mongo.foodtruck.domain.feedback.repository.BossStoreFeedbackRepositoryCustom
+import com.depromeet.threedollar.domain.mongo.foodtruck.domain.feedback.repository.BossStoreFeedbackStatisticsRepositoryCustom
+
+interface BossStoreFeedbackRepository : MongoRepository<BossStoreFeedback, String>, BossStoreFeedbackRepositoryCustom, BossStoreFeedbackStatisticsRepositoryCustom

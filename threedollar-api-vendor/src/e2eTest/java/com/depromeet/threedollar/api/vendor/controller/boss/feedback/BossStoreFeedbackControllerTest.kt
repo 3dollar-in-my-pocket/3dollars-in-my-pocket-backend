@@ -8,14 +8,14 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
-import com.depromeet.threedollar.api.core.service.boss.feedback.dto.request.AddBossStoreFeedbackRequest
-import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackCountResponse
-import com.depromeet.threedollar.api.core.service.boss.feedback.dto.response.BossStoreFeedbackTypeResponse
+import com.depromeet.threedollar.api.core.service.foodtruck.feedback.dto.request.AddBossStoreFeedbackRequest
+import com.depromeet.threedollar.api.core.service.foodtruck.feedback.dto.response.BossStoreFeedbackCountResponse
+import com.depromeet.threedollar.api.core.service.foodtruck.feedback.dto.response.BossStoreFeedbackTypeResponse
 import com.depromeet.threedollar.api.vendor.controller.SetupUserControllerTest
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
-import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedbackRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
+import com.depromeet.threedollar.domain.mongo.foodtruck.domain.feedback.BossStoreFeedbackRepository
+import com.depromeet.threedollar.domain.mongo.foodtruck.domain.store.BossStoreCreator
+import com.depromeet.threedollar.domain.mongo.foodtruck.domain.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.domain.boss.feedback.BossStoreFeedbackCountRepository
 
 internal class BossStoreFeedbackControllerTest(
@@ -79,7 +79,7 @@ internal class BossStoreFeedbackControllerTest(
 
     @DisplayName("GET /api/v1/boss/store/feedback/types")
     @Test
-    fun `사장님 가게 피드백 종류를 조회합니다`() {
+    fun `푸드트럭 피드백 종류를 조회합니다`() {
         // when & then
         mockMvc.get("/v1/boss/store/feedback/types")
             .andDo { print() }
@@ -95,7 +95,7 @@ internal class BossStoreFeedbackControllerTest(
 
     @DisplayName("POST /api/v1/boss/store/{bossStoreId}/feedback")
     @Test
-    fun `사장님 가게에 새로운 피드백을 추가합니다`() {
+    fun `푸드트럭에 새로운 피드백을 추가합니다`() {
         // given
         val bossStore = BossStoreCreator.create(
             bossId = "bossId",

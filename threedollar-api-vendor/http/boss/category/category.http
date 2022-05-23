@@ -1,4 +1,4 @@
-### 사장님 가게의 카테고리 목록을 조회합니다
+### 푸드트럭의 카테고리 목록을 조회합니다
 GET {{vendor_api}}/v1/boss/store/categories
 
 > {%

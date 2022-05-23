@@ -1,4 +1,4 @@
-### 사장님 가게 카테고리 목록을 조회합니다
+### 푸드트럭 카테고리 목록을 조회합니다
 GET {{admin}}/v1/boss/store/categories
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 

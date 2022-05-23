@@ -8,7 +8,7 @@ import com.depromeet.threedollar.common.type.BossStoreFeedbackType;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.common.utils.EnumMapper;
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreOpenType;
+import com.depromeet.threedollar.domain.mongo.foodtruck.domain.store.BossStoreOpenType;
 import com.depromeet.threedollar.domain.rds.vendor.domain.advertisement.AdvertisementPlatformType;
 import com.depromeet.threedollar.domain.rds.vendor.domain.advertisement.AdvertisementPositionType;
 import com.depromeet.threedollar.domain.rds.vendor.domain.faq.FaqCategory;

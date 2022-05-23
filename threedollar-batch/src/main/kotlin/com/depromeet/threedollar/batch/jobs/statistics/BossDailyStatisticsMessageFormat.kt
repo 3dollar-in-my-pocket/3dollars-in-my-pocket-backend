@@ -27,7 +27,7 @@ enum class BossDailyStatisticsMessageFormat(
     ),
     BOSS_STORE_STATISTICS(
         """
-            3. 사장님 가게 통계 정보
+            3. 푸드트럭 통계 정보
             - 총 %s개의 가게가 등록되어 있습니다..
             - 오늘 %s개의 가게가 신규 등록되었습니다.
             - 일주일 간 %s개의 가게가 신규 등록되었습니다.
@@ -35,7 +35,7 @@ enum class BossDailyStatisticsMessageFormat(
     ),
     DELETED_BOSS_STORE_STATISTICS(
         """
-            4. 사장님 가게 삭제 통계 정보
+            4. 푸드트럭 삭제 통계 정보
             - 총 %s개의 가게가 삭제 처리되었습니다.
             - 오늘 %s개의 가게가 삭제 처리되었습니다.
             - 일주일 간 %s개의 가게가 삭제 처리되었습니다.
@@ -43,7 +43,7 @@ enum class BossDailyStatisticsMessageFormat(
     ),
     BOSS_STORE_FEEDBACK_STATISTICS(
         """
-            5. 사장님 가게 피드백 통계 정보
+            5. 푸드트럭 피드백 통계 정보
             - 총 %s개의 피드백이 등록되어 있습니다..
             - 오늘 %s개의 피드백이 신규 등록되었습니다.
             - 일주일 간 %s개의 피드백이 신규 등록되었습니다.

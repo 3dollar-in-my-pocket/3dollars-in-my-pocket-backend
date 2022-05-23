@@ -1,0 +1,142 @@
+### 푸드트럭의 카테고리 목록을 조회합니다
+GET {{foodtruck_api}}/v1/boss/store/categories
+
+> {%
+client.global.set("BOSS_CATEGORY_ID", response.body["data"][0]["categoryId"])
+%}
+
+
+### 주변 특정 거리 안에 위치한 가게 목록을 조회합니다.
+GET {{foodtruck_api}}/v1/boss/stores/around?mapLatitude=38&mapLongitude=127&distanceKm=1
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 사장님 자신이 운영 중인 가게를 조회합니다
+GET {{foodtruck_api}}/v1/boss/store/me?mapLatitude=38&mapLongitude=127.009
+Authorization: Bearer {{BOSS_AUTHORIZATION}}
+
+> {%
+client.global.set("BOSS_STORE_ID", response.body["data"]["bossStoreId"])
+%}
+
+
+### 가게의 영업을 시작/갱신 합니다.
+PUT {{foodtruck_api}}/v1/boss/store/{{BOSS_STORE_ID}}/open?mapLatitude=38&mapLongitude=127
+Authorization: Bearer {{BOSS_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 가게 영업을 종료합니다.
+PUT {{foodtruck_api}}/v1/boss/store/{{BOSS_STORE_ID}}/close
+Authorization: Bearer {{BOSS_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 특정 가게의 정보를 상세 조회합니다
+GET {{foodtruck_api}}/v1/boss/store/{{BOSS_STORE_ID}}?mapLatitude=38&mapLongitude=129
+Authorization: Bearer {{BOSS_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 푸드트럭의 정보를 수정합니다
+PUT {{foodtruck_api}}/v1/boss/store/{{BOSS_STORE_ID}}
+Content-Type: application/json
+Authorization: Bearer {{BOSS_AUTHORIZATION}}
+
+{
+    "name": "가슴속 3천원 붕어빵 가게",
+    "imageUrl": "https://www.jungle.co.kr/image/9184139c4725921ad8526df7",
+    "introduction": "가슴속 3천원 입니다\n많이 이용해주세요",
+    "contactsNumber": "010-2345-2345",
+    "snsUrl": "https://www.instagram.com/3dollar_in_my_pocket/",
+    "menus": [
+        {
+            "name": "슈크림 붕어빵 2개",
+            "price": 1000,
+            "imageUrl": "https://storage.dev.threedollars.co.kr/popup/adv_store_category_20220121_threedollars.png"
+        },
+        {
+            "name": "팥 붕어빵 2개",
+            "price": 1000,
+            "imageUrl": "https://storage.dev.threedollars.co.kr/popup/adv_store_category_20220121_threedollars.png"
+        },
+        {
+            "name": "팥 붕어빵 5개",
+            "price": 2000,
+            "imageUrl": "https://storage.dev.threedollars.co.kr/popup/adv_store_category_20220121_threedollars.png"
+        },
+        {
+            "name": "팥 붕어빵 5개",
+            "price": 2000,
+            "imageUrl": "https://storage.dev.threedollars.co.kr/popup/adv_store_category_20220121_threedollars.png"
+        }
+    ],
+    "appearanceDays": [
+        {
+            "dayOfTheWeek": "MONDAY",
+            "startTime": "10:00",
+            "endTime": "19:00",
+            "locationDescription": "산본역"
+        },
+        {
+            "dayOfTheWeek": "TUESDAY",
+            "startTime": "10:00",
+            "endTime": "19:00",
+            "locationDescription": "신도림역"
+        },
+        {
+            "dayOfTheWeek": "THURSDAY",
+            "startTime": "10:00",
+            "endTime": "19:00",
+            "locationDescription": "신정네거리역"
+        }
+    ],
+    "categoriesIds": [
+        "{{BOSS_CATEGORY_ID}}"
+    ]
+}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 푸드트럭의 정보를 수정합니다 (PATCH)
+PATCH {{foodtruck_api}}/v1/boss/store/{{BOSS_STORE_ID}}
+Content-Type: application/json
+Authorization: Bearer {{BOSS_AUTHORIZATION}}
+
+{
+    "name": "가게 이름",
+    "menus": [],
+    "appearanceDays": [],
+    "categoriesIds": []
+}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}

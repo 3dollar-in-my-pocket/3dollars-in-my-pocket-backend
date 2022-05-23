@@ -1,0 +1,7 @@
+package com.depromeet.threedollar.domain.mongo.foodtruck.domain.registration
+
+import org.springframework.data.mongodb.repository.MongoRepository
+import com.depromeet.threedollar.domain.mongo.foodtruck.domain.registration.repository.BossRegistrationRepositoryCustom
+import com.depromeet.threedollar.domain.mongo.foodtruck.domain.registration.repository.BossRegistrationStatisticsRepositoryCustom
+
+interface BossRegistrationRepository : MongoRepository<BossRegistration, String>, BossRegistrationRepositoryCustom, BossRegistrationStatisticsRepositoryCustom

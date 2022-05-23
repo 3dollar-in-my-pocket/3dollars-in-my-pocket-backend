@@ -1,4 +1,4 @@
-### 특정 거리 안에 위치한 사장님 가게 목록을 조회합니다. (거리순)
+### 특정 거리 안에 위치한 푸드트럭 목록을 조회합니다. (거리순)
 GET {{vendor_api}}/v1/boss/stores/around?mapLatitude=38&mapLongitude=127.01&distanceKm=1&latitude=38.0&longitude=127.2&size=30&orderType=DISTANCE_ASC
 
 > {%
@@ -9,7 +9,7 @@ client.test("200 OK", () => {
 %}
 
 
-### 특정 거리 안에 위치한 사장님 가게 목록을 조회합니다. (스티커 순)
+### 특정 거리 안에 위치한 푸드트럭 목록을 조회합니다. (스티커 순)
 GET {{vendor_api}}/v1/boss/stores/around?mapLatitude=38&mapLongitude=127.01&distanceKm=1&latitude=38.0&longitude=127.2&size=30&orderType=TOTAL_FEEDBACKS_COUNTS_DESC
 
 > {%
@@ -20,7 +20,7 @@ client.test("200 OK", () => {
 %}
 
 
-### 특정 사장님 가게의 정보를 상세 조회합니다
+### 특정 푸드트럭의 정보를 상세 조회합니다
 GET {{vendor_api}}/v1/boss/store/{{BOSS_STORE_ID}}?latitude=38.0&longitude=127.1
 Authorization: {{AUTHORIZATION}}
 

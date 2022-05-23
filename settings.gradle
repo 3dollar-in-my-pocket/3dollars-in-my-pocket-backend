@@ -2,7 +2,7 @@ rootProject.name = 'threedollar'
 
 include 'threedollar-api-admin'
 include 'threedollar-api-vendor'
-include 'threedollar-api-boss'
+include 'threedollar-api-foodtruck'
 include 'threedollar-api-core'
 
 include 'threedollar-batch'
