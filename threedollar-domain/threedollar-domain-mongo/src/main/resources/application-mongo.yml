@@ -39,9 +39,10 @@ spring.config:
 spring:
   data:
     mongodb:
-      uri: ${secret.mongodb.uri}?connectTimeoutMS=${spring.data.mongodb.connection-timeout}&maxPoolSize=${spring.data.mongodb.connection-pool-size}&minPoolSize=${spring.data.mongodb.connection-pool-size}&replicaSet=${spring.data.mongodb.replicaSet}
+      uri: ${secret.mongodb.uri}?connectTimeoutMS=${spring.data.mongodb.connection-timeout}&maxPoolSize=${spring.data.mongodb.connection-pool-size}&minPoolSize=${spring.data.mongodb.connection-pool-size}&replicaSet=${spring.data.mongodb.replicaSet}&readPreference=${spring.data.mongodb.readPreference}
       connection-pool-size: 10
       connection-timeout: 5000
       replicaSet: threedollar-replication-1
+      readPreference: secondaryPreferred
 
 ---
