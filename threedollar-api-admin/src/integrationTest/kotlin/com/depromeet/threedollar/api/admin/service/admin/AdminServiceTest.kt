@@ -12,8 +12,8 @@ import com.depromeet.threedollar.api.admin.service.admin.dto.request.AddAdminReq
 import com.depromeet.threedollar.api.admin.service.admin.dto.request.UpdateMyAdminInfoRequest
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminCreator
-import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminRepository
+import com.depromeet.threedollar.domain.rds.vendor.domain.admin.AdminCreator
+import com.depromeet.threedollar.domain.rds.vendor.domain.admin.AdminRepository
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest

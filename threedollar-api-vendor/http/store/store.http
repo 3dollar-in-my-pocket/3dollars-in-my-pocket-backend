@@ -1,0 +1,152 @@
+### [인증] 새로운 가게 정보를 등록합니다.
+POST {{vendor_api}}/v2/store
+Content-Type: application/json
+Authorization: {{AUTHORIZATION}}
+
+{
+    "appearanceDays": [
+        "MONDAY",
+        "TUESDAY",
+        "FRIDAY",
+        "SUNDAY"
+    ],
+    "latitude": 35.0011111111,
+    "longitude": 127.000000001,
+    "menus": [
+        {
+            "category": "DALGONA",
+            "name": "붕어빵 10개에 3000원",
+            "price": "3000원"
+        },
+        {
+            "category": "TAKOYAKI",
+            "name": "다코야키 10개에 3000원",
+            "price": "3000원"
+        }
+    ],
+    "paymentMethods": [
+        "CASH",
+        "CARD"
+    ],
+    "storeName": "가슴속 3천원 가게",
+    "storeType": "ROAD"
+}
+
+> {%
+client.test("200 OK", () => {
+    client.global.set("STORE_ID", response.body["data"]["storeId"])
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 특정 가게의 정보를 조회합니다.
+GET {{vendor_api}}/v2/store/?storeId={{STORE_ID}}&latitude=35&longitude=127&startDate=2022-02-01
+Authorization: {{AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 위도, 경도 주변의 가게 목록을 조회합니다.
+GET {{vendor_api}}/v2/stores/near?latitude=35&longitude=127&mapLatitude=35&mapLongitude=127&distance=5000&orderType=DISTANCE_ASC&size=100
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 내가 작성한 가게의 정보를 조회합니다. (첫 스크롤)
+GET {{vendor_api}}/v3/stores/me?size=30
+Authorization: {{AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.global.set("CURSOR", response.body["data"]["nextCursor"])
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 내가 작성한 가게의 정보를 조회합니다. (두번째 스크롤)
+GET {{vendor_api}}/v3/stores/me?size=30&latitude=34&longitude=126&cursor={{CURSOR}}
+Authorization: {{AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    if (response.body["data"]["nextCursor"] !== null) {
+        client.global.set("CURSOR", response.body["data"]["nextCursor"])
+    }
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 특정 가게의 정보를 수정합니다.
+PUT {{vendor_api}}/v2/store/{{STORE_ID}}
+Content-Type: application/json
+Authorization: {{AUTHORIZATION}}
+
+{
+    "appearanceDays": [
+        "WEDNESDAY",
+        "SUNDAY"
+    ],
+    "latitude": 38,
+    "longitude": 131,
+    "menus": [
+        {
+            "category": "EOMUK",
+            "name": "어묵",
+            "price": "1000원"
+        }
+    ],
+    "paymentMethods": [
+        "CARD",
+        "ACCOUNT_TRANSFER"
+    ],
+    "storeName": "승호의 붕어빵",
+    "storeType": "ROAD"
+}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 특정 가게를 삭제 요청합니다.
+DELETE {{vendor_api}}/v2/store/{{STORE_ID}}?deleteReasonType=NOSTORE
+Authorization: {{AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 위도, 경도 주변 거리에 가게가 존재하는지 확인합니다.
+GET {{vendor_api}}/v1/stores/near/exists?mapLatitude=34&mapLongitude=126&distance=1000
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 활성화중인 가게 메뉴 카테고리 목록을 조회합니다
+GET {{vendor_api}}/v2/store/menu/categories
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}

@@ -9,7 +9,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.post
 import com.depromeet.threedollar.api.admin.controller.SetupAdminControllerTest
 import com.depromeet.threedollar.api.admin.service.auth.dto.request.LoginRequest
-import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminCreator
+import com.depromeet.threedollar.domain.rds.vendor.domain.admin.AdminCreator
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
 import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse
 import com.ninjasquad.springmockk.MockkBean

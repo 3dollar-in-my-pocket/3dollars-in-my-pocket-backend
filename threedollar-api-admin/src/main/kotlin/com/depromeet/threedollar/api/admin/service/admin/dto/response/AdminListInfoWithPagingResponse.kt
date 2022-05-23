@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.admin.service.admin.dto.response
 
 import com.depromeet.threedollar.api.core.common.dto.PagingResponse
-import com.depromeet.threedollar.domain.rds.user.domain.admin.Admin
+import com.depromeet.threedollar.domain.rds.vendor.domain.admin.Admin
 
 data class AdminListInfoWithPagingResponse(
     val admins: List<AdminInfoResponse>,

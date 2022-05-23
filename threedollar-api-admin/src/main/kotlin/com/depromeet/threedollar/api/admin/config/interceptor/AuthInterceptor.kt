@@ -11,7 +11,7 @@ import org.springframework.web.method.HandlerMethod
 import org.springframework.web.servlet.HandlerInterceptor
 import com.depromeet.threedollar.api.admin.config.session.SessionConstants.ADMIN_ID
 import com.depromeet.threedollar.common.exception.model.UnAuthorizedException
-import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminRepository
+import com.depromeet.threedollar.domain.rds.vendor.domain.admin.AdminRepository
 
 private const val TOKEN_PREFIX = "Bearer "
 

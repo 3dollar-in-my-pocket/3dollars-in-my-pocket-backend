@@ -9,8 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.api.admin.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminCreator
-import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminRepository
+import com.depromeet.threedollar.domain.rds.vendor.domain.admin.AdminCreator
+import com.depromeet.threedollar.domain.rds.vendor.domain.admin.AdminRepository
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
 import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse
 

@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.core.mapper.user.faq.dto.response
 
-import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCategory
+import com.depromeet.threedollar.domain.rds.vendor.domain.faq.FaqCategory
 
 data class FaqCategoryResponse(
     val category: FaqCategory,

@@ -7,7 +7,7 @@ import com.depromeet.threedollar.api.admin.service.admin.dto.request.RetrieveAdm
 import com.depromeet.threedollar.api.admin.service.admin.dto.request.UpdateMyAdminInfoRequest
 import com.depromeet.threedollar.api.admin.service.admin.dto.response.AdminInfoResponse
 import com.depromeet.threedollar.api.admin.service.admin.dto.response.AdminListInfoWithPagingResponse
-import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminRepository
+import com.depromeet.threedollar.domain.rds.vendor.domain.admin.AdminRepository
 
 @Service
 class AdminService(

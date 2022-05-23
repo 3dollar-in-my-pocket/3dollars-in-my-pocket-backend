@@ -1,0 +1,35 @@
+### [인증] 가게에 등록된 이미지 목록을 조회합니다
+GET {{vendor_api}}/v2/store/{{STORE_ID}}/images
+Authorization: {{AUTHORIZATION}}
+
+> {%
+client.test("200 OK", function() {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+
+### [인증] 가게의 이미지를 삭제합니다.
+DELETE {{vendor_api}}/v2/store/image
+Authorization: {{AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+
+
+### [인증] 가게의 이미지를 삭제합니다.
+DELETE {{vendor_api}}/v2/store/image/1
+Authorization: {{AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+

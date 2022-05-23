@@ -4,8 +4,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
-import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminCreator
-import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminRepository
+import com.depromeet.threedollar.domain.rds.vendor.domain.admin.AdminCreator
+import com.depromeet.threedollar.domain.rds.vendor.domain.admin.AdminRepository
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest

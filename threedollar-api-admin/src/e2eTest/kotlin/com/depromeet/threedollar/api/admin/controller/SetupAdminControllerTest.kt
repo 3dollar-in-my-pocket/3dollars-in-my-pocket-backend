@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminRepository
+import com.depromeet.threedollar.domain.rds.vendor.domain.admin.AdminRepository
 import com.fasterxml.jackson.core.type.TypeReference
 
 internal abstract class SetupAdminControllerTest : SetupControllerTest() {

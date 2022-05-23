@@ -3,8 +3,8 @@ package com.depromeet.threedollar.api.admin.service.admin
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
-import com.depromeet.threedollar.domain.rds.user.domain.admin.Admin
-import com.depromeet.threedollar.domain.rds.user.domain.admin.AdminRepository
+import com.depromeet.threedollar.domain.rds.vendor.domain.admin.Admin
+import com.depromeet.threedollar.domain.rds.vendor.domain.admin.AdminRepository
 
 object AdminServiceUtils {
 

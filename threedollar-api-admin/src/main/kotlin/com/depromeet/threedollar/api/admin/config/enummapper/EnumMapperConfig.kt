@@ -4,13 +4,13 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.common.utils.EnumMapper
-import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPlatformType
-import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementPositionType
-import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCategory
-import com.depromeet.threedollar.domain.rds.user.domain.store.DeleteReasonType
-import com.depromeet.threedollar.domain.rds.user.domain.store.PaymentMethodType
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreType
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType
+import com.depromeet.threedollar.domain.rds.vendor.domain.advertisement.AdvertisementPlatformType
+import com.depromeet.threedollar.domain.rds.vendor.domain.advertisement.AdvertisementPositionType
+import com.depromeet.threedollar.domain.rds.vendor.domain.faq.FaqCategory
+import com.depromeet.threedollar.domain.rds.vendor.domain.store.DeleteReasonType
+import com.depromeet.threedollar.domain.rds.vendor.domain.store.PaymentMethodType
+import com.depromeet.threedollar.domain.rds.vendor.domain.store.StoreType
+import com.depromeet.threedollar.domain.rds.vendor.domain.user.UserSocialType
 
 @Configuration
 class EnumMapperConfig {

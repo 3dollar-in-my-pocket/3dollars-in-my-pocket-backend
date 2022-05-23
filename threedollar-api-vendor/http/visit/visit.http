@@ -1,0 +1,26 @@
+### [인증] 새로운 가게 방문을 등록합니다.
+POST {{vendor_api}}/v2/store/visit
+Content-Type: application/json
+Authorization: {{AUTHORIZATION}}
+
+{
+    "storeId": {{STORE_ID}},
+    "type": "NOT_EXISTS"
+}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 내가 방문 기록 인증을 남긴 가게들을 스크롤 페이지네이션으로 조회합니다.
+GET {{vendor_api}}/v2/store/visits/me?size=30
+Authorization: {{AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}

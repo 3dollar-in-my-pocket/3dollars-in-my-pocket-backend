@@ -1,0 +1,56 @@
+### [인증] 나의 회원 정보를 조회합니다.
+GET {{vendor_api}}/v2/user/me
+Authorization: {{AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 나의 활동 정보를 조회합니다.
+GET {{vendor_api}}/v1/user/me/activity
+Authorization: {{AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 나의 회원 정보를 수정합니다.
+PUT {{vendor_api}}/v2/user/me
+Content-Type: application/json
+Authorization: {{AUTHORIZATION}}
+
+{
+    "name": "강승호"
+}
+
+> {%
+client.test("200 OK or 409 Conflict", () => {
+    client.assert(response.status === 200 || 409, "응답 실패");
+});
+%}
+
+
+### 닉네임 중복 여부를 체크합니다.
+GET {{vendor_api}}/v2/user/name/check?name=wi_ll
+
+> {%
+client.test("200 OK or 409 Conflict", () => {
+     client.assert(response.status === 409 || 200, "응답 실패");
+});
+%}
+
+
+### 허용하지 않는 닉네임일경우 400 에러를 처리합니다.
+GET {{vendor_api}}/v2/user/name/check?name=-11-
+
+> {%
+client.test("400 BadRequest", () => {
+     client.assert(response.status === 400, "응답 실패");
+});
+%}

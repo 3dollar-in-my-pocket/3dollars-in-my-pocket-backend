@@ -1,0 +1,36 @@
+### 전체 메달 목록을 조회합니다
+GET {{vendor_api}}/v1/medals
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 사용자가 보유중인 메달들을 조회한다
+GET {{vendor_api}}/v1/user/medals
+Authorization: {{AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.global.set("MEDAL_ID", response.body["data"][0]["medalId"])
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 사용자의 장착중인 메달을 수정한다
+PUT {{vendor_api}}/v1/user/medal
+Content-Type: application/json
+Authorization: {{AUTHORIZATION}}
+
+{
+    "medalId": {{MEDAL_ID}}
+}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}

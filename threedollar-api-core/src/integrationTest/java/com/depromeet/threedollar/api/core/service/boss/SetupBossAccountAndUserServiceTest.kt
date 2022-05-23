@@ -6,12 +6,12 @@ import org.springframework.boot.test.context.SpringBootTest
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionRepository
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
-import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalRepository
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserCreator
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserSocialType
+import com.depromeet.threedollar.domain.rds.vendor.domain.medal.MedalAcquisitionConditionRepository
+import com.depromeet.threedollar.domain.rds.vendor.domain.medal.MedalRepository
+import com.depromeet.threedollar.domain.rds.vendor.domain.medal.UserMedalRepository
+import com.depromeet.threedollar.domain.rds.vendor.domain.user.UserCreator
+import com.depromeet.threedollar.domain.rds.vendor.domain.user.UserRepository
+import com.depromeet.threedollar.domain.rds.vendor.domain.user.UserSocialType
 
 @SpringBootTest
 internal abstract class SetupBossAccountAndUserServiceTest {
