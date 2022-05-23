@@ -4,6 +4,7 @@ import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.common.type.OsPlatformType
 
 data class UserMetaValue(
+    val traceId: String?,
     val osPlatform: OsPlatformType,
     val userAgent: String?,
     val clientIp: String?,
@@ -18,13 +19,15 @@ data class UserMetaValue(
             clientIp: String? = null,
             applicationType: ApplicationType,
             appVersion: String? = null,
+            traceId: String?,
         ): UserMetaValue {
             return UserMetaValue(
                 osPlatform = osPlatform,
                 userAgent = userAgent,
                 clientIp = clientIp,
                 applicationType = applicationType,
-                appVersion = appVersion
+                appVersion = appVersion,
+                traceId = traceId,
             )
         }
     }
