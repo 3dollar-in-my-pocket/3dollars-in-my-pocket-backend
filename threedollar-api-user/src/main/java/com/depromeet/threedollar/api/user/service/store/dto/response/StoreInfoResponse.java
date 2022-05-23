@@ -69,7 +69,7 @@ public class StoreInfoResponse extends AuditingTimeResponse {
             .rating(store.getRating())
             .isDeleted(store.isDeleted())
             .build();
-        response.categories.addAll(store.getMenuCategories());
+        response.categories.addAll(store.getMenuCategoriesSortedByCounts());
         response.setAuditingTime(store.getCreatedAt(), store.getUpdatedAt());
         return response;
     }
