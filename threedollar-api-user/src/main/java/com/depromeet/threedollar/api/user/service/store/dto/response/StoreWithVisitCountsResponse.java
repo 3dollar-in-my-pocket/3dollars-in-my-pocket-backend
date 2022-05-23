@@ -54,7 +54,7 @@ public class StoreWithVisitCountsResponse extends AuditingTimeResponse {
             .existsVisitsCount(existsVisitsCount)
             .notExistsVisitsCount(notExistsVisitsCount)
             .build();
-        response.categories.addAll(store.getMenuCategories());
+        response.categories.addAll(store.getMenuCategoriesSortedByCounts());
         response.setAuditingTime(store.getCreatedAt(), store.getUpdatedAt());
         return response;
     }

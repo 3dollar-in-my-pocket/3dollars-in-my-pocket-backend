@@ -9,12 +9,14 @@ import com.depromeet.threedollar.common.model.UserMetaValue
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.common.type.OsPlatformType
 import com.depromeet.threedollar.common.utils.ClientIpUtils
+import com.depromeet.threedollar.common.utils.TraceIdUtils
 import com.depromeet.threedollar.common.utils.UserMetaSessionUtils
 
 private const val USER_AGENT_HEADER = "User-Agent"
 private const val X_FORWARDED_FOR_HEADER = "X-Forwarded-For"
 private const val ANDROID_VERSION_HEADER = "X-Android-Service-Version"
 private const val IOS_USER_AGENT_POSTFIX = "(com.macgongmon"
+private const val TRACE_ID = "X-Amzn-Trace-Id"
 
 @Component
 class UserMetadataInterceptor : HandlerInterceptor {
@@ -29,6 +31,7 @@ class UserMetadataInterceptor : HandlerInterceptor {
             clientIp = ClientIpUtils.getClientIp(request.remoteAddr, request.getHeader(X_FORWARDED_FOR_HEADER)),
             applicationType = ApplicationType.BOSS_API,
             appVersion = extractAppVersion(platform, request),
+            traceId = request.getHeader(TRACE_ID) ?: TraceIdUtils.generate()
         ))
         return true
     }

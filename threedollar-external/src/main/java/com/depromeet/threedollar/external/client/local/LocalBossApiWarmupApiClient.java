@@ -17,7 +17,7 @@ public interface LocalBossApiWarmupApiClient {
     void retrieveNearBossStores(
         @RequestParam("mapLatitude") double mapLatitude,
         @RequestParam("mapLongitude") double mapLongitude,
-        @RequestParam("distanceKm") int distanceKm
+        @RequestParam("distanceKm") double distanceKm
     );
 
     @Retryable(maxAttempts = 5, backoff = @Backoff(value = 1000), value = Exception.class)

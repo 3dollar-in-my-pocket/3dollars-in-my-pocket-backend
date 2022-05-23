@@ -75,7 +75,7 @@ public class StoreServiceUtils {
     private static void saveAroundStoresInCached(AroundUserStoresCacheRepository aroundUserStoresCacheRepository, List<StoreWithMenuProjection> nearStores, double mapLatitude, double mapLongitude, double distance) {
         List<UserStoreCacheModel> cachedAroundStores = nearStores.stream()
             .map(store -> UserStoreCacheModel.of(
-                store.getMenuCategories(),
+                store.getMenuCategoriesSortedByCounts(),
                 store.getId(),
                 store.getLatitude(),
                 store.getLongitude(),

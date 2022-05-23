@@ -10,8 +10,8 @@ Authorization: {{AUTHORIZATION}}
         "FRIDAY",
         "SUNDAY"
     ],
-    "latitude": 34.0011111111,
-    "longitude": 126.000000001,
+    "latitude": 35.0011111111,
+    "longitude": 127.000000001,
     "menus": [
         {
             "category": "DALGONA",
@@ -41,7 +41,7 @@ client.test("200 OK", () => {
 
 
 ### [인증] 특정 가게의 정보를 조회합니다.
-GET {{user_api}}/v2/store/?storeId={{STORE_ID}}&latitude=34&longitude=126&startDate=2022-02-01
+GET {{user_api}}/v2/store/?storeId={{STORE_ID}}&latitude=35&longitude=127&startDate=2022-02-01
 Authorization: {{AUTHORIZATION}}
 
 > {%
@@ -52,7 +52,7 @@ client.test("200 OK", () => {
 
 
 ### 위도, 경도 주변의 가게 목록을 조회합니다.
-GET {{user_api}}/v2/stores/near?latitude=34&longitude=126&mapLatitude=34&mapLongitude=126&distance=5000&orderType=DISTANCE_ASC&size=100
+GET {{user_api}}/v2/stores/near?latitude=35&longitude=127&mapLatitude=35&mapLongitude=127&distance=5000&orderType=DISTANCE_ASC&size=100
 
 > {%
 client.test("200 OK", () => {

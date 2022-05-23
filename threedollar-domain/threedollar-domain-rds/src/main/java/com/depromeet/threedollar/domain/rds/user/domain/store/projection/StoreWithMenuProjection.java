@@ -2,12 +2,16 @@ package com.depromeet.threedollar.domain.rds.user.domain.store.projection;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import org.jetbrains.annotations.NotNull;
 
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreStatus;
 import com.querydsl.core.annotations.QueryProjection;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -28,6 +32,7 @@ public class StoreWithMenuProjection {
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
+    @Builder
     @QueryProjection
     public StoreWithMenuProjection(Long id, Long userId, double latitude, double longitude, String name, double rating, StoreStatus status, List<MenuProjection> menus, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
@@ -46,10 +51,18 @@ public class StoreWithMenuProjection {
         return this.status.isDeleted();
     }
 
-    public List<UserMenuCategoryType> getMenuCategories() {
-        return this.menus.stream()
-            .map(MenuProjection::getCategory)
+    @NotNull
+    public List<UserMenuCategoryType> getMenuCategoriesSortedByCounts() {
+        Map<UserMenuCategoryType, Long> counts = getCurrentMenuCategoryGroupByCounts();
+        return counts.entrySet().stream()
+            .sorted(Map.Entry.<UserMenuCategoryType, Long>comparingByValue().reversed())
+            .map(Map.Entry::getKey)
             .collect(Collectors.toList());
+    }
+
+    private Map<UserMenuCategoryType, Long> getCurrentMenuCategoryGroupByCounts() {
+        return this.menus.stream()
+            .collect(Collectors.groupingBy(MenuProjection::getCategory, Collectors.counting()));
     }
 
     public String getName() {
@@ -67,6 +80,7 @@ public class StoreWithMenuProjection {
         private final String price;
         private final UserMenuCategoryType category;
 
+        @Builder
         @QueryProjection
         public MenuProjection(String name, String price, UserMenuCategoryType category) {
             this.name = name;

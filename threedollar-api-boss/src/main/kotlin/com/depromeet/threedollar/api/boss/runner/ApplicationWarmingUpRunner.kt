@@ -26,7 +26,7 @@ class ApplicationWarmingUpRunner(
         try {
             for (i in 0 until API_CALL_COUNT) {
                 for (place in FamousPlace.values()) {
-                    apiClient.retrieveNearBossStores(place.latitude, place.longitude, 3000)
+                    apiClient.retrieveNearBossStores(place.latitude, place.longitude, 2.0)
                 }
                 apiClient.retrieveBossStoreCategories()
                 appleAuthApiClient.appleAuthPublicKey
