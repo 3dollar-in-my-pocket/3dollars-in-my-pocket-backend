@@ -46,7 +46,7 @@
 
 ### 멀티 모듈 구조
 
-![img.png](images/modules-20220307.png)
+![img.png](images/modules-20220524.png)
 
 ## Developers & Contacts
 
