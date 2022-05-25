@@ -1,4 +1,6 @@
-threedollars.aplication.uid: ${random.uuid}
+threedollars:
+  aplication:
+    uid: ${random.uuid}
 
 server:
   port: 4000
@@ -12,6 +14,10 @@ server:
     threads:
       max: 200
     connection-timeout: 10s
+  compression:
+    enabled: true
+    mime-types: application/json
+    min-response-size: 2KB
 
 spring:
   profiles:
