@@ -43,8 +43,7 @@ class CheckAvailableNameRequestTest {
         Set<ConstraintViolation<CheckAvailableNameRequest>> constraintViolations = validator.validate(request);
 
         // then
-        assertThat(constraintViolations).isNotEmpty()
-            .hasSize(1);
+        assertThat(constraintViolations).hasSize(1);
     }
 
     @NullAndEmptySource
@@ -59,8 +58,7 @@ class CheckAvailableNameRequestTest {
         Set<ConstraintViolation<CheckAvailableNameRequest>> constraintViolations = validator.validate(request);
 
         // then
-        assertThat(constraintViolations).isNotEmpty()
-            .hasSize(1);
+        assertThat(constraintViolations).hasSize(1);
     }
 
 }

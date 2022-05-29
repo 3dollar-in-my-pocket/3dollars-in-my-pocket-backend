@@ -28,7 +28,7 @@ class RetrieveMyVisitHistoriesRequestTest {
         Set<ConstraintViolation<RetrieveMyVisitHistoriesRequest>> constraintViolations = validator.validate(request);
 
         // then
-        assertThat(constraintViolations).isNotEmpty();
+        assertThat(constraintViolations).hasSize(1);
     }
 
     @ValueSource(ints = {1, 100})
