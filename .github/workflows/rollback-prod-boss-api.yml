@@ -25,8 +25,8 @@ jobs:
       - validate
     environment: prod-boss
     steps:
-      - name: checkout@v2
-        uses: actions/checkout@v2
+      - name: checkout@v3
+        uses: actions/checkout@v3
 
       - name: Version
         id: version

@@ -23,8 +23,8 @@ jobs:
     needs:
       - validate
     steps:
-      - name: checkout@v2
-        uses: actions/checkout@v2
+      - name: checkout@v3
+        uses: actions/checkout@v3
 
       - name: Version
         id: version
@@ -33,6 +33,22 @@ jobs:
           echo "::set-output name=version::$VERSION"
         env:
           VERSIONING: ${{ github.event.inputs.version }}
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -52,10 +68,6 @@ jobs:
           DOCKER_REPOSITORY: 3dollar-batch-dev
           IMAGE_TAG: ${{ steps.version.outputs.version }}
         run: |
-          docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG -f ./threedollar-batch/Dockerfile .
-          docker tag $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
-          docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG
-          docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
+          ./gradlew :threedollar-batch:jib -Dimage=$DOCKER_REGISTRY/$DOCKER_REPOSITORY -Dtag=$IMAGE_TAG
 
-          echo "::set-output name=image::$DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG"
           echo "🐇 Build Image >> $DOCKER_REPOSITORY$IMAGE_TAG"

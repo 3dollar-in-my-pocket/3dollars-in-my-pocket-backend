@@ -6,6 +6,8 @@ plugins {
     id "application"
     id "jacoco"
     id "org.sonarqube" version "3.3"
+    id "com.google.cloud.tools.jib" version "3.2.1"
+    id "de.undercouch.download" version "5.1.0"
 }
 
 repositories {
@@ -41,12 +43,11 @@ subprojects {
         plugin "org.jetbrains.kotlin.plugin.spring"
         plugin "jacoco"
         plugin "java-test-fixtures"
+        plugin "com.google.cloud.tools.jib"
     }
 
-    java {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 
     compileKotlin {
         kotlinOptions {
@@ -180,15 +181,17 @@ subprojects {
         dependsOn integrationTest
     }
 
-    task e2eTestNeeded(type: Test, group: "verification", description: "E2E Test Needed") {
+    task ciNeeded(type: Test, group: "verification", description: "CI Needed") {
         configurations {
-            testRunime.getTaskDependencyFromProjectDependency(true, "e2eTestNeeded")
+            testRunime.getTaskDependencyFromProjectDependency(true, "ciTestNeeded")
         }
+        dependsOn unitTest
+        dependsOn integrationTest
         dependsOn e2eTest
     }
 
     buildNeeded {
-        finalizedBy e2eTestNeeded
+        finalizedBy ciNeeded
     }
 }
 

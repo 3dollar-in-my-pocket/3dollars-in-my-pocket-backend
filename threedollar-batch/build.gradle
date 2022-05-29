@@ -10,3 +10,26 @@ dependencies {
 application {
     mainClass.set("com.depromeet.threedollar.batch.ThreeDollarBatchApplicationKt")
 }
+
+jib {
+    from {
+        image = "adoptopenjdk/openjdk11:alpine-jre"
+    }
+    to {
+        image = System.getProperty("image", "")
+        tags = ["latest", System.getProperty("tag", "")]
+    }
+    container {
+        jvmFlags = [
+            "-Duser.timezone=Asia/Seoul"
+        ]
+    }
+}
+
+tasks.jib {
+    dependsOn ciNeeded
+}
+
+tasks.jibDockerBuild {
+    dependsOn ciNeeded
+}
