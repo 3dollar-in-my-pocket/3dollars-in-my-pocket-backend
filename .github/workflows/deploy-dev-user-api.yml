@@ -72,8 +72,7 @@ jobs:
           ./gradlew clean :threedollar-api-user:ciNeeded :threedollar-api-user:jib -Dimage=$DOCKER_REGISTRY/$DOCKER_REPOSITORY -Dtag=$IMAGE_TAG
 
           echo "::set-output name=image::$DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG"
-          echo "🐇 Build Image >> $DOCKER_REPOSITORY$IMAGE_TAG"
-
+          echo "🐇 Build Image >> $DOCKER_REPOSITORY:$IMAGE_TAG"
       - name: Download task definition
         id: download-task-definition
         run: |
