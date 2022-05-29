@@ -20,8 +20,8 @@ class UserTest {
         // given
         String medalName = "리뷰왕";
         String description = "리뷰 5번 작성시 획득하는 메달";
-        String activationIconUrl = "activationIconUrl";
-        String disabledIconUrl = "disabledIconUrl";
+        String activationIconUrl = "https://active-icon.png";
+        String disabledIconUrl = "https://disable-icon.png";
         MedalAcquisitionConditionType conditionType = MedalAcquisitionConditionType.ADD_REVIEW;
         int count = 5;
 
@@ -48,7 +48,7 @@ class UserTest {
     }
 
     @Test
-    void 유저가_메달을_획득하면_비활성화_상태로_보관된다() {
+    void 유저가_메달을_획득하면_비활성화_상태로_추가된다() {
         // given
         User user = UserCreator.create("social-id", UserSocialType.KAKAO, "닉네임");
         Medal medalA = MedalCreator.create("메달 A");
@@ -64,7 +64,7 @@ class UserTest {
     }
 
     @Test
-    void 유저가_장착한_메달을_조회할때_장착한_메달이_없는경우_예외가_아닌_null_을_반환한다() {
+    void 유저가_장착한_메달을_조회할때_장착한_메달이_없는경우_null_을_반환한다() {
         // given
         User user = UserCreator.create("social-id", UserSocialType.KAKAO, "닉네임");
         Medal medalA = MedalCreator.create("메달 A");

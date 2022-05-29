@@ -30,7 +30,7 @@ import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder;
 @SpringBootTest
 class AppleAuthServiceTest {
 
-    private static final String SOCIAL_ID = "social-id";
+    private static final String SOCIAL_ID = "apple-social-id";
     private static final UserSocialType SOCIAL_TYPE = UserSocialType.APPLE;
 
     private AuthService authService;

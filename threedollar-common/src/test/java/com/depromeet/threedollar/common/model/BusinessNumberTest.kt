@@ -11,7 +11,7 @@ internal class BusinessNumberTest {
 
     @ValueSource(strings = ["125-86-31602", "527-88-00686", "120-87-65763"])
     @ParameterizedTest
-    fun `정상적인 사업자 번호면 InvalidException이 발생하지 않는다`(number: String) {
+    fun `정상적인 사업자 번호면 유효성 검사를 통과한다`(number: String) {
         // when & then
         assertDoesNotThrow { BusinessNumber.of(number) }
     }

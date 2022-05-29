@@ -21,7 +21,7 @@ class Base32UtilsTest {
     }
 
     @Test
-    void 값이_다른경우_다른_값이_나온다() {
+    void 인코딩시_값이_다른경우_다른_값이_나온다() {
         // when
         String one = Base32Utils.encode(1L);
         String two = Base32Utils.encode(2L);

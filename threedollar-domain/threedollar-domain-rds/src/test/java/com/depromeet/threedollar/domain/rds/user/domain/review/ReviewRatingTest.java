@@ -12,7 +12,7 @@ class ReviewRatingTest {
 
     @ValueSource(ints = {1, 2, 3, 4, 5})
     @ParameterizedTest
-    void 점수가_1점이상_5점이하면_통과한다(int value) {
+    void 리뷰_점수가_1점에서_5점사이면_유효성_검증을_통과한다(int value) {
         // when
         ReviewRating reviewRating = ReviewRating.of(value);
 
