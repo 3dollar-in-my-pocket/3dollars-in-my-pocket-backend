@@ -27,11 +27,3 @@ jib {
         ports = ["5100"]
     }
 }
-
-tasks.jib {
-    dependsOn ciNeeded
-}
-
-tasks.jibDockerBuild {
-    dependsOn ciNeeded
-}

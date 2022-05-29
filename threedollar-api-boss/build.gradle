@@ -50,11 +50,5 @@ jib {
 }
 
 tasks.jib {
-    dependsOn ciNeeded
-    dependsOn extractAgent
-}
-
-tasks.jibDockerBuild {
-    dependsOn ciNeeded
     dependsOn extractAgent
 }

@@ -68,7 +68,7 @@ jobs:
           DOCKER_REPOSITORY: threedollars-in-my-pocket-admin-prod
           IMAGE_TAG: ${{ steps.version.outputs.version }}
         run: |
-          ./gradlew :threedollar-api-admin:jib -Dimage=$DOCKER_REGISTRY/$DOCKER_REPOSITORY -Dtag=$IMAGE_TAG
+          ./gradlew clean :threedollar-api-admin:ciNeeded :threedollar-api-admin:jib -Dimage=$DOCKER_REGISTRY/$DOCKER_REPOSITORY -Dtag=$IMAGE_TAG
           echo "🐇 Build Image >> $DOCKER_REPOSITORY$IMAGE_TAG"
 
       - name: Download task definition

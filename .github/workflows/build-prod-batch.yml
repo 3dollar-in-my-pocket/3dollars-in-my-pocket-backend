@@ -67,6 +67,6 @@ jobs:
           DOCKER_REPOSITORY: threedollars-in-my-pocket-batch-prod
           IMAGE_TAG: ${{ steps.version.outputs.version }}
         run: |
-          ./gradlew :threedollar-batch:jib -Dimage=$DOCKER_REGISTRY/$DOCKER_REPOSITORY -Dtag=$IMAGE_TAG
+          ./gradlew clean :threedollar-batch:ciNeeded :threedollar-batch:jib -Dimage=$DOCKER_REGISTRY/$DOCKER_REPOSITORY -Dtag=$IMAGE_TAG
 
           echo "🐇 Build Image >> $DOCKER_REPOSITORY$IMAGE_TAG"

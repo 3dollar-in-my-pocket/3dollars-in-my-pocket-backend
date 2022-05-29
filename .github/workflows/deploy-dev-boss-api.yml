@@ -69,7 +69,7 @@ jobs:
           DOCKER_REPOSITORY: 3dollar-boss-api-dev
           IMAGE_TAG: ${{ steps.version.outputs.version }}
         run: |
-          ./gradlew :threedollar-api-boss:jib -Dimage=$DOCKER_REGISTRY/$DOCKER_REPOSITORY -Dtag=$IMAGE_TAG
+          ./gradlew clean :threedollar-api-boss:ciNeeded :threedollar-api-boss:jib -Dimage=$DOCKER_REGISTRY/$DOCKER_REPOSITORY -Dtag=$IMAGE_TAG
 
           echo "::set-output name=image::$DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG"
           echo "🐇 Build Image >> $DOCKER_REPOSITORY$IMAGE_TAG"
