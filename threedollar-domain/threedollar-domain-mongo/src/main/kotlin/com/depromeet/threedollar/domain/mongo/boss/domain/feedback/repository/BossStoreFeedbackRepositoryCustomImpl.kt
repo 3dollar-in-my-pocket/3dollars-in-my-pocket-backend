@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.domain.mongo.boss.domain.feedback.repository
 
 import java.time.LocalDate
+import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.find
 import org.springframework.data.mongodb.core.query.Query
@@ -30,11 +31,13 @@ class BossStoreFeedbackRepositoryCustomImpl(
         )
     }
 
-    override fun findFirstLessThanDate(bossStoreId: String, date: LocalDate): BossStoreFeedback? {
-        return mongoTemplate.findOne(Query()
-            .addCriteria(BossStoreFeedback::bossStoreId isEqualTo bossStoreId)
-            .addCriteria(BossStoreFeedback::date lt date)
-            .limit(1), BossStoreFeedback::class.java
+    override fun findLastLessThanDate(bossStoreId: String, date: LocalDate): BossStoreFeedback? {
+        return mongoTemplate.findOne(
+            Query()
+                .addCriteria(BossStoreFeedback::bossStoreId isEqualTo bossStoreId)
+                .addCriteria(BossStoreFeedback::date lt date)
+                .with(Sort.by(Sort.Direction.DESC, BossStoreFeedback::date.name))
+                .limit(1), BossStoreFeedback::class.java
         )
     }
 
