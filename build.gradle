@@ -180,19 +180,6 @@ subprojects {
         dependsOn unitTest
         dependsOn integrationTest
     }
-
-    task ciNeeded(type: Test, group: "verification", description: "CI Needed") {
-        configurations {
-            testRunime.getTaskDependencyFromProjectDependency(true, "ciTestNeeded")
-        }
-        dependsOn unitTest
-        dependsOn integrationTest
-        dependsOn e2eTest
-    }
-
-    buildNeeded {
-        finalizedBy ciNeeded
-    }
 }
 
 sonarqube {
