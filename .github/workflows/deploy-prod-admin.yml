@@ -65,6 +65,7 @@ jobs:
         id: build
         run: |
           ./gradlew clean ci :threedollar-api-admin:jib -Dimage=${DOCKER_REGISTRY}/${DOCKER_REPOSITORY} -Dtag=${IMAGE_TAG}
+          echo "::set-output name=image::${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}:${IMAGE_TAG}"
           echo "🐇 Build Image >> ${DOCKER_REPOSITORY}:${IMAGE_TAG}"
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
