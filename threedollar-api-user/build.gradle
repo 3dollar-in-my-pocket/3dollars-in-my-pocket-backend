@@ -15,6 +15,7 @@ ext {
     newRelicAgentDownload = "https://download.newrelic.com/newrelic/java-agent/newrelic-agent/current/newrelic-java.zip"
     newRelicExtraDirectory = "${buildDir}/newrelic"
     newRelicHostDirectory = "/usr/app/newrelic"
+    newRelicJavaAgentDirectory = "${newRelicHostDirectory}/newrelic/newrelic.jar"
 }
 
 task downloadAgent(type: Download) {
@@ -36,13 +37,13 @@ jib {
         tags = ["latest", System.getProperty("tag", "")]
     }
     extraDirectories.paths = [
-        "$buildDir/newrelic"
+        "${newRelicExtraDirectory}"
     ]
     container {
         jvmFlags = [
             "-server",
             "-XX:+UseG1GC",
-            "-javaagent:" + newRelicHostDirectory + "/newrelic/newrelic.jar",
+            "-javaagent:" + newRelicJavaAgentDirectory,
             "-Duser.timezone=Asia/Seoul"
         ]
         ports = ["5000"]

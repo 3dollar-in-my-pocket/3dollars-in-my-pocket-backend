@@ -31,7 +31,18 @@ jobs:
         id: version
         run: |
           VERSION=${GITHUB_REF_NAME#v}
-          echo "::set-output name=version::$VERSION"
+          echo "::set-output name=version::${VERSION}"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
 
       - name: Set up JDK 11
         uses: actions/setup-java@v3
@@ -49,24 +60,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2
+      - name: Build & Push Admin API Image
+        run: |
+          ./gradlew clean ci :threedollar-api-admin:jib -Dimage=${DOCKER_REGISTRY}/${DOCKER_REPOSITORY} -Dtag=${IMAGE_TAG}
 
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build Admin API Image
-        id: build
+          echo "🐇 Build Image >> ${DOCKER_REPOSITORY}:${IMAGE_TAG}"
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           DOCKER_REPOSITORY: threedollars-in-my-pocket-admin-prod
           IMAGE_TAG: ${{ steps.version.outputs.version }}
-        run: |
-          ./gradlew clean ci :threedollar-api-admin:jib -Dimage=$DOCKER_REGISTRY/$DOCKER_REPOSITORY -Dtag=$IMAGE_TAG
-
-          echo "🐇 Build Image >> $DOCKER_REPOSITORY:$IMAGE_TAG"

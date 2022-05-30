@@ -21,6 +21,8 @@ jib {
     }
     container {
         jvmFlags = [
+            "-server",
+            "-XX:+UseG1GC",
             "-Duser.timezone=Asia/Seoul"
         ]
     }

@@ -104,37 +104,29 @@ subprojects {
         integrationTest {
             compileClasspath += main.output + test.output
             runtimeClasspath += main.output + test.output
+            resources {
+                "src/integrationTest/resources"
+            }
         }
         e2eTest {
             compileClasspath += main.output + test.output
             runtimeClasspath += main.output + test.output
+            resources {
+                "src/e2eTest/resources"
+            }
         }
     }
 
     configurations {
-        compileOnly {
-            extendsFrom annotationProcessor
-        }
+        compileOnly.extendsFrom annotationProcessor
 
-        integrationTestImplementation {
-            extendsFrom implementation, testImplementation
-        }
-        integrationTestRuntimeOnly {
-            extendsFrom testRuntimeOnly
-        }
-        integrationTestCompileOnly {
-            extendsFrom testCompileOnly, testAnnotationProcessor
-        }
+        integrationTestImplementation.extendsFrom testImplementation
+        integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+        integrationTestCompileOnly.extendsFrom testCompileOnly, testAnnotationProcessor
 
-        e2eTestImplementation {
-            extendsFrom implementation, testImplementation
-        }
-        e2eTestRuntimeOnly {
-            extendsFrom testRuntimeOnly
-        }
-        e2eTestCompileOnly {
-            extendsFrom testCompileOnly, testAnnotationProcessor
-        }
+        e2eTestImplementation.extendsFrom testImplementation
+        e2eTestRuntimeOnly.extendsFrom testRuntimeOnly
+        e2eTestCompileOnly.extendsFrom testCompileOnly, testAnnotationProcessor
     }
 
     tasks.withType(Test) {
@@ -142,12 +134,16 @@ subprojects {
             html.enabled = false
             junitXml.enabled = false
         }
+        testLogging {
+            showStandardStreams = true
+            exceptionFormat = 'full'
+        }
     }
 
     task unitTest(type: Test, group: "verification", description: "Execute Unit Tests") {
         useJUnitPlatform()
         jacoco {
-            destinationFile = file("$buildDir/jacoco/unitTest.exec")
+            destinationFile = file("${buildDir}/jacoco/unitTest.exec")
         }
     }
 
@@ -156,7 +152,11 @@ subprojects {
         classpath = sourceSets.integrationTest.runtimeClasspath
         useJUnitPlatform()
         jacoco {
-            destinationFile = file("$buildDir/jacoco/integrationTest.exec")
+            destinationFile = file("${buildDir}/jacoco/integrationTest.exec")
+        }
+        testLogging {
+            showStandardStreams = true
+            exceptionFormat = 'full'
         }
     }
 
@@ -165,7 +165,7 @@ subprojects {
         classpath = sourceSets.e2eTest.runtimeClasspath
         useJUnitPlatform()
         jacoco {
-            destinationFile = file("$buildDir/jacoco/e2eTest.exec")
+            destinationFile = file("${buildDir}/jacoco/e2eTest.exec")
         }
     }
 
@@ -188,12 +188,12 @@ sonarqube {
         property "sonar.organization", "3dollar-in-my-pocket"
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.java.coveragePlugin", "jacoco"
-        property "sonar.coverage.jacoco.xmlReportPaths", "$buildDir/reports/jacoco/testCoverage/testCoverage.xml"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/testCoverage/testCoverage.xml"
     }
 }
 
 jacoco {
-    toolVersion = "$jacocoVersion"
+    toolVersion = "${jacocoVersion}"
 }
 
 task testCoverage(type: JacocoReport, group: "verification", description: "Report Test Coverage") {
@@ -204,8 +204,8 @@ task testCoverage(type: JacocoReport, group: "verification", description: "Repor
     }
 
     reports {
-        html.enabled true
         xml.enabled true
+        html.enabled false
         csv.enabled false
     }
 }

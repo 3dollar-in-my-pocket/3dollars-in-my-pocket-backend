@@ -32,7 +32,7 @@ jobs:
         id: version
         run: |
           VERSION=${GITHUB_REF_NAME#v}
-          echo "::set-output name=version::$VERSION"
+          echo "::set-output name=version::${VERSION}"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -51,7 +51,7 @@ jobs:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           DOCKER_REPOSITORY: threedollars-in-my-pocket-boss-api-prod
           IMAGE_TAG: ${{ steps.version.outputs.version }}
-        run: echo "::set-output name=image::$DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG"
+        run: echo "::set-output name=image::${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}:${IMAGE_TAG}"
 
       - name: Download task definition
         id: download-task-definition

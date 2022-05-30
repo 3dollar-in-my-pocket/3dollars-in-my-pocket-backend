@@ -15,7 +15,7 @@ on:
       - develop
   workflow_dispatch:
   schedule:
-    - cron: '00 11 * * *' # 08:00 KST every day
+    - cron: '00 23 * * *' # 08:00 KST every day
 
 jobs:
   ci:
@@ -51,7 +51,7 @@ jobs:
       - name: Test w/ coverage
         run: ./gradlew clean bootjar ci testCoverage --stacktrace
 
-      - name: Build and analyze
+      - name: Sonarqube analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_QUBE_TOKEN }}
