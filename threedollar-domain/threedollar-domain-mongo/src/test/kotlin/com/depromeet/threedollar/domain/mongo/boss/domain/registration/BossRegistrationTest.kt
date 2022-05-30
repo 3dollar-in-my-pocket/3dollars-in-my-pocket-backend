@@ -11,7 +11,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSoc
 internal class BossRegistrationTest {
 
     @Test
-    fun `가입신청을 바탕으로 BossAccout를 생성한다`() {
+    fun `가입신청한 내용을 기반으로 새로운 사장님 계정을 생성한다`() {
         // given
         val socialId = "social-id"
         val socialType = BossAccountSocialType.NAVER
@@ -40,7 +40,7 @@ internal class BossRegistrationTest {
     }
 
     @Test
-    fun `가입신청을 바탕으로 BossStore를 생성한다`() {
+    fun `가입신청한 내용을 바탕으로 사장님 가게를 생성한다`() {
         // given
         val bossId = "bossId"
         val storeName = "행잉"

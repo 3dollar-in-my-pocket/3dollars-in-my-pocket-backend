@@ -24,6 +24,7 @@ data class UpdateBossStoreInfoRequest(
     @field:Size(max = 2048, message = "{store.snsUrl.size}")
     val snsUrl: String?,
 
+    @field:Size(max = 20, message = "{store.menu.size}")
     val menus: List<MenuRequest>,
 
     val appearanceDays: Set<AppearanceDayRequest>,

@@ -30,7 +30,7 @@ import com.depromeet.threedollar.external.client.kakao.dto.response.KaKaoProfile
 @SpringBootTest
 class KaKaoAuthServiceTest {
 
-    private static final String SOCIAL_ID = "social-id";
+    private static final String SOCIAL_ID = "kakako-social-id";
     private static final UserSocialType SOCIAL_TYPE = UserSocialType.KAKAO;
 
     private AuthService authService;

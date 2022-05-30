@@ -1,4 +1,6 @@
-threedollars.aplication.uid: ${random.uuid}
+threedollars:
+  aplication:
+    uid: ${random.uuid}
 
 server:
   port: 5100
@@ -10,6 +12,10 @@ server:
     context-path: /admin
   tomcat:
     connection-timeout: 10s
+  compression:
+    enabled: true
+    mime-types: application/json
+    min-response-size: 2KB
 
 spring:
   profiles:

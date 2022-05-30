@@ -60,7 +60,7 @@ class StoreReviewRatingServiceTest extends SetupStoreServiceTest {
         List<Store> stores = storeRepository.findAll();
         assertAll(
             () -> assertThat(stores).hasSize(1),
-            () -> assertThat(stores.get(0).getRating()).isEqualTo(0)
+            () -> assertThat(stores.get(0).getRating()).isZero()
         );
     }
 

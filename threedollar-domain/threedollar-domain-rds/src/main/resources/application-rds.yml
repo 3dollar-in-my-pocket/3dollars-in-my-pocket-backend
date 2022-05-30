@@ -154,9 +154,9 @@ spring:
       hikari:
         auto-commit: false
         driver-class-name: org.mariadb.jdbc.Driver
-        jdbc-url: ${secret.jdbc.uri}
-        username: ${secret.jdbc.username}
-        password: ${secret.jdbc.password}
+        jdbc-url: ${secret.primary.jdbc.uri}
+        username: ${secret.primary.jdbc.username}
+        password: ${secret.primary.jdbc.password}
         pool-name: HikariPool-Primary
         connection-test-query: SELECT 1
         connection-timeout: 10000
@@ -164,9 +164,9 @@ spring:
       hikari:
         auto-commit: false
         driver-class-name: org.mariadb.jdbc.Driver
-        jdbc-url: ${secret.jdbc.uri}
-        username: ${secret.jdbc.username}
-        password: ${secret.jdbc.password}
+        jdbc-url: ${secret.secondary.jdbc.uri}
+        username: ${secret.secondary.jdbc.username}
+        password: ${secret.secondary.jdbc.password}
         pool-name: HikariPool-Seconary
         connection-test-query: SELECT 1
         connection-timeout: 10000

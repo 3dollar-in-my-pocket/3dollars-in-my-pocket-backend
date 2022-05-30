@@ -10,3 +10,46 @@ dependencies {
 application {
     mainClass.set("com.depromeet.threedollar.boss.api.ThreeDollarBossApiApplicationKt")
 }
+
+ext {
+    newRelicAgentDownloadUrl = "https://download.newrelic.com/newrelic/java-agent/newrelic-agent/current/newrelic-java.zip"
+    newRelicExtraDirectory = "${buildDir}/newrelic"
+    newRelicHostDirectory = "/usr/app/newrelic"
+    newRelicJavaAgentDirectory = "${newRelicHostDirectory}/newrelic/newrelic.jar"
+}
+
+task downloadAgent(type: Download) {
+    src "${newRelicAgentDownloadUrl}"
+    dest "${buildDir}/newrelic.zip"
+}
+
+task extractAgent(dependsOn: downloadAgent, type: Copy) {
+    from zipTree(downloadAgent.dest)
+    into "${newRelicExtraDirectory}/${newRelicHostDirectory}"
+}
+
+jib {
+    from {
+        image = "adoptopenjdk/openjdk11:alpine-jre"
+    }
+    to {
+        image = System.getProperty("image", "")
+        tags = ["latest", System.getProperty("tag", "")]
+    }
+    extraDirectories.paths = [
+        "${newRelicExtraDirectory}"
+    ]
+    container {
+        jvmFlags = [
+            "-server",
+            "-XX:+UseG1GC",
+            "-javaagent:" + newRelicJavaAgentDirectory,
+            "-Duser.timezone=Asia/Seoul"
+        ]
+        ports = ["4000"]
+    }
+}
+
+tasks.jib {
+    dependsOn extractAgent
+}

@@ -32,7 +32,7 @@ class AddReviewRequestTest {
         Set<ConstraintViolation<AddReviewRequest>> constraintViolations = validator.validate(request);
 
         // then
-        assertThat(constraintViolations).isNotEmpty();
+        assertThat(constraintViolations).hasSize(1);
     }
 
     @ValueSource(ints = {1, 2, 3, 4, 5})

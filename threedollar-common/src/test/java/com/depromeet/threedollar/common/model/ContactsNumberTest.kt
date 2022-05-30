@@ -15,7 +15,7 @@ internal class ContactsNumberTest {
         "010-1234-1234"
     ])
     @ParameterizedTest
-    fun `정상적인 연락처 번호인 경우 InvalidException이 발생하지 않는다`(number: String) {
+    fun `연락처 번호 형식에 일치하는 경우 유효성 검사를 통과한다`(number: String) {
         // when & then
         assertDoesNotThrow { ContactsNumber.of(number) }
     }
@@ -26,7 +26,7 @@ internal class ContactsNumberTest {
         "1234"
     ])
     @ParameterizedTest
-    fun `연락처 번호 유효성 검증 실패하는 케이스`(number: String) {
+    fun `연락처 번호 형식에 어긋나는 경우 InvalidException이 발생한다`(number: String) {
         // when & then
         assertThatThrownBy { ContactsNumber.of(number) }.isInstanceOf(InvalidException::class.java)
     }

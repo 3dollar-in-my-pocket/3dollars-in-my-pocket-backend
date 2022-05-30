@@ -16,7 +16,7 @@ class FileUtilsTest {
         "test.png, .png"
     })
     @ParameterizedTest
-    void 파일의_확장자를_가져온다(String fileName, String extension) {
+    void 파일이름에서_파일의_확장자를_가져온다(String fileName, String extension) {
         // when
         String sut = FileUtils.getFileExtension(fileName);
 

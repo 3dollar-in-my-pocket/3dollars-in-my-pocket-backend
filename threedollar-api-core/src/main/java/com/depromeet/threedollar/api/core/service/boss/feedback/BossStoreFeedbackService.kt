@@ -67,7 +67,7 @@ class BossStoreFeedbackService(
     }
 
     private fun getNextDate(bossStoreId: String, oldestDateInCursor: LocalDate): LocalDate? {
-        return bossStoreFeedbackRepository.findFirstLessThanDate(bossStoreId = bossStoreId, date = oldestDateInCursor)?.date
+        return bossStoreFeedbackRepository.findLastLessThanDate(bossStoreId = bossStoreId, date = oldestDateInCursor)?.date
     }
 
 }

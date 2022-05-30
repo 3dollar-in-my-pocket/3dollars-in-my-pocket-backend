@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.admin.service.auth
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
@@ -50,13 +51,13 @@ internal class GoogleAuthServiceTest(
             val adminId = authService.login(LoginRequest("token"))
 
             // then
-            Assertions.assertThat(adminId).isEqualTo(admin.id)
+            assertThat(adminId).isEqualTo(admin.id)
         }
 
         @Test
         fun `구글 로그인시 가입한 관리자가 아니면 404 에러 발생`() {
             // when & then
-            Assertions.assertThatThrownBy {
+            assertThatThrownBy {
                 authService.login(LoginRequest("token"))
             }.isInstanceOf(NotFoundException::class.java)
         }

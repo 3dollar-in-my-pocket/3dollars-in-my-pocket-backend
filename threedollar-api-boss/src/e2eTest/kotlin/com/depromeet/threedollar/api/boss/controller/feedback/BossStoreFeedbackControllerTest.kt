@@ -163,22 +163,29 @@ internal class BossStoreFeedbackControllerTest(
         }
 
         @Test
-        fun `조회한 기간 범위에는 피드백이 존재하지 않지만 해당 범위 이전에 피드백이 더 있는 경우 cursor가 해당 날짜를 가리킨다`() {
+        fun `해당 기간 이전의 피드백이 더 있는 경우 cursor가 다음 피드백의 날짜를 가리킨다`() {
             // given
-            val date = LocalDate.of(2022, 1, 1)
+            val userId = 100000L
+
             val bossStore = BossStoreCreator.create(
                 bossId = "bossId",
                 name = "가슴속 3천원"
             )
             bossStoreRepository.save(bossStore)
 
-            val feedback = BossStoreFeedbackCreator.create(
+            val feedback1 = BossStoreFeedbackCreator.create(
                 storeId = bossStore.id,
-                userId = 1000000L,
+                userId = userId,
                 feedbackType = BossStoreFeedbackType.BOSS_IS_KIND,
-                date = date
+                date = LocalDate.of(2022, 1, 1)
             )
-            bossStoreFeedbackRepository.save(feedback)
+            val feedback2 = BossStoreFeedbackCreator.create(
+                storeId = bossStore.id,
+                userId = userId,
+                feedbackType = BossStoreFeedbackType.FOOD_IS_DELICIOUS,
+                date = LocalDate.of(2021, 12, 25)
+            )
+            bossStoreFeedbackRepository.saveAll(listOf(feedback1, feedback2))
 
             // when & then
             mockMvc.get("/v1/boss/store/${bossStore.id}/feedbacks/specific?startDate=2022-01-02&endDate=2022-01-03")

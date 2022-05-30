@@ -22,6 +22,7 @@ data class PatchBossStoreInfoRequest(
     @field:Size(max = 2048, message = "{store.snsUrl.size}")
     val snsUrl: String? = null,
 
+    @field:Size(max = 20, message = "{store.menu.size}")
     val menus: List<MenuRequest>? = null,
 
     val appearanceDays: Set<AppearanceDayRequest>? = null,

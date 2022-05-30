@@ -8,7 +8,7 @@ aws ecr get-login-password --region ${ECR_REGION} | docker login --username AWS 
 
 EXIST_BLUE=$(docker-compose -p ${DOCKER_APP_NAME}-blue -f docker-compose.blue.yml ps | grep Up)
 
-if [ -z "$EXIST_BLUE" ]; then
+if [ -z "${EXIST_BLUE}" ]; then
     echo "[Blue] 서버를 가동합니다"
     docker-compose -p ${DOCKER_APP_NAME}-blue -f docker-compose.blue.yml up -d --build
 

@@ -20,7 +20,7 @@ class BossStoreCategoryCacheRepositoryTest(
     }
 
     @Test
-    fun `캐시에 없는 경우 null을 반환한다`() {
+    fun `사장님 가게 카테고리 목록이 캐시에 없는 경우 null을 반환한다`() {
         // when
         val categories = bossStoreCategoryCacheRepository.getAll()
 
