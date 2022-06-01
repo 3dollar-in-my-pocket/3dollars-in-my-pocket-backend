@@ -42,7 +42,7 @@ class BossStoreFeedbackController(
     @GetMapping("/v1/boss/store/feedback/types")
     fun getBossStoreFeedbackTypes(): ApiResponse<List<BossStoreFeedbackTypeResponse>> {
         return ApiResponse.success(BossStoreFeedbackType.values().asSequence()
-            .map { BossStoreFeedbackTypeResponse.of(it) }
+            .map { feedbackType -> BossStoreFeedbackTypeResponse.of(feedbackType) }
             .toList())
     }
 

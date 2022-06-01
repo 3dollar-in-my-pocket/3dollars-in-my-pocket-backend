@@ -7,8 +7,8 @@ object FaqCategoryMapper {
 
     fun retrieveFaqCategories(): List<FaqCategoryResponse> {
         return FaqCategory.values().asSequence()
-            .sortedBy { it.displayOrder }
-            .map { FaqCategoryResponse.of(it) }
+            .sortedBy { faqCategory -> faqCategory.displayOrder }
+            .map { faqCategory -> FaqCategoryResponse.of(faqCategory) }
             .toList()
     }
 

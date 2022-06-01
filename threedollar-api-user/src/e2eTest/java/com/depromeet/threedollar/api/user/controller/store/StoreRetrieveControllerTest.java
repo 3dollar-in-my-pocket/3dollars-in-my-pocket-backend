@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -379,7 +380,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             storeRetrieveMockApiCaller.retrieveAroundStores(request, LocationValue.of(latitude, longitude), LocationValue.of(latitude, longitude), 200);
 
             // then
-            verify(aroundUserStoresCacheRepository).set(anyDouble(), anyDouble(), anyDouble(), anyList());
+            verify(aroundUserStoresCacheRepository, times(1)).set(anyDouble(), anyDouble(), anyDouble(), anyList());
         }
 
         @Test

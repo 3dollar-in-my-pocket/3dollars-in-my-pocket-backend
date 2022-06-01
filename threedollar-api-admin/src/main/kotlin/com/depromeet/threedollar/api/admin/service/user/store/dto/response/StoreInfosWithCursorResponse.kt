@@ -11,7 +11,7 @@ data class StoreInfosWithCursorResponse(
 
     companion object {
         fun of(storesCursor: CursorPagingSupporter<Store>): StoreInfosWithCursorResponse {
-            val stores = storesCursor.currentCursorItems.map { StoreInfoResponse.of(it) }
+            val stores = storesCursor.currentCursorItems.map { store -> StoreInfoResponse.of(store) }
             if (storesCursor.hasNext()) {
                 return StoreInfosWithCursorResponse(stores, CursorResponse.of(storesCursor.nextCursor.id))
             }

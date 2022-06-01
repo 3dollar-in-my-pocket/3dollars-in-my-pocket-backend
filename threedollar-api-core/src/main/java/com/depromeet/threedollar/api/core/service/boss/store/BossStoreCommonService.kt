@@ -47,14 +47,14 @@ class BossStoreCommonService(
         val categoriesDictionary: Map<String, BossStoreCategoryResponse> = bossStoreCategoryService.retrieveBossStoreCategories().associateBy { it.categoryId }
 
         return bossStores.asSequence()
-            .filter { it.isNotOwner(bossId ?: "") }
-            .map {
+            .filter { bossStore -> bossStore.isNotOwner(bossId = bossId ?: "") }
+            .map { bossStore ->
                 BossStoreAroundInfoResponse.of(
-                    bossStore = it,
-                    categories = getCategories(it, categoriesDictionary),
-                    openStartDateTime = bossStoreOpenTimeRepository.get(it.id),
+                    bossStore = bossStore,
+                    categories = getCategories(bossStore, categoriesDictionary),
+                    openStartDateTime = bossStoreOpenTimeRepository.get(bossStore.id),
                     deviceLocation = deviceLocation,
-                    totalFeedbacksCounts = bossStoreFeedbackCountRepository.getTotalCounts(it.id)
+                    totalFeedbacksCounts = bossStoreFeedbackCountRepository.getTotalCounts(bossStore.id)
                 )
             }
             .sortedWith(request.orderType.sorted)
@@ -62,7 +62,7 @@ class BossStoreCommonService(
     }
 
     private fun getCategories(bossStore: BossStore, categoriesDictionary: Map<String, BossStoreCategoryResponse>): List<BossStoreCategoryResponse> {
-        return bossStore.categoriesIds.mapNotNull { categoriesDictionary[it] }
+        return bossStore.categoriesIds.mapNotNull { categoryId -> categoriesDictionary[categoryId] }
     }
 
     @Transactional(readOnly = true)

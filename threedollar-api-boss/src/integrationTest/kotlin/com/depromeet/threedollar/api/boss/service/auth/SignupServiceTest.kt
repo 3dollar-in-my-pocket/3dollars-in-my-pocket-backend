@@ -181,6 +181,6 @@ private fun createCategory(
     vararg titles: String,
 ): Set<String> {
     return titles.asSequence()
-        .map { bossStoreCategoryRepository.save(BossStoreCategoryCreator.create(it)).id }
+        .map { title -> bossStoreCategoryRepository.save(BossStoreCategoryCreator.create(title)).id }
         .toSet()
 }

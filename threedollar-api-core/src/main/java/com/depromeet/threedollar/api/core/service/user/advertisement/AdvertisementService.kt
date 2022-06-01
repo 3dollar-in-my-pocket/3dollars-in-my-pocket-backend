@@ -18,7 +18,7 @@ class AdvertisementService(
     @Transactional(readOnly = true)
     fun getAdvertisements(request: RetrieveAdvertisementsRequest): List<AdvertisementResponse> {
         val advertisements = advertisementRepository.findActivatedAdvertisementsByPositionAndPlatformAfterDate(request.position, request.platform, LocalDateTime.now())
-        return advertisements.map { AdvertisementResponse.of(it.detail) }
+        return advertisements.map { advertisement -> AdvertisementResponse.of(advertisement.detail) }
     }
 
 }

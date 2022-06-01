@@ -72,7 +72,7 @@ class UserMedalServiceTest extends SetupUserServiceTest {
                 .build();
 
             // when & then
-            assertThatThrownBy(() -> userMedalService.updateRepresentativeMedal(request, userId)).isInstanceOfAny(NotFoundException.class);
+            assertThatThrownBy(() -> userMedalService.updateRepresentativeMedal(request, userId)).isInstanceOf(NotFoundException.class);
         }
 
     }

@@ -14,8 +14,10 @@ data class BossStoreFeedbackCursorResponse(
             return BossStoreFeedbackCursorResponse(
                 cursor = CursorResponse.of(nextDate),
                 contents = feedbackGroupingDate.asSequence()
-                    .sortedByDescending { it.key }
-                    .map { BossStoreFeedbackGroupingDateResponse.of(it.key, it.value) }
+                    .sortedByDescending { (date, _) -> date }
+                    .map { (date, feedbackCountsGroupingType) ->
+                        BossStoreFeedbackGroupingDateResponse.of(date = date, feedbackCountsGroupingType = feedbackCountsGroupingType)
+                    }
                     .toList()
             )
         }
@@ -33,7 +35,9 @@ data class BossStoreFeedbackGroupingDateResponse(
         fun of(date: LocalDate, feedbackCountsGroupingType: Map<BossStoreFeedbackType, Int>): BossStoreFeedbackGroupingDateResponse {
             return BossStoreFeedbackGroupingDateResponse(
                 date = date,
-                feedbacks = feedbackCountsGroupingType.map { BossStoreFeedbackCountResponse.of(it.key, it.value) }
+                feedbacks = feedbackCountsGroupingType.map { (feedbackType, count) ->
+                    BossStoreFeedbackCountResponse.of(feedbackType = feedbackType, count = count)
+                }
             )
         }
     }

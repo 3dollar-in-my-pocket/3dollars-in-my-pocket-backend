@@ -17,8 +17,8 @@ class FaqService(
     @Transactional(readOnly = true)
     fun retrieveFaqsByCategory(request: RetrieveFaqsRequest): List<FaqResponse> {
         return faqRepository.findAllByCategory(request.category).asSequence()
-            .sortedBy { it.category.displayOrder }
-            .map { FaqResponse.of(it) }
+            .sortedBy { faq -> faq.category.displayOrder }
+            .map { faq -> FaqResponse.of(faq) }
             .toList()
     }
 

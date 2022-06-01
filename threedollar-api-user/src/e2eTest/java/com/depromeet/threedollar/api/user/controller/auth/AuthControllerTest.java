@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.user.controller.auth;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.AfterEach;
@@ -56,7 +56,7 @@ class AuthControllerTest extends SetupUserControllerTest {
         @Test
         void 카카오_회원가입_요청이_성공하면_인증_토큰이_반환된다() throws Exception {
             // given
-            when(kaKaoAuthApiClient.getProfileInfo(any())).thenReturn(KaKaoProfileResponse.testInstance("kakao-social-id"));
+            when(kaKaoAuthApiClient.getProfileInfo(anyString())).thenReturn(KaKaoProfileResponse.testInstance("kakao-social-id"));
 
             SignUpRequest request = SignUpRequest.testBuilder()
                 .token("social-access-token")
@@ -78,7 +78,7 @@ class AuthControllerTest extends SetupUserControllerTest {
         @Test
         void 애플_회원가입_요청이_성공하면_인증_토큰이_반환된다() throws Exception {
             // given
-            when(appleTokenDecoder.getSocialIdFromIdToken(any())).thenReturn("apple-social-id");
+            when(appleTokenDecoder.getSocialIdFromIdToken(anyString())).thenReturn("apple-social-id");
 
             SignUpRequest request = SignUpRequest.testBuilder()
                 .token("social-access-token")
@@ -100,7 +100,7 @@ class AuthControllerTest extends SetupUserControllerTest {
         @Test
         void 구글_회원가입_요청이_성공하면_인증_토큰이_반환된다() throws Exception {
             // given
-            when(googleAuthApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance("google-social-id"));
+            when(googleAuthApiClient.getProfileInfo(anyString())).thenReturn(GoogleProfileInfoResponse.testInstance("google-social-id"));
 
             SignUpRequest request = SignUpRequest.testBuilder()
                 .token("social-access-token")
@@ -131,7 +131,7 @@ class AuthControllerTest extends SetupUserControllerTest {
             User user = UserCreator.create("kakao-social-id", UserSocialType.KAKAO, "카카오 계정");
             userRepository.save(user);
 
-            when(kaKaoAuthApiClient.getProfileInfo(any())).thenReturn(KaKaoProfileResponse.testInstance(user.getSocialId()));
+            when(kaKaoAuthApiClient.getProfileInfo(anyString())).thenReturn(KaKaoProfileResponse.testInstance(user.getSocialId()));
 
             LoginRequest request = LoginRequest.testBuilder()
                 .token("kakao-access-token")
@@ -155,7 +155,7 @@ class AuthControllerTest extends SetupUserControllerTest {
             User user = UserCreator.create("apple-social-id", UserSocialType.APPLE, "애플 계정");
             userRepository.save(user);
 
-            when(appleTokenDecoder.getSocialIdFromIdToken(any())).thenReturn(user.getSocialId());
+            when(appleTokenDecoder.getSocialIdFromIdToken(anyString())).thenReturn(user.getSocialId());
 
             LoginRequest request = LoginRequest.testBuilder()
                 .token("apple-access-token")
@@ -179,7 +179,7 @@ class AuthControllerTest extends SetupUserControllerTest {
             User user = UserCreator.create("google-social-id", UserSocialType.GOOGLE, "구글 계정");
             userRepository.save(user);
 
-            when(googleAuthApiClient.getProfileInfo(any())).thenReturn(GoogleProfileInfoResponse.testInstance(user.getSocialId()));
+            when(googleAuthApiClient.getProfileInfo(anyString())).thenReturn(GoogleProfileInfoResponse.testInstance(user.getSocialId()));
 
             LoginRequest request = LoginRequest.testBuilder()
                 .token("google-access-token")

@@ -18,6 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
 
 import com.depromeet.threedollar.api.core.provider.upload.UploadProvider;
+import com.depromeet.threedollar.api.core.provider.upload.dto.request.UploadFileRequest;
 import com.depromeet.threedollar.api.user.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
@@ -52,7 +53,7 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
         @Test
         void 가게_이미지_파일을_업로드하고_업로드된_외부_스토리지의_URL을_반환받는다() {
             // given
-            when(uploadProvider.uploadFile(any())).thenReturn(IMAGE_URL);
+            when(uploadProvider.uploadFile(any(UploadFileRequest.class))).thenReturn(IMAGE_URL);
 
             AddStoreImageRequest request = AddStoreImageRequest.testBuilder()
                 .storeId(store.getId())

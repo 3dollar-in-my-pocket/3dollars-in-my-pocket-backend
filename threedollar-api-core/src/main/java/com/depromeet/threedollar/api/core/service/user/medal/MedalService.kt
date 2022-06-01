@@ -15,8 +15,8 @@ class MedalService(
     @Cacheable(cacheNames = [MEDALS], key = "'ALL'")
     @Transactional(readOnly = true)
     fun getAllMedals(): List<MedalResponse> {
-        return medalRepository.findAllActiveMedals()
-            .map { MedalResponse.of(it) }
+        val activeMedals = medalRepository.findAllActiveMedals()
+        return activeMedals.map { medal -> MedalResponse.of(medal) }
     }
 
 }

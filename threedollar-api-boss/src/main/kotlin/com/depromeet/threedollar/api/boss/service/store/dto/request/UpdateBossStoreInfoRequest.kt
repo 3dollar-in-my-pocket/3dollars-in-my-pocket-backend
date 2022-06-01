@@ -34,14 +34,12 @@ data class UpdateBossStoreInfoRequest(
 ) {
 
     fun toMenus(): List<BossStoreMenu> {
-        return menus.map {
-            it.toMenu()
-        }
+        return menus.map { menuRequest -> menuRequest.toMenu() }
     }
 
     fun toAppearanceDays(): Set<BossStoreAppearanceDay> {
         return appearanceDays.asSequence()
-            .map { it.toAppearanceDay() }
+            .map { appearanceDayRequest -> appearanceDayRequest.toAppearanceDay() }
             .toSet()
     }
 

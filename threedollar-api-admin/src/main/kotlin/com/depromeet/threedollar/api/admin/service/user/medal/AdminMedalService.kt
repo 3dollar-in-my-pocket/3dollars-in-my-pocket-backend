@@ -34,8 +34,8 @@ class AdminMedalService(
 
     @Transactional(readOnly = true)
     fun retrieveMedals(): List<MedalResponse> {
-        return medalRepository.findAllActiveMedals()
-            .map { MedalResponse.of(it) }
+        val activeMedals = medalRepository.findAllActiveMedals()
+        return activeMedals.map { medal -> MedalResponse.of(medal) }
     }
 
     private fun findMedalById(medalId: Long): Medal {

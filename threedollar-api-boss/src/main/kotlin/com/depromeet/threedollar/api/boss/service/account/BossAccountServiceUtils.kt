@@ -10,7 +10,10 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegis
 
 object BossAccountServiceUtils {
 
-    fun findBossAccountByRegistrationId(bossAccountRepository: BossAccountRepository, bossId: String): BossAccount {
+    fun findBossAccountByRegistrationId(
+        bossAccountRepository: BossAccountRepository,
+        bossId: String,
+    ): BossAccount {
         return bossAccountRepository.findBossAccountById(bossId)
             ?: throw NotFoundException("해당하는 사장님 계정($bossId)은 존재하지 않습니다", ErrorCode.NOTFOUND_BOSS_ACCOUNT)
     }
@@ -31,11 +34,13 @@ object BossAccountServiceUtils {
         socialId: String,
         socialType: BossAccountSocialType,
     ): String {
-        return bossAccountRepository.findBossAccountBySocialInfo(socialId, socialType)?.id
-            ?: run {
-                return bossRegistrationRepository.findWaitingRegistrationBySocialIdAndSocialType(socialId, socialType)?.id
-                    ?: throw NotFoundException("존재하지 않는 사장님 계정(${socialId} - $socialType 입니다.", ErrorCode.NOTFOUND_BOSS_ACCOUNT)
-            }
+        val bossAccount = bossAccountRepository.findBossAccountBySocialInfo(socialId, socialType)
+        if (bossAccount != null) {
+            return bossAccount.id
+        }
+        val bossRegistration = bossRegistrationRepository.findWaitingRegistrationBySocialIdAndSocialType(socialId, socialType)
+            ?: throw NotFoundException("존재하지 않는 사장님 계정(${socialId} - $socialType 입니다.", ErrorCode.NOTFOUND_BOSS_ACCOUNT)
+        return bossRegistration.id
     }
 
 }

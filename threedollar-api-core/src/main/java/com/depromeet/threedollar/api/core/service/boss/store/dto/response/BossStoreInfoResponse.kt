@@ -43,8 +43,10 @@ data class BossStoreInfoResponse(
                 introduction = bossStore.introduction,
                 contactsNumber = bossStore.contactsNumber?.getNumberWithSeparator(),
                 snsUrl = bossStore.snsUrl,
-                menus = bossStore.menus.map { BossStoreMenuResponse.of(it) },
-                appearanceDays = bossStore.appearanceDays.asSequence().map { BossStoreAppearanceDayResponse.of(it) }.toSet(),
+                menus = bossStore.menus.map { menu -> BossStoreMenuResponse.of(menu) },
+                appearanceDays = bossStore.appearanceDays.asSequence()
+                    .map { appearanceDay -> BossStoreAppearanceDayResponse.of(appearanceDay) }
+                    .toSet(),
                 categories = categories.toSet(),
                 openStatus = openStartDateTime?.let { BossStoreOpenStatusResponse.of(it) }
                     ?: BossStoreOpenStatusResponse.close(),
@@ -84,7 +86,7 @@ data class BossStoreAroundInfoResponse(
                 bossStoreId = bossStore.id,
                 name = bossStore.name,
                 location = bossStore.location?.let { LocationResponse.of(it) },
-                menus = bossStore.menus.map { BossStoreMenuResponse.of(it) },
+                menus = bossStore.menus.map { menu -> BossStoreMenuResponse.of(menu) },
                 categories = categories.toSet(),
                 openStatus = openStartDateTime?.let { BossStoreOpenStatusResponse.of(it) }
                     ?: BossStoreOpenStatusResponse.close(),

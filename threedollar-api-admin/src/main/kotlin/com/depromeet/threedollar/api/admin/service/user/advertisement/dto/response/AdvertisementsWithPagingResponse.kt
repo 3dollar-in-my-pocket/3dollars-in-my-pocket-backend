@@ -14,8 +14,8 @@ data class AdvertisementsWithPagingResponse(
     companion object {
         fun of(advertisements: List<Advertisement>, totalCounts: Long): AdvertisementsWithPagingResponse {
             return AdvertisementsWithPagingResponse(
-                advertisements.map { AdvertisementResponse.of(it) },
-                totalCounts
+                contents = advertisements.map { advertisement -> AdvertisementResponse.of(advertisement) },
+                totalCounts = totalCounts
             )
         }
     }

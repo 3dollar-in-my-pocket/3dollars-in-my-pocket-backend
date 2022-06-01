@@ -11,11 +11,11 @@ data class AddBossStoreFeedbackRequest(
 ) {
 
     fun toDocuments(storeId: String, userId: Long, date: LocalDate): List<BossStoreFeedback> {
-        return feedbackTypes.map {
+        return feedbackTypes.map {feedbackType ->
             BossStoreFeedback.of(
                 bossStoreId = storeId,
                 userId = userId,
-                feedbackType = it,
+                feedbackType = feedbackType,
                 date = date
             )
         }

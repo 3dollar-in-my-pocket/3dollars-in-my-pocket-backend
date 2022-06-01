@@ -36,7 +36,7 @@ internal class BossStoreCategoryServiceTest(
         bossStoreCategoryService.retrieveBossStoreCategories()
 
         // then
-        verify { bossStoreCategoryCacheRepository.set(any()) }
+        verify(exactly = 1) { bossStoreCategoryCacheRepository.set(any()) }
     }
 
     @Test
@@ -52,7 +52,7 @@ internal class BossStoreCategoryServiceTest(
         bossStoreCategoryService.retrieveBossStoreCategoriesByIds(listOf(category.id))
 
         // then
-        verify { bossStoreCategoryCacheRepository.set(any()) }
+        verify(exactly = 1) { bossStoreCategoryCacheRepository.set(any()) }
     }
 
 }

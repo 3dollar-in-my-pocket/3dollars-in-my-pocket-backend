@@ -18,11 +18,12 @@ class AdminUserStoreService(
 
     @Transactional(readOnly = true)
     fun retrieveReportedStores(request: RetrieveReportedStoresRequest): List<ReportedStoreInfoResponse> {
-        return storeRepository.findStoresByMoreThanReportCntWithPagination(
+        val storesMoreThanReportCount = storeRepository.findStoresByMoreThanReportCntWithPagination(
             request.minCount,
             request.page - 1,
             request.size
-        ).map { ReportedStoreInfoResponse.of(it) }
+        )
+        return storesMoreThanReportCount.map { store -> ReportedStoreInfoResponse.of(store) }
     }
 
     @Transactional(readOnly = true)

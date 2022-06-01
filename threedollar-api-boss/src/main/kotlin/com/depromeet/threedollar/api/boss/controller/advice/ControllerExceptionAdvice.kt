@@ -55,7 +55,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(BindException::class)
     private fun handleBadRequest(e: BindException): ApiResponse<Nothing> {
         val errorMessage = e.bindingResult.fieldErrors.stream()
-            .map { obj: FieldError -> obj.defaultMessage }
+            .map { fieldError: FieldError -> fieldError.defaultMessage }
             .collect(Collectors.joining("\n"))
         log.error("BindException: {}", errorMessage)
         return ApiResponse.error(INVALID, errorMessage)

@@ -11,7 +11,7 @@ data class AdminListInfoWithPagingResponse(
     companion object {
         fun of(admins: List<Admin>, perSize: Int, totalSize: Long): AdminListInfoWithPagingResponse {
             return AdminListInfoWithPagingResponse(
-                admins = admins.map { AdminInfoResponse.of(it) },
+                admins = admins.map { admin -> AdminInfoResponse.of(admin) },
                 page = PagingResponse.of(totalSize = totalSize, perSize = perSize)
             )
         }

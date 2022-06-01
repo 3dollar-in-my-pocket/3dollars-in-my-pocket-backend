@@ -58,7 +58,9 @@ data class BossAccountRegistrationStoreResponse(
         fun of(store: RegistrationStoreForm, bossStoreCategoryMap: Map<String, BossStoreCategory>): BossAccountRegistrationStoreResponse {
             return BossAccountRegistrationStoreResponse(
                 name = store.name,
-                categories = store.categoriesIds.mapNotNull { bossStoreCategoryMap[it]?.name }.toSet(),
+                categories = store.categoriesIds.asSequence()
+                    .mapNotNull { categoryId -> bossStoreCategoryMap[categoryId]?.name }
+                    .toSet(),
                 contactsNumber = store.contactsNumber.getNumberWithSeparator(),
                 certificationPhotoUrl = store.certificationPhotoUrl
             )

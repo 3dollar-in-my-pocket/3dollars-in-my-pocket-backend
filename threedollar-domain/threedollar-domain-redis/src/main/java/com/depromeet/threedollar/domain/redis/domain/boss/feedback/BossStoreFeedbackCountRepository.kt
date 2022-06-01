@@ -12,10 +12,14 @@ class BossStoreFeedbackCountRepository(
 ) {
 
     fun getTotalCounts(bossStoreId: String): Int {
-        return bossStoreFeedbackCountRepository.getBulk(
-            BossStoreFeedbackType.values().map {
-                BossStoreFeedbackCountKey(bossStoreId = bossStoreId, feedbackType = it)
-            })
+        val keys = BossStoreFeedbackType.values()
+            .map { feedbackType ->
+                BossStoreFeedbackCountKey(
+                    bossStoreId = bossStoreId,
+                    feedbackType = feedbackType
+                )
+            }
+        return bossStoreFeedbackCountRepository.getBulk(keys).asSequence()
             .filterNotNull()
             .sum()
     }
@@ -29,10 +33,10 @@ class BossStoreFeedbackCountRepository(
     }
 
     fun increaseBulk(bossStoreId: String, feedbackTypes: Set<BossStoreFeedbackType>) {
-        val keys = feedbackTypes.map {
+        val keys = feedbackTypes.map { feedbackType ->
             BossStoreFeedbackCountKey.of(
                 bossStoreId = bossStoreId,
-                feedbackType = it
+                feedbackType = feedbackType
             )
         }
         bossStoreFeedbackCountRepository.incrBulk(keys)
@@ -48,8 +52,10 @@ class BossStoreFeedbackCountRepository(
 
     fun getAllCountsGroupByFeedbackType(bossStoreId: String): Map<BossStoreFeedbackType, Int> {
         val feedbackTypes = BossStoreFeedbackType.values()
-        val feedbackCounts: List<Int?> = bossStoreFeedbackCountRepository.getBulk(feedbackTypes
-            .map { BossStoreFeedbackCountKey.of(bossStoreId, it) })
+        val keys: List<BossStoreFeedbackCountKey> = feedbackTypes.map { feedbackType ->
+            BossStoreFeedbackCountKey.of(bossStoreId = bossStoreId, feedbackType = feedbackType)
+        }
+        val feedbackCounts: List<Int?> = bossStoreFeedbackCountRepository.getBulk(keys)
 
         val feedbackCountsMap = linkedMapOf<BossStoreFeedbackType, Int>()
         feedbackTypes.forEachIndexed { index, feedbackType ->

@@ -7,9 +7,9 @@ object MenuCategoryMapper {
 
     fun retrieveActiveMenuCategories(): List<MenuCategoryResponse> {
         return UserMenuCategoryType.values().asSequence()
-            .filter { it.isVisible }
-            .sortedBy { it.displayOrder }
-            .map { MenuCategoryResponse.of(it) }
+            .filter { categoryType -> categoryType.isVisible }
+            .sortedBy { categoryType -> categoryType.displayOrder }
+            .map { categoryType -> MenuCategoryResponse.of(categoryType) }
             .toList()
     }
 

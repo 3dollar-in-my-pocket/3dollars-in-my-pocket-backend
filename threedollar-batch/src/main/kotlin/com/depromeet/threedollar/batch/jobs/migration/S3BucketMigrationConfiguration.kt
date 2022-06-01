@@ -41,12 +41,13 @@ class S3BucketMigrationConfiguration(
         return stepBuilderFactory[JOB_NAME + "_step"]
             .tasklet { _, _ ->
                 val storeImages = storeImageRepository.findAll().asSequence()
-                    .filter { it.url.startsWith(beforePrefix) }
-                    .map {
-                        val url = it.url.split(beforePrefix)[1]
-                        it.updateUrl(afterPrefix + url)
-                        it
-                    }.toList()
+                    .filter { storeImage -> storeImage.url.startsWith(beforePrefix) }
+                    .map { storeImage ->
+                        val url = storeImage.url.split(beforePrefix)[1]
+                        storeImage.updateUrl(afterPrefix + url)
+                        storeImage
+                    }
+                    .toList()
                 storeImageRepository.saveAll(storeImages)
                 RepeatStatus.FINISHED
             }

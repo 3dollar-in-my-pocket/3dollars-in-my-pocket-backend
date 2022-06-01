@@ -46,8 +46,9 @@ class BossStoreFeedbackService(
         BossStoreCommonServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
         val feedbackCountsGroupingByFeedbackType: Map<BossStoreFeedbackType, Int> = bossStoreFeedbackCountRepository.getAllCountsGroupByFeedbackType(bossStoreId)
         val totalCount = feedbackCountsGroupingByFeedbackType.values.sum()
-        return feedbackCountsGroupingByFeedbackType
-            .map { BossStoreFeedbackCountWithRatioResponse.of(feedbackType = it.key, count = it.value, totalCount = totalCount) }
+        return feedbackCountsGroupingByFeedbackType.map { (feedbackType, count) ->
+            BossStoreFeedbackCountWithRatioResponse.of(feedbackType = feedbackType, count = count, totalCount = totalCount)
+        }
     }
 
     @Transactional(readOnly = true)
@@ -56,9 +57,9 @@ class BossStoreFeedbackService(
         val feedbacks = bossStoreFeedbackRepository.findAllByBossStoreIdAndBetween(bossStoreId = bossStoreId, startDate = request.startDate, endDate = request.endDate)
 
         val feedbacksGroupByDate: Map<LocalDate, Map<BossStoreFeedbackType, Int>> = feedbacks
-            .groupBy { it.date }
+            .groupBy { feedback -> feedback.date }
             .entries
-            .associate { it -> it.key to it.value.groupingBy { it.feedbackType }.eachCount() }
+            .associate { (date, feedback) -> date to feedback.groupingBy { it.feedbackType }.eachCount() }
 
         return BossStoreFeedbackCursorResponse.of(
             feedbackGroupingDate = feedbacksGroupByDate,

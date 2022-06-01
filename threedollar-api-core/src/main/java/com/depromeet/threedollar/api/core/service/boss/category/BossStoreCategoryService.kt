@@ -17,21 +17,28 @@ class BossStoreCategoryService(
     fun retrieveBossStoreCategories(): List<BossStoreCategoryResponse> {
         val cachedCategories = bossStoreCategoryCacheRepository.getAll()
         cachedCategories?.let {
-            return cachedCategories.map { BossStoreCategoryResponse.of(it) }
+            return cachedCategories.map { cachedCategory -> BossStoreCategoryResponse.of(cachedCategory) }
         }
-        val originCategories = bossStoreCategoryRepository.findAll().sortedBy { it.sequencePriority }
-        bossStoreCategoryCacheRepository.set(originCategories.map {
+
+        val originCategories = bossStoreCategoryRepository.findAll()
+            .sortedBy { it.sequencePriority }
+
+        val bossStoreCacheModel = originCategories.map { originCategory ->
             BossStoreCategoryCacheModel.of(
-                categoryId = it.id,
-                name = it.name,
+                categoryId = originCategory.id,
+                name = originCategory.name,
             )
-        })
-        return originCategories.map { BossStoreCategoryResponse.of(it) }
+        }
+        bossStoreCategoryCacheRepository.set(bossStoreCacheModel)
+
+        return originCategories.map { originCategory -> BossStoreCategoryResponse.of(originCategory) }
     }
 
     @Transactional(readOnly = true)
     fun retrieveBossStoreCategoriesByIds(bossStoreCategories: Collection<String>): List<BossStoreCategoryResponse> {
-        return retrieveBossStoreCategories().filter { bossStoreCategories.contains(it.categoryId) }
+        return retrieveBossStoreCategories().filter { bossStoreCategoryResponse ->
+            bossStoreCategories.contains(bossStoreCategoryResponse.categoryId)
+        }
     }
 
 }
