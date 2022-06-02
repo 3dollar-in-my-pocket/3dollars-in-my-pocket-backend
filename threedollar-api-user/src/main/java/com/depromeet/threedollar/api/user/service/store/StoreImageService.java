@@ -2,7 +2,6 @@ package com.depromeet.threedollar.api.user.service.store;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -11,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.depromeet.threedollar.api.core.provider.upload.UploadProvider;
 import com.depromeet.threedollar.api.core.provider.upload.dto.request.ImageUploadFileRequest;
+import com.depromeet.threedollar.api.core.provider.upload.dto.request.UploadFileRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.common.type.ApplicationType;
@@ -40,23 +40,19 @@ public class StoreImageService {
         if (imageFiles.size() == 1) {
             return Collections.singletonList(uploadStoreImage(request, imageFiles.get(0), userId));
         }
-        List<CompletableFuture<StoreImage>> storeImageFutures = imageFiles.stream()
-            .map(imageFile -> CompletableFuture.supplyAsync(() -> {
-                String imageUrl = uploadProvider.uploadFile(ImageUploadFileRequest.of(imageFile, FILE_TYPE, APPLICATION_TYPE));
-                return request.toEntity(request.getStoreId(), userId, imageUrl);
-            }))
+
+        List<UploadFileRequest> uploadFileRequests = imageFiles.stream()
+            .map(imageFile -> ImageUploadFileRequest.of(imageFile, FILE_TYPE, APPLICATION_TYPE))
             .collect(Collectors.toList());
 
-        return CompletableFuture.allOf(storeImageFutures.toArray(new CompletableFuture[0]))
-            .thenApply(storeImage -> storeImageFutures.stream()
-                .map(CompletableFuture::join)
-                .collect(Collectors.toList())
-            ).join();
+        return uploadProvider.uploadFiles(uploadFileRequests).stream()
+            .map(uploadResponse -> request.toEntity(userId, uploadResponse.getFileUrl()))
+            .collect(Collectors.toList());
     }
 
     private StoreImage uploadStoreImage(AddStoreImageRequest request, MultipartFile imageFile, Long userId) {
         String imageUrl = uploadProvider.uploadFile(ImageUploadFileRequest.of(imageFile, FILE_TYPE, APPLICATION_TYPE));
-        return request.toEntity(request.getStoreId(), userId, imageUrl);
+        return request.toEntity(userId, imageUrl);
     }
 
     @Transactional

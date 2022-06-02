@@ -29,4 +29,21 @@ class AdminFileUploadController(
         return ApiResponse.success(imageUrl)
     }
 
+    @ApiOperation("파일을 bulk로 업로드합니다")
+    @Auth
+    @PostMapping("/v1/upload/{fileType}/bulk")
+    fun uploadFiles(
+        @RequestPart files: List<MultipartFile>,
+        @PathVariable fileType: FileType,
+    ): ApiResponse<List<String>> {
+        val uploadRequests = files.map { file -> ImageUploadFileRequest.of(file, fileType, ApplicationType.ADMIN_API) }
+
+        val uploadResponses = uploadProvider.uploadFiles(uploadRequests).asSequence()
+            .sortedBy { it.sequence }
+            .map { it.fileUrl }
+            .toList()
+
+        return ApiResponse.success(uploadResponses)
+    }
+
 }

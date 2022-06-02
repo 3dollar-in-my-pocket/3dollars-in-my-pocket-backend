@@ -23,7 +23,7 @@ public class AddStoreImageRequest {
         this.storeId = storeId;
     }
 
-    public StoreImage toEntity(Long storeId, Long userId, String imageUrl) {
+    public StoreImage toEntity(Long userId, String imageUrl) {
         return StoreImage.newInstance(storeId, userId, imageUrl);
     }
 

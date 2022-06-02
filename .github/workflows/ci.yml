@@ -49,11 +49,11 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Test w/ coverage
-        run: ./gradlew clean bootjar ci testCoverage --stacktrace
+        run: ./gradlew clean bootjar ci testCoverage --warn
 
       - name: Sonarqube analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_QUBE_TOKEN }}
         run: |
-          ./gradlew sonarqube --stacktrace
+          ./gradlew sonarqube
