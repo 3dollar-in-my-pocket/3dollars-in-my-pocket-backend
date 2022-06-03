@@ -145,6 +145,10 @@ subprojects {
         jacoco {
             destinationFile = file("${buildDir}/jacoco/unitTest.exec")
         }
+        testLogging {
+            showStandardStreams = true
+            exceptionFormat = 'full'
+        }
     }
 
     task integrationTest(type: Test, group: "verification", description: "Execute Integration Tests") {
@@ -166,6 +170,10 @@ subprojects {
         useJUnitPlatform()
         jacoco {
             destinationFile = file("${buildDir}/jacoco/e2eTest.exec")
+        }
+        testLogging {
+            showStandardStreams = true
+            exceptionFormat = 'full'
         }
     }
 

@@ -15,7 +15,8 @@ on:
       - develop
   workflow_dispatch:
   schedule:
-    - cron: '00 23 * * *' # 08:00 KST every day
+    - cron: '00 23 * * *' # 08:00
+    - cron: '00 11 * * *' # 20:00
 
 jobs:
   ci:
