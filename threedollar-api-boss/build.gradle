@@ -34,7 +34,7 @@ jib {
     }
     to {
         image = System.getProperty("image", "")
-        tags = ["latest", System.getProperty("tag", "")]
+        tags = [System.getProperty("tag", "latest")]
     }
     extraDirectories.paths = [
         "${newRelicExtraDirectory}"
