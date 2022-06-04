@@ -3,7 +3,7 @@
 ### 1. 로컬 환경 구성 with docker-compose
 
 ```bash
-docker-compose -f ./docker-compose.yml -p threedollar up -d
+docker-compose up -d
 ```
 
 ### 2. Run Application
