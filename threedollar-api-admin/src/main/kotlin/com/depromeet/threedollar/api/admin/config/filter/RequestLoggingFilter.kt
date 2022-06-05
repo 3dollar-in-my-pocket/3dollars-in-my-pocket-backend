@@ -11,7 +11,9 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload
 import org.springframework.web.util.ContentCachingRequestWrapper
 import org.springframework.web.util.ContentCachingResponseWrapper
 import com.depromeet.threedollar.api.core.utils.HttpServletRequestUtils
-import com.depromeet.threedollar.common.utils.logger
+import mu.KotlinLogging
+
+private val log = KotlinLogging.logger {}
 
 class RequestLoggingFilter : Filter {
 
@@ -38,10 +40,6 @@ class RequestLoggingFilter : Filter {
             """.trimIndent()
         )
         return
-    }
-
-    companion object {
-        private val log = logger()
     }
 
 }

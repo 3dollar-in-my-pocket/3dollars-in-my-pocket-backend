@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.api.admin.controller.advice
 
 import java.util.stream.Collectors
-import org.slf4j.Logger
 import org.springframework.beans.TypeMismatchException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -22,9 +21,11 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
-import com.depromeet.threedollar.common.utils.logger
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
+import mu.KotlinLogging
+
+private val log = KotlinLogging.logger {}
 
 @RestControllerAdvice
 class ControllerExceptionAdvice {
@@ -163,10 +164,6 @@ class ControllerExceptionAdvice {
         log.error(exception.message, exception)
         return ResponseEntity.status(exception.status)
             .body(ApiResponse.error(exception.errorCode))
-    }
-
-    companion object {
-        private val log: Logger = logger()
     }
 
 }

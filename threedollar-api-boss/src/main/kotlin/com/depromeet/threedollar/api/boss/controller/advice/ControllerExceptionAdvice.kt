@@ -4,7 +4,6 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.stream.Collectors
 import javax.servlet.http.HttpServletRequest
-import org.slf4j.Logger
 import org.springframework.beans.TypeMismatchException
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.http.HttpStatus
@@ -38,9 +37,11 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode.UNSUPPORTED_MED
 import com.depromeet.threedollar.common.model.event.ServerExceptionOccurredEvent
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.common.utils.UserMetaSessionUtils
-import com.depromeet.threedollar.common.utils.logger
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
+import mu.KotlinLogging
+
+private val log = KotlinLogging.logger {}
 
 @RestControllerAdvice
 class ControllerExceptionAdvice(
@@ -206,10 +207,6 @@ class ControllerExceptionAdvice(
             UserMetaSessionUtils.get(),
             LocalDateTime.now(ZoneId.of("Asia/Seoul"))
         )
-    }
-
-    companion object {
-        private val log: Logger = logger()
     }
 
 }
