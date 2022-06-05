@@ -12,19 +12,20 @@ application {
 }
 
 ext {
-    newRelicAgentDownload = "https://download.newrelic.com/newrelic/java-agent/newrelic-agent/current/newrelic-java.zip"
+    newRelicAgentDownloadUrl = "https://download.newrelic.com/newrelic/java-agent/newrelic-agent/current/newrelic-java.zip"
     newRelicExtraDirectory = "${buildDir}/newrelic"
     newRelicHostDirectory = "/usr/app/newrelic"
     newRelicJavaAgentDirectory = "${newRelicHostDirectory}/newrelic/newrelic.jar"
 }
 
-task downloadAgent(type: Download) {
-    src "${newRelicAgentDownload}"
+task downloadNewRelicAgent(type: Download) {
+    src "${newRelicAgentDownloadUrl}"
     dest "${buildDir}/newrelic.zip"
 }
 
-task extractAgent(dependsOn: downloadAgent, type: Copy) {
-    from zipTree(downloadAgent.dest)
+task extractNewRelicAgent(type: Copy, description: "Extract Newrelic agent") {
+    dependsOn downloadNewRelicAgent
+    from zipTree(downloadNewRelicAgent.dest)
     into "${newRelicExtraDirectory}/${newRelicHostDirectory}"
 }
 
@@ -51,6 +52,6 @@ jib {
 }
 
 tasks.jib {
-    dependsOn extractAgent
+    dependsOn extractNewRelicAgent
 }
 
