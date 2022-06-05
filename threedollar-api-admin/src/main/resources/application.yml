@@ -1,3 +1,15 @@
+spring.profiles.default: local
+spring.config:
+  import:
+    - classpath:/application-rds.yml
+    - classpath:/application-redis.yml
+    - classpath:/application-mongo.yml
+    - classpath:/application-external.yml
+    - classpath:/application-sentry.yml
+    - classpath:/application-swagger.yml
+    - classpath:/application-actuator.yml
+    - optional:classpath:/application-secret.yml
+
 threedollars:
   aplication:
     uid: ${random.uuid}
@@ -18,24 +30,10 @@ server:
     min-response-size: 2KB
 
 spring:
-  profiles:
-    active: local
-    default: local
-    include:
-      - rds
-      - redis
-      - mongo
-      - external
-      - swagger
-      - sentry
-      - actuator
-      - secret
-
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 30MB
-
   mvc:
     format:
       date: yyyy-MM-dd
