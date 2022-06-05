@@ -58,3 +58,9 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_QUBE_TOKEN }}
         run: |
           ./gradlew sonarqube
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: "build/test-results/**/*.xml"
