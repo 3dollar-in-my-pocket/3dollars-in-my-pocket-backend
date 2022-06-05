@@ -1,9 +1,6 @@
 spring.profiles.default: integration-test
 spring.config:
   import:
-    - classpath:/application-rds.yml
-    - classpath:/application-redis.yml
-    - classpath:/application-mongo.yml
     - classpath:/application-external.yml
 
 

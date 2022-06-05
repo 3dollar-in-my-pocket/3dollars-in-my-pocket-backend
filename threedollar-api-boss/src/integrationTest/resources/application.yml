@@ -11,17 +11,3 @@ spring.config:
 spring.config:
   activate:
     on-profile: integration-test
-
-server:
-  servlet:
-    encoding:
-      charset: UTF-8
-      force: true
-    context-path: /boss
-
-spring:
-  mvc:
-    format:
-      date: yyyy-MM-dd
-      date-time: yyyy-MM-dd'T'HH:mm:ss
-      time: HH:mm:ss
