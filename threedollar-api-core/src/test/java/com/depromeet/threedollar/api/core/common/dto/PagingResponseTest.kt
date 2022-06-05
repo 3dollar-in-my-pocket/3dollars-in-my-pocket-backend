@@ -17,7 +17,7 @@ internal class PagingResponseTest {
         val response = PagingResponse.of(perSize = perSize, totalSize = totalSize)
 
         // then
-        assertThat(response.totalPage).isZero;
+        assertThat(response.totalPage).isZero
     }
 
     @ValueSource(longs = [1, 2, 3])
