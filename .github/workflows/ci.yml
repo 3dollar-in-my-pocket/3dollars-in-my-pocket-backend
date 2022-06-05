@@ -59,8 +59,30 @@ jobs:
         run: |
           ./gradlew sonarqube
 
-      - name: Publish Test Results
+      - name: Publish Unit Tests Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: "build/test-results/unitTest/*.xml"
+          check_name: "Unit Tests Results"
+
+      - name: Publish Integration Tests Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: "build/test-results/integrationTest/*.xml"
+          check_name: "Integration Tests Results"
+
+      - name: Publish E2E Tests Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: "build/test-results/e2eTest/*.xml"
+          check_name: "E2E Tests Results"
+
+      - name: Publish Total Tests Summary Results
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
           files: "build/test-results/**/*.xml"
+          check_name: "Total Tests Results Summary"
