@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.rds.common.model;
+package com.depromeet.threedollar.domain.rds.core.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;

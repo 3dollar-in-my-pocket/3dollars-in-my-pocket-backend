@@ -1,5 +1,5 @@
 ### 사장님 가게의 카테고리 목록을 조회합니다
-GET {{boss_api}}/v1/boss/store/categories
+GET {{boss-api}}/v1/boss/store/categories
 
 > {%
 client.global.set("BOSS_CATEGORY_ID", response.body["data"][0]["categoryId"])
@@ -7,7 +7,7 @@ client.global.set("BOSS_CATEGORY_ID", response.body["data"][0]["categoryId"])
 
 
 ### 주변 특정 거리 안에 위치한 가게 목록을 조회합니다.
-GET {{boss_api}}/v1/boss/stores/around?mapLatitude=38&mapLongitude=127&distanceKm=1
+GET {{boss-api}}/v1/boss/stores/around?mapLatitude=38&mapLongitude=127&distanceKm=1
 
 > {%
 client.test("200 OK", () => {
@@ -17,7 +17,7 @@ client.test("200 OK", () => {
 
 
 ### 사장님 자신이 운영 중인 가게를 조회합니다
-GET {{boss_api}}/v1/boss/store/me?mapLatitude=38&mapLongitude=127.009
+GET {{boss-api}}/v1/boss/store/me?mapLatitude=38&mapLongitude=127.009
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 > {%
@@ -26,7 +26,7 @@ client.global.set("BOSS_STORE_ID", response.body["data"]["bossStoreId"])
 
 
 ### 가게의 영업을 시작/갱신 합니다.
-PUT {{boss_api}}/v1/boss/store/{{BOSS_STORE_ID}}/open?mapLatitude=38&mapLongitude=127
+PUT {{boss-api}}/v1/boss/store/{{BOSS_STORE_ID}}/open?mapLatitude=38&mapLongitude=127
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 > {%
@@ -37,7 +37,7 @@ client.test("200 OK", () => {
 
 
 ### 가게 영업을 종료합니다.
-PUT {{boss_api}}/v1/boss/store/{{BOSS_STORE_ID}}/close
+PUT {{boss-api}}/v1/boss/store/{{BOSS_STORE_ID}}/close
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 > {%
@@ -48,7 +48,7 @@ client.test("200 OK", () => {
 
 
 ### 특정 가게의 정보를 상세 조회합니다
-GET {{boss_api}}/v1/boss/store/{{BOSS_STORE_ID}}?mapLatitude=38&mapLongitude=129
+GET {{boss-api}}/v1/boss/store/{{BOSS_STORE_ID}}?mapLatitude=38&mapLongitude=129
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 > {%
@@ -59,7 +59,7 @@ client.test("200 OK", () => {
 
 
 ### 사장님 가게의 정보를 수정합니다
-PUT {{boss_api}}/v1/boss/store/{{BOSS_STORE_ID}}
+PUT {{boss-api}}/v1/boss/store/{{BOSS_STORE_ID}}
 Content-Type: application/json
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
@@ -124,7 +124,7 @@ client.test("200 OK", () => {
 
 
 ### 사장님 가게의 정보를 수정합니다 (PATCH)
-PATCH {{boss_api}}/v1/boss/store/{{BOSS_STORE_ID}}
+PATCH {{boss-api}}/v1/boss/store/{{BOSS_STORE_ID}}
 Content-Type: application/json
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 

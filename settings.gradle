@@ -1,6 +1,5 @@
 rootProject.name = 'threedollar'
 
-
 include 'threedollar-api-admin-service'
 include 'threedollar-api-user-service'
 include 'threedollar-api-boss-service'

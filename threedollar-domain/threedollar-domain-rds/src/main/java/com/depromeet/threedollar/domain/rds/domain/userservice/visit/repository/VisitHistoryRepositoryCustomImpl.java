@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.visit.repository;
 
-import static com.depromeet.threedollar.domain.rds.common.support.QuerydslSupport.predicate;
+import static com.depromeet.threedollar.domain.rds.core.support.QuerydslSupport.predicate;
 import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QMenu.menu;
 import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStore.store;
 import static com.depromeet.threedollar.domain.rds.domain.userservice.user.QUser.user;

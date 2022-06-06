@@ -3,7 +3,7 @@ package com.depromeet.threedollar.domain.mongo.domain.bossservice.account
 import java.time.LocalDateTime
 import org.springframework.data.mongodb.core.mapping.Document
 import com.depromeet.threedollar.common.model.BusinessNumber
-import com.depromeet.threedollar.domain.mongo.common.model.BaseDocument
+import com.depromeet.threedollar.domain.mongo.core.model.BaseDocument
 
 @Document("boss_withdrawal_account_v1")
 class BossWithdrawalAccount(

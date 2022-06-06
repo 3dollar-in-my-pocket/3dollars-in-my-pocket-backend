@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.user.repository;
 
-import static com.depromeet.threedollar.domain.rds.common.constants.RDBPackageConstants.PERSISTENCE_LOCK_TIMEOUT;
+import static com.depromeet.threedollar.domain.rds.core.constants.RDBPackageConstants.PERSISTENCE_LOCK_TIMEOUT;
 import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.QMedal.medal;
 import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.QMedalAcquisitionCondition.medalAcquisitionCondition;
 import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.QUserMedal.userMedal;

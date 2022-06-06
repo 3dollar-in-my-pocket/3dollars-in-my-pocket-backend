@@ -15,8 +15,8 @@ import javax.persistence.Table;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.depromeet.threedollar.domain.rds.common.model.AuditingTimeEntity;
-import com.depromeet.threedollar.domain.rds.common.model.DateTimeInterval;
+import com.depromeet.threedollar.domain.rds.core.model.AuditingTimeEntity;
+import com.depromeet.threedollar.domain.rds.core.model.DateTimeInterval;
 
 import lombok.AccessLevel;
 import lombok.Builder;

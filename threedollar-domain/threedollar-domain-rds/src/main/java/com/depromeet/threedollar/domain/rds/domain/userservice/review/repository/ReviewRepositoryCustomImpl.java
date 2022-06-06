@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.review.repository;
 
 import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_REVIEWS_COUNTS;
-import static com.depromeet.threedollar.domain.rds.common.constants.RDBPackageConstants.PERSISTENCE_LOCK_TIMEOUT;
-import static com.depromeet.threedollar.domain.rds.common.support.QuerydslSupport.predicate;
+import static com.depromeet.threedollar.domain.rds.core.constants.RDBPackageConstants.PERSISTENCE_LOCK_TIMEOUT;
+import static com.depromeet.threedollar.domain.rds.core.support.QuerydslSupport.predicate;
 import static com.depromeet.threedollar.domain.rds.domain.userservice.review.QReview.review;
 import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStore.store;
 

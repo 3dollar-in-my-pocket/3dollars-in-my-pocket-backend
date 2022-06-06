@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.depromeet.threedollar.domain.rds.common.support.CursorPagingSupporter;
+import com.depromeet.threedollar.domain.rds.core.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreWithMenuProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection.VisitHistoryCounter;
 

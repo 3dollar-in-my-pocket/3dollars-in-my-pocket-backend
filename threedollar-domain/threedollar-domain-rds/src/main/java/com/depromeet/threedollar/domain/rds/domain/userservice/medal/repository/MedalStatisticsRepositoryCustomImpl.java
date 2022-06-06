@@ -5,7 +5,7 @@ import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.QUse
 
 import java.util.List;
 
-import com.depromeet.threedollar.domain.rds.common.support.OrderByNull;
+import com.depromeet.threedollar.domain.rds.core.support.OrderByNull;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.projection.MedalCountsStatisticsProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.projection.QMedalCountsStatisticsProjection;

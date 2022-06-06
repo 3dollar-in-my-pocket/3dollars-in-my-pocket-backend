@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.RetrieveMyReviewsRequest;
 import com.depromeet.threedollar.api.userservice.service.review.dto.response.ReviewsCursorResponse;
 import com.depromeet.threedollar.api.userservice.service.user.UserServiceUtils;
-import com.depromeet.threedollar.domain.rds.common.support.CursorPagingSupporter;
+import com.depromeet.threedollar.domain.rds.core.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;

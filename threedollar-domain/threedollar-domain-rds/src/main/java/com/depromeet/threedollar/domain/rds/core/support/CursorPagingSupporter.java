@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.rds.common.support;
+package com.depromeet.threedollar.domain.rds.core.support;
 
 import java.util.List;
 

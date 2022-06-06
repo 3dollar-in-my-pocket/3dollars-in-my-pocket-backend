@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.response
 
 import com.depromeet.threedollar.api.core.common.dto.CursorResponse
-import com.depromeet.threedollar.domain.rds.common.support.CursorPagingSupporter
+import com.depromeet.threedollar.domain.rds.core.support.CursorPagingSupporter
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store
 
 data class StoreInfosWithCursorResponse(

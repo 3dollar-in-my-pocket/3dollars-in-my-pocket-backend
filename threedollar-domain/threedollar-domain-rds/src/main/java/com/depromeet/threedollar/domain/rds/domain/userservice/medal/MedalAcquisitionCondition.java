@@ -16,7 +16,7 @@ import javax.persistence.UniqueConstraint;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.depromeet.threedollar.domain.rds.common.model.AuditingTimeEntity;
+import com.depromeet.threedollar.domain.rds.core.model.AuditingTimeEntity;
 
 import lombok.AccessLevel;
 import lombok.Builder;

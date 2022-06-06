@@ -6,7 +6,7 @@ import javax.persistence.Embeddable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.depromeet.threedollar.domain.rds.common.constants.ColumnDefinition;
+import com.depromeet.threedollar.domain.rds.core.constants.ColumnDefinition;
 
 import lombok.AccessLevel;
 import lombok.Builder;

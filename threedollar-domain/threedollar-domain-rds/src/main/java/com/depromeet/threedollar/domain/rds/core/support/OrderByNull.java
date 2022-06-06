@@ -1,11 +1,11 @@
-package com.depromeet.threedollar.domain.rds.common.support;
+package com.depromeet.threedollar.domain.rds.core.support;
 
 import com.querydsl.core.types.NullExpression;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 
 /**
- * MySQL 8.0 이전 버전 or MariaDB에서느 GROUP BY시 묵시적으로 해당 필드로 ORDER BY가 수행
+ * MySQL 8.0 이전 버전 or MariaDB에서는 GROUP BY시 묵시적으로 해당 필드로 ORDER BY가 수행
  * MySQL 8.0부터 묵시적으로 ORDER BY 수행하지 않도록 개선됨)
  * -
  * In MariaDB Docs

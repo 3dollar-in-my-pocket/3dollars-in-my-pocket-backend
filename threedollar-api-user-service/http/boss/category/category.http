@@ -1,5 +1,5 @@
 ### 사장님 가게의 카테고리 목록을 조회합니다
-GET {{user_api}}/v1/boss/store/categories
+GET {{user-api}}/v1/boss/store/categories
 
 > {%
 client.test("200 OK", () => {

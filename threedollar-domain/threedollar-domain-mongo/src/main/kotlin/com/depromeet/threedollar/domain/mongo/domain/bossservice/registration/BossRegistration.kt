@@ -3,7 +3,7 @@ package com.depromeet.threedollar.domain.mongo.domain.bossservice.registration
 import org.springframework.data.mongodb.core.mapping.Document
 import com.depromeet.threedollar.common.model.BusinessNumber
 import com.depromeet.threedollar.common.model.ContactsNumber
-import com.depromeet.threedollar.domain.mongo.common.model.BaseDocument
+import com.depromeet.threedollar.domain.mongo.core.model.BaseDocument
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType

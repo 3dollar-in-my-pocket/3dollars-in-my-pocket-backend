@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.rds.common.model;
+package com.depromeet.threedollar.domain.rds.domain.userservice.store;
 
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_LATITUDE_RANGE;
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_LONGITUDE_RANGE;
@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode
 @Embeddable
-public class Location {
+public class StoreLocation {
 
     private static final double SOUTH_KOREA_MIN_LATITUDE = 33.1;
     private static final double SOUTH_KOREA_MAX_LATITUDE = 38.61;
@@ -36,14 +36,14 @@ public class Location {
     @Column(nullable = false)
     private double longitude;
 
-    private Location(double latitude, double longitude) {
+    private StoreLocation(double latitude, double longitude) {
         validateIsScopeOfKorea(latitude, longitude);
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public static Location of(double latitude, double longitude) {
-        return new Location(latitude, longitude);
+    public static StoreLocation of(double latitude, double longitude) {
+        return new StoreLocation(latitude, longitude);
     }
 
     private void validateIsScopeOfKorea(double latitude, double longitude) {

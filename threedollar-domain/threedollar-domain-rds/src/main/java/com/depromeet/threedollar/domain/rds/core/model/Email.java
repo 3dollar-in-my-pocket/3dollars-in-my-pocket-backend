@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.rds.common.model;
+package com.depromeet.threedollar.domain.rds.core.model;
 
 import java.util.regex.Pattern;
 

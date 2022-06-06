@@ -9,8 +9,8 @@ import javax.persistence.Id;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.depromeet.threedollar.domain.rds.common.model.AuditingTimeEntity;
-import com.depromeet.threedollar.domain.rds.common.model.Email;
+import com.depromeet.threedollar.domain.rds.core.model.AuditingTimeEntity;
+import com.depromeet.threedollar.domain.rds.core.model.Email;
 
 import lombok.AccessLevel;
 import lombok.Builder;

@@ -4,12 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
-import com.depromeet.threedollar.domain.rds.common.model.Location;
 import com.depromeet.threedollar.domain.rds.domain.TestHelper;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.DeleteReasonType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Menu;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequest;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreLocation;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreType;
 
 import lombok.AccessLevel;
@@ -21,7 +21,7 @@ public class StoreAssertions {
 
     public static void assertStore(Store store, double latitude, double longitude, String storeName, StoreType storeType, Long userId) {
         assertAll(
-            () -> assertThat(store.getLocation()).isEqualTo(Location.of(latitude, longitude)),
+            () -> assertThat(store.getLocation()).isEqualTo(StoreLocation.of(latitude, longitude)),
             () -> assertThat(store.getLatitude()).isEqualTo(latitude),
             () -> assertThat(store.getLongitude()).isEqualTo(longitude),
             () -> assertThat(store.getName()).isEqualTo(storeName),

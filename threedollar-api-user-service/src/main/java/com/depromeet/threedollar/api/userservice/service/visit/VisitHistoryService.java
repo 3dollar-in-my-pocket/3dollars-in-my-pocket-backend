@@ -10,7 +10,7 @@ import com.depromeet.threedollar.api.userservice.service.store.StoreServiceUtils
 import com.depromeet.threedollar.api.userservice.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.response.VisitHistoriesCursorResponse;
-import com.depromeet.threedollar.domain.rds.common.support.CursorPagingSupporter;
+import com.depromeet.threedollar.domain.rds.core.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistory;

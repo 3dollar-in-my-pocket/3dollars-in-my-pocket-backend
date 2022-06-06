@@ -5,7 +5,7 @@ import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QSto
 
 import java.util.List;
 
-import com.depromeet.threedollar.domain.rds.common.support.OrderByNull;
+import com.depromeet.threedollar.domain.rds.core.support.OrderByNull;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.MenuStatisticsProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.QMenuStatisticsProjection;

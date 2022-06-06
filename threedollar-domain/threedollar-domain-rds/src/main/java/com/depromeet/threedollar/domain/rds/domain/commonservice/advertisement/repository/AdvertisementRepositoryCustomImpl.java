@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.repository;
 
-import static com.depromeet.threedollar.domain.rds.common.support.QuerydslSupport.predicate;
+import static com.depromeet.threedollar.domain.rds.core.support.QuerydslSupport.predicate;
 import static com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.QAdvertisement.advertisement;
 
 import java.time.LocalDateTime;

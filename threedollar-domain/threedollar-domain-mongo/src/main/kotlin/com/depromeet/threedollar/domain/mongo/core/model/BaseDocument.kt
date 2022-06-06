@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.mongo.common.model
+package com.depromeet.threedollar.domain.mongo.core.model
 
 import java.time.LocalDateTime
 import org.springframework.data.annotation.CreatedDate

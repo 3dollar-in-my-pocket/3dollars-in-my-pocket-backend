@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.store.repository;
 
-import static com.depromeet.threedollar.domain.rds.common.constants.RDBPackageConstants.PERSISTENCE_LOCK_TIMEOUT;
+import static com.depromeet.threedollar.domain.rds.core.constants.RDBPackageConstants.PERSISTENCE_LOCK_TIMEOUT;
 import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStoreDeleteRequest.storeDeleteRequest;
 
 import java.util.List;

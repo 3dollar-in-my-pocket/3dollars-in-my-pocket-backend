@@ -21,7 +21,7 @@ import com.depromeet.threedollar.api.userservice.service.store.dto.response.Stor
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoresCursorResponse;
 import com.depromeet.threedollar.common.model.LocationValue;
-import com.depromeet.threedollar.domain.rds.common.support.CursorPagingSupporter;
+import com.depromeet.threedollar.domain.rds.core.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;

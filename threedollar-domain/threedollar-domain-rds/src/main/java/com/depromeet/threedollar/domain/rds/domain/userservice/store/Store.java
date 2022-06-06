@@ -25,8 +25,7 @@ import org.jetbrains.annotations.Nullable;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.common.utils.MathUtils;
-import com.depromeet.threedollar.domain.rds.common.model.AuditingTimeEntity;
-import com.depromeet.threedollar.domain.rds.common.model.Location;
+import com.depromeet.threedollar.domain.rds.core.model.AuditingTimeEntity;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -54,7 +53,7 @@ public class Store extends AuditingTimeEntity {
     private Long userId;
 
     @Embedded
-    private Location location;
+    private StoreLocation location;
 
     @Column(nullable = false, length = 300)
     private String name;
@@ -90,7 +89,7 @@ public class Store extends AuditingTimeEntity {
         @NotNull StoreStatus status
     ) {
         this.userId = userId;
-        this.location = Location.of(latitude, longitude);
+        this.location = StoreLocation.of(latitude, longitude);
         this.name = name;
         this.type = type;
         this.rating = rating;
@@ -209,7 +208,7 @@ public class Store extends AuditingTimeEntity {
     public void updateInfo(@NotNull String name, @Nullable StoreType type, double latitude, double longitude) {
         this.name = name;
         this.type = type;
-        this.location = Location.of(latitude, longitude);
+        this.location = StoreLocation.of(latitude, longitude);
     }
 
     public void updateAverageRating(double average) {

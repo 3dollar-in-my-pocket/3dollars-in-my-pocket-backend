@@ -8,7 +8,7 @@ import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.
 import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.response.StoreInfosWithCursorResponse
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
-import com.depromeet.threedollar.domain.rds.common.support.CursorPagingSupporter
+import com.depromeet.threedollar.domain.rds.core.support.CursorPagingSupporter
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
 
 @Service

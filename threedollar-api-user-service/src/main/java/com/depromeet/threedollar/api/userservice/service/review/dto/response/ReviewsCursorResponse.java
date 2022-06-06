@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.depromeet.threedollar.domain.rds.common.support.CursorPagingSupporter;
+import com.depromeet.threedollar.domain.rds.core.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.collection.StoreDictionary;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;

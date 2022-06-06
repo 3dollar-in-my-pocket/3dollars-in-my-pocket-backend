@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 import org.jetbrains.annotations.NotNull;
 
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
-import com.depromeet.threedollar.domain.rds.common.model.AuditingTimeEntity;
+import com.depromeet.threedollar.domain.rds.core.model.AuditingTimeEntity;
 
 import lombok.AccessLevel;
 import lombok.Getter;
