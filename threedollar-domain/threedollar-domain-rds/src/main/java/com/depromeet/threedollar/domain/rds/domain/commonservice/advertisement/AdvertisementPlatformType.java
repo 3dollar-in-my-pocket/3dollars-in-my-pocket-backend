@@ -17,7 +17,6 @@ public enum AdvertisementPlatformType implements EnumModel {
 
     private final String description;
 
-
     @Override
     public String getKey() {
         return name();

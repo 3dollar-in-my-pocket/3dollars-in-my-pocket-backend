@@ -13,9 +13,9 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
 import com.depromeet.threedollar.common.type.UserMenuCategoryType
-import com.depromeet.threedollar.domain.rds.collection.userservice.medal.MedalObtainCollection
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.collection.MedalObtainCollection
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequestRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository

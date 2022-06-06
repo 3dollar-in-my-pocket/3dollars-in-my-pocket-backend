@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.rds.collection.userservice.store;
+package com.depromeet.threedollar.domain.rds.domain.userservice.store.collection;
 
 import java.util.List;
 import java.util.Map;

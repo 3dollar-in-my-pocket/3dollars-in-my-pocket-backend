@@ -18,14 +18,14 @@ import com.depromeet.threedollar.common.model.LocationValue;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.common.utils.distance.LocationDistanceUtils;
-import com.depromeet.threedollar.domain.rds.collection.userservice.user.UserDictionary;
-import com.depromeet.threedollar.domain.rds.collection.userservice.visit.VisitHistoryCounter;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Menu;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreImageProjection;
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.collection.UserDictionary;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection.VisitHistoryCounter;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryWithUserProjection;
 
 import lombok.AccessLevel;

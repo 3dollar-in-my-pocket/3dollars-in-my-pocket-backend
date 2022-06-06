@@ -21,8 +21,6 @@ import com.depromeet.threedollar.api.userservice.service.store.dto.response.Stor
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoresCursorResponse;
 import com.depromeet.threedollar.common.model.LocationValue;
-import com.depromeet.threedollar.domain.rds.collection.userservice.user.UserDictionary;
-import com.depromeet.threedollar.domain.rds.collection.userservice.visit.VisitHistoryCounter;
 import com.depromeet.threedollar.domain.rds.common.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
@@ -32,7 +30,9 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreReposi
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreImageProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreWithMenuProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.collection.UserDictionary;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection.VisitHistoryCounter;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryWithUserProjection;
 import com.depromeet.threedollar.domain.redis.domain.userservice.store.AroundUserStoresCacheRepository;
 

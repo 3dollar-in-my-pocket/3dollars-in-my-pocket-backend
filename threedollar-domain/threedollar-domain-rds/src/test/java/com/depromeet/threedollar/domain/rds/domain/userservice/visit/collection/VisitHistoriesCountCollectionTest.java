@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.rds.collection.userservice.visit;
+package com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;

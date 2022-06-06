@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.depromeet.threedollar.api.userservice.service.user.UserServiceUtils;
-import com.depromeet.threedollar.domain.rds.collection.userservice.medal.MedalObtainCollection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.collection.MedalObtainCollection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
 

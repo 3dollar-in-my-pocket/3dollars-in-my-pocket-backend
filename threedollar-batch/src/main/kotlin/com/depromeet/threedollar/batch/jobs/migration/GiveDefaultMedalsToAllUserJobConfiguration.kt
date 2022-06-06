@@ -12,9 +12,9 @@ import org.springframework.batch.item.database.builder.JpaCursorItemReaderBuilde
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
-import com.depromeet.threedollar.domain.rds.collection.userservice.medal.MedalObtainCollection
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.collection.MedalObtainCollection
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User
 
 /**

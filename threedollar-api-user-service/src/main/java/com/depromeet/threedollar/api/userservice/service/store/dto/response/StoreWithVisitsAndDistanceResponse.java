@@ -11,7 +11,7 @@ import com.depromeet.threedollar.api.userservice.service.visit.dto.response.Visi
 import com.depromeet.threedollar.common.model.LocationValue;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.common.utils.distance.LocationDistanceUtils;
-import com.depromeet.threedollar.domain.rds.collection.userservice.visit.VisitHistoryCounter;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection.VisitHistoryCounter;
 
 import lombok.AccessLevel;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.rds.collection.userservice.medal;
+package com.depromeet.threedollar.domain.rds.domain.userservice.medal.collection;
 
 import java.util.List;
 import java.util.stream.Collectors;
