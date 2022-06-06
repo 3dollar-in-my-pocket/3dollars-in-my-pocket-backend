@@ -2,7 +2,7 @@
   <configuration default="false" name="ThreeDollarApiUserApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" value="local-docker" />
     <module name="threedollar.threedollar-api-user-service.main" />
-    <option name="SPRING_BOOT_MAIN_CLASS" value="com.depromeet.threedollar.api.user.ThreeDollarApiUserApplication" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.depromeet.threedollar.api.userservice.ThreeDollarApiUserApplication" />
     <option name="VM_PARAMETERS" value="-server -Xms2G -Xmx2G -XX:+UseG1GC" />
     <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
       <option name="credential" />
