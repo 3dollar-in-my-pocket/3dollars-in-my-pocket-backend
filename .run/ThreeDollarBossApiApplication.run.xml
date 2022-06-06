@@ -1,12 +1,12 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="ThreeDollarBossApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
     <option name="ACTIVE_PROFILES" value="local-docker" />
-    <module name="threedollar.threedollar-api-boss.main" />
-    <option name="SPRING_BOOT_MAIN_CLASS" value="com.depromeet.threedollar.api.boss.ThreeDollarBossApiApplication" />
+    <module name="threedollar.threedollar-api-boss-service.main" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.depromeet.threedollar.api.bossservice.ThreeDollarBossApiApplication" />
     <option name="VM_PARAMETERS" value="-server -Xms2G -Xmx2G -XX:+UseG1GC" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.depromeet.threedollar.api.boss.*" />
+        <option name="PATTERN" value="com.depromeet.threedollar.api.bossservice.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

@@ -64,7 +64,7 @@ jobs:
 
       - name: Build & Push Admin API Image
         run: |
-          ./gradlew clean ci :threedollar-api-admin:jib -Dimage=${DOCKER_REGISTRY}/${DOCKER_REPOSITORY} -Dtag=${IMAGE_TAG}
+          ./gradlew clean ci :threedollar-api-admin-service:jib -Dimage=${DOCKER_REGISTRY}/${DOCKER_REPOSITORY} -Dtag=${IMAGE_TAG}
 
           echo "🐇 Build Image >> ${DOCKER_REPOSITORY}:${IMAGE_TAG}"
         env:
