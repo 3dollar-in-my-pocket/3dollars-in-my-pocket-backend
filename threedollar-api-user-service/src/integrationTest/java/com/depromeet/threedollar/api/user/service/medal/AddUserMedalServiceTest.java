@@ -13,9 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.depromeet.threedollar.api.user.service.SetupUserServiceTest;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator;
 
 @SpringBootTest
 class AddUserMedalServiceTest extends SetupUserServiceTest {

@@ -1,14 +1,14 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.medal.repository;
 
-import static com.depromeet.threedollar.domain.rds.user.domain.medal.QMedal.medal;
-import static com.depromeet.threedollar.domain.rds.user.domain.medal.QUserMedal.userMedal;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.QMedal.medal;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.QUserMedal.userMedal;
 
 import java.util.List;
 
 import com.depromeet.threedollar.domain.rds.common.support.OrderByNull;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.projection.MedalCountsStatisticsProjection;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.projection.QMedalCountsStatisticsProjection;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.projection.QMedalCountsStatisticsProjection;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;

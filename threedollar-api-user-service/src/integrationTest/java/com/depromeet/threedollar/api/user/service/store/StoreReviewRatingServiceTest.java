@@ -12,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.depromeet.threedollar.api.user.service.SetupStoreServiceTest;
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
 
 @SpringBootTest
 class StoreReviewRatingServiceTest extends SetupStoreServiceTest {

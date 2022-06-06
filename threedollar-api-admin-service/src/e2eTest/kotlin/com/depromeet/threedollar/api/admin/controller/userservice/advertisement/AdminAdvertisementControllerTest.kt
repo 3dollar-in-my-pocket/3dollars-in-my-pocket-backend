@@ -15,10 +15,10 @@ import com.depromeet.threedollar.api.admin.service.userservice.advertisement.dto
 import com.depromeet.threedollar.api.admin.service.userservice.advertisement.dto.request.UpdateAdvertisementRequest
 import com.depromeet.threedollar.api.admin.service.userservice.advertisement.dto.response.AdvertisementResponse
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementCreator
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPositionType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementRepository
-import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementCreator
 
 internal class AdminAdvertisementControllerTest(
     private val advertisementRepository: AdvertisementRepository,

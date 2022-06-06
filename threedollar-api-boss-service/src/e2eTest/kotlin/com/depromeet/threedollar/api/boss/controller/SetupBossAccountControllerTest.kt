@@ -5,12 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import com.depromeet.threedollar.api.boss.service.auth.dto.response.LoginResponse
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.fasterxml.jackson.core.type.TypeReference
 
 internal abstract class SetupBossAccountControllerTest : SetupControllerTest() {
 
     @Autowired
-    protected lateinit var bossAccountRepository: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
+    protected lateinit var bossAccountRepository: BossAccountRepository
 
     protected lateinit var token: String
 

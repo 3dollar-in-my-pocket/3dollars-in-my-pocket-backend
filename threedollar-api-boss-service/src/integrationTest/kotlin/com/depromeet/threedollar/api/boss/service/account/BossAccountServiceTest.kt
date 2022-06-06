@@ -11,14 +11,20 @@ import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.api.boss.service.account.dto.request.UpdateBossAccountInfoRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.model.BusinessNumber
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccount
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccountRepository
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class BossAccountServiceTest(
     private val bossAccountService: BossAccountService,
-    private val bossAccountRepository: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository,
-    private val bossWithdrawalAccountRepository: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccountRepository,
+    private val bossAccountRepository: BossAccountRepository,
+    private val bossWithdrawalAccountRepository: BossWithdrawalAccountRepository,
 ) {
 
     @AfterEach
@@ -38,7 +44,7 @@ internal class BossAccountServiceTest(
 
             val bossAccount = BossAccountCreator.create(
                 socialId = "social-id",
-                socialType = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.GOOGLE,
+                socialType = BossAccountSocialType.GOOGLE,
                 name = "사장님 이름",
                 isSetupNotification = false
             )
@@ -89,7 +95,7 @@ internal class BossAccountServiceTest(
             // given
             val bossAccount = BossAccountCreator.create(
                 socialId = "socialId",
-                socialType = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.APPLE
+                socialType = BossAccountSocialType.APPLE
             )
             bossAccountRepository.save(bossAccount)
 
@@ -105,7 +111,7 @@ internal class BossAccountServiceTest(
         fun `회원탈퇴시 계정정보가 BossWithdrawalAccount에 백업된다`() {
             // given
             val socialId = "auth-social-id"
-            val socialType = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.APPLE
+            val socialType = BossAccountSocialType.APPLE
             val name = "강승호"
             val isSetupNotification = false
             val businessNumber = BusinessNumber.of("000-00-00000")
@@ -129,7 +135,7 @@ internal class BossAccountServiceTest(
                 assertWithdrawalAccount(
                     withdrawalAccount = withdrawalAccounts[0],
                     name = name,
-                    socialInfo = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo.of(socialId, socialType),
+                    socialInfo = BossAccountSocialInfo.of(socialId, socialType),
                     isSetupNotification = isSetupNotification,
                     businessNumber = businessNumber,
                 )
@@ -142,7 +148,7 @@ internal class BossAccountServiceTest(
 
     }
 
-    private fun assertBossAccount(bossAccount: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount, name: String, isSetupNotification: Boolean, bossAccountId: String, socialInfo: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo, businessNumber: BusinessNumber) {
+    private fun assertBossAccount(bossAccount: BossAccount, name: String, isSetupNotification: Boolean, bossAccountId: String, socialInfo: BossAccountSocialInfo, businessNumber: BusinessNumber) {
         assertThat(bossAccount.name).isEqualTo(name)
         assertThat(bossAccount.isSetupNotification).isEqualTo(isSetupNotification)
         assertThat(bossAccount.id).isEqualTo(bossAccountId)
@@ -151,7 +157,7 @@ internal class BossAccountServiceTest(
     }
 
 
-    private fun assertWithdrawalAccount(withdrawalAccount: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccount, name: String, socialInfo: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo, isSetupNotification: Boolean, businessNumber: BusinessNumber) {
+    private fun assertWithdrawalAccount(withdrawalAccount: BossWithdrawalAccount, name: String, socialInfo: BossAccountSocialInfo, isSetupNotification: Boolean, businessNumber: BusinessNumber) {
         assertThat(withdrawalAccount.name).isEqualTo(name)
         assertThat(withdrawalAccount.socialInfo).isEqualTo(socialInfo)
         assertThat(withdrawalAccount.isSetupNotification).isEqualTo(isSetupNotification)

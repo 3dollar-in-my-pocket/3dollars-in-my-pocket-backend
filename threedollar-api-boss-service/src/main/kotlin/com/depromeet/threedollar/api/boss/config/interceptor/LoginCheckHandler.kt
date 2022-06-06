@@ -9,14 +9,15 @@ import com.depromeet.threedollar.api.boss.config.session.SessionConstants
 import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.UnAuthorizedException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
 
 private const val HEADER_BEARER_PREFIX = "Bearer "
 
 @Component
 class LoginCheckHandler(
     private val sessionRepository: SessionRepository<out Session?>,
-    private val bossAccountRepository: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository,
+    private val bossAccountRepository: BossAccountRepository,
     private val bossRegistrationRepository: BossRegistrationRepository,
 ) {
 

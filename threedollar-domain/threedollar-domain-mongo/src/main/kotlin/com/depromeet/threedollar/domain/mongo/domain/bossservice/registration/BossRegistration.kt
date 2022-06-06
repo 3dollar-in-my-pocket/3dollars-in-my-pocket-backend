@@ -3,8 +3,11 @@ package com.depromeet.threedollar.domain.mongo.domain.bossservice.registration
 import org.springframework.data.mongodb.core.mapping.Document
 import com.depromeet.threedollar.common.model.BusinessNumber
 import com.depromeet.threedollar.common.model.ContactsNumber
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 import com.depromeet.threedollar.domain.mongo.common.model.BaseDocument
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 
 @Document("boss_registration_v1")
 class BossRegistration(
@@ -13,7 +16,7 @@ class BossRegistration(
     var status: BossRegistrationStatus,
 ) : BaseDocument() {
 
-    fun toBossAccount(): com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount {
+    fun toBossAccount(): BossAccount {
         return this.boss.toBossAccount(this.id)
     }
 
@@ -47,13 +50,13 @@ class BossRegistration(
 
 
 data class RegistrationBossForm(
-    val socialInfo: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo,
+    val socialInfo: BossAccountSocialInfo,
     val name: String,
     val businessNumber: BusinessNumber,
 ) {
 
-    fun toBossAccount(registrationId: String): com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount {
-        return com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount.of(
+    fun toBossAccount(registrationId: String): BossAccount {
+        return BossAccount.of(
             bossId = registrationId,
             name = name,
             socialId = socialInfo.socialId,
@@ -65,12 +68,12 @@ data class RegistrationBossForm(
     companion object {
         fun of(
             socialId: String,
-            socialType: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType,
+            socialType: BossAccountSocialType,
             name: String,
             businessNumber: String,
         ): RegistrationBossForm {
             return RegistrationBossForm(
-                socialInfo = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo.of(socialId = socialId, socialType = socialType),
+                socialInfo = BossAccountSocialInfo.of(socialId = socialId, socialType = socialType),
                 name = name,
                 businessNumber = BusinessNumber.of(businessNumber)
             )

@@ -8,10 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import com.depromeet.threedollar.api.user.service.review.dto.response.ReviewDetailResponse;
 import com.depromeet.threedollar.api.user.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.user.service.review.dto.response.ReviewWithUserResponse;
+import com.depromeet.threedollar.domain.rds.domain.TestHelper;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
-import com.depromeet.threedollar.domain.rds.user.domain.TestHelper;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

@@ -23,9 +23,9 @@ import com.depromeet.threedollar.api.user.service.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.user.service.store.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImage;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageStatus;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageCreator;
 
 @SpringBootTest
 class StoreImageServiceTest extends SetupStoreServiceTest {

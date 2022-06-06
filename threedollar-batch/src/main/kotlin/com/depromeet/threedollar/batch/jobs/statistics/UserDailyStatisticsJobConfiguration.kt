@@ -190,7 +190,7 @@ class DailyStatisticsJobConfiguration(
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
                     messageType = COUNTS_VISIT_HISTORY,
-                    totalCounts = visitHistoryRepository.countAllVisitHistoriese(),
+                    totalCounts = visitHistoryRepository.countAllVisitHistories(),
                     todayCounts = visitHistoryRepository.countVisitHistoriesBetweenDate(yesterday, yesterday),
                     weekendCounts = visitHistoryRepository.countVisitHistoriesBetweenDate(yesterday.minusWeeks(1), yesterday)
                 )

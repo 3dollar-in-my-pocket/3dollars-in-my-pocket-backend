@@ -21,10 +21,10 @@ import com.depromeet.threedollar.api.user.controller.SetupUserControllerTest;
 import com.depromeet.threedollar.api.user.service.user.dto.request.CheckAvailableNameRequest;
 import com.depromeet.threedollar.api.user.service.user.dto.request.UpdateUserInfoRequest;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserCreator;
 
 class UserControllerTest extends SetupUserControllerTest {
 

@@ -3,9 +3,9 @@ package com.depromeet.threedollar.api.user.service.medal.support;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import com.depromeet.threedollar.domain.rds.domain.TestHelper;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus;
-import com.depromeet.threedollar.domain.rds.user.domain.TestHelper;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

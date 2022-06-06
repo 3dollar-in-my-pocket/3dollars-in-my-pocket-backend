@@ -13,8 +13,8 @@ import com.depromeet.threedollar.api.admin.service.userservice.medal.dto.request
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest

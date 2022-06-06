@@ -19,8 +19,8 @@ import com.depromeet.threedollar.api.core.service.userservice.faq.dto.request.Re
 import com.depromeet.threedollar.api.core.service.userservice.faq.dto.response.FaqCategoryResponse
 import com.depromeet.threedollar.api.core.service.userservice.faq.dto.response.FaqResponse
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory
+import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCreator
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqRepository
-import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCreator
 
 internal class AdminFaqControllerTest(
     private val faqRepository: FaqRepository,

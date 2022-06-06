@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public interface VisitHistoryStatisticsRepositoryCustom {
 
-    long countAllVisitHistoriese();
+    long countAllVisitHistories();
 
     long countVisitHistoriesBetweenDate(LocalDate startDate, LocalDate endDate);
 

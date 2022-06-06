@@ -9,20 +9,22 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.api.boss.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationCreator
 import com.depromeet.threedollar.external.client.naver.NaverAuthApiClient
 import com.depromeet.threedollar.external.client.naver.dto.response.NaverProfileInfoResponse
 import com.depromeet.threedollar.external.client.naver.dto.response.NaverProfileResponse
 
 private const val SOCIAL_ID = "social-id"
-private val SOCIAL_TYPE = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.NAVER
+private val SOCIAL_TYPE = BossAccountSocialType.NAVER
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
 internal class NaverAuthServiceTest(
-    private val bossAccountRepository: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository,
+    private val bossAccountRepository: BossAccountRepository,
     private val bossRegistrationRepository: BossRegistrationRepository,
 ) {
 

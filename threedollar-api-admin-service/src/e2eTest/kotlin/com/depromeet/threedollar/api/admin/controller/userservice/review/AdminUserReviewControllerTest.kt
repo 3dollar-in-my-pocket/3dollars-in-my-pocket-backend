@@ -10,13 +10,13 @@ import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.admin.controller.SetupAdminControllerTest
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.common.exception.type.ErrorCode
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserCreator
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserCreator
 
 internal class AdminUserReviewControllerTest(
     private val reviewRepository: ReviewRepository,

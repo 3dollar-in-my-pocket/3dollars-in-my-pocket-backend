@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.AppearanceDayRepository;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.MenuCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.MenuRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.PaymentMethodRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
 
 public abstract class SetupStoreServiceTest extends SetupUserServiceTest {
 

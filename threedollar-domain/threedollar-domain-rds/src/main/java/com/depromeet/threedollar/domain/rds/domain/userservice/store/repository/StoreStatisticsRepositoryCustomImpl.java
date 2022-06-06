@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.store.repository;
 
-import static com.depromeet.threedollar.domain.rds.user.domain.store.QMenu.menu;
-import static com.depromeet.threedollar.domain.rds.user.domain.store.QStore.store;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QMenu.menu;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStore.store;
 
 import java.time.LocalDate;
 

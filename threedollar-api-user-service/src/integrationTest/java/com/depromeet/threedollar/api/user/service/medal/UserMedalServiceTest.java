@@ -18,10 +18,10 @@ import com.depromeet.threedollar.api.user.service.SetupUserServiceTest;
 import com.depromeet.threedollar.api.user.service.medal.dto.request.ChangeRepresentativeMedalRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedal;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalCreator;
 
 @SpringBootTest
 class UserMedalServiceTest extends SetupUserServiceTest {

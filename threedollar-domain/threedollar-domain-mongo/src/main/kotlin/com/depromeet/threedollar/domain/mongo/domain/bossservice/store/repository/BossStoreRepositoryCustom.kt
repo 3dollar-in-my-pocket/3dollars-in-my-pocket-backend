@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.mongo.domain.bossservice.store.repository
 
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 
 interface BossStoreRepositoryCustom {
 

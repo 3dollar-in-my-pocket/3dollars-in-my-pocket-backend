@@ -14,8 +14,8 @@ import com.depromeet.threedollar.api.admin.service.userservice.faq.dto.request.U
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.Faq
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory
+import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCreator
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqRepository
-import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCreator
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest

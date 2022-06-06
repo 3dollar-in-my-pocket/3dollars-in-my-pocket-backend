@@ -4,8 +4,8 @@ import java.time.LocalTime
 import javax.validation.constraints.Size
 import org.hibernate.validator.constraints.URL
 import com.depromeet.threedollar.common.type.DayOfTheWeek
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppearanceDay
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenu
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreAppearanceDay
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenu
 
 data class UpdateBossStoreInfoRequest(
     @field:Size(max = 30, message = "{store.name.size}")

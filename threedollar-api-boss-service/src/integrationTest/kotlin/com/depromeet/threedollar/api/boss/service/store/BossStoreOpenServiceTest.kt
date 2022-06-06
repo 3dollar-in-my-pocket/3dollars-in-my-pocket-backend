@@ -11,7 +11,7 @@ import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.api.boss.service.SetupBossStoreServiceTest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.model.LocationValue
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.redis.domain.bossservice.store.BossStoreOpenTimeRepository
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)

@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Test
 import com.depromeet.threedollar.common.model.BusinessNumber
 import com.depromeet.threedollar.common.model.ContactsNumber
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationCreator
 
 internal class BossRegistrationTest {
 
@@ -12,7 +15,7 @@ internal class BossRegistrationTest {
     fun `가입신청한 내용을 기반으로 새로운 사장님 계정을 생성한다`() {
         // given
         val socialId = "social-id"
-        val socialType = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.NAVER
+        val socialType = BossAccountSocialType.NAVER
         val bossName = "가삼"
         val businessNumber = "000-00-00000"
 
@@ -31,7 +34,7 @@ internal class BossRegistrationTest {
         assertAll({
             bossAccount.let {
                 assertThat(it.name).isEqualTo(bossName)
-                assertThat(it.socialInfo).isEqualTo(com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo.of(socialId, socialType))
+                assertThat(it.socialInfo).isEqualTo(BossAccountSocialInfo.of(socialId, socialType))
                 assertThat(it.businessNumber).isEqualTo(BusinessNumber.of(businessNumber))
             }
         })
@@ -47,7 +50,7 @@ internal class BossRegistrationTest {
 
         val registration = RegistrationCreator.create(
             socialId = "social-id",
-            socialType = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.NAVER,
+            socialType = BossAccountSocialType.NAVER,
             storeName = storeName,
             categoriesIds = categoriesIds,
             contactsNumber = contactsNumber,

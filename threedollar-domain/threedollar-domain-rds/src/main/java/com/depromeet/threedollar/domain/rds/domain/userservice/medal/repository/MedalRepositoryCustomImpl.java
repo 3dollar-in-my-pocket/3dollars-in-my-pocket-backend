@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.medal.repository;
 
-import static com.depromeet.threedollar.domain.rds.user.domain.medal.QMedal.medal;
-import static com.depromeet.threedollar.domain.rds.user.domain.medal.QMedalAcquisitionCondition.medalAcquisitionCondition;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.QMedal.medal;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.QMedalAcquisitionCondition.medalAcquisitionCondition;
 
 import java.util.List;
 

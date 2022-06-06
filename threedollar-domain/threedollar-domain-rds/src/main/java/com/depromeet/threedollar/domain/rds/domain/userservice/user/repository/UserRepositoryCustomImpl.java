@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.user.repository;
 
 import static com.depromeet.threedollar.domain.rds.common.constants.RDBPackageConstants.PERSISTENCE_LOCK_TIMEOUT;
-import static com.depromeet.threedollar.domain.rds.user.domain.medal.QMedal.medal;
-import static com.depromeet.threedollar.domain.rds.user.domain.medal.QMedalAcquisitionCondition.medalAcquisitionCondition;
-import static com.depromeet.threedollar.domain.rds.user.domain.medal.QUserMedal.userMedal;
-import static com.depromeet.threedollar.domain.rds.user.domain.user.QUser.user;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.QMedal.medal;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.QMedalAcquisitionCondition.medalAcquisitionCondition;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.QUserMedal.userMedal;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.user.QUser.user;
 
 import java.util.List;
 

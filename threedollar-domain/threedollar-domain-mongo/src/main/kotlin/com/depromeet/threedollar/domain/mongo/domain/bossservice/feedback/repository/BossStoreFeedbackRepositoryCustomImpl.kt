@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.query.gte
 import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.data.mongodb.core.query.lt
 import org.springframework.stereotype.Repository
-import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedback
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedback
 
 @Repository
 class BossStoreFeedbackRepositoryCustomImpl(

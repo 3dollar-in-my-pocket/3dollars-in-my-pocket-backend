@@ -27,24 +27,28 @@ import com.depromeet.threedollar.common.model.BusinessNumber
 import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.common.type.DayOfTheWeek
-import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
-import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistration
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationBossForm
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStoreForm
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppearanceDay
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenu
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategory
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistration
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationBossForm
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationStoreForm
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreAppearanceDay
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreLocation
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenu
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 import io.swagger.annotations.ApiOperation
 
-private val BOSS = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount.of(
+private val BOSS = BossAccount.of(
     bossId = "test" + UUID.randomUUID().toString(),
     name = "테스트 계정",
     socialId = "test-social-id",
-    socialType = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.KAKAO,
+    socialType = BossAccountSocialType.KAKAO,
     businessNumber = BusinessNumber.of("000-00-00000"),
     isSetupNotification = false
 )
@@ -52,7 +56,7 @@ private val BOSS = com.depromeet.threedollar.domain.mongo.domain.bossservice.acc
 @Profile("local", "local-docker", "integration-test", "dev")
 @RestController
 class LocalTestController(
-    private val bossAccountRepository: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository,
+    private val bossAccountRepository: BossAccountRepository,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossRegistrationRepository: BossRegistrationRepository,
@@ -82,7 +86,7 @@ class LocalTestController(
         val bossRegistration = BossRegistration.of(
             boss = RegistrationBossForm.of(
                 socialId = UUID.randomUUID().toString(),
-                socialType = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.KAKAO,
+                socialType = BossAccountSocialType.KAKAO,
                 name = bossName,
                 businessNumber = businessNumber,
             ),
@@ -201,12 +205,12 @@ class LocalTestController(
         return ApiResponse.OK
     }
 
-    private fun registerNewBossAccount(bossRegistration: BossRegistration): com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount {
+    private fun registerNewBossAccount(bossRegistration: BossRegistration): BossAccount {
         validateDuplicateRegistration(bossRegistration.boss.socialInfo)
         return bossAccountRepository.save(bossRegistration.toBossAccount())
     }
 
-    private fun validateDuplicateRegistration(socialInfo: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo) {
+    private fun validateDuplicateRegistration(socialInfo: BossAccountSocialInfo) {
         if (bossAccountRepository.existsBossAccountBySocialInfo(socialId = socialInfo.socialId, socialType = socialInfo.socialType)) {
             throw ConflictException("이미 가입한 사장님(${socialInfo.socialId} - ${socialInfo.socialType})입니다")
         }

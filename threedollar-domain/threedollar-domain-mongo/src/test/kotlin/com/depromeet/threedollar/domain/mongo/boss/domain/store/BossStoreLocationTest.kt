@@ -7,6 +7,7 @@ import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import com.depromeet.threedollar.common.exception.model.InvalidException
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreLocation
 
 internal class BossStoreLocationTest {
 

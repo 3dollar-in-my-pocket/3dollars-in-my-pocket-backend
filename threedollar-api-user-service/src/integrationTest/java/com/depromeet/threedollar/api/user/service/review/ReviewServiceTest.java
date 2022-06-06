@@ -18,9 +18,9 @@ import com.depromeet.threedollar.api.user.service.review.dto.request.AddReviewRe
 import com.depromeet.threedollar.api.user.service.review.dto.request.UpdateReviewRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewStatus;
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
 
 @SpringBootTest
 class ReviewServiceTest extends SetupStoreServiceTest {

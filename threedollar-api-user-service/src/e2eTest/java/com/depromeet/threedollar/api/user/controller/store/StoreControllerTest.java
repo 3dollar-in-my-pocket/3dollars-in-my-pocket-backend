@@ -35,13 +35,13 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.MenuReposit
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.PaymentMethodRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequestCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequestRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreType;
 import com.depromeet.threedollar.domain.rds.event.userservice.store.StoreCreatedEvent;
 import com.depromeet.threedollar.domain.rds.event.userservice.store.StoreDeletedEvent;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestCreator;
 
 class StoreControllerTest extends SetupUserControllerTest {
 

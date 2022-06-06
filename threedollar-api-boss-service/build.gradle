@@ -1,5 +1,5 @@
 dependencies {
-    implementation project(':threedollar-api-common')
+    implementation project(':threedollar-api-core')
 
     // TestFixtures
     testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-mongo")))

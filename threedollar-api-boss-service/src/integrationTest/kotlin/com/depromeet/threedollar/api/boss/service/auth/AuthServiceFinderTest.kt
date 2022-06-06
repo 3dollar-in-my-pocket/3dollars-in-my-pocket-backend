@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.common.exception.model.ServiceUnAvailableException
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
@@ -19,7 +20,7 @@ internal class AuthServiceFinderTest(
 
     @MethodSource("bossSocialTypeAndServices")
     @ParameterizedTest
-    fun `각 소셜타입의 AuthService를 가져온다`(socialType: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType, expectedAuthServiceClass: Class<AuthService>) {
+    fun `각 소셜타입의 AuthService를 가져온다`(socialType: BossAccountSocialType, expectedAuthServiceClass: Class<AuthService>) {
         // when
         val authService = authServiceFinder.getAuthService(socialType)
 
@@ -31,9 +32,9 @@ internal class AuthServiceFinderTest(
         @JvmStatic
         private fun bossSocialTypeAndServices(): Stream<Arguments> {
             return Stream.of(
-                Arguments.of(com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.KAKAO, KaKaoAuthService::class.java),
-                Arguments.of(com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.APPLE, AppleAuthService::class.java),
-                Arguments.of(com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.GOOGLE, GoogleAuthService::class.java)
+                Arguments.of(BossAccountSocialType.KAKAO, KaKaoAuthService::class.java),
+                Arguments.of(BossAccountSocialType.APPLE, AppleAuthService::class.java),
+                Arguments.of(BossAccountSocialType.GOOGLE, GoogleAuthService::class.java)
             )
         }
     }
@@ -41,7 +42,7 @@ internal class AuthServiceFinderTest(
     @Test
     fun `네이버 인증방식은 아직 지원하지 않는다`() {
         // given
-        val socialType = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.NAVER
+        val socialType = BossAccountSocialType.NAVER
 
         // when & then
         assertThatThrownBy { authServiceFinder.getAuthService(socialType) }.isInstanceOf(ServiceUnAvailableException::class.java)

@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import com.depromeet.threedollar.api.admin.service.SetupAdminServiceTest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator
 
 internal class AdminUserStoreServiceTest(
     private val adminUserStoreService: AdminUserStoreService,

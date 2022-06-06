@@ -33,19 +33,19 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.AppearanceD
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.AppearanceDayRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.DeleteReasonType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Menu;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.MenuCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.MenuRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.PaymentMethod;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.PaymentMethodRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequest;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequestCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequestRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestCreator;
 
 @SpringBootTest
 class StoreServiceTest extends SetupUserServiceTest {

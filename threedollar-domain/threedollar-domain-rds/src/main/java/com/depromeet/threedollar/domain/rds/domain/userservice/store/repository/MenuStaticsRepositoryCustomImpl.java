@@ -1,14 +1,14 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.store.repository;
 
-import static com.depromeet.threedollar.domain.rds.user.domain.store.QMenu.menu;
-import static com.depromeet.threedollar.domain.rds.user.domain.store.QStore.store;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QMenu.menu;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStore.store;
 
 import java.util.List;
 
 import com.depromeet.threedollar.domain.rds.common.support.OrderByNull;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.MenuStatisticsProjection;
-import com.depromeet.threedollar.domain.rds.user.domain.store.projection.QMenuStatisticsProjection;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.QMenuStatisticsProjection;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;

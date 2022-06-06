@@ -26,13 +26,13 @@ import com.depromeet.threedollar.api.user.service.visit.dto.request.AddVisitHist
 import com.depromeet.threedollar.api.user.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
 import com.depromeet.threedollar.api.user.service.visit.dto.response.VisitHistoriesCursorResponse;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistory;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
 import com.depromeet.threedollar.domain.rds.event.userservice.visit.VisitHistoryAddedEvent;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryCreator;
 
 class VisitHistoryControllerTest extends SetupStoreControllerTest {
 

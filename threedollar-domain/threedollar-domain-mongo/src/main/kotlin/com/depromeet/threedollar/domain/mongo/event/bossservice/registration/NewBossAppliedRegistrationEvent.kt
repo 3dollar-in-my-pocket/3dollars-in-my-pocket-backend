@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.mongo.event.bossservice.registration
 
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistration
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistration
 
 data class NewBossAppliedRegistrationEvent(
     val bossRegistration: BossRegistration,

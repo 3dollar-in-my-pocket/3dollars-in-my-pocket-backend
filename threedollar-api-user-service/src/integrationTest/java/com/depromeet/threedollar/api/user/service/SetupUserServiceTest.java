@@ -8,9 +8,9 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquis
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserCreator;
 
 @SpringBootTest
 public abstract class SetupUserServiceTest {

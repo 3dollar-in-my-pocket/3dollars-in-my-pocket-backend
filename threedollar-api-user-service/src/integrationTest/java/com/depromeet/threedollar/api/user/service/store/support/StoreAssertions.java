@@ -5,12 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.common.model.Location;
+import com.depromeet.threedollar.domain.rds.domain.TestHelper;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.DeleteReasonType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Menu;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequest;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreType;
-import com.depromeet.threedollar.domain.rds.user.domain.TestHelper;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

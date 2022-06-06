@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.mongo.domain.bossservice.category.repository
 
-import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategory
 
 interface BossStoreCategoryRepositoryCustom {
 

@@ -20,9 +20,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import com.depromeet.threedollar.api.user.controller.SetupUserControllerTest;
 import com.depromeet.threedollar.api.user.service.medal.dto.request.ChangeRepresentativeMedalRequest;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalCreator;
 
 class UserMedalControllerTest extends SetupUserControllerTest {
 

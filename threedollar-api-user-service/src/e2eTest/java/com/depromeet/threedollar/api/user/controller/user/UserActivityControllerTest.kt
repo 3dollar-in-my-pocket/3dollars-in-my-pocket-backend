@@ -7,13 +7,13 @@ import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
 import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.user.controller.SetupUserControllerTest
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalCreator
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator
-import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalCreator
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator
 
 internal class UserActivityControllerTest(
     private val storeRepository: StoreRepository,

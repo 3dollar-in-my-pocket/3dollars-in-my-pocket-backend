@@ -15,8 +15,8 @@ import com.depromeet.threedollar.api.admin.service.userservice.medal.dto.request
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.core.service.userservice.medal.dto.response.MedalResponse
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator
 
 internal class AdminMedalControllerTest(
     private val medalRepository: MedalRepository,

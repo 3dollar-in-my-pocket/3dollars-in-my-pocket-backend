@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.rds.domain.commonservice.admin.repository;
 
-import static com.depromeet.threedollar.domain.rds.user.domain.admin.QAdmin.admin;
+import static com.depromeet.threedollar.domain.rds.domain.commonservice.admin.QAdmin.admin;
 
 import java.util.List;
 

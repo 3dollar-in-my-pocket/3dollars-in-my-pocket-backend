@@ -3,13 +3,14 @@ package com.depromeet.threedollar.api.boss.service.auth.dto.request
 import javax.validation.constraints.Size
 import org.hibernate.validator.constraints.URL
 import com.depromeet.threedollar.api.boss.config.validator.BossName
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistration
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationBossForm
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStoreForm
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistration
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationBossForm
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationStoreForm
 
 data class SignupRequest(
     val token: String,
-    val socialType: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType,
+    val socialType: BossAccountSocialType,
 
     @field:BossName
     val bossName: String,

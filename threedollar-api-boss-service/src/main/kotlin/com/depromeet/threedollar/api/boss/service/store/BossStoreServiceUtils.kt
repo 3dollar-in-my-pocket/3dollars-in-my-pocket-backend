@@ -2,8 +2,8 @@ package com.depromeet.threedollar.api.boss.service.store
 
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 
 object BossStoreServiceUtils {
 

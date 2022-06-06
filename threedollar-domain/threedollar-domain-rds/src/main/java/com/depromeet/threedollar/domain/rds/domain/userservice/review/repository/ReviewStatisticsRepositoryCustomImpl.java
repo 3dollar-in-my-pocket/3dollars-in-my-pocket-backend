@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.review.repository;
 
-import static com.depromeet.threedollar.domain.rds.user.domain.review.QReview.review;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.review.QReview.review;
 
 import java.time.LocalDate;
 

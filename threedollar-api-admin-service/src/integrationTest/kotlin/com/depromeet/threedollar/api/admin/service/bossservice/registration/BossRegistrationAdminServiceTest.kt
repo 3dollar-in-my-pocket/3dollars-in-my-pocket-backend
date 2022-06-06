@@ -11,16 +11,19 @@ import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.model.BusinessNumber
 import com.depromeet.threedollar.common.model.ContactsNumber
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationStatus
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationStatus
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 
 internal class BossRegistrationAdminServiceTest(
     private val bossRegistrationAdminService: BossRegistrationAdminService,
     private val bossRegistrationRepository: BossRegistrationRepository,
-    private val bossAccountRepository: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository,
+    private val bossAccountRepository: BossAccountRepository,
     private val bossStoreRepository: BossStoreRepository,
 ) : SetupAdminServiceTest() {
 
@@ -39,7 +42,7 @@ internal class BossRegistrationAdminServiceTest(
         fun `신규 가입신청을 승인하면 가입 신청 정보를 토대로 사장님 계정이 생성된다`() {
             // given
             val socialId = "social-id"
-            val socialType = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.NAVER
+            val socialType = BossAccountSocialType.NAVER
             val bossName = "가삼"
             val businessNumber = "000-00-00000"
 
@@ -60,7 +63,7 @@ internal class BossRegistrationAdminServiceTest(
             assertAll({
                 assertThat(bossAccounts).hasSize(1)
                 bossAccounts[0].let {
-                    assertThat(it.socialInfo).isEqualTo(com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo.of(socialId, socialType))
+                    assertThat(it.socialInfo).isEqualTo(BossAccountSocialInfo.of(socialId, socialType))
                     assertThat(it.name).isEqualTo(bossName)
                     assertThat(it.businessNumber).isEqualTo(BusinessNumber.of(businessNumber))
                     assertThat(it.isSetupNotification).isFalse()
@@ -72,7 +75,7 @@ internal class BossRegistrationAdminServiceTest(
         fun `신규 가입신청을 승인하면 세션 유지를 위해서 가입신청 ID가 사장님 계정의 ID가 된다`() {
             // given
             val socialId = "social-id"
-            val socialType = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.NAVER
+            val socialType = BossAccountSocialType.NAVER
             val bossName = "가삼"
             val businessNumber = "000-00-00000"
 
@@ -107,7 +110,7 @@ internal class BossRegistrationAdminServiceTest(
 
             val registration = RegistrationCreator.create(
                 socialId = "social-id",
-                socialType = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.NAVER,
+                socialType = BossAccountSocialType.NAVER,
                 storeName = storeName,
                 categoriesIds = categoriesIds,
                 contactsNumber = contactsNumber,
@@ -139,7 +142,7 @@ internal class BossRegistrationAdminServiceTest(
             // given
             val registration = RegistrationCreator.create(
                 socialId = "socialId",
-                socialType = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.NAVER,
+                socialType = BossAccountSocialType.NAVER,
                 status = BossRegistrationStatus.APPROVED
             )
             bossRegistrationRepository.save(registration)
@@ -153,7 +156,7 @@ internal class BossRegistrationAdminServiceTest(
             // given
             val registration = RegistrationCreator.create(
                 socialId = "socialId",
-                socialType = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.NAVER,
+                socialType = BossAccountSocialType.NAVER,
                 status = BossRegistrationStatus.REJECTED
             )
             bossRegistrationRepository.save(registration)
@@ -172,7 +175,7 @@ internal class BossRegistrationAdminServiceTest(
         fun `가입 승인시 이미 사장님 계정이 있는 경우 Conflict Exception`() {
             // given
             val socialId = "social-id"
-            val socialType = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.NAVER
+            val socialType = BossAccountSocialType.NAVER
 
             val bossAccount = BossAccountCreator.create(
                 socialId = socialId,
@@ -196,7 +199,7 @@ internal class BossRegistrationAdminServiceTest(
             // given
             val registration = RegistrationCreator.create(
                 socialId = "social-id",
-                socialType = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.NAVER,
+                socialType = BossAccountSocialType.NAVER,
                 status = BossRegistrationStatus.WAITING
             )
             bossRegistrationRepository.save(registration)
@@ -222,7 +225,7 @@ internal class BossRegistrationAdminServiceTest(
             // given
             val registration = RegistrationCreator.create(
                 socialId = "social-id",
-                socialType = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.NAVER,
+                socialType = BossAccountSocialType.NAVER,
                 status = BossRegistrationStatus.WAITING
             )
             bossRegistrationRepository.save(registration)

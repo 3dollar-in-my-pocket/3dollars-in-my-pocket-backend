@@ -4,15 +4,17 @@ import org.springframework.stereotype.Service
 import com.depromeet.threedollar.api.boss.service.account.BossAccountServiceUtils
 import com.depromeet.threedollar.api.boss.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.common.utils.HttpHeaderUtils
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.NAVER
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
 import com.depromeet.threedollar.external.client.naver.NaverAuthApiClient
 import com.depromeet.threedollar.external.client.naver.dto.response.NaverProfileResponse
 
-private val SOCIAL_TYPE = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.NAVER
+private val SOCIAL_TYPE = NAVER
 
 @Service
 class NaverAuthService(
-    private val bossAccountRepository: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository,
+    private val bossAccountRepository: BossAccountRepository,
     private val bossRegistrationRepository: BossRegistrationRepository,
     private val naverAuthApiClient: NaverAuthApiClient,
 ) : AuthService {

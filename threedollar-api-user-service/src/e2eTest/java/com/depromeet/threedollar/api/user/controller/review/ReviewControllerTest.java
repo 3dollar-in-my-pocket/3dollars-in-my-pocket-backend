@@ -28,14 +28,14 @@ import com.depromeet.threedollar.api.user.service.review.dto.request.UpdateRevie
 import com.depromeet.threedollar.api.user.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.user.service.review.dto.response.ReviewsCursorResponse;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewStatus;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
 import com.depromeet.threedollar.domain.rds.event.userservice.review.ReviewChangedEvent;
 import com.depromeet.threedollar.domain.rds.event.userservice.review.ReviewCreatedEvent;
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
 
 class ReviewControllerTest extends SetupStoreControllerTest {
 

@@ -7,8 +7,8 @@ import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.core.service.userservice.medal.dto.response.MedalResponse
 import com.depromeet.threedollar.api.user.controller.SetupControllerTest
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator
 
 internal class MedalControllerTest(
     private val medalRepository: MedalRepository,

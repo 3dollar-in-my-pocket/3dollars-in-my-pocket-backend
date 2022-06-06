@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.inValues
 import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.stereotype.Repository
-import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategory
 
 @Repository
 class BossStoreCategoryRepositoryCustomImpl(

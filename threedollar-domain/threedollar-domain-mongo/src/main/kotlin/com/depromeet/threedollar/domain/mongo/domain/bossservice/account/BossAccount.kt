@@ -15,7 +15,7 @@ import com.depromeet.threedollar.domain.mongo.common.model.BaseDocument
 @Document("boss_account_v1")
 class BossAccount(
     var name: String,
-    val socialInfo: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo,
+    val socialInfo: BossAccountSocialInfo,
     val businessNumber: BusinessNumber,
     var isSetupNotification: Boolean,
 ) : BaseDocument() {
@@ -30,13 +30,13 @@ class BossAccount(
             bossId: String,
             name: String,
             socialId: String,
-            socialType: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType,
+            socialType: BossAccountSocialType,
             businessNumber: BusinessNumber,
             isSetupNotification: Boolean = false,
-        ): com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount {
-            val bossAccount = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount(
+        ): BossAccount {
+            val bossAccount = BossAccount(
                 name = name,
-                socialInfo = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo.Companion.of(socialId, socialType),
+                socialInfo = BossAccountSocialInfo.of(socialId, socialType),
                 businessNumber = businessNumber,
                 isSetupNotification = isSetupNotification
             )

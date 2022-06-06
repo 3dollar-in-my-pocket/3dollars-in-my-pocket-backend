@@ -1,13 +1,13 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.store.repository;
 
-import static com.depromeet.threedollar.domain.rds.user.domain.store.QStore.store;
-import static com.depromeet.threedollar.domain.rds.user.domain.store.QStoreDeleteRequest.storeDeleteRequest;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStore.store;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStoreDeleteRequest.storeDeleteRequest;
 
 import java.util.List;
 
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.QStoreWithReportedCountProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreWithReportedCountProjection;
-import com.depromeet.threedollar.domain.rds.user.domain.store.projection.QStoreWithReportedCountProjection;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;

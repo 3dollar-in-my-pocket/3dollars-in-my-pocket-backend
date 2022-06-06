@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.store.repository;
 
-import static com.depromeet.threedollar.domain.rds.user.domain.store.QStoreImage.storeImage;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStoreImage.storeImage;
 
 import java.util.List;
 
@@ -8,8 +8,8 @@ import org.jetbrains.annotations.Nullable;
 
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImage;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageStatus;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.QStoreImageProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreImageProjection;
-import com.depromeet.threedollar.domain.rds.user.domain.store.projection.QStoreImageProjection;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;

@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.gte
 import org.springframework.stereotype.Repository
-import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedback
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedback
 
 @Repository
 class BossStoreFeedbackStatisticsRepositoryCustomImpl(

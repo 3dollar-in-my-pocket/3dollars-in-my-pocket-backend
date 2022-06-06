@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.depromeet.threedollar.api.user.service.user.dto.response.UserInfoResponse;
+import com.depromeet.threedollar.domain.rds.domain.TestHelper;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
-import com.depromeet.threedollar.domain.rds.user.domain.TestHelper;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

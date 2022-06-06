@@ -2,8 +2,8 @@ package com.depromeet.threedollar.domain.rds.domain.userservice.store.repository
 
 import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_STORES_COUNTS;
 import static com.depromeet.threedollar.domain.rds.common.support.QuerydslSupport.predicate;
-import static com.depromeet.threedollar.domain.rds.user.domain.store.QMenu.menu;
-import static com.depromeet.threedollar.domain.rds.user.domain.store.QStore.store;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QMenu.menu;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStore.store;
 import static com.querydsl.core.group.GroupBy.groupBy;
 import static com.querydsl.core.types.dsl.MathExpressions.acos;
 import static com.querydsl.core.types.dsl.MathExpressions.cos;
@@ -18,9 +18,9 @@ import org.springframework.cache.annotation.Cacheable;
 import com.depromeet.threedollar.domain.rds.common.support.OrderByNull;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.QStoreWithMenuProjection;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.QStoreWithMenuProjection_MenuProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreWithMenuProjection;
-import com.depromeet.threedollar.domain.rds.user.domain.store.projection.QStoreWithMenuProjection;
-import com.depromeet.threedollar.domain.rds.user.domain.store.projection.QStoreWithMenuProjection_MenuProjection;
 import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.Ops;
 import com.querydsl.core.types.dsl.Expressions;

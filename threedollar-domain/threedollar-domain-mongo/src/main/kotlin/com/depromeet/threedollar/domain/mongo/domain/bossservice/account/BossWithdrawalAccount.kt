@@ -7,17 +7,17 @@ import com.depromeet.threedollar.domain.mongo.common.model.BaseDocument
 
 @Document("boss_withdrawal_account_v1")
 class BossWithdrawalAccount(
-    val backupInfo: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BackupBossAccountInfo,
+    val backupInfo: BackupBossAccountInfo,
     val name: String,
-    val socialInfo: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo,
+    val socialInfo: BossAccountSocialInfo,
     val businessNumber: BusinessNumber,
     val isSetupNotification: Boolean,
 ) : BaseDocument() {
 
     companion object {
-        fun newInstance(bossAccount: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount): com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccount {
-            return com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccount(
-                backupInfo = com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BackupBossAccountInfo.Companion.of(bossAccount),
+        fun newInstance(bossAccount: BossAccount): BossWithdrawalAccount {
+            return BossWithdrawalAccount(
+                backupInfo = BackupBossAccountInfo.of(bossAccount),
                 name = bossAccount.name,
                 socialInfo = bossAccount.socialInfo.copy(),
                 businessNumber = bossAccount.businessNumber.copy(),
@@ -35,8 +35,8 @@ data class BackupBossAccountInfo(
 ) {
 
     companion object {
-        fun of(bossAccount: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount): com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BackupBossAccountInfo {
-            return com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BackupBossAccountInfo(
+        fun of(bossAccount: BossAccount): BackupBossAccountInfo {
+            return BackupBossAccountInfo(
                 bossId = bossAccount.id,
                 bossCreatedAt = bossAccount.createdAt
             )

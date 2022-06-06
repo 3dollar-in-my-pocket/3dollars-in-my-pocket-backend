@@ -5,12 +5,15 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.boss.service.account.dto.request.UpdateBossAccountInfoRequest
 import com.depromeet.threedollar.api.boss.service.account.dto.response.BossAccountInfoResponse
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccount
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccountRepository
 import com.depromeet.threedollar.domain.mongo.event.bossservice.registration.BossSignOutEvent
 
 @Service
 class BossAccountService(
-    private val bossAccountRepository: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository,
-    private val bossWithdrawalAccountRepository: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccountRepository,
+    private val bossAccountRepository: BossAccountRepository,
+    private val bossWithdrawalAccountRepository: BossWithdrawalAccountRepository,
     private val eventPublisher: ApplicationEventPublisher,
 ) {
 
@@ -30,7 +33,7 @@ class BossAccountService(
     @Transactional
     fun signOut(bossId: String) {
         val bossAccount = BossAccountServiceUtils.findBossAccountByRegistrationId(bossAccountRepository, bossId)
-        bossWithdrawalAccountRepository.save(com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccount.newInstance(bossAccount))
+        bossWithdrawalAccountRepository.save(BossWithdrawalAccount.newInstance(bossAccount))
         bossAccountRepository.delete(bossAccount)
 
         eventPublisher.publishEvent(BossSignOutEvent.of(bossId))

@@ -4,9 +4,10 @@ import java.util.*
 import javax.annotation.PostConstruct
 import org.springframework.stereotype.Component
 import com.depromeet.threedollar.common.exception.model.ServiceUnAvailableException
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 
-private val authServiceMap: MutableMap<com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType, AuthService> = EnumMap(
-    com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType::class.java)
+private val authServiceMap: MutableMap<BossAccountSocialType, AuthService> = EnumMap(
+    BossAccountSocialType::class.java)
 
 @Component
 class AuthServiceFinder(
@@ -17,12 +18,12 @@ class AuthServiceFinder(
 
     @PostConstruct
     fun initializeAuthServicesMap() {
-        authServiceMap[com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.KAKAO] = kaKaoAuthService
-        authServiceMap[com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.APPLE] = appleAuthService
-        authServiceMap[com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.GOOGLE] = googleAuthService
+        authServiceMap[BossAccountSocialType.KAKAO] = kaKaoAuthService
+        authServiceMap[BossAccountSocialType.APPLE] = appleAuthService
+        authServiceMap[BossAccountSocialType.GOOGLE] = googleAuthService
     }
 
-    fun getAuthService(socialType: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType): AuthService {
+    fun getAuthService(socialType: BossAccountSocialType): AuthService {
         return authServiceMap[socialType]
             ?: throw ServiceUnAvailableException("AuthService ($socialType) 로직이 구현되지 않았습니다")
     }

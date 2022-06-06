@@ -1,10 +1,11 @@
 package com.depromeet.threedollar.api.admin.service.bossservice.registration.dto.response
 
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
-import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategory
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistration
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationBossForm
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.RegistrationStoreForm
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategory
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistration
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationBossForm
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationStoreForm
 
 data class BossAccountRegistrationResponse(
     val registrationId: String,
@@ -28,7 +29,7 @@ data class BossAccountRegistrationResponse(
 
 
 data class BossAccountRegistrationBossResponse(
-    val socialType: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType,
+    val socialType: BossAccountSocialType,
     val name: String,
     val businessNumber: String,
 ) {

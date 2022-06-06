@@ -19,9 +19,9 @@ import com.depromeet.threedollar.api.user.service.visit.support.VisitHistoryAsse
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistory;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryCreator;
 
 @SpringBootTest
 class VisitHistoryServiceTest extends SetupStoreServiceTest {

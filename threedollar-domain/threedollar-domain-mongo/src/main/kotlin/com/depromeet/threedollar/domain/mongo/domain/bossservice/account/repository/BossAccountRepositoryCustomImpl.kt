@@ -5,33 +5,36 @@ import org.springframework.data.mongodb.core.findOne
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.stereotype.Repository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 
 @Repository
 class BossAccountRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate,
-) : com.depromeet.threedollar.domain.mongo.domain.bossservice.account.repository.BossAccountRepositoryCustom {
+) : BossAccountRepositoryCustom {
 
     override fun existsBossAccountById(id: String): Boolean {
         return mongoTemplate.exists(Query()
-            .addCriteria(com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount::id isEqualTo id), com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount::class.java
+            .addCriteria(BossAccount::id isEqualTo id), BossAccount::class.java
         )
     }
 
-    override fun findBossAccountById(id: String): com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount? {
+    override fun findBossAccountById(id: String): BossAccount? {
         return mongoTemplate.findOne(Query()
-            .addCriteria(com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount::id isEqualTo id)
+            .addCriteria(BossAccount::id isEqualTo id)
         )
     }
 
-    override fun findBossAccountBySocialInfo(socialId: String, socialType: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType): com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount? {
+    override fun findBossAccountBySocialInfo(socialId: String, socialType: BossAccountSocialType): BossAccount? {
         return mongoTemplate.findOne(Query()
-            .addCriteria(com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount::socialInfo isEqualTo com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo.of(socialId, socialType))
+            .addCriteria(BossAccount::socialInfo isEqualTo BossAccountSocialInfo.of(socialId, socialType))
         )
     }
 
-    override fun existsBossAccountBySocialInfo(socialId: String, socialType: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType): Boolean {
+    override fun existsBossAccountBySocialInfo(socialId: String, socialType: BossAccountSocialType): Boolean {
         return mongoTemplate.exists(Query()
-            .addCriteria(com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount::socialInfo isEqualTo com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo.of(socialId, socialType)), com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount::class.java
+            .addCriteria(BossAccount::socialInfo isEqualTo BossAccountSocialInfo.of(socialId, socialType)), BossAccount::class.java
         )
     }
 

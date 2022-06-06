@@ -18,9 +18,9 @@ import com.depromeet.threedollar.api.user.controller.SetupStoreControllerTest;
 import com.depromeet.threedollar.api.user.controller.store.support.StoreImageAssertions;
 import com.depromeet.threedollar.api.user.service.store.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImage;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageStatus;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageCreator;
 
 class StoreImageControllerTest extends SetupStoreControllerTest {
 

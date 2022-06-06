@@ -25,14 +25,14 @@ import com.depromeet.threedollar.api.core.service.bossservice.store.dto.response
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.common.type.DayOfTheWeek
-import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreAppearanceDayCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreLocation
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreMenuCreator
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreOpenType
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreAppearanceDayCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreLocation
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenuCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreOpenType
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.store.BossStoreOpenTimeRepository
 import com.ninjasquad.springmockk.MockkBean
@@ -78,11 +78,12 @@ internal class BossStoreControllerTest(
                 snsUrl = "https://sns.com",
                 contactsNumber = ContactsNumber.of("010-1234-1234"),
                 menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
-                appearanceDays = setOf(BossStoreAppearanceDayCreator.create(
-                    dayOfTheWeek = DayOfTheWeek.FRIDAY,
-                    startTime = LocalTime.of(8, 0),
-                    endTime = LocalTime.of(10, 0),
-                    locationDescription = "강남역")
+                appearanceDays = setOf(
+                    BossStoreAppearanceDayCreator.create(
+                        dayOfTheWeek = DayOfTheWeek.FRIDAY,
+                        startTime = LocalTime.of(8, 0),
+                        endTime = LocalTime.of(10, 0),
+                        locationDescription = "강남역")
                 ),
                 categoriesIds = setOf(category.id)
             )
@@ -116,11 +117,12 @@ internal class BossStoreControllerTest(
                 snsUrl = "https://sns.com",
                 contactsNumber = ContactsNumber.of("010-1234-1234"),
                 menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
-                appearanceDays = setOf(BossStoreAppearanceDayCreator.create(
-                    dayOfTheWeek = DayOfTheWeek.FRIDAY,
-                    startTime = LocalTime.of(8, 0),
-                    endTime = LocalTime.of(10, 0),
-                    locationDescription = "강남역")
+                appearanceDays = setOf(
+                    BossStoreAppearanceDayCreator.create(
+                        dayOfTheWeek = DayOfTheWeek.FRIDAY,
+                        startTime = LocalTime.of(8, 0),
+                        endTime = LocalTime.of(10, 0),
+                        locationDescription = "강남역")
                 ),
                 categoriesIds = setOf(category.id)
             )
@@ -161,11 +163,12 @@ internal class BossStoreControllerTest(
                 snsUrl = "https://sns.com",
                 contactsNumber = ContactsNumber.of("010-1234-1234"),
                 menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
-                appearanceDays = setOf(BossStoreAppearanceDayCreator.create(
-                    dayOfTheWeek = DayOfTheWeek.FRIDAY,
-                    startTime = LocalTime.of(8, 0),
-                    endTime = LocalTime.of(10, 0),
-                    locationDescription = "강남역")
+                appearanceDays = setOf(
+                    BossStoreAppearanceDayCreator.create(
+                        dayOfTheWeek = DayOfTheWeek.FRIDAY,
+                        startTime = LocalTime.of(8, 0),
+                        endTime = LocalTime.of(10, 0),
+                        locationDescription = "강남역")
                 ),
                 categoriesIds = setOf(category.id)
             )
@@ -197,11 +200,12 @@ internal class BossStoreControllerTest(
                 snsUrl = "https://sns.com",
                 contactsNumber = ContactsNumber.of("010-1234-1234"),
                 menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
-                appearanceDays = setOf(BossStoreAppearanceDayCreator.create(
-                    dayOfTheWeek = DayOfTheWeek.FRIDAY,
-                    startTime = LocalTime.of(8, 0),
-                    endTime = LocalTime.of(10, 0),
-                    locationDescription = "강남역")
+                appearanceDays = setOf(
+                    BossStoreAppearanceDayCreator.create(
+                        dayOfTheWeek = DayOfTheWeek.FRIDAY,
+                        startTime = LocalTime.of(8, 0),
+                        endTime = LocalTime.of(10, 0),
+                        locationDescription = "강남역")
                 ),
                 categoriesIds = setOf(category.id)
             )
@@ -243,11 +247,12 @@ internal class BossStoreControllerTest(
                 snsUrl = "https://sns.com",
                 contactsNumber = ContactsNumber.of("010-1234-1234"),
                 menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
-                appearanceDays = setOf(BossStoreAppearanceDayCreator.create(
-                    dayOfTheWeek = DayOfTheWeek.FRIDAY,
-                    startTime = LocalTime.of(8, 0),
-                    endTime = LocalTime.of(10, 0),
-                    locationDescription = "강남역")
+                appearanceDays = setOf(
+                    BossStoreAppearanceDayCreator.create(
+                        dayOfTheWeek = DayOfTheWeek.FRIDAY,
+                        startTime = LocalTime.of(8, 0),
+                        endTime = LocalTime.of(10, 0),
+                        locationDescription = "강남역")
                 ),
                 categoriesIds = setOf(category.id)
             )
@@ -305,11 +310,12 @@ internal class BossStoreControllerTest(
                 snsUrl = "https://sns.com",
                 contactsNumber = ContactsNumber.of("010-1234-1234"),
                 menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
-                appearanceDays = setOf(BossStoreAppearanceDayCreator.create(
-                    dayOfTheWeek = DayOfTheWeek.FRIDAY,
-                    startTime = LocalTime.of(8, 0),
-                    endTime = LocalTime.of(10, 0),
-                    locationDescription = "강남역")
+                appearanceDays = setOf(
+                    BossStoreAppearanceDayCreator.create(
+                        dayOfTheWeek = DayOfTheWeek.FRIDAY,
+                        startTime = LocalTime.of(8, 0),
+                        endTime = LocalTime.of(10, 0),
+                        locationDescription = "강남역")
                 ),
                 categoriesIds = setOf(category.id)
             )
@@ -532,11 +538,12 @@ internal class BossStoreControllerTest(
                 snsUrl = "https://sns.com",
                 contactsNumber = ContactsNumber.of("010-1234-1234"),
                 menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
-                appearanceDays = setOf(BossStoreAppearanceDayCreator.create(
-                    dayOfTheWeek = DayOfTheWeek.FRIDAY,
-                    startTime = LocalTime.of(8, 0),
-                    endTime = LocalTime.of(10, 0),
-                    locationDescription = "강남역")
+                appearanceDays = setOf(
+                    BossStoreAppearanceDayCreator.create(
+                        dayOfTheWeek = DayOfTheWeek.FRIDAY,
+                        startTime = LocalTime.of(8, 0),
+                        endTime = LocalTime.of(10, 0),
+                        locationDescription = "강남역")
                 ),
                 categoriesIds = setOf(category.id)
             )
@@ -596,11 +603,12 @@ internal class BossStoreControllerTest(
                 snsUrl = "https://sns.com",
                 contactsNumber = ContactsNumber.of("010-1234-1234"),
                 menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
-                appearanceDays = setOf(BossStoreAppearanceDayCreator.create(
-                    dayOfTheWeek = DayOfTheWeek.FRIDAY,
-                    startTime = LocalTime.of(8, 0),
-                    endTime = LocalTime.of(10, 0),
-                    locationDescription = "강남역")
+                appearanceDays = setOf(
+                    BossStoreAppearanceDayCreator.create(
+                        dayOfTheWeek = DayOfTheWeek.FRIDAY,
+                        startTime = LocalTime.of(8, 0),
+                        endTime = LocalTime.of(10, 0),
+                        locationDescription = "강남역")
                 ),
                 categoriesIds = setOf(category.id)
             )

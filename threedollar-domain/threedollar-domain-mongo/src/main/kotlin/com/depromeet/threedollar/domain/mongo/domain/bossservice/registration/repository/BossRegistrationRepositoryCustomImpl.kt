@@ -10,15 +10,16 @@ import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.data.mongodb.core.query.lt
 import org.springframework.stereotype.Repository
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistration
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationStatus
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistration
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationStatus
 
 @Repository
 class BossRegistrationRepositoryCustomImpl(
     private val mongoTemplate: MongoTemplate,
 ) : BossRegistrationRepositoryCustom {
 
-    override fun existsWaitingRegistrationBySocialIdAndSocialType(socialId: String, socialType: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType): Boolean {
+    override fun existsWaitingRegistrationBySocialIdAndSocialType(socialId: String, socialType: BossAccountSocialType): Boolean {
         return mongoTemplate.exists(Query()
             .addCriteria(where("boss.socialInfo.socialId").isEqualTo(socialId))
             .addCriteria(where("boss.socialInfo.socialType").isEqualTo(socialType))
@@ -33,7 +34,7 @@ class BossRegistrationRepositoryCustomImpl(
         )
     }
 
-    override fun findWaitingRegistrationBySocialIdAndSocialType(socialId: String, socialType: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType): BossRegistration? {
+    override fun findWaitingRegistrationBySocialIdAndSocialType(socialId: String, socialType: BossAccountSocialType): BossRegistration? {
         return mongoTemplate.findOne(Query()
             .addCriteria(where("boss.socialInfo.socialId").isEqualTo(socialId))
             .addCriteria(where("boss.socialInfo.socialType").isEqualTo(socialType))

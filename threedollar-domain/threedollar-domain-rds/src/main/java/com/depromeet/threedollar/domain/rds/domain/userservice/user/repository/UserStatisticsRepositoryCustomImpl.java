@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.user.repository;
 
-import static com.depromeet.threedollar.domain.rds.user.domain.user.QUser.user;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.user.QUser.user;
 
 import java.time.LocalDate;
 

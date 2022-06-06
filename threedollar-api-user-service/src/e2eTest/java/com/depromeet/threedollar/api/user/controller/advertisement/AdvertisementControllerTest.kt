@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.core.service.userservice.advertisement.dto.response.AdvertisementResponse
 import com.depromeet.threedollar.api.user.controller.SetupControllerTest
+import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementCreator
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPositionType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementRepository
-import com.depromeet.threedollar.domain.rds.user.domain.advertisement.AdvertisementCreator
 
 internal class AdvertisementControllerTest(
     private val advertisementRepository: AdvertisementRepository,

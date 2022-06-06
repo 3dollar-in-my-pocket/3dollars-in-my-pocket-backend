@@ -18,8 +18,8 @@ import com.depromeet.threedollar.api.core.service.userservice.faq.dto.response.F
 import com.depromeet.threedollar.api.user.controller.SetupUserControllerTest;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.Faq;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory;
+import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCreator;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.faq.FaqCreator;
 
 class FaqControllerTest extends SetupUserControllerTest {
 

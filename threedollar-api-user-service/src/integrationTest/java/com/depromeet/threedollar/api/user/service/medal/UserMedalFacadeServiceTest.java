@@ -19,21 +19,21 @@ import com.depromeet.threedollar.api.user.service.medal.support.UserMedalAsserti
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus;
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.DeleteReasonType;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.MenuCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequestCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequestRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryCreator;
 
 @SpringBootTest
 class UserMedalFacadeServiceTest extends SetupUserServiceTest {

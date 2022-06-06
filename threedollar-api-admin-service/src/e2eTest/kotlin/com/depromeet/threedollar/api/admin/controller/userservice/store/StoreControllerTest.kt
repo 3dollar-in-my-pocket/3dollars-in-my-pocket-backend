@@ -16,10 +16,10 @@ import com.depromeet.threedollar.api.admin.service.userservice.store.dto.respons
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.DeleteReasonType
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequest
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequestRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator
 import com.fasterxml.jackson.core.type.TypeReference
 
 internal class StoreControllerTest(

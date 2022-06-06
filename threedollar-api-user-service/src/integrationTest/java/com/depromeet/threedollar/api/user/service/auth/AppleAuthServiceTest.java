@@ -21,10 +21,10 @@ import com.depromeet.threedollar.api.user.service.user.support.UserAssertions;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.WithdrawalUserRepository;
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserCreator;
 import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder;
 
 @SpringBootTest

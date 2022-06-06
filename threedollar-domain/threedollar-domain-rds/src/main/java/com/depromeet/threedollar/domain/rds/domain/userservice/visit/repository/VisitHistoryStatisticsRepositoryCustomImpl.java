@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.visit.repository;
 
-import static com.depromeet.threedollar.domain.rds.user.domain.visit.QVisitHistory.visitHistory;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.visit.QVisitHistory.visitHistory;
 
 import java.time.LocalDate;
 
@@ -14,7 +14,7 @@ public class VisitHistoryStatisticsRepositoryCustomImpl implements VisitHistoryS
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public long countAllVisitHistoriese() {
+    public long countAllVisitHistories() {
         return queryFactory.select(visitHistory.id)
             .from(visitHistory)
             .fetchCount();

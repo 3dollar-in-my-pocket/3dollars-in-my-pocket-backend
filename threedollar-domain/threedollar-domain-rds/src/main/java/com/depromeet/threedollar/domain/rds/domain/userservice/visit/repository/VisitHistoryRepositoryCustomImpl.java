@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.visit.repository;
 
 import static com.depromeet.threedollar.domain.rds.common.support.QuerydslSupport.predicate;
-import static com.depromeet.threedollar.domain.rds.user.domain.store.QMenu.menu;
-import static com.depromeet.threedollar.domain.rds.user.domain.store.QStore.store;
-import static com.depromeet.threedollar.domain.rds.user.domain.user.QUser.user;
-import static com.depromeet.threedollar.domain.rds.user.domain.visit.QVisitHistory.visitHistory;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QMenu.menu;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStore.store;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.user.QUser.user;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.visit.QVisitHistory.visitHistory;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,10 +14,10 @@ import org.jetbrains.annotations.Nullable;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistory;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.QVisitHistoryCountProjection;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.QVisitHistoryWithUserProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryCountProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryWithUserProjection;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.QVisitHistoryCountProjection;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.QVisitHistoryWithUserProjection;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;

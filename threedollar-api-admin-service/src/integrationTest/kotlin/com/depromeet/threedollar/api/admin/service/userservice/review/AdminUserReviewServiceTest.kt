@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import com.depromeet.threedollar.api.admin.service.SetupAdminServiceTest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewStatus
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewCreator
 
 internal class AdminUserReviewServiceTest(
     private val adminUserReviewService: AdminUserReviewService,

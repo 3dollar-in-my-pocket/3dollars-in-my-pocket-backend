@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.boss.service.store
 import java.time.LocalDateTime
 import org.springframework.stereotype.Service
 import com.depromeet.threedollar.common.model.LocationValue
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.store.BossStoreOpenTimeRepository
 
 @Service
