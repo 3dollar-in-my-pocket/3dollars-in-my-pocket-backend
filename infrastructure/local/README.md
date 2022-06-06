@@ -9,7 +9,7 @@ docker-compose up -d
 ### 2. Run Application
 
 ```bash
-./gradlew :threedollar-api-user:bootRun -Dspring.profiles.active=local-docker
+./gradlew :threedollar-api-user-service:bootRun -Dspring.profiles.active=local-docker
 ```
 
 ### 3. Add Seed Data

@@ -22,13 +22,13 @@ import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessag
 import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_USER
 import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_VISIT_HISTORY
 import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.DAILY_STATISTICS_INFO
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository
-import com.depromeet.threedollar.domain.rds.user.domain.store.MenuRepository
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
-import com.depromeet.threedollar.domain.rds.user.domain.user.UserRepository
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.MenuRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequestRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository
 import com.depromeet.threedollar.external.client.slack.SlackWebhookApiClient
 import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest
 

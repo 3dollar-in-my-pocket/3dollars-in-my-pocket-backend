@@ -1,5 +1,7 @@
 package com.depromeet.threedollar.domain.rds.user.domain.store
 
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImage
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageStatus
 import com.depromeet.threedollar.domain.rds.user.domain.TestFixture
 
 @TestFixture

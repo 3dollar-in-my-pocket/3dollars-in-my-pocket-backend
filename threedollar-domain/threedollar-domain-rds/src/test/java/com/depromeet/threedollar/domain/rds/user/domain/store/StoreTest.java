@@ -14,6 +14,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.PaymentMethodType;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 
 class StoreTest {
 

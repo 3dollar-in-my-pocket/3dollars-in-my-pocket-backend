@@ -9,7 +9,6 @@ import org.springframework.batch.repeat.RepeatStatus
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedbackRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossDeletedStoreRepository
@@ -27,7 +26,7 @@ class BossDailyStatisticsJobConfiguration(
     private val jobBuilderFactory: JobBuilderFactory,
     private val stepBuilderFactory: StepBuilderFactory,
     private val slackNotificationApiClient: SlackWebhookApiClient,
-    private val bossAccountRepository: BossAccountRepository,
+    private val bossAccountRepository: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository,
     private val bossRegistrationRepository: BossRegistrationRepository,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,

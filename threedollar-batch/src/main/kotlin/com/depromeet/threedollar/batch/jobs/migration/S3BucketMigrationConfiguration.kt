@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageRepository
 
 /**
  * S3 버킷을 마이그레이션 하는 배치.

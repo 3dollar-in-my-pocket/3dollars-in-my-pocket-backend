@@ -1,8 +1,10 @@
 package com.depromeet.threedollar.domain.rds.user.domain.visit
 
 import java.time.LocalDate
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistory
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType
 import com.depromeet.threedollar.domain.rds.user.domain.TestFixture
-import com.depromeet.threedollar.domain.rds.user.domain.store.Store
 
 @TestFixture
 object VisitHistoryCreator {

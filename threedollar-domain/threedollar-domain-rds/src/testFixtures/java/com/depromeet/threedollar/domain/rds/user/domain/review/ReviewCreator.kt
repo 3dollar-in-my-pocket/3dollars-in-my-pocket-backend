@@ -1,5 +1,7 @@
 package com.depromeet.threedollar.domain.rds.user.domain.review
 
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewStatus
 import com.depromeet.threedollar.domain.rds.user.domain.TestFixture
 
 @TestFixture

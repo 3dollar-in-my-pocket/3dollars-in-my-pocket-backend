@@ -1,5 +1,7 @@
 package com.depromeet.threedollar.domain.rds.user.domain.faq
 
+import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.Faq
+import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory
 import com.depromeet.threedollar.domain.rds.user.domain.TestFixture
 
 @TestFixture

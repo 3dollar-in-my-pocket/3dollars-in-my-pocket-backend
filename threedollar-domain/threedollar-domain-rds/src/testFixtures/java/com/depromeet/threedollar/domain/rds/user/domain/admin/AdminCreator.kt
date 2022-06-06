@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.domain.rds.user.domain.admin
 
+import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.Admin
 import com.depromeet.threedollar.domain.rds.user.domain.TestFixture
 
 @TestFixture

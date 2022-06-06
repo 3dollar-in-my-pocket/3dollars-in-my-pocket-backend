@@ -4,7 +4,7 @@ import java.time.Duration
 import java.time.LocalDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import com.depromeet.threedollar.domain.redis.domain.boss.store.BossStoreOpenTimeKey
+import com.depromeet.threedollar.domain.redis.domain.bossservice.store.BossStoreOpenTimeKey
 
 private const val BOSS_STORE_ID = "bossStoreId"
 

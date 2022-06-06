@@ -1,6 +1,10 @@
 package com.depromeet.threedollar.domain.rds.user.domain.advertisement
 
 import java.time.LocalDateTime
+import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.Advertisement
+import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementDetail
+import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType
+import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPositionType
 import com.depromeet.threedollar.domain.rds.user.domain.TestFixture
 
 @TestFixture
@@ -22,7 +26,8 @@ object AdvertisementCreator {
         return Advertisement.builder()
             .positionType(positionType)
             .platformType(platformType)
-            .detail(AdvertisementDetail.builder()
+            .detail(
+                AdvertisementDetail.builder()
                 .title(title)
                 .subTitle(subTitle)
                 .imageUrl(imageUrl)

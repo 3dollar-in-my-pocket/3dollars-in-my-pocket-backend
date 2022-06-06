@@ -1,5 +1,8 @@
 package com.depromeet.threedollar.domain.rds.user.domain.store
 
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.DeleteReasonType
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequest
 import com.depromeet.threedollar.domain.rds.user.domain.TestFixture
 
 @TestFixture

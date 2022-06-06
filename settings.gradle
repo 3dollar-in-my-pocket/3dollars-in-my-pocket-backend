@@ -1,10 +1,10 @@
 rootProject.name = 'threedollar'
 
 
-include 'threedollar-api-admin'
-include 'threedollar-api-user'
-include 'threedollar-api-boss'
-include 'threedollar-api-core'
+include 'threedollar-api-admin-service'
+include 'threedollar-api-user-service'
+include 'threedollar-api-boss-service'
+include 'threedollar-api-common'
 
 include 'threedollar-batch'
 

@@ -1,14 +1,13 @@
 package com.depromeet.threedollar.domain.mongo.boss.domain.registration
 
 import com.depromeet.threedollar.domain.mongo.TestFixture
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 
 @TestFixture
 object RegistrationCreator {
 
     fun create(
         socialId: String,
-        socialType: BossAccountSocialType,
+        socialType: com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType,
         bossName: String = "will",
         businessNumber: String = "000-00-00000",
         storeName: String = "가슴속 3천원",

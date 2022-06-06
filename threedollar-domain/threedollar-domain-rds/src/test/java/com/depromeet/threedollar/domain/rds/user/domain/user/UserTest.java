@@ -7,11 +7,13 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import com.depromeet.threedollar.domain.rds.user.domain.medal.Medal;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionType;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedal;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus;
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
 import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedal;
-import com.depromeet.threedollar.domain.rds.user.domain.medal.UserMedalStatus;
 
 class UserTest {
 

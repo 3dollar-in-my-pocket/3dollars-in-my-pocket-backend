@@ -7,8 +7,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType;
-import com.depromeet.threedollar.domain.rds.user.domain.visit.projection.VisitHistoryCountProjection;
+import com.depromeet.threedollar.domain.rds.collection.userservice.visit.VisitHistoryCounter;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryCountProjection;
 
 class VisitHistoriesCountCollectionTest {
 

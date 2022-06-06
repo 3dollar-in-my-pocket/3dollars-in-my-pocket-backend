@@ -8,9 +8,10 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
-import com.depromeet.threedollar.domain.rds.user.domain.store.Store;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreWithMenuProjection;
 import com.depromeet.threedollar.domain.rds.user.domain.store.StoreCreator;
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreStatus;
 
 class StoreWithMenuProjectionTest {
 

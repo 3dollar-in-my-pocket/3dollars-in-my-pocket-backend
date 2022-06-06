@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import com.depromeet.threedollar.common.exception.model.InvalidException;
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRating;
 
 class ReviewRatingTest {
 

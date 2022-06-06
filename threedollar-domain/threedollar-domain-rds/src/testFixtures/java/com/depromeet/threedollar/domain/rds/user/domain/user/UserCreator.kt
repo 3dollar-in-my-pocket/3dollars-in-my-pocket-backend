@@ -1,5 +1,7 @@
 package com.depromeet.threedollar.domain.rds.user.domain.user
 
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.User
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType
 import com.depromeet.threedollar.domain.rds.user.domain.TestFixture
 
 @TestFixture

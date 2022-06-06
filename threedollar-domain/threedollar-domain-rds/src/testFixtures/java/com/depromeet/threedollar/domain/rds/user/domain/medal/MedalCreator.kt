@@ -1,5 +1,7 @@
 package com.depromeet.threedollar.domain.rds.user.domain.medal
 
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType
 import com.depromeet.threedollar.domain.rds.user.domain.TestFixture
 
 @TestFixture
