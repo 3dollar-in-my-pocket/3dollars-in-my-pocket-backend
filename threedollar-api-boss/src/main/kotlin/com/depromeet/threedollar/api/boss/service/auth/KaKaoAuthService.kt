@@ -8,6 +8,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRep
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
 import com.depromeet.threedollar.external.client.kakao.KaKaoAuthApiClient
+import com.depromeet.threedollar.external.client.kakao.dto.response.KaKaoProfileResponse
 
 private val SOCIAL_TYPE = BossAccountSocialType.KAKAO
 
@@ -28,7 +29,8 @@ class KaKaoAuthService(
     }
 
     override fun getSocialId(token: String): String {
-        return kaKaoAuthApiClient.getProfileInfo(HttpHeaderUtils.withBearerToken(token)).id
+        val profileInfoResponse: KaKaoProfileResponse = kaKaoAuthApiClient.getProfileInfo(HttpHeaderUtils.withBearerToken(token))
+        return profileInfoResponse.id
     }
 
 }

@@ -26,9 +26,7 @@ class BossAccountService(
     @Transactional
     fun updateBossAccountInfo(bossId: String, request: UpdateBossAccountInfoRequest) {
         val bossAccount = BossAccountServiceUtils.findBossAccountByRegistrationId(bossAccountRepository, bossId)
-        request.let {
-            bossAccount.updateInfo(it.name, it.isSetupNotification)
-        }
+        bossAccount.updateInfo(request.name, request.isSetupNotification)
         bossAccountRepository.save(bossAccount)
     }
 

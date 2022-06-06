@@ -3,7 +3,6 @@ package com.depromeet.threedollar.common.exception.type;
 import static com.depromeet.threedollar.common.exception.type.ErrorAlarmOptionType.OFF;
 import static com.depromeet.threedollar.common.exception.type.ErrorAlarmOptionType.ON;
 import static com.depromeet.threedollar.common.type.HttpStatusCode.BAD_REQUEST;
-import static com.depromeet.threedollar.common.type.HttpStatusCode.NOT_FOUND;
 
 import com.depromeet.threedollar.common.type.HttpStatusCode;
 
@@ -50,19 +49,19 @@ public enum ErrorCode {
 
 
     // 404 Not Found
-    NOTFOUND(NOT_FOUND, OFF, "NF000", "존재하지 않습니다"),
-    NOTFOUND_USER(NOT_FOUND, OFF, "NF001", "탈퇴하거나 존재하지 않는 유저입니다"),
-    NOTFOUND_STORE(NOT_FOUND, OFF, "NF002", "삭제되거나 존재하지 않는 가게입니다"),
-    NOTFOUND_REVIEW(NOT_FOUND, OFF, "NF003", "삭제되거나 존재하지 않는 리뷰입니다"),
-    NOTFOUND_STORE_IMAGE(NOT_FOUND, OFF, "NF004", "삭제되거나 존재하지 않는 가게 이미지입니다"),
-    NOTFOUND_FAQ(NOT_FOUND, OFF, "NF005", "삭제되거나 존재하지 않는 FAQ입니다"),
-    NOTFOUND_MEDAL(NOT_FOUND, OFF, "N006", "존재하지 않은 메달입니다"),
-    NOTFOUND_USER_MEDAL(NOT_FOUND, OFF, "N007", "보유하지 않은 메달입니다"),
-    NOTFOUND_CATEGORY(NOT_FOUND, OFF, "N008", "존재하지 않는 카테고리 입니다"),
-    NOTFOUND_BOSS_ACCOUNT(NOT_FOUND, OFF, "N009", "존재하지 않는 사장님 계정입니다"),
-    NOTFOUND_SIGNUP_REGISTRATION(NOT_FOUND, OFF, "NF010", "해당하는 가입 신청은 존재하지 않습니다"),
-    NOTFOUND_ADMIN(NOT_FOUND, OFF, "NF011", "해당하는 관리자는 존재하지 않습니다"),
-    NOTFOUND_ADVERTISEMENT(NOT_FOUND, OFF, "NF012", "해당하는 광고는 존재하지 않습니다"),
+    NOT_FOUND(HttpStatusCode.NOT_FOUND, OFF, "NF000", "존재하지 않습니다"),
+    NOT_FOUND_USER(HttpStatusCode.NOT_FOUND, OFF, "NF001", "탈퇴하거나 존재하지 않는 유저입니다"),
+    NOT_FOUND_STORE(HttpStatusCode.NOT_FOUND, OFF, "NF002", "삭제되거나 존재하지 않는 가게입니다"),
+    NOT_FOUND_REVIEW(HttpStatusCode.NOT_FOUND, OFF, "NF003", "삭제되거나 존재하지 않는 리뷰입니다"),
+    NOT_FOUND_STORE_IMAGE(HttpStatusCode.NOT_FOUND, OFF, "NF004", "삭제되거나 존재하지 않는 가게 이미지입니다"),
+    NOT_FOUND_FAQ(HttpStatusCode.NOT_FOUND, OFF, "NF005", "삭제되거나 존재하지 않는 FAQ입니다"),
+    NOT_FOUND_MEDAL(HttpStatusCode.NOT_FOUND, OFF, "N006", "존재하지 않은 메달입니다"),
+    NOT_FOUND_USER_MEDAL(HttpStatusCode.NOT_FOUND, OFF, "N007", "보유하지 않은 메달입니다"),
+    NOT_FOUND_CATEGORY(HttpStatusCode.NOT_FOUND, OFF, "N008", "존재하지 않는 카테고리 입니다"),
+    NOT_FOUND_BOSS_ACCOUNT(HttpStatusCode.NOT_FOUND, OFF, "N009", "존재하지 않는 사장님 계정입니다"),
+    NOT_FOUND_SIGNUP_REGISTRATION(HttpStatusCode.NOT_FOUND, OFF, "NF010", "해당하는 가입 신청은 존재하지 않습니다"),
+    NOT_FOUND_ADMIN(HttpStatusCode.NOT_FOUND, OFF, "NF011", "해당하는 관리자는 존재하지 않습니다"),
+    NOT_FOUND_ADVERTISEMENT(HttpStatusCode.NOT_FOUND, OFF, "NF012", "해당하는 광고는 존재하지 않습니다"),
 
 
     // 405 Method Not Allowed

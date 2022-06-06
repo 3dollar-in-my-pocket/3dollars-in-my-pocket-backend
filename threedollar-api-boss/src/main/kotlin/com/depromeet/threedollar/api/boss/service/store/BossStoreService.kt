@@ -10,6 +10,7 @@ import com.depromeet.threedollar.api.core.service.boss.store.dto.response.BossSt
 import com.depromeet.threedollar.domain.mongo.boss.domain.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossDeletedStore
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossDeletedStoreRepository
+import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStore
 import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.domain.boss.store.BossStoreOpenTimeRepository
 
@@ -38,9 +39,9 @@ class BossStoreService(
                 contactsNumber = it.contactsNumber,
                 snsUrl = it.snsUrl
             )
-            bossStore.updateMenus(request.toMenus())
-            bossStore.updateAppearanceDays(request.toAppearanceDays())
-            bossStore.updateCategoriesIds(request.categoriesIds)
+            bossStore.updateMenus(it.toMenus())
+            bossStore.updateAppearanceDays(it.toAppearanceDays())
+            bossStore.updateCategoriesIds(it.categoriesIds)
         }
         bossStoreRepository.save(bossStore)
     }
@@ -53,6 +54,11 @@ class BossStoreService(
     ) {
         val bossStore = BossStoreServiceUtils.findBossStoreByIdAndBossId(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
         request.let {
+            it.categoriesIds?.let { categoriesIds ->
+                BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, categoriesIds)
+                bossStore.updateCategoriesIds(categoriesIds)
+            }
+
             bossStore.patchInfo(
                 name = it.name,
                 imageUrl = it.imageUrl,
@@ -62,17 +68,14 @@ class BossStoreService(
             )
             bossStore.patchMenus(it.toMenus())
             bossStore.patchAppearanceDays(it.toAppearanceDays())
-            it.categoriesIds?.let { categoriesIds ->
-                BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, categoriesIds)
-                bossStore.updateCategoriesIds(categoriesIds)
-            }
         }
         bossStoreRepository.save(bossStore)
     }
 
     @Transactional
     fun deleteBossStoreByBossId(bossId: String) {
-        bossStoreRepository.findBossStoreByBossId(bossId)?.let {
+        val bossStore: BossStore? = bossStoreRepository.findBossStoreByBossId(bossId = bossId)
+        bossStore?.let {
             bossDeleteBossStoreRepository.save(BossDeletedStore.of(it))
             bossStoreRepository.delete(it)
         }
@@ -80,7 +83,7 @@ class BossStoreService(
 
     @Transactional(readOnly = true)
     fun getMyBossStore(bossId: String): BossStoreInfoResponse {
-        val bossStore = BossStoreServiceUtils.findBossStoreByBossId(bossStoreRepository, bossId)
+        val bossStore = BossStoreServiceUtils.findBossStoreByBossId(bossStoreRepository = bossStoreRepository, bossId = bossId)
         return BossStoreInfoResponse.of(
             bossStore = bossStore,
             categories = bossStoreCategoryService.retrieveBossStoreCategoriesByIds(bossStore.categoriesIds),

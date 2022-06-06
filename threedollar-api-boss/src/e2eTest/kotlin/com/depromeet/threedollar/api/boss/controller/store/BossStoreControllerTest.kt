@@ -507,8 +507,8 @@ internal class BossStoreControllerTest(
                 }
                 .andExpect {
                     status { isNotFound() }
-                    jsonPath("$.resultCode") { value(ErrorCode.NOTFOUND_STORE.code) }
-                    jsonPath("$.message") { value(ErrorCode.NOTFOUND_STORE.message) }
+                    jsonPath("$.resultCode") { value(ErrorCode.NOT_FOUND_STORE.code) }
+                    jsonPath("$.message") { value(ErrorCode.NOT_FOUND_STORE.message) }
                 }
         }
 

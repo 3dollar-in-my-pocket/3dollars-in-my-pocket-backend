@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.rds.user.domain.user;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOTFOUND_USER_MEDAL;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOT_FOUND_USER_MEDAL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +101,7 @@ public class User extends AuditingTimeEntity {
         return this.userMedals.stream()
             .filter(userMedal -> userMedal.hasSameMedalId(medalId))
             .findFirst()
-            .orElseThrow(() -> new NotFoundException(String.format("해당 유저(%s)는 해당하는 유저 메달(%s)을 보유하고 있지 않습니다", this.id, medalId), NOTFOUND_USER_MEDAL));
+            .orElseThrow(() -> new NotFoundException(String.format("해당 유저(%s)는 해당하는 유저 메달(%s)을 보유하고 있지 않습니다", this.id, medalId), NOT_FOUND_USER_MEDAL));
     }
 
     @NotNull

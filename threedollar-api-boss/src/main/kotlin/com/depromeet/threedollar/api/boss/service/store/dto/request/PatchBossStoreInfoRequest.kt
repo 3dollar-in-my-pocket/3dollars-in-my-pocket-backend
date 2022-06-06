@@ -32,13 +32,17 @@ data class PatchBossStoreInfoRequest(
 ) {
 
     fun toMenus(): List<BossStoreMenu>? {
-        return menus?.map { menuRequest -> menuRequest.toMenu() }
+        return menus?.let {
+            return it.map { menuRequest -> menuRequest.toMenu() }
+        }
     }
 
     fun toAppearanceDays(): Set<BossStoreAppearanceDay>? {
-        return appearanceDays?.asSequence()
-            ?.map { appearanceDayRequest -> appearanceDayRequest.toAppearanceDay() }
-            ?.toSet()
+        return appearanceDays?.let {
+            return it.asSequence()
+                .map { appearanceDayRequest -> appearanceDayRequest.toAppearanceDay() }
+                .toSet()
+        }
     }
 
 }

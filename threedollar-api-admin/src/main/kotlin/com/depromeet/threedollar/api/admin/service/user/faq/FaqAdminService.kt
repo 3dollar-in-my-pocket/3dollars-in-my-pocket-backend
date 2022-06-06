@@ -40,7 +40,7 @@ class FaqAdminService(
 
     private fun findFaqById(faqId: Long): Faq {
         return faqRepository.findFaqById(faqId)
-            ?: throw NotFoundException("해당하는 Faq($faqId)는 존재하지 않습니다.", ErrorCode.NOTFOUND_FAQ)
+            ?: throw NotFoundException("해당하는 Faq($faqId)는 존재하지 않습니다.", ErrorCode.NOT_FOUND_FAQ)
     }
 
 }

@@ -14,13 +14,11 @@ class BossStoreOpenService(
 
     fun openBossStore(bossStoreId: String, bossId: String, mapLocation: LocationValue) {
         val bossStore = BossStoreServiceUtils.findBossStoreByIdAndBossId(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
-        mapLocation.let {
-            if (bossStore.hasChangedLocation(latitude = it.latitude, longitude = it.longitude)) {
-                bossStore.updateLocation(latitude = it.latitude, longitude = it.longitude)
-                bossStoreRepository.save(bossStore)
-            }
-            upsertStoreOpenInfo(bossStoreId = bossStoreId)
+        if (bossStore.hasChangedLocation(latitude = mapLocation.latitude, longitude = mapLocation.longitude)) {
+            bossStore.updateLocation(latitude = mapLocation.latitude, longitude = mapLocation.longitude)
+            bossStoreRepository.save(bossStore)
         }
+        upsertStoreOpenInfo(bossStoreId = bossStoreId)
     }
 
     private fun upsertStoreOpenInfo(bossStoreId: String) {

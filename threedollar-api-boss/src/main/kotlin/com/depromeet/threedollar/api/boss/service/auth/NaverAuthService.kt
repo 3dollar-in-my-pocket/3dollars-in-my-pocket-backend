@@ -8,6 +8,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRep
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
 import com.depromeet.threedollar.external.client.naver.NaverAuthApiClient
+import com.depromeet.threedollar.external.client.naver.dto.response.NaverProfileResponse
 
 private val SOCIAL_TYPE = BossAccountSocialType.NAVER
 
@@ -28,7 +29,8 @@ class NaverAuthService(
     }
 
     override fun getSocialId(token: String): String {
-        return naverAuthApiClient.getProfileInfo(HttpHeaderUtils.withBearerToken(token)).response.id
+        val profileInfoResponse: NaverProfileResponse = naverAuthApiClient.getProfileInfo(HttpHeaderUtils.withBearerToken(token))
+        return profileInfoResponse.response.id
     }
 
 }

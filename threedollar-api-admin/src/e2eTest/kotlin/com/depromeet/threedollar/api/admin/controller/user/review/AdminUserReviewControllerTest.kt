@@ -142,8 +142,8 @@ internal class AdminUserReviewControllerTest(
                 .andDo { print() }
                 .andExpect {
                     status { isNotFound() }
-                    jsonPath("$.resultCode") { value(ErrorCode.NOTFOUND_REVIEW.code) }
-                    jsonPath("$.message") { value(ErrorCode.NOTFOUND_REVIEW.message) }
+                    jsonPath("$.resultCode") { value(ErrorCode.NOT_FOUND_REVIEW.code) }
+                    jsonPath("$.message") { value(ErrorCode.NOT_FOUND_REVIEW.message) }
                 }
         }
 

@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.user.service.store;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOTFOUND_STORE_IMAGE;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOT_FOUND_STORE_IMAGE;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -18,7 +18,7 @@ class StoreImageServiceUtils {
     static StoreImage findStoreImageById(StoreImageRepository storeImageRepository, Long storeImageId) {
         StoreImage storeImage = storeImageRepository.findStoreImageById(storeImageId);
         if (storeImage == null) {
-            throw new NotFoundException(String.format("해당하는 가게 이미지 (%s)는 존재하지 않습니다", storeImageId), NOTFOUND_STORE_IMAGE);
+            throw new NotFoundException(String.format("해당하는 가게 이미지 (%s)는 존재하지 않습니다", storeImageId), NOT_FOUND_STORE_IMAGE);
         }
         return storeImage;
     }

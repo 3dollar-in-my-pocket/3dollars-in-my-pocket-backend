@@ -37,5 +37,5 @@ class AdminUserReviewService(
 
 private fun findReviewById(reviewRepository: ReviewRepository, reviewId: Long): Review {
     return reviewRepository.findReviewById(reviewId)
-        ?: throw NotFoundException("해당하는 리뷰($reviewId)는 존재하지 않습니다", ErrorCode.NOTFOUND_REVIEW)
+        ?: throw NotFoundException("해당하는 리뷰($reviewId)는 존재하지 않습니다", ErrorCode.NOT_FOUND_REVIEW)
 }

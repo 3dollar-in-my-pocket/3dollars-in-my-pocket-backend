@@ -36,7 +36,7 @@ class AdminUserStoreService(
     @Transactional
     fun deleteStoreByForce(storeId: Long) {
         val store = storeRepository.findStoreById(storeId)
-            ?: throw NotFoundException("해당하는 가게($storeId)는 존재하지 않습니다", ErrorCode.NOTFOUND_STORE)
+            ?: throw NotFoundException("해당하는 가게($storeId)는 존재하지 않습니다", ErrorCode.NOT_FOUND_STORE)
         store.deleteByAdmin()
     }
 

@@ -27,6 +27,7 @@ class SignupService(
         BossAccountServiceUtils.validateNotExistsBossAccount(bossAccountRepository, socialId, request.socialType)
         validateDuplicateRegistration(socialId, request.socialType)
         BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, request.storeCategoriesIds)
+
         val registration = request.toEntity(socialId)
         bossRegistrationRepository.save(registration)
 

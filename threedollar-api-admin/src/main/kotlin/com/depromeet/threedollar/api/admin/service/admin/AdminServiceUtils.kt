@@ -16,7 +16,7 @@ object AdminServiceUtils {
 
     fun findAdminById(adminRepository: AdminRepository, adminId: Long): Admin {
         return adminRepository.findAdminById(adminId)
-            ?: throw NotFoundException("해당하는 관리자 ($adminId)는 존재하지 않습니다", ErrorCode.NOTFOUND_ADMIN)
+            ?: throw NotFoundException("해당하는 관리자 ($adminId)는 존재하지 않습니다", ErrorCode.NOT_FOUND_ADMIN)
     }
 
 }

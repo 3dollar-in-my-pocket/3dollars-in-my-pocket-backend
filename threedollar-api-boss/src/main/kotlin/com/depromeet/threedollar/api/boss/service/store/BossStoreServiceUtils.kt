@@ -13,7 +13,7 @@ object BossStoreServiceUtils {
         bossId: String,
     ): BossStore {
         return bossStoreRepository.findBossStoreByIdAndBossId(bossStoreId = bossStoreId, bossId = bossId)
-            ?: throw NotFoundException("해당하는 사장님 가게(${bossStoreId})는 존재하지 않습니다", ErrorCode.NOTFOUND_STORE)
+            ?: throw NotFoundException("해당하는 사장님 가게(${bossStoreId})는 존재하지 않습니다", ErrorCode.NOT_FOUND_STORE)
     }
 
     fun findBossStoreByBossId(
@@ -21,7 +21,7 @@ object BossStoreServiceUtils {
         bossId: String,
     ): BossStore {
         return bossStoreRepository.findBossStoreByBossId(bossId)
-            ?: throw NotFoundException("사장님(${bossId})이 운영중인 사장님 가게가 존재하지 않습니다", ErrorCode.NOTFOUND_STORE)
+            ?: throw NotFoundException("사장님(${bossId})이 운영중인 사장님 가게가 존재하지 않습니다", ErrorCode.NOT_FOUND_STORE)
     }
 
     fun validateExistsBossStoreByBoss(
@@ -30,7 +30,7 @@ object BossStoreServiceUtils {
         bossId: String,
     ) {
         if (!bossStoreRepository.existsBossStoreByIdAndBossId(bossStoreId = bossStoreId, bossId = bossId)) {
-            throw NotFoundException("사장님($bossStoreId)이 운영중인 사장님 가게($bossStoreId)는 존재하지 않습니다", ErrorCode.NOTFOUND_STORE)
+            throw NotFoundException("사장님($bossStoreId)이 운영중인 사장님 가게($bossStoreId)는 존재하지 않습니다", ErrorCode.NOT_FOUND_STORE)
         }
     }
 

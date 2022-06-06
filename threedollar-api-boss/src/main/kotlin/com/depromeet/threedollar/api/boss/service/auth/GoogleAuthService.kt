@@ -8,6 +8,7 @@ import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRep
 import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
+import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse
 
 private val SOCIAL_TYPE = BossAccountSocialType.GOOGLE
 
@@ -28,7 +29,8 @@ class GoogleAuthService(
     }
 
     override fun getSocialId(token: String): String {
-        return googleAuthApiClient.getProfileInfo(HttpHeaderUtils.withBearerToken(token)).id
+        val profileInfoResponse: GoogleProfileInfoResponse = googleAuthApiClient.getProfileInfo(HttpHeaderUtils.withBearerToken(token))
+        return profileInfoResponse.id
     }
 
 }

@@ -52,7 +52,7 @@ class AdminAdvertisementService(
 
     fun findAdvertisementById(advertisementId: Long): Advertisement {
         return advertisementRepository.findAdvertisementById(advertisementId)
-            ?: throw NotFoundException("해당하는 광고(${advertisementId})는 존재하지 않습니다.", ErrorCode.NOTFOUND_ADVERTISEMENT)
+            ?: throw NotFoundException("해당하는 광고(${advertisementId})는 존재하지 않습니다.", ErrorCode.NOT_FOUND_ADVERTISEMENT)
     }
 
 }

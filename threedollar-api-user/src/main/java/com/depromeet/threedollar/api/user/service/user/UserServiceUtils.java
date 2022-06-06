@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.user.service.user;
 
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.CONFLICT_NICKNAME;
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.CONFLICT_USER;
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOTFOUND_USER;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOT_FOUND_USER;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -34,7 +34,7 @@ public class UserServiceUtils {
     public static User findUserById(UserRepository userRepository, Long userId) {
         User user = userRepository.findUserById(userId);
         if (user == null) {
-            throw new NotFoundException(String.format("존재하지 않는 유저 (%s) 입니다", userId), NOTFOUND_USER);
+            throw new NotFoundException(String.format("존재하지 않는 유저 (%s) 입니다", userId), NOT_FOUND_USER);
         }
         return user;
     }
@@ -43,7 +43,7 @@ public class UserServiceUtils {
     public static User findUserBySocialIdAndSocialType(UserRepository userRepository, String socialId, UserSocialType socialType) {
         User user = userRepository.findUserBySocialIdAndSocialType(socialId, socialType);
         if (user == null) {
-            throw new NotFoundException(String.format("존재하지 않는 유저 (%s-%s) 입니다", socialId, socialType), NOTFOUND_USER);
+            throw new NotFoundException(String.format("존재하지 않는 유저 (%s-%s) 입니다", socialId, socialType), NOT_FOUND_USER);
         }
         return user;
     }
