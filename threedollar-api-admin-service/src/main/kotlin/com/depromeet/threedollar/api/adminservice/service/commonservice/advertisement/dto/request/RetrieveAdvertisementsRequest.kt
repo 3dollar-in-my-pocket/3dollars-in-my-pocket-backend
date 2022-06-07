@@ -2,10 +2,13 @@ package com.depromeet.threedollar.api.adminservice.service.commonservice.adverti
 
 import javax.validation.constraints.Max
 import javax.validation.constraints.Min
+import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPositionType
 
 data class RetrieveAdvertisementsRequest(
+    val applicationType: ApplicationType,
+
     @field:Min(value = 1, message = "{common.size.min}")
     @field:Max(value = 30, message = "{common.size.max}")
     val size: Long = 1,

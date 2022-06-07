@@ -18,12 +18,12 @@ public enum FaqCategory implements EnumModel {
     ETC(List.of(ApplicationType.USER_API, ApplicationType.BOSS_API), "기타", 6),
     ;
 
-    private final List<ApplicationType> applicationTypes;
+    private final List<ApplicationType> supportedApplicationTypes;
     private final String description;
     private final int displayOrder;
 
-    FaqCategory(List<ApplicationType> applicationTypes, String description, int displayOrder) {
-        this.applicationTypes = applicationTypes;
+    FaqCategory(List<ApplicationType> supportedApplicationTypes, String description, int displayOrder) {
+        this.supportedApplicationTypes = supportedApplicationTypes;
         this.description = description;
         this.displayOrder = displayOrder;
     }
@@ -34,7 +34,7 @@ public enum FaqCategory implements EnumModel {
     }
 
     public boolean isSupported(ApplicationType applicationType) {
-        return this.applicationTypes.contains(applicationType);
+        return this.supportedApplicationTypes.contains(applicationType);
     }
 
 }

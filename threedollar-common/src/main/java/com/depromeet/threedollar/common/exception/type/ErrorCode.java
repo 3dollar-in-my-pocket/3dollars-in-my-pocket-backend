@@ -47,6 +47,7 @@ public enum ErrorCode {
     FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT(HttpStatusCode.FORBIDDEN, OFF, "FB001", "가입 신청이 승인 대기 중입니다\n가입 승인 절차 이후 이용하실 수 있습니다."),
     FORBIDDEN_UPLOAD_FILE_IN_MODULE(HttpStatusCode.FORBIDDEN, OFF, "FB002", "해당 서비스에서 업로드할 수 없는 파일 타입 입니다"),
     FORBIDDEN_NOT_SUPPORTED_FAQ_CATEGORY(HttpStatusCode.FORBIDDEN, OFF, "FB003", "해당 서비스에서 지원하지 않는 FAQ 카테고리 입니다"),
+    FORBIDDEN_NOT_SUPPORTED_ADVERTISEMENT_POSITION(HttpStatusCode.FORBIDDEN, OFF, "FB004", "해당 서비스에서 지원하지 않는 광고 위치 입니다"),
 
 
     // 404 Not Found

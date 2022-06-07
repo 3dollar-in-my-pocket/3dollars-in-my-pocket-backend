@@ -15,6 +15,7 @@ import javax.persistence.Table;
 
 import org.jetbrains.annotations.NotNull;
 
+import com.depromeet.threedollar.common.type.ApplicationType;
 import com.depromeet.threedollar.domain.rds.core.model.AuditingTimeEntity;
 import com.depromeet.threedollar.domain.rds.core.model.DateTimeInterval;
 
@@ -28,7 +29,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(
     indexes = {
-        @Index(name = "idx_advertisemment_1", columnList = "positionType,platformType,id,startDateTime")
+        @Index(name = "idx_advertisemment_1", columnList = "applicationType,positionType,platformType,id,startDateTime")
     }
 )
 public class Advertisement extends AuditingTimeEntity {
@@ -36,6 +37,10 @@ public class Advertisement extends AuditingTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, length = 30)
+    @Enumerated(EnumType.STRING)
+    private ApplicationType applicationType;
 
     @Column(nullable = false, length = 30)
     @Enumerated(EnumType.STRING)
@@ -53,12 +58,14 @@ public class Advertisement extends AuditingTimeEntity {
 
     @Builder(access = AccessLevel.PACKAGE)
     private Advertisement(
+        @NotNull ApplicationType applicationType,
         @NotNull AdvertisementPositionType positionType,
         @NotNull AdvertisementPlatformType platformType,
         @NotNull LocalDateTime startDateTime,
         @NotNull LocalDateTime endDateTime,
         @NotNull AdvertisementDetail detail
     ) {
+        this.applicationType = applicationType;
         this.positionType = positionType;
         this.platformType = platformType;
         this.dateTimeInterval = DateTimeInterval.of(startDateTime, endDateTime);
@@ -66,6 +73,7 @@ public class Advertisement extends AuditingTimeEntity {
     }
 
     public static Advertisement newInstance(
+        @NotNull ApplicationType applicationType,
         @NotNull AdvertisementPositionType positionType,
         @NotNull AdvertisementPlatformType platformType,
         @NotNull LocalDateTime startDateTime,
@@ -73,6 +81,7 @@ public class Advertisement extends AuditingTimeEntity {
         @NotNull AdvertisementDetail detail
     ) {
         return Advertisement.builder()
+            .applicationType(applicationType)
             .positionType(positionType)
             .platformType(platformType)
             .startDateTime(startDateTime)

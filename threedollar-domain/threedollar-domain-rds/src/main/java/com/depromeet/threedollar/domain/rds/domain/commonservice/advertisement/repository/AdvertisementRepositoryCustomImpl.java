@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.jetbrains.annotations.Nullable;
 
+import com.depromeet.threedollar.common.type.ApplicationType;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.Advertisement;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPositionType;
@@ -30,9 +31,10 @@ public class AdvertisementRepositoryCustomImpl implements AdvertisementRepositor
     }
 
     @Override
-    public List<Advertisement> findActivatedAdvertisementsByPositionAndPlatformAfterDate(AdvertisementPositionType positionType, AdvertisementPlatformType platformType, LocalDateTime dateTime) {
+    public List<Advertisement> findActivatedAdvertisementsByPositionAndPlatformAfterDate(ApplicationType applicationType, AdvertisementPositionType positionType, AdvertisementPlatformType platformType, LocalDateTime dateTime) {
         return queryFactory.selectFrom(advertisement)
             .where(
+                advertisement.applicationType.eq(applicationType),
                 advertisement.positionType.eq(positionType),
                 advertisement.platformType.in(platformType, AdvertisementPlatformType.ALL),
                 advertisement.dateTimeInterval.startDateTime.loe(dateTime),
@@ -43,9 +45,10 @@ public class AdvertisementRepositoryCustomImpl implements AdvertisementRepositor
     }
 
     @Override
-    public List<Advertisement> findAllByPositionAndPlatformWithPaging(long size, int page, AdvertisementPlatformType platformType, AdvertisementPositionType positionType) {
+    public List<Advertisement> findAllByApplicationTypeAndPositionAndPlatformWithPaging(ApplicationType applicationType, long size, int page, @Nullable AdvertisementPlatformType platformType, @Nullable AdvertisementPositionType positionType) {
         return queryFactory.selectFrom(advertisement)
             .where(
+                advertisement.applicationType.eq(applicationType),
                 predicate(platformType != null, () -> advertisement.platformType.eq(platformType)),
                 predicate(positionType != null, () -> advertisement.positionType.eq(positionType))
             )
@@ -56,8 +59,13 @@ public class AdvertisementRepositoryCustomImpl implements AdvertisementRepositor
     }
 
     @Override
-    public long findAllCounts() {
+    public long findAllCountsByApplicationTypeAndPlatformTypeAndPositionType(ApplicationType applicationType, @Nullable AdvertisementPlatformType platformType, @Nullable AdvertisementPositionType positionType) {
         return queryFactory.selectFrom(advertisement)
+            .where(
+                advertisement.applicationType.eq(applicationType),
+                predicate(platformType != null, () -> advertisement.platformType.eq(platformType)),
+                predicate(positionType != null, () -> advertisement.positionType.eq(positionType))
+            )
             .fetchCount();
     }
 

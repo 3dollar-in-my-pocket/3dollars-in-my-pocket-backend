@@ -3,12 +3,15 @@ package com.depromeet.threedollar.api.adminservice.service.commonservice.adverti
 import java.time.LocalDateTime
 import javax.validation.constraints.Size
 import org.hibernate.validator.constraints.URL
+import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.Advertisement
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementDetail
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPositionType
 
 data class AddAdvertisementRequest(
+    val applicationType: ApplicationType,
+
     val position: AdvertisementPositionType,
 
     val platform: AdvertisementPlatformType,
@@ -40,7 +43,7 @@ data class AddAdvertisementRequest(
 
     fun toEntity(): Advertisement {
         val detail = AdvertisementDetail.of(title, subTitle, imageUrl, linkUrl, bgColor, fontColor)
-        return Advertisement.newInstance(position, platform, startDateTime, endDateTime, detail)
+        return Advertisement.newInstance(applicationType, position, platform, startDateTime, endDateTime, detail)
     }
 
 }
