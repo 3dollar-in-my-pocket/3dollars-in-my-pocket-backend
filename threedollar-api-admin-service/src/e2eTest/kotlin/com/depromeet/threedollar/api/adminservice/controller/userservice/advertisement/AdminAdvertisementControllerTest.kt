@@ -11,9 +11,9 @@ import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.put
 import com.depromeet.threedollar.api.adminservice.controller.SetupAdminControllerTest
-import com.depromeet.threedollar.api.adminservice.service.userservice.advertisement.dto.request.AddAdvertisementRequest
-import com.depromeet.threedollar.api.adminservice.service.userservice.advertisement.dto.request.UpdateAdvertisementRequest
-import com.depromeet.threedollar.api.adminservice.service.userservice.advertisement.dto.response.AdvertisementResponse
+import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.request.AddAdvertisementRequest
+import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.request.UpdateAdvertisementRequest
+import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.response.AdvertisementResponse
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementCreator
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType

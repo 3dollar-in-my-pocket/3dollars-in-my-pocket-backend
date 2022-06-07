@@ -1,24 +1,29 @@
 package com.depromeet.threedollar.domain.rds.domain.commonservice.faq;
 
+import java.util.List;
+
 import com.depromeet.threedollar.common.model.EnumModel;
+import com.depromeet.threedollar.common.type.ApplicationType;
 
 import lombok.Getter;
 
 @Getter
 public enum FaqCategory implements EnumModel {
 
-    STORE("가게", 1),
-    REVIEW_MENU("리뷰 및 메뉴", 2),
-    WITHDRAWAL("회원탈퇴", 3),
-    BOARD("게시글 수정 및 삭제", 4),
-    CATEGORY("카테고리", 5),
-    ETC("기타", 6),
+    STORE(List.of(ApplicationType.USER_API, ApplicationType.BOSS_API), "가게", 1),
+    REVIEW_MENU(List.of(ApplicationType.USER_API), "리뷰 및 메뉴", 2),
+    WITHDRAWAL(List.of(ApplicationType.USER_API), "회원탈퇴", 3),
+    BOARD(List.of(ApplicationType.USER_API), "게시글 수정 및 삭제", 4),
+    CATEGORY(List.of(ApplicationType.USER_API), "카테고리", 5),
+    ETC(List.of(ApplicationType.USER_API, ApplicationType.BOSS_API), "기타", 6),
     ;
 
+    private final List<ApplicationType> applicationTypes;
     private final String description;
     private final int displayOrder;
 
-    FaqCategory(String description, int displayOrder) {
+    FaqCategory(List<ApplicationType> applicationTypes, String description, int displayOrder) {
+        this.applicationTypes = applicationTypes;
         this.description = description;
         this.displayOrder = displayOrder;
     }
@@ -26,6 +31,10 @@ public enum FaqCategory implements EnumModel {
     @Override
     public String getKey() {
         return name();
+    }
+
+    public boolean isSupported(ApplicationType applicationType) {
+        return this.applicationTypes.contains(applicationType);
     }
 
 }

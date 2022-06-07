@@ -22,7 +22,7 @@ public class AdvertisementRepositoryCustomImpl implements AdvertisementRepositor
 
     @Nullable
     @Override
-    public Advertisement findAdvertisementById(long advertisementId) {
+    public Advertisement findAdvertisementById(Long advertisementId) {
         return queryFactory.selectFrom(advertisement)
             .where(
                 advertisement.id.eq(advertisementId)

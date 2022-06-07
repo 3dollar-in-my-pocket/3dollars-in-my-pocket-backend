@@ -6,7 +6,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
-import com.depromeet.threedollar.api.core.service.userservice.advertisement.dto.response.AdvertisementResponse
+import com.depromeet.threedollar.api.core.service.commonservice.advertisement.dto.response.AdvertisementResponse
 import com.depromeet.threedollar.api.userservice.controller.SetupControllerTest
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementCreator
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType

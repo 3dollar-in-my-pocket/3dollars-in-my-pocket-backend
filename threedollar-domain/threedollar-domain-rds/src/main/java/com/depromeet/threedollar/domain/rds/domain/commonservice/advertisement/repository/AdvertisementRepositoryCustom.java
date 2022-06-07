@@ -12,7 +12,7 @@ import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.A
 public interface AdvertisementRepositoryCustom {
 
     @Nullable
-    Advertisement findAdvertisementById(long advertisementId);
+    Advertisement findAdvertisementById(Long advertisementId);
 
     List<Advertisement> findActivatedAdvertisementsByPositionAndPlatformAfterDate(AdvertisementPositionType positionType, AdvertisementPlatformType platformType, LocalDateTime dateTime);
 

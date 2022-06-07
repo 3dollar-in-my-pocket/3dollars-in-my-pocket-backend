@@ -12,12 +12,12 @@ import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.put
 import com.depromeet.threedollar.api.adminservice.controller.SetupAdminControllerTest
-import com.depromeet.threedollar.api.adminservice.service.userservice.faq.dto.request.AddFaqRequest
-import com.depromeet.threedollar.api.adminservice.service.userservice.faq.dto.request.UpdateFaqRequest
+import com.depromeet.threedollar.api.adminservice.service.commonservice.faq.dto.request.AddFaqRequest
+import com.depromeet.threedollar.api.adminservice.service.commonservice.faq.dto.request.UpdateFaqRequest
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.service.userservice.faq.dto.request.RetrieveFaqsRequest
-import com.depromeet.threedollar.api.core.service.userservice.faq.dto.response.FaqCategoryResponse
-import com.depromeet.threedollar.api.core.service.userservice.faq.dto.response.FaqResponse
+import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.response.FaqCategoryResponse
+import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.response.FaqResponse
+import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCreator
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqRepository
@@ -32,17 +32,22 @@ internal class AdminFaqControllerTest(
         faqRepository.deleteAllInBatch()
     }
 
-    @DisplayName("POST /admin/v1/user/faq")
+    @DisplayName("POST /admin/v1/faq")
     @Nested
     inner class AddFaqApiTest {
 
         @Test
         fun 새로운_FAQ를_추가한다() {
             // given
-            val request = AddFaqRequest("카테고리 질문", "카테고리 답변", FaqCategory.CATEGORY)
+            val request = AddFaqRequest(
+                applicationType = ApplicationType.BOSS_API,
+                question = "카테고리 질문",
+                answer = "카테고리 답변",
+                category = FaqCategory.ETC
+            )
 
             // when & then
-            mockMvc.post("/v1/user/faq") {
+            mockMvc.post("/v1/faq") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
@@ -62,7 +67,7 @@ internal class AdminFaqControllerTest(
 
     }
 
-    @DisplayName("PUT /admin/v1/user/faq")
+    @DisplayName("PUT /admin/v1/faq")
     @Nested
     inner class UpdateFaqApiTest {
 
@@ -74,7 +79,7 @@ internal class AdminFaqControllerTest(
             val request = UpdateFaqRequest("카테고리 질문", "카테고리 답변", FaqCategory.CATEGORY)
 
             // when & then
-            mockMvc.put("/v1/user/faq/${faq.id}") {
+            mockMvc.put("/v1/faq/${faq.id}") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 contentType = MediaType.APPLICATION_JSON
                 content = objectMapper.writeValueAsString(request)
@@ -94,7 +99,7 @@ internal class AdminFaqControllerTest(
 
     }
 
-    @DisplayName("DELETE /admin/v1/user/faq")
+    @DisplayName("DELETE /admin/v1/faq")
     @Nested
     inner class DeleteFaqApiTest {
 
@@ -104,7 +109,7 @@ internal class AdminFaqControllerTest(
             val faq = faqRepository.save(FaqCreator.create("question", "answer", FaqCategory.BOARD))
 
             // when & then
-            mockMvc.delete("/v1/user/faq/${faq.id}") {
+            mockMvc.delete("/v1/faq/${faq.id}") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             }
                 .andDo {
@@ -119,19 +124,19 @@ internal class AdminFaqControllerTest(
 
     }
 
-    @DisplayName("GET /admin/v1/user/faqs")
+    @DisplayName("GET /admin/v1/faqs")
     @Nested
     inner class RetrieveFaqsApiTest {
 
         @Test
         fun FAQ_리스트를_조회한다() {
             // given
-            val faq1 = FaqCreator.create("question1", "answer1", FaqCategory.BOARD)
-            val faq2 = FaqCreator.create("question2", "answer2", FaqCategory.CATEGORY)
+            val faq1 = FaqCreator.create(applicationType = ApplicationType.USER_API, question = "question1", answer = "answer1", category = FaqCategory.BOARD)
+            val faq2 = FaqCreator.create(applicationType = ApplicationType.BOSS_API, question = "question2", answer = "answer2", category = FaqCategory.CATEGORY)
             faqRepository.saveAll(listOf(faq1, faq2))
 
             // when & then
-            mockMvc.get("/v1/user/faqs") {
+            mockMvc.get("/v1/faqs") {
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             }
                 .andDo {
@@ -146,51 +151,27 @@ internal class AdminFaqControllerTest(
                     jsonPath("$.data[0].question") { value(faq1.question) }
                     jsonPath("$.data[0].answer") { value(faq1.answer) }
                     jsonPath("$.data[0].category") { value(faq1.category.name) }
+                    jsonPath("$.data[0].applicationType") { value(faq1.applicationType.name) }
 
                     jsonPath("$.data[1].faqId") { value(faq2.id) }
                     jsonPath("$.data[1].question") { value(faq2.question) }
                     jsonPath("$.data[1].answer") { value(faq2.answer) }
                     jsonPath("$.data[1].category") { value(faq2.category.name) }
-                }
-        }
-
-        @Test
-        fun 특정_카테고리의_FAQ_리스트를_조회한다() {
-            // given
-            val faq1 = FaqCreator.create("question1", "answer1", FaqCategory.BOARD)
-            val faq2 = FaqCreator.create("question2", "answer2", FaqCategory.CATEGORY)
-            faqRepository.saveAll(listOf(faq1, faq2))
-
-            val request = RetrieveFaqsRequest(FaqCategory.CATEGORY)
-
-            // when & then
-            mockMvc.get("/v1/user/faqs?category=${request.category}") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
-            }
-                .andDo {
-                    print()
-                }
-                .andExpect {
-                    status { isOk() }
-
-                    jsonPath("$.data", hasSize<FaqResponse>(1))
-                    jsonPath("$.data[0].faqId") { value(faq2.id) }
-                    jsonPath("$.data[0].question") { value(faq2.question) }
-                    jsonPath("$.data[0].answer") { value(faq2.answer) }
-                    jsonPath("$.data[0].category") { value(faq2.category.name) }
+                    jsonPath("$.data[1].applicationType") { value(faq2.applicationType.name) }
                 }
         }
 
     }
 
-    @DisplayName("GET /admin/v1/user/faq/categories")
+    @DisplayName("GET /admin/v1/faq/categories")
     @Nested
     inner class RetrieveFaqCategoriesApiTest {
 
         @Test
         fun FAQ_카테고리_리스트를_조회한다() {
             // when & then
-            mockMvc.get("/v1/user/faq/categories") {
+            mockMvc.get("/v1/faq/categories") {
+                param("applicationType", ApplicationType.USER_API.name)
                 header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             }
                 .andDo {

@@ -8,8 +8,9 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
-import com.depromeet.threedollar.api.adminservice.service.userservice.advertisement.dto.request.AddAdvertisementRequest
-import com.depromeet.threedollar.api.adminservice.service.userservice.advertisement.dto.request.UpdateAdvertisementRequest
+import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.AdminAdvertisementService
+import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.request.AddAdvertisementRequest
+import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.request.UpdateAdvertisementRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.Advertisement
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementCreator
