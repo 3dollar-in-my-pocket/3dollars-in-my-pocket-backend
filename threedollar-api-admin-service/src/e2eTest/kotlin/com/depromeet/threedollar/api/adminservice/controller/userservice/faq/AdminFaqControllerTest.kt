@@ -43,7 +43,7 @@ internal class AdminFaqControllerTest(
                 applicationType = ApplicationType.BOSS_API,
                 question = "카테고리 질문",
                 answer = "카테고리 답변",
-                category = FaqCategory.CATEGORY
+                category = FaqCategory.ETC
             )
 
             // when & then
