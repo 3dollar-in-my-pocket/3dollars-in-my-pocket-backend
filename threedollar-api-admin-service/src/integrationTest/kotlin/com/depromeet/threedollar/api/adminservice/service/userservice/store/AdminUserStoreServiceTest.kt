@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import com.depromeet.threedollar.api.adminservice.service.SetupAdminServiceTest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus
@@ -45,11 +46,7 @@ internal class AdminUserStoreServiceTest(
             val stores = storeRepository.findAll()
             assertAll({
                 assertThat(stores).hasSize(1)
-                stores[0].let {
-                    assertThat(it.status).isEqualTo(StoreStatus.FILTERED)
-                    assertThat(it.isDeleted).isTrue
-                    assertThat(it.id).isEqualTo(store.id)
-                }
+                assertStore(store = stores[0], status = StoreStatus.FILTERED, isDeleted = true, storeId = store.id)
             })
         }
 
@@ -92,6 +89,12 @@ internal class AdminUserStoreServiceTest(
             assertThatThrownBy { adminUserStoreService.deleteStoreByForce(storeId = store.id) }.isInstanceOf(NotFoundException::class.java)
         }
 
+    }
+
+    private fun assertStore(store: Store, status: StoreStatus, isDeleted: Boolean, storeId: Long) {
+        assertThat(store.status).isEqualTo(status)
+        assertThat(store.isDeleted).isEqualTo(isDeleted)
+        assertThat(store.id).isEqualTo(storeId)
     }
 
 }

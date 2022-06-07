@@ -11,6 +11,8 @@ import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.api.adminservice.service.userservice.medal.dto.request.AddMedalRequest
 import com.depromeet.threedollar.api.adminservice.service.userservice.medal.dto.request.UpdateMedalRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionCondition
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator
@@ -62,20 +64,10 @@ internal class AdminMedalServiceTest(
             val medalAcquisitionConditions = medalAcquisitionConditionRepository.findAll()
             assertAll({
                 assertThat(medals).hasSize(1)
-                medals[0]?.let {
-                    assertThat(it.name).isEqualTo(name)
-                    assertThat(it.introduction).isEqualTo(introduction)
-                    assertThat(it.medalImage.activationIconUrl).isEqualTo(activationIconUrl)
-                    assertThat(it.medalImage.disableIconUrl).isEqualTo(disableIconUrl)
-                }
+                assertMedal(medal = medals[0], name = name, introduction = introduction, activationIconUrl = activationIconUrl, disableIconUrl = disableIconUrl)
 
                 assertThat(medalAcquisitionConditions).hasSize(1)
-                medalAcquisitionConditions[0]?.let {
-                    assertThat(it.medal.id).isEqualTo(medals[0].id)
-                    assertThat(it.conditionType).isEqualTo(conditionType)
-                    assertThat(it.count).isEqualTo(conditionCount)
-                    assertThat(it.description).isEqualTo(acquisitionDescription)
-                }
+                assertMedalAcquisitionCondition(medalAcquisitionCondition = medalAcquisitionConditions[0], medalId = medals[0].id, conditionType = conditionType, conditionCount = conditionCount, acquisitionDescription = acquisitionDescription)
             })
 
         }
@@ -111,12 +103,7 @@ internal class AdminMedalServiceTest(
             val medalAcquisitionConditions = medalAcquisitionConditionRepository.findAll()
             assertAll({
                 assertThat(medals).hasSize(1)
-                medals[0]?.let {
-                    assertThat(it.name).isEqualTo(name)
-                    assertThat(it.introduction).isEqualTo(introduction)
-                    assertThat(it.medalImage.activationIconUrl).isEqualTo(activationIconUrl)
-                    assertThat(it.medalImage.disableIconUrl).isEqualTo(disableIconUrl)
-                }
+                assertMedal(medal = medals[0], name = name, introduction = introduction, activationIconUrl = activationIconUrl, disableIconUrl = disableIconUrl)
 
                 assertThat(medalAcquisitionConditions).hasSize(1)
             })
@@ -138,6 +125,20 @@ internal class AdminMedalServiceTest(
             assertThatThrownBy { adminMedalService.updateMedal(notFoundMedalId, request) }.isInstanceOf(NotFoundException::class.java)
         }
 
+    }
+
+    private fun assertMedal(medal: Medal, name: String, introduction: String, activationIconUrl: String, disableIconUrl: String) {
+        assertThat(medal.name).isEqualTo(name)
+        assertThat(medal.introduction).isEqualTo(introduction)
+        assertThat(medal.medalImage.activationIconUrl).isEqualTo(activationIconUrl)
+        assertThat(medal.medalImage.disableIconUrl).isEqualTo(disableIconUrl)
+    }
+
+    private fun assertMedalAcquisitionCondition(medalAcquisitionCondition: MedalAcquisitionCondition, medalId: Long, conditionType: MedalAcquisitionConditionType, conditionCount: Int, acquisitionDescription: String) {
+        assertThat(medalAcquisitionCondition.medal.id).isEqualTo(medalId)
+        assertThat(medalAcquisitionCondition.conditionType).isEqualTo(conditionType)
+        assertThat(medalAcquisitionCondition.count).isEqualTo(conditionCount)
+        assertThat(medalAcquisitionCondition.description).isEqualTo(acquisitionDescription)
     }
 
 }

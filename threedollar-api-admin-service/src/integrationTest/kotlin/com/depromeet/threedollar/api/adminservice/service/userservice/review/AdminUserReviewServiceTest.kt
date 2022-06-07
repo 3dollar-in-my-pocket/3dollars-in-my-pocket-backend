@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import com.depromeet.threedollar.api.adminservice.service.SetupAdminServiceTest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewStatus
@@ -40,14 +41,14 @@ internal class AdminUserReviewServiceTest(
         val reviews = reviewRepository.findAll()
         assertAll({
             assertThat(reviews).hasSize(1)
-            reviews[0].let {
-                assertThat(it.status).isEqualTo(ReviewStatus.FILTERED)
-
-                assertThat(it.id).isEqualTo(review.id)
-                assertThat(it.contents).isEqualTo(review.contents)
-                assertThat(it.rating).isEqualTo(review.rating)
-                assertThat(it.userId).isEqualTo(review.userId)
-            }
+            assertReview(
+                review = reviews[0],
+                status = ReviewStatus.FILTERED,
+                reviewId = review.id,
+                contents = review.contents,
+                rating = review.rating,
+                userId = review.userId
+            )
         })
     }
 
@@ -70,6 +71,14 @@ internal class AdminUserReviewServiceTest(
 
         // when & then
         assertThatThrownBy { adminUserReviewService.deleteReviewByForce(reviewId = -1L) }.isInstanceOf(NotFoundException::class.java)
+    }
+
+    private fun assertReview(review: Review, status: ReviewStatus, reviewId: Long, contents: String, rating: Int, userId: Long) {
+        assertThat(review.status).isEqualTo(status)
+        assertThat(review.id).isEqualTo(reviewId)
+        assertThat(review.contents).isEqualTo(contents)
+        assertThat(review.rating).isEqualTo(rating)
+        assertThat(review.userId).isEqualTo(userId)
     }
 
 }

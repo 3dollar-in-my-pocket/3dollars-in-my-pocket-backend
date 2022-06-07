@@ -127,7 +127,7 @@ internal class FaqAdminServiceTest(
                 category = FaqCategory.STORE)
             faqRepository.save(faq)
 
-            val request = UpdateFaqRequest("질문", "답변", FaqCategory.REVIEW_MENU)
+            val request = UpdateFaqRequest(question = "질문", answer = "답변", category = FaqCategory.REVIEW_MENU)
 
             // when & then
             assertThatThrownBy {
@@ -142,7 +142,7 @@ internal class FaqAdminServiceTest(
         fun 등록된_FAQ를_수정할때_해당하는_FAQ가_없으면_NotFOUND_EXCEPTION() {
             // given
             val notFoundFaqId = -1L
-            val request = UpdateFaqRequest("질문", "답변", FaqCategory.CATEGORY)
+            val request = UpdateFaqRequest(question = "질문", answer = "답변", category = FaqCategory.REVIEW_MENU)
 
             // when & then
             assertThatThrownBy {
