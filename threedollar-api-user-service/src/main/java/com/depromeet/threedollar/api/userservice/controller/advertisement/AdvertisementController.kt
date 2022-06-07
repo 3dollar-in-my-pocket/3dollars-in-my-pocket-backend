@@ -4,9 +4,9 @@ import javax.validation.Valid
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.service.userservice.advertisement.AdvertisementService
-import com.depromeet.threedollar.api.core.service.userservice.advertisement.dto.request.RetrieveAdvertisementsRequest
-import com.depromeet.threedollar.api.core.service.userservice.advertisement.dto.response.AdvertisementResponse
+import com.depromeet.threedollar.api.core.service.commonservice.advertisement.AdvertisementService
+import com.depromeet.threedollar.api.core.service.commonservice.advertisement.dto.request.RetrieveAdvertisementsRequest
+import com.depromeet.threedollar.api.core.service.commonservice.advertisement.dto.response.AdvertisementResponse
 import io.swagger.annotations.ApiOperation
 
 @RestController

@@ -9,7 +9,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 public interface ReviewRepositoryCustom {
 
     @Nullable
-    Review findReviewById(long reviewId);
+    Review findReviewById(Long reviewId);
 
     @Nullable
     Review findReviewByIdAndUserId(Long reviewId, Long userId);

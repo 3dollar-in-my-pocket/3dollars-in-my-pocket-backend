@@ -26,7 +26,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
 
     @Nullable
     @Override
-    public Review findReviewById(long reviewId) {
+    public Review findReviewById(Long reviewId) {
         return queryFactory.selectFrom(review)
             .where(
                 review.id.eq(reviewId),

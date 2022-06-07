@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import org.jetbrains.annotations.NotNull;
 
+import com.depromeet.threedollar.common.type.ApplicationType;
 import com.depromeet.threedollar.domain.rds.core.model.AuditingTimeEntity;
 
 import lombok.AccessLevel;
@@ -35,6 +36,10 @@ public class Faq extends AuditingTimeEntity {
 
     @Column(nullable = false, length = 30)
     @Enumerated(EnumType.STRING)
+    private ApplicationType applicationType;
+
+    @Column(nullable = false, length = 30)
+    @Enumerated(EnumType.STRING)
     private FaqCategory category;
 
     @Column(nullable = false, length = 100)
@@ -44,14 +49,20 @@ public class Faq extends AuditingTimeEntity {
     private String answer;
 
     @Builder(access = AccessLevel.PACKAGE)
-    private Faq(@NotNull FaqCategory category, @NotNull String question, @NotNull String answer) {
+    private Faq(@NotNull ApplicationType applicationType, @NotNull FaqCategory category, @NotNull String question, @NotNull String answer) {
+        this.applicationType = applicationType;
         this.category = category;
         this.question = question;
         this.answer = answer;
     }
 
-    public static Faq newInstance(@NotNull FaqCategory category, @NotNull String question, @NotNull String answer) {
-        return new Faq(category, question, answer);
+    public static Faq newInstance(@NotNull ApplicationType applicationType, @NotNull FaqCategory category, @NotNull String question, @NotNull String answer) {
+        return Faq.builder()
+            .applicationType(applicationType)
+            .category(category)
+            .question(question)
+            .answer(answer)
+            .build();
     }
 
     public void update(@NotNull String question, @NotNull String answer, @NotNull FaqCategory category) {

@@ -9,9 +9,12 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
-import com.depromeet.threedollar.api.adminservice.service.userservice.faq.dto.request.AddFaqRequest
-import com.depromeet.threedollar.api.adminservice.service.userservice.faq.dto.request.UpdateFaqRequest
+import com.depromeet.threedollar.api.adminservice.service.commonservice.faq.FaqAdminService
+import com.depromeet.threedollar.api.adminservice.service.commonservice.faq.dto.request.AddFaqRequest
+import com.depromeet.threedollar.api.adminservice.service.commonservice.faq.dto.request.UpdateFaqRequest
+import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.Faq
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCreator
@@ -36,11 +39,17 @@ internal class FaqAdminServiceTest(
         @Test
         fun 새로운_FAQ_를_등록하면_FAQ_데이터가_추가된다() {
             // given
+            val applicationType = ApplicationType.BOSS_API
             val question = "이름이 뭔가요?"
             val answer = "가슴속 삼천원입니다"
             val category = FaqCategory.ETC
 
-            val request = AddFaqRequest(question, answer, category)
+            val request = AddFaqRequest(
+                applicationType = applicationType,
+                question = question,
+                answer = answer,
+                category = category
+            )
 
             // when
             faqAdminService.addFaq(request)
@@ -49,8 +58,27 @@ internal class FaqAdminServiceTest(
             val faqs = faqRepository.findAll()
             assertAll({
                 assertThat(faqs).hasSize(1)
-                assertFaq(faqs[0], question, answer, category)
+                assertFaq(faqs[0], applicationType = applicationType, question = question, answer = answer, category = category)
             })
+        }
+
+        @Test
+        fun `해당하는 서비스에서 지원하지 않는 FAQ 카테고리인경우 ForbiddenException이 발생한다`() {
+            // given
+            val applicationType = ApplicationType.BOSS_API
+            val question = "이름이 뭔가요?"
+            val answer = "가슴속 삼천원입니다"
+            val category = FaqCategory.REVIEW_MENU
+
+            val request = AddFaqRequest(
+                applicationType = applicationType,
+                question = question,
+                answer = answer,
+                category = category
+            )
+
+            // when & then
+            assertThatThrownBy { faqAdminService.addFaq(request) }.isInstanceOf(ForbiddenException::class.java)
         }
 
     }
@@ -66,7 +94,10 @@ internal class FaqAdminServiceTest(
             val answer = "가슴속 삼천원입니다"
             val category = FaqCategory.ETC
 
-            val faq = FaqCreator.create("기존의 질문", "기존의 답변", FaqCategory.CATEGORY)
+            val faq = FaqCreator.create(
+                question = "기존의 질문",
+                answer = "기존의 답변",
+                category = FaqCategory.CATEGORY)
             faqRepository.save(faq)
 
             val request = UpdateFaqRequest(
@@ -82,8 +113,29 @@ internal class FaqAdminServiceTest(
             val faqs = faqRepository.findAll()
             assertAll({
                 assertThat(faqs).hasSize(1)
-                assertFaq(faqs[0], question, answer, category)
+                assertFaq(faqs[0], applicationType = faq.applicationType, question = question, answer = answer, category = category)
             })
+        }
+
+        @Test
+        fun `FAQ 수정시 해당하는 서비스에서 지원하지 않는 FAQ 카테고리인경우 ForbiddenException이 발생한다`() {
+            // given
+            val faq = FaqCreator.create(
+                applicationType = ApplicationType.BOSS_API,
+                question = "기존의 질문",
+                answer = "기존의 답변",
+                category = FaqCategory.STORE)
+            faqRepository.save(faq)
+
+            val request = UpdateFaqRequest("질문", "답변", FaqCategory.REVIEW_MENU)
+
+            // when & then
+            assertThatThrownBy {
+                faqAdminService.updateFaq(
+                    faqId = faq.id,
+                    request = request
+                )
+            }.isInstanceOf(ForbiddenException::class.java)
         }
 
         @Test
@@ -131,7 +183,8 @@ internal class FaqAdminServiceTest(
 
     }
 
-    private fun assertFaq(faq: Faq, question: String, answer: String, category: FaqCategory) {
+    private fun assertFaq(faq: Faq, applicationType: ApplicationType, question: String, answer: String, category: FaqCategory) {
+        assertThat(faq.applicationType).isEqualTo(applicationType)
         assertThat(faq.question).isEqualTo(question)
         assertThat(faq.answer).isEqualTo(answer)
         assertThat(faq.category).isEqualTo(category)
