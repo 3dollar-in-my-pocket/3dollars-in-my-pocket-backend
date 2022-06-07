@@ -48,7 +48,7 @@ class ReviewMockApiCaller extends MockMvcUtils {
     }
 
     ApiResponse<ReviewInfoResponse> updateReview(Long reviewId, UpdateReviewRequest request, String token, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = put("/v2/store/review/".concat(String.valueOf(reviewId)))
+        MockHttpServletRequestBuilder builder = put("/v2/store/review/" + reviewId)
             .header(HttpHeaders.AUTHORIZATION, token)
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(request));
@@ -65,7 +65,7 @@ class ReviewMockApiCaller extends MockMvcUtils {
     }
 
     ApiResponse<String> deleteReview(Long reviewId, String token, int expectedStatus) throws Exception {
-        MockHttpServletRequestBuilder builder = delete("/v2/store/review/".concat(String.valueOf(reviewId)))
+        MockHttpServletRequestBuilder builder = delete("/v2/store/review/" + reviewId)
             .header(HttpHeaders.AUTHORIZATION, token);
 
         return objectMapper.readValue(

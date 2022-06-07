@@ -12,7 +12,7 @@ public class HttpHeaderUtils {
 
     @NotNull
     public static String withBearerToken(@NotNull String token) {
-        return BEARER_TOKEN.concat(token);
+        return BEARER_TOKEN + token;
     }
 
 }

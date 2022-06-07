@@ -26,7 +26,7 @@ public class HttpServletRequestUtils {
 
     private static String getQuery(HttpServletRequest request) {
         if (StringUtils.hasText(request.getQueryString())) {
-            return "?".concat(request.getQueryString());
+            return "?" + request.getQueryString();
         }
         return "";
     }

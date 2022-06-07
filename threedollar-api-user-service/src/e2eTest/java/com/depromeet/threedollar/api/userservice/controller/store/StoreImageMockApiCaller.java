@@ -39,7 +39,7 @@ class StoreImageMockApiCaller extends MockMvcUtils {
 
     ApiResponse<String> deleteStoreImage(Long imageId, String token, int expectedStatus) throws Exception {
         return objectMapper.readValue(
-            mockMvc.perform(delete("/v2/store/image/".concat(String.valueOf(imageId)))
+            mockMvc.perform(delete("/v2/store/image/" + imageId)
                     .header(HttpHeaders.AUTHORIZATION, token))
                 .andExpect(status().is(expectedStatus))
                 .andDo(print())

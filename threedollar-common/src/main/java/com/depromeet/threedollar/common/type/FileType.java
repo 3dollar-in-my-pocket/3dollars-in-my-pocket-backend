@@ -61,12 +61,12 @@ public enum FileType implements EnumModel {
             throw new InvalidException("파일의 이름이 null 이어서는 안됩니다", INVALID_EMPTY_UPLOAD_FILE_NAME);
         }
         String extension = FileUtils.getFileExtension(originalFileName);
-        return getFileNameWithDirectory(UuidUtils.generate().concat(extension));
+        return getFileNameWithDirectory(UuidUtils.generate() + extension);
     }
 
     @NotNull
     private String getFileNameWithDirectory(@NotNull String fileName) {
-        return this.directory.concat(fileName);
+        return this.directory + fileName;
     }
 
     @Override
