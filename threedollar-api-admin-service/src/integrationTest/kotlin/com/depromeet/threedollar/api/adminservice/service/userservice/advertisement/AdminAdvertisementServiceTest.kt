@@ -11,7 +11,9 @@ import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.AdminAdvertisementService
 import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.request.AddAdvertisementRequest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.request.UpdateAdvertisementRequest
+import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.Advertisement
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementCreator
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType
@@ -48,6 +50,7 @@ internal class AdminAdvertisementServiceTest(
             val endDateTime = LocalDateTime.of(2022, 1, 7, 0, 0)
 
             val request = AddAdvertisementRequest(
+                applicationType = ApplicationType.USER_API,
                 position = positionType,
                 platform = platformType,
                 title = title,
@@ -80,6 +83,26 @@ internal class AdminAdvertisementServiceTest(
             }
         }
 
+        @Test
+        fun `광고 추가시 해당 서비스에서 지원하지 않는 광고 위치인경우 ForbiddenException이 발생한다`() {
+            val request = AddAdvertisementRequest(
+                applicationType = ApplicationType.BOSS_API,
+                position = AdvertisementPositionType.SPLASH,
+                platform = AdvertisementPlatformType.AOS,
+                title = "광고 제목",
+                subTitle = "광고 서브제목",
+                imageUrl = "https://imageUrl.png",
+                linkUrl = "https://link.com",
+                bgColor = "#000000",
+                fontColor = "#000000",
+                startDateTime = LocalDateTime.of(2022, 1, 1, 0, 0),
+                endDateTime = LocalDateTime.of(2022, 1, 3, 0, 0)
+            )
+
+            // when & then
+            assertThatThrownBy { adminAdvertisementService.addAdvertisement(request) }.isInstanceOf(ForbiddenException::class.java)
+        }
+
     }
 
     @Nested
@@ -88,7 +111,7 @@ internal class AdminAdvertisementServiceTest(
         @Test
         fun `광고를 수정합니다`() {
             // given
-            val advertisement = createMockAdvetisement()
+            val advertisement = createMockAdvertisement()
             advertisementRepository.save(advertisement)
 
             val positionType = AdvertisementPositionType.SPLASH
@@ -163,7 +186,7 @@ internal class AdminAdvertisementServiceTest(
         @Test
         fun `광고를 삭제한다`() {
             // given
-            val advertisement = createMockAdvetisement()
+            val advertisement = createMockAdvertisement()
             advertisementRepository.save(advertisement)
 
             // when
@@ -182,8 +205,9 @@ internal class AdminAdvertisementServiceTest(
 
     }
 
-    private fun createMockAdvetisement(): Advertisement {
+    private fun createMockAdvertisement(): Advertisement {
         return AdvertisementCreator.create(
+            applicationType = ApplicationType.USER_API,
             positionType = AdvertisementPositionType.SPLASH,
             platformType = AdvertisementPlatformType.AOS,
             title = "가슴속 3천원이 익산동에 출몰",

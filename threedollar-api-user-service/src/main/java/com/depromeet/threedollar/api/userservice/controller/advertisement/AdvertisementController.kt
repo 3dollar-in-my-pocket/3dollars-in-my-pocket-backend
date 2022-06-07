@@ -7,6 +7,7 @@ import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.core.service.commonservice.advertisement.AdvertisementService
 import com.depromeet.threedollar.api.core.service.commonservice.advertisement.dto.request.RetrieveAdvertisementsRequest
 import com.depromeet.threedollar.api.core.service.commonservice.advertisement.dto.response.AdvertisementResponse
+import com.depromeet.threedollar.common.type.ApplicationType
 import io.swagger.annotations.ApiOperation
 
 @RestController
@@ -20,7 +21,7 @@ class AdvertisementController(
     fun getAdvertisementsV1(
         @Valid request: RetrieveAdvertisementsRequest,
     ): ApiResponse<List<AdvertisementResponse>> {
-        return ApiResponse.success(advertisementService.getAdvertisements(request))
+        return ApiResponse.success(advertisementService.getAdvertisements(applicationType = ApplicationType.USER_API, request = request))
     }
 
     @ApiOperation("활성화중인 광고 목록을 조회합니다")
@@ -28,7 +29,7 @@ class AdvertisementController(
     fun getActivatedAdvertisements(
         @Valid request: RetrieveAdvertisementsRequest,
     ): ApiResponse<List<AdvertisementResponse>> {
-        return ApiResponse.success(advertisementService.getAdvertisements(request))
+        return ApiResponse.success(advertisementService.getAdvertisements(applicationType = ApplicationType.USER_API, request = request))
     }
 
 }

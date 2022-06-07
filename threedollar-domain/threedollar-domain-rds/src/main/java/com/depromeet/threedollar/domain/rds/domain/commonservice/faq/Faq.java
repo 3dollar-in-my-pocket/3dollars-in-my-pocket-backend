@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(
     indexes = {
-        @Index(name = "idx_faq_1", columnList = "category")
+        @Index(name = "idx_faq_1", columnList = "applicationType,category")
     }
 )
 public class Faq extends AuditingTimeEntity {

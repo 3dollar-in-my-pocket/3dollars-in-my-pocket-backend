@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.core.service.commonservice.advertisement.dto.response.AdvertisementResponse
 import com.depromeet.threedollar.api.userservice.controller.SetupControllerTest
+import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementCreator
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPositionType
@@ -28,6 +29,7 @@ internal class AdvertisementControllerTest(
         // given
         val platform = AdvertisementPlatformType.AOS
         val advertisement = AdvertisementCreator.create(
+            applicationType = ApplicationType.USER_API,
             positionType = AdvertisementPositionType.SPLASH,
             platformType = platform,
             title = "가슴속 3천원 팀원 이야기",
@@ -63,6 +65,7 @@ internal class AdvertisementControllerTest(
         // given
         val platform = AdvertisementPlatformType.AOS
         val advertisement = AdvertisementCreator.create(
+            applicationType = ApplicationType.USER_API,
             positionType = AdvertisementPositionType.SPLASH,
             platformType = platform,
             title = "가슴속 3천원 팀원 이야기",
