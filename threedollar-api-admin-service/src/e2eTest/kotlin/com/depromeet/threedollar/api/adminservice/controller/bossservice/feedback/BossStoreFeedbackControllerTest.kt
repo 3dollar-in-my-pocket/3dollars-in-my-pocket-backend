@@ -29,13 +29,13 @@ internal class BossStoreFeedbackControllerTest : SetupAdminControllerTest() {
                 status { isOk() }
                 jsonPath("$.data", Matchers.hasSize<BossStoreFeedbackTypeResponse>(BossStoreFeedbackType.values().size))
 
-                jsonPath("$.data[0].feedbackType") { value(BossStoreFeedbackType.FOOD_IS_DELICIOUS.name) }
-                jsonPath("$.data[0].description") { value(BossStoreFeedbackType.FOOD_IS_DELICIOUS.description) }
-                jsonPath("$.data[0].emoji") { value(BossStoreFeedbackType.FOOD_IS_DELICIOUS.emoji) }
+                jsonPath("$.data[0].feedbackType") { value(BossStoreFeedbackType.HANDS_ARE_FAST.name) }
+                jsonPath("$.data[0].description") { value(BossStoreFeedbackType.HANDS_ARE_FAST.description) }
+                jsonPath("$.data[0].emoji") { value(BossStoreFeedbackType.HANDS_ARE_FAST.emoji) }
 
-                jsonPath("$.data[5].feedbackType") { value(BossStoreFeedbackType.PLATING_IS_BEAUTIFUL.name) }
-                jsonPath("$.data[5].description") { value(BossStoreFeedbackType.PLATING_IS_BEAUTIFUL.description) }
-                jsonPath("$.data[5].emoji") { value(BossStoreFeedbackType.PLATING_IS_BEAUTIFUL.emoji) }
+                jsonPath("$.data[-1].feedbackType") { value(BossStoreFeedbackType.GOT_A_BONUS.name) }
+                jsonPath("$.data[-1].description") { value(BossStoreFeedbackType.GOT_A_BONUS.description) }
+                jsonPath("$.data[-1].emoji") { value(BossStoreFeedbackType.GOT_A_BONUS.emoji) }
             }
     }
 

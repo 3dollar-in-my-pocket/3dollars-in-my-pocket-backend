@@ -156,7 +156,7 @@ internal class BossStoreFeedbackServiceTest(
                 storeId = bossStoreId,
                 userId = userId,
                 date = LocalDate.of(2022, 2, 23),
-                feedbackType = BossStoreFeedbackType.PLATING_IS_BEAUTIFUL
+                feedbackType = BossStoreFeedbackType.GOT_A_BONUS
             ))
 
         // when
@@ -175,7 +175,7 @@ internal class BossStoreFeedbackServiceTest(
                 assertThat(it.bossStoreId).isEqualTo(bossStoreId)
                 assertThat(it.userId).isEqualTo(userId)
                 assertThat(it.date).isEqualTo(LocalDate.of(2022, 2, 23))
-                assertThat(it.feedbackType).isEqualTo(BossStoreFeedbackType.PLATING_IS_BEAUTIFUL)
+                assertThat(it.feedbackType).isEqualTo(BossStoreFeedbackType.GOT_A_BONUS)
             }
 
             bossStoreFeedbacks[1].let {

@@ -10,7 +10,6 @@ import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.request.AddBossStoreFeedbackRequest
 import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.response.BossStoreFeedbackCountResponse
-import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.response.BossStoreFeedbackTypeResponse
 import com.depromeet.threedollar.api.userservice.controller.SetupUserControllerTest
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedbackRepository
@@ -50,30 +49,37 @@ internal class BossStoreFeedbackControllerTest(
             .andExpect {
                 status { isOk() }
                 jsonPath("$.data", hasSize<BossStoreFeedbackCountResponse>(BossStoreFeedbackType.values().size))
+                jsonPath("$.data[0].feedbackType") { value(BossStoreFeedbackType.HANDS_ARE_FAST.name) }
+                jsonPath("$.data[0].count") { value(0) }
+                jsonPath("$.data[0].ratio") { value(0.0) }
 
-                jsonPath("$.data[0].feedbackType") { value(BossStoreFeedbackType.FOOD_IS_DELICIOUS.name) }
-                jsonPath("$.data[0].count") { value(1) }
-                jsonPath("$.data[0].ratio") { value(0.33) }
+                jsonPath("$.data[1].feedbackType") { value(BossStoreFeedbackType.FOOD_IS_DELICIOUS.name) }
+                jsonPath("$.data[1].count") { value(1) }
+                jsonPath("$.data[1].ratio") { value(0.33) }
 
-                jsonPath("$.data[1].feedbackType") { value(BossStoreFeedbackType.BOSS_IS_KIND.name) }
-                jsonPath("$.data[1].count") { value(2) }
-                jsonPath("$.data[1].ratio") { value(0.67) }
-
-                jsonPath("$.data[2].feedbackType") { value(BossStoreFeedbackType.EASY_TO_EAT.name) }
+                jsonPath("$.data[2].feedbackType") { value(BossStoreFeedbackType.HYGIENE_IS_CLEAN.name) }
                 jsonPath("$.data[2].count") { value(0) }
                 jsonPath("$.data[2].ratio") { value(0.0) }
 
-                jsonPath("$.data[3].feedbackType") { value(BossStoreFeedbackType.PRICE_IS_CHEAP.name) }
-                jsonPath("$.data[3].count") { value(0) }
-                jsonPath("$.data[3].ratio") { value(0.0) }
+                jsonPath("$.data[3].feedbackType") { value(BossStoreFeedbackType.BOSS_IS_KIND.name) }
+                jsonPath("$.data[3].count") { value(2) }
+                jsonPath("$.data[3].ratio") { value(0.67) }
 
-                jsonPath("$.data[4].feedbackType") { value(BossStoreFeedbackType.THERE_ARE_PLACES_TO_EAT_AROUND.name) }
+                jsonPath("$.data[4].feedbackType") { value(BossStoreFeedbackType.CAN_PAY_BY_CARD.name) }
                 jsonPath("$.data[4].count") { value(0) }
                 jsonPath("$.data[4].ratio") { value(0.0) }
 
-                jsonPath("$.data[5].feedbackType") { value(BossStoreFeedbackType.PLATING_IS_BEAUTIFUL.name) }
+                jsonPath("$.data[5].feedbackType") { value(BossStoreFeedbackType.GOOD_VALUE_FOR_MONEY.name) }
                 jsonPath("$.data[5].count") { value(0) }
                 jsonPath("$.data[5].ratio") { value(0.0) }
+
+                jsonPath("$.data[6].feedbackType") { value(BossStoreFeedbackType.GOOD_TO_EAT_IN_ONE_BITE.name) }
+                jsonPath("$.data[6].count") { value(0) }
+                jsonPath("$.data[6].ratio") { value(0.0) }
+
+                jsonPath("$.data[7].feedbackType") { value(BossStoreFeedbackType.GOT_A_BONUS.name) }
+                jsonPath("$.data[7].count") { value(0) }
+                jsonPath("$.data[7].ratio") { value(0.0) }
             }
     }
 
@@ -85,11 +91,13 @@ internal class BossStoreFeedbackControllerTest(
             .andDo { print() }
             .andExpect {
                 status { isOk() }
-                jsonPath("$.data", hasSize<BossStoreFeedbackTypeResponse>(BossStoreFeedbackType.values().size))
-                jsonPath("$.data[0].feedbackType") { value(BossStoreFeedbackType.FOOD_IS_DELICIOUS.name) }
-                jsonPath("$.data[0].description") { value(BossStoreFeedbackType.FOOD_IS_DELICIOUS.description) }
-                jsonPath("$.data[5].feedbackType") { value(BossStoreFeedbackType.PLATING_IS_BEAUTIFUL.name) }
-                jsonPath("$.data[5].description") { value(BossStoreFeedbackType.PLATING_IS_BEAUTIFUL.description) }
+                jsonPath("$.data[0].feedbackType") { value(BossStoreFeedbackType.HANDS_ARE_FAST.name) }
+                jsonPath("$.data[0].description") { value(BossStoreFeedbackType.HANDS_ARE_FAST.description) }
+                jsonPath("$.data[0].emoji") { value(BossStoreFeedbackType.HANDS_ARE_FAST.emoji) }
+
+                jsonPath("$.data[-1].feedbackType") { value(BossStoreFeedbackType.GOT_A_BONUS.name) }
+                jsonPath("$.data[-1].description") { value(BossStoreFeedbackType.GOT_A_BONUS.description) }
+                jsonPath("$.data[-1].emoji") { value(BossStoreFeedbackType.GOT_A_BONUS.emoji) }
             }
     }
 
@@ -104,7 +112,7 @@ internal class BossStoreFeedbackControllerTest(
         bossStoreRepository.save(bossStore)
 
         val request = AddBossStoreFeedbackRequest(
-            feedbackTypes = setOf(BossStoreFeedbackType.BOSS_IS_KIND, BossStoreFeedbackType.THERE_ARE_PLACES_TO_EAT_AROUND)
+            feedbackTypes = setOf(BossStoreFeedbackType.BOSS_IS_KIND, BossStoreFeedbackType.CAN_PAY_BY_CARD)
         )
 
         mockMvc.post("/v1/boss/store/${bossStore.id}/feedback") {

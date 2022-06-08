@@ -7,12 +7,14 @@ enum class BossStoreFeedbackType(
     val emoji: String,
 ) : EnumModel {
 
-    FOOD_IS_DELICIOUS("음식이 맛있어요", "\uD83C\uDF55"),
+    HANDS_ARE_FAST("손이 빠르세요", "\uD83D\uDE0B"),
+    FOOD_IS_DELICIOUS("음식이 맛있어요", "\uD83D\uDE0B"),
+    HYGIENE_IS_CLEAN("위생이 청결해요", "✨"),
     BOSS_IS_KIND("사장님이 친절해요", "\uD83D\uDE4F"),
-    EASY_TO_EAT("먹기 간편해요", "\uD83D\uDE80"),
-    PRICE_IS_CHEAP("가격이 저렴해요", "\uD83C\uDF08"),
-    THERE_ARE_PLACES_TO_EAT_AROUND("주변에 먹을 곳이 있어요", "\uD83D\uDECB"),
-    PLATING_IS_BEAUTIFUL("플레이팅이 이뻐요", "\uD83C\uDF80"),
+    CAN_PAY_BY_CARD("카드 결제 가능해요", "\uD83D\uDCB3"),
+    GOOD_VALUE_FOR_MONEY("가성비가 좋아요", "💰"),
+    GOOD_TO_EAT_IN_ONE_BITE("한입에 먹기 좋아요", "\uD83D\uDC4C"),
+    GOT_A_BONUS("덤도 주셨어요", "\uD83D\uDC4D"),
     ;
 
     override fun getKey(): String {
