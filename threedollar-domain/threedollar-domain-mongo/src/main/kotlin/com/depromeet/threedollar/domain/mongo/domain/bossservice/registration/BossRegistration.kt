@@ -95,7 +95,8 @@ data class RegistrationStoreForm(
             bossId = bossId,
             name = name,
             categoriesIds = categoriesIds,
-            contactsNumber = contactsNumber
+            contactsNumber = contactsNumber,
+            imageUrl = certificationPhotoUrl,
         )
     }
 

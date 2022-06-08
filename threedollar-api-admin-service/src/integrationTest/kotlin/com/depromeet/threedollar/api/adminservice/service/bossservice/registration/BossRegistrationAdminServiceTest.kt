@@ -107,6 +107,7 @@ internal class BossRegistrationAdminServiceTest(
             val storeName = "행잉"
             val contactsNumber = "010-1234-1234"
             val categoriesIds = setOf("한식id", "중식id")
+            val certificationImageUrl = "https://certification.png"
 
             val registration = RegistrationCreator.create(
                 socialId = "social-id",
@@ -114,6 +115,7 @@ internal class BossRegistrationAdminServiceTest(
                 storeName = storeName,
                 categoriesIds = categoriesIds,
                 contactsNumber = contactsNumber,
+                certificationPhotoUrl = certificationImageUrl,
             )
             bossRegistrationRepository.save(registration)
 
@@ -126,7 +128,7 @@ internal class BossRegistrationAdminServiceTest(
                 assertThat(bossStores).hasSize(1)
                 bossStores[0].let {
                     assertThat(it.name).isEqualTo(storeName)
-                    assertThat(it.imageUrl).isNull()
+                    assertThat(it.imageUrl).isEqualTo(certificationImageUrl)
                     assertThat(it.introduction).isNull()
                     assertThat(it.contactsNumber).isEqualTo(ContactsNumber.of(contactsNumber))
                     assertThat(it.snsUrl).isNull()
