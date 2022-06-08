@@ -48,10 +48,10 @@ public enum CacheType {
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static class CacheKey {
 
-        public static final String FAQS = "user:v1:common:faqs";
-        public static final String MEDALS = "user:v1:common:medals";
-        public static final String ADVERTISEMENTS = "user:v1:common:advertisements";
+        public static final String FAQS = "common:v1:faqs";
+        public static final String ADVERTISEMENTS = "common:v1:advertisements";
 
+        public static final String MEDALS = "user:v1:medals";
         public static final String USER_STORES_COUNTS = "user:v1:my:stores:count";
         public static final String USER_REVIEWS_COUNTS = "user:v1:my:reviews:count";
         public static final String USER_MEDALS = "user:v1:my:medals";
