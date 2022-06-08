@@ -130,7 +130,13 @@ Authorization: Bearer {{BOSS_AUTHORIZATION}}
 
 {
     "name": "가게 이름",
-    "menus": [],
+    "menus": [
+        {
+            "name": "슈크림 붕어빵 2개",
+            "price": 1000,
+            "imageUrl": "https://storage.dev.threedollars.co.kr/popup/adv_store_category_20220121_threedollars.png"
+        }
+    ],
     "appearanceDays": [],
     "categoriesIds": []
 }

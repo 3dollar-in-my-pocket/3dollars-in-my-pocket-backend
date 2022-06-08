@@ -18,11 +18,11 @@ data class UpdateAdvertisementRequest(
     val subTitle: String?,
 
     @field:URL(message = "{advertisement.imageUrl.url}")
-    @field:Size(max = 2048, message = "{advertisement.imageUrl.size}")
+    @field:Size(max = 300, message = "{advertisement.imageUrl.size}")
     val imageUrl: String,
 
     @field:URL(message = "{advertisement.linkUrl.url}")
-    @field:Size(max = 2048, message = "{advertisement.linkUrl.size}")
+    @field:Size(max = 300, message = "{advertisement.linkUrl.size}")
     val linkUrl: String?,
 
     @field:Size(min = 7, max = 7, message = "{advertisement.bgColor.size}")

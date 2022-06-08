@@ -17,7 +17,7 @@ data class SignupRequest(
 
     val businessNumber: String,
 
-    @field:Size(max = 30, message = "{store.name.size}")
+    @field:Size(max = 20, message = "{store.name.size}")
     val storeName: String,
 
     @field:Size(max = 3, message = "{store.categoriesIds.size}")
@@ -25,7 +25,7 @@ data class SignupRequest(
 
     val contactsNumber: String,
 
-    @field:Size(max = 2048, message = "{store.certificationPhotoUrl.size}")
+    @field:Size(max = 300, message = "{store.certificationPhotoUrl.size}")
     @field:URL(message = "{store.certificationPhotoUrl.url}")
     val certificationPhotoUrl: String,
 ) {

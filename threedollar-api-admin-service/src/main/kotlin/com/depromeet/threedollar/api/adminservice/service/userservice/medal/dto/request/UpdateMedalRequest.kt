@@ -10,11 +10,11 @@ data class UpdateMedalRequest(
     @field:Size(max = 200, message = "{medal.introduction.size}")
     val introduction: String?,
 
-    @field:Size(max = 2048, message = "{medal.activationIconUrl.size}")
+    @field:Size(max = 300, message = "{medal.activationIconUrl.size}")
     @field:URL(message = "{medal.activationIconUrl.url}")
     val activationIconUrl: String,
 
-    @field:Size(max = 2048, message = "{medal.disableIconUrl.size}")
+    @field:Size(max = 300, message = "{medal.disableIconUrl.size}")
     @field:URL(message = "{medal.disableIconUrl.url}")
     val disableIconUrl: String,
 )
