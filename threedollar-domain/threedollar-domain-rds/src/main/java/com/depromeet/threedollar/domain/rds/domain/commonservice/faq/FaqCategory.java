@@ -10,7 +10,7 @@ import lombok.Getter;
 @Getter
 public enum FaqCategory implements EnumModel {
 
-    STORE(List.of(ApplicationType.USER_API, ApplicationType.BOSS_API), "가게", 1),
+    STORE(List.of(ApplicationType.USER_API), "가게", 1),
     REVIEW_MENU(List.of(ApplicationType.USER_API), "리뷰 및 메뉴", 2),
     WITHDRAWAL(List.of(ApplicationType.USER_API), "회원탈퇴", 3),
     BOARD(List.of(ApplicationType.USER_API), "게시글 수정 및 삭제", 4),

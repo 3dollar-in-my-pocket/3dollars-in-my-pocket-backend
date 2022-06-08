@@ -124,7 +124,7 @@ internal class FaqAdminServiceTest(
                 applicationType = ApplicationType.BOSS_API,
                 question = "기존의 질문",
                 answer = "기존의 답변",
-                category = FaqCategory.STORE)
+                category = FaqCategory.ETC)
             faqRepository.save(faq)
 
             val request = UpdateFaqRequest(question = "질문", answer = "답변", category = FaqCategory.REVIEW_MENU)

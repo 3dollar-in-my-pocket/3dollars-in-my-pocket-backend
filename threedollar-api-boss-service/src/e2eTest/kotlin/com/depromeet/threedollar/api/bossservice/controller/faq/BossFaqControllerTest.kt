@@ -121,15 +121,10 @@ internal class BossFaqControllerTest(
                 .andDo { print() }
                 .andExpect {
                     status { isOk() }
-                    jsonPath("$.data", hasSize<FaqCategoryResponse>(2))
-
-                    jsonPath("$.data[0].category") { value(FaqCategory.STORE.name) }
-                    jsonPath("$.data[0].description") { value(FaqCategory.STORE.description) }
-                    jsonPath("$.data[0].displayOrder") { value(FaqCategory.STORE.displayOrder) }
-
-                    jsonPath("$.data[1].category") { value(FaqCategory.ETC.name) }
-                    jsonPath("$.data[1].description") { value(FaqCategory.ETC.description) }
-                    jsonPath("$.data[1].displayOrder") { value(FaqCategory.ETC.displayOrder) }
+                    jsonPath("$.data", hasSize<FaqCategoryResponse>(1))
+                    jsonPath("$.data[0].category") { value(FaqCategory.ETC.name) }
+                    jsonPath("$.data[0].description") { value(FaqCategory.ETC.description) }
+                    jsonPath("$.data[0].displayOrder") { value(FaqCategory.ETC.displayOrder) }
                 }
         }
 
