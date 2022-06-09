@@ -38,9 +38,18 @@ enum class UserDailyStatisticsMessageFormat(
             - %s: %s개가 활성화 되어 있습니다.
         """.trimIndent()
     ),
+    COUNTS_STORE_IMAGE(
+        """
+            4. 가게 이미지 통계 정보
+            - 총 %s개의 가게 이미지가 신규 등록되었습니다.
+            - 오늘 %s개의 가게 이미지가 신규 등록되었습니다.
+            - 일주일 간 %s개의 가게 이미지가 신규 등록되었습니다.
+            - 한달 간 %s개의 가게 이미지가 신규 등록되었습니다.
+        """.trimIndent()
+    ),
     COUNTS_DELETED_STORE(
         """
-            4. 가게 삭제 통계 정보
+            5. 가게 삭제 통계 정보
             - 총 %s개의 가게가 삭제 처리되었습니다.
             - 오늘 %s개의 가게가 삭제 처리되었습니다.
             - 일주일 간 %s개의 가게가 삭제 처리되었습니다.
@@ -49,7 +58,7 @@ enum class UserDailyStatisticsMessageFormat(
     ),
     COUNTS_DELETE_STORE_REQUEST(
         """
-            5. 가게 삭제 요청 통계 정보
+            6. 가게 삭제 요청 통계 정보
             - 총 %s개의 가게 삭제 요청이 추가되었습니다.
             - 오늘 %s개의 가게 삭제 요청이 추가되었습니다.
             - 일주일 간 %s개의 가게 삭제 요청이 추가되었습니다.
@@ -58,7 +67,7 @@ enum class UserDailyStatisticsMessageFormat(
     ),
     COUNTS_REVIEW(
         """
-            6. 리뷰 통계 정보
+            7. 리뷰 통계 정보
             - 총 %s개의 리뷰가 작성되어 있습니다.
             - 오늘 %s개의 리뷰가 신규 작성되었습니다.
             - 일주일 간 %s개의 리뷰가 신규 작성되었습니다.
@@ -67,7 +76,7 @@ enum class UserDailyStatisticsMessageFormat(
     ),
     COUNTS_VISIT_HISTORY(
         """
-            7. 방문 인증 기록 통계 정보
+            8. 방문 인증 기록 통계 정보
             - 총 %s번의 방문 인증 기록이 등록되어 있습니다.
             - 오늘 %s번의 방문 인증 기록이 신규 등록되었습니다.
             - 일주일 간 %s번의 방문 인증 기록이 신규 등록되었습니다.
@@ -76,7 +85,7 @@ enum class UserDailyStatisticsMessageFormat(
     ),
     COUNTS_MEDALS(
         """
-            8. 보유중인 메달 정보
+            9. 보유중인 메달 정보
             %s
         """.trimIndent()
     ),
@@ -87,7 +96,7 @@ enum class UserDailyStatisticsMessageFormat(
     ),
     COUNTS_ACTIVE_MEDALS(
         """
-            9. 장착중인 메달 정보
+            10. 장착중인 메달 정보
             %s
         """.trimIndent()
     ),

@@ -19,6 +19,7 @@ import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessag
 import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_MENUS
 import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_REVIEW
 import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_STORE
+import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_STORE_IMAGE
 import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_USER
 import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_VISIT_HISTORY
 import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.DAILY_STATISTICS_INFO
@@ -26,6 +27,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalReposi
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.MenuRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequestRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository
@@ -49,6 +51,7 @@ class DailyStatisticsJobConfiguration(
     private val reviewRepository: ReviewRepository,
     private val visitHistoryRepository: VisitHistoryRepository,
     private val medalRepository: MedalRepository,
+    private val storeImageRepository: StoreImageRepository,
     private val storeDeleteRequestRepository: StoreDeleteRequestRepository,
 
     private val slackNotificationApiClient: SlackWebhookApiClient,
@@ -62,6 +65,7 @@ class DailyStatisticsJobConfiguration(
             .next(notificationUsersStatisticsStep())
             .next(notificationStoresStatisticsStep())
             .next(notificationMenusStatisticsStep())
+            .next(notificationStoreImageStatisticsStep())
             .next(notificationDeletedStoresStatisticsStep())
             .next(notificationStoreDeleteRequestsStatisticsStep())
             .next(notificationReviewsStatisticsStep())
@@ -131,6 +135,23 @@ class DailyStatisticsJobConfiguration(
 
                 slackNotificationApiClient.postStatisticsMessage(
                     PostSlackMessageRequest.of(COUNTS_MENUS.messageFormat.format(message))
+                )
+                RepeatStatus.FINISHED
+            }
+            .build()
+    }
+
+    @Bean
+    fun notificationStoreImageStatisticsStep(): Step {
+        return stepBuilderFactory[DAILY_STATISTICS_JOB + "_storeImage_step"]
+            .tasklet { _, _ ->
+                val yesterday = LocalDate.now().minusDays(1)
+                sendStatisticsNotification(
+                    messageType = COUNTS_STORE_IMAGE,
+                    totalCounts = storeImageRepository.count(),
+                    todayCounts = storeImageRepository.countBetweenDate(yesterday, yesterday),
+                    weekendCounts = storeImageRepository.countBetweenDate(yesterday.minusWeeks(1), yesterday),
+                    monthlyCounts = storeImageRepository.countBetweenDate(yesterday.minusMonths(1), yesterday),
                 )
                 RepeatStatus.FINISHED
             }

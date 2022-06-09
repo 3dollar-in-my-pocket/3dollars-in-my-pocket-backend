@@ -2,7 +2,7 @@
   <configuration default="false" name="ThreeDollarsBatchApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" value="local-docker" />
     <module name="threedollar.threedollar-batch.main" />
-    <option name="PROGRAM_PARAMETERS" value="--job.name=bossStatisticsJob" />
+    <option name="PROGRAM_PARAMETERS" value="--job.name=dailyStaticsJob" />
     <selectedOptions>
       <option name="environmentVariables" />
     </selectedOptions>
