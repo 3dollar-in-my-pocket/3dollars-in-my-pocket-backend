@@ -34,7 +34,7 @@ class BossAccountController(
         @BossId bossId: String,
         @Valid @RequestBody request: UpdateBossAccountInfoRequest,
     ): ApiResponse<String> {
-        bossAccountService.updateBossAccountInfo(bossId, request)
+        bossAccountService.updateBossAccountInfo(bossId = bossId, request = request)
         return ApiResponse.OK
     }
 

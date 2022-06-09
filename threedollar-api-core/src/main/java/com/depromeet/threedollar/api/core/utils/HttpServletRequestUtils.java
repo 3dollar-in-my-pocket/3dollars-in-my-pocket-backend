@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.util.StringUtils;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
@@ -56,17 +57,18 @@ public class HttpServletRequestUtils {
         return " - ";
     }
 
+    @NotNull
     public static String getResponseBody(HttpServletResponse response) throws IOException {
-        String payload = null;
         ContentCachingResponseWrapper wrapper = WebUtils.getNativeResponse(response, ContentCachingResponseWrapper.class);
         if (wrapper != null) {
             byte[] buf = wrapper.getContentAsByteArray();
             if (buf.length > 0) {
-                payload = new String(buf, 0, buf.length, wrapper.getCharacterEncoding());
+                String payload = new String(buf, 0, buf.length, wrapper.getCharacterEncoding());
                 wrapper.copyBodyToResponse();
+                return payload;
             }
         }
-        return payload == null ? " - " : payload;
+        return " - ";
     }
 
 }

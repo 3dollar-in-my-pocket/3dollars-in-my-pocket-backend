@@ -10,6 +10,7 @@ import com.depromeet.threedollar.api.bossservice.config.interceptor.Auth
 import com.depromeet.threedollar.api.bossservice.config.resolver.BossId
 import com.depromeet.threedollar.api.bossservice.config.session.SessionConstants.BOSS_ACCOUNT_ID
 import com.depromeet.threedollar.api.bossservice.service.account.BossAccountService
+import com.depromeet.threedollar.api.bossservice.service.auth.AuthService
 import com.depromeet.threedollar.api.bossservice.service.auth.AuthServiceFinder
 import com.depromeet.threedollar.api.bossservice.service.auth.SignupService
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.request.LoginRequest
@@ -31,7 +32,7 @@ class AuthController(
     fun applyForBossAccountRegistration(
         @Valid @RequestBody request: SignupRequest,
     ): ApiResponse<LoginResponse> {
-        val authService = authServiceFinder.getAuthService(request.socialType)
+        val authService: AuthService = authServiceFinder.getAuthService(request.socialType)
         val socialId = authService.getSocialId(request.token)
         val bossId = signupService.signUp(request, socialId)
         httpSession.setAttribute(BOSS_ACCOUNT_ID, bossId)
@@ -46,7 +47,7 @@ class AuthController(
     fun login(
         @Valid @RequestBody request: LoginRequest,
     ): ApiResponse<LoginResponse> {
-        val authService = authServiceFinder.getAuthService(request.socialType)
+        val authService: AuthService = authServiceFinder.getAuthService(request.socialType)
         val bossId = authService.login(request)
         httpSession.setAttribute(BOSS_ACCOUNT_ID, bossId)
         return ApiResponse.success(LoginResponse(
