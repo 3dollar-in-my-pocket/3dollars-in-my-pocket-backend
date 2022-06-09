@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreImageRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageRepository
 
 /**
  * S3 버킷을 마이그레이션 하는 배치.
@@ -41,12 +41,13 @@ class S3BucketMigrationConfiguration(
         return stepBuilderFactory[JOB_NAME + "_step"]
             .tasklet { _, _ ->
                 val storeImages = storeImageRepository.findAll().asSequence()
-                    .filter { it.url.startsWith(beforePrefix) }
-                    .map {
-                        val url = it.url.split(beforePrefix)[1]
-                        it.updateUrl(afterPrefix + url)
-                        it
-                    }.toList()
+                    .filter { storeImage -> storeImage.url.startsWith(beforePrefix) }
+                    .map { storeImage ->
+                        val url = storeImage.url.split(beforePrefix)[1]
+                        storeImage.updateUrl(afterPrefix + url)
+                        storeImage
+                    }
+                    .toList()
                 storeImageRepository.saveAll(storeImages)
                 RepeatStatus.FINISHED
             }

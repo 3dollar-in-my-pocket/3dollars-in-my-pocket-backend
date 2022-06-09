@@ -27,6 +27,7 @@ ext {
     embeddedMongoVersion = "3.4.5"
     commonsLang3Version = "3.12.0"
     commonsCodecVersion = "1.15"
+    kotlinLoggingVersion = "2.1.20"
 }
 
 allprojects {
@@ -94,7 +95,12 @@ subprojects {
         // Kotlin
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+        // Kotlin Jackson
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+        // Kotlin Logging
+        implementation("io.github.microutils:kotlin-logging-jvm:${kotlinLoggingVersion}")
 
         // Spring MockK
         testImplementation("com.ninja-squad:springmockk:${springmockkVersion}")
@@ -130,10 +136,6 @@ subprojects {
     }
 
     tasks.withType(Test) {
-        reports {
-            html.enabled = false
-            junitXml.enabled = false
-        }
         testLogging {
             showStandardStreams = true
             exceptionFormat = 'full'
@@ -154,10 +156,6 @@ subprojects {
         jacoco {
             destinationFile = file("${buildDir}/jacoco/integrationTest.exec")
         }
-        testLogging {
-            showStandardStreams = true
-            exceptionFormat = 'full'
-        }
     }
 
     task e2eTest(type: Test, group: "verification", description: "Execute E2E Tests") {
@@ -169,11 +167,21 @@ subprojects {
         }
     }
 
+    task copyTestReport(type: Copy, description: "Copy Test Reports") {
+        def testReportsDir = new File("${project.rootDir.absolutePath}/build/test-results")
+        if (!testReportsDir.exists()) {
+            testReportsDir.mkdirs()
+        }
+        from "${buildDir}/test-results"
+        include "**/*.xml"
+        into testReportsDir
+    }
+
     task ci(type: Test, group: "verification", description: "CI") {
         dependsOn unitTest
         dependsOn integrationTest
         dependsOn e2eTest
-        finalizedBy jacocoTestReport
+        finalizedBy jacocoTestReport, copyTestReport
     }
 
     test {

@@ -1,0 +1,29 @@
+### Health Check API
+GET {{user-api}}/ping
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### (개발 서버용) 테스트를 위한 세션
+GET {{user-api}}/test-token
+
+> {%
+client.global.set("AUTHORIZATION", response.body["data"]["token"])
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 클라이언트에서 사용되는 Enums 목록을 조회합니다
+GET {{user-api}}/v1/enums
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}

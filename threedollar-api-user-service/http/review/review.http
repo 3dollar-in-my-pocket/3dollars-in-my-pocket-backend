@@ -1,0 +1,57 @@
+### [인증] 가게에 새로운 리뷰를 등록합니다.
+POST {{user-api}}/v2/store/review
+Content-Type: application/json
+Authorization: {{AUTHORIZATION}}
+
+{
+    "storeId": {{STORE_ID}},
+    "contents": "진짜 맛있어요~~~ :)",
+    "rating": 5
+}
+
+> {%
+client.test("200 OK", () => {
+    client.global.set("REVIEW_ID", response.body["data"]["reviewId"])
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 사용자가 작성한 리뷰를 수정합니다.
+PUT {{user-api}}/v2/store/review/{{REVIEW_ID}}
+Content-Type: application/json
+Authorization: {{AUTHORIZATION}}
+
+{
+    "contents": "가게가 사라졌어요 ㅠㅠ",
+    "rating": 1
+}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 사용자가 작성한 리뷰를 삭제합니다.
+DELETE {{user-api}}/v2/store/review/{{REVIEW_ID}}
+Authorization: {{AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 사용자가 작성한 리뷰를 전체 조회합니다. (페이지네이션)
+GET {{user-api}}/v3/store/reviews/me?size=30
+Authorization: {{AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.global.set("REVIEW_CURSOR", response.body["data"]["nextCursor"])
+    client.assert(response.status === 200, "응답 실패");
+});
+%}

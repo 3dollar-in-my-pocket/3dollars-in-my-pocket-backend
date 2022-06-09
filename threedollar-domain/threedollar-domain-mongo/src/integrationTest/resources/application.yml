@@ -1,0 +1,10 @@
+spring.profiles.default: integration-test
+spring.config:
+  import:
+    - classpath:/application-mongo.yml
+
+
+---
+spring.config:
+  activate:
+    on-profile: integration-test

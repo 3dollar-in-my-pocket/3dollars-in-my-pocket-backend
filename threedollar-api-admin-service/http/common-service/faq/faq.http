@@ -1,0 +1,79 @@
+### [인증] 새로운 FAQ를 등록합니다.
+POST {{admin}}/v1/faq
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+Content-Type: application/json
+
+{
+    "category": "BOARD",
+    "question": "게시글을 삭제하고 싶어요.",
+    "answer": "가게 정보 삭제는 상세페이지 우측 상단의 '삭제요청'을 통해 가능합니다.\n가게 삭제는 3명 이상의 사용자에게 요청이 들어오면 완료됩니다.\n잘못된 가게 정보를 빠르게 삭제하고 싶다면 '문의하기'를 통해 메일을 보내주세요!."
+}
+
+> {%
+client.test("200 OK", () => {
+    client.global.set("FAQ_ID", response.body["data"]["faqId"])
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 등록된 FAQ를 수정합니다
+PUT {{admin}}/v1/faq/{{FAQ_ID}}
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+Content-Type: application/json
+
+{
+    "category": "ETC",
+    "question": "가슴속 삼천원 서비스팀과 협업하고 싶어요.",
+    "answer": "각종 광고 및 인터뷰, 협업 문의는 저희 가슴속 3천원 대표 메일을 통해 연락 주시면 빠르게 회신 가능합니다.\n많은 연락과 관심 부탁드려요!3dollarinmypocket@gmail.com"
+}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 등록된 FAQ를 삭제합니다
+DELETE {{admin}}/v1/faq/{{FAQ_ID}}
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 등록된 FAQ를 모두 조회한다
+GET {{admin}}/v1/faqs
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 등록된 FAQ를 특정 카테고리 범위에서 조회한다
+GET {{admin}}/v1/faqs?category=STORE
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [인증] 등록된 FAQ 카테고리들을 조회한다
+GET {{admin}}/v1/faq/categories
+Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}

@@ -9,11 +9,11 @@ import org.springframework.batch.repeat.RepeatStatus
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
-import com.depromeet.threedollar.domain.mongo.boss.domain.account.BossAccountRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.feedback.BossStoreFeedbackRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.registration.BossRegistrationRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossDeletedStoreRepository
-import com.depromeet.threedollar.domain.mongo.boss.domain.store.BossStoreRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedbackRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossDeletedStoreRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 import com.depromeet.threedollar.external.client.slack.SlackWebhookApiClient
 import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest
 
@@ -69,7 +69,8 @@ class BossDailyStatisticsJobConfiguration(
                     messageType = BossDailyStatisticsMessageFormat.BOSS_ACCOUNT_STATISTICS,
                     totalCounts = bossAccountRepository.count(),
                     todayCounts = bossAccountRepository.countBossAccountsBetweenDate(yesterday, yesterday),
-                    weekendCounts = bossAccountRepository.countBossAccountsBetweenDate(yesterday.minusWeeks(1), yesterday)
+                    weekendCounts = bossAccountRepository.countBossAccountsBetweenDate(yesterday.minusWeeks(1), yesterday),
+                    monthlyCounts = bossAccountRepository.countBossAccountsBetweenDate(yesterday.minusMonths(1), yesterday),
                 )
                 RepeatStatus.FINISHED
             }
@@ -85,7 +86,8 @@ class BossDailyStatisticsJobConfiguration(
                     messageType = BossDailyStatisticsMessageFormat.BOSS_REGISTRATION_STATISTICS,
                     totalCounts = bossRegistrationRepository.count(),
                     todayCounts = bossRegistrationRepository.countBossRegistrationsBetweenDate(yesterday, yesterday),
-                    weekendCounts = bossRegistrationRepository.countBossRegistrationsBetweenDate(yesterday.minusWeeks(1), yesterday)
+                    weekendCounts = bossRegistrationRepository.countBossRegistrationsBetweenDate(yesterday.minusWeeks(1), yesterday),
+                    monthlyCounts = bossRegistrationRepository.countBossRegistrationsBetweenDate(yesterday.minusMonths(1), yesterday),
                 )
                 RepeatStatus.FINISHED
             }
@@ -101,7 +103,8 @@ class BossDailyStatisticsJobConfiguration(
                     messageType = BossDailyStatisticsMessageFormat.BOSS_STORE_STATISTICS,
                     totalCounts = bossStoreRepository.count(),
                     todayCounts = bossStoreRepository.countBossStoresBetweenDate(yesterday, yesterday),
-                    weekendCounts = bossStoreRepository.countBossStoresBetweenDate(yesterday.minusWeeks(1), yesterday)
+                    weekendCounts = bossStoreRepository.countBossStoresBetweenDate(yesterday.minusWeeks(1), yesterday),
+                    monthlyCounts = bossStoreRepository.countBossStoresBetweenDate(yesterday.minusMonths(1), yesterday),
                 )
                 RepeatStatus.FINISHED
             }
@@ -117,7 +120,8 @@ class BossDailyStatisticsJobConfiguration(
                     messageType = BossDailyStatisticsMessageFormat.DELETED_BOSS_STORE_STATISTICS,
                     totalCounts = bossDeletedStoreRepository.count(),
                     todayCounts = bossDeletedStoreRepository.countDeletedBossStoresBetweenDate(yesterday, yesterday),
-                    weekendCounts = bossDeletedStoreRepository.countDeletedBossStoresBetweenDate(yesterday.minusWeeks(1), yesterday)
+                    weekendCounts = bossDeletedStoreRepository.countDeletedBossStoresBetweenDate(yesterday.minusWeeks(1), yesterday),
+                    monthlyCounts = bossDeletedStoreRepository.countDeletedBossStoresBetweenDate(yesterday.minusMonths(1), yesterday),
                 )
                 RepeatStatus.FINISHED
             }
@@ -133,7 +137,8 @@ class BossDailyStatisticsJobConfiguration(
                     messageType = BossDailyStatisticsMessageFormat.BOSS_STORE_FEEDBACK_STATISTICS,
                     totalCounts = bossStoreFeedbackRepository.count(),
                     todayCounts = bossStoreFeedbackRepository.countBossStoreFeedbacksBetweenDate(yesterday, yesterday),
-                    weekendCounts = bossStoreFeedbackRepository.countBossStoreFeedbacksBetweenDate(yesterday.minusWeeks(1), yesterday)
+                    weekendCounts = bossStoreFeedbackRepository.countBossStoreFeedbacksBetweenDate(yesterday.minusWeeks(1), yesterday),
+                    monthlyCounts = bossStoreFeedbackRepository.countBossStoreFeedbacksBetweenDate(yesterday.minusMonths(1), yesterday),
                 )
                 RepeatStatus.FINISHED
             }
@@ -145,9 +150,10 @@ class BossDailyStatisticsJobConfiguration(
         totalCounts: Long,
         todayCounts: Long,
         weekendCounts: Long,
+        monthlyCounts: Long,
     ) {
         slackNotificationApiClient.postStatisticsMessage(
-            PostSlackMessageRequest.of(messageType.messageFormat.format(totalCounts, todayCounts, weekendCounts))
+            PostSlackMessageRequest.of(messageType.messageFormat.format(totalCounts, todayCounts, weekendCounts, monthlyCounts))
         )
     }
 

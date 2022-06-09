@@ -1,9 +1,7 @@
-spring:
-  config:
-    import:
-      - classpath:/application-redis.yml
-  profiles:
-    active: integration-test
+spring.profiles.default: integration-test
+spring.config:
+  import:
+    - classpath:/application-redis.yml
 
 
 ---

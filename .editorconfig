@@ -13,7 +13,7 @@ ij_java_class_count_to_use_import_on_demand = 2147483647
 ij_java_names_count_to_use_import_on_demand = 2147483647
 ij_java_imports_layout = $*, |, java.**, |, javax.**, |, org.**, |, com.**, |, *
 
-[{*.gradle.kts,*.kt,*.kts,*.main.kts}]
+[{*.kt,*.kts}]
 ij_kotlin_align_in_columns_case_branch = false
 ij_kotlin_align_multiline_binary_operation = false
 ij_kotlin_align_multiline_extends_list = false

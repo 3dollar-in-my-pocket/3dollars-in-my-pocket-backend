@@ -13,15 +13,15 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
 import com.depromeet.threedollar.common.type.UserMenuCategoryType
-import com.depromeet.threedollar.domain.rds.user.collection.medal.MedalObtainCollection
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalAcquisitionConditionType
-import com.depromeet.threedollar.domain.rds.user.domain.medal.MedalRepository
-import com.depromeet.threedollar.domain.rds.user.domain.review.ReviewRepository
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreDeleteRequestRepository
-import com.depromeet.threedollar.domain.rds.user.domain.store.StoreRepository
-import com.depromeet.threedollar.domain.rds.user.domain.user.User
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitHistoryRepository
-import com.depromeet.threedollar.domain.rds.user.domain.visit.VisitType
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.collection.MedalObtainCollection
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequestRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.User
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType
 
 /**
  * 마이그레이션을 위해 기존의 유저의 활동 이력을 통해 메달을 제공하는 배치

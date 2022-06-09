@@ -18,7 +18,7 @@ public class AmazonCloudFrontProperty {
     private final String url;
 
     public String getFullPathFileUrl(String fileName) {
-        return this.url.concat(fileName);
+        return this.url + fileName;
     }
 
 }

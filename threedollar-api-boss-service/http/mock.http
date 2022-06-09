@@ -1,0 +1,49 @@
+### 사장님 가게의 카테고리 목록을 조회합니다
+GET {{boss-api}}/v1/boss/store/categories
+
+> {%
+client.global.set("BOSS_CATEGORY_ID", response.body["data"][0]["categoryId"])
+%}
+
+
+### [테스트용] Mock 가게 데이터를 추가합니다.
+POST {{boss-api}}/test-store?latitude=38.003&longitude=127&categoriesIds={{BOSS_CATEGORY_ID}}
+Content-Type: application/json
+Authorization: Bearer {{BOSS_AUTHORIZATION}}
+
+> {%
+client.global.set("BOSS_STORE_ID", response.body["data"])
+%}
+
+
+### [테스트용] 가게에 Mock 피드백 데이터를 추가합니다
+POST {{boss-api}}/test-feedback/{{BOSS_STORE_ID}}?feedbackTypes=FOOD_IS_DELICIOUS,BOSS_IS_KIND&date=2022-02-16&userId=10000012
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [테스트용] 가입 신청을 수락합니다.
+PUT {{boss-api}}/test-registration/{{REGISTRATION_ID}}/apply
+
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### [테스트용] Mock 가게 카테고리 데이터를 추가합니다.
+POST {{boss-api}}/test-category?name=카테고리&priority=1000
+
+> {%
+client.global.set("BOSS_CATEGORY_ID", response.body["data"])
+%}
+
+
+### [테스트용] Mock 가입신청 추가
+POST {{boss-api}}/test-registration?bossName=사장님이름10&storeName=가게이름&categoriesIds={{BOSS_CATEGORY_ID}}&certificationPhotoUrl=https://www.jungle.co.kr/image/9184139c4725921ad8526df7&contactsNumber=010-1234-1234&businessNumber=000-00-00000

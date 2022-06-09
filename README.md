@@ -5,7 +5,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=3dollar-in-my-pocket_3dollars-in-my-pocket-backend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=3dollar-in-my-pocket_3dollars-in-my-pocket-backend)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=3dollar-in-my-pocket_3dollars-in-my-pocket-backend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=3dollar-in-my-pocket_3dollars-in-my-pocket-backend)
 
-![img.png](images/logo.png)
+![img.png](docs/logo.png)
 
 ### 프로젝트 설명
 
@@ -20,7 +20,7 @@
 
 <p align="center">
     <img src="https://user-images.githubusercontent.com/7058293/110067262-b179c700-7db6-11eb-8451-223956dca69d.jpg" width="40%" alt="IOS 인증샷"/>
-    <img src="./images/appstore.png" width="40%" alt="IOS 인증샷">
+    <img src="docs/appstore.png" width="40%" alt="IOS 인증샷">
 </p>
 
 ## 기술 스택
@@ -37,7 +37,7 @@
 
 ### 인프라 아키텍처
 
-![img.png](images/3dollars-architecture-20220409.png)
+![img.png](docs/3dollars-architecture-20220409.png)
 
 - **Infra** - ECS Fargate (API, Batch), ALB, S3, CloudFront
 - **DB** - MariaDB(RDS), MongoDB(EC2), Redis Cluster(Elastic Cache)
@@ -46,7 +46,7 @@
 
 ### 멀티 모듈 구조
 
-![img.png](images/modules-20220307.png)
+![img.png](docs/modules-20220608.png)
 
 ## Developers & Contacts
 

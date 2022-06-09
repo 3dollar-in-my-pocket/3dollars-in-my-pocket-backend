@@ -15,7 +15,8 @@ on:
       - develop
   workflow_dispatch:
   schedule:
-    - cron: '00 23 * * *' # 08:00 KST every day
+    - cron: '00 23 * * *' # 08:00
+    - cron: '00 11 * * *' # 20:00
 
 jobs:
   ci:
@@ -49,11 +50,20 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Test w/ coverage
-        run: ./gradlew clean bootjar ci testCoverage --stacktrace
+        run: ./gradlew clean bootjar ci testCoverage --warn
 
       - name: Sonarqube analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_QUBE_TOKEN }}
         run: |
-          ./gradlew sonarqube --stacktrace
+          ./gradlew sonarqube
+
+      - name: Publish Total Tests Summary Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: "build/test-results/**/*.xml"
+          check_name: "Total Tests Results Summary"
+          report_individual_runs: "true"
+          test_changes_limit: 10
