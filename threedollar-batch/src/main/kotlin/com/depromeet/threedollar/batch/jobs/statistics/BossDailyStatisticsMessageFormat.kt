@@ -15,6 +15,7 @@ enum class BossDailyStatisticsMessageFormat(
             - 총 %s명이 가입하고 있습니다.
             - 오늘 %s명이 신규 가입하였습니다.
             - 일주일 간 %s명이 신규 가입하였습니다.
+            - 한달 간 %s명이 신규 가입하였습니다.
         """.trimIndent()
     ),
     BOSS_REGISTRATION_STATISTICS(
@@ -23,6 +24,7 @@ enum class BossDailyStatisticsMessageFormat(
             - 총 %s명이 가입 신청하였습니다.
             - 오늘 %s명이 가입 신청하였습니다.
             - 일주일 간 %s명이 가입 신청하였습니다.
+            - 한달 간 %s명이 가입 신청하였습니다.
         """.trimIndent()
     ),
     BOSS_STORE_STATISTICS(
@@ -31,6 +33,7 @@ enum class BossDailyStatisticsMessageFormat(
             - 총 %s개의 가게가 등록되어 있습니다..
             - 오늘 %s개의 가게가 신규 등록되었습니다.
             - 일주일 간 %s개의 가게가 신규 등록되었습니다.
+            - 한달 간 %s개의 가게가 신규 등록되었습니다.
         """.trimIndent()
     ),
     DELETED_BOSS_STORE_STATISTICS(
@@ -39,6 +42,7 @@ enum class BossDailyStatisticsMessageFormat(
             - 총 %s개의 가게가 삭제 처리되었습니다.
             - 오늘 %s개의 가게가 삭제 처리되었습니다.
             - 일주일 간 %s개의 가게가 삭제 처리되었습니다.
+            - 한달 간 %s개의 가게가 삭제 처리되었습니다.
         """.trimIndent()
     ),
     BOSS_STORE_FEEDBACK_STATISTICS(
@@ -47,6 +51,7 @@ enum class BossDailyStatisticsMessageFormat(
             - 총 %s개의 피드백이 등록되어 있습니다..
             - 오늘 %s개의 피드백이 신규 등록되었습니다.
             - 일주일 간 %s개의 피드백이 신규 등록되었습니다.
+            - 한달 간 %s개의 피드백이 신규 등록되었습니다.
         """.trimIndent()
     ),
 

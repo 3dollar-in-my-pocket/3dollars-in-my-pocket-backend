@@ -69,7 +69,8 @@ class BossDailyStatisticsJobConfiguration(
                     messageType = BossDailyStatisticsMessageFormat.BOSS_ACCOUNT_STATISTICS,
                     totalCounts = bossAccountRepository.count(),
                     todayCounts = bossAccountRepository.countBossAccountsBetweenDate(yesterday, yesterday),
-                    weekendCounts = bossAccountRepository.countBossAccountsBetweenDate(yesterday.minusWeeks(1), yesterday)
+                    weekendCounts = bossAccountRepository.countBossAccountsBetweenDate(yesterday.minusWeeks(1), yesterday),
+                    monthlyCounts = bossAccountRepository.countBossAccountsBetweenDate(yesterday.minusMonths(1), yesterday),
                 )
                 RepeatStatus.FINISHED
             }
@@ -85,7 +86,8 @@ class BossDailyStatisticsJobConfiguration(
                     messageType = BossDailyStatisticsMessageFormat.BOSS_REGISTRATION_STATISTICS,
                     totalCounts = bossRegistrationRepository.count(),
                     todayCounts = bossRegistrationRepository.countBossRegistrationsBetweenDate(yesterday, yesterday),
-                    weekendCounts = bossRegistrationRepository.countBossRegistrationsBetweenDate(yesterday.minusWeeks(1), yesterday)
+                    weekendCounts = bossRegistrationRepository.countBossRegistrationsBetweenDate(yesterday.minusWeeks(1), yesterday),
+                    monthlyCounts = bossRegistrationRepository.countBossRegistrationsBetweenDate(yesterday.minusMonths(1), yesterday),
                 )
                 RepeatStatus.FINISHED
             }
@@ -101,7 +103,8 @@ class BossDailyStatisticsJobConfiguration(
                     messageType = BossDailyStatisticsMessageFormat.BOSS_STORE_STATISTICS,
                     totalCounts = bossStoreRepository.count(),
                     todayCounts = bossStoreRepository.countBossStoresBetweenDate(yesterday, yesterday),
-                    weekendCounts = bossStoreRepository.countBossStoresBetweenDate(yesterday.minusWeeks(1), yesterday)
+                    weekendCounts = bossStoreRepository.countBossStoresBetweenDate(yesterday.minusWeeks(1), yesterday),
+                    monthlyCounts = bossStoreRepository.countBossStoresBetweenDate(yesterday.minusMonths(1), yesterday),
                 )
                 RepeatStatus.FINISHED
             }
@@ -117,7 +120,8 @@ class BossDailyStatisticsJobConfiguration(
                     messageType = BossDailyStatisticsMessageFormat.DELETED_BOSS_STORE_STATISTICS,
                     totalCounts = bossDeletedStoreRepository.count(),
                     todayCounts = bossDeletedStoreRepository.countDeletedBossStoresBetweenDate(yesterday, yesterday),
-                    weekendCounts = bossDeletedStoreRepository.countDeletedBossStoresBetweenDate(yesterday.minusWeeks(1), yesterday)
+                    weekendCounts = bossDeletedStoreRepository.countDeletedBossStoresBetweenDate(yesterday.minusWeeks(1), yesterday),
+                    monthlyCounts = bossDeletedStoreRepository.countDeletedBossStoresBetweenDate(yesterday.minusMonths(1), yesterday),
                 )
                 RepeatStatus.FINISHED
             }
@@ -133,7 +137,8 @@ class BossDailyStatisticsJobConfiguration(
                     messageType = BossDailyStatisticsMessageFormat.BOSS_STORE_FEEDBACK_STATISTICS,
                     totalCounts = bossStoreFeedbackRepository.count(),
                     todayCounts = bossStoreFeedbackRepository.countBossStoreFeedbacksBetweenDate(yesterday, yesterday),
-                    weekendCounts = bossStoreFeedbackRepository.countBossStoreFeedbacksBetweenDate(yesterday.minusWeeks(1), yesterday)
+                    weekendCounts = bossStoreFeedbackRepository.countBossStoreFeedbacksBetweenDate(yesterday.minusWeeks(1), yesterday),
+                    monthlyCounts = bossStoreFeedbackRepository.countBossStoreFeedbacksBetweenDate(yesterday.minusMonths(1), yesterday),
                 )
                 RepeatStatus.FINISHED
             }
@@ -145,9 +150,10 @@ class BossDailyStatisticsJobConfiguration(
         totalCounts: Long,
         todayCounts: Long,
         weekendCounts: Long,
+        monthlyCounts: Long,
     ) {
         slackNotificationApiClient.postStatisticsMessage(
-            PostSlackMessageRequest.of(messageType.messageFormat.format(totalCounts, todayCounts, weekendCounts))
+            PostSlackMessageRequest.of(messageType.messageFormat.format(totalCounts, todayCounts, weekendCounts, monthlyCounts))
         )
     }
 

@@ -15,6 +15,7 @@ enum class UserDailyStatisticsMessageFormat(
             - 총 %s명이 가입하고 있습니다.
             - 오늘 %s명이 신규 가입하였습니다.
             - 일주일 간 %s명이 신규 가입하였습니다.
+            - 한달 간 %s명이 신규 가입하였습니다.
         """.trimIndent()
     ),
     COUNTS_STORE(
@@ -23,6 +24,7 @@ enum class UserDailyStatisticsMessageFormat(
             - 총 %s개의 가게가 등록되어 있습니다..
             - 오늘 %s개의 가게가 신규 등록되었습니다.
             - 일주일 간 %s개의 가게가 신규 등록되었습니다.
+            - 한달 간 %s개의 가게가 신규 등록되었습니다.
         """.trimIndent()
     ),
     COUNTS_MENUS(
@@ -42,6 +44,7 @@ enum class UserDailyStatisticsMessageFormat(
             - 총 %s개의 가게가 삭제 처리되었습니다.
             - 오늘 %s개의 가게가 삭제 처리되었습니다.
             - 일주일 간 %s개의 가게가 삭제 처리되었습니다.
+            - 한달 간 %s개의 가게가 삭제 처리되었습니다.
         """.trimIndent()
     ),
     COUNTS_DELETE_STORE_REQUEST(
@@ -50,6 +53,7 @@ enum class UserDailyStatisticsMessageFormat(
             - 총 %s개의 가게 삭제 요청이 추가되었습니다.
             - 오늘 %s개의 가게 삭제 요청이 추가되었습니다.
             - 일주일 간 %s개의 가게 삭제 요청이 추가되었습니다.
+            - 한달 간 %s개의 가게 삭제 요청이 추가되었습니다.
       """.trimIndent()
     ),
     COUNTS_REVIEW(
@@ -58,6 +62,7 @@ enum class UserDailyStatisticsMessageFormat(
             - 총 %s개의 리뷰가 작성되어 있습니다.
             - 오늘 %s개의 리뷰가 신규 작성되었습니다.
             - 일주일 간 %s개의 리뷰가 신규 작성되었습니다.
+            - 한달 간 %s개의 리뷰가 신규 작성되었습니다.
         """.trimIndent()
     ),
     COUNTS_VISIT_HISTORY(
@@ -66,6 +71,7 @@ enum class UserDailyStatisticsMessageFormat(
             - 총 %s번의 방문 인증 기록이 등록되어 있습니다.
             - 오늘 %s번의 방문 인증 기록이 신규 등록되었습니다.
             - 일주일 간 %s번의 방문 인증 기록이 신규 등록되었습니다.
+            - 한달 간 %s번의 방문 인증 기록이 신규 등록되었습니다.
         """.trimIndent()
     ),
     COUNTS_MEDALS(
