@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.repository
+package com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.repository.statistics
 
 import java.time.LocalDate
 import org.springframework.data.mongodb.core.MongoTemplate

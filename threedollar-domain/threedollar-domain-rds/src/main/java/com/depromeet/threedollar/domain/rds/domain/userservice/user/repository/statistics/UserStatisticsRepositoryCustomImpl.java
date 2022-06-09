@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.rds.domain.userservice.user.repository;
+package com.depromeet.threedollar.domain.rds.domain.userservice.user.repository.statistics;
 
 import static com.depromeet.threedollar.domain.rds.domain.userservice.user.QUser.user;
 

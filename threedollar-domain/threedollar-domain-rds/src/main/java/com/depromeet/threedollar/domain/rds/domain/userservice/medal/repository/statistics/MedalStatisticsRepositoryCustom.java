@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.rds.domain.userservice.medal.repository;
+package com.depromeet.threedollar.domain.rds.domain.userservice.medal.repository.statistics;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.repository
+package com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.repository.statistics
 
 import java.time.LocalDate
 import org.springframework.data.mongodb.core.MongoTemplate

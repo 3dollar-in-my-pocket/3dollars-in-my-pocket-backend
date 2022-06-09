@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.rds.domain.userservice.visit.repository;
+package com.depromeet.threedollar.domain.rds.domain.userservice.visit.repository.statistics;
 
 import static com.depromeet.threedollar.domain.rds.domain.userservice.visit.QVisitHistory.visitHistory;
 

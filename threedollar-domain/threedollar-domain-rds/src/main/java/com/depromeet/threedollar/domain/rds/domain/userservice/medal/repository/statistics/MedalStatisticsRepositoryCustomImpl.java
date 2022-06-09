@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.rds.domain.userservice.medal.repository;
+package com.depromeet.threedollar.domain.rds.domain.userservice.medal.repository.statistics;
 
 import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.QMedal.medal;
 import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.QUserMedal.userMedal;

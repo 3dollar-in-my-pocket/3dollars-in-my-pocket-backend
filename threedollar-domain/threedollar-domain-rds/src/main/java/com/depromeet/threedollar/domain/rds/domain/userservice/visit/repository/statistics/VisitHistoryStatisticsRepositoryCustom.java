@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.rds.domain.userservice.visit.repository;
+package com.depromeet.threedollar.domain.rds.domain.userservice.visit.repository.statistics;
 
 import java.time.LocalDate;
 

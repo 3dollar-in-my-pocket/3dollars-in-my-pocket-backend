@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.rds.domain.userservice.store.repository;
+package com.depromeet.threedollar.domain.rds.domain.userservice.store.repository.admin;
 
 import java.util.List;
 

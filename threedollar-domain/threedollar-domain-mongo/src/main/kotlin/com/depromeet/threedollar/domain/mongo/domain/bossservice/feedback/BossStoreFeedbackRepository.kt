@@ -2,6 +2,6 @@ package com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback
 
 import org.springframework.data.mongodb.repository.MongoRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.repository.BossStoreFeedbackRepositoryCustom
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.repository.BossStoreFeedbackStatisticsRepositoryCustom
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.repository.statistics.BossStoreFeedbackStatisticsRepositoryCustom
 
 interface BossStoreFeedbackRepository : MongoRepository<BossStoreFeedback, String>, BossStoreFeedbackRepositoryCustom, BossStoreFeedbackStatisticsRepositoryCustom

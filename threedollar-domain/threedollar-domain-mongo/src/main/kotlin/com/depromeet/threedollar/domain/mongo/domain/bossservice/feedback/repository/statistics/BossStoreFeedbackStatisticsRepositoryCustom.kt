@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.repository
+package com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.repository.statistics
 
 import java.time.LocalDate
 

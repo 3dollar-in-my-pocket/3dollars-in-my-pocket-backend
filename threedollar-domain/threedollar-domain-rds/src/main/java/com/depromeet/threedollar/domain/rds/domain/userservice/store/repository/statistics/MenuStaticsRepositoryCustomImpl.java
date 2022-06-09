@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.rds.domain.userservice.store.repository;
+package com.depromeet.threedollar.domain.rds.domain.userservice.store.repository.statistics;
 
 import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QMenu.menu;
 import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStore.store;
