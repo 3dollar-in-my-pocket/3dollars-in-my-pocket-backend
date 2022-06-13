@@ -43,7 +43,8 @@ spring:
       time: HH:mm
     servlet:
       load-on-startup: 1
-
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 ---
 spring.config:

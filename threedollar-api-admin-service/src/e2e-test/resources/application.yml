@@ -25,3 +25,5 @@ spring:
       date: yyyy-MM-dd
       date-time: yyyy-MM-dd'T'HH:mm:ss
       time: HH:mm:ss
+    pathmatch:
+      matching-strategy: ant_path_matcher

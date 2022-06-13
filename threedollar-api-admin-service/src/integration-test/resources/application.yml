@@ -6,8 +6,12 @@ spring.config:
     - classpath:/application-mongo.yml
     - classpath:/application-external.yml
 
-
 ---
 spring.config:
   activate:
     on-profile: integration-test
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher

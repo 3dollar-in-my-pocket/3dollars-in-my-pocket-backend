@@ -18,7 +18,7 @@ dependencies {
     annotationProcessor("jakarta.annotation:jakarta.annotation-api")
 
     // Flyway
-    implementation("org.flywaydb:flyway-core")
+    implementation("org.flywaydb:flyway-mysql")
 
     // TestFixtures
     testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-rds")))
