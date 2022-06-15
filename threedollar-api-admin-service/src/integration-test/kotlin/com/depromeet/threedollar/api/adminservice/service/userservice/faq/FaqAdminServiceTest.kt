@@ -6,8 +6,6 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.api.adminservice.IntegrationTest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.faq.FaqAdminService
 import com.depromeet.threedollar.api.adminservice.service.commonservice.faq.dto.request.AddFaqRequest
@@ -20,8 +18,6 @@ import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCreator
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqRepository
 
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@SpringBootTest
 internal class FaqAdminServiceTest(
     private val faqAdminService: FaqAdminService,
     private val faqRepository: FaqRepository,

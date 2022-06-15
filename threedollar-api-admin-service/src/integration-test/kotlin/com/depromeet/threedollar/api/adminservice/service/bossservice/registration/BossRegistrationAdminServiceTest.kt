@@ -6,7 +6,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import com.depromeet.threedollar.api.adminservice.SetupAdminServiceTest
+import com.depromeet.threedollar.api.adminservice.SetupAdminIntegrationTest
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.model.BusinessNumber
@@ -25,7 +25,7 @@ internal class BossRegistrationAdminServiceTest(
     private val bossRegistrationRepository: BossRegistrationRepository,
     private val bossAccountRepository: BossAccountRepository,
     private val bossStoreRepository: BossStoreRepository,
-) : SetupAdminServiceTest() {
+) : SetupAdminIntegrationTest() {
 
     @AfterEach
     fun cleanUp() {

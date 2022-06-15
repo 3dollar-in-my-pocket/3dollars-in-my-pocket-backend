@@ -9,7 +9,7 @@ import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossSt
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 
-internal abstract class SetupBossStoreServiceTest : SetupBossAccountServiceTest() {
+internal abstract class SetupBossStoreIntegrationTest : SetupBossAccountIntegrationTest() {
 
     @Autowired
     protected lateinit var bossStoreRepository: BossStoreRepository

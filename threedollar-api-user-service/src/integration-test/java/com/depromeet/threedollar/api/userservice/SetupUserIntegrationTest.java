@@ -8,7 +8,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
 
-public abstract class SetupUserServiceTest extends IntegrationTest {
+public abstract class SetupUserIntegrationTest extends IntegrationTest {
 
     @Autowired
     protected UserRepository userRepository;

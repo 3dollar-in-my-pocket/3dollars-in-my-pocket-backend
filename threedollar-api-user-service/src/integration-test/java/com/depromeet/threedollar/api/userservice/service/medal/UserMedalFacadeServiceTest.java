@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.depromeet.threedollar.api.userservice.SetupUserServiceTest;
+import com.depromeet.threedollar.api.userservice.SetupUserIntegrationTest;
 import com.depromeet.threedollar.api.userservice.service.medal.support.UserMedalAssertions;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
@@ -35,7 +35,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistor
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
 
-class UserMedalFacadeServiceTest extends SetupUserServiceTest {
+class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
 
     @Autowired
     private AddUserMedalFacadeService userMedalFacadeService;

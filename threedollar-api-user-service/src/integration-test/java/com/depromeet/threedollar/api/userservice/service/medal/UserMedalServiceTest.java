@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.depromeet.threedollar.api.userservice.SetupUserServiceTest;
+import com.depromeet.threedollar.api.userservice.SetupUserIntegrationTest;
 import com.depromeet.threedollar.api.userservice.service.medal.dto.request.ChangeRepresentativeMedalRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
@@ -23,7 +23,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalCr
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus;
 
-class UserMedalServiceTest extends SetupUserServiceTest {
+class UserMedalServiceTest extends SetupUserIntegrationTest {
 
     @Autowired
     private UserMedalService userMedalService;

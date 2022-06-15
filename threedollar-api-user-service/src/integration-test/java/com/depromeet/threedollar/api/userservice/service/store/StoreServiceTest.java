@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.depromeet.threedollar.api.userservice.SetupUserServiceTest;
+import com.depromeet.threedollar.api.userservice.SetupUserIntegrationTest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.DeleteStoreRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.MenuRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.RegisterStoreRequest;
@@ -45,7 +45,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreReposi
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreType;
 
-class StoreServiceTest extends SetupUserServiceTest {
+class StoreServiceTest extends SetupUserIntegrationTest {
 
     @Autowired
     private StoreService storeService;

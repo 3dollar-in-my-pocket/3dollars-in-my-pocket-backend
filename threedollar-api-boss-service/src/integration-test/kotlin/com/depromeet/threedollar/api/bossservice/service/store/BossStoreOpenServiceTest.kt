@@ -6,20 +6,16 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
-import com.depromeet.threedollar.api.bossservice.SetupBossStoreServiceTest
+import com.depromeet.threedollar.api.bossservice.SetupBossStoreIntegrationTest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.model.LocationValue
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.redis.domain.bossservice.store.BossStoreOpenTimeRepository
 
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@SpringBootTest
 internal class BossStoreOpenServiceTest(
     private val bossStoreOpenService: BossStoreOpenService,
     private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository,
-) : SetupBossStoreServiceTest() {
+) : SetupBossStoreIntegrationTest() {
 
     @AfterEach
     fun cleanUp() {

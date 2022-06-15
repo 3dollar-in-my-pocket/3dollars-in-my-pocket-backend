@@ -7,14 +7,10 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.api.bossservice.IntegrationTest
 import com.depromeet.threedollar.common.exception.model.ServiceUnAvailableException
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@SpringBootTest
 internal class AuthServiceFinderTest(
     private val authServiceFinder: AuthServiceFinder,
 ) : IntegrationTest() {

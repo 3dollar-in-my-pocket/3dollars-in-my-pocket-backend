@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.api.userservice.MockMvcUtils;
+import com.depromeet.threedollar.api.userservice.MockMvcHelper;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.DeleteStoreRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.RegisterStoreRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.UpdateStoreRequest;
@@ -23,7 +23,7 @@ import com.depromeet.threedollar.api.userservice.service.store.dto.response.Stor
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-class StoreMockApiCaller extends MockMvcUtils {
+class StoreMockApiCaller extends MockMvcHelper {
 
     StoreMockApiCaller(MockMvc mockMvc, ObjectMapper objectMapper) {
         super(mockMvc, objectMapper);

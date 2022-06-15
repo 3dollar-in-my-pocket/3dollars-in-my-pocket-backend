@@ -11,7 +11,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
 
-public abstract class SetupStoreServiceTest extends SetupUserServiceTest {
+public abstract class SetupStoreIntegrationTest extends SetupUserIntegrationTest {
 
     @Autowired
     protected StoreRepository storeRepository;

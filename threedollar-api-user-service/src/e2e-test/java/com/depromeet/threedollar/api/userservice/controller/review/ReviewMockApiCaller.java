@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.api.userservice.MockMvcUtils;
+import com.depromeet.threedollar.api.userservice.MockMvcHelper;
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.RetrieveMyReviewsRequest;
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.UpdateReviewRequest;
@@ -24,7 +24,7 @@ import com.depromeet.threedollar.api.userservice.service.review.dto.response.Rev
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-class ReviewMockApiCaller extends MockMvcUtils {
+class ReviewMockApiCaller extends MockMvcHelper {
 
     ReviewMockApiCaller(MockMvc mockMvc, ObjectMapper objectMapper) {
         super(mockMvc, objectMapper);

@@ -4,19 +4,16 @@ import java.time.LocalDateTime
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
+import com.depromeet.threedollar.domain.redis.IntegrationTest
 import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
 
 private const val BOSS_STORE_ID = "boss-store-id"
 
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@SpringBootTest
 internal class BossStoreOpenTimeRepositoryTest(
     private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository,
     private val stringRepository: StringRedisRepository<BossStoreOpenTimeKey, LocalDateTime>,
-) {
+) : IntegrationTest() {
 
     @AfterEach
     fun cleanUp() {

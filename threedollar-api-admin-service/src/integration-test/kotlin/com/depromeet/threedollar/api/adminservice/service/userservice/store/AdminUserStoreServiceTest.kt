@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import com.depromeet.threedollar.api.adminservice.SetupAdminServiceTest
+import com.depromeet.threedollar.api.adminservice.SetupAdminIntegrationTest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator
@@ -15,7 +15,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus
 internal class AdminUserStoreServiceTest(
     private val adminUserStoreService: AdminUserStoreService,
     private val storeRepository: StoreRepository,
-) : SetupAdminServiceTest() {
+) : SetupAdminIntegrationTest() {
 
     @Nested
     inner class DeleteUserStoreByAdminTest {

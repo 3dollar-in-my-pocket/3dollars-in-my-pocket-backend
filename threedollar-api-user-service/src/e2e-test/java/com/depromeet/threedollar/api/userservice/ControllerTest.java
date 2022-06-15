@@ -10,10 +10,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.depromeet.threedollar.domain.rds.domain.lib.DatabaseCleaner;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @AutoConfigureMockMvc
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
-public abstract class SetupControllerTest {
+public abstract class ControllerTest {
 
     @Autowired
     protected MockMvc mockMvc;

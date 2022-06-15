@@ -5,8 +5,6 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.api.adminservice.IntegrationTest
 import com.depromeet.threedollar.api.adminservice.service.userservice.medal.dto.request.AddMedalRequest
 import com.depromeet.threedollar.api.adminservice.service.userservice.medal.dto.request.UpdateMedalRequest
@@ -18,8 +16,6 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquis
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
 
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@SpringBootTest
 internal class AdminMedalServiceTest(
     private val adminMedalService: AdminMedalService,
     private val medalRepository: MedalRepository,

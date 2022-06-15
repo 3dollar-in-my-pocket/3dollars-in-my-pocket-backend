@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.depromeet.threedollar.api.userservice.SetupStoreServiceTest;
+import com.depromeet.threedollar.api.userservice.SetupStoreIntegrationTest;
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.UpdateReviewRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
@@ -20,7 +20,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCrea
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewStatus;
 
-class ReviewServiceTest extends SetupStoreServiceTest {
+class ReviewServiceTest extends SetupStoreIntegrationTest {
 
     @Autowired
     private ReviewService reviewService;

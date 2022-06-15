@@ -5,8 +5,6 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
 import com.depromeet.threedollar.api.adminservice.IntegrationTest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
@@ -17,8 +15,6 @@ import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfi
 
 private const val EMAIL = "will.seunho@gmail.com"
 
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@SpringBootTest
 internal class GoogleAuthServiceTest(
     private val adminRepository: AdminRepository,
 ) : IntegrationTest() {

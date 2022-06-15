@@ -17,7 +17,7 @@ import org.springframework.mock.web.MockMultipartFile;
 
 import com.depromeet.threedollar.api.core.provider.upload.UploadProvider;
 import com.depromeet.threedollar.api.core.provider.upload.dto.request.UploadFileRequest;
-import com.depromeet.threedollar.api.userservice.SetupStoreServiceTest;
+import com.depromeet.threedollar.api.userservice.SetupStoreIntegrationTest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImage;
@@ -25,7 +25,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageC
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageStatus;
 
-class StoreImageServiceTest extends SetupStoreServiceTest {
+class StoreImageServiceTest extends SetupStoreIntegrationTest {
 
     private static final String IMAGE_URL = "https://image-storage.png";
 

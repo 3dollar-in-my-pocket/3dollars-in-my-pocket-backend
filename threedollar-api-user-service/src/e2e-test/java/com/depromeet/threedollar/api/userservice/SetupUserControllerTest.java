@@ -8,7 +8,7 @@ import com.depromeet.threedollar.api.userservice.service.auth.dto.response.Login
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
 
-public abstract class SetupUserControllerTest extends SetupControllerTest {
+public abstract class SetupUserControllerTest extends ControllerTest {
 
     @Autowired
     protected UserRepository userRepository;

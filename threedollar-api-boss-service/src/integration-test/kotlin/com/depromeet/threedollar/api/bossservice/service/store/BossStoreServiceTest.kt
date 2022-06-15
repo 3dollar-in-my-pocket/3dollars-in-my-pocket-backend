@@ -9,9 +9,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
-import com.depromeet.threedollar.api.bossservice.SetupBossAccountServiceTest
+import com.depromeet.threedollar.api.bossservice.SetupBossAccountIntegrationTest
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.AppearanceDayRequest
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.MenuRequest
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.PatchBossStoreInfoRequest
@@ -34,14 +32,12 @@ import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossSt
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@SpringBootTest
 internal class BossStoreSetupBossAccountServiceTest(
     private val bossStoreService: BossStoreService,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossDeletedStoreRepository: BossDeletedStoreRepository,
-) : SetupBossAccountServiceTest() {
+) : SetupBossAccountIntegrationTest() {
 
     @MockkBean
     private lateinit var bossStoreCategoryCacheRepository: BossStoreCategoryCacheRepository

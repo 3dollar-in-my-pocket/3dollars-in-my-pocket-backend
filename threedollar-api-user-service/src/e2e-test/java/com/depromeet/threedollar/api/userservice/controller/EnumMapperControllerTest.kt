@@ -3,9 +3,9 @@ package com.depromeet.threedollar.api.userservice.controller
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
-import com.depromeet.threedollar.api.userservice.SetupControllerTest
+import com.depromeet.threedollar.api.userservice.ControllerTest
 
-internal class EnumMapperControllerTest : SetupControllerTest() {
+internal class EnumMapperControllerTest : ControllerTest() {
 
     @DisplayName("GET /api/v1/enums")
     @Test

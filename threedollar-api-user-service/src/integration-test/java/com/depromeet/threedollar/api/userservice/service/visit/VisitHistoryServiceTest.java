@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.depromeet.threedollar.api.userservice.SetupStoreServiceTest;
+import com.depromeet.threedollar.api.userservice.SetupStoreIntegrationTest;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.userservice.service.visit.support.VisitHistoryAssertions;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
@@ -21,7 +21,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistor
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
 
-class VisitHistoryServiceTest extends SetupStoreServiceTest {
+class VisitHistoryServiceTest extends SetupStoreIntegrationTest {
 
     @Autowired
     private VisitHistoryService visitHistoryService;

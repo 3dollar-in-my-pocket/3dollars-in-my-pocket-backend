@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.depromeet.threedollar.api.userservice.SetupUserServiceTest;
+import com.depromeet.threedollar.api.userservice.SetupUserIntegrationTest;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator;
@@ -17,7 +17,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus;
 
-class AddUserMedalServiceTest extends SetupUserServiceTest {
+class AddUserMedalServiceTest extends SetupUserIntegrationTest {
 
     @Autowired
     private AddUserMedalService addUserMedalService;

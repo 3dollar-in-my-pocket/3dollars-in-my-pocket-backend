@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.core.service.bossservice
 
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
+import com.depromeet.threedollar.api.core.IntegrationTest
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountCreator
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
@@ -13,8 +13,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserCreator
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType
 
-@SpringBootTest
-internal abstract class SetupBossAccountAndUserServiceTest {
+internal abstract class SetupBossAccountAndUserServiceTest : IntegrationTest() {
 
     @Autowired
     protected lateinit var userRepository: UserRepository
@@ -45,7 +44,8 @@ internal abstract class SetupBossAccountAndUserServiceTest {
         ).id
     }
 
-    protected fun cleanup() {
+    override fun cleanup() {
+        super.cleanup()
         medalAcquisitionConditionRepository.deleteAllInBatch()
         userMedalRepository.deleteAllInBatch()
         medalRepository.deleteAllInBatch()

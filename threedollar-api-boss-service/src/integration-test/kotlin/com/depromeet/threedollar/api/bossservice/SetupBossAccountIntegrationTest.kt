@@ -2,14 +2,12 @@ package com.depromeet.threedollar.api.bossservice
 
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountCreator
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 
-@SpringBootTest
-internal abstract class SetupBossAccountServiceTest : IntegrationTest() {
+internal abstract class SetupBossAccountIntegrationTest : IntegrationTest() {
 
     @Autowired
     protected lateinit var bossAccountRepository: BossAccountRepository

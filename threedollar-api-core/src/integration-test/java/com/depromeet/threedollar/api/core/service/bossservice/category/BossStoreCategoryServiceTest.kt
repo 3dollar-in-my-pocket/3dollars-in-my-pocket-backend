@@ -2,8 +2,7 @@ package com.depromeet.threedollar.api.core.service.bossservice.category
 
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
+import com.depromeet.threedollar.api.core.IntegrationTest
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryCreator
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheRepository
@@ -11,12 +10,10 @@ import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import io.mockk.verify
 
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@SpringBootTest
 internal class BossStoreCategoryServiceTest(
     private val bossStoreCategoryService: BossStoreCategoryService,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-) {
+) : IntegrationTest() {
 
     @MockkBean
     private lateinit var bossStoreCategoryCacheRepository: BossStoreCategoryCacheRepository
