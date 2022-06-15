@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.adminservice.controller
+package com.depromeet.threedollar.api.bossservice
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @AutoConfigureMockMvc
 @SpringBootTest
-internal abstract class SetupControllerTest {
+internal abstract class SetupControllerTest : IntegrationTest() {
 
     @Autowired
     protected lateinit var objectMapper: ObjectMapper

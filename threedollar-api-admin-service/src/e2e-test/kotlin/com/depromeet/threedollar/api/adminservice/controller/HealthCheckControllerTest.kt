@@ -4,9 +4,10 @@ import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import com.depromeet.threedollar.api.adminservice.ControllerTest
 import com.depromeet.threedollar.common.constants.VersionConstants
 
-internal class HealthCheckControllerTest : SetupControllerTest() {
+internal class HealthCheckControllerTest : ControllerTest() {
 
     @Test
     fun healthCheck() {

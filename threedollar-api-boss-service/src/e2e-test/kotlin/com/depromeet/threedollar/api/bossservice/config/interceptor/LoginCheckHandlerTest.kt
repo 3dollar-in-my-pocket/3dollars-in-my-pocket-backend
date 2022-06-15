@@ -8,7 +8,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
-import com.depromeet.threedollar.api.bossservice.controller.SetupBossAccountControllerTest
+import com.depromeet.threedollar.api.bossservice.SetupBossAccountControllerTest
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 
 internal class LoginCheckHandlerTest : SetupBossAccountControllerTest() {

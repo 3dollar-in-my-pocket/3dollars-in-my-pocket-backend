@@ -6,13 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
+import com.depromeet.threedollar.api.userservice.IntegrationTest;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.request.LoginRequest;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.userservice.service.user.UserService;
@@ -23,12 +22,10 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
-import com.depromeet.threedollar.domain.rds.domain.userservice.user.WithdrawalUserRepository;
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient;
 import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse;
 
-@SpringBootTest
-class GoogleAuthServiceTest {
+class GoogleAuthServiceTest extends IntegrationTest {
 
     private static final String SOCIAL_ID = "google-social-id";
     private static final UserSocialType SOCIAL_TYPE = UserSocialType.GOOGLE;
@@ -41,18 +38,9 @@ class GoogleAuthServiceTest {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private WithdrawalUserRepository withdrawalUserRepository;
-
     @BeforeEach
     void setup() {
         authService = new GoogleAuthService(new StubGoogleAuthApiClient(), userService, userRepository);
-    }
-
-    @AfterEach
-    void cleanUp() {
-        userRepository.deleteAll();
-        withdrawalUserRepository.deleteAllInBatch();
     }
 
     private static class StubGoogleAuthApiClient implements GoogleAuthApiClient {

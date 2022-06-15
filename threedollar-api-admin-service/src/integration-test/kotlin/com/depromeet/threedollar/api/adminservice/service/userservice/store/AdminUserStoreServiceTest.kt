@@ -2,11 +2,10 @@ package com.depromeet.threedollar.api.adminservice.service.userservice.store
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import com.depromeet.threedollar.api.adminservice.service.SetupAdminServiceTest
+import com.depromeet.threedollar.api.adminservice.SetupAdminServiceTest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator
@@ -17,12 +16,6 @@ internal class AdminUserStoreServiceTest(
     private val adminUserStoreService: AdminUserStoreService,
     private val storeRepository: StoreRepository,
 ) : SetupAdminServiceTest() {
-
-    @AfterEach
-    fun cleanUp() {
-        super.cleanup()
-        storeRepository.deleteAll()
-    }
 
     @Nested
     inner class DeleteUserStoreByAdminTest {

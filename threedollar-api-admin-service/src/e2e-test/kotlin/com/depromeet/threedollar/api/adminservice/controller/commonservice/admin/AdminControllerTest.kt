@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.api.adminservice.controller.commonservice.admin
 
 import org.hamcrest.Matchers.hasSize
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -10,18 +9,13 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.put
-import com.depromeet.threedollar.api.adminservice.controller.SetupAdminControllerTest
+import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.admin.dto.request.AddAdminRequest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.admin.dto.request.UpdateMyAdminInfoRequest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.admin.dto.response.AdminInfoResponse
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 
 internal class AdminControllerTest : SetupAdminControllerTest() {
-
-    @AfterEach
-    fun cleanUp() {
-        super.cleanup()
-    }
 
     @DisplayName("GET /admin/v1/account/admin/me")
     @Nested

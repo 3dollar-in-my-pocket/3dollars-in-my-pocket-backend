@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
-import com.depromeet.threedollar.api.bossservice.controller.SetupControllerTest
+import com.depromeet.threedollar.api.bossservice.SetupControllerTest
 import com.depromeet.threedollar.api.core.service.bossservice.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryCreator
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository

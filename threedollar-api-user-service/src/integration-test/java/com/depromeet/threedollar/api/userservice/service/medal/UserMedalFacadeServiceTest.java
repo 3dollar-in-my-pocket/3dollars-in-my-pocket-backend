@@ -7,20 +7,20 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import com.depromeet.threedollar.api.userservice.service.SetupUserServiceTest;
+import com.depromeet.threedollar.api.userservice.SetupUserServiceTest;
 import com.depromeet.threedollar.api.userservice.service.medal.support.UserMedalAssertions;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedal;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
@@ -35,7 +35,6 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistor
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
 
-@SpringBootTest
 class UserMedalFacadeServiceTest extends SetupUserServiceTest {
 
     @Autowired
@@ -53,14 +52,11 @@ class UserMedalFacadeServiceTest extends SetupUserServiceTest {
     @Autowired
     private VisitHistoryRepository visitHistoryRepository;
 
-    @AfterEach
-    void cleanUp() {
-        super.cleanup();
-        visitHistoryRepository.deleteAllInBatch();
-        storeDeleteRequestRepository.deleteAllInBatch();
-        reviewRepository.deleteAllInBatch();
-        storeRepository.deleteAll();
-    }
+    @Autowired
+    private MedalRepository medalRepository;
+
+    @Autowired
+    private UserMedalRepository userMedalRepository;
 
     @DisplayName("가게 추가 조건 메달 획득")
     @Nested

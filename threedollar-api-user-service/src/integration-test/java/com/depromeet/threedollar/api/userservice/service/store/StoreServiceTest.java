@@ -13,13 +13,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import com.depromeet.threedollar.api.userservice.service.SetupUserServiceTest;
+import com.depromeet.threedollar.api.userservice.SetupUserServiceTest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.DeleteStoreRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.MenuRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.RegisterStoreRequest;
@@ -47,7 +45,6 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreReposi
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreType;
 
-@SpringBootTest
 class StoreServiceTest extends SetupUserServiceTest {
 
     @Autowired
@@ -67,16 +64,6 @@ class StoreServiceTest extends SetupUserServiceTest {
 
     @Autowired
     private MenuRepository menuRepository;
-
-    @AfterEach
-    void cleanUp() {
-        super.cleanup();
-        appearanceDayRepository.deleteAllInBatch();
-        paymentMethodRepository.deleteAllInBatch();
-        menuRepository.deleteAllInBatch();
-        storeDeleteRequestRepository.deleteAllInBatch();
-        storeRepository.deleteAllInBatch();
-    }
 
     private List<DayOfTheWeek> getDayOfTheWeeks(List<AppearanceDay> appearanceDays) {
         return appearanceDays.stream()

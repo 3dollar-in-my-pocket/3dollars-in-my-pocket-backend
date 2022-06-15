@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.api.userservice.controller.MockMvcUtils;
+import com.depromeet.threedollar.api.userservice.MockMvcUtils;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.DeleteStoreRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.RegisterStoreRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.UpdateStoreRequest;

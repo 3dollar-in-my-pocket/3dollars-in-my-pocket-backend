@@ -3,11 +3,11 @@ package com.depromeet.threedollar.api.adminservice.service.userservice.advertise
 import java.time.LocalDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
+import com.depromeet.threedollar.api.adminservice.IntegrationTest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.AdminAdvertisementService
 import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.request.AddAdvertisementRequest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.request.UpdateAdvertisementRequest
@@ -25,12 +25,7 @@ import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.A
 internal class AdminAdvertisementServiceTest(
     private val adminAdvertisementService: AdminAdvertisementService,
     private val advertisementRepository: AdvertisementRepository,
-) {
-
-    @AfterEach
-    fun cleanUp() {
-        advertisementRepository.deleteAllInBatch()
-    }
+) : IntegrationTest() {
 
     @Nested
     inner class AddAdvertisementTest {

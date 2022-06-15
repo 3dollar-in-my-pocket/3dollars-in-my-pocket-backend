@@ -2,12 +2,12 @@ package com.depromeet.threedollar.api.adminservice.service.userservice.medal
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
+import com.depromeet.threedollar.api.adminservice.IntegrationTest
 import com.depromeet.threedollar.api.adminservice.service.userservice.medal.dto.request.AddMedalRequest
 import com.depromeet.threedollar.api.adminservice.service.userservice.medal.dto.request.UpdateMedalRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
@@ -24,13 +24,7 @@ internal class AdminMedalServiceTest(
     private val adminMedalService: AdminMedalService,
     private val medalRepository: MedalRepository,
     private val medalAcquisitionConditionRepository: MedalAcquisitionConditionRepository,
-) {
-
-    @AfterEach
-    fun cleanUp() {
-        medalAcquisitionConditionRepository.deleteAllInBatch()
-        medalRepository.deleteAllInBatch()
-    }
+): IntegrationTest() {
 
     @Nested
     inner class AddMedalTest {

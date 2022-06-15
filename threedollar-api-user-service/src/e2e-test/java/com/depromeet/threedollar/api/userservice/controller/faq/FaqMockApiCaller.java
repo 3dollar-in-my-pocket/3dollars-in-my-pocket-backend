@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.response.FaqCategoryResponse;
 import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.response.FaqResponse;
-import com.depromeet.threedollar.api.userservice.controller.MockMvcUtils;
+import com.depromeet.threedollar.api.userservice.MockMvcUtils;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

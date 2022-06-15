@@ -3,6 +3,7 @@ package com.depromeet.threedollar.api.userservice.controller
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
+import com.depromeet.threedollar.api.userservice.SetupControllerTest
 
 internal class EnumMapperControllerTest : SetupControllerTest() {
 

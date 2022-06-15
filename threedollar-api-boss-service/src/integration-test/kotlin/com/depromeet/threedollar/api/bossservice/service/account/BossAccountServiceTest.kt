@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
+import com.depromeet.threedollar.api.bossservice.IntegrationTest
 import com.depromeet.threedollar.api.bossservice.service.account.dto.request.UpdateBossAccountInfoRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.model.BusinessNumber
@@ -25,7 +26,7 @@ internal class BossAccountServiceTest(
     private val bossAccountService: BossAccountService,
     private val bossAccountRepository: BossAccountRepository,
     private val bossWithdrawalAccountRepository: BossWithdrawalAccountRepository,
-) {
+) : IntegrationTest() {
 
     @AfterEach
     fun cleanUp() {

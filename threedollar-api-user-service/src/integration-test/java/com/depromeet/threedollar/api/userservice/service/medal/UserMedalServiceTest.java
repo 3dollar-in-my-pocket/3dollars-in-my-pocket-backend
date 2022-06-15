@@ -7,32 +7,32 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import com.depromeet.threedollar.api.userservice.service.SetupUserServiceTest;
+import com.depromeet.threedollar.api.userservice.SetupUserServiceTest;
 import com.depromeet.threedollar.api.userservice.service.medal.dto.request.ChangeRepresentativeMedalRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus;
 
-@SpringBootTest
 class UserMedalServiceTest extends SetupUserServiceTest {
 
     @Autowired
     private UserMedalService userMedalService;
 
-    @AfterEach
-    void cleanUp() {
-        super.cleanup();
-    }
+    @Autowired
+    private MedalRepository medalRepository;
+
+    @Autowired
+    private UserMedalRepository userMedalRepository;
 
     @DisplayName("유저의 장착중인 대표 칭호를 변경한다")
     @Nested

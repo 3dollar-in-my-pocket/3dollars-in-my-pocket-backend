@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.core.service.bossservice.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.api.core.service.bossservice.store.dto.response.BossStoreAppearanceDayResponse
 import com.depromeet.threedollar.api.core.service.bossservice.store.dto.response.BossStoreMenuResponse
-import com.depromeet.threedollar.api.userservice.controller.SetupUserControllerTest
+import com.depromeet.threedollar.api.userservice.SetupUserControllerTest
 import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryCreator
@@ -45,7 +45,6 @@ internal class BossStoreControllerTest(
 
     @AfterEach
     fun cleanUp() {
-        super.cleanup()
         bossStoreCategoryRepository.deleteAll()
         bossStoreRepository.deleteAll()
     }

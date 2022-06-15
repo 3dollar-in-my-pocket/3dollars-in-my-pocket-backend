@@ -13,8 +13,8 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.mock.http.MockHttpInputMessage;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
+import com.depromeet.threedollar.api.userservice.SetupControllerTest;
 import com.depromeet.threedollar.api.userservice.controller.HealthCheckController;
-import com.depromeet.threedollar.api.userservice.controller.SetupControllerTest;
 import com.depromeet.threedollar.common.exception.model.BadGatewayException;
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import com.depromeet.threedollar.common.exception.model.ServiceUnAvailableException;

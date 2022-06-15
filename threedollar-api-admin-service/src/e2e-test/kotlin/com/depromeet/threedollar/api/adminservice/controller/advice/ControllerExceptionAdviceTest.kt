@@ -7,8 +7,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.web.multipart.MaxUploadSizeExceededException
+import com.depromeet.threedollar.api.adminservice.ControllerTest
 import com.depromeet.threedollar.api.adminservice.controller.HealthCheckController
-import com.depromeet.threedollar.api.adminservice.controller.SetupControllerTest
 import com.depromeet.threedollar.common.exception.model.BadGatewayException
 import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.common.exception.model.ServiceUnAvailableException
@@ -17,7 +17,7 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.ninjasquad.springmockk.SpykBean
 import io.mockk.every
 
-internal class ControllerExceptionAdviceTest : SetupControllerTest() {
+internal class ControllerExceptionAdviceTest : ControllerTest() {
 
     @SpykBean
     private lateinit var healthCheckController: HealthCheckController

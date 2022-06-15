@@ -7,13 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import com.depromeet.threedollar.api.userservice.service.SetupStoreServiceTest;
+import com.depromeet.threedollar.api.userservice.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.UpdateReviewRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
@@ -22,7 +20,6 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCrea
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewStatus;
 
-@SpringBootTest
 class ReviewServiceTest extends SetupStoreServiceTest {
 
     @Autowired
@@ -30,12 +27,6 @@ class ReviewServiceTest extends SetupStoreServiceTest {
 
     @Autowired
     private ReviewRepository reviewRepository;
-
-    @AfterEach
-    void cleanUp() {
-        super.cleanup();
-        reviewRepository.deleteAllInBatch();
-    }
 
     @Nested
     class AddReviewTest {

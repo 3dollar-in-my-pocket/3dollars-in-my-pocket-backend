@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.adminservice.controller
+package com.depromeet.threedollar.api.adminservice
 
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
@@ -7,7 +7,7 @@ import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminRepository
 import com.fasterxml.jackson.core.type.TypeReference
 
-internal abstract class SetupAdminControllerTest : SetupControllerTest() {
+internal abstract class SetupAdminControllerTest : ControllerTest() {
 
     @Autowired
     protected lateinit var adminRepository: AdminRepository
@@ -23,10 +23,6 @@ internal abstract class SetupAdminControllerTest : SetupControllerTest() {
                 .contentAsString, object : TypeReference<ApiResponse<String>>() {}
         )
         token = response.data
-    }
-
-    protected fun cleanup() {
-        adminRepository.deleteAll()
     }
 
 }

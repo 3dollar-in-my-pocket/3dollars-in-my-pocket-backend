@@ -8,30 +8,33 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.api.userservice.controller.SetupUserControllerTest;
+import com.depromeet.threedollar.api.userservice.SetupUserControllerTest;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.CheckAvailableNameRequest;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.UpdateUserInfoRequest;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
 
 class UserControllerTest extends SetupUserControllerTest {
 
-    @AfterEach
-    void cleanUp() {
-        super.cleanup();
-    }
+    @Autowired
+    private UserMedalRepository userMedalRepository;
+
+    @Autowired
+    private MedalRepository medalRepository;
 
     @DisplayName("GET /api/v2/user/me")
     @Nested

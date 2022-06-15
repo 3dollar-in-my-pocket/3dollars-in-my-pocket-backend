@@ -7,13 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import com.depromeet.threedollar.api.userservice.service.SetupStoreServiceTest;
+import com.depromeet.threedollar.api.userservice.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.userservice.service.visit.support.VisitHistoryAssertions;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
@@ -23,7 +21,6 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistor
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
 
-@SpringBootTest
 class VisitHistoryServiceTest extends SetupStoreServiceTest {
 
     @Autowired
@@ -31,12 +28,6 @@ class VisitHistoryServiceTest extends SetupStoreServiceTest {
 
     @Autowired
     private VisitHistoryRepository visitHistoryRepository;
-
-    @AfterEach
-    void cleanUp() {
-        visitHistoryRepository.deleteAllInBatch();
-        super.cleanup();
-    }
 
     @Nested
     class AddStoreVisitHistoryTest {

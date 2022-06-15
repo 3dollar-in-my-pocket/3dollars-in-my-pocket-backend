@@ -13,7 +13,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.patch
 import org.springframework.test.web.servlet.put
-import com.depromeet.threedollar.api.bossservice.controller.SetupBossAccountControllerTest
+import com.depromeet.threedollar.api.bossservice.SetupBossAccountControllerTest
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.AppearanceDayRequest
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.MenuRequest
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.PatchBossStoreInfoRequest

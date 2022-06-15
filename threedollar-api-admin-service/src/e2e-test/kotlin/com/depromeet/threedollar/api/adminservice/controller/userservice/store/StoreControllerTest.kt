@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.api.adminservice.controller.userservice.store
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -9,7 +8,7 @@ import org.junit.jupiter.api.assertAll
 import org.springframework.http.HttpHeaders
 import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
-import com.depromeet.threedollar.api.adminservice.controller.SetupAdminControllerTest
+import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
 import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.response.ReportedStoreInfoResponse
 import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.response.StoreInfoResponse
 import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.response.StoreInfosWithCursorResponse
@@ -26,13 +25,6 @@ internal class StoreControllerTest(
     private val storeRepository: StoreRepository,
     private val storeDeleteRequestRepository: StoreDeleteRequestRepository,
 ) : SetupAdminControllerTest() {
-
-    @AfterEach
-    fun cleanUp() {
-        super.cleanup()
-        storeDeleteRequestRepository.deleteAllInBatch()
-        storeRepository.deleteAll()
-    }
 
     @DisplayName("GET /admin/v1/user/stores/reported")
     @Nested

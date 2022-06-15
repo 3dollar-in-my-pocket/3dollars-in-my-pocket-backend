@@ -10,7 +10,7 @@ import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.request.AddBossStoreFeedbackRequest
 import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.response.BossStoreFeedbackCountResponse
-import com.depromeet.threedollar.api.userservice.controller.SetupUserControllerTest
+import com.depromeet.threedollar.api.userservice.SetupUserControllerTest
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedbackRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreCreator
@@ -25,7 +25,6 @@ internal class BossStoreFeedbackControllerTest(
 
     @AfterEach
     fun cleanUp() {
-        super.cleanup()
         bossStoreFeedbackRepository.deleteAll()
     }
 

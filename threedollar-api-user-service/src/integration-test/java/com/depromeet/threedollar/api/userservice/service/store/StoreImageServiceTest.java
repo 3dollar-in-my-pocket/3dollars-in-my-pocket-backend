@@ -9,17 +9,15 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
 
 import com.depromeet.threedollar.api.core.provider.upload.UploadProvider;
 import com.depromeet.threedollar.api.core.provider.upload.dto.request.UploadFileRequest;
-import com.depromeet.threedollar.api.userservice.service.SetupStoreServiceTest;
+import com.depromeet.threedollar.api.userservice.SetupStoreServiceTest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImage;
@@ -27,7 +25,6 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageC
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageStatus;
 
-@SpringBootTest
 class StoreImageServiceTest extends SetupStoreServiceTest {
 
     private static final String IMAGE_URL = "https://image-storage.png";
@@ -40,12 +37,6 @@ class StoreImageServiceTest extends SetupStoreServiceTest {
 
     @MockBean
     private UploadProvider uploadProvider;
-
-    @AfterEach
-    void cleanUp() {
-        storeImageRepository.deleteAllInBatch();
-        super.cleanup();
-    }
 
     @Nested
     class UploadStoreImageTest {

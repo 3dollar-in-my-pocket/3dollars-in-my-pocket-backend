@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.bossservice.controller
+package com.depromeet.threedollar.api.bossservice
 
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
@@ -29,7 +29,8 @@ internal abstract class SetupBossAccountControllerTest : SetupControllerTest() {
         bossId = response.data.bossId
     }
 
-    protected fun cleanup() {
+    override fun cleanup() {
+        super.cleanup()
         bossAccountRepository.deleteAll()
     }
 

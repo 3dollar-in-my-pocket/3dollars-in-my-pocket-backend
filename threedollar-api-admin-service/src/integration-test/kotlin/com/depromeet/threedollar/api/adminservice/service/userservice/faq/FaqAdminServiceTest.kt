@@ -2,13 +2,13 @@ package com.depromeet.threedollar.api.adminservice.service.userservice.faq
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
+import com.depromeet.threedollar.api.adminservice.IntegrationTest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.faq.FaqAdminService
 import com.depromeet.threedollar.api.adminservice.service.commonservice.faq.dto.request.AddFaqRequest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.faq.dto.request.UpdateFaqRequest
@@ -25,12 +25,7 @@ import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqReposito
 internal class FaqAdminServiceTest(
     private val faqAdminService: FaqAdminService,
     private val faqRepository: FaqRepository,
-) {
-
-    @AfterEach
-    fun cleanUp() {
-        faqRepository.deleteAllInBatch()
-    }
+) : IntegrationTest() {
 
     @DisplayName("신규 FAQ 등록")
     @Nested

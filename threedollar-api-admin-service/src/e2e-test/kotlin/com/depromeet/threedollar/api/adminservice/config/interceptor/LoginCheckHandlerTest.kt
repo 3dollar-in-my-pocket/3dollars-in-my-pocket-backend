@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.api.adminservice.config.interceptor
 
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -8,15 +7,10 @@ import org.springframework.http.HttpHeaders
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
-import com.depromeet.threedollar.api.adminservice.controller.SetupAdminControllerTest
+import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 
 internal class LoginCheckHandlerTest : SetupAdminControllerTest() {
-
-    @AfterEach
-    fun cleanUp() {
-        super.cleanup()
-    }
 
     @Test
     fun 로그인_테스트_로그인이_성공하면_200OK() {

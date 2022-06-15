@@ -1,13 +1,12 @@
 package com.depromeet.threedollar.api.adminservice.controller.commonservice.auth
 
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.post
-import com.depromeet.threedollar.api.adminservice.controller.SetupAdminControllerTest
+import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminCreator
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
@@ -19,11 +18,6 @@ internal class AuthControllerTest : SetupAdminControllerTest() {
 
     @MockkBean
     private lateinit var googleAuthApiClient: GoogleAuthApiClient
-
-    @AfterEach
-    fun cleanUp() {
-        super.cleanup()
-    }
 
     @DisplayName("POST /api/v2/login")
     @Nested

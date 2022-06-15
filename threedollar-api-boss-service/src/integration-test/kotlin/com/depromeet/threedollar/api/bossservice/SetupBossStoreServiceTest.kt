@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.bossservice.service
+package com.depromeet.threedollar.api.bossservice
 
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired

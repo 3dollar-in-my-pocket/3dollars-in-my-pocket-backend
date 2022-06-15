@@ -2,10 +2,9 @@ package com.depromeet.threedollar.api.adminservice.service.userservice.review
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import com.depromeet.threedollar.api.adminservice.service.SetupAdminServiceTest
+import com.depromeet.threedollar.api.adminservice.SetupAdminServiceTest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator
@@ -16,12 +15,6 @@ internal class AdminUserReviewServiceTest(
     private val adminUserReviewService: AdminUserReviewService,
     private val reviewRepository: ReviewRepository,
 ) : SetupAdminServiceTest() {
-
-    @AfterEach
-    fun cleanUp() {
-        super.cleanup()
-        reviewRepository.deleteAll()
-    }
 
     @Test
     fun `특정 리뷰를 강제로 삭제한다`() {

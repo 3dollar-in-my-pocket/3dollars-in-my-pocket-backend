@@ -1,14 +1,15 @@
 package com.depromeet.threedollar.api.userservice.controller.user
 
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
 import org.springframework.test.web.servlet.get
-import com.depromeet.threedollar.api.userservice.controller.SetupUserControllerTest
+import com.depromeet.threedollar.api.userservice.SetupUserControllerTest
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalCreator
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository
@@ -18,14 +19,9 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreReposi
 internal class UserActivityControllerTest(
     private val storeRepository: StoreRepository,
     private val reviewRepository: ReviewRepository,
+    private val medalRepository: MedalRepository,
+    private val userMedalRepository: UserMedalRepository,
 ) : SetupUserControllerTest() {
-
-    @AfterEach
-    fun cleanUp() {
-        super.cleanup()
-        storeRepository.deleteAll()
-        reviewRepository.deleteAllInBatch()
-    }
 
     @DisplayName("GET /v1/user/me/activity")
     @Nested

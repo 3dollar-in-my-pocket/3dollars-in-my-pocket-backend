@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
-import com.depromeet.threedollar.api.bossservice.service.SetupBossAccountServiceTest
+import com.depromeet.threedollar.api.bossservice.SetupBossAccountServiceTest
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.AppearanceDayRequest
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.MenuRequest
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.PatchBossStoreInfoRequest

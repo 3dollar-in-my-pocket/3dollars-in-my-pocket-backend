@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -14,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.api.userservice.controller.SetupStoreControllerTest;
+import com.depromeet.threedollar.api.userservice.SetupStoreControllerTest;
 import com.depromeet.threedollar.api.userservice.controller.store.support.StoreImageAssertions;
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImage;
@@ -32,12 +31,6 @@ class StoreImageControllerTest extends SetupStoreControllerTest {
     @BeforeEach
     void setUp() {
         storeImageMockApiCaller = new StoreImageMockApiCaller(mockMvc, objectMapper);
-    }
-
-    @AfterEach
-    void cleanUp() {
-        storeImageRepository.deleteAllInBatch();
-        super.cleanup();
     }
 
     @DisplayName("GET /api/v2/store/storeId/images")

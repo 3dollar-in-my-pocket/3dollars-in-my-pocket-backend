@@ -2,12 +2,12 @@ package com.depromeet.threedollar.api.adminservice.service.commonservice.auth
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
+import com.depromeet.threedollar.api.adminservice.IntegrationTest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminCreator
@@ -21,18 +21,13 @@ private const val EMAIL = "will.seunho@gmail.com"
 @SpringBootTest
 internal class GoogleAuthServiceTest(
     private val adminRepository: AdminRepository,
-) {
+) : IntegrationTest() {
 
     private lateinit var authService: AuthService
 
     @BeforeEach
     fun setUp() {
         authService = GoogleAuthService(adminRepository, StubGoogleAuthApiClient())
-    }
-
-    @AfterEach
-    fun cleanUp() {
-        adminRepository.deleteAll()
     }
 
     @Nested

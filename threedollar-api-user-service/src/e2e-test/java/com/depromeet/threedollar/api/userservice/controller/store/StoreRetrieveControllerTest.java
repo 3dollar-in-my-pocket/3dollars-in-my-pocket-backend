@@ -23,7 +23,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -32,7 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.api.userservice.controller.SetupUserControllerTest;
+import com.depromeet.threedollar.api.userservice.SetupUserControllerTest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.CheckExistsStoresNearbyRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.RetrieveAroundStoresRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.RetrieveMyStoresRequest;
@@ -48,11 +47,8 @@ import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.AppearanceDayRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Menu;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.MenuCreator;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.MenuRepository;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.PaymentMethodRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator;
@@ -76,15 +72,6 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
     private StoreRepository storeRepository;
 
     @Autowired
-    private AppearanceDayRepository appearanceDayRepository;
-
-    @Autowired
-    private PaymentMethodRepository paymentMethodRepository;
-
-    @Autowired
-    private MenuRepository menuRepository;
-
-    @Autowired
     private ReviewRepository reviewRepository;
 
     @Autowired
@@ -99,18 +86,6 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
     @BeforeEach
     void setUp() {
         storeRetrieveMockApiCaller = new StoreRetrieveMockApiCaller(mockMvc, objectMapper);
-    }
-
-    @AfterEach
-    void cleanUp() {
-        super.cleanup();
-        storeImageRepository.deleteAllInBatch();
-        reviewRepository.deleteAllInBatch();
-        appearanceDayRepository.deleteAllInBatch();
-        paymentMethodRepository.deleteAllInBatch();
-        menuRepository.deleteAllInBatch();
-        visitHistoryRepository.deleteAllInBatch();
-        storeRepository.deleteAllInBatch();
     }
 
     @DisplayName("GET /api/v2/stores/near")

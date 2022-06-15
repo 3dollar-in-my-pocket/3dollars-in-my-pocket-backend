@@ -7,13 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
+import com.depromeet.threedollar.api.userservice.IntegrationTest;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.CheckAvailableNameRequest;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.CreateUserRequest;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.UpdateUserInfoRequest;
@@ -28,8 +27,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.user.WithdrawalUs
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.WithdrawalUserCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.WithdrawalUserRepository;
 
-@SpringBootTest
-class UserServiceTest {
+class UserServiceTest extends IntegrationTest {
 
     @Autowired
     private UserService userService;
@@ -39,12 +37,6 @@ class UserServiceTest {
 
     @Autowired
     private WithdrawalUserRepository withdrawalUserRepository;
-
-    @AfterEach
-    void cleanUp() {
-        userRepository.deleteAllInBatch();
-        withdrawalUserRepository.deleteAllInBatch();
-    }
 
     @Nested
     class AddUserTest {

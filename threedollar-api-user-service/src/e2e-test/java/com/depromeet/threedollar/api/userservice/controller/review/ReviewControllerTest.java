@@ -10,7 +10,6 @@ import static org.mockito.Mockito.verify;
 
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -19,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.api.userservice.controller.SetupStoreControllerTest;
+import com.depromeet.threedollar.api.userservice.SetupStoreControllerTest;
 import com.depromeet.threedollar.api.userservice.listener.medal.AddUserMedalEventListener;
 import com.depromeet.threedollar.api.userservice.listener.store.StoreRatingEventListener;
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.AddReviewRequest;
@@ -53,12 +52,6 @@ class ReviewControllerTest extends SetupStoreControllerTest {
     @BeforeEach
     void setUp() {
         reviewMockApiCaller = new ReviewMockApiCaller(mockMvc, objectMapper);
-    }
-
-    @AfterEach
-    void cleanUp() {
-        super.cleanup();
-        reviewRepository.deleteAllInBatch();
     }
 
     @DisplayName("POST /api/v2/store/review")

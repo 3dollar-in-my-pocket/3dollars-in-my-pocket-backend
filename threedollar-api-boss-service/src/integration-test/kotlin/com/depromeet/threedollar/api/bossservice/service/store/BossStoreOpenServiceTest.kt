@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
-import com.depromeet.threedollar.api.bossservice.service.SetupBossStoreServiceTest
+import com.depromeet.threedollar.api.bossservice.SetupBossStoreServiceTest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.model.LocationValue
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore

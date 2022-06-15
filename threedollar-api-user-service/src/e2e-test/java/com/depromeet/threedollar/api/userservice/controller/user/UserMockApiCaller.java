@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.api.userservice.controller.MockMvcUtils;
+import com.depromeet.threedollar.api.userservice.MockMvcUtils;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.response.LoginResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

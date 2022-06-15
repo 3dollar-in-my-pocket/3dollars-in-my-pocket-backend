@@ -2,12 +2,12 @@ package com.depromeet.threedollar.api.adminservice.service.commonservice.admin
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
+import com.depromeet.threedollar.api.adminservice.IntegrationTest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.admin.dto.request.AddAdminRequest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.admin.dto.request.UpdateMyAdminInfoRequest
 import com.depromeet.threedollar.common.exception.model.ConflictException
@@ -20,12 +20,7 @@ import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminRepo
 internal class AdminServiceTest(
     private val adminService: AdminService,
     private val adminRepository: AdminRepository,
-) {
-
-    @AfterEach
-    fun cleanUp() {
-        adminRepository.deleteAllInBatch()
-    }
+) : IntegrationTest() {
 
     @Nested
     inner class GetMyAdminInfoTest {

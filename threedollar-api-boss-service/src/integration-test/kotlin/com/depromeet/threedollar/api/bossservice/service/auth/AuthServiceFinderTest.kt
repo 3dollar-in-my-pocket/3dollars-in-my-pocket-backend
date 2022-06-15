@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
+import com.depromeet.threedollar.api.bossservice.IntegrationTest
 import com.depromeet.threedollar.common.exception.model.ServiceUnAvailableException
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 
@@ -16,7 +17,7 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAcc
 @SpringBootTest
 internal class AuthServiceFinderTest(
     private val authServiceFinder: AuthServiceFinder,
-) {
+) : IntegrationTest() {
 
     @MethodSource("bossSocialTypeAndServices")
     @ParameterizedTest

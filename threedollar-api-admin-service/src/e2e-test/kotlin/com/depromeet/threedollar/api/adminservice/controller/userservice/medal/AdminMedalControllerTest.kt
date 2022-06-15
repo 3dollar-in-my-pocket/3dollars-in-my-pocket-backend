@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.api.adminservice.controller.userservice.medal
 
 import org.hamcrest.Matchers.hasSize
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
@@ -9,7 +8,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.put
-import com.depromeet.threedollar.api.adminservice.controller.SetupAdminControllerTest
+import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
 import com.depromeet.threedollar.api.adminservice.service.userservice.medal.dto.request.AddMedalRequest
 import com.depromeet.threedollar.api.adminservice.service.userservice.medal.dto.request.UpdateMedalRequest
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
@@ -21,12 +20,6 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalReposi
 internal class AdminMedalControllerTest(
     private val medalRepository: MedalRepository,
 ) : SetupAdminControllerTest() {
-
-    @AfterEach
-    fun cleanUp() {
-        super.cleanup()
-        medalRepository.deleteAll()
-    }
 
     @DisplayName("POST /v1/user/medal")
     @Test

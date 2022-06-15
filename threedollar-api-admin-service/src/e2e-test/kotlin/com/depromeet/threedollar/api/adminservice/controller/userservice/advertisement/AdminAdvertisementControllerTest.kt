@@ -2,7 +2,6 @@ package com.depromeet.threedollar.api.adminservice.controller.userservice.advert
 
 import java.time.LocalDateTime
 import org.hamcrest.Matchers.hasSize
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
@@ -11,7 +10,7 @@ import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.put
-import com.depromeet.threedollar.api.adminservice.controller.SetupAdminControllerTest
+import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.request.AddAdvertisementRequest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.request.UpdateAdvertisementRequest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.response.AdvertisementResponse
@@ -25,12 +24,6 @@ import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.A
 internal class AdminAdvertisementControllerTest(
     private val advertisementRepository: AdvertisementRepository,
 ) : SetupAdminControllerTest() {
-
-    @AfterEach
-    fun cleanUp() {
-        super.cleanup()
-        advertisementRepository.deleteAll()
-    }
 
     @Nested
     inner class AddAdvertisementApiTest {

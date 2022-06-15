@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.userservice.controller;
+package com.depromeet.threedollar.api.userservice;
 
 import org.springframework.test.web.servlet.MockMvc;
 

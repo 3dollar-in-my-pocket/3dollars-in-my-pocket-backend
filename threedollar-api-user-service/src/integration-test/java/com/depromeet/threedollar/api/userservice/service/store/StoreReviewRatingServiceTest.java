@@ -5,18 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import com.depromeet.threedollar.api.userservice.service.SetupStoreServiceTest;
+import com.depromeet.threedollar.api.userservice.SetupStoreServiceTest;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 
-@SpringBootTest
 class StoreReviewRatingServiceTest extends SetupStoreServiceTest {
 
     @Autowired
@@ -24,12 +21,6 @@ class StoreReviewRatingServiceTest extends SetupStoreServiceTest {
 
     @Autowired
     private ReviewRepository reviewRepository;
-
-    @AfterEach
-    void cleanUp() {
-        super.cleanup();
-        reviewRepository.deleteAllInBatch();
-    }
 
     @DisplayName("리뷰 평균 점수 계산: 1점 + 5점 / 2 = 3점")
     @Test

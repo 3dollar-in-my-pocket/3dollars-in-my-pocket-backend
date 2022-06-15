@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.bossservice.service
+package com.depromeet.threedollar.api.bossservice
 
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
@@ -9,7 +9,7 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAcc
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 
 @SpringBootTest
-internal abstract class SetupBossAccountServiceTest {
+internal abstract class SetupBossAccountServiceTest : IntegrationTest() {
 
     @Autowired
     protected lateinit var bossAccountRepository: BossAccountRepository
@@ -27,7 +27,8 @@ internal abstract class SetupBossAccountServiceTest {
         bossId = boss.id
     }
 
-    protected fun cleanup() {
+    override fun cleanup() {
+        super.cleanup()
         bossAccountRepository.deleteAll()
     }
 

@@ -1,13 +1,12 @@
 package com.depromeet.threedollar.api.adminservice.controller.userservice.review
 
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
 import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
-import com.depromeet.threedollar.api.adminservice.controller.SetupAdminControllerTest
+import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator
@@ -23,12 +22,6 @@ internal class AdminUserReviewControllerTest(
     private val storeRepository: StoreRepository,
     private val userRepository: UserRepository,
 ) : SetupAdminControllerTest() {
-
-    @AfterEach
-    fun cleanUp() {
-        super.cleanup()
-        reviewRepository.deleteAll()
-    }
 
     @DisplayName("DELETE /admin/v1/user/review/{REVIEW_ID}")
     @Nested

@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -15,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.response.FaqCategoryResponse;
 import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.response.FaqResponse;
-import com.depromeet.threedollar.api.userservice.controller.SetupUserControllerTest;
+import com.depromeet.threedollar.api.userservice.SetupUserControllerTest;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.Faq;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCreator;
@@ -31,12 +30,6 @@ class FaqControllerTest extends SetupUserControllerTest {
     @BeforeEach
     void setUp() {
         faqMockApiCaller = new FaqMockApiCaller(mockMvc, objectMapper);
-    }
-
-    @AfterEach
-    void cleanUp() {
-        super.cleanup();
-        faqRepository.deleteAllInBatch();
     }
 
     @DisplayName("GET /api/v2/faqs")

@@ -7,8 +7,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.web.multipart.MaxUploadSizeExceededException
+import com.depromeet.threedollar.api.bossservice.SetupControllerTest
 import com.depromeet.threedollar.api.bossservice.controller.HealthCheckController
-import com.depromeet.threedollar.api.bossservice.controller.SetupControllerTest
 import com.depromeet.threedollar.common.exception.model.BadGatewayException
 import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.common.exception.model.ServiceUnAvailableException

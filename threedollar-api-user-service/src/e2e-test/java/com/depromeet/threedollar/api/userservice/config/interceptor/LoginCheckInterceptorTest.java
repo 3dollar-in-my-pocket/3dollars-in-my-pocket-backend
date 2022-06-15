@@ -6,20 +6,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.http.HttpHeaders;
 
-import com.depromeet.threedollar.api.userservice.controller.SetupUserControllerTest;
+import com.depromeet.threedollar.api.userservice.SetupUserControllerTest;
 
 class LoginCheckInterceptorTest extends SetupUserControllerTest {
-
-    @AfterEach
-    void cleanUp() {
-        super.cleanup();
-    }
 
     @Test
     void 로그인_테스트_로그인이_성공하면_200_OK() throws Exception {

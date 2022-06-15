@@ -1,25 +1,16 @@
 package com.depromeet.threedollar.api.userservice.controller.medal
 
 import org.hamcrest.collection.IsCollectionWithSize.hasSize
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.core.service.userservice.medal.dto.response.MedalResponse
-import com.depromeet.threedollar.api.userservice.controller.SetupControllerTest
-import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionRepository
+import com.depromeet.threedollar.api.userservice.SetupControllerTest
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
 
 internal class MedalControllerTest(
     private val medalRepository: MedalRepository,
-    private val medalAcquisitionConditionRepository: MedalAcquisitionConditionRepository,
 ) : SetupControllerTest() {
-
-    @AfterEach
-    fun cleanUp() {
-        medalAcquisitionConditionRepository.deleteAllInBatch()
-        medalRepository.deleteAllInBatch()
-    }
 
     @Test
     fun `전체 메달 목록을 조회합니다`() {

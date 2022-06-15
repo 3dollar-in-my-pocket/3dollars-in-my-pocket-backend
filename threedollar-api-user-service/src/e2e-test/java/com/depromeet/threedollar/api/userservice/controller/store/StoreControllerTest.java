@@ -9,7 +9,6 @@ import static org.mockito.Mockito.verify;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -18,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.api.userservice.controller.SetupUserControllerTest;
+import com.depromeet.threedollar.api.userservice.SetupUserControllerTest;
 import com.depromeet.threedollar.api.userservice.controller.store.support.StoreAssertions;
 import com.depromeet.threedollar.api.userservice.listener.medal.AddUserMedalEventListener;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.DeleteStoreRequest;
@@ -29,10 +28,7 @@ import com.depromeet.threedollar.api.userservice.service.store.dto.response.Stor
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoreInfoResponse;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.AppearanceDayRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.DeleteReasonType;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.MenuRepository;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.PaymentMethodRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator;
@@ -51,15 +47,6 @@ class StoreControllerTest extends SetupUserControllerTest {
     private StoreRepository storeRepository;
 
     @Autowired
-    private AppearanceDayRepository appearanceDayRepository;
-
-    @Autowired
-    private PaymentMethodRepository paymentMethodRepository;
-
-    @Autowired
-    private MenuRepository menuRepository;
-
-    @Autowired
     private StoreDeleteRequestRepository storeDeleteRequestRepository;
 
     @MockBean
@@ -68,16 +55,6 @@ class StoreControllerTest extends SetupUserControllerTest {
     @BeforeEach
     void setUp() {
         storeMockApiCaller = new StoreMockApiCaller(mockMvc, objectMapper);
-    }
-
-    @AfterEach
-    void cleanUp() {
-        super.cleanup();
-        appearanceDayRepository.deleteAllInBatch();
-        paymentMethodRepository.deleteAllInBatch();
-        menuRepository.deleteAllInBatch();
-        storeDeleteRequestRepository.deleteAllInBatch();
-        storeRepository.deleteAllInBatch();
     }
 
     @DisplayName("POST /api/v2/store")

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
+import com.depromeet.threedollar.api.core.IntegrationTest
 import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.request.RetrieveFaqsRequest
 import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.type.ApplicationType
@@ -14,7 +15,7 @@ import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory
 @SpringBootTest
 internal class FaqServiceTest(
     private val faqService: FaqService,
-) {
+) : IntegrationTest() {
 
     @Test
     fun `카테고리 목록을 조회할 때, 해당 서비스에서 지원하지 않는 카테고리를 요청하면 Forbidden 에러가 발생한다`() {

@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.adminservice.service
+package com.depromeet.threedollar.api.adminservice
 
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
@@ -9,7 +9,7 @@ import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminRepo
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @SpringBootTest
-internal abstract class SetupAdminServiceTest {
+internal abstract class SetupAdminServiceTest : IntegrationTest() {
 
     @Autowired
     private lateinit var adminRepository: AdminRepository
@@ -21,10 +21,6 @@ internal abstract class SetupAdminServiceTest {
         val admin = AdminCreator.create("admin@gmail.com", "name")
         adminRepository.save(admin)
         adminId = admin.id
-    }
-
-    protected fun cleanup() {
-        adminRepository.deleteAllInBatch()
     }
 
 }
