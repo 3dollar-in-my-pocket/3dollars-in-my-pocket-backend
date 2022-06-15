@@ -21,7 +21,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class StoreServiceUtils {
+public class StoreServiceHelper {
 
     public static void validateExistsStore(StoreRepository storeRepository, Long storeId) {
         if (!storeRepository.existsById(storeId)) {

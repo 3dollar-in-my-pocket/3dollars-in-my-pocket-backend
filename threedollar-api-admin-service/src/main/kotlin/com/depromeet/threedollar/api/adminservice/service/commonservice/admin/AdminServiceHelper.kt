@@ -6,7 +6,7 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.Admin
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminRepository
 
-object AdminServiceUtils {
+object AdminServiceHelper {
 
     fun validateNotExistsEmail(adminRepository: AdminRepository, email: String) {
         if (adminRepository.existsByEmail(email)) {

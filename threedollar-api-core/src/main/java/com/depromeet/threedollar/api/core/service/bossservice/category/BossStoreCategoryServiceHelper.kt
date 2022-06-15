@@ -4,7 +4,7 @@ import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
 
-object BossStoreCategoryServiceUtils {
+object BossStoreCategoryServiceHelper {
 
     fun validateExistsCategories(bossStoreCategoryRepository: BossStoreCategoryRepository, categoriesIds: Set<String>) {
         val categories = bossStoreCategoryRepository.findAllCategoriesByIds(categoriesIds)

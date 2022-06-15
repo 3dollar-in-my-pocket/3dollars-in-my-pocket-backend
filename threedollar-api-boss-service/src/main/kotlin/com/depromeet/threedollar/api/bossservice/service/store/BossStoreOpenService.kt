@@ -13,7 +13,7 @@ class BossStoreOpenService(
 ) {
 
     fun openBossStore(bossStoreId: String, bossId: String, mapLocation: LocationValue) {
-        val bossStore = BossStoreServiceUtils.findBossStoreByIdAndBossId(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
+        val bossStore = BossStoreServiceHelper.findBossStoreByIdAndBossId(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
         if (bossStore.hasChangedLocation(latitude = mapLocation.latitude, longitude = mapLocation.longitude)) {
             bossStore.updateLocation(latitude = mapLocation.latitude, longitude = mapLocation.longitude)
             bossStoreRepository.save(bossStore)
@@ -28,7 +28,7 @@ class BossStoreOpenService(
     }
 
     fun closeBossStore(bossStoreId: String, bossId: String) {
-        BossStoreServiceUtils.validateExistsBossStoreByBoss(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
+        BossStoreServiceHelper.validateExistsBossStoreByBoss(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
         bossStoreOpenTimeRepository.delete(bossStoreId = bossStoreId)
     }
 

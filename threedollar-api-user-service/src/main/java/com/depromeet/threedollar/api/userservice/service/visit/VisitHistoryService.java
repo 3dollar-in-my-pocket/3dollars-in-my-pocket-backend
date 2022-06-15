@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.depromeet.threedollar.api.userservice.service.store.StoreServiceUtils;
+import com.depromeet.threedollar.api.userservice.service.store.StoreServiceHelper;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.response.VisitHistoriesCursorResponse;
@@ -27,8 +27,8 @@ public class VisitHistoryService {
 
     @Transactional
     public Long addVisitHistory(AddVisitHistoryRequest request, Long userId, LocalDate dateOfVisit) {
-        Store store = StoreServiceUtils.findStoreById(storeRepository, request.getStoreId());
-        VisitHistoryServiceUtils.validateNotVisitedToday(visitHistoryRepository, request.getStoreId(), userId, dateOfVisit);
+        Store store = StoreServiceHelper.findStoreById(storeRepository, request.getStoreId());
+        VisitHistoryServiceHelper.validateNotVisitedToday(visitHistoryRepository, request.getStoreId(), userId, dateOfVisit);
         return visitHistoryRepository.save(request.toEntity(store, userId, dateOfVisit)).getId();
     }
 

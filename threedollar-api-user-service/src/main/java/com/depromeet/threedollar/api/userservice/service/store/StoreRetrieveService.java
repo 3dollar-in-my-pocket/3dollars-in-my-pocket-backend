@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.userservice.service.store;
 
-import static com.depromeet.threedollar.api.userservice.service.store.StoreServiceUtils.findAroundStoresFilerByCategory;
+import static com.depromeet.threedollar.api.userservice.service.store.StoreServiceHelper.findAroundStoresFilerByCategory;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -65,7 +65,7 @@ public class StoreRetrieveService {
 
     @Transactional(readOnly = true)
     public StoreDetailResponse retrieveStoreDetailInfo(RetrieveStoreDetailRequest request, LocationValue deviceLocation) {
-        Store store = StoreServiceUtils.findStoreByIdFetchJoinMenu(storeRepository, request.getStoreId());
+        Store store = StoreServiceHelper.findStoreByIdFetchJoinMenu(storeRepository, request.getStoreId());
         List<Review> reviews = reviewRepository.findAllByStoreId(request.getStoreId());
         List<StoreImageProjection> storeImages = storeImageRepository.findAllByStoreId(request.getStoreId());
         List<VisitHistoryWithUserProjection> visitHistories = visitHistoryRepository.findAllVisitWithUserByStoreIdAfterDate(request.getStoreId(), request.getStartDate());

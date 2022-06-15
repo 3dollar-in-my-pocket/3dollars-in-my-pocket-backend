@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
-import com.depromeet.threedollar.domain.rds.domain.TestHelper;
+import com.depromeet.threedollar.domain.rds.domain.TestAssertions;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.DeleteReasonType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Menu;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
@@ -15,7 +15,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreType;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@TestHelper
+@TestAssertions
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StoreAssertions {
 

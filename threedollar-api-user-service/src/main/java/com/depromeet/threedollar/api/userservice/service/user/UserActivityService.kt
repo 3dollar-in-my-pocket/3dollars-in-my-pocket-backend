@@ -17,7 +17,7 @@ class UserActivityService(
     @Transactional(readOnly = true)
     fun getUserActivity(userId: Long?): UserWithActivityResponse {
         return UserWithActivityResponse.of(
-            user = UserServiceUtils.findUserById(userRepository, userId),
+            user = UserServiceHelper.findUserById(userRepository, userId),
             storesCount = storeRepository.countByUserId(userId),
             reviewsCount = reviewRepository.countByUserId(userId)
         )

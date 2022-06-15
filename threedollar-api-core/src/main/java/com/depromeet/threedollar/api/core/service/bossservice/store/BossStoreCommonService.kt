@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.core.service.bossservice.store
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryService
-import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryServiceUtils
+import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryServiceHelper
 import com.depromeet.threedollar.api.core.service.bossservice.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.api.core.service.bossservice.store.dto.request.GetAroundBossStoresRequest
 import com.depromeet.threedollar.api.core.service.bossservice.store.dto.response.BossStoreAroundInfoResponse
@@ -33,7 +33,7 @@ class BossStoreCommonService(
         bossId: String? = null,
     ): List<BossStoreAroundInfoResponse> {
         request.categoryId?.let {
-            BossStoreCategoryServiceUtils.validateExistsCategory(bossStoreCategoryRepository, it)
+            BossStoreCategoryServiceHelper.validateExistsCategory(bossStoreCategoryRepository, it)
         }
 
         val bossStores: List<BossStore> = bossStoreRepository.findAllNearBossStoresFilterByCategoryId(
@@ -70,7 +70,7 @@ class BossStoreCommonService(
         storeId: String,
         deviceLocation: LocationValue = LocationValue.of(0.0, 0.0),
     ): BossStoreInfoResponse {
-        val bossStore = BossStoreCommonServiceUtils.findBossStoreById(bossStoreRepository, storeId)
+        val bossStore = BossStoreCommonServiceHelper.findBossStoreById(bossStoreRepository, storeId)
         return BossStoreInfoResponse.of(
             bossStore = bossStore,
             categories = bossStoreCategoryService.retrieveBossStoreCategoriesByIds(bossStore.categoriesIds),

@@ -5,7 +5,7 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 
-object BossStoreServiceUtils {
+object BossStoreServiceHelper {
 
     fun findBossStoreByIdAndBossId(
         bossStoreRepository: BossStoreRepository,

@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.PatchBossStoreInfoRequest
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.UpdateBossStoreInfoRequest
 import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryService
-import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryServiceUtils
+import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryServiceHelper
 import com.depromeet.threedollar.api.core.service.bossservice.store.dto.response.BossStoreInfoResponse
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossDeletedStore
@@ -29,8 +29,8 @@ class BossStoreService(
         request: UpdateBossStoreInfoRequest,
         bossId: String,
     ) {
-        val bossStore = BossStoreServiceUtils.findBossStoreByIdAndBossId(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
-        BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, request.categoriesIds)
+        val bossStore = BossStoreServiceHelper.findBossStoreByIdAndBossId(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
+        BossStoreCategoryServiceHelper.validateExistsCategories(bossStoreCategoryRepository, request.categoriesIds)
         request.let {
             bossStore.updateInfo(
                 name = it.name,
@@ -52,10 +52,10 @@ class BossStoreService(
         request: PatchBossStoreInfoRequest,
         bossId: String,
     ) {
-        val bossStore = BossStoreServiceUtils.findBossStoreByIdAndBossId(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
+        val bossStore = BossStoreServiceHelper.findBossStoreByIdAndBossId(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
         request.let {
             it.categoriesIds?.let { categoriesIds ->
-                BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, categoriesIds)
+                BossStoreCategoryServiceHelper.validateExistsCategories(bossStoreCategoryRepository, categoriesIds)
                 bossStore.updateCategoriesIds(categoriesIds)
             }
 
@@ -83,7 +83,7 @@ class BossStoreService(
 
     @Transactional(readOnly = true)
     fun getMyBossStore(bossId: String): BossStoreInfoResponse {
-        val bossStore = BossStoreServiceUtils.findBossStoreByBossId(bossStoreRepository = bossStoreRepository, bossId = bossId)
+        val bossStore = BossStoreServiceHelper.findBossStoreByBossId(bossStoreRepository = bossStoreRepository, bossId = bossId)
         return BossStoreInfoResponse.of(
             bossStore = bossStore,
             categories = bossStoreCategoryService.retrieveBossStoreCategoriesByIds(bossStore.categoriesIds),

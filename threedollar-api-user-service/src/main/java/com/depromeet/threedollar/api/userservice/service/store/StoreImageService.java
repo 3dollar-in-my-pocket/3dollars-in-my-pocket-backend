@@ -36,7 +36,7 @@ public class StoreImageService {
     private final UploadProvider uploadProvider;
 
     public List<StoreImage> uploadStoreImages(AddStoreImageRequest request, List<MultipartFile> imageFiles, Long userId) {
-        StoreServiceUtils.validateExistsStore(storeRepository, request.getStoreId());
+        StoreServiceHelper.validateExistsStore(storeRepository, request.getStoreId());
         if (imageFiles.size() == 1) {
             return Collections.singletonList(uploadStoreImage(request, imageFiles.get(0), userId));
         }
@@ -64,13 +64,13 @@ public class StoreImageService {
 
     @Transactional
     public void deleteStoreImage(Long imageId) {
-        StoreImage storeImage = StoreImageServiceUtils.findStoreImageById(storeImageRepository, imageId);
+        StoreImage storeImage = StoreImageServiceHelper.findStoreImageById(storeImageRepository, imageId);
         storeImage.delete();
     }
 
     @Transactional(readOnly = true)
     public List<StoreImageResponse> getStoreImages(Long storeId) {
-        StoreServiceUtils.validateExistsStore(storeRepository, storeId);
+        StoreServiceHelper.validateExistsStore(storeRepository, storeId);
         return storeImageRepository.findAllByStoreId(storeId).stream()
             .map(StoreImageResponse::of)
             .collect(Collectors.toList());

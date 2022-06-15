@@ -4,14 +4,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoreImageResponse;
-import com.depromeet.threedollar.domain.rds.domain.TestHelper;
+import com.depromeet.threedollar.domain.rds.domain.TestAssertions;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImage;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageStatus;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@TestHelper
+@TestAssertions
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class StoreImageAssertions {
 

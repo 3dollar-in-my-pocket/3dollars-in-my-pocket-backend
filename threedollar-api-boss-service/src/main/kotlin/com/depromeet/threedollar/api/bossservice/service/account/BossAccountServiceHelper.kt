@@ -8,7 +8,7 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAcc
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
 
-object BossAccountServiceUtils {
+object BossAccountServiceHelper {
 
     fun findBossAccountByRegistrationId(
         bossAccountRepository: BossAccountRepository,

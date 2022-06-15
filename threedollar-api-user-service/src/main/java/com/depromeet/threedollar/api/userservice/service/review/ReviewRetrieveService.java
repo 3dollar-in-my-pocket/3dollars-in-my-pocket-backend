@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.RetrieveMyReviewsRequest;
 import com.depromeet.threedollar.api.userservice.service.review.dto.response.ReviewsCursorResponse;
-import com.depromeet.threedollar.api.userservice.service.user.UserServiceUtils;
+import com.depromeet.threedollar.api.userservice.service.user.UserServiceHelper;
 import com.depromeet.threedollar.domain.rds.core.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
@@ -29,7 +29,7 @@ public class ReviewRetrieveService {
 
     @Transactional(readOnly = true)
     public ReviewsCursorResponse retrieveMyReviewHistories(RetrieveMyReviewsRequest request, Long userId) {
-        User user = UserServiceUtils.findUserById(userRepository, userId);
+        User user = UserServiceHelper.findUserById(userRepository, userId);
         List<Review> reviewsWithNextCursor = reviewRepository.findAllByUserIdUsingCursor(userId, request.getCursor(), request.getSize() + 1);
         CursorPagingSupporter<Review> reviewsCursor = CursorPagingSupporter.of(reviewsWithNextCursor, request.getSize());
         StoreDictionary storeDictionary = findStoresByReviews(reviewsCursor.getCurrentCursorItems());

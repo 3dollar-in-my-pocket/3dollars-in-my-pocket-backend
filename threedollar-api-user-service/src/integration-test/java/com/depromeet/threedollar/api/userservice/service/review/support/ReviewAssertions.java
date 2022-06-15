@@ -3,14 +3,14 @@ package com.depromeet.threedollar.api.userservice.service.review.support;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import com.depromeet.threedollar.domain.rds.domain.TestHelper;
+import com.depromeet.threedollar.domain.rds.domain.TestAssertions;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewStatus;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@TestHelper
+@TestAssertions
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ReviewAssertions {
 

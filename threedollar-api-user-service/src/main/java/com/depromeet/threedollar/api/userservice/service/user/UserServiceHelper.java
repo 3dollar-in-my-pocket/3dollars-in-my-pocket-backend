@@ -16,7 +16,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class UserServiceUtils {
+public class UserServiceHelper {
 
     static void validateNotExistsUserName(UserRepository userRepository, String name) {
         if (userRepository.existsByName(name)) {

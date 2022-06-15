@@ -25,7 +25,7 @@ class BossRegistrationAdminService(
 
     @Transactional
     fun applyBossRegistration(registrationId: String) {
-        val registration = BossRegistrationServiceUtils.findWaitingRegistrationById(bossRegistrationRepository, registrationId)
+        val registration = BossRegistrationServiceHelper.findWaitingRegistrationById(bossRegistrationRepository, registrationId)
         val bossAccount = registerNewBossAccount(registration)
         bossStoreRepository.save(registration.toBossStore(bossAccount.id))
         registration.approve()
@@ -45,7 +45,7 @@ class BossRegistrationAdminService(
 
     @Transactional
     fun rejectBossRegistration(registrationId: String) {
-        val registration = BossRegistrationServiceUtils.findWaitingRegistrationById(bossRegistrationRepository, registrationId)
+        val registration = BossRegistrationServiceHelper.findWaitingRegistrationById(bossRegistrationRepository, registrationId)
         registration.reject()
         bossRegistrationRepository.save(registration)
     }

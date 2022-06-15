@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.response.VisitHistoryCountsResponse;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.response.VisitHistoryWithStoreResponse;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.response.VisitHistoryWithUserResponse;
-import com.depromeet.threedollar.domain.rds.domain.TestHelper;
+import com.depromeet.threedollar.domain.rds.domain.TestAssertions;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistory;
@@ -16,7 +16,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistor
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@TestHelper
+@TestAssertions
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class VisitHistoryAssertions {
 

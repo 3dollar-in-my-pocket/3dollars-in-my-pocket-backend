@@ -15,9 +15,9 @@ import com.depromeet.threedollar.api.bossservice.config.interceptor.Auth
 import com.depromeet.threedollar.api.bossservice.config.resolver.BossId
 import com.depromeet.threedollar.api.bossservice.config.session.SessionConstants
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.response.LoginResponse
-import com.depromeet.threedollar.api.bossservice.service.store.BossStoreServiceUtils
+import com.depromeet.threedollar.api.bossservice.service.store.BossStoreServiceHelper
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryServiceUtils
+import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryServiceHelper
 import com.depromeet.threedollar.api.core.service.bossservice.feedback.BossStoreFeedbackService
 import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.request.AddBossStoreFeedbackRequest
 import com.depromeet.threedollar.common.exception.model.ConflictException
@@ -111,8 +111,8 @@ class LocalTestController(
         @RequestParam categoriesIds: Set<String>,
         @RequestParam randomBossId: String?,
     ): ApiResponse<String> {
-        BossStoreServiceUtils.findBossStoreByBossId(bossStoreRepository, bossId)
-        BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, categoriesIds)
+        BossStoreServiceHelper.findBossStoreByBossId(bossStoreRepository, bossId)
+        BossStoreCategoryServiceHelper.validateExistsCategories(bossStoreCategoryRepository, categoriesIds)
         val bossStore = bossStoreRepository.save(
             BossStore.of(
                 bossId = randomBossId?.let { randomBossId } ?: bossId,

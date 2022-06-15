@@ -12,7 +12,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-class ReviewServiceUtils {
+class ReviewServiceHelper {
 
     @NotNull
     static Review findReviewByIdAndUserId(ReviewRepository reviewRepository, Long reviewId, Long userId) {

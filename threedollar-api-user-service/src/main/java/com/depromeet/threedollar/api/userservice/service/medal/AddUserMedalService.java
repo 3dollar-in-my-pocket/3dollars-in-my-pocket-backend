@@ -10,7 +10,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.depromeet.threedollar.api.userservice.service.user.UserServiceUtils;
+import com.depromeet.threedollar.api.userservice.service.user.UserServiceHelper;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository;
@@ -30,7 +30,7 @@ public class AddUserMedalService {
     @CacheEvict(cacheNames = USER_MEDALS, key = "#userId")
     @Transactional
     public void addMedalsIfSatisfyCondition(Long userId, MedalAcquisitionConditionType conditionType, LongSupplier countsByUserSupplier) {
-        User user = UserServiceUtils.findUserById(userRepository, userId);
+        User user = UserServiceHelper.findUserById(userRepository, userId);
         MedalObtainCollection medalObtainCollection = MedalObtainCollection.of(medalRepository.findAllByConditionType(conditionType), conditionType, user);
         if (medalObtainCollection.hasNoMoreMedalsCanBeObtained()) {
             return;
@@ -40,7 +40,7 @@ public class AddUserMedalService {
 
     @Transactional
     public void addAndActivateDefaultMedals(Long userId) {
-        User user = UserServiceUtils.findUserById(userRepository, userId);
+        User user = UserServiceHelper.findUserById(userRepository, userId);
         MedalObtainCollection medalObtainCollection = MedalObtainCollection.of(medalRepository.findAllByConditionType(NO_CONDITION), NO_CONDITION, user);
         if (medalObtainCollection.hasNoMoreMedalsCanBeObtained()) {
             return;

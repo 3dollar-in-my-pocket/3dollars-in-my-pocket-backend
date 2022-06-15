@@ -5,7 +5,7 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistration
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
 
-object BossRegistrationServiceUtils {
+object BossRegistrationServiceHelper {
 
     fun findWaitingRegistrationById(bossRegistrationRepository: BossRegistrationRepository, registrationId: String): BossRegistration {
         return bossRegistrationRepository.findWaitingRegistrationById(registrationId)
