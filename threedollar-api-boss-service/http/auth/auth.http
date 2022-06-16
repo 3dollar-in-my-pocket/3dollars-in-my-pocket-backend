@@ -18,6 +18,9 @@ Content-Type: application/json
 > {%
 client.global.set("BOSS_AUTHORIZATION", response.body["data"]["token"])
 client.global.set("REGISTRATION_ID", response.body["data"]["bossId"])
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
 %}
 
 
@@ -33,6 +36,21 @@ Content-Type: application/json
 > {%
 client.global.set("BOSS_AUTHORIZATION", response.body["data"]["token"])
 client.global.set("REGISTRATION_ID", response.body["data"]["bossId"])
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### 사장님 계정을 로그아웃을 요청합니다.
+POST {{boss-api}}/v1/auth/logout
+Content-Type: application/json
+Authorization: Bearer {{BOSS_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
 %}
 
 
@@ -40,3 +58,9 @@ client.global.set("REGISTRATION_ID", response.body["data"]["bossId"])
 DELETE {{boss-api}}/v1/auth/signout
 Content-Type: application/json
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}

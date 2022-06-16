@@ -555,9 +555,7 @@ internal class AuthControllerTest(
         @Test
         fun 로그아웃_성공시_200_OK() {
             // when & then
-            mockMvc.post("/v1/auth/logout") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
-            }
+            mockMvc.post("/v1/auth/logout")
                 .andDo {
                     print()
                 }
