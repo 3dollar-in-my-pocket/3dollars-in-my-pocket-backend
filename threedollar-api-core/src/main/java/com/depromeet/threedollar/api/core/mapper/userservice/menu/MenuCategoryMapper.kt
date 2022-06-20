@@ -1,6 +1,5 @@
-package com.depromeet.threedollar.api.core.service.userservice.menu
+package com.depromeet.threedollar.api.core.mapper.userservice.menu
 
-import com.depromeet.threedollar.api.core.service.userservice.menu.dto.response.MenuCategoryResponse
 import com.depromeet.threedollar.common.type.UserMenuCategoryType
 
 object MenuCategoryMapper {

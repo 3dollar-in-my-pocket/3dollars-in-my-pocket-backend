@@ -1,6 +1,6 @@
-package com.depromeet.threedollar.api.core.service.commonservice.faq
+package com.depromeet.threedollar.api.core.mapper.commonservice.faq
 
-import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.response.FaqCategoryResponse
+import com.depromeet.threedollar.api.core.mapper.commonservice.faq.dto.response.FaqCategoryResponse
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory
 

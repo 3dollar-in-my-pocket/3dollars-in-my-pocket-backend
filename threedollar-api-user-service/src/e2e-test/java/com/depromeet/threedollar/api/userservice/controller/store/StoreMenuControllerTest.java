@@ -16,7 +16,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.api.core.service.userservice.menu.dto.response.MenuCategoryResponse;
+import com.depromeet.threedollar.api.core.mapper.userservice.menu.MenuCategoryResponse;
 import com.depromeet.threedollar.api.userservice.ControllerTest;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.fasterxml.jackson.core.type.TypeReference;

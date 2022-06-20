@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.bossservice.SetupControllerTest
-import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.response.FaqCategoryResponse
+import com.depromeet.threedollar.api.core.mapper.commonservice.faq.dto.response.FaqCategoryResponse
 import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.response.FaqResponse
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.type.ApplicationType

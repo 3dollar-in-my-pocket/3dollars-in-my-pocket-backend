@@ -17,7 +17,7 @@ import com.depromeet.threedollar.domain.redis.domain.bossservice.feedback.BossSt
 import com.depromeet.threedollar.domain.redis.domain.bossservice.store.BossStoreOpenTimeRepository
 
 @Service
-class BossStoreCommonService(
+class BossStoreRetrieveService(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository,
     private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository,
@@ -70,12 +70,22 @@ class BossStoreCommonService(
         storeId: String,
         deviceLocation: LocationValue = LocationValue.of(0.0, 0.0),
     ): BossStoreInfoResponse {
-        val bossStore = BossStoreCommonServiceHelper.findBossStoreById(bossStoreRepository, storeId)
+        val bossStore = BossStoreServiceHelper.findBossStoreById(bossStoreRepository, storeId)
         return BossStoreInfoResponse.of(
             bossStore = bossStore,
             categories = bossStoreCategoryService.retrieveBossStoreCategoriesByIds(bossStore.categoriesIds),
             openStartDateTime = bossStoreOpenTimeRepository.get(bossStore.id),
             deviceLocation = deviceLocation
+        )
+    }
+
+    @Transactional(readOnly = true)
+    fun getMyBossStore(bossId: String): BossStoreInfoResponse {
+        val bossStore = BossStoreServiceHelper.findBossStoreByBossId(bossStoreRepository = bossStoreRepository, bossId = bossId)
+        return BossStoreInfoResponse.of(
+            bossStore = bossStore,
+            categories = bossStoreCategoryService.retrieveBossStoreCategoriesByIds(bossStore.categoriesIds),
+            openStartDateTime = bossStoreOpenTimeRepository.get(bossStore.id)
         )
     }
 
