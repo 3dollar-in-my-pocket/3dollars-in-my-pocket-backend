@@ -17,7 +17,7 @@ import com.depromeet.threedollar.api.userservice.service.visit.support.VisitHist
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistory;
-import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
 
@@ -73,7 +73,7 @@ class VisitHistoryServiceTest extends SetupStoreIntegrationTest {
             LocalDate dateOfVisit = LocalDate.of(2021, 12, 1);
             VisitType visitType = VisitType.EXISTS;
 
-            visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, dateOfVisit));
+            visitHistoryRepository.save(VisitHistoryFixture.create(store, userId, VisitType.EXISTS, dateOfVisit));
 
             AddVisitHistoryRequest request = AddVisitHistoryRequest.testBuilder()
                 .storeId(storeId)

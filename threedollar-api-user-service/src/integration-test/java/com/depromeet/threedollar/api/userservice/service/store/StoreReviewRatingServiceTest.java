@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.depromeet.threedollar.api.userservice.SetupStoreIntegrationTest;
-import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 
@@ -27,8 +27,8 @@ class StoreReviewRatingServiceTest extends SetupStoreIntegrationTest {
     void 가게에_작성된_리뷰로_가게의_평균점수를_갱신한다() {
         // given
         reviewRepository.saveAll(List.of(
-            ReviewCreator.create(storeId, userId, "1점", 1),
-            ReviewCreator.create(storeId, userId, "5점", 5)
+            ReviewFixture.create(storeId, userId, "1점", 1),
+            ReviewFixture.create(storeId, userId, "5점", 5)
         ));
 
         // when

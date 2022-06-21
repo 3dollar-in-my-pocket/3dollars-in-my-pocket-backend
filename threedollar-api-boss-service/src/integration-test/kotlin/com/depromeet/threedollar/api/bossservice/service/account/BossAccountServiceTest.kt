@@ -11,7 +11,7 @@ import com.depromeet.threedollar.api.bossservice.service.account.dto.request.Upd
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.model.BusinessNumber
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
@@ -39,7 +39,7 @@ internal class BossAccountServiceTest(
             val name = "새로운 이름"
             val isSetupNotification = true
 
-            val bossAccount = BossAccountCreator.create(
+            val bossAccount = BossAccountFixture.create(
                 socialId = "social-id",
                 socialType = BossAccountSocialType.GOOGLE,
                 name = "사장님 이름",
@@ -90,7 +90,7 @@ internal class BossAccountServiceTest(
         @Test
         fun `회원탈퇴시 BossAccount 계정 정보가 삭제된다`() {
             // given
-            val bossAccount = BossAccountCreator.create(
+            val bossAccount = BossAccountFixture.create(
                 socialId = "socialId",
                 socialType = BossAccountSocialType.APPLE
             )
@@ -113,7 +113,7 @@ internal class BossAccountServiceTest(
             val isSetupNotification = false
             val businessNumber = BusinessNumber.of("000-00-00000")
 
-            val bossAccount = BossAccountCreator.create(
+            val bossAccount = BossAccountFixture.create(
                 socialId = socialId,
                 socialType = socialType,
                 name = name,

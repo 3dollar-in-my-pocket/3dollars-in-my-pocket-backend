@@ -6,7 +6,7 @@ import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.domain.mongo.TestFixture
 
 @TestFixture
-class BossStoreAppearanceDayCreator {
+class BossStoreAppearanceDayFixture {
 
     companion object {
         fun create(

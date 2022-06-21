@@ -11,14 +11,14 @@ import com.depromeet.threedollar.api.bossservice.service.auth.dto.request.Signup
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationStatus
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationFixture
 
 internal class SignupServiceTest(
     private val signupService: SignupService,
@@ -96,7 +96,7 @@ internal class SignupServiceTest(
             val certificationPhotoUrl = "https://example-photo.png"
 
             bossRegistrationRepository.save(
-                RegistrationCreator.create(
+                RegistrationFixture.create(
                     socialId = socialId,
                     socialType = socialType
                 )
@@ -125,7 +125,7 @@ internal class SignupServiceTest(
             val socialId = "social-id"
             val socialType = BossAccountSocialType.APPLE
             bossAccountRepository.save(
-                BossAccountCreator.create(
+                BossAccountFixture.create(
                     socialId = socialId,
                     socialType = socialType
                 )
@@ -178,6 +178,6 @@ private fun createCategory(
     vararg titles: String,
 ): Set<String> {
     return titles.asSequence()
-        .map { title -> bossStoreCategoryRepository.save(BossStoreCategoryCreator.create(title)).id }
+        .map { title -> bossStoreCategoryRepository.save(BossStoreCategoryFixture.create(title)).id }
         .toSet()
 }

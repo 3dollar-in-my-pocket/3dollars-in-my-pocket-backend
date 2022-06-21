@@ -3,7 +3,7 @@ package com.depromeet.threedollar.domain.rds.domain.userservice.store
 import com.depromeet.threedollar.domain.rds.domain.TestFixture
 
 @TestFixture
-object StoreDeleteRequestCreator {
+object StoreDeleteRequestFixture {
 
     @JvmStatic
     fun create(

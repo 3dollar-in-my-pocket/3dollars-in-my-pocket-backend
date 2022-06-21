@@ -12,10 +12,10 @@ import com.depromeet.threedollar.api.bossservice.SetupBossAccountControllerTest
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.request.SignupRequest
 import com.depromeet.threedollar.common.exception.type.ErrorCode
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationFixture
 import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
 import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse
@@ -80,7 +80,7 @@ internal class AuthControllerTest(
         @Test
         fun 카카오_회원가입시_이미_존재하는_사장님_계정인경우_409_에러가_발생한다() {
             // given
-            val boss = BossAccountCreator.create("google-social-id", BossAccountSocialType.KAKAO, "카카오 계정")
+            val boss = BossAccountFixture.create("google-social-id", BossAccountSocialType.KAKAO, "카카오 계정")
             bossAccountRepository.save(boss)
 
             every { kaKaoAuthApiClient.getProfileInfo(any()) } returns KaKaoProfileResponse.testInstance(boss.socialInfo.socialId)
@@ -114,7 +114,7 @@ internal class AuthControllerTest(
         @Test
         fun 카카오_회원가입시_가입_승인_대기중인경우_403_에러가_발생한다() {
             // given
-            val registration = RegistrationCreator.create("google-social-id", BossAccountSocialType.KAKAO)
+            val registration = RegistrationFixture.create("google-social-id", BossAccountSocialType.KAKAO)
             bossRegistrationRepository.save(registration)
 
             every { kaKaoAuthApiClient.getProfileInfo(any()) } returns KaKaoProfileResponse.testInstance(registration.boss.socialInfo.socialId)
@@ -178,7 +178,7 @@ internal class AuthControllerTest(
         @Test
         fun 애플_회원가입시_이미_존재하는_사장님_계정인경우_409_에러가_발생한다() {
             // given
-            val boss = BossAccountCreator.create("apple-social-id", BossAccountSocialType.APPLE, "애플 계정")
+            val boss = BossAccountFixture.create("apple-social-id", BossAccountSocialType.APPLE, "애플 계정")
             bossAccountRepository.save(boss)
 
             every { appleTokenDecoder.getSocialIdFromIdToken(any()) } returns boss.socialInfo.socialId
@@ -212,7 +212,7 @@ internal class AuthControllerTest(
         @Test
         fun 애플_회원가입시_가입_승인_대기중인경우_403_에러가_발생한다() {
             // given
-            val registration = RegistrationCreator.create("apple-social-id", BossAccountSocialType.APPLE)
+            val registration = RegistrationFixture.create("apple-social-id", BossAccountSocialType.APPLE)
             bossRegistrationRepository.save(registration)
 
             every { appleTokenDecoder.getSocialIdFromIdToken(any()) } returns registration.boss.socialInfo.socialId
@@ -276,7 +276,7 @@ internal class AuthControllerTest(
         @Test
         fun 구글_회원가입시_이미_존재하는_사장님_계정인경우_409_에러가_발생한다() {
             // given
-            val boss = BossAccountCreator.create("google-social-id", BossAccountSocialType.GOOGLE, "구글 계정")
+            val boss = BossAccountFixture.create("google-social-id", BossAccountSocialType.GOOGLE, "구글 계정")
             bossAccountRepository.save(boss)
 
             every { googleAuthApiClient.getProfileInfo(any()) } returns GoogleProfileInfoResponse.testInstance(boss.socialInfo.socialId)
@@ -310,7 +310,7 @@ internal class AuthControllerTest(
         @Test
         fun 구글_회원가입시_가입_승인_대기중인경우_403_에러가_발생한다() {
             // given
-            val registration = RegistrationCreator.create("google-social-id", BossAccountSocialType.GOOGLE)
+            val registration = RegistrationFixture.create("google-social-id", BossAccountSocialType.GOOGLE)
             bossRegistrationRepository.save(registration)
 
             every { googleAuthApiClient.getProfileInfo(any()) } returns GoogleProfileInfoResponse.testInstance(registration.boss.socialInfo.socialId)
@@ -379,7 +379,7 @@ internal class AuthControllerTest(
         @Test
         fun 카카오_로그인_요청이_성공하면_토큰이_반환된다() {
             // given
-            val boss = BossAccountCreator.create("google-social-id", BossAccountSocialType.KAKAO, "카카오 계정")
+            val boss = BossAccountFixture.create("google-social-id", BossAccountSocialType.KAKAO, "카카오 계정")
             bossAccountRepository.save(boss)
 
             every { kaKaoAuthApiClient.getProfileInfo(any()) } returns KaKaoProfileResponse.testInstance(boss.socialInfo.socialId)
@@ -404,7 +404,7 @@ internal class AuthControllerTest(
         @Test
         fun 카카오_로그인시_가입승인_대기중인경우_토큰이_반환된다() {
             // given
-            val registration = RegistrationCreator.create("google-social-id", BossAccountSocialType.KAKAO)
+            val registration = RegistrationFixture.create("google-social-id", BossAccountSocialType.KAKAO)
             bossRegistrationRepository.save(registration)
 
             every { kaKaoAuthApiClient.getProfileInfo(any()) } returns KaKaoProfileResponse.testInstance(registration.boss.socialInfo.socialId)
@@ -429,7 +429,7 @@ internal class AuthControllerTest(
         @Test
         fun 애플_로그인_요청이_성공하면_토큰이_반환된다() {
             // given
-            val boss = BossAccountCreator.create("google-social-id", BossAccountSocialType.APPLE, "애플 계정")
+            val boss = BossAccountFixture.create("google-social-id", BossAccountSocialType.APPLE, "애플 계정")
             bossAccountRepository.save(boss)
 
             every { appleTokenDecoder.getSocialIdFromIdToken(any()) } returns boss.socialInfo.socialId
@@ -454,7 +454,7 @@ internal class AuthControllerTest(
         @Test
         fun 애플_로그인시_가입승인_대기중인경우_토큰이_반환된다() {
             // given
-            val registration = RegistrationCreator.create("google-social-id", BossAccountSocialType.APPLE)
+            val registration = RegistrationFixture.create("google-social-id", BossAccountSocialType.APPLE)
             bossRegistrationRepository.save(registration)
 
             every { appleTokenDecoder.getSocialIdFromIdToken(any()) } returns registration.boss.socialInfo.socialId
@@ -479,7 +479,7 @@ internal class AuthControllerTest(
         @Test
         fun 구글_로그인_요청이_성공하면_토큰이_반환된다() {
             // given
-            val boss = BossAccountCreator.create("google-social-id", BossAccountSocialType.GOOGLE, "구글 계정")
+            val boss = BossAccountFixture.create("google-social-id", BossAccountSocialType.GOOGLE, "구글 계정")
             bossAccountRepository.save(boss)
 
             every { googleAuthApiClient.getProfileInfo(any()) } returns GoogleProfileInfoResponse.testInstance(boss.socialInfo.socialId)
@@ -504,7 +504,7 @@ internal class AuthControllerTest(
         @Test
         fun 구글_로그인시_가입승인_대기중인경우_토큰이_반환된다() {
             // given
-            val registration = RegistrationCreator.create("google-social-id", BossAccountSocialType.GOOGLE)
+            val registration = RegistrationFixture.create("google-social-id", BossAccountSocialType.GOOGLE)
             bossRegistrationRepository.save(registration)
 
             every { googleAuthApiClient.getProfileInfo(any()) } returns GoogleProfileInfoResponse.testInstance(registration.boss.socialInfo.socialId)

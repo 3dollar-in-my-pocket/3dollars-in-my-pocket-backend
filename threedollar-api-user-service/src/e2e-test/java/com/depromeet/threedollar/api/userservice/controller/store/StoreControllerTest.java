@@ -31,9 +31,9 @@ import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.DeleteReasonType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.PaymentMethodType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequestCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequestFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequestRepository;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreType;
 import com.depromeet.threedollar.domain.rds.event.userservice.store.StoreCreatedEvent;
@@ -122,7 +122,7 @@ class StoreControllerTest extends SetupUserControllerTest {
             Set<DayOfTheWeek> appearanceDays = Set.of(DayOfTheWeek.SATURDAY, DayOfTheWeek.MONDAY);
             Set<PaymentMethodType> paymentMethods = Set.of(PaymentMethodType.CASH, PaymentMethodType.ACCOUNT_TRANSFER);
 
-            Store store = StoreCreator.createWithDefaultMenu(user.getId(), "storeName");
+            Store store = StoreFixture.createWithDefaultMenu(user.getId(), "storeName");
             storeRepository.save(store);
 
             double latitude = 34.0;
@@ -157,7 +157,7 @@ class StoreControllerTest extends SetupUserControllerTest {
         @Test
         void 가게_삭제_요청시_실제로_삭제되지_않으면_False를_반환한다() throws Exception {
             // given
-            Store store = StoreCreator.create(user.getId(), "가삼 붕어빵");
+            Store store = StoreFixture.create(user.getId(), "가삼 붕어빵");
             storeRepository.save(store);
 
             DeleteStoreRequest request = DeleteStoreRequest.testBuilder()
@@ -174,12 +174,12 @@ class StoreControllerTest extends SetupUserControllerTest {
         @Test
         void 가게_삭제_요청시_실제로_삭제되면_True를_반환한다() throws Exception {
             // given
-            Store store = StoreCreator.create(user.getId(), "가삼 붕어빵");
+            Store store = StoreFixture.create(user.getId(), "가삼 붕어빵");
             storeRepository.save(store);
 
             storeDeleteRequestRepository.saveAll(List.of(
-                StoreDeleteRequestCreator.create(store, 1000L, DeleteReasonType.NOSTORE),
-                StoreDeleteRequestCreator.create(store, 1001L, DeleteReasonType.NOSTORE)
+                StoreDeleteRequestFixture.create(store, 1000L, DeleteReasonType.NOSTORE),
+                StoreDeleteRequestFixture.create(store, 1001L, DeleteReasonType.NOSTORE)
             ));
 
             DeleteStoreRequest request = DeleteStoreRequest.testBuilder()
@@ -196,7 +196,7 @@ class StoreControllerTest extends SetupUserControllerTest {
         @Test
         void 가게_삭제_요청시_획득할_수_있는_메달_체크_이벤트가_발생됩니다() throws Exception {
             // given
-            Store store = StoreCreator.create(user.getId(), "가슴속 3천원 붕어빵");
+            Store store = StoreFixture.create(user.getId(), "가슴속 3천원 붕어빵");
             storeRepository.save(store);
 
             DeleteStoreRequest request = DeleteStoreRequest.testBuilder()

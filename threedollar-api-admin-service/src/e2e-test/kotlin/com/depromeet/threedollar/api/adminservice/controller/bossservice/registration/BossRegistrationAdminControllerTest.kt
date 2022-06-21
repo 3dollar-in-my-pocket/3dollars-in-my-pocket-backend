@@ -12,7 +12,7 @@ import com.depromeet.threedollar.api.adminservice.service.bossservice.registrati
 import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.response.BossAccountRegistrationStoreResponse
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationFixture
 
 internal class BossRegistrationAdminControllerTest(
     private val bossRegistrationRepository: BossRegistrationRepository,
@@ -28,7 +28,7 @@ internal class BossRegistrationAdminControllerTest(
     @Test
     fun `사장님 계정 가입 신청을 승인합니다`() {
         // given
-        val registration = RegistrationCreator.create("social-id", com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.GOOGLE)
+        val registration = RegistrationFixture.create("social-id", com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.GOOGLE)
         bossRegistrationRepository.save(registration)
 
         // when & then
@@ -46,7 +46,7 @@ internal class BossRegistrationAdminControllerTest(
     @Test
     fun `사장님 계정 가입 신청을 반려합니다`() {
         // given
-        val registration = RegistrationCreator.create("social-id", com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.GOOGLE)
+        val registration = RegistrationFixture.create("social-id", com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.GOOGLE)
         bossRegistrationRepository.save(registration)
 
         // when & then
@@ -64,7 +64,7 @@ internal class BossRegistrationAdminControllerTest(
     @Test
     fun `사장님 계정의 가입 신청 목록을 조회합니다`() {
         // given
-        val registration = RegistrationCreator.create("social-id", com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.GOOGLE)
+        val registration = RegistrationFixture.create("social-id", com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.GOOGLE)
         bossRegistrationRepository.save(registration)
 
         // when & then

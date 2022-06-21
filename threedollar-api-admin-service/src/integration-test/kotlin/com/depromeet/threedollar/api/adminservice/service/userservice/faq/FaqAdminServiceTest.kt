@@ -15,7 +15,7 @@ import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.Faq
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory
-import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCreator
+import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqFixture
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqRepository
 
 internal class FaqAdminServiceTest(
@@ -85,7 +85,7 @@ internal class FaqAdminServiceTest(
             val answer = "가슴속 삼천원입니다"
             val category = FaqCategory.ETC
 
-            val faq = FaqCreator.create(
+            val faq = FaqFixture.create(
                 question = "기존의 질문",
                 answer = "기존의 답변",
                 category = FaqCategory.CATEGORY)
@@ -111,7 +111,7 @@ internal class FaqAdminServiceTest(
         @Test
         fun `FAQ 수정시 해당하는 서비스에서 지원하지 않는 FAQ 카테고리인경우 ForbiddenException이 발생한다`() {
             // given
-            val faq = FaqCreator.create(
+            val faq = FaqFixture.create(
                 applicationType = ApplicationType.BOSS_API,
                 question = "기존의 질문",
                 answer = "기존의 답변",
@@ -153,7 +153,7 @@ internal class FaqAdminServiceTest(
         @Test
         fun 특정_FAQ_를_삭제하면_해당_데이터가_삭제된다() {
             // given
-            val faq = faqRepository.save(FaqCreator.create(question = "질문", answer = "답변", category = FaqCategory.CATEGORY))
+            val faq = faqRepository.save(FaqFixture.create(question = "질문", answer = "답변", category = FaqCategory.CATEGORY))
 
             // when
             faqAdminService.deleteFaq(faq.id)

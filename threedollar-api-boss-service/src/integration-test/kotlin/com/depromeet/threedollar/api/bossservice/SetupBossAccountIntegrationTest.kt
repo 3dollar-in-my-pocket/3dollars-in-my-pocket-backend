@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.bossservice
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 
@@ -17,7 +17,7 @@ internal abstract class SetupBossAccountIntegrationTest : IntegrationTest() {
 
     @BeforeEach
     fun setup() {
-        boss = bossAccountRepository.save(BossAccountCreator.create(
+        boss = bossAccountRepository.save(BossAccountFixture.create(
             socialId = "social-id-test",
             socialType = BossAccountSocialType.APPLE,
             name = "통합 테스트 사장님 계정"

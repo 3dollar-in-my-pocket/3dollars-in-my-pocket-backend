@@ -8,7 +8,7 @@ import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.core.service.commonservice.advertisement.dto.response.AdvertisementResponse
 import com.depromeet.threedollar.api.userservice.ControllerTest
 import com.depromeet.threedollar.common.type.ApplicationType
-import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementCreator
+import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementFixture
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPositionType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementRepository
@@ -22,7 +22,7 @@ internal class AdvertisementControllerTest(
     fun `(DEPRECATED) 특정_플랫폼에_활성화중인 광고 목록을 필터링해서_조회한다`() {
         // given
         val platform = AdvertisementPlatformType.AOS
-        val advertisement = AdvertisementCreator.create(
+        val advertisement = AdvertisementFixture.create(
             applicationType = ApplicationType.USER_API,
             positionType = AdvertisementPositionType.SPLASH,
             platformType = platform,
@@ -58,7 +58,7 @@ internal class AdvertisementControllerTest(
     fun `특정_플랫폼에_활성화중인 광고 목록을 필터링해서_조회한다`() {
         // given
         val platform = AdvertisementPlatformType.AOS
-        val advertisement = AdvertisementCreator.create(
+        val advertisement = AdvertisementFixture.create(
             applicationType = ApplicationType.USER_API,
             positionType = AdvertisementPositionType.SPLASH,
             platformType = platform,

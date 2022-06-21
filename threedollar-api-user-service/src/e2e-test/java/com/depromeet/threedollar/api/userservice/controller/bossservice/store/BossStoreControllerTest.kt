@@ -15,12 +15,12 @@ import com.depromeet.threedollar.api.core.service.bossservice.store.dto.response
 import com.depromeet.threedollar.api.userservice.SetupUserControllerTest
 import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.common.type.DayOfTheWeek
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreAppearanceDayCreator
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreAppearanceDayFixture
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreLocation
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenuCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenuFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreOpenType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheRepository
@@ -53,10 +53,10 @@ internal class BossStoreControllerTest(
     @Test
     fun `특정 사장님 가게를 조회할때, Redis에 영업 정보가 있으면 영업중인 가게로 표기된다`() {
         // given
-        val category = BossStoreCategoryCreator.create(title = "한식", sequencePriority = 1)
+        val category = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1)
         bossStoreCategoryRepository.save(category)
 
-        val bossStore = BossStoreCreator.create(
+        val bossStore = BossStoreFixture.create(
             bossId = "anotherBossId",
             name = "사장님 가게",
             location = BossStoreLocation.of(latitude = 38.0, longitude = 128.0),
@@ -64,8 +64,8 @@ internal class BossStoreControllerTest(
             introduction = "introduction",
             snsUrl = "https://sns.com",
             contactsNumber = ContactsNumber.of("010-1234-1234"),
-            menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
-            appearanceDays = setOf(BossStoreAppearanceDayCreator.create(DayOfTheWeek.FRIDAY, LocalTime.of(8, 0), LocalTime.of(10, 0), "강남역")),
+            menus = listOf(BossStoreMenuFixture.create("붕어빵", 2000, "https://menu.png")),
+            appearanceDays = setOf(BossStoreAppearanceDayFixture.create(DayOfTheWeek.FRIDAY, LocalTime.of(8, 0), LocalTime.of(10, 0), "강남역")),
             categoriesIds = setOf(category.id)
         )
         bossStoreRepository.save(bossStore)

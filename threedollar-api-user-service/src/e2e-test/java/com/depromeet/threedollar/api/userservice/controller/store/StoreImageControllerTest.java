@@ -17,7 +17,7 @@ import com.depromeet.threedollar.api.userservice.SetupStoreControllerTest;
 import com.depromeet.threedollar.api.userservice.controller.store.support.StoreImageAssertions;
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImage;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageStatus;
 
@@ -43,8 +43,8 @@ class StoreImageControllerTest extends SetupStoreControllerTest {
             String imageUrl1 = "https://image1.png";
             String imageUrl2 = "https://image2.png";
 
-            StoreImage storeImage1 = StoreImageCreator.create(storeId, user.getId(), imageUrl1);
-            StoreImage storeImage2 = StoreImageCreator.create(storeId, user.getId(), imageUrl2);
+            StoreImage storeImage1 = StoreImageFixture.create(storeId, user.getId(), imageUrl1);
+            StoreImage storeImage2 = StoreImageFixture.create(storeId, user.getId(), imageUrl2);
             storeImageRepository.saveAll(List.of(storeImage1, storeImage2));
 
             // when
@@ -62,7 +62,7 @@ class StoreImageControllerTest extends SetupStoreControllerTest {
         void 가게에_등록된_이미지_목록을_조회한다() throws Exception {
             // given
             String imageUrl = "https://store-good-image.png";
-            StoreImage storeImage = StoreImageCreator.create(store.getId(), user.getId(), imageUrl);
+            StoreImage storeImage = StoreImageFixture.create(store.getId(), user.getId(), imageUrl);
             storeImageRepository.save(storeImage);
 
             // when
@@ -78,7 +78,7 @@ class StoreImageControllerTest extends SetupStoreControllerTest {
         @Test
         void 가게에_등록된_이미지_목록을_조회시_삭제된_이미지는_조회되지_않는다() throws Exception {
             // given
-            StoreImage storeImage = StoreImageCreator.create(store.getId(), user.getId(), "https://deleted-store-image.png", StoreImageStatus.INACTIVE);
+            StoreImage storeImage = StoreImageFixture.create(store.getId(), user.getId(), "https://deleted-store-image.png", StoreImageStatus.INACTIVE);
             storeImageRepository.save(storeImage);
 
             // when
@@ -97,7 +97,7 @@ class StoreImageControllerTest extends SetupStoreControllerTest {
         @Test
         void 가게의_특정_이미지를_삭제합니다() throws Exception {
             // given
-            StoreImage storeImage = storeImageRepository.save(StoreImageCreator.create(storeId, user.getId(), "https://image-url.png"));
+            StoreImage storeImage = storeImageRepository.save(StoreImageFixture.create(storeId, user.getId(), "https://image-url.png"));
 
             // when
             ApiResponse<String> response = storeImageMockApiCaller.deleteStoreImage(storeImage.getId(), token, 200);

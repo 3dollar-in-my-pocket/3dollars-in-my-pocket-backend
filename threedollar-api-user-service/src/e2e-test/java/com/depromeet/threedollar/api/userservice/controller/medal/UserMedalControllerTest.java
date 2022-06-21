@@ -20,9 +20,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import com.depromeet.threedollar.api.userservice.SetupUserControllerTest;
 import com.depromeet.threedollar.api.userservice.service.medal.dto.request.ChangeRepresentativeMedalRequest;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
-import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository;
-import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus;
 
@@ -41,13 +41,13 @@ class UserMedalControllerTest extends SetupUserControllerTest {
         @Test
         void 유저가_보유중인_메달을_모두_조회합니다() throws Exception {
             // given.
-            Medal medalActive = MedalCreator.create("활성화중인 메달", "활성중인 메달 설명", "https://active-medal.png", "https://disable-medal.png");
-            Medal medalInActive = MedalCreator.create("비활성화중인 메달", "비활성화중인 메달 설명", "https://active-medal-two.png", "https://disable-medal-two.png");
+            Medal medalActive = MedalFixture.create("활성화중인 메달", "활성중인 메달 설명", "https://active-medal.png", "https://disable-medal.png");
+            Medal medalInActive = MedalFixture.create("비활성화중인 메달", "비활성화중인 메달 설명", "https://active-medal-two.png", "https://disable-medal-two.png");
             medalRepository.saveAll(List.of(medalActive, medalInActive));
 
             userMedalRepository.saveAll(List.of(
-                UserMedalCreator.create(medalActive, user),
-                UserMedalCreator.create(medalInActive, user, UserMedalStatus.IN_ACTIVE)
+                UserMedalFixture.create(medalActive, user),
+                UserMedalFixture.create(medalInActive, user, UserMedalStatus.IN_ACTIVE)
             ));
 
             // when & then
@@ -80,10 +80,10 @@ class UserMedalControllerTest extends SetupUserControllerTest {
         @Test
         void 유저가_대표_메달을_변경합니다() throws Exception {
             // given
-            Medal medal = MedalCreator.create("활성화중인 메달", "활성중인 메달 설명", "https://active-medal.jpeg", "https://disable-medal.jpeg");
+            Medal medal = MedalFixture.create("활성화중인 메달", "활성중인 메달 설명", "https://active-medal.jpeg", "https://disable-medal.jpeg");
             medalRepository.save(medal);
 
-            userMedalRepository.save(UserMedalCreator.create(medal, user, UserMedalStatus.IN_ACTIVE));
+            userMedalRepository.save(UserMedalFixture.create(medal, user, UserMedalStatus.IN_ACTIVE));
 
             ChangeRepresentativeMedalRequest request = ChangeRepresentativeMedalRequest.testBuilder()
                 .medalId(medal.getId())

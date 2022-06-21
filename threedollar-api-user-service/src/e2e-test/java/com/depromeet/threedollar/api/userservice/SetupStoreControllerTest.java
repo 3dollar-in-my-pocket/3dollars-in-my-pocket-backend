@@ -6,9 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.MenuCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.MenuFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
 
 public abstract class SetupStoreControllerTest extends SetupUserControllerTest {
@@ -22,8 +22,8 @@ public abstract class SetupStoreControllerTest extends SetupUserControllerTest {
 
     @BeforeEach
     void setUpStore() {
-        store = StoreCreator.create(user.getId(), "디프만 붕어빵");
-        store.addMenus(List.of(MenuCreator.create(store, "메뉴", "가격", UserMenuCategoryType.BUNGEOPPANG)));
+        store = StoreFixture.create(user.getId(), "디프만 붕어빵");
+        store.addMenus(List.of(MenuFixture.create(store, "메뉴", "가격", UserMenuCategoryType.BUNGEOPPANG)));
         storeRepository.save(store);
         storeId = store.getId();
     }

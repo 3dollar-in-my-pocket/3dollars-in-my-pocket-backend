@@ -27,11 +27,11 @@ import com.depromeet.threedollar.api.userservice.service.review.dto.request.Upda
 import com.depromeet.threedollar.api.userservice.service.review.dto.response.ReviewInfoResponse;
 import com.depromeet.threedollar.api.userservice.service.review.dto.response.ReviewsCursorResponse;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
-import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewStatus;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
 import com.depromeet.threedollar.domain.rds.event.userservice.review.ReviewChangedEvent;
 import com.depromeet.threedollar.domain.rds.event.userservice.review.ReviewCreatedEvent;
@@ -116,7 +116,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 내가_작성한_리뷰를_수정합니다() throws Exception {
             // given
-            Review review = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요", 5);
+            Review review = ReviewFixture.create(store.getId(), user.getId(), "너무 맛있어요", 5);
             reviewRepository.save(review);
 
             UpdateReviewRequest request = UpdateReviewRequest.testBuilder()
@@ -134,7 +134,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 리뷰를_수정하면_가게의_평균_리뷰점수가_갱신된다() throws Exception {
             // given
-            Review review = ReviewCreator.create(store.getId(), user.getId(), "맛 없어요", 2);
+            Review review = ReviewFixture.create(store.getId(), user.getId(), "맛 없어요", 2);
             reviewRepository.save(review);
 
             UpdateReviewRequest request = UpdateReviewRequest.testBuilder()
@@ -158,7 +158,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 내가_작성한_리뷰를_삭제합니다() throws Exception {
             // given
-            Review review = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요", 5);
+            Review review = ReviewFixture.create(store.getId(), user.getId(), "너무 맛있어요", 5);
             reviewRepository.save(review);
 
             // when
@@ -171,7 +171,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 내가_작성한_리뷰를_삭제하면_가게의_평균_점수가_갱신됩니다() throws Exception {
             // given
-            Review review = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요", 5);
+            Review review = ReviewFixture.create(store.getId(), user.getId(), "너무 맛있어요", 5);
             reviewRepository.save(review);
 
             // when
@@ -190,10 +190,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 내가_작성한_리뷰_목록을_첫번째_커서를_조회합니다() throws Exception {
             // given
-            Review review1 = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요1", 5);
-            Review review2 = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요2", 4);
-            Review review3 = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요3", 3);
-            Review review4 = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요4", 2);
+            Review review1 = ReviewFixture.create(store.getId(), user.getId(), "너무 맛있어요1", 5);
+            Review review2 = ReviewFixture.create(store.getId(), user.getId(), "너무 맛있어요2", 4);
+            Review review3 = ReviewFixture.create(store.getId(), user.getId(), "너무 맛있어요3", 3);
+            Review review4 = ReviewFixture.create(store.getId(), user.getId(), "너무 맛있어요4", 2);
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
@@ -218,10 +218,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 내가_작성한_리뷰_목록을_두번째_커서를_조회합니다() throws Exception {
             // given
-            Review review1 = ReviewCreator.create(store.getId(), user.getId(), "최고에요", 5);
-            Review review2 = ReviewCreator.create(store.getId(), user.getId(), "맛있어요", 4);
-            Review review3 = ReviewCreator.create(store.getId(), user.getId(), "그냥 그래요", 3);
-            Review review4 = ReviewCreator.create(store.getId(), user.getId(), "좀 그래요", 2);
+            Review review1 = ReviewFixture.create(store.getId(), user.getId(), "최고에요", 5);
+            Review review2 = ReviewFixture.create(store.getId(), user.getId(), "맛있어요", 4);
+            Review review3 = ReviewFixture.create(store.getId(), user.getId(), "그냥 그래요", 3);
+            Review review4 = ReviewFixture.create(store.getId(), user.getId(), "좀 그래요", 2);
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
@@ -246,10 +246,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 내가_작성한_리뷰_목록을_조회할때_내가_작성한_총_리뷰_갯수도_함께_반환됩니다() throws Exception {
             // given
-            Review review1 = ReviewCreator.create(store.getId(), user.getId(), "최고에요", 5);
-            Review review2 = ReviewCreator.create(store.getId(), user.getId(), "맛있어요", 4);
-            Review review3 = ReviewCreator.create(store.getId(), user.getId(), "그냥 그래요", 3);
-            Review review4 = ReviewCreator.create(store.getId(), user.getId(), "좀 그래요", 2);
+            Review review1 = ReviewFixture.create(store.getId(), user.getId(), "최고에요", 5);
+            Review review2 = ReviewFixture.create(store.getId(), user.getId(), "맛있어요", 4);
+            Review review3 = ReviewFixture.create(store.getId(), user.getId(), "그냥 그래요", 3);
+            Review review4 = ReviewFixture.create(store.getId(), user.getId(), "좀 그래요", 2);
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
@@ -274,10 +274,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 내가_작성한_리뷰를_모두_조회한경우_커서가_더이상_없다고_표시됩니다_SIZE_이상의_리뷰가_존재하지_않는경우() throws Exception {
             // given
-            Review review1 = ReviewCreator.create(store.getId(), user.getId(), "정말 맛있어요", 5);
-            Review review2 = ReviewCreator.create(store.getId(), user.getId(), "그냥 맛있어요", 4);
-            Review review3 = ReviewCreator.create(store.getId(), user.getId(), "좀 맛있어요", 3);
-            Review review4 = ReviewCreator.create(store.getId(), user.getId(), "그냥 그래요", 2);
+            Review review1 = ReviewFixture.create(store.getId(), user.getId(), "정말 맛있어요", 5);
+            Review review2 = ReviewFixture.create(store.getId(), user.getId(), "그냥 맛있어요", 4);
+            Review review3 = ReviewFixture.create(store.getId(), user.getId(), "좀 맛있어요", 3);
+            Review review4 = ReviewFixture.create(store.getId(), user.getId(), "그냥 그래요", 2);
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
@@ -302,10 +302,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 내가_작성한_리뷰를_모두_조회한경우_커서가_더이상_없다고_표시됩니다_SIZE보다_적은_리뷰가_조회된경우() throws Exception {
             // given
-            Review review1 = ReviewCreator.create(store.getId(), user.getId(), "정말! 맛있어요", 5);
-            Review review2 = ReviewCreator.create(store.getId(), user.getId(), "그냥! 맛있어요", 4);
-            Review review3 = ReviewCreator.create(store.getId(), user.getId(), "좀! 맛있어요", 3);
-            Review review4 = ReviewCreator.create(store.getId(), user.getId(), "그냥! 그래요", 2);
+            Review review1 = ReviewFixture.create(store.getId(), user.getId(), "정말! 맛있어요", 5);
+            Review review2 = ReviewFixture.create(store.getId(), user.getId(), "그냥! 맛있어요", 4);
+            Review review3 = ReviewFixture.create(store.getId(), user.getId(), "좀! 맛있어요", 3);
+            Review review4 = ReviewFixture.create(store.getId(), user.getId(), "그냥! 그래요", 2);
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
@@ -329,8 +329,8 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 내가_작성한_리뷰_목록을_조회할때_삭제된_리뷰는_조회되지_않는다() throws Exception {
             // given
-            Review deletedReviewByUser = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요", 5, ReviewStatus.DELETED);
-            Review deletedReviewByAdmin = ReviewCreator.create(store.getId(), user.getId(), "너무 맛있어요", 5, ReviewStatus.FILTERED);
+            Review deletedReviewByUser = ReviewFixture.create(store.getId(), user.getId(), "너무 맛있어요", 5, ReviewStatus.DELETED);
+            Review deletedReviewByAdmin = ReviewFixture.create(store.getId(), user.getId(), "너무 맛있어요", 5, ReviewStatus.FILTERED);
             reviewRepository.saveAll(List.of(deletedReviewByAdmin, deletedReviewByUser));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
@@ -352,12 +352,12 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 내가_작성한_리뷰_목록_조회시_삭제된_가게의_리뷰인경우_삭제된_가게라고_표기된다() throws Exception {
             // given
-            Store storeDeletedByAdmin = StoreCreator.createDefaultWithMenu(user.getId(), "삭제되기 전 가게 이름", StoreStatus.DELETED);
-            Store storeDeleteByUser = StoreCreator.createDefaultWithMenu(user.getId(), "삭제되기 전 가게 이름", StoreStatus.FILTERED);
+            Store storeDeletedByAdmin = StoreFixture.createDefaultWithMenu(user.getId(), "삭제되기 전 가게 이름", StoreStatus.DELETED);
+            Store storeDeleteByUser = StoreFixture.createDefaultWithMenu(user.getId(), "삭제되기 전 가게 이름", StoreStatus.FILTERED);
             storeRepository.saveAll(List.of(storeDeleteByUser, storeDeletedByAdmin));
 
-            Review review1 = ReviewCreator.create(storeDeleteByUser.getId(), user.getId(), "너무 맛있어요", 5);
-            Review review2 = ReviewCreator.create(storeDeletedByAdmin.getId(), user.getId(), "너무 맛있어요", 5);
+            Review review1 = ReviewFixture.create(storeDeleteByUser.getId(), user.getId(), "너무 맛있어요", 5);
+            Review review2 = ReviewFixture.create(storeDeletedByAdmin.getId(), user.getId(), "너무 맛있어요", 5);
             reviewRepository.saveAll(List.of(review1, review2));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()

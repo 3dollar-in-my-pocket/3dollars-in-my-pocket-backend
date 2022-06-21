@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.core.service.bossservice
 
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 
 internal abstract class SetupBossStoreServiceTest : SetupBossAccountAndUserServiceTest() {
@@ -16,7 +16,7 @@ internal abstract class SetupBossStoreServiceTest : SetupBossAccountAndUserServi
     override fun setup() {
         super.setup()
         bossStoreId = bossStoreRepository.save(
-            BossStoreCreator.create(
+            BossStoreFixture.create(
             bossId = bossId,
             name = "사장님의 가게 이름"
         )).id

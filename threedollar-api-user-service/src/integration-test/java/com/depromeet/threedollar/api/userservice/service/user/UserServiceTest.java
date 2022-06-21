@@ -20,11 +20,11 @@ import com.depromeet.threedollar.api.userservice.service.user.support.UserAssert
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
-import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.WithdrawalUser;
-import com.depromeet.threedollar.domain.rds.domain.userservice.user.WithdrawalUserCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.WithdrawalUserFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.WithdrawalUserRepository;
 
 class UserServiceTest extends IntegrationTest {
@@ -69,7 +69,7 @@ class UserServiceTest extends IntegrationTest {
         void 회원가입시_중복된_닉네임인경우_CONFLICT_에러가_발생합니다() {
             // given
             String name = "will";
-            userRepository.save(UserCreator.create("social-id", UserSocialType.KAKAO, name));
+            userRepository.save(UserFixture.create("social-id", UserSocialType.KAKAO, name));
 
             CreateUserRequest request = CreateUserRequest.builder()
                 .socialId("another-social-id")
@@ -87,7 +87,7 @@ class UserServiceTest extends IntegrationTest {
             String socialId = "conflict-social-id";
             UserSocialType socialType = UserSocialType.GOOGLE;
 
-            userRepository.save(UserCreator.create(socialId, socialType, "기존의 닉네임"));
+            userRepository.save(UserFixture.create(socialId, socialType, "기존의 닉네임"));
 
             CreateUserRequest request = CreateUserRequest.builder()
                 .socialId(socialId)
@@ -122,7 +122,7 @@ class UserServiceTest extends IntegrationTest {
         void 닉네임_사용가능_확인시_중복된_닉네임인경우_CONFLICT_에러가_발생합니다() {
             // given
             String name = "토끼";
-            User user = UserCreator.create("social-id", UserSocialType.KAKAO, name);
+            User user = UserFixture.create("social-id", UserSocialType.KAKAO, name);
             userRepository.save(user);
 
             CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
@@ -156,7 +156,7 @@ class UserServiceTest extends IntegrationTest {
             UserSocialType socialType = UserSocialType.APPLE;
             String name = "토끼";
 
-            User user = UserCreator.create(socialId, socialType, "기존의 닉네임");
+            User user = UserFixture.create(socialId, socialType, "기존의 닉네임");
             userRepository.save(user);
 
             UpdateUserInfoRequest request = UpdateUserInfoRequest.testBuilder()
@@ -195,7 +195,7 @@ class UserServiceTest extends IntegrationTest {
         @Test
         void 회원탈퇴시_유저의_백업데이터가_생성된다() {
             // given
-            User user = UserCreator.create("social-id", UserSocialType.KAKAO, "디프만");
+            User user = UserFixture.create("social-id", UserSocialType.KAKAO, "디프만");
             userRepository.save(user);
 
             // when
@@ -216,8 +216,8 @@ class UserServiceTest extends IntegrationTest {
         @Test
         void 회원탈퇴시_User테이블에서의_해당_데이터는_삭제된다() {
             // given
-            User user1 = UserCreator.create("social-id1", UserSocialType.KAKAO, "기존의 닉네임1");
-            User user2 = UserCreator.create("social-id2", UserSocialType.APPLE, "기존의 닉네임2");
+            User user1 = UserFixture.create("social-id1", UserSocialType.KAKAO, "기존의 닉네임1");
+            User user2 = UserFixture.create("social-id2", UserSocialType.APPLE, "기존의 닉네임2");
 
             userRepository.saveAll(List.of(user1, user2));
 
@@ -247,10 +247,10 @@ class UserServiceTest extends IntegrationTest {
             String socialId = "social-id";
             UserSocialType socialType = UserSocialType.GOOGLE;
 
-            WithdrawalUser withdrawalUser = WithdrawalUserCreator.create(socialId, socialType, 10000L);
+            WithdrawalUser withdrawalUser = WithdrawalUserFixture.create(socialId, socialType, 10000L);
             withdrawalUserRepository.save(withdrawalUser);
 
-            User user = UserCreator.create(socialId, socialType, "기존의 닉네임2");
+            User user = UserFixture.create(socialId, socialType, "기존의 닉네임2");
             userRepository.save(user);
 
             // when

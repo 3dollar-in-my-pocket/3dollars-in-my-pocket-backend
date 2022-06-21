@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.depromeet.threedollar.api.userservice.SetupUserIntegrationTest;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType;
-import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalRepository;
@@ -31,7 +31,7 @@ class AddUserMedalServiceTest extends SetupUserIntegrationTest {
     @Test
     void 기본_메달을_유저에게_부여하면_대표_메달로_등록되고_보유중인_메달에_추가된다() {
         // given
-        Medal medal = MedalCreator.create("기본 메달", MedalAcquisitionConditionType.NO_CONDITION, 0);
+        Medal medal = MedalFixture.create("기본 메달", MedalAcquisitionConditionType.NO_CONDITION, 0);
         medalRepository.save(medal);
 
         // when
@@ -49,7 +49,7 @@ class AddUserMedalServiceTest extends SetupUserIntegrationTest {
     @Test
     void 기본_메달을_유저에게_부여하면_대표_메달로_등록된다() {
         // given
-        Medal medal = MedalCreator.create("기본 메달", MedalAcquisitionConditionType.NO_CONDITION, 0);
+        Medal medal = MedalFixture.create("기본 메달", MedalAcquisitionConditionType.NO_CONDITION, 0);
         medalRepository.save(medal);
 
         // when
@@ -66,8 +66,8 @@ class AddUserMedalServiceTest extends SetupUserIntegrationTest {
     @Test
     void 기본_메달을_둘_이상_획득하면_획득한_첫번째_메달이_대표_메달로_등록된다() {
         // given
-        Medal medalFirst = MedalCreator.create("첫번째 메달", MedalAcquisitionConditionType.NO_CONDITION, 0);
-        Medal medalSecond = MedalCreator.create("두번째 메달", MedalAcquisitionConditionType.NO_CONDITION, 0);
+        Medal medalFirst = MedalFixture.create("첫번째 메달", MedalAcquisitionConditionType.NO_CONDITION, 0);
+        Medal medalSecond = MedalFixture.create("두번째 메달", MedalAcquisitionConditionType.NO_CONDITION, 0);
         medalRepository.saveAll(List.of(medalFirst, medalSecond));
 
         // when

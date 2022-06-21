@@ -21,7 +21,7 @@ import com.depromeet.threedollar.api.userservice.SetupStoreIntegrationTest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImage;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageStatus;
 
@@ -85,8 +85,8 @@ class StoreImageServiceTest extends SetupStoreIntegrationTest {
             String storeImageUrl2 = "https://store-image2.png";
 
             List<StoreImage> storeImages = List.of(
-                StoreImageCreator.create(storeId, userId, storeImageUrl1),
-                StoreImageCreator.create(storeId, userId, storeImageUrl2)
+                StoreImageFixture.create(storeId, userId, storeImageUrl1),
+                StoreImageFixture.create(storeId, userId, storeImageUrl2)
             );
 
             // when
@@ -108,7 +108,7 @@ class StoreImageServiceTest extends SetupStoreIntegrationTest {
         void 가게_이미지_삭제시_해당_이미지가_IN_ACTIVE_로_변경된다() {
             // given
             String imageUrl = "https://store-image.png";
-            StoreImage storeImage = StoreImageCreator.create(storeId, userId, imageUrl);
+            StoreImage storeImage = StoreImageFixture.create(storeId, userId, imageUrl);
             storeImageRepository.save(storeImage);
 
             // when
@@ -134,7 +134,7 @@ class StoreImageServiceTest extends SetupStoreIntegrationTest {
         @Test
         void 가게_이미지_삭제_요청시_해당하는_가게_이미지가_이미_삭제된경우_NOT_FOUND_STORE_EXCEPTION() {
             // given
-            StoreImage storeImage = StoreImageCreator.create(store.getId(), userId, "https://profile.png", StoreImageStatus.INACTIVE);
+            StoreImage storeImage = StoreImageFixture.create(store.getId(), userId, "https://profile.png", StoreImageStatus.INACTIVE);
             storeImageRepository.save(storeImage);
 
             // when & then

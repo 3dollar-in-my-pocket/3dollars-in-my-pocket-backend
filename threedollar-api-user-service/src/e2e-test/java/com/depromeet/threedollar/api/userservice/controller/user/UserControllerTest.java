@@ -21,11 +21,11 @@ import com.depromeet.threedollar.api.userservice.SetupUserControllerTest;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.CheckAvailableNameRequest;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.UpdateUserInfoRequest;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
-import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository;
-import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalRepository;
-import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
 
 class UserControllerTest extends SetupUserControllerTest {
@@ -59,9 +59,9 @@ class UserControllerTest extends SetupUserControllerTest {
             String activationIconUrl = "https://activation-icon.png";
             String disableIconUrl = "https://disable-icon.png";
 
-            Medal medal = MedalCreator.create(medalName, description, activationIconUrl, disableIconUrl);
+            Medal medal = MedalFixture.create(medalName, description, activationIconUrl, disableIconUrl);
             medalRepository.save(medal);
-            userMedalRepository.save(UserMedalCreator.create(medal, user));
+            userMedalRepository.save(UserMedalFixture.create(medal, user));
 
             // when & then
             getUserInfoApi(token)
@@ -133,7 +133,7 @@ class UserControllerTest extends SetupUserControllerTest {
         void 사용가능한_닉네임_확인_요청시_중복된_이름인경우_409_에러() throws Exception {
             // given
             String name = "디프만";
-            userRepository.save(UserCreator.create("social-social-id", UserSocialType.APPLE, name));
+            userRepository.save(UserFixture.create("social-social-id", UserSocialType.APPLE, name));
 
             CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
                 .name(name)
@@ -152,7 +152,7 @@ class UserControllerTest extends SetupUserControllerTest {
         void 사용가능한_닉네임_확인_요청시_허용되지_않은_닉네임인경우_400_에러() throws Exception {
             // given
             String name = "-a-";
-            userRepository.save(UserCreator.create("social-social-id", UserSocialType.APPLE, name));
+            userRepository.save(UserFixture.create("social-social-id", UserSocialType.APPLE, name));
 
             CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
                 .name(name)

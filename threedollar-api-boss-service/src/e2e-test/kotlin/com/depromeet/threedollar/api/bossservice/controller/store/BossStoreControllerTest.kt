@@ -21,12 +21,12 @@ import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.common.type.DayOfTheWeek
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreAppearanceDayCreator
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreAppearanceDayFixture
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreLocation
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenuCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenuFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreOpenType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.store.BossStoreOpenTimeRepository
@@ -51,19 +51,19 @@ internal class BossStoreControllerTest(
         @Test
         fun `가게의 영업 정보를 시작합니다`() {
             // given
-            val category = BossStoreCategoryCreator.create("한식", 1)
+            val category = BossStoreCategoryFixture.create("한식", 1)
             bossStoreCategoryRepository.save(category)
 
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = bossId,
                 name = "사장님 가게",
                 imageUrl = "https://image.png",
                 introduction = "introduction",
                 snsUrl = "https://sns.com",
                 contactsNumber = ContactsNumber.of("010-1234-1234"),
-                menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
+                menus = listOf(BossStoreMenuFixture.create("붕어빵", 2000, "https://menu.png")),
                 appearanceDays = setOf(
-                    BossStoreAppearanceDayCreator.create(
+                    BossStoreAppearanceDayFixture.create(
                         dayOfTheWeek = DayOfTheWeek.FRIDAY,
                         startTime = LocalTime.of(8, 0),
                         endTime = LocalTime.of(10, 0),
@@ -96,10 +96,10 @@ internal class BossStoreControllerTest(
         @Test
         fun `이미 가게를 영업중일때 영업 정보를 갱신합니다`() {
             // given
-            val category = BossStoreCategoryCreator.create("한식", 1)
+            val category = BossStoreCategoryFixture.create("한식", 1)
             bossStoreCategoryRepository.save(category)
 
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = bossId,
                 name = "사장님 가게",
                 location = BossStoreLocation.of(latitude = 38.0, longitude = 128.0),
@@ -107,9 +107,9 @@ internal class BossStoreControllerTest(
                 introduction = "introduction",
                 snsUrl = "https://sns.com",
                 contactsNumber = ContactsNumber.of("010-1234-1234"),
-                menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
+                menus = listOf(BossStoreMenuFixture.create("붕어빵", 2000, "https://menu.png")),
                 appearanceDays = setOf(
-                    BossStoreAppearanceDayCreator.create(
+                    BossStoreAppearanceDayFixture.create(
                         dayOfTheWeek = DayOfTheWeek.FRIDAY,
                         startTime = LocalTime.of(8, 0),
                         endTime = LocalTime.of(10, 0),
@@ -138,10 +138,10 @@ internal class BossStoreControllerTest(
         @Test
         fun `오픈 정보를 갱신할 수 있는 범위 밖인 경우 가게가 강제로 영업 종료된다`() {
             // given
-            val category = BossStoreCategoryCreator.create("한식", 1)
+            val category = BossStoreCategoryFixture.create("한식", 1)
             bossStoreCategoryRepository.save(category)
 
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = bossId,
                 name = "사장님 가게",
                 location = BossStoreLocation.of(latitude = 38.0, longitude = 128.0),
@@ -149,9 +149,9 @@ internal class BossStoreControllerTest(
                 introduction = "introduction",
                 snsUrl = "https://sns.com",
                 contactsNumber = ContactsNumber.of("010-1234-1234"),
-                menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
+                menus = listOf(BossStoreMenuFixture.create("붕어빵", 2000, "https://menu.png")),
                 appearanceDays = setOf(
-                    BossStoreAppearanceDayCreator.create(
+                    BossStoreAppearanceDayFixture.create(
                         dayOfTheWeek = DayOfTheWeek.FRIDAY,
                         startTime = LocalTime.of(8, 0),
                         endTime = LocalTime.of(10, 0),
@@ -180,10 +180,10 @@ internal class BossStoreControllerTest(
         @Test
         fun `오픈 중이지 않은 가게인 경우 Forbidden Exception이 발생한다`() {
             // given
-            val category = BossStoreCategoryCreator.create("한식", 1)
+            val category = BossStoreCategoryFixture.create("한식", 1)
             bossStoreCategoryRepository.save(category)
 
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = bossId,
                 name = "사장님 가게",
                 location = BossStoreLocation.of(latitude = 38.0, longitude = 128.0),
@@ -191,9 +191,9 @@ internal class BossStoreControllerTest(
                 introduction = "introduction",
                 snsUrl = "https://sns.com",
                 contactsNumber = ContactsNumber.of("010-1234-1234"),
-                menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
+                menus = listOf(BossStoreMenuFixture.create("붕어빵", 2000, "https://menu.png")),
                 appearanceDays = setOf(
-                    BossStoreAppearanceDayCreator.create(
+                    BossStoreAppearanceDayFixture.create(
                         dayOfTheWeek = DayOfTheWeek.FRIDAY,
                         startTime = LocalTime.of(8, 0),
                         endTime = LocalTime.of(10, 0),
@@ -226,19 +226,19 @@ internal class BossStoreControllerTest(
         @Test
         fun `가게를 강제로 영업을 종료합니다`() {
             // given
-            val category = BossStoreCategoryCreator.create("한식", 1)
+            val category = BossStoreCategoryFixture.create("한식", 1)
             bossStoreCategoryRepository.save(category)
 
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = bossId,
                 name = "사장님 가게",
                 imageUrl = "https://image.png",
                 introduction = "introduction",
                 snsUrl = "https://sns.com",
                 contactsNumber = ContactsNumber.of("010-1234-1234"),
-                menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
+                menus = listOf(BossStoreMenuFixture.create("붕어빵", 2000, "https://menu.png")),
                 appearanceDays = setOf(
-                    BossStoreAppearanceDayCreator.create(
+                    BossStoreAppearanceDayFixture.create(
                         dayOfTheWeek = DayOfTheWeek.FRIDAY,
                         startTime = LocalTime.of(8, 0),
                         endTime = LocalTime.of(10, 0),
@@ -263,10 +263,10 @@ internal class BossStoreControllerTest(
         @Test
         fun `가게를 영업중일때 가게를 강제 영업 종료합니다`() {
             // given
-            val category = BossStoreCategoryCreator.create("한식", 1)
+            val category = BossStoreCategoryFixture.create("한식", 1)
             bossStoreCategoryRepository.save(category)
 
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = bossId,
                 name = "사장님 가게",
                 location = BossStoreLocation.of(latitude = 38.0, longitude = 128.0),
@@ -274,9 +274,9 @@ internal class BossStoreControllerTest(
                 introduction = "introduction",
                 snsUrl = "https://sns.com",
                 contactsNumber = ContactsNumber.of("010-1234-1234"),
-                menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
+                menus = listOf(BossStoreMenuFixture.create("붕어빵", 2000, "https://menu.png")),
                 appearanceDays = setOf(
-                    BossStoreAppearanceDayCreator.create(
+                    BossStoreAppearanceDayFixture.create(
                         dayOfTheWeek = DayOfTheWeek.FRIDAY,
                         startTime = LocalTime.of(8, 0),
                         endTime = LocalTime.of(10, 0),
@@ -311,19 +311,19 @@ internal class BossStoreControllerTest(
         @Test
         fun `사장님 가게의 정보를 수정합니다 - PUT`() {
             // given
-            val category = BossStoreCategoryCreator.create("중식", 1)
+            val category = BossStoreCategoryFixture.create("중식", 1)
             bossStoreCategoryRepository.save(category)
 
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = bossId,
                 name = "사장님 가게",
                 imageUrl = "https://image.png",
                 introduction = "introduction",
                 snsUrl = "https://sns.com",
                 contactsNumber = ContactsNumber.of("010-1234-1234"),
-                menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
+                menus = listOf(BossStoreMenuFixture.create("붕어빵", 2000, "https://menu.png")),
                 appearanceDays = setOf(
-                    BossStoreAppearanceDayCreator.create(
+                    BossStoreAppearanceDayFixture.create(
                         dayOfTheWeek = DayOfTheWeek.FRIDAY,
                         startTime = LocalTime.of(8, 0),
                         endTime = LocalTime.of(10, 0),
@@ -376,19 +376,19 @@ internal class BossStoreControllerTest(
         @Test
         fun `사장님의 가게를 수정합니다 - PATCH`() {
             // given
-            val category = BossStoreCategoryCreator.create("중식", 1)
+            val category = BossStoreCategoryFixture.create("중식", 1)
             bossStoreCategoryRepository.save(category)
 
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = bossId,
                 name = "사장님 가게",
                 imageUrl = "https://image.png",
                 introduction = "introduction",
                 snsUrl = "https://sns.com",
                 contactsNumber = ContactsNumber.of("010-1234-1234"),
-                menus = listOf(BossStoreMenuCreator.create("붕어빵", 2000, "https://menu.png")),
+                menus = listOf(BossStoreMenuFixture.create("붕어빵", 2000, "https://menu.png")),
                 appearanceDays = setOf(
-                    BossStoreAppearanceDayCreator.create(
+                    BossStoreAppearanceDayFixture.create(
                         dayOfTheWeek = DayOfTheWeek.FRIDAY,
                         startTime = LocalTime.of(8, 0),
                         endTime = LocalTime.of(10, 0),

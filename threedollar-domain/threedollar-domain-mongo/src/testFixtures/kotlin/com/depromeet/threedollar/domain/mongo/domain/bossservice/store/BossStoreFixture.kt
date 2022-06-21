@@ -4,7 +4,7 @@ import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.domain.mongo.TestFixture
 
 @TestFixture
-object BossStoreCreator {
+object BossStoreFixture {
 
     fun create(
         bossId: String,

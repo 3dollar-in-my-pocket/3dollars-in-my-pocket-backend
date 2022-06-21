@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.core.service.bossservice.category
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import com.depromeet.threedollar.api.core.IntegrationTest
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheRepository
 import com.ninjasquad.springmockk.MockkBean
@@ -42,7 +42,7 @@ internal class BossStoreCategoryServiceTest(
         every { bossStoreCategoryCacheRepository.set(any()) } returns Unit
         every { bossStoreCategoryCacheRepository.getAll() } returns null
 
-        val category = BossStoreCategoryCreator.create(title = "한식", sequencePriority = 1)
+        val category = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1)
         bossStoreCategoryRepository.save(category)
 
         // when

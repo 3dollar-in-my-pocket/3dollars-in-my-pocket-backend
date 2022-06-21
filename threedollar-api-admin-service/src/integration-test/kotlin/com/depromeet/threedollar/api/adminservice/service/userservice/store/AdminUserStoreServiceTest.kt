@@ -8,7 +8,7 @@ import org.junit.jupiter.api.assertAll
 import com.depromeet.threedollar.api.adminservice.SetupAdminIntegrationTest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus
 
@@ -23,7 +23,7 @@ internal class AdminUserStoreServiceTest(
         @Test
         fun `관리자가 특정 가게를 강제로 삭제한다`() {
             // given
-            val store = StoreCreator.createWithDefaultMenu(
+            val store = StoreFixture.createWithDefaultMenu(
                 userId = 10000L,
                 storeName = "가게 이름",
                 latitude = 36.0,
@@ -52,7 +52,7 @@ internal class AdminUserStoreServiceTest(
         @Test
         fun `관리자가 특정 가게를 강제로 삭제시 해당하는 가게가 유저에 의해 이미 삭제처리된 경우 NotFoundException 에러가 발생한다`() {
             // given
-            val store = StoreCreator.createWithDefaultMenu(
+            val store = StoreFixture.createWithDefaultMenu(
                 userId = 10000L,
                 storeName = "가게 이름",
                 latitude = 36.0,
@@ -68,7 +68,7 @@ internal class AdminUserStoreServiceTest(
         @Test
         fun `관리자가 특정 가게를 강제로 삭제시 해당하는 가게가 관리자에 의해 이미 삭제처리된 경우 NotFoundException 에러가 발생한다`() {
             // given
-            val store = StoreCreator.createWithDefaultMenu(
+            val store = StoreFixture.createWithDefaultMenu(
                 userId = 10000L,
                 storeName = "가게 이름",
                 latitude = 36.0,

@@ -13,7 +13,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionCondition
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType
-import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
 
 internal class AdminMedalServiceTest(
@@ -82,7 +82,7 @@ internal class AdminMedalServiceTest(
                 disableIconUrl = disableIconUrl
             )
 
-            val medal = MedalCreator.create("메달 이름", MedalAcquisitionConditionType.ADD_STORE, 3)
+            val medal = MedalFixture.create("메달 이름", MedalAcquisitionConditionType.ADD_STORE, 3)
             medalRepository.save(medal)
 
             // when

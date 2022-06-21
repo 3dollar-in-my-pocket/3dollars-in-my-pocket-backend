@@ -5,7 +5,7 @@ import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.TestFixture
 
 @TestFixture
-object AdvertisementCreator {
+object AdvertisementFixture {
 
     @JvmStatic
     fun create(

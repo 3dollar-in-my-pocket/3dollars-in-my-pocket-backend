@@ -8,7 +8,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.post
 import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.auth.dto.request.LoginRequest
-import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminCreator
+import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminFixture
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
 import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse
 import com.ninjasquad.springmockk.MockkBean
@@ -27,7 +27,7 @@ internal class AuthControllerTest : SetupAdminControllerTest() {
         fun 구글_로그인_요청이_성공하면_토큰이_반환된다() {
             // given
             val email = "will.seungho@gmail.com"
-            val admin = AdminCreator.create(email, "관리자")
+            val admin = AdminFixture.create(email, "관리자")
             adminRepository.save(admin)
 
             every { googleAuthApiClient.getProfileInfo(any()) } returns GoogleProfileInfoResponse.testInstance("google-social-id", email, "구글 계정 이름")

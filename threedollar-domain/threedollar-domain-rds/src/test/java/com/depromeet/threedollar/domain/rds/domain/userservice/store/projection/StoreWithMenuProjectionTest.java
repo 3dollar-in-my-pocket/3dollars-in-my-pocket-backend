@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
 
 class StoreWithMenuProjectionTest {
@@ -59,7 +59,7 @@ class StoreWithMenuProjectionTest {
         @Test
         void 가게에_아무런_메뉴도_없을경우_빈_리스트을_반환한다() {
             // given
-            Store store = StoreCreator.create(100L, "가게");
+            Store store = StoreFixture.create(100L, "가게");
 
             // when
             List<UserMenuCategoryType> categories = store.getMenuCategoriesSortedByCounts();

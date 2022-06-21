@@ -11,13 +11,13 @@ import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.model.BusinessNumber
 import com.depromeet.threedollar.common.model.ContactsNumber
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationStatus
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 
 internal class BossRegistrationAdminServiceTest(
@@ -46,7 +46,7 @@ internal class BossRegistrationAdminServiceTest(
             val bossName = "가삼"
             val businessNumber = "000-00-00000"
 
-            val registration = RegistrationCreator.create(
+            val registration = RegistrationFixture.create(
                 socialId = socialId,
                 socialType = socialType,
                 bossName = bossName,
@@ -79,7 +79,7 @@ internal class BossRegistrationAdminServiceTest(
             val bossName = "가삼"
             val businessNumber = "000-00-00000"
 
-            val registration = RegistrationCreator.create(
+            val registration = RegistrationFixture.create(
                 socialId = socialId,
                 socialType = socialType,
                 bossName = bossName,
@@ -109,7 +109,7 @@ internal class BossRegistrationAdminServiceTest(
             val categoriesIds = setOf("한식id", "중식id")
             val certificationImageUrl = "https://certification.png"
 
-            val registration = RegistrationCreator.create(
+            val registration = RegistrationFixture.create(
                 socialId = "social-id",
                 socialType = BossAccountSocialType.NAVER,
                 storeName = storeName,
@@ -142,7 +142,7 @@ internal class BossRegistrationAdminServiceTest(
         @Test
         fun `이미 승인된 가입 신청인 경우 다시 승인할 수 없다`() {
             // given
-            val registration = RegistrationCreator.create(
+            val registration = RegistrationFixture.create(
                 socialId = "socialId",
                 socialType = BossAccountSocialType.NAVER,
                 status = BossRegistrationStatus.APPROVED
@@ -156,7 +156,7 @@ internal class BossRegistrationAdminServiceTest(
         @Test
         fun `가입 거부된 가입 신청인 경우 다시 승인할 수 없다`() {
             // given
-            val registration = RegistrationCreator.create(
+            val registration = RegistrationFixture.create(
                 socialId = "socialId",
                 socialType = BossAccountSocialType.NAVER,
                 status = BossRegistrationStatus.REJECTED
@@ -179,13 +179,13 @@ internal class BossRegistrationAdminServiceTest(
             val socialId = "social-id"
             val socialType = BossAccountSocialType.NAVER
 
-            val bossAccount = BossAccountCreator.create(
+            val bossAccount = BossAccountFixture.create(
                 socialId = socialId,
                 socialType = socialType
             )
             bossAccountRepository.save(bossAccount)
 
-            val registration = RegistrationCreator.create(
+            val registration = RegistrationFixture.create(
                 socialId = socialId,
                 socialType = socialType,
                 status = BossRegistrationStatus.WAITING
@@ -199,7 +199,7 @@ internal class BossRegistrationAdminServiceTest(
         @Test
         fun `사장님 가입 신청이 승인되면 해당 가입 신청은 APPROVE 상태로 변경된다`() {
             // given
-            val registration = RegistrationCreator.create(
+            val registration = RegistrationFixture.create(
                 socialId = "social-id",
                 socialType = BossAccountSocialType.NAVER,
                 status = BossRegistrationStatus.WAITING
@@ -225,7 +225,7 @@ internal class BossRegistrationAdminServiceTest(
         @Test
         fun `사장님 가입 신청이 거부되면 해당 가입 신청은 APPROVE 상태로 변경된다`() {
             // given
-            val registration = RegistrationCreator.create(
+            val registration = RegistrationFixture.create(
                 socialId = "social-id",
                 socialType = BossAccountSocialType.NAVER,
                 status = BossRegistrationStatus.WAITING

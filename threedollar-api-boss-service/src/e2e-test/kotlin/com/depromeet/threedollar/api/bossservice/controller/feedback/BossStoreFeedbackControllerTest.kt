@@ -12,9 +12,9 @@ import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.respo
 import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.response.BossStoreFeedbackGroupingDateResponse
 import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.response.BossStoreFeedbackTypeResponse
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedbackCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedbackFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedbackRepository
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.feedback.BossStoreFeedbackCountRepository
 
@@ -34,7 +34,7 @@ internal class BossStoreFeedbackControllerTest(
     @Test
     fun `전체 기간동안의 특정 사장님의 가게의 피드백 갯수와 총 개수 중 해당 피드백의 비율을 조회합니다`() {
         // given
-        val bossStore = BossStoreCreator.create(
+        val bossStore = BossStoreFixture.create(
             bossId = "bossId",
             name = "가슴속 3천원"
         )
@@ -96,13 +96,13 @@ internal class BossStoreFeedbackControllerTest(
             val feedbackType = BossStoreFeedbackType.BOSS_IS_KIND
             val date = LocalDate.of(2022, 1, 1)
 
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = "bossId",
                 name = "가슴속 3천원"
             )
             bossStoreRepository.save(bossStore)
 
-            val feedback = BossStoreFeedbackCreator.create(
+            val feedback = BossStoreFeedbackFixture.create(
                 storeId = bossStore.id,
                 userId = 1000000L,
                 feedbackType = feedbackType,
@@ -134,19 +134,19 @@ internal class BossStoreFeedbackControllerTest(
             val date = LocalDate.of(2022, 1, 1)
             val nextDate = LocalDate.of(2021, 12, 31)
 
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = "bossId",
                 name = "가슴속 3천원"
             )
             bossStoreRepository.save(bossStore)
 
-            val feedback = BossStoreFeedbackCreator.create(
+            val feedback = BossStoreFeedbackFixture.create(
                 storeId = bossStore.id,
                 userId = 1000000L,
                 feedbackType = feedbackType,
                 date = date
             )
-            val feedbackMore = BossStoreFeedbackCreator.create(
+            val feedbackMore = BossStoreFeedbackFixture.create(
                 storeId = bossStore.id,
                 userId = 1000000L,
                 feedbackType = feedbackType,
@@ -175,19 +175,19 @@ internal class BossStoreFeedbackControllerTest(
             // given
             val userId = 100000L
 
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = "bossId",
                 name = "가슴속 3천원"
             )
             bossStoreRepository.save(bossStore)
 
-            val feedback1 = BossStoreFeedbackCreator.create(
+            val feedback1 = BossStoreFeedbackFixture.create(
                 storeId = bossStore.id,
                 userId = userId,
                 feedbackType = BossStoreFeedbackType.BOSS_IS_KIND,
                 date = LocalDate.of(2022, 1, 1)
             )
-            val feedback2 = BossStoreFeedbackCreator.create(
+            val feedback2 = BossStoreFeedbackFixture.create(
                 storeId = bossStore.id,
                 userId = userId,
                 feedbackType = BossStoreFeedbackType.FOOD_IS_DELICIOUS,

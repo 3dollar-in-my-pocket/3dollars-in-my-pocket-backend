@@ -13,7 +13,7 @@ import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.respo
 import com.depromeet.threedollar.api.userservice.SetupUserControllerTest
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedbackRepository
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.feedback.BossStoreFeedbackCountRepository
 
@@ -32,7 +32,7 @@ internal class BossStoreFeedbackControllerTest(
     @Test
     fun `전체 기간동안의 특정 사장님의 가게의 피드백 갯수와 총 개수 중 해당 피드백의 비율을 조회합니다`() {
         // given
-        val bossStore = BossStoreCreator.create(
+        val bossStore = BossStoreFixture.create(
             bossId = "bossId",
             name = "가슴속 3천원"
         )
@@ -104,7 +104,7 @@ internal class BossStoreFeedbackControllerTest(
     @Test
     fun `사장님 가게에 새로운 피드백을 추가합니다`() {
         // given
-        val bossStore = BossStoreCreator.create(
+        val bossStore = BossStoreFixture.create(
             bossId = "bossId",
             name = "가슴속 3천원"
         )

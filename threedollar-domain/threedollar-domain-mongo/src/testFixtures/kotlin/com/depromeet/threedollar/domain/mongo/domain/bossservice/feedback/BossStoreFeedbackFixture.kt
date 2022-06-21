@@ -5,7 +5,7 @@ import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.mongo.TestFixture
 
 @TestFixture
-object BossStoreFeedbackCreator {
+object BossStoreFeedbackFixture {
 
     fun create(
         storeId: String,

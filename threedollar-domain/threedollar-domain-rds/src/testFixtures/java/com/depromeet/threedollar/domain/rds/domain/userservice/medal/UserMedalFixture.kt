@@ -4,7 +4,7 @@ import com.depromeet.threedollar.domain.rds.domain.TestFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User
 
 @TestFixture
-object UserMedalCreator {
+object UserMedalFixture {
 
     @JvmOverloads
     @JvmStatic

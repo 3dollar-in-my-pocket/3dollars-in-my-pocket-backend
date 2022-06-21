@@ -23,7 +23,7 @@ class StoreTest {
         @Test
         void 가게의_영업일_정보를_수정한다() {
             // given
-            Store store = StoreCreator.createWithDefaultMenu(100L, "가게");
+            Store store = StoreFixture.createWithDefaultMenu(100L, "가게");
             store.addAppearanceDays(Set.of(DayOfTheWeek.MONDAY));
 
             // when
@@ -39,7 +39,7 @@ class StoreTest {
         @Test
         void 가게의_영업일_정보를_모두_삭제한다() {
             // given
-            Store store = StoreCreator.createWithDefaultMenu(100L, "가게");
+            Store store = StoreFixture.createWithDefaultMenu(100L, "가게");
             store.addAppearanceDays(Set.of(DayOfTheWeek.MONDAY));
 
             // when
@@ -59,7 +59,7 @@ class StoreTest {
         @Test
         void 가게의_결제방법을_수정한다() {
             // given
-            Store store = StoreCreator.createWithDefaultMenu(100L, "가게");
+            Store store = StoreFixture.createWithDefaultMenu(100L, "가게");
             store.addPaymentMethods(Set.of(PaymentMethodType.CARD));
 
             // when
@@ -75,7 +75,7 @@ class StoreTest {
         @Test
         void 가게의_결제방법을_모두_삭제한다() {
             // given
-            Store store = StoreCreator.createWithDefaultMenu(100L, "가게");
+            Store store = StoreFixture.createWithDefaultMenu(100L, "가게");
             store.addPaymentMethods(Set.of(PaymentMethodType.CARD));
 
             // when
@@ -95,8 +95,8 @@ class StoreTest {
         @Test
         void 가게에_해당_카테고리를판매중인지_여부_확인시_메뉴_카테고리_존재하면_true를_반환한다() {
             // given
-            Store store = StoreCreator.create(100L, "가게");
-            store.addMenus(List.of(MenuCreator.create(store, "name", "price", UserMenuCategoryType.BUNGEOPPANG)));
+            Store store = StoreFixture.create(100L, "가게");
+            store.addMenus(List.of(MenuFixture.create(store, "name", "price", UserMenuCategoryType.BUNGEOPPANG)));
 
             // when
             boolean result = store.hasMenuCategory(UserMenuCategoryType.BUNGEOPPANG);
@@ -108,8 +108,8 @@ class StoreTest {
         @Test
         void 게에_해당_카테고리를판매중인지_여부_확인시_해당하는_메뉴_카테고리가_존재하지_않으면_false를_반환한다() {
             // given
-            Store store = StoreCreator.create(100L, "가게");
-            store.addMenus(List.of(MenuCreator.create(store, "name", "price", UserMenuCategoryType.BUNGEOPPANG)));
+            Store store = StoreFixture.create(100L, "가게");
+            store.addMenus(List.of(MenuFixture.create(store, "name", "price", UserMenuCategoryType.BUNGEOPPANG)));
 
             // when
             boolean result = store.hasMenuCategory(UserMenuCategoryType.DALGONA);
@@ -126,11 +126,11 @@ class StoreTest {
         @Test
         void 가게의_카테고리_조회시_가게_메뉴의_수가_많은것부터_정렬해서_반환한다() {
             // given
-            Store store = StoreCreator.create(100L, "가게");
+            Store store = StoreFixture.create(100L, "가게");
             store.addMenus(List.of(
-                MenuCreator.create(store, "name", "price", UserMenuCategoryType.BUNGEOPPANG),
-                MenuCreator.create(store, "name", "price", UserMenuCategoryType.BUNGEOPPANG),
-                MenuCreator.create(store, "name", "price", UserMenuCategoryType.EOMUK)
+                MenuFixture.create(store, "name", "price", UserMenuCategoryType.BUNGEOPPANG),
+                MenuFixture.create(store, "name", "price", UserMenuCategoryType.BUNGEOPPANG),
+                MenuFixture.create(store, "name", "price", UserMenuCategoryType.EOMUK)
             ));
 
             // when
@@ -144,7 +144,7 @@ class StoreTest {
         @Test
         void 가게에_아무런_메뉴도_없을경우_빈_리스트을_반환한다() {
             // given
-            Store store = StoreCreator.create(100L, "가게");
+            Store store = StoreFixture.create(100L, "가게");
 
             // when
             List<UserMenuCategoryType> categories = store.getMenuCategoriesSortedByCounts();
@@ -165,7 +165,7 @@ class StoreTest {
         @ParameterizedTest
         void 가게의_평균점수를_갱신시_소수점_둘째자리에서_반올림된다(double rating, double expectedResult) {
             // given
-            Store store = StoreCreator.create(100L, "가게 이름");
+            Store store = StoreFixture.create(100L, "가게 이름");
 
             // when
             store.updateAverageRating(rating);

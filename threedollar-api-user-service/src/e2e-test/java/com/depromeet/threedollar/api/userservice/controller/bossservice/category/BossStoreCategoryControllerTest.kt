@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.core.service.bossservice.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.api.userservice.ControllerTest
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheModel
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheRepository
@@ -31,8 +31,8 @@ internal class BossStoreCategoryControllerTest(
         every { bossStoreCategoryCacheRepository.set(any()) } returns Unit
         every { bossStoreCategoryCacheRepository.getAll() } returns null
 
-        val category1 = BossStoreCategoryCreator.create(title = "한식", sequencePriority = 1)
-        val category2 = BossStoreCategoryCreator.create(title = "중식", sequencePriority = 2)
+        val category1 = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1)
+        val category2 = BossStoreCategoryFixture.create(title = "중식", sequencePriority = 2)
         bossStoreCategoryRepository.saveAll(listOf(category1, category2))
 
         // when & then
@@ -56,8 +56,8 @@ internal class BossStoreCategoryControllerTest(
         every { bossStoreCategoryCacheRepository.set(any()) } returns Unit
         every { bossStoreCategoryCacheRepository.getAll() } returns listOf()
 
-        val category1 = BossStoreCategoryCreator.create(title = "한식", sequencePriority = 1)
-        val category2 = BossStoreCategoryCreator.create(title = "중식", sequencePriority = 2)
+        val category1 = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1)
+        val category2 = BossStoreCategoryFixture.create(title = "중식", sequencePriority = 2)
         bossStoreCategoryRepository.saveAll(listOf(category1, category2))
 
         // when & then

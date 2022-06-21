@@ -9,11 +9,11 @@ import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.common.exception.type.ErrorCode
-import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
-import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserCreator
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType
 
@@ -30,7 +30,7 @@ internal class AdminUserReviewControllerTest(
         @Test
         fun `관리자가 특정 리뷰를 삭제한다`() {
             // given
-            val review = ReviewCreator.create(
+            val review = ReviewFixture.create(
                 storeId = 10000L,
                 userId = 1L,
                 rating = 1,
@@ -57,20 +57,20 @@ internal class AdminUserReviewControllerTest(
         @Test
         fun `관리자가 특정 리뷰를 조회한다`() {
             // given
-            val user = UserCreator.create(
+            val user = UserFixture.create(
                 socialId = "social-id",
                 socialType = UserSocialType.GOOGLE,
                 name = "닉네임"
             )
             userRepository.save(user)
 
-            val store = StoreCreator.create(
+            val store = StoreFixture.create(
                 userId = user.id,
                 storeName = "가게 이름",
             )
             storeRepository.save(store)
 
-            val review = ReviewCreator.create(
+            val review = ReviewFixture.create(
                 storeId = store.id,
                 userId = user.id,
                 rating = 5,
@@ -101,7 +101,7 @@ internal class AdminUserReviewControllerTest(
         @Test
         fun `관리자가 특정 리뷰를 조회할때 유저나 가게가 없는경우 해당 정보에 null이 반환된다`() {
             // given
-            val review = ReviewCreator.create(
+            val review = ReviewFixture.create(
                 storeId = -1L,
                 userId = -1L,
                 rating = 3,

@@ -17,7 +17,7 @@ import com.depromeet.threedollar.api.userservice.service.auth.dto.request.LoginR
 import com.depromeet.threedollar.api.userservice.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.response.LoginResponse;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
-import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
 import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder;
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient;
@@ -122,7 +122,7 @@ class AuthControllerTest extends SetupUserControllerTest {
         @Test
         void 카카오_로그인_요청이_성공하면_인증_토큰이_반환된다() throws Exception {
             // given
-            User user = UserCreator.create("kakao-social-id", UserSocialType.KAKAO, "카카오 계정");
+            User user = UserFixture.create("kakao-social-id", UserSocialType.KAKAO, "카카오 계정");
             userRepository.save(user);
 
             when(kaKaoAuthApiClient.getProfileInfo(anyString())).thenReturn(KaKaoProfileResponse.testInstance(user.getSocialId()));
@@ -146,7 +146,7 @@ class AuthControllerTest extends SetupUserControllerTest {
         @Test
         void 애플_로그인_요청이_성공하면_인증_토큰이_반환된다() throws Exception {
             // given
-            User user = UserCreator.create("apple-social-id", UserSocialType.APPLE, "애플 계정");
+            User user = UserFixture.create("apple-social-id", UserSocialType.APPLE, "애플 계정");
             userRepository.save(user);
 
             when(appleTokenDecoder.getSocialIdFromIdToken(anyString())).thenReturn(user.getSocialId());
@@ -170,7 +170,7 @@ class AuthControllerTest extends SetupUserControllerTest {
         @Test
         void 구글_로그인_요청이_성공하면_인증_토큰이_반환된다() throws Exception {
             // given
-            User user = UserCreator.create("google-social-id", UserSocialType.GOOGLE, "구글 계정");
+            User user = UserFixture.create("google-social-id", UserSocialType.GOOGLE, "구글 계정");
             userRepository.save(user);
 
             when(googleAuthApiClient.getProfileInfo(anyString())).thenReturn(GoogleProfileInfoResponse.testInstance(user.getSocialId()));

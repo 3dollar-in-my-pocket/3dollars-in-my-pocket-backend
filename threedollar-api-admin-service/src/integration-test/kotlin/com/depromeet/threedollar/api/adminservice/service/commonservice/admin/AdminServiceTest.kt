@@ -10,7 +10,7 @@ import com.depromeet.threedollar.api.adminservice.service.commonservice.admin.dt
 import com.depromeet.threedollar.api.adminservice.service.commonservice.admin.dto.request.UpdateMyAdminInfoRequest
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminCreator
+import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminFixture
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminRepository
 
 internal class AdminServiceTest(
@@ -34,7 +34,7 @@ internal class AdminServiceTest(
         fun `자신의 관리자 정보를 수정한다`() {
             // given
             val name = "끼토끼토"
-            val admin = AdminCreator.create(
+            val admin = AdminFixture.create(
                 email = "will.seungho@gmail.com",
                 name = "토끼"
             )
@@ -107,7 +107,7 @@ internal class AdminServiceTest(
             // given
             val email = "will.seungho@gmail.com"
 
-            val admin = AdminCreator.create(
+            val admin = AdminFixture.create(
                 email = email,
                 name = "토끼"
             )

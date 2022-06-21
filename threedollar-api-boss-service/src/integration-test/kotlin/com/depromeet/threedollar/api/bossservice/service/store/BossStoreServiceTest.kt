@@ -17,16 +17,16 @@ import com.depromeet.threedollar.api.bossservice.service.store.dto.request.Updat
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.common.type.DayOfTheWeek
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossDeletedStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossDeletedStoreRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreAppearanceDay
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreAppearanceDayCreator
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreAppearanceDayFixture
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenu
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenuCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenuFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheRepository
 import com.ninjasquad.springmockk.MockkBean
@@ -61,7 +61,7 @@ internal class BossStoreSetupBossAccountServiceTest(
         fun `사장님 가게의 정보를 수정한다`() {
             // given
             val categoriesIds = createMockCategory(bossStoreCategoryRepository, "한식", "일식", "중식")
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = bossId,
                 name = "사장님 가게",
             )
@@ -105,13 +105,13 @@ internal class BossStoreSetupBossAccountServiceTest(
                         snsUrl = request.snsUrl,
                         categoriesIds = categoriesIds,
                         menus = listOf(
-                            BossStoreMenuCreator.create(
+                            BossStoreMenuFixture.create(
                                 name = "팥 붕어빵",
                                 price = 1000,
                                 imageUrl = "https://menu-bungeoppang.png"
                             )),
                         appearanceDays = setOf(
-                            BossStoreAppearanceDayCreator.create(
+                            BossStoreAppearanceDayFixture.create(
                                 dayOfTheWeek = DayOfTheWeek.WEDNESDAY,
                                 startTime = LocalTime.of(8, 0),
                                 endTime = LocalTime.of(10, 0),
@@ -126,7 +126,7 @@ internal class BossStoreSetupBossAccountServiceTest(
         fun `다른 사장님의 가게 정보를 수정할 수 없다`() {
             // given
             val categoriesIds = createMockCategory(bossStoreCategoryRepository, "한식", "일식")
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = bossId,
                 name = "사장님 가게",
             )
@@ -164,11 +164,11 @@ internal class BossStoreSetupBossAccountServiceTest(
         @Test
         fun `따로 파라미터에 명시하지 않은 정보들은 수정되지 않는다`() {
             // given
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = bossId,
                 name = "사장님 가게",
-                menus = listOf(BossStoreMenuCreator.create(name = "슈붕", price = 1000, imageUrl = "https://menu-image.png")),
-                appearanceDays = setOf(BossStoreAppearanceDayCreator.create(dayOfTheWeek = DayOfTheWeek.FRIDAY, startTime = LocalTime.of(8, 0), endTime = LocalTime.of(10, 0))),
+                menus = listOf(BossStoreMenuFixture.create(name = "슈붕", price = 1000, imageUrl = "https://menu-image.png")),
+                appearanceDays = setOf(BossStoreAppearanceDayFixture.create(dayOfTheWeek = DayOfTheWeek.FRIDAY, startTime = LocalTime.of(8, 0), endTime = LocalTime.of(10, 0))),
                 categoriesIds = setOf("카테고리 1")
             )
             bossStoreRepository.save(bossStore)
@@ -201,7 +201,7 @@ internal class BossStoreSetupBossAccountServiceTest(
         fun `수정 요청한 이름만 변경된다`() {
             // given
             val newName = "새로운 가게 이름"
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = bossId,
                 name = "사장님 가게",
             )
@@ -236,10 +236,10 @@ internal class BossStoreSetupBossAccountServiceTest(
         @Test
         fun `사장님 가게의 메뉴 정보를 수정한다`() {
             // given
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = bossId,
                 name = "사장님 가게",
-                menus = listOf(BossStoreMenuCreator.create(name = "슈붕", price = 1000, imageUrl = "https://menu0.png"))
+                menus = listOf(BossStoreMenuFixture.create(name = "슈붕", price = 1000, imageUrl = "https://menu0.png"))
             )
             bossStoreRepository.save(bossStore)
 
@@ -268,11 +268,11 @@ internal class BossStoreSetupBossAccountServiceTest(
         @Test
         fun `메뉴 리스트를 빈 리스트로 요청하면, 모든 메뉴가 삭제된다`() {
             // given
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = bossId,
                 name = "사장님 가게",
-                menus = listOf(BossStoreMenuCreator.create(name = "슈붕", price = 1000, imageUrl = "https://menu-image.png")),
-                appearanceDays = setOf(BossStoreAppearanceDayCreator.create(dayOfTheWeek = DayOfTheWeek.FRIDAY, startTime = LocalTime.of(8, 0), endTime = LocalTime.of(10, 0))),
+                menus = listOf(BossStoreMenuFixture.create(name = "슈붕", price = 1000, imageUrl = "https://menu-image.png")),
+                appearanceDays = setOf(BossStoreAppearanceDayFixture.create(dayOfTheWeek = DayOfTheWeek.FRIDAY, startTime = LocalTime.of(8, 0), endTime = LocalTime.of(10, 0))),
                 categoriesIds = setOf("카테고리 1")
             )
             bossStoreRepository.save(bossStore)
@@ -306,7 +306,7 @@ internal class BossStoreSetupBossAccountServiceTest(
         @Test
         fun `사장님 계정의 가게들을 삭제한다`() {
             // given
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = bossId,
                 name = "사장님 가게",
             )
@@ -329,7 +329,7 @@ internal class BossStoreSetupBossAccountServiceTest(
             val imageUrl = "https://store-image.png"
             val contactsNumber = ContactsNumber.of("010-1234-1234")
             val snsUrl = "https://instagram.com/test"
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = bossId,
                 name = name,
                 imageUrl = imageUrl,
@@ -365,7 +365,7 @@ internal class BossStoreSetupBossAccountServiceTest(
         @Test
         fun `다른 사장님의 가게를 삭제할 수 없다`() {
             // given
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = bossId,
                 name = "사장님 가게"
             )
@@ -387,7 +387,7 @@ private fun createMockCategory(
     vararg titles: String,
 ): Set<String> {
     return titles.asSequence()
-        .map { title -> bossStoreCategoryRepository.save(BossStoreCategoryCreator.create(title)).id }
+        .map { title -> bossStoreCategoryRepository.save(BossStoreCategoryFixture.create(title)).id }
         .toSet()
 }
 

@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.bossservice
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheRepository
 import com.ninjasquad.springmockk.MockkBean
@@ -28,7 +28,7 @@ internal abstract class SetupBossStoreIntegrationTest : SetupBossAccountIntegrat
     @BeforeEach
     override fun setup() {
         super.setup()
-        bossStore = bossStoreRepository.save(BossStoreCreator.create(
+        bossStore = bossStoreRepository.save(BossStoreFixture.create(
             bossId = bossId,
             name = "사장님의 가게 이름"
         ))

@@ -11,7 +11,7 @@ import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.response
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory
-import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCreator
+import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqFixture
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqRepository
 
 internal class BossFaqControllerTest(
@@ -29,13 +29,13 @@ internal class BossFaqControllerTest(
         @Test
         fun `FAQ 목록을 조회합니다`() {
             // given
-            val faq1 = FaqCreator.create(
+            val faq1 = FaqFixture.create(
                 applicationType = ApplicationType.BOSS_API,
                 question = "질문1",
                 answer = "답변1",
                 category = FaqCategory.ETC
             )
-            val faq2 = FaqCreator.create(
+            val faq2 = FaqFixture.create(
                 applicationType = ApplicationType.BOSS_API,
                 question = "질문2",
                 answer = "답변2",
@@ -65,13 +65,13 @@ internal class BossFaqControllerTest(
         @Test
         fun `카테고리에 해당하는 FAQ 목록을 조회합니다`() {
             // given
-            val faq1 = FaqCreator.create(
+            val faq1 = FaqFixture.create(
                 applicationType = ApplicationType.BOSS_API,
                 question = "질문1",
                 answer = "답변1",
                 category = FaqCategory.ETC
             )
-            val faq2 = FaqCreator.create(
+            val faq2 = FaqFixture.create(
                 applicationType = ApplicationType.BOSS_API,
                 question = "질문2",
                 answer = "답변2",

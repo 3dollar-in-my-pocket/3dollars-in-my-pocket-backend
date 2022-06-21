@@ -3,7 +3,7 @@ package com.depromeet.threedollar.domain.rds.domain.userservice.store
 import com.depromeet.threedollar.domain.rds.domain.TestFixture
 
 @TestFixture
-object StoreImageCreator {
+object StoreImageFixture {
 
     @JvmOverloads
     @JvmStatic

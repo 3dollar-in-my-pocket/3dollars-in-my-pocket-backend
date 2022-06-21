@@ -13,7 +13,7 @@ import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.Advertisement
-import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementCreator
+import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementFixture
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPositionType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementRepository
@@ -197,7 +197,7 @@ internal class AdminAdvertisementServiceTest(
     }
 
     private fun createMockAdvertisement(): Advertisement {
-        return AdvertisementCreator.create(
+        return AdvertisementFixture.create(
             applicationType = ApplicationType.USER_API,
             positionType = AdvertisementPositionType.SPLASH,
             platformType = AdvertisementPlatformType.AOS,

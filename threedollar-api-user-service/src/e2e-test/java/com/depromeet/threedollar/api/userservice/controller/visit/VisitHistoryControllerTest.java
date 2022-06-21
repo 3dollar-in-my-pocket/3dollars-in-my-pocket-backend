@@ -25,10 +25,10 @@ import com.depromeet.threedollar.api.userservice.service.visit.dto.request.AddVi
 import com.depromeet.threedollar.api.userservice.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.response.VisitHistoriesCursorResponse;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistory;
-import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
 import com.depromeet.threedollar.domain.rds.event.userservice.visit.VisitHistoryAddedEvent;
@@ -90,8 +90,8 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
         @Test
         void 내가_방문_인증한_가게들의_정보와_방문_기록을_조회한다() throws Exception {
             // given
-            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, user.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
-            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, user.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 22));
+            VisitHistory visitHistory1 = VisitHistoryFixture.create(store, user.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
+            VisitHistory visitHistory2 = VisitHistoryFixture.create(store, user.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 22));
 
             visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
 
@@ -116,8 +116,8 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
         @Test
         void SIZE만큼의_방문_기록을_조회힌다_더_존재하면_마지막_방문기록의_ID가_nextCursor_로_넘어간다() throws Exception {
             // given
-            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, user.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
-            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, user.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 22));
+            VisitHistory visitHistory1 = VisitHistoryFixture.create(store, user.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
+            VisitHistory visitHistory2 = VisitHistoryFixture.create(store, user.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 22));
 
             visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
 
@@ -141,8 +141,8 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
         @Test
         void 커서로_넘어온_방문기록_이전의_방문_기록들을_SIZE_만큼_조회한다() throws Exception {
             // given
-            VisitHistory visitHistory1 = VisitHistoryCreator.create(store, user.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
-            VisitHistory visitHistory2 = VisitHistoryCreator.create(store, user.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 22));
+            VisitHistory visitHistory1 = VisitHistoryFixture.create(store, user.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
+            VisitHistory visitHistory2 = VisitHistoryFixture.create(store, user.getId(), VisitType.NOT_EXISTS, LocalDate.of(2021, 10, 22));
 
             visitHistoryRepository.saveAll(List.of(visitHistory1, visitHistory2));
 
@@ -185,10 +185,10 @@ class VisitHistoryControllerTest extends SetupStoreControllerTest {
         @Test
         void 방문한_가게가_삭제됬을경우_해당_정보를_반환하돼_가게는_삭제표시된다() throws Exception {
             // given
-            Store deletedStore = StoreCreator.createDefaultWithMenu(user.getId(), "가게 이름", StoreStatus.DELETED);
+            Store deletedStore = StoreFixture.createDefaultWithMenu(user.getId(), "가게 이름", StoreStatus.DELETED);
             storeRepository.save(deletedStore);
 
-            VisitHistory visitHistory = VisitHistoryCreator.create(deletedStore, user.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
+            VisitHistory visitHistory = VisitHistoryFixture.create(deletedStore, user.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 21));
             visitHistoryRepository.save(visitHistory);
 
             RetrieveMyVisitHistoriesRequest request = RetrieveMyVisitHistoriesRequest.testBuilder()

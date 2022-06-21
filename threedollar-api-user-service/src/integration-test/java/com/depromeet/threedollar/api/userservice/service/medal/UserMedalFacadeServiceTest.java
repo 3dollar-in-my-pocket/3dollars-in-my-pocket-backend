@@ -17,21 +17,21 @@ import com.depromeet.threedollar.api.userservice.service.medal.support.UserMedal
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType;
-import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus;
-import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.DeleteReasonType;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.MenuCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.MenuFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequestCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequestFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequestRepository;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
-import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
 
@@ -66,12 +66,12 @@ class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
         @Test
         void 가게_등록_관련_메달_조건을_만족하면_해당_메달을_획득한다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.ADD_STORE, 2);
+            Medal medal = MedalFixture.create("붕어빵 챌린지", MedalAcquisitionConditionType.ADD_STORE, 2);
             medalRepository.save(medal);
 
             storeRepository.saveAll(List.of(
-                StoreCreator.createWithDefaultMenu(userId, "가게 A"),
-                StoreCreator.createWithDefaultMenu(userId, "가게 B")
+                StoreFixture.createWithDefaultMenu(userId, "가게 A"),
+                StoreFixture.createWithDefaultMenu(userId, "가게 B")
             ));
 
             // when
@@ -89,10 +89,10 @@ class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
         @Test
         void 가게_추가_조건을_만족하지_못하면_메달을_획득하지_못한다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.ADD_STORE, 2);
+            Medal medal = MedalFixture.create("붕어빵 챌린지", MedalAcquisitionConditionType.ADD_STORE, 2);
             medalRepository.save(medal);
 
-            storeRepository.save(StoreCreator.createWithDefaultMenu(userId, "가게 A"));
+            storeRepository.save(StoreFixture.createWithDefaultMenu(userId, "가게 A"));
 
             // when
             userMedalFacadeService.addObtainableMedalsByAddStore(userId);
@@ -112,13 +112,13 @@ class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
         @Test
         void 가게_삭제_조건을_만족하면_해당_메달을_획득한다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.DELETE_STORE, 1);
+            Medal medal = MedalFixture.create("붕어빵 챌린지", MedalAcquisitionConditionType.DELETE_STORE, 1);
             medalRepository.save(medal);
 
-            Store store = StoreCreator.createWithDefaultMenu(userId, "가게");
+            Store store = StoreFixture.createWithDefaultMenu(userId, "가게");
             storeRepository.save(store);
 
-            storeDeleteRequestRepository.save(StoreDeleteRequestCreator.create(store, userId, DeleteReasonType.OVERLAPSTORE));
+            storeDeleteRequestRepository.save(StoreDeleteRequestFixture.create(store, userId, DeleteReasonType.OVERLAPSTORE));
 
             // when
             userMedalFacadeService.addObtainableMedalsByDeleteStore(userId);
@@ -135,10 +135,10 @@ class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
         @Test
         void 가게_삭제_조건을_만족하지_못하면_메달을_획득하지_못한다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.DELETE_STORE, 1);
+            Medal medal = MedalFixture.create("붕어빵 챌린지", MedalAcquisitionConditionType.DELETE_STORE, 1);
             medalRepository.save(medal);
 
-            Store store = StoreCreator.createWithDefaultMenu(userId, "가게");
+            Store store = StoreFixture.createWithDefaultMenu(userId, "가게");
             storeRepository.save(store);
 
             // when
@@ -159,15 +159,15 @@ class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
         @Test
         void 리뷰_작성_조건을_만족하면_해당_메달을_획득한다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.ADD_REVIEW, 2);
+            Medal medal = MedalFixture.create("붕어빵 챌린지", MedalAcquisitionConditionType.ADD_REVIEW, 2);
             medalRepository.save(medal);
 
-            Store store = StoreCreator.createWithDefaultMenu(userId, "가게");
+            Store store = StoreFixture.createWithDefaultMenu(userId, "가게");
             storeRepository.save(store);
 
             reviewRepository.saveAll(List.of(
-                ReviewCreator.create(store.getId(), userId, "댓글 A", 5),
-                ReviewCreator.create(store.getId(), userId, "댓글 B", 4)
+                ReviewFixture.create(store.getId(), userId, "댓글 A", 5),
+                ReviewFixture.create(store.getId(), userId, "댓글 B", 4)
             ));
 
             // when
@@ -185,13 +185,13 @@ class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
         @Test
         void 리뷰_작성_조건을_만족하지_못하면_메달을_획득하지_못한다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.ADD_REVIEW, 2);
+            Medal medal = MedalFixture.create("붕어빵 챌린지", MedalAcquisitionConditionType.ADD_REVIEW, 2);
             medalRepository.save(medal);
 
-            Store store = StoreCreator.createWithDefaultMenu(userId, "가게");
+            Store store = StoreFixture.createWithDefaultMenu(userId, "가게");
             storeRepository.save(store);
 
-            reviewRepository.save(ReviewCreator.create(store.getId(), userId, "댓글 A", 5));
+            reviewRepository.save(ReviewFixture.create(store.getId(), userId, "댓글 A", 5));
 
             // when
             userMedalFacadeService.addObtainableMedalsByAddReview(userId);
@@ -211,16 +211,16 @@ class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
         @Test
         void 방문_인증_조건을_만족하면_해당_메달을_획득한다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE, 2);
+            Medal medal = MedalFixture.create("붕어빵 챌린지", MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE, 2);
             medalRepository.save(medal);
 
-            Store store = StoreCreator.create(userId, "가게");
-            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵 2개", "천원", UserMenuCategoryType.BUNGEOPPANG)));
+            Store store = StoreFixture.create(userId, "가게");
+            store.addMenus(List.of(MenuFixture.create(store, "팥 붕어빵 2개", "천원", UserMenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             visitHistoryRepository.saveAll(List.of(
-                VisitHistoryCreator.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 1, 1)),
-                VisitHistoryCreator.create(store, userId, VisitType.NOT_EXISTS, LocalDate.of(2021, 1, 2))
+                VisitHistoryFixture.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 1, 1)),
+                VisitHistoryFixture.create(store, userId, VisitType.NOT_EXISTS, LocalDate.of(2021, 1, 2))
             ));
 
             // when
@@ -238,14 +238,14 @@ class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
         @Test
         void 방문_인증_조건을_만족하지_못하면_메달을_획득하지_못한다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE, 2);
+            Medal medal = MedalFixture.create("붕어빵 챌린지", MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE, 2);
             medalRepository.save(medal);
 
-            Store store = StoreCreator.create(userId, "가게");
-            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵 2개", "천원", UserMenuCategoryType.BUNGEOPPANG)));
+            Store store = StoreFixture.create(userId, "가게");
+            store.addMenus(List.of(MenuFixture.create(store, "팥 붕어빵 2개", "천원", UserMenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
-            visitHistoryRepository.save(VisitHistoryCreator.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 1, 1)));
+            visitHistoryRepository.save(VisitHistoryFixture.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 1, 1)));
 
             // when
             userMedalFacadeService.addObtainableMedalsByVisitStore(userId);
@@ -259,16 +259,16 @@ class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
         @Test
         void 붕어빵을_파는_가게가_아닌경우_카운트에_포함되지_않는다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE, 2);
+            Medal medal = MedalFixture.create("붕어빵 챌린지", MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE, 2);
             medalRepository.save(medal);
 
-            Store store = StoreCreator.create(userId, "가게");
-            store.addMenus(List.of(MenuCreator.create(store, "팥 붕어빵 2개", "천원", UserMenuCategoryType.BUNGEOPPANG)));
+            Store store = StoreFixture.create(userId, "가게");
+            store.addMenus(List.of(MenuFixture.create(store, "팥 붕어빵 2개", "천원", UserMenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
             visitHistoryRepository.saveAll(List.of(
-                VisitHistoryCreator.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 1, 1)),
-                VisitHistoryCreator.create(store, userId, VisitType.NOT_EXISTS, LocalDate.of(2021, 1, 2))
+                VisitHistoryFixture.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 1, 1)),
+                VisitHistoryFixture.create(store, userId, VisitType.NOT_EXISTS, LocalDate.of(2021, 1, 2))
             ));
 
             // when
@@ -286,15 +286,15 @@ class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
         @Test
         void 방문_인증_실패_조건을_만족하면_해당_메달을_획득한다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.VISIT_NOT_EXISTS_STORE, 2);
+            Medal medal = MedalFixture.create("붕어빵 챌린지", MedalAcquisitionConditionType.VISIT_NOT_EXISTS_STORE, 2);
             medalRepository.save(medal);
 
-            Store store = StoreCreator.createWithDefaultMenu(userId, "가게");
+            Store store = StoreFixture.createWithDefaultMenu(userId, "가게");
             storeRepository.save(store);
 
             visitHistoryRepository.saveAll(List.of(
-                VisitHistoryCreator.create(store, userId, VisitType.NOT_EXISTS, LocalDate.of(2021, 1, 1)),
-                VisitHistoryCreator.create(store, userId, VisitType.NOT_EXISTS, LocalDate.of(2021, 1, 2))
+                VisitHistoryFixture.create(store, userId, VisitType.NOT_EXISTS, LocalDate.of(2021, 1, 1)),
+                VisitHistoryFixture.create(store, userId, VisitType.NOT_EXISTS, LocalDate.of(2021, 1, 2))
             ));
 
             // when
@@ -312,15 +312,15 @@ class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
         @Test
         void 방문_인증_실패_조건을_만족하지_못하면_메달을_획득하지_못한다() {
             // given
-            Medal medal = MedalCreator.create("붕어빵 챌린지", MedalAcquisitionConditionType.VISIT_NOT_EXISTS_STORE, 2);
+            Medal medal = MedalFixture.create("붕어빵 챌린지", MedalAcquisitionConditionType.VISIT_NOT_EXISTS_STORE, 2);
             medalRepository.save(medal);
 
-            Store store = StoreCreator.createWithDefaultMenu(userId, "가게");
+            Store store = StoreFixture.createWithDefaultMenu(userId, "가게");
             storeRepository.save(store);
 
             visitHistoryRepository.saveAll(List.of(
-                VisitHistoryCreator.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 1, 1)),
-                VisitHistoryCreator.create(store, userId, VisitType.NOT_EXISTS, LocalDate.of(2021, 1, 2))
+                VisitHistoryFixture.create(store, userId, VisitType.EXISTS, LocalDate.of(2021, 1, 1)),
+                VisitHistoryFixture.create(store, userId, VisitType.NOT_EXISTS, LocalDate.of(2021, 1, 2))
             ));
 
             // when

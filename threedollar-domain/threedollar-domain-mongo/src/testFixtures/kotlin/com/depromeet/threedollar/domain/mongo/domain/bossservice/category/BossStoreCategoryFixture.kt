@@ -3,7 +3,7 @@ package com.depromeet.threedollar.domain.mongo.domain.bossservice.category
 import com.depromeet.threedollar.domain.mongo.TestFixture
 
 @TestFixture
-object BossStoreCategoryCreator {
+object BossStoreCategoryFixture {
 
     fun create(
         title: String,

@@ -3,13 +3,13 @@ package com.depromeet.threedollar.api.core.service.bossservice
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 import com.depromeet.threedollar.api.core.IntegrationTest
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalRepository
-import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserCreator
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType
 
@@ -36,8 +36,8 @@ internal abstract class SetupBossAccountAndUserServiceTest : IntegrationTest() {
 
     @BeforeEach
     fun setup() {
-        userId = userRepository.save(UserCreator.create("social-id", UserSocialType.KAKAO, "디프만")).id
-        bossId = bossAccountRepository.save(BossAccountCreator.create(
+        userId = userRepository.save(UserFixture.create("social-id", UserSocialType.KAKAO, "디프만")).id
+        bossId = bossAccountRepository.save(BossAccountFixture.create(
             socialId = "social-id-test",
             socialType = BossAccountSocialType.KAKAO,
             name = "통합 테스트용 사장님 이름")

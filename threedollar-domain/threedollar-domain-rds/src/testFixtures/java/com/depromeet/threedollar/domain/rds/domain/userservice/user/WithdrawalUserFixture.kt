@@ -3,17 +3,19 @@ package com.depromeet.threedollar.domain.rds.domain.userservice.user
 import com.depromeet.threedollar.domain.rds.domain.TestFixture
 
 @TestFixture
-object UserCreator {
+object WithdrawalUserFixture {
 
+    @JvmOverloads
     @JvmStatic
     fun create(
         socialId: String,
         socialType: UserSocialType,
-        name: String,
-    ): User {
-        return User.builder()
-            .socialId(socialId)
-            .socialType(socialType)
+        userId: Long,
+        name: String = "가삼",
+    ): WithdrawalUser {
+        return WithdrawalUser.builder()
+            .userId(userId)
+            .socialInfo(UserSocialInfo.of(socialId, socialType))
             .name(name)
             .build()
     }

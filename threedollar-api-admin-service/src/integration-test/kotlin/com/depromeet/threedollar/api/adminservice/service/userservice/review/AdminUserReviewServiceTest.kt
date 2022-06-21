@@ -7,7 +7,7 @@ import org.junit.jupiter.api.assertAll
 import com.depromeet.threedollar.api.adminservice.SetupAdminIntegrationTest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review
-import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewStatus
 
@@ -19,7 +19,7 @@ internal class AdminUserReviewServiceTest(
     @Test
     fun `특정 리뷰를 강제로 삭제한다`() {
         // given
-        val review = ReviewCreator.create(
+        val review = ReviewFixture.create(
             storeId = 10000L,
             userId = 1L,
             rating = 1,
@@ -54,7 +54,7 @@ internal class AdminUserReviewServiceTest(
     @Test
     fun `리뷰 삭제시 해당하는 리뷰가 유저에 의해 삭제처리된 리뷰인 경우 NotFoundException`() {
         // given
-        val review = ReviewCreator.create(
+        val review = ReviewFixture.create(
             storeId = 10000L,
             userId = 1L,
             rating = 1,

@@ -16,7 +16,7 @@ import com.depromeet.threedollar.api.userservice.service.review.dto.request.AddR
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.UpdateReviewRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
-import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewStatus;
 
@@ -80,7 +80,7 @@ class ReviewServiceTest extends SetupStoreIntegrationTest {
             String contents = "우와 맛있어요";
             int rating = 4;
 
-            Review review = ReviewCreator.create(store.getId(), userId, "너무 맛있어요", 3);
+            Review review = ReviewFixture.create(store.getId(), userId, "너무 맛있어요", 3);
             reviewRepository.save(review);
 
             UpdateReviewRequest request = UpdateReviewRequest.testBuilder()
@@ -117,7 +117,7 @@ class ReviewServiceTest extends SetupStoreIntegrationTest {
         void 내가_작성하지_않은_리뷰를_수정하는_경우_NOT_FOUND_에러가_발생한다() {
             // given
             long creatorId = 10000L;
-            Review review = ReviewCreator.create(store.getId(), creatorId, "너무 맛있어요", 3);
+            Review review = ReviewFixture.create(store.getId(), creatorId, "너무 맛있어요", 3);
             reviewRepository.save(review);
 
             UpdateReviewRequest request = UpdateReviewRequest.testBuilder()
@@ -137,7 +137,7 @@ class ReviewServiceTest extends SetupStoreIntegrationTest {
         @Test
         void 내가_작성한_리뷰를_삭제하면_DELETED로_표기되고_삭제처리된다() {
             // given
-            Review review = ReviewCreator.create(store.getId(), userId, "너무 맛있어요", 3);
+            Review review = ReviewFixture.create(store.getId(), userId, "너무 맛있어요", 3);
             reviewRepository.save(review);
 
             // when
@@ -164,7 +164,7 @@ class ReviewServiceTest extends SetupStoreIntegrationTest {
         void 내가_작성하지_않은_리뷰를_삭제하려하면_NOT_FOUND에러가_발생한다() {
             // given
             Long notFoundUserId = -1L;
-            Review review = ReviewCreator.create(store.getId(), userId, "너무 맛있어요", 3);
+            Review review = ReviewFixture.create(store.getId(), userId, "너무 맛있어요", 3);
             reviewRepository.save(review);
 
             // when & then

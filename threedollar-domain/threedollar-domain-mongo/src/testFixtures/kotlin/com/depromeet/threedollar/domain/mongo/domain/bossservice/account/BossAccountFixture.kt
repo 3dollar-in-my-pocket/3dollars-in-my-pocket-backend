@@ -4,7 +4,7 @@ import com.depromeet.threedollar.common.model.BusinessNumber
 import com.depromeet.threedollar.domain.mongo.TestFixture
 
 @TestFixture
-object BossAccountCreator {
+object BossAccountFixture {
 
     fun create(
         socialId: String,

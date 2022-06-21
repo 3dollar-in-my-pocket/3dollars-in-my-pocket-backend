@@ -2,10 +2,10 @@ package com.depromeet.threedollar.domain.rds.domain.userservice.store
 
 import com.depromeet.threedollar.common.type.UserMenuCategoryType
 import com.depromeet.threedollar.domain.rds.domain.TestFixture
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.MenuCreator.create
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.MenuFixture.create
 
 @TestFixture
-object StoreCreator {
+object StoreFixture {
 
     @JvmOverloads
     @JvmStatic

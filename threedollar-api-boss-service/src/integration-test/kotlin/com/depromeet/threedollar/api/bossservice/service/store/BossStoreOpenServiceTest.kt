@@ -12,7 +12,7 @@ import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.model.LocationValue
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreOpenType
 import com.depromeet.threedollar.domain.redis.domain.bossservice.store.BossStoreOpenTimeRepository
@@ -109,7 +109,7 @@ internal class BossStoreOpenServiceTest(
             val latitude = 38.0
             val longitude = 126.0
 
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = bossId,
                 name = "사장님 가게",
                 location = BossStoreLocation.of(latitude = latitude, longitude = longitude)
@@ -141,7 +141,7 @@ internal class BossStoreOpenServiceTest(
             val latitude = 38.0
             val longitude = 126.0
 
-            val bossStore = BossStoreCreator.create(
+            val bossStore = BossStoreFixture.create(
                 bossId = bossId,
                 name = "사장님 가게",
                 location = BossStoreLocation.of(latitude = latitude, longitude = longitude)

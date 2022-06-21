@@ -3,7 +3,7 @@ package com.depromeet.threedollar.domain.rds.domain.userservice.medal
 import com.depromeet.threedollar.domain.rds.domain.TestFixture
 
 @TestFixture
-object MedalCreator {
+object MedalFixture {
 
     @JvmOverloads
     @JvmStatic

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import com.depromeet.threedollar.api.adminservice.IntegrationTest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminCreator
+import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminFixture
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminRepository
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
 import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse
@@ -32,7 +32,7 @@ internal class GoogleAuthServiceTest(
         @Test
         fun `구글 로그인이 성공하면 관리자 계정의 ID가 반환된다`() {
             // given
-            val admin = AdminCreator.create(
+            val admin = AdminFixture.create(
                 email = EMAIL,
                 name = "강승호"
             )

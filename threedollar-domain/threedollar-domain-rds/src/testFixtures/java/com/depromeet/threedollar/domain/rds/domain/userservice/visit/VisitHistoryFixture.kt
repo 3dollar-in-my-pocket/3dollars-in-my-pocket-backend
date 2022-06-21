@@ -5,7 +5,7 @@ import com.depromeet.threedollar.domain.rds.domain.TestFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store
 
 @TestFixture
-object VisitHistoryCreator {
+object VisitHistoryFixture {
 
     @JvmStatic
     fun create(

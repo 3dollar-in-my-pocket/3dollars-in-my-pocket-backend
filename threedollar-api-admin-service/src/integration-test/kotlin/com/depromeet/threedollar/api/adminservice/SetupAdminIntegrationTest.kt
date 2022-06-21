@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.adminservice
 
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
-import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminCreator
+import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminFixture
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminRepository
 
 internal abstract class SetupAdminIntegrationTest : IntegrationTest() {
@@ -14,7 +14,7 @@ internal abstract class SetupAdminIntegrationTest : IntegrationTest() {
 
     @BeforeEach
     fun setup() {
-        val admin = AdminCreator.create("admin@gmail.com", "name")
+        val admin = AdminFixture.create("admin@gmail.com", "name")
         adminRepository.save(admin)
         adminId = admin.id
     }

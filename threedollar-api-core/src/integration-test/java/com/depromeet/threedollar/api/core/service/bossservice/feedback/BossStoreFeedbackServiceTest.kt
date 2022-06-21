@@ -11,7 +11,7 @@ import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.reque
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedbackCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedbackFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedbackRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.feedback.BossStoreFeedbackCountRepository
 
@@ -98,7 +98,7 @@ internal class BossStoreFeedbackServiceTest(
         val date = LocalDate.of(2022, 2, 24)
 
         bossStoreFeedbackRepository.save(
-            BossStoreFeedbackCreator.create(
+            BossStoreFeedbackFixture.create(
                 storeId = bossStoreId,
                 userId = userId,
                 date = date,
@@ -123,7 +123,7 @@ internal class BossStoreFeedbackServiceTest(
         val date = LocalDate.of(2022, 2, 24)
 
         bossStoreFeedbackRepository.save(
-            BossStoreFeedbackCreator.create(
+            BossStoreFeedbackFixture.create(
                 storeId = bossStoreId,
                 userId = userId,
                 date = date,
@@ -148,7 +148,7 @@ internal class BossStoreFeedbackServiceTest(
         val date = LocalDate.of(2022, 2, 24)
 
         bossStoreFeedbackRepository.save(
-            BossStoreFeedbackCreator.create(
+            BossStoreFeedbackFixture.create(
                 storeId = bossStoreId,
                 userId = userId,
                 date = LocalDate.of(2022, 2, 23),

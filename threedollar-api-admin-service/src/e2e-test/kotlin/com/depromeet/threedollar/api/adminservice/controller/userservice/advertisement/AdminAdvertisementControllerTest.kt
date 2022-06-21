@@ -16,7 +16,7 @@ import com.depromeet.threedollar.api.adminservice.service.commonservice.advertis
 import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.response.AdvertisementResponse
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.common.type.ApplicationType
-import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementCreator
+import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementFixture
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPositionType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementRepository
@@ -66,7 +66,7 @@ internal class AdminAdvertisementControllerTest(
         @Test
         fun `기존 광고를 수정합니다`() {
             // given
-            val advertisement = AdvertisementCreator.create(
+            val advertisement = AdvertisementFixture.create(
                 applicationType = ApplicationType.USER_API,
                 positionType = AdvertisementPositionType.MAIN_PAGE_CARD,
                 platformType = AdvertisementPlatformType.ALL,
@@ -115,7 +115,7 @@ internal class AdminAdvertisementControllerTest(
         @Test
         fun `기존 광고를 삭제합니다`() {
             // given
-            val advertisement = AdvertisementCreator.create(
+            val advertisement = AdvertisementFixture.create(
                 applicationType = ApplicationType.USER_API,
                 positionType = AdvertisementPositionType.MAIN_PAGE_CARD,
                 platformType = AdvertisementPlatformType.ALL,
@@ -149,7 +149,7 @@ internal class AdminAdvertisementControllerTest(
         @Test
         fun `광고 목록을 조회합니다`() {
             // given
-            val advertisement = AdvertisementCreator.create(
+            val advertisement = AdvertisementFixture.create(
                 applicationType = ApplicationType.USER_API,
                 positionType = AdvertisementPositionType.MAIN_PAGE_CARD,
                 platformType = AdvertisementPlatformType.ALL,
@@ -191,7 +191,7 @@ internal class AdminAdvertisementControllerTest(
         @Test
         fun `특정 서비스의 광고 목록을 조회합니다`() {
             // given
-            val userServiceAdvertisment = AdvertisementCreator.create(
+            val userServiceAdvertisment = AdvertisementFixture.create(
                 applicationType = ApplicationType.USER_API,
                 positionType = AdvertisementPositionType.MAIN_PAGE_CARD,
                 platformType = AdvertisementPlatformType.ALL,
@@ -204,7 +204,7 @@ internal class AdminAdvertisementControllerTest(
                 startDateTime = LocalDateTime.of(2022, 5, 3, 0, 0),
                 endDateTime = LocalDateTime.of(2022, 5, 5, 0, 0)
             )
-            val bossServiceAdvertisement = AdvertisementCreator.create(
+            val bossServiceAdvertisement = AdvertisementFixture.create(
                 applicationType = ApplicationType.BOSS_API,
                 positionType = AdvertisementPositionType.MAIN_PAGE_CARD,
                 platformType = AdvertisementPlatformType.ALL,

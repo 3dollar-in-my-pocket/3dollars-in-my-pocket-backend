@@ -18,7 +18,7 @@ import com.depromeet.threedollar.api.core.mapper.commonservice.faq.dto.response.
 import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.response.FaqResponse
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory
-import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCreator
+import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqFixture
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqRepository
 
 internal class AdminFaqControllerTest(
@@ -67,7 +67,7 @@ internal class AdminFaqControllerTest(
         @Test
         fun FAQ_를_수정한다() {
             // given
-            val faq = faqRepository.save(FaqCreator.create("question", "answer", FaqCategory.BOARD))
+            val faq = faqRepository.save(FaqFixture.create("question", "answer", FaqCategory.BOARD))
 
             val request = UpdateFaqRequest("카테고리 질문", "카테고리 답변", FaqCategory.CATEGORY)
 
@@ -99,7 +99,7 @@ internal class AdminFaqControllerTest(
         @Test
         fun FAQ_를_삭제한다() {
             // given
-            val faq = faqRepository.save(FaqCreator.create("question", "answer", FaqCategory.BOARD))
+            val faq = faqRepository.save(FaqFixture.create("question", "answer", FaqCategory.BOARD))
 
             // when & then
             mockMvc.delete("/v1/faq/${faq.id}") {
@@ -124,8 +124,8 @@ internal class AdminFaqControllerTest(
         @Test
         fun FAQ_리스트를_조회한다() {
             // given
-            val faq1 = FaqCreator.create(applicationType = ApplicationType.USER_API, question = "question1", answer = "answer1", category = FaqCategory.BOARD)
-            val faq2 = FaqCreator.create(applicationType = ApplicationType.BOSS_API, question = "question2", answer = "answer2", category = FaqCategory.CATEGORY)
+            val faq1 = FaqFixture.create(applicationType = ApplicationType.USER_API, question = "question1", answer = "answer1", category = FaqCategory.BOARD)
+            val faq2 = FaqFixture.create(applicationType = ApplicationType.BOSS_API, question = "question2", answer = "answer2", category = FaqCategory.CATEGORY)
             faqRepository.saveAll(listOf(faq1, faq2))
 
             // when & then

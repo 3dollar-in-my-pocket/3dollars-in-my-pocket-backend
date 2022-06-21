@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType;
-import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus;
 
@@ -25,8 +25,8 @@ class UserTest {
         MedalAcquisitionConditionType conditionType = MedalAcquisitionConditionType.ADD_REVIEW;
         int count = 5;
 
-        User user = UserCreator.create("social-id", UserSocialType.KAKAO, "닉네임");
-        Medal medal = MedalCreator.create(medalName, description, activationIconUrl, disabledIconUrl, conditionType, count);
+        User user = UserFixture.create("social-id", UserSocialType.KAKAO, "닉네임");
+        Medal medal = MedalFixture.create(medalName, description, activationIconUrl, disabledIconUrl, conditionType, count);
 
         // when
         user.addMedals(List.of(medal));
@@ -50,8 +50,8 @@ class UserTest {
     @Test
     void 유저가_메달을_획득하면_비활성화_상태로_추가된다() {
         // given
-        User user = UserCreator.create("social-id", UserSocialType.KAKAO, "닉네임");
-        Medal medalA = MedalCreator.create("메달 A");
+        User user = UserFixture.create("social-id", UserSocialType.KAKAO, "닉네임");
+        Medal medalA = MedalFixture.create("메달 A");
 
         // when
         user.addMedals(List.of(medalA));
@@ -66,8 +66,8 @@ class UserTest {
     @Test
     void 유저가_장착한_메달을_조회할때_장착한_메달이_없는경우_null_을_반환한다() {
         // given
-        User user = UserCreator.create("social-id", UserSocialType.KAKAO, "닉네임");
-        Medal medalA = MedalCreator.create("메달 A");
+        User user = UserFixture.create("social-id", UserSocialType.KAKAO, "닉네임");
+        Medal medalA = MedalFixture.create("메달 A");
         user.addMedals(List.of(medalA));
 
         // when

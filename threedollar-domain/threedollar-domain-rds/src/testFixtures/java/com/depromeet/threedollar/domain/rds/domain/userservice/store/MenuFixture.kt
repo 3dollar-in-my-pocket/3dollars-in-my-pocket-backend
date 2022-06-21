@@ -4,7 +4,7 @@ import com.depromeet.threedollar.common.type.UserMenuCategoryType
 import com.depromeet.threedollar.domain.rds.domain.TestFixture
 
 @TestFixture
-object MenuCreator {
+object MenuFixture {
 
     @JvmStatic
     fun create(

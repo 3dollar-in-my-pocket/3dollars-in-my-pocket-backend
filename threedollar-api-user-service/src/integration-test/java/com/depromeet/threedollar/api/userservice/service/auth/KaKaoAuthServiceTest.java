@@ -19,7 +19,7 @@ import com.depromeet.threedollar.api.userservice.service.user.support.UserAssert
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
-import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
 import com.depromeet.threedollar.external.client.kakao.KaKaoAuthApiClient;
@@ -58,7 +58,7 @@ class KaKaoAuthServiceTest extends IntegrationTest {
         @Test
         void 카카오_로그인_성공시_멤버의_ID_가_반환된다() {
             // given
-            User user = UserCreator.create(SOCIAL_ID, SOCIAL_TYPE, "닉네임");
+            User user = UserFixture.create(SOCIAL_ID, SOCIAL_TYPE, "닉네임");
             userRepository.save(user);
 
             LoginRequest request = LoginRequest.testBuilder()
@@ -113,7 +113,7 @@ class KaKaoAuthServiceTest extends IntegrationTest {
         @Test
         void 카카오_회원가입시_이미_가입한_유저면_Conflict_에러_발생() {
             // given
-            userRepository.save(UserCreator.create(SOCIAL_ID, SOCIAL_TYPE, "헬로우"));
+            userRepository.save(UserFixture.create(SOCIAL_ID, SOCIAL_TYPE, "헬로우"));
 
             SignUpRequest request = SignUpRequest.testBuilder()
                 .token("social-access-token")

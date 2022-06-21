@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.core.service.userservice.medal.dto.response.MedalResponse
 import com.depromeet.threedollar.api.userservice.ControllerTest
-import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
 
 internal class MedalControllerTest(
@@ -15,8 +15,8 @@ internal class MedalControllerTest(
     @Test
     fun `전체 메달 목록을 조회합니다`() {
         // given
-        val medalOne = MedalCreator.create("붕어빵 챌린저")
-        val medalTwo = MedalCreator.create("붕어빵 전문가")
+        val medalOne = MedalFixture.create("붕어빵 챌린저")
+        val medalTwo = MedalFixture.create("붕어빵 전문가")
         medalRepository.saveAll(listOf(medalOne, medalTwo))
 
         // when & then

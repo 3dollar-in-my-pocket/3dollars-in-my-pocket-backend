@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test
 import com.depromeet.threedollar.api.bossservice.IntegrationTest
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationCreator
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationFixture
 import com.depromeet.threedollar.external.client.kakao.KaKaoAuthApiClient
 import com.depromeet.threedollar.external.client.kakao.dto.response.KaKaoProfileResponse
 
@@ -40,7 +40,7 @@ internal class KaKaoAuthServiceTest(
     @Test
     fun `카카오 로그인이 성공하면 사장님 계정의 ID가 반환된다`() {
         // given
-        val bossAccount = BossAccountCreator.create(
+        val bossAccount = BossAccountFixture.create(
             name = "사장님",
             socialId = SOCIAL_ID,
             socialType = SOCIAL_TYPE
@@ -65,7 +65,7 @@ internal class KaKaoAuthServiceTest(
     @Test
     fun `카카오 로그인시 가입 승인 대기중인 유저면 Registration의 ID를 반환한다`() {
         // given
-        val registration = RegistrationCreator.create(SOCIAL_ID, SOCIAL_TYPE)
+        val registration = RegistrationFixture.create(SOCIAL_ID, SOCIAL_TYPE)
         bossRegistrationRepository.save(registration)
 
         // when

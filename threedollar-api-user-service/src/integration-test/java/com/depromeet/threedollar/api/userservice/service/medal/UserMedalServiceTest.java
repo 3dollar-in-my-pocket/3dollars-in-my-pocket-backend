@@ -16,10 +16,10 @@ import com.depromeet.threedollar.api.userservice.SetupUserIntegrationTest;
 import com.depromeet.threedollar.api.userservice.service.medal.dto.request.ChangeRepresentativeMedalRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
-import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedal;
-import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalCreator;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus;
 
@@ -41,10 +41,10 @@ class UserMedalServiceTest extends SetupUserIntegrationTest {
         @Test
         void 대표_메달을_변경합니다() {
             // given
-            Medal medal = MedalCreator.create("붕친맨");
+            Medal medal = MedalFixture.create("붕친맨");
             medalRepository.save(medal);
 
-            UserMedal userMedal = UserMedalCreator.create(medal, user, UserMedalStatus.IN_ACTIVE);
+            UserMedal userMedal = UserMedalFixture.create(medal, user, UserMedalStatus.IN_ACTIVE);
             userMedalRepository.save(userMedal);
 
             ChangeRepresentativeMedalRequest request = ChangeRepresentativeMedalRequest.testBuilder()

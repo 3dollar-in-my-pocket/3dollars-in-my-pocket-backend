@@ -14,7 +14,7 @@ import com.depromeet.threedollar.api.adminservice.service.userservice.medal.dto.
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.core.service.userservice.medal.dto.response.MedalResponse
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType
-import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
 
 internal class AdminMedalControllerTest(
@@ -52,7 +52,7 @@ internal class AdminMedalControllerTest(
     @Test
     fun `새로운 메달을 수정한다`() {
         // given
-        val medal = MedalCreator.create(
+        val medal = MedalFixture.create(
             name = "메달 이름",
             introduction = "메달 소개",
             activationIconUrl = "https://activate-icon.png",
@@ -87,7 +87,7 @@ internal class AdminMedalControllerTest(
     @Test
     fun `전체 메달 목록을 조회합니다`() {
         // given
-        val medal = MedalCreator.create(
+        val medal = MedalFixture.create(
             name = "메달 이름",
             introduction = "메달 소개",
             activationIconUrl = "https://activate-icon.png",

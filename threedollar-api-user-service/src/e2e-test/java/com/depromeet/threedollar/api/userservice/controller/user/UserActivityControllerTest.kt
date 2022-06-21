@@ -6,14 +6,14 @@ import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
 import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.userservice.SetupUserControllerTest
-import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalCreator
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
-import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalCreator
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus
-import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewCreator
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreCreator
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
 
 internal class UserActivityControllerTest(
@@ -45,14 +45,14 @@ internal class UserActivityControllerTest(
         @Test
         fun `유저의 활동정보가 포함된 회원 정보를 조회시 활성화중인 메달이 있는 경우 함께 조회된다`() {
             // given
-            val medal = MedalCreator.create(
+            val medal = MedalFixture.create(
                 name = "붕어빵 전문가",
                 introduction = "우리 동네 붕어에 대해서는 내가 척척 박사",
                 activationIconUrl = "https://medal-image.png",
                 disableIconUrl = "https://medal-image-disable.png"
             )
             medalRepository.save(medal)
-            userMedalRepository.save(UserMedalCreator.create(medal, user))
+            userMedalRepository.save(UserMedalFixture.create(medal, user))
 
             // when & then
             mockMvc.get("/v1/user/me/activity") {
@@ -72,8 +72,8 @@ internal class UserActivityControllerTest(
             // given
             storeRepository.saveAll(
                 listOf(
-                    StoreCreator.createWithDefaultMenu(user.id, "제보한 가게 1"),
-                    StoreCreator.createWithDefaultMenu(user.id, "제보한 가게 2")
+                    StoreFixture.createWithDefaultMenu(user.id, "제보한 가게 1"),
+                    StoreFixture.createWithDefaultMenu(user.id, "제보한 가게 2")
                 )
             )
 
@@ -91,14 +91,14 @@ internal class UserActivityControllerTest(
         @Test
         fun `유저가 작성한 리뷰 개수도 조회한다`() {
             // given
-            val store = StoreCreator.create(user.id, "가게")
+            val store = StoreFixture.create(user.id, "가게")
             storeRepository.save(store)
 
             reviewRepository.saveAll(
                 listOf(
-                    ReviewCreator.create(store.id, user.id, "리뷰 1", 4),
-                    ReviewCreator.create(store.id, user.id, "리뷰 2", 3),
-                    ReviewCreator.create(store.id, user.id, "리뷰 3", 2)
+                    ReviewFixture.create(store.id, user.id, "리뷰 1", 4),
+                    ReviewFixture.create(store.id, user.id, "리뷰 2", 3),
+                    ReviewFixture.create(store.id, user.id, "리뷰 3", 2)
                 )
             )
 
@@ -116,13 +116,13 @@ internal class UserActivityControllerTest(
         @Test
         fun `유저가 보유한 메달 개수도 조회한다`() {
             // given
-            val medalOne = MedalCreator.create(
+            val medalOne = MedalFixture.create(
                 name = "붕어빵 전문가",
                 introduction = "우리 동네 붕어에 대해서는 내가 척척 박사",
                 activationIconUrl = "https://medal-image.png",
                 disableIconUrl = "https://medal-image-disable.png"
             )
-            val medalTwo = MedalCreator.create(
+            val medalTwo = MedalFixture.create(
                 name = "붕친맨",
                 introduction = "앗, 이정도면 붕어빵 척척박사는 넘어섰네요",
                 activationIconUrl = "https://medal-image.png",
@@ -132,8 +132,8 @@ internal class UserActivityControllerTest(
 
             userMedalRepository.saveAll(
                 listOf(
-                    UserMedalCreator.create(medalOne, user),
-                    UserMedalCreator.create(medalTwo, user, UserMedalStatus.IN_ACTIVE)
+                    UserMedalFixture.create(medalOne, user),
+                    UserMedalFixture.create(medalTwo, user, UserMedalStatus.IN_ACTIVE)
                 )
             )
 
@@ -172,14 +172,14 @@ internal class UserActivityControllerTest(
         @Test
         fun `유저의 활동정보가 포함된 회원 정보를 조회시 활성화중인 메달이 있는 경우 함께 조회된다`() {
             // given
-            val medal = MedalCreator.create(
+            val medal = MedalFixture.create(
                 name = "붕어빵 전문가",
                 introduction = "우리 동네 붕어에 대해서는 내가 척척 박사",
                 activationIconUrl = "https://activation--image.png",
                 disableIconUrl = "https://disable-image-disable.png"
             )
             medalRepository.save(medal)
-            userMedalRepository.save(UserMedalCreator.create(medal, user))
+            userMedalRepository.save(UserMedalFixture.create(medal, user))
 
             // when & then
             mockMvc.get("/v1/user/activity") {
@@ -199,8 +199,8 @@ internal class UserActivityControllerTest(
             // given
             storeRepository.saveAll(
                 listOf(
-                    StoreCreator.createWithDefaultMenu(user.id, "제보한 가게 1"),
-                    StoreCreator.createWithDefaultMenu(user.id, "제보한 가게 2")
+                    StoreFixture.createWithDefaultMenu(user.id, "제보한 가게 1"),
+                    StoreFixture.createWithDefaultMenu(user.id, "제보한 가게 2")
                 )
             )
 
@@ -218,14 +218,14 @@ internal class UserActivityControllerTest(
         @Test
         fun `유저가 작성한 리뷰 개수도 조회한다`() {
             // given
-            val store = StoreCreator.create(user.id, "가게")
+            val store = StoreFixture.create(user.id, "가게")
             storeRepository.save(store)
 
             reviewRepository.saveAll(
                 listOf(
-                    ReviewCreator.create(store.id, user.id, "리뷰 1", 4),
-                    ReviewCreator.create(store.id, user.id, "리뷰 2", 3),
-                    ReviewCreator.create(store.id, user.id, "리뷰 3", 2)
+                    ReviewFixture.create(store.id, user.id, "리뷰 1", 4),
+                    ReviewFixture.create(store.id, user.id, "리뷰 2", 3),
+                    ReviewFixture.create(store.id, user.id, "리뷰 3", 2)
                 )
             )
 
@@ -243,13 +243,13 @@ internal class UserActivityControllerTest(
         @Test
         fun `유저가 보유한 메달 개수도 조회한다`() {
             // given
-            val medalOne = MedalCreator.create(
+            val medalOne = MedalFixture.create(
                 name = "붕어빵 전문가",
                 introduction = "우리 동네 붕어에 대해서는 내가 척척 박사",
                 activationIconUrl = "https://medal-image.png",
                 disableIconUrl = "https://medal-image-disable.png"
             )
-            val medalTwo = MedalCreator.create(
+            val medalTwo = MedalFixture.create(
                 name = "붕친맨",
                 introduction = "앗, 이정도면 붕어빵 척척박사는 넘어섰네요",
                 activationIconUrl = "https://medal-image-active-medal-image.png",
@@ -259,8 +259,8 @@ internal class UserActivityControllerTest(
 
             userMedalRepository.saveAll(
                 listOf(
-                    UserMedalCreator.create(medalOne, user),
-                    UserMedalCreator.create(medalTwo, user, UserMedalStatus.IN_ACTIVE)
+                    UserMedalFixture.create(medalOne, user),
+                    UserMedalFixture.create(medalTwo, user, UserMedalStatus.IN_ACTIVE)
                 )
             )
 

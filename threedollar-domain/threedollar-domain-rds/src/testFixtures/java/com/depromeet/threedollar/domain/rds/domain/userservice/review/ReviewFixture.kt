@@ -3,7 +3,7 @@ package com.depromeet.threedollar.domain.rds.domain.userservice.review
 import com.depromeet.threedollar.domain.rds.domain.TestFixture
 
 @TestFixture
-object ReviewCreator {
+object ReviewFixture {
 
     @JvmOverloads
     @JvmStatic
