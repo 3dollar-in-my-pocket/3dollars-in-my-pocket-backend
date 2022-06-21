@@ -58,7 +58,7 @@ public class StoreWithVisitsAndDistanceResponse extends AuditingTimeResponse {
     public static StoreWithVisitsAndDistanceResponse of(@NotNull StoreInfoResponse store, LocationValue deviceLocation, VisitHistoryCounter visitsCounter) {
         StoreWithVisitsAndDistanceResponse response = StoreWithVisitsAndDistanceResponse.builder()
             .store(store)
-            .distance(LocationDistanceUtils.getDistance(deviceLocation, LocationValue.of(store.getLatitude(), store.getLongitude())))
+            .distance(LocationDistanceUtils.getDistanceM(deviceLocation, LocationValue.of(store.getLatitude(), store.getLongitude())))
             .existsVisitsCount(visitsCounter.getStoreExistsVisitsCount(store.getStoreId()))
             .notExistsVisitsCount(visitsCounter.getStoreNotExistsVisitsCount(store.getStoreId()))
             .isDeleted(store.getIsDeleted())

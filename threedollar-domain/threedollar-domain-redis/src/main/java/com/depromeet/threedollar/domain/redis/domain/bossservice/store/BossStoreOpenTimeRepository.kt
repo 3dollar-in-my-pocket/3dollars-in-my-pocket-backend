@@ -14,6 +14,11 @@ class BossStoreOpenTimeRepository(
         return bossStoreOpenRedisRepository.get(key)
     }
 
+    fun exists(bossStoreId: String): Boolean {
+        val key = BossStoreOpenTimeKey(bossStoreId)
+        return bossStoreOpenRedisRepository.get(key) != null
+    }
+
     fun set(bossStoreId: String, openDateTime: LocalDateTime) {
         val key = BossStoreOpenTimeKey.of(bossStoreId)
         bossStoreOpenRedisRepository.set(key, openDateTime)

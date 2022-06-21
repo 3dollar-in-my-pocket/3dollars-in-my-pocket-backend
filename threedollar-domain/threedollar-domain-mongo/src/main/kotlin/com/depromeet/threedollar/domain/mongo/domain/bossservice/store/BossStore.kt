@@ -2,7 +2,11 @@ package com.depromeet.threedollar.domain.mongo.domain.bossservice.store
 
 import org.springframework.data.mongodb.core.mapping.Document
 import com.depromeet.threedollar.common.model.ContactsNumber
+import com.depromeet.threedollar.common.model.LocationValue
+import com.depromeet.threedollar.common.utils.distance.LocationDistanceUtils
 import com.depromeet.threedollar.domain.mongo.core.model.BaseDocument
+
+private const val OPEN_RANGE_LIMIT_KM = 1.0
 
 @Document("boss_store_v1")
 class BossStore(
@@ -85,6 +89,14 @@ class BossStore(
 
     fun updateLocation(latitude: Double, longitude: Double) {
         this.location = BossStoreLocation.of(latitude = latitude, longitude = longitude)
+    }
+
+    fun canBeRenewOpenDistance(mapLocation: LocationValue): Boolean {
+        val distanceKm: Double = LocationDistanceUtils.getDistanceKm(
+            LocationValue.of(location?.latitude ?: 0.0, location?.longitude ?: 0.0),
+            mapLocation
+        )
+        return distanceKm in 0.0..OPEN_RANGE_LIMIT_KM
     }
 
     companion object {

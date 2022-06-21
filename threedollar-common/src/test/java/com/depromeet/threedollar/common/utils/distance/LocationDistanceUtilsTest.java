@@ -17,7 +17,7 @@ class LocationDistanceUtilsTest {
     @ParameterizedTest
     void 두_지점간의_거리를_계산한다(double sourceLatitude, double sourceLongitude, double targetLatitude, double targetLongitude, int distance) {
         // when
-        int result = LocationDistanceUtils.getDistance(sourceLatitude, sourceLongitude, targetLatitude, targetLongitude);
+        int result = LocationDistanceUtils.getDistanceM(sourceLatitude, sourceLongitude, targetLatitude, targetLongitude);
 
         // then
         assertThat(result).isEqualTo(distance);
@@ -32,7 +32,7 @@ class LocationDistanceUtilsTest {
     @ParameterizedTest
     void 어느하나_0인경우_마이너스1을_반환한다(double sourceLatitude, double sourceLongitude, double targetLatitude, double targetLongitude) {
         // when
-        int result = LocationDistanceUtils.getDistance(sourceLatitude, sourceLongitude, targetLatitude, targetLongitude);
+        int result = LocationDistanceUtils.getDistanceM(sourceLatitude, sourceLongitude, targetLatitude, targetLongitude);
 
         // then
         assertThat(result).isEqualTo(-1);
@@ -45,7 +45,7 @@ class LocationDistanceUtilsTest {
     @ParameterizedTest
     void 두_Location_지점_간의_거리를_계산한다(double sourceLatitude, double sourceLongitude, double targetLatitude, double targetLongitude, int distance) {
         // when
-        int result = LocationDistanceUtils.getDistance(LocationValue.of(sourceLatitude, sourceLongitude), LocationValue.of(targetLatitude, targetLongitude));
+        int result = LocationDistanceUtils.getDistanceM(LocationValue.of(sourceLatitude, sourceLongitude), LocationValue.of(targetLatitude, targetLongitude));
 
         // then
         assertThat(result).isEqualTo(distance);
@@ -54,7 +54,7 @@ class LocationDistanceUtilsTest {
     @Test
     void source_위치_정보가_null인경우_마이너스1을_반환한다() {
         // when
-        int result = LocationDistanceUtils.getDistance(null, LocationValue.of(38.0, 124.0));
+        int result = LocationDistanceUtils.getDistanceM(null, LocationValue.of(38.0, 124.0));
 
         // then
         assertThat(result).isEqualTo(-1);
@@ -63,7 +63,7 @@ class LocationDistanceUtilsTest {
     @Test
     void target_위치_정보가_null인경우_마이너스1을_반환한다() {
         // when
-        int result = LocationDistanceUtils.getDistance(LocationValue.of(38.0, 124.0), null);
+        int result = LocationDistanceUtils.getDistanceM(LocationValue.of(38.0, 124.0), null);
 
         // then
         assertThat(result).isEqualTo(-1);
