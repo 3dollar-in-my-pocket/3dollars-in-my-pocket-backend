@@ -63,7 +63,7 @@ public class AppleTokenDecoderImpl implements AppleTokenDecoder {
     }
 
     private PublicKey getPublicKey(Map<String, String> header) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        ApplePublicKeyResponse response = appleApiCaller.getAppleAuthPublicKey();
+        ApplePublicKeyResponse response = appleApiCaller.retrieveApplePublicKey();
         ApplePublicKeyResponse.Key key = response.getMatchedPublicKey(header.get("kid"), header.get("alg"));
 
         byte[] nBytes = Base64.getUrlDecoder().decode(key.getN());

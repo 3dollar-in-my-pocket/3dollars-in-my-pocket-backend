@@ -29,8 +29,7 @@ class ApplicationWarmingUpRunner(
                     apiClient.retrieveNearBossStores(place.latitude, place.longitude, 2.0)
                 }
                 apiClient.retrieveBossStoreCategories()
-                appleAuthApiClient.appleAuthPublicKey
-                appleAuthApiClient.appleAuthPublicKey
+                appleAuthApiClient.retrieveApplePublicKey()
                 kakaoAuthApiClient.getProfileInfo("Dummy Kakao Auth Token")
                 googleAuthApiClient.getProfileInfo("Dummy Google Auth Token")
             }

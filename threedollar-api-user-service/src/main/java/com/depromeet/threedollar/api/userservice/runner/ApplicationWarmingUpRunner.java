@@ -45,7 +45,7 @@ public class ApplicationWarmingUpRunner {
                 for (AdvertisementPlatformType platformType : AdvertisementPlatformType.values()) {
                     userApiWarmUpApiClient.getAdvertisements(platformType.name());
                 }
-                appleAuthApiClient.getAppleAuthPublicKey();
+                appleAuthApiClient.retrieveApplePublicKey();
                 kaKaoAuthApiClient.getProfileInfo("Dummy Kakao Auth Token");
                 googleAuthApiClient.getProfileInfo("Dummy Google Auth Token");
 

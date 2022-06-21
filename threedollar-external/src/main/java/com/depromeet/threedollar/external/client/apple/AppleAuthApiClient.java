@@ -20,6 +20,6 @@ public interface AppleAuthApiClient {
 
     @Retryable(backoff = @Backoff(value = 1000), value = BadGatewayException.class)
     @GetMapping("${external.client.apple.profile.url}")
-    ApplePublicKeyResponse getAppleAuthPublicKey();
+    ApplePublicKeyResponse retrieveApplePublicKey();
 
 }
