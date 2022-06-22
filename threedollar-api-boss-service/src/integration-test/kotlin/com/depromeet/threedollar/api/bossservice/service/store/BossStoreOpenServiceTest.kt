@@ -14,7 +14,6 @@ import com.depromeet.threedollar.common.model.LocationValue
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreLocation
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreOpenType
 import com.depromeet.threedollar.domain.redis.domain.bossservice.store.BossStoreOpenTimeRepository
 
 internal class BossStoreOpenServiceTest(
@@ -34,7 +33,7 @@ internal class BossStoreOpenServiceTest(
         @Test
         fun `기존의 오픈 정보가 없는경우 현재시간으로 오픈정보가 레디스에 추가된다`() {
             // when
-            val response = bossStoreOpenService.openBossStore(
+            bossStoreOpenService.openBossStore(
                 bossStoreId = bossStoreId,
                 bossId = bossId,
                 mapLocation = LocationValue.of(38.0, 127.0)
@@ -44,9 +43,6 @@ internal class BossStoreOpenServiceTest(
             val openStartDateTime = bossStoreOpenTimeRepository.get(bossStoreId)
             assertAll({
                 assertThat(openStartDateTime).isNotNull
-
-                assertThat(response.status).isEqualTo(BossStoreOpenType.OPEN)
-                assertThat(response.openStartDateTime).isNotNull
             })
         }
 
@@ -57,7 +53,7 @@ internal class BossStoreOpenServiceTest(
             val longitude = 127.0
 
             // when
-            val response = bossStoreOpenService.openBossStore(
+            bossStoreOpenService.openBossStore(
                 bossStoreId = bossStoreId,
                 bossId = bossId,
                 mapLocation = LocationValue.of(latitude, longitude)
@@ -68,9 +64,6 @@ internal class BossStoreOpenServiceTest(
             assertAll({
                 assertThat(bossStores).hasSize(1)
                 assertBossStoreLocation(bossStore = bossStores[0], latitude = latitude, longitude = longitude)
-
-                assertThat(response.status).isEqualTo(BossStoreOpenType.OPEN)
-                assertThat(response.openStartDateTime).isNotNull
             })
         }
 
@@ -120,7 +113,7 @@ internal class BossStoreOpenServiceTest(
             bossStoreOpenTimeRepository.set(bossStore.id, startDateTime)
 
             // when
-            val response = bossStoreOpenService.renewBossStoreOpenInfo(
+            bossStoreOpenService.renewBossStoreOpenInfo(
                 bossStoreId = bossStore.id,
                 bossId = bossId,
                 mapLocation = LocationValue.of(latitude, longitude)
@@ -130,40 +123,6 @@ internal class BossStoreOpenServiceTest(
             val openStartDateTime = bossStoreOpenTimeRepository.get(bossStore.id)
             assertAll({
                 assertThat(openStartDateTime).isEqualTo(startDateTime)
-                assertThat(response.status).isEqualTo(BossStoreOpenType.OPEN)
-                assertThat(response.openStartDateTime).isNotNull
-            })
-        }
-
-        @Test
-        fun `가게 오픈 갱신시 오픈 정보가 있지만, 영업 가능 거리 밖에 있는 경우 강제로 영업이 종료된다`() {
-            // given
-            val latitude = 38.0
-            val longitude = 126.0
-
-            val bossStore = BossStoreFixture.create(
-                bossId = bossId,
-                name = "사장님 가게",
-                location = BossStoreLocation.of(latitude = latitude, longitude = longitude)
-            )
-            bossStoreRepository.save(bossStore)
-
-            val startDateTime = LocalDateTime.of(2022, 1, 1, 0, 0)
-            bossStoreOpenTimeRepository.set(bossStore.id, startDateTime)
-
-            // when
-            val response = bossStoreOpenService.renewBossStoreOpenInfo(
-                bossStoreId = bossStore.id,
-                bossId = bossId,
-                mapLocation = LocationValue.of(36.0, 125.0)
-            )
-
-            // then
-            val openStartDateTime = bossStoreOpenTimeRepository.get(bossStore.id)
-            assertAll({
-                assertThat(openStartDateTime).isNull()
-                assertThat(response.status).isEqualTo(BossStoreOpenType.CLOSED)
-                assertThat(response.openStartDateTime).isNull()
             })
         }
 
