@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import com.depromeet.threedollar.common.type.FamousPlace;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType;
-import com.depromeet.threedollar.external.client.apple.AppleAuthApiClient;
 import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient;
 import com.depromeet.threedollar.external.client.kakao.KaKaoAuthApiClient;
 import com.depromeet.threedollar.external.client.local.LocalBossApiWarmupApiClient;
@@ -27,7 +26,6 @@ public class ApplicationWarmingUpRunner {
 
     private final LocalUserApiWarmUpApiClient userApiWarmUpApiClient;
     private final LocalBossApiWarmupApiClient bossApiWarmupApiClient;
-    private final AppleAuthApiClient appleAuthApiClient;
     private final KaKaoAuthApiClient kaKaoAuthApiClient;
     private final GoogleAuthApiClient googleAuthApiClient;
 
@@ -45,7 +43,6 @@ public class ApplicationWarmingUpRunner {
                 for (AdvertisementPlatformType platformType : AdvertisementPlatformType.values()) {
                     userApiWarmUpApiClient.getAdvertisements(platformType.name());
                 }
-                appleAuthApiClient.retrieveApplePublicKey();
                 kaKaoAuthApiClient.getProfileInfo("Dummy Kakao Auth Token");
                 googleAuthApiClient.getProfileInfo("Dummy Google Auth Token");
 

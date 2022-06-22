@@ -6,11 +6,6 @@ dependencies {
 
     // Spring Cloud Aws
     implementation("org.springframework.cloud:spring-cloud-starter-aws:${springCloudAwsVersion}")
-
-    // JWT
-    implementation("io.jsonwebtoken:jjwt-api:${jjwtVersion}")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:${jjwtVersion}")
-    runtimeOnly("io.jsonwebtoken:jjwt-jackson:${jjwtVersion}")
 }
 
 bootJar {

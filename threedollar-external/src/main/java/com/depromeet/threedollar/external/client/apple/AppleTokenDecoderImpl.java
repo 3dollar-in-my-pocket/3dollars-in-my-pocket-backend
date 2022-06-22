@@ -2,30 +2,21 @@ package com.depromeet.threedollar.external.client.apple;
 
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_AUTH_TOKEN;
 
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.RSAPublicKeySpec;
+import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Base64;
-import java.util.Map;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 import com.depromeet.threedollar.common.exception.model.InvalidException;
+import com.depromeet.threedollar.common.exception.type.ErrorCode;
+import com.depromeet.threedollar.common.utils.LocalDateTimeUtils;
+import com.depromeet.threedollar.external.client.apple.dto.model.AppleIdTokenPayload;
 import com.depromeet.threedollar.external.client.apple.dto.property.AppleAuthProperty;
-import com.depromeet.threedollar.external.client.apple.dto.response.ApplePublicKeyResponse;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.InvalidClaimException;
-import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -35,46 +26,38 @@ import lombok.RequiredArgsConstructor;
 @Component
 public class AppleTokenDecoderImpl implements AppleTokenDecoder {
 
-    private final AppleAuthApiClient appleApiCaller;
+    /**
+     * 애플 토큰에서 제공되는 만료시간 (1일)을 사용하지 않고, 발급시간 후 5분을 자체 만료시간으로 사용한다.
+     */
+    private static final Duration EXPIRED_DURATION = Duration.ofMinutes(5);
+
     private final AppleAuthProperty appleAuthProperty;
     private final ObjectMapper objectMapper;
 
     @Override
     public String getSocialIdFromIdToken(@NotNull String idToken) {
-        String headerIdToken = idToken.split("\\.")[0];
         try {
-            Map<String, String> header = objectMapper.readValue(new String(Base64.getDecoder().decode(headerIdToken), StandardCharsets.UTF_8), new TypeReference<>() {
-            });
-            PublicKey publicKey = getPublicKey(header);
-            Claims claims = Jwts.parserBuilder()
-                .setSigningKey(publicKey)
-                .requireIssuer(appleAuthProperty.getIssuer())
-                .requireAudience(appleAuthProperty.getClientId())
-                .build()
-                .parseClaimsJws(idToken)
-                .getBody();
-            return claims.getSubject();
-        } catch (ExpiredJwtException e) {
-            throw new InvalidException(String.format("만료된 애플 idToken(%s) 입니다 (reason: %s)", idToken, e.getMessage()), INVALID_AUTH_TOKEN);
-        } catch (JsonProcessingException | InvalidKeySpecException | InvalidClaimException | NoSuchAlgorithmException |
-                 IllegalArgumentException e) {
-            throw new InvalidException(String.format("잘못된 애플 idToken(%s) 입니다 (reason: %s)", idToken, e.getMessage()), INVALID_AUTH_TOKEN);
+            String payload = idToken.split("\\.")[1];
+            String decodedPayload = new String(Base64.getDecoder().decode(payload));
+            AppleIdTokenPayload appleIdTokenPayload = objectMapper.readValue(decodedPayload, AppleIdTokenPayload.class);
+            validateToken(appleIdTokenPayload);
+            return appleIdTokenPayload.getSub();
+        } catch (IOException | IllegalArgumentException e) {
+            throw new InvalidException(String.format("잘못된 토큰 (%s) 입니다", idToken), ErrorCode.INVALID_AUTH_TOKEN);
         }
     }
 
-    private PublicKey getPublicKey(Map<String, String> header) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        ApplePublicKeyResponse response = appleApiCaller.retrieveApplePublicKey();
-        ApplePublicKeyResponse.Key key = response.getMatchedPublicKey(header.get("kid"), header.get("alg"));
-
-        byte[] nBytes = Base64.getUrlDecoder().decode(key.getN());
-        byte[] eBytes = Base64.getUrlDecoder().decode(key.getE());
-
-        BigInteger n = new BigInteger(1, nBytes);
-        BigInteger e = new BigInteger(1, eBytes);
-
-        RSAPublicKeySpec publicKeySpec = new RSAPublicKeySpec(n, e);
-        KeyFactory keyFactory = KeyFactory.getInstance(key.getKty());
-        return keyFactory.generatePublic(publicKeySpec);
+    private void validateToken(@NotNull AppleIdTokenPayload payload) {
+        if (!payload.getIss().equals(appleAuthProperty.getIssuer())) {
+            throw new InvalidException(String.format("잘못된 애플 토큰 입니다 - issuer가 일치하지 않습니다 payload: (%s)", payload), INVALID_AUTH_TOKEN);
+        }
+        if (!payload.getAud().equals(appleAuthProperty.getClientId())) {
+            throw new InvalidException(String.format("잘못된 애플 토큰 입니다 - clientId가 일치하지 않습니다 payload: (%s)", payload), INVALID_AUTH_TOKEN);
+        }
+        LocalDateTime authDateTime = LocalDateTimeUtils.epochToLocalDateTime(payload.getAuth_time());
+        if (authDateTime.plus(EXPIRED_DURATION).isBefore(LocalDateTime.now())) {
+            throw new InvalidException(String.format("발급 후 5분애플 토큰 (%s) 입니다 만료시간: (%s)", payload, authDateTime), INVALID_AUTH_TOKEN);
+        }
     }
 
 }
