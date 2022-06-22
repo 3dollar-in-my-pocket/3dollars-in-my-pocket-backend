@@ -56,8 +56,7 @@ class AuthController(
         ))
     }
 
-    @ApiOperation("[인증] 사장님 계정을 로그아웃을 요청합니다.")
-    @Auth
+    @ApiOperation("사장님 계정을 로그아웃을 요청합니다.")
     @PostMapping("/v1/auth/logout")
     fun logout(): ApiResponse<String> {
         httpSession.removeAttribute(BOSS_ACCOUNT_ID)

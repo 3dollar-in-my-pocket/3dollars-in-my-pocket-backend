@@ -3,9 +3,9 @@ package com.depromeet.threedollar.api.bossservice.service.auth
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import com.depromeet.threedollar.api.bossservice.service.account.BossAccountServiceUtils
+import com.depromeet.threedollar.api.bossservice.service.account.BossAccountServiceHelper
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.request.SignupRequest
-import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryServiceUtils
+import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryServiceHelper
 import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
@@ -24,9 +24,9 @@ class SignupService(
 
     @Transactional
     fun signUp(request: SignupRequest, socialId: String): String {
-        BossAccountServiceUtils.validateNotExistsBossAccount(bossAccountRepository, socialId, request.socialType)
+        BossAccountServiceHelper.validateNotExistsBossAccount(bossAccountRepository, socialId, request.socialType)
         validateDuplicateRegistration(socialId, request.socialType)
-        BossStoreCategoryServiceUtils.validateExistsCategories(bossStoreCategoryRepository, request.storeCategoriesIds)
+        BossStoreCategoryServiceHelper.validateExistsCategories(bossStoreCategoryRepository, request.storeCategoriesIds)
 
         val registration = request.toEntity(socialId)
         bossRegistrationRepository.save(registration)

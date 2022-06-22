@@ -48,9 +48,9 @@ data class BossStoreInfoResponse(
                     .map { appearanceDay -> BossStoreAppearanceDayResponse.of(appearanceDay) }
                     .toSet(),
                 categories = categories.toSet(),
-                openStatus = openStartDateTime?.let { BossStoreOpenStatusResponse.of(it) }
+                openStatus = openStartDateTime?.let { BossStoreOpenStatusResponse.open(it) }
                     ?: BossStoreOpenStatusResponse.close(),
-                distance = LocationDistanceUtils.getDistance(
+                distance = LocationDistanceUtils.getDistanceM(
                     LocationValue.of(bossStore.location?.latitude ?: 0.0,
                         bossStore.location?.longitude ?: 0.0
                     ), deviceLocation)
@@ -88,10 +88,10 @@ data class BossStoreAroundInfoResponse(
                 location = bossStore.location?.let { LocationResponse.of(it) },
                 menus = bossStore.menus.map { menu -> BossStoreMenuResponse.of(menu) },
                 categories = categories.toSet(),
-                openStatus = openStartDateTime?.let { BossStoreOpenStatusResponse.of(it) }
+                openStatus = openStartDateTime?.let { BossStoreOpenStatusResponse.open(it) }
                     ?: BossStoreOpenStatusResponse.close(),
                 totalFeedbacksCounts = totalFeedbacksCounts,
-                distance = LocationDistanceUtils.getDistance(
+                distance = LocationDistanceUtils.getDistanceM(
                     LocationValue.of(bossStore.location?.latitude ?: 0.0,
                         bossStore.location?.longitude ?: 0.0
                     ), deviceLocation)
@@ -164,7 +164,7 @@ data class BossStoreOpenStatusResponse(
 ) {
 
     companion object {
-        fun of(openStartDateTime: LocalDateTime): BossStoreOpenStatusResponse {
+        fun open(openStartDateTime: LocalDateTime): BossStoreOpenStatusResponse {
             return BossStoreOpenStatusResponse(
                 status = BossStoreOpenType.OPEN,
                 openStartDateTime = openStartDateTime

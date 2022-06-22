@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.depromeet.threedollar.api.userservice.service.medal.dto.request.ChangeRepresentativeMedalRequest;
-import com.depromeet.threedollar.api.userservice.service.user.UserServiceUtils;
+import com.depromeet.threedollar.api.userservice.service.user.UserServiceHelper;
 import com.depromeet.threedollar.api.userservice.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.api.userservice.service.user.dto.response.UserMedalResponse;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedal;
@@ -28,7 +28,7 @@ public class UserMedalService {
     @Cacheable(cacheNames = USER_MEDALS, key = "#userId")
     @Transactional(readOnly = true)
     public List<UserMedalResponse> retrieveObtainedMedals(Long userId) {
-        List<UserMedal> userMedals = UserServiceUtils.findUserById(userRepository, userId).getUserMedals();
+        List<UserMedal> userMedals = UserServiceHelper.findUserById(userRepository, userId).getUserMedals();
         return userMedals.stream()
             .map(UserMedalResponse::of)
             .collect(Collectors.toList());
@@ -36,7 +36,7 @@ public class UserMedalService {
 
     @Transactional
     public UserInfoResponse updateRepresentativeMedal(ChangeRepresentativeMedalRequest request, Long userId) {
-        User user = UserServiceUtils.findUserById(userRepository, userId);
+        User user = UserServiceHelper.findUserById(userRepository, userId);
         user.updateActivatedMedal(request.getMedalId());
         return UserInfoResponse.of(user);
     }

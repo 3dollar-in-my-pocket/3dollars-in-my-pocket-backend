@@ -19,20 +19,20 @@ class BossAccountService(
 
     @Transactional(readOnly = true)
     fun getBossAccountInfo(bossId: String): BossAccountInfoResponse {
-        val bossAccount = BossAccountServiceUtils.findBossAccountByRegistrationId(bossAccountRepository, bossId)
+        val bossAccount = BossAccountServiceHelper.findBossAccountByRegistrationId(bossAccountRepository, bossId)
         return BossAccountInfoResponse.of(bossAccount)
     }
 
     @Transactional
     fun updateBossAccountInfo(bossId: String, request: UpdateBossAccountInfoRequest) {
-        val bossAccount = BossAccountServiceUtils.findBossAccountByRegistrationId(bossAccountRepository, bossId)
+        val bossAccount = BossAccountServiceHelper.findBossAccountByRegistrationId(bossAccountRepository, bossId)
         bossAccount.updateInfo(request.name, request.isSetupNotification)
         bossAccountRepository.save(bossAccount)
     }
 
     @Transactional
     fun signOut(bossId: String) {
-        val bossAccount = BossAccountServiceUtils.findBossAccountByRegistrationId(bossAccountRepository, bossId)
+        val bossAccount = BossAccountServiceHelper.findBossAccountByRegistrationId(bossAccountRepository, bossId)
         bossWithdrawalAccountRepository.save(BossWithdrawalAccount.newInstance(bossAccount))
         bossAccountRepository.delete(bossAccount)
 

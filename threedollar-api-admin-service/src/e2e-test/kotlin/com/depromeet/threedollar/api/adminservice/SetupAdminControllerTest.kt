@@ -1,0 +1,28 @@
+package com.depromeet.threedollar.api.adminservice
+
+import org.junit.jupiter.api.BeforeEach
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminRepository
+import com.fasterxml.jackson.core.type.TypeReference
+
+internal abstract class SetupAdminControllerTest : ControllerTest() {
+
+    @Autowired
+    protected lateinit var adminRepository: AdminRepository
+
+    protected lateinit var token: String
+
+    @BeforeEach
+    protected fun setupToken() {
+        val response = objectMapper.readValue(
+            mockMvc.perform(get("/test-token"))
+                .andReturn()
+                .response
+                .contentAsString, object : TypeReference<ApiResponse<String>>() {}
+        )
+        token = response.data
+    }
+
+}

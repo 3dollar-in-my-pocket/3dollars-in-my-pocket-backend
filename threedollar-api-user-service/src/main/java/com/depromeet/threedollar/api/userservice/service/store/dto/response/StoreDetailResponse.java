@@ -94,7 +94,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
                                          List<Review> reviews, VisitHistoryCounter visitHistoriesCollection, List<VisitHistoryWithUserProjection> visitHistories) {
         StoreDetailResponse response = StoreDetailResponse.builder()
             .store(store)
-            .distance(LocationDistanceUtils.getDistance(LocationValue.of(store.getLatitude(), store.getLongitude()), deviceLocation))
+            .distance(LocationDistanceUtils.getDistanceM(LocationValue.of(store.getLatitude(), store.getLongitude()), deviceLocation))
             .user(UserInfoResponse.of(userDictionary.getUser(store.getUserId())))
             .visitHistory(VisitHistoryCountsResponse.of(visitHistoriesCollection.getStoreExistsVisitsCount(store.getId()), visitHistoriesCollection.getStoreNotExistsVisitsCount(store.getId())))
             .build();

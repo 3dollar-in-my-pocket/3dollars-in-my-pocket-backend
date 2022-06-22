@@ -1,13 +1,12 @@
 package com.depromeet.threedollar.api.userservice.service.store;
 
-import static com.depromeet.threedollar.api.userservice.service.store.StoreServiceUtils.findAroundStoresFilerByCategory;
-
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +20,7 @@ import com.depromeet.threedollar.api.userservice.service.store.dto.response.Stor
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoresCursorResponse;
 import com.depromeet.threedollar.common.model.LocationValue;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.core.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
@@ -35,6 +35,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistor
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection.VisitHistoryCounter;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryWithUserProjection;
 import com.depromeet.threedollar.domain.redis.domain.userservice.store.AroundUserStoresCacheRepository;
+import com.depromeet.threedollar.domain.redis.domain.userservice.store.UserStoreCacheModel;
 
 import lombok.RequiredArgsConstructor;
 
@@ -52,7 +53,7 @@ public class StoreRetrieveService {
 
     @Transactional(readOnly = true)
     public List<StoreWithVisitsAndDistanceResponse> retrieveAroundStores(RetrieveAroundStoresRequest request, LocationValue deviceLocation, LocationValue mapLocation) {
-        List<StoreInfoResponse> aroundStoresFilerByCategory = findAroundStoresFilerByCategory(storeRepository, aroundUserStoresCacheRepository, mapLocation.getLatitude(), mapLocation.getLongitude(), request.getDistance(), request.getCategory());
+        List<StoreInfoResponse> aroundStoresFilerByCategory = findAroundStoresFilerByCategory(mapLocation.getLatitude(), mapLocation.getLongitude(), request.getDistance(), request.getCategory());
         VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(aroundStoresFilerByCategory.stream()
             .map(StoreInfoResponse::getStoreId)
             .collect(Collectors.toList()));
@@ -63,9 +64,50 @@ public class StoreRetrieveService {
             .collect(Collectors.toList());
     }
 
+    private List<StoreInfoResponse> findAroundStoresFilerByCategory(double mapLatitude, double mapLongitude, double distance, @Nullable UserMenuCategoryType categoryType) {
+        List<StoreInfoResponse> aroundStores = findAroundStores(mapLatitude, mapLongitude, distance);
+        if (categoryType == null) {
+            return aroundStores;
+        }
+        return aroundStores.stream()
+            .filter(store -> store.hasMenuCategory(categoryType))
+            .collect(Collectors.toList());
+    }
+
+    private List<StoreInfoResponse> findAroundStores(double mapLatitude, double mapLongitude, double distance) {
+        List<UserStoreCacheModel> aroundStoresInCache = aroundUserStoresCacheRepository.get(mapLatitude, mapLongitude, distance);
+        if (aroundStoresInCache != null) {
+            return aroundStoresInCache.stream()
+                .map(StoreInfoResponse::of)
+                .collect(Collectors.toList());
+        }
+        List<StoreWithMenuProjection> aroundStoresInDB = storeRepository.findStoresByLocationLessThanDistance(mapLatitude, mapLongitude, distance);
+
+        saveAroundStoresInCached(aroundStoresInDB, mapLatitude, mapLongitude, distance);
+
+        return aroundStoresInDB.stream()
+            .map(StoreInfoResponse::of)
+            .collect(Collectors.toList());
+    }
+
+    private void saveAroundStoresInCached(List<StoreWithMenuProjection> nearStores, double mapLatitude, double mapLongitude, double distance) {
+        List<UserStoreCacheModel> cachedAroundStores = nearStores.stream()
+            .map(store -> UserStoreCacheModel.of(
+                store.getMenuCategoriesSortedByCounts(),
+                store.getId(),
+                store.getLatitude(),
+                store.getLongitude(),
+                store.getName(),
+                store.getRating(),
+                store.getCreatedAt(),
+                store.getUpdatedAt())
+            ).collect(Collectors.toList());
+        aroundUserStoresCacheRepository.set(mapLatitude, mapLongitude, distance, cachedAroundStores);
+    }
+
     @Transactional(readOnly = true)
     public StoreDetailResponse retrieveStoreDetailInfo(RetrieveStoreDetailRequest request, LocationValue deviceLocation) {
-        Store store = StoreServiceUtils.findStoreByIdFetchJoinMenu(storeRepository, request.getStoreId());
+        Store store = StoreServiceHelper.findStoreByIdFetchJoinMenu(storeRepository, request.getStoreId());
         List<Review> reviews = reviewRepository.findAllByStoreId(request.getStoreId());
         List<StoreImageProjection> storeImages = storeImageRepository.findAllByStoreId(request.getStoreId());
         List<VisitHistoryWithUserProjection> visitHistories = visitHistoryRepository.findAllVisitWithUserByStoreIdAfterDate(request.getStoreId(), request.getStartDate());

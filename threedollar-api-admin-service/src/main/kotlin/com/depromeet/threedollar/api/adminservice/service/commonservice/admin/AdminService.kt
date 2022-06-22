@@ -16,13 +16,13 @@ class AdminService(
 
     @Transactional(readOnly = true)
     fun getMyAdminInfo(adminId: Long): AdminInfoResponse {
-        val admin = AdminServiceUtils.findAdminById(adminRepository, adminId)
+        val admin = AdminServiceHelper.findAdminById(adminRepository, adminId)
         return AdminInfoResponse.of(admin)
     }
 
     @Transactional
     fun updateMyAdminInfo(adminId: Long, request: UpdateMyAdminInfoRequest): AdminInfoResponse {
-        val admin = AdminServiceUtils.findAdminById(adminRepository, adminId)
+        val admin = AdminServiceHelper.findAdminById(adminRepository, adminId)
         request.let {
             admin.updateName(it.name)
         }
@@ -31,7 +31,7 @@ class AdminService(
 
     @Transactional
     fun addAdmin(request: AddAdminRequest, adminId: Long) {
-        AdminServiceUtils.validateNotExistsEmail(adminRepository, request.email)
+        AdminServiceHelper.validateNotExistsEmail(adminRepository, request.email)
         adminRepository.save(request.toEntity(adminId))
     }
 

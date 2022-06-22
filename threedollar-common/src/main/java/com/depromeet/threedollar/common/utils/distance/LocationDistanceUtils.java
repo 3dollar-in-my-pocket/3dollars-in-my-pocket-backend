@@ -16,14 +16,14 @@ public class LocationDistanceUtils {
     /**
      * 두 위도/경도간의 거리를 계산해주는 유틸성 메소드.
      */
-    public static int getDistance(@Nullable LocationValue source, @Nullable LocationValue target) {
+    public static int getDistanceM(@Nullable LocationValue source, @Nullable LocationValue target) {
         if (source == null || target == null) {
             return UNKNOWN_DISTANCE;
         }
-        return getDistance(source.getLatitude(), source.getLongitude(), target.getLatitude(), target.getLongitude());
+        return getDistanceM(source.getLatitude(), source.getLongitude(), target.getLatitude(), target.getLongitude());
     }
 
-    public static int getDistance(double sourceLatitude, double sourceLongitude, double targetLatitude, double targetLongitude) {
+    public static int getDistanceM(double sourceLatitude, double sourceLongitude, double targetLatitude, double targetLongitude) {
         if (sourceLatitude == 0 || sourceLongitude == 0 || targetLatitude == 0 || targetLongitude == 0) {
             return UNKNOWN_DISTANCE;
         }
@@ -34,6 +34,21 @@ public class LocationDistanceUtils {
         dist = convertRadianToDegree(dist);
         dist = dist * 60 * 1.1515;
         return (int) (dist * 1609.344);
+    }
+
+    public static double getDistanceKm(@Nullable LocationValue source, @Nullable LocationValue target) {
+        if (source == null || target == null) {
+            return UNKNOWN_DISTANCE;
+        }
+        return getDistanceKm(source.getLatitude(), source.getLongitude(), target.getLatitude(), target.getLongitude());
+    }
+
+    private static double getDistanceKm(double sourceLatitude, double sourceLongitude, double targetLatitude, double targetLongitude) {
+        int distanceM = getDistanceM(sourceLatitude, sourceLongitude, targetLatitude, targetLongitude);
+        if (distanceM == UNKNOWN_DISTANCE) {
+            return UNKNOWN_DISTANCE;
+        }
+        return DistanceUnitConvertUtils.fromMeterToKm(distanceM);
     }
 
     private static double convertDegreeToRadian(double degree) {

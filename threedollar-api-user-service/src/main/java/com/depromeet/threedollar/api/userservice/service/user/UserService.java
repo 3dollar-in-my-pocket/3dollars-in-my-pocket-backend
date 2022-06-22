@@ -30,8 +30,8 @@ public class UserService {
     @Retryable(maxAttempts = 2, backoff = @Backoff(value = 1000), value = LockAcquisitionException.class)
     @Transactional
     public Long registerUser(CreateUserRequest request) {
-        UserServiceUtils.validateNotExistsUser(userRepository, request.getSocialId(), request.getSocialType());
-        UserServiceUtils.validateNotExistsUserName(userRepository, request.getName());
+        UserServiceHelper.validateNotExistsUser(userRepository, request.getSocialId(), request.getSocialType());
+        UserServiceHelper.validateNotExistsUserName(userRepository, request.getName());
         User user = userRepository.save(request.toEntity());
         eventPublisher.publishEvent(NewUserCreatedEvent.of(user.getId()));
         return user.getId();
@@ -39,26 +39,26 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public UserInfoResponse getUserInfo(Long userId) {
-        User user = UserServiceUtils.findUserById(userRepository, userId);
+        User user = UserServiceHelper.findUserById(userRepository, userId);
         return UserInfoResponse.of(user);
     }
 
     @Transactional(readOnly = true)
     public void checkIsAvailableName(CheckAvailableNameRequest request) {
-        UserServiceUtils.validateNotExistsUserName(userRepository, request.getName());
+        UserServiceHelper.validateNotExistsUserName(userRepository, request.getName());
     }
 
     @Transactional
     public UserInfoResponse updateUserInfo(UpdateUserInfoRequest request, Long userId) {
-        User user = UserServiceUtils.findUserById(userRepository, userId);
-        UserServiceUtils.validateNotExistsUserName(userRepository, request.getName());
+        User user = UserServiceHelper.findUserById(userRepository, userId);
+        UserServiceHelper.validateNotExistsUserName(userRepository, request.getName());
         user.updateName(request.getName());
         return UserInfoResponse.of(user);
     }
 
     @Transactional
     public void signOut(Long userId) {
-        User user = UserServiceUtils.findUserById(userRepository, userId);
+        User user = UserServiceHelper.findUserById(userRepository, userId);
         withdrawalUserRepository.save(WithdrawalUser.newInstance(user));
         userRepository.delete(user);
     }

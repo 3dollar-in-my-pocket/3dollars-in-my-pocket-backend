@@ -18,7 +18,7 @@ internal class BossRegistrationTest {
         val bossName = "가삼"
         val businessNumber = "000-00-00000"
 
-        val registration = RegistrationCreator.create(
+        val registration = RegistrationFixture.create(
             socialId = socialId,
             socialType = socialType,
             bossName = bossName,
@@ -47,7 +47,7 @@ internal class BossRegistrationTest {
         val contactsNumber = "010-1234-1234"
         val categoriesIds = setOf("한식id", "중식id")
 
-        val registration = RegistrationCreator.create(
+        val registration = RegistrationFixture.create(
             socialId = "social-id",
             socialType = BossAccountSocialType.NAVER,
             storeName = storeName,

@@ -1,8 +1,8 @@
 plugins {
-    id "org.springframework.boot" version "2.5.13"
+    id "org.springframework.boot" version "2.5.14"
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
-    id "org.jetbrains.kotlin.jvm" version "1.6.20"
-    id "org.jetbrains.kotlin.plugin.spring" version "1.6.20"
+    id "org.jetbrains.kotlin.jvm" version "1.6.21"
+    id "org.jetbrains.kotlin.plugin.spring" version "1.6.21"
     id "application"
     id "jacoco"
     id "org.sonarqube" version "3.3"
@@ -21,7 +21,6 @@ ext {
     jacocoVersion = "0.8.8"
     springRetryVersion = "1.3.3"
     springmockkVersion = "3.1.1"
-    jjwtVersion = "0.11.5"
     springCloudAwsVersion = "2.2.6.RELEASE"
     embeddedRedisVersion = "0.7.2"
     embeddedMongoVersion = "3.4.5"
@@ -36,6 +35,7 @@ allprojects {
 
 subprojects {
     apply {
+        plugin "idea"
         plugin "java-library"
         plugin "kotlin"
         plugin "org.springframework.boot"
@@ -110,29 +110,52 @@ subprojects {
         integrationTest {
             compileClasspath += main.output + test.output
             runtimeClasspath += main.output + test.output
+            java {
+                srcDir "src/integration-test/java"
+                srcDir "src/integration-test/kotlin"
+            }
             resources {
-                "src/integrationTest/resources"
+                srcDir "src/integration-test/resources"
             }
         }
         e2eTest {
             compileClasspath += main.output + test.output
             runtimeClasspath += main.output + test.output
+            java {
+                srcDir "src/e2e-test/java"
+                srcDir "src/e2e-test/kotlin"
+            }
             resources {
-                "src/e2eTest/resources"
+                srcDir "src/e2e-test/resources"
             }
         }
     }
 
-    configurations {
-        compileOnly.extendsFrom annotationProcessor
+    idea {
+        module {
+            testSourceDirs += sourceSets.integrationTest.java.srcDirs
+            testSourceDirs += sourceSets.integrationTest.kotlin.srcDirs
+            testResourceDirs += sourceSets.integrationTest.resources.srcDirs
 
-        integrationTestImplementation.extendsFrom testImplementation
+            testSourceDirs += sourceSets.e2eTest.java.srcDirs
+            testSourceDirs += sourceSets.e2eTest.kotlin.srcDirs
+            testResourceDirs += sourceSets.e2eTest.resources.srcDirs
+        }
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+        integrationTestImplementation.extendsFrom implementation, testImplementation
         integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
-        integrationTestCompileOnly.extendsFrom testCompileOnly, testAnnotationProcessor
+        integrationTestCompileOnly.extendsFrom testCompileOnly
+        integrationTestAnnotationProcessor.extendsFrom testAnnotationProcessor
 
         e2eTestImplementation.extendsFrom testImplementation
         e2eTestRuntimeOnly.extendsFrom testRuntimeOnly
-        e2eTestCompileOnly.extendsFrom testCompileOnly, testAnnotationProcessor
+        e2eTestCompileOnly.extendsFrom testCompileOnly
+        e2eTestAnnotationProcessor.extendsFrom testAnnotationProcessor
     }
 
     tasks.withType(Test) {

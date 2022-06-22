@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.response.LoginResponse;
-import com.depromeet.threedollar.api.userservice.service.store.StoreServiceUtils;
+import com.depromeet.threedollar.api.userservice.service.store.StoreServiceHelper;
 import com.depromeet.threedollar.api.userservice.service.user.UserService;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.CreateUserRequest;
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
@@ -63,7 +63,7 @@ public class LocalTestController {
     public ApiResponse<String> deleteStoreByForce(
         @RequestParam Long storeId
     ) {
-        Store store = StoreServiceUtils.findStoreById(storeRepository, storeId);
+        Store store = StoreServiceHelper.findStoreById(storeRepository, storeId);
         store.deleteByUser();
         storeRepository.save(store);
         return ApiResponse.OK;

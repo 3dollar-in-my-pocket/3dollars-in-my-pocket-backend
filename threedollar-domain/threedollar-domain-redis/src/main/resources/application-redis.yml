@@ -9,8 +9,6 @@ spring:
     host: localhost
     port: ${random.int(49152,65535)}
     timeout: 5000
-  cache:
-    type: none
 
 
 ---

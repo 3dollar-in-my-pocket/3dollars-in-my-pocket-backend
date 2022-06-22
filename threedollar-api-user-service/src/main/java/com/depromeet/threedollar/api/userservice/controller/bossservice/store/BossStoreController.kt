@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.core.config.resolver.DeviceLocation
 import com.depromeet.threedollar.api.core.config.resolver.MapLocation
-import com.depromeet.threedollar.api.core.service.bossservice.store.BossStoreCommonService
+import com.depromeet.threedollar.api.core.service.bossservice.store.BossStoreRetrieveService
 import com.depromeet.threedollar.api.core.service.bossservice.store.dto.request.GetAroundBossStoresRequest
 import com.depromeet.threedollar.api.core.service.bossservice.store.dto.response.BossStoreAroundInfoResponse
 import com.depromeet.threedollar.api.core.service.bossservice.store.dto.response.BossStoreInfoResponse
@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiOperation
 
 @RestController
 class BossStoreController(
-    private val bossStoreCommonService: BossStoreCommonService,
+    private val bossStoreRetrieveService: BossStoreRetrieveService,
 ) {
 
     @ApiOperation("주변의 사장님 가게 목록을 조회합니다")
@@ -27,7 +27,7 @@ class BossStoreController(
         @MapLocation mapLocation: LocationValue,
         @DeviceLocation(required = false) deviceLocation: LocationValue,
     ): ApiResponse<List<BossStoreAroundInfoResponse>> {
-        return ApiResponse.success(bossStoreCommonService.getAroundBossStores(
+        return ApiResponse.success(bossStoreRetrieveService.getAroundBossStores(
             request = request,
             mapLocation = mapLocation,
             deviceLocation = deviceLocation
@@ -41,7 +41,7 @@ class BossStoreController(
         @PathVariable bossStoreId: String,
         @DeviceLocation(required = false) deviceLocation: LocationValue,
     ): ApiResponse<BossStoreInfoResponse> {
-        return ApiResponse.success(bossStoreCommonService.getBossStore(bossStoreId, deviceLocation))
+        return ApiResponse.success(bossStoreRetrieveService.getBossStore(bossStoreId, deviceLocation))
     }
 
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.request.LoginRequest;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.userservice.service.user.UserService;
-import com.depromeet.threedollar.api.userservice.service.user.UserServiceUtils;
+import com.depromeet.threedollar.api.userservice.service.user.UserServiceHelper;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
 import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder;
@@ -31,7 +31,7 @@ class AppleAuthService implements AuthService {
     @Override
     public Long login(LoginRequest request) {
         String socialId = appleTokenDecoder.getSocialIdFromIdToken(request.getToken());
-        return UserServiceUtils.findUserBySocialIdAndSocialType(userRepository, socialId, socialType).getId();
+        return UserServiceHelper.findUserBySocialIdAndSocialType(userRepository, socialId, socialType).getId();
     }
 
 }

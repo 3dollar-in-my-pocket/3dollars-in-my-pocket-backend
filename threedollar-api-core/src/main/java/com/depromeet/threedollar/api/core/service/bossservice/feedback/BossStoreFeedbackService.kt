@@ -9,7 +9,7 @@ import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.reque
 import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.request.GetBossStoreFeedbacksCountsBetweenDateRequest
 import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.response.BossStoreFeedbackCountWithRatioResponse
 import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.response.BossStoreFeedbackCursorResponse
-import com.depromeet.threedollar.api.core.service.bossservice.store.BossStoreCommonServiceUtils
+import com.depromeet.threedollar.api.core.service.bossservice.store.BossStoreServiceHelper
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
@@ -29,7 +29,7 @@ class BossStoreFeedbackService(
     @CacheEvict(cacheNames = [BOSS_STORE_FEEDBACKS_TOTAL_COUNTS], key = "#bossStoreId")
     @Transactional
     fun addFeedback(bossStoreId: String, request: AddBossStoreFeedbackRequest, userId: Long, date: LocalDate) {
-        BossStoreCommonServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
+        BossStoreServiceHelper.validateExistsBossStore(bossStoreRepository, bossStoreId)
         validateNotExistsFeedbackOnDate(storeId = bossStoreId, userId = userId, date = date)
 
         bossStoreFeedbackRepository.saveAll(request.toDocuments(bossStoreId, userId, date))
@@ -45,7 +45,7 @@ class BossStoreFeedbackService(
     @Cacheable(cacheNames = [BOSS_STORE_FEEDBACKS_TOTAL_COUNTS], key = "#bossStoreId")
     @Transactional(readOnly = true)
     fun getBossStoreFeedbacksCounts(bossStoreId: String): List<BossStoreFeedbackCountWithRatioResponse> {
-        BossStoreCommonServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
+        BossStoreServiceHelper.validateExistsBossStore(bossStoreRepository, bossStoreId)
 
         val feedbackCountsGroupingByFeedbackType: Map<BossStoreFeedbackType, Int> = bossStoreFeedbackCountRepository.getAllCountsGroupByFeedbackType(bossStoreId)
         val totalCount = feedbackCountsGroupingByFeedbackType.values.sum()
@@ -56,7 +56,7 @@ class BossStoreFeedbackService(
 
     @Transactional(readOnly = true)
     fun getBossStoreFeedbacksCountsBetweenDate(bossStoreId: String, request: GetBossStoreFeedbacksCountsBetweenDateRequest): BossStoreFeedbackCursorResponse {
-        BossStoreCommonServiceUtils.validateExistsBossStore(bossStoreRepository, bossStoreId)
+        BossStoreServiceHelper.validateExistsBossStore(bossStoreRepository, bossStoreId)
         val feedbacks = bossStoreFeedbackRepository.findAllByBossStoreIdAndBetween(bossStoreId = bossStoreId, startDate = request.startDate, endDate = request.endDate)
 
         val feedbacksGroupByDate: Map<LocalDate, Map<BossStoreFeedbackType, Int>> = feedbacks

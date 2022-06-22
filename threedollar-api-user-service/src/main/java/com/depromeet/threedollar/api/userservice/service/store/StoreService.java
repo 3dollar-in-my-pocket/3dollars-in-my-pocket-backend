@@ -42,7 +42,7 @@ public class StoreService {
 
     @Transactional
     public StoreInfoResponse updateStore(Long storeId, UpdateStoreRequest request) {
-        Store store = StoreServiceUtils.findStoreByIdFetchJoinMenu(storeRepository, storeId);
+        Store store = StoreServiceHelper.findStoreByIdFetchJoinMenu(storeRepository, storeId);
         store.updateInfo(request.getStoreName(), request.getStoreType(), request.getLatitude(), request.getLongitude());
         store.updatePaymentMethods(request.getPaymentMethods());
         store.updateAppearanceDays(request.getAppearanceDays());
@@ -52,7 +52,7 @@ public class StoreService {
 
     @Transactional
     public StoreDeleteResponse deleteStore(Long storeId, DeleteStoreRequest request, Long userId) {
-        Store store = StoreServiceUtils.findStoreById(storeRepository, storeId);
+        Store store = StoreServiceHelper.findStoreById(storeRepository, storeId);
         List<Long> reporters = storeDeleteRequestRepository.findAllUserIdByStoreIdWithLock(storeId);
         if (reporters.contains(userId)) {
             throw new ConflictException(String.format("사용자(%s)는 유저 가게(%s)에 대해 이미 삭제 요청을 하였습니다", userId, storeId), CONFLICT_DELETE_REQUEST_STORE);

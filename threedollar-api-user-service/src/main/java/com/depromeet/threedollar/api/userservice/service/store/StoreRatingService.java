@@ -19,7 +19,7 @@ public class StoreRatingService {
 
     @Transactional
     public void renewStoreAverageRating(Long storeId) {
-        Store store = StoreServiceUtils.findStoreById(storeRepository, storeId);
+        Store store = StoreServiceHelper.findStoreById(storeRepository, storeId);
         double average = calculateAverageRating(storeId);
         store.updateAverageRating(average);
         storeRepository.save(store);
