@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.adminservice.controller.advice
+package com.depromeet.threedollar.api.adminservice.config.advice
 
 import org.junit.jupiter.api.Test
 import org.springframework.http.converter.HttpMessageNotReadableException

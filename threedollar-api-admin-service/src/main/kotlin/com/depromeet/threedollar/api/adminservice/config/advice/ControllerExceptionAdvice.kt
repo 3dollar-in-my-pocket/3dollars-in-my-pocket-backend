@@ -1,11 +1,7 @@
-package com.depromeet.threedollar.api.bossservice.controller.advice
+package com.depromeet.threedollar.api.adminservice.config.advice
 
-import java.time.LocalDateTime
-import java.time.ZoneId
 import java.util.stream.Collectors
-import javax.servlet.http.HttpServletRequest
 import org.springframework.beans.TypeMismatchException
-import org.springframework.context.ApplicationEventPublisher
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
@@ -23,20 +19,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.multipart.MaxUploadSizeExceededException
 import org.springframework.web.multipart.support.MissingServletRequestPartException
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.utils.HttpServletRequestUtils
 import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
-import com.depromeet.threedollar.common.exception.type.ErrorCode.INTERNAL_SERVER
-import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID
-import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_MISSING_PARAMETER
-import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_TYPE
-import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_UPLOAD_FILE_SIZE
-import com.depromeet.threedollar.common.exception.type.ErrorCode.METHOD_NOT_ALLOWED
-import com.depromeet.threedollar.common.exception.type.ErrorCode.NOT_ACCEPTABLE
-import com.depromeet.threedollar.common.exception.type.ErrorCode.UNSUPPORTED_MEDIA_TYPE
-import com.depromeet.threedollar.common.model.event.ServerExceptionOccurredEvent
-import com.depromeet.threedollar.common.type.ApplicationType
-import com.depromeet.threedollar.common.utils.UserMetaSessionUtils
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import mu.KotlinLogging
@@ -44,9 +28,7 @@ import mu.KotlinLogging
 private val log = KotlinLogging.logger {}
 
 @RestControllerAdvice
-class ControllerExceptionAdvice(
-    private val eventPublisher: ApplicationEventPublisher,
-) {
+class ControllerExceptionAdvice {
 
     /**
      * 400 BadRequest
@@ -59,7 +41,7 @@ class ControllerExceptionAdvice(
             .map { fieldError: FieldError -> fieldError.defaultMessage }
             .collect(Collectors.joining("\n"))
         log.error("BindException: {}", errorMessage)
-        return ApiResponse.error(INVALID, errorMessage)
+        return ApiResponse.error(ErrorCode.INVALID, errorMessage)
     }
 
     /**
@@ -71,9 +53,9 @@ class ControllerExceptionAdvice(
         log.warn(e.message)
         if (e.rootCause is MissingKotlinParameterException) {
             val parameterName = (e.rootCause as MissingKotlinParameterException).parameter.name
-            return ApiResponse.error(INVALID_MISSING_PARAMETER, "필수 파라미터 ($parameterName)을 입력해주세요")
+            return ApiResponse.error(ErrorCode.INVALID_MISSING_PARAMETER, "필수 파라미터 ($parameterName)을 입력해주세요")
         }
-        return ApiResponse.error(INVALID)
+        return ApiResponse.error(ErrorCode.INVALID)
     }
 
     /**
@@ -84,7 +66,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(MissingServletRequestParameterException::class)
     protected fun handleMissingServletRequestParameterException(e: MissingServletRequestParameterException): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(INVALID_MISSING_PARAMETER, "필수 파라미터 (${e.parameterName})을 입력해주세요")
+        return ApiResponse.error(ErrorCode.INVALID_MISSING_PARAMETER, "필수 파라미터 (${e.parameterName})을 입력해주세요")
     }
 
     /**
@@ -95,7 +77,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(MissingServletRequestPartException::class)
     protected fun handleMissingServletRequestPartException(e: MissingServletRequestPartException): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(INVALID_MISSING_PARAMETER, "Multipart (${e.requestPartName})을 입력해주세요")
+        return ApiResponse.error(ErrorCode.INVALID_MISSING_PARAMETER, "Multipart (${e.requestPartName})을 입력해주세요")
     }
 
     /**
@@ -106,7 +88,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(MissingPathVariableException::class)
     private fun handleMissingPathVariableException(e: MissingPathVariableException): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(INVALID_MISSING_PARAMETER, "Path (${e.variableName})를 입력해주세요")
+        return ApiResponse.error(ErrorCode.INVALID_MISSING_PARAMETER, "Path (${e.variableName})를 입력해주세요")
     }
 
     /**
@@ -117,7 +99,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(TypeMismatchException::class)
     private fun handleTypeMismatchException(e: TypeMismatchException): ApiResponse<Nothing> {
         log.warn(e.message)
-        val errorCode = INVALID_TYPE
+        val errorCode = ErrorCode.INVALID_TYPE
         return ApiResponse.error(errorCode, "${errorCode.message} (${e.value})")
     }
 
@@ -128,7 +110,7 @@ class ControllerExceptionAdvice(
     )
     private fun handleMethodArgumentNotValidException(e: Exception): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(INVALID)
+        return ApiResponse.error(ErrorCode.INVALID)
     }
 
     /**
@@ -139,7 +121,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(HttpRequestMethodNotSupportedException::class)
     private fun handleHttpRequestMethodNotSupportedException(e: HttpRequestMethodNotSupportedException): ApiResponse<Nothing> {
         log.warn(e.message, e)
-        return ApiResponse.error(METHOD_NOT_ALLOWED)
+        return ApiResponse.error(ErrorCode.METHOD_NOT_ALLOWED)
     }
 
     /**
@@ -149,7 +131,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(HttpMediaTypeNotAcceptableException::class)
     private fun handleHttpMediaTypeNotAcceptableException(e: HttpMediaTypeNotAcceptableException): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(NOT_ACCEPTABLE)
+        return ApiResponse.error(ErrorCode.NOT_ACCEPTABLE)
     }
 
     /**
@@ -160,7 +142,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(HttpMediaTypeException::class)
     private fun handleHttpMediaTypeException(e: HttpMediaTypeException): ApiResponse<Nothing> {
         log.warn(e.message, e)
-        return ApiResponse.error(UNSUPPORTED_MEDIA_TYPE)
+        return ApiResponse.error(ErrorCode.UNSUPPORTED_MEDIA_TYPE)
     }
 
     /**
@@ -170,7 +152,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(MaxUploadSizeExceededException::class)
     private fun handleMaxUploadSizeExceededException(e: MaxUploadSizeExceededException): ApiResponse<Nothing> {
         log.error(e.message, e)
-        return ApiResponse.error(INVALID_UPLOAD_FILE_SIZE)
+        return ApiResponse.error(ErrorCode.INVALID_UPLOAD_FILE_SIZE)
     }
 
 
@@ -178,35 +160,10 @@ class ControllerExceptionAdvice(
      * ThreeDollars Custom Exception
      */
     @ExceptionHandler(ThreeDollarsBaseException::class)
-    private fun handleBaseException(exception: ThreeDollarsBaseException, request: HttpServletRequest): ResponseEntity<ApiResponse<Nothing>> {
+    private fun handleBaseException(exception: ThreeDollarsBaseException): ResponseEntity<ApiResponse<Nothing>> {
         log.error(exception.message, exception)
-        if (exception.isSetAlarm) {
-            eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(exception.errorCode, exception, request))
-        }
         return ResponseEntity.status(exception.status)
             .body(ApiResponse.error(exception.errorCode))
-    }
-
-    /**
-     * 500 Internal Server
-     */
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(Exception::class)
-    private fun handleInternalServerException(exception: Exception, request: HttpServletRequest): ApiResponse<Nothing> {
-        log.error(exception.message, exception)
-        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(INTERNAL_SERVER, exception, request))
-        return ApiResponse.error(INTERNAL_SERVER)
-    }
-
-    private fun createUnExpectedErrorOccurredEvent(errorCode: ErrorCode, exception: Exception, request: HttpServletRequest): ServerExceptionOccurredEvent {
-        return ServerExceptionOccurredEvent.error(
-            ApplicationType.BOSS_API,
-            errorCode,
-            exception,
-            HttpServletRequestUtils.getFullUrlWithMethod(request),
-            UserMetaSessionUtils.get(),
-            LocalDateTime.now(ZoneId.of("Asia/Seoul"))
-        )
     }
 
 }

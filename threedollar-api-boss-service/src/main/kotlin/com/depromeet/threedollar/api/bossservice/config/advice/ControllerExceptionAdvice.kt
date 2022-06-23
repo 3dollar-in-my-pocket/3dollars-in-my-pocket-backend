@@ -1,7 +1,11 @@
-package com.depromeet.threedollar.api.adminservice.controller.advice
+package com.depromeet.threedollar.api.bossservice.config.advice
 
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.stream.Collectors
+import javax.servlet.http.HttpServletRequest
 import org.springframework.beans.TypeMismatchException
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
@@ -19,8 +23,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.multipart.MaxUploadSizeExceededException
 import org.springframework.web.multipart.support.MissingServletRequestPartException
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.utils.HttpServletRequestUtils
 import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
+import com.depromeet.threedollar.common.model.event.ServerExceptionOccurredEvent
+import com.depromeet.threedollar.common.type.ApplicationType
+import com.depromeet.threedollar.common.utils.UserMetaSessionUtils
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import mu.KotlinLogging
@@ -28,7 +36,9 @@ import mu.KotlinLogging
 private val log = KotlinLogging.logger {}
 
 @RestControllerAdvice
-class ControllerExceptionAdvice {
+class ControllerExceptionAdvice(
+    private val eventPublisher: ApplicationEventPublisher,
+) {
 
     /**
      * 400 BadRequest
@@ -160,10 +170,35 @@ class ControllerExceptionAdvice {
      * ThreeDollars Custom Exception
      */
     @ExceptionHandler(ThreeDollarsBaseException::class)
-    private fun handleBaseException(exception: ThreeDollarsBaseException): ResponseEntity<ApiResponse<Nothing>> {
+    private fun handleBaseException(exception: ThreeDollarsBaseException, request: HttpServletRequest): ResponseEntity<ApiResponse<Nothing>> {
         log.error(exception.message, exception)
+        if (exception.isSetAlarm) {
+            eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(exception.errorCode, exception, request))
+        }
         return ResponseEntity.status(exception.status)
             .body(ApiResponse.error(exception.errorCode))
+    }
+
+    /**
+     * 500 Internal Server
+     */
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception::class)
+    private fun handleInternalServerException(exception: Exception, request: HttpServletRequest): ApiResponse<Nothing> {
+        log.error(exception.message, exception)
+        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(ErrorCode.INTERNAL_SERVER, exception, request))
+        return ApiResponse.error(ErrorCode.INTERNAL_SERVER)
+    }
+
+    private fun createUnExpectedErrorOccurredEvent(errorCode: ErrorCode, exception: Exception, request: HttpServletRequest): ServerExceptionOccurredEvent {
+        return ServerExceptionOccurredEvent.error(
+            ApplicationType.BOSS_API,
+            errorCode,
+            exception,
+            HttpServletRequestUtils.getFullUrlWithMethod(request),
+            UserMetaSessionUtils.get(),
+            LocalDateTime.now(ZoneId.of("Asia/Seoul"))
+        )
     }
 
 }

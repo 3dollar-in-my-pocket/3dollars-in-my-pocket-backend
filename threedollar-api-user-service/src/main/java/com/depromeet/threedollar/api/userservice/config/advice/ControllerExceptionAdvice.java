@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.userservice.controller.advice;
+package com.depromeet.threedollar.api.userservice.config.advice;
 
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.INTERNAL_SERVER;
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID;

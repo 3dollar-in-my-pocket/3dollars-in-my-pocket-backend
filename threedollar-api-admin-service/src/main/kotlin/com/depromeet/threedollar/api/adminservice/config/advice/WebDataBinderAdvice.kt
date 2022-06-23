@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.bossservice.controller.advice
+package com.depromeet.threedollar.api.adminservice.config.advice
 
 import org.springframework.beans.propertyeditors.StringTrimmerEditor
 import org.springframework.web.bind.WebDataBinder
