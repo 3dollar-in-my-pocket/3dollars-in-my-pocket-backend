@@ -26,8 +26,7 @@ Authorization: {{AUTHORIZATION}}
 {
     "feedbackTypes": [
         "FOOD_IS_DELICIOUS",
-        "BOSS_IS_KIND",
-        "PLATING_IS_BEAUTIFUL"
+        "BOSS_IS_KIND"
     ]
 }
 

@@ -25,40 +25,6 @@ client.global.set("BOSS_STORE_ID", response.body["data"]["bossStoreId"])
 %}
 
 
-### 가게의 영업을 시작/재시작합니다.
-POST {{boss-api}}/v1/boss/store/{{BOSS_STORE_ID}}/open?mapLatitude=38&mapLongitude=127
-Authorization: Bearer {{BOSS_AUTHORIZATION}}
-
-> {%
-client.test("200 OK", () => {
-    client.assert(response.status === 200, "응답 실패");
-});
-%}
-
-
-
-### 가게의 영업을 갱신 합니다.
-PUT {{boss-api}}/v1/boss/store/{{BOSS_STORE_ID}}/renew?mapLatitude=38&mapLongitude=127
-Authorization: Bearer {{BOSS_AUTHORIZATION}}
-
-> {%
-client.test("200 OK", () => {
-    client.assert(response.status === 200, "응답 실패");
-});
-%}
-
-
-### 가게 영업을 종료합니다.
-DELETE {{boss-api}}/v1/boss/store/{{BOSS_STORE_ID}}/close
-Authorization: Bearer {{BOSS_AUTHORIZATION}}
-
-> {%
-client.test("200 OK", () => {
-    client.assert(response.status === 200, "응답 실패");
-});
-%}
-
-
 ### 특정 가게의 정보를 상세 조회합니다
 GET {{boss-api}}/v1/boss/store/{{BOSS_STORE_ID}}?mapLatitude=38&mapLongitude=129
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
