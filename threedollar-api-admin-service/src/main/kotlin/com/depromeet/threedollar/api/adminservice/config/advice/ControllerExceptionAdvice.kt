@@ -155,7 +155,6 @@ class ControllerExceptionAdvice {
         return ApiResponse.error(ErrorCode.INVALID_UPLOAD_FILE_SIZE)
     }
 
-
     /**
      * ThreeDollars Custom Exception
      */

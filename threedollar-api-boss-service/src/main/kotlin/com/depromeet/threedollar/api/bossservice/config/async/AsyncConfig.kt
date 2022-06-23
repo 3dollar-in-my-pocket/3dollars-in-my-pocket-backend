@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableAsync
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
 import mu.KotlinLogging
 
-private const val MAX_POOL_SIZE = 100
+private const val MAX_POOL_SIZE = 50
 
 @EnableAsync
 @Configuration
@@ -37,7 +37,7 @@ private val log = KotlinLogging.logger {}
 class AsyncTaskExceptionHandler : SimpleAsyncUncaughtExceptionHandler() {
 
     override fun handleUncaughtException(ex: Throwable, method: Method, vararg params: Any) {
-        log.error("비동기 처리 중 에러가 발생하였습니다  method: $method params: $params exception: $ex")
+        log.error("비동기 처리 중 에러가 발생하였습니다  method: (${method}) params: ($params) exception: ($ex)")
     }
 
 }
