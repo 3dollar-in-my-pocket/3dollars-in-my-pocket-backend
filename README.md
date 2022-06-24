@@ -29,9 +29,8 @@
 
 - **Language** - Java 11, Kotlin 1.6
 - **Framework** - Spring Framework (Spring Boot, Spring MVC, Spring Batch)
-- **Data(RDBMS)** - JPA/Hibernate, QueryDSL, MariaDB, flyway
+- **Data(RDBMS)** - JPA/Hibernate, QueryDSL, MariaDB
 - **Data(NoSQL, Cache)** - MongoDB, Redis, Caffeine Cache
-- **API Client** - Feign Client
 - **Build Tool** - Gradle
 - **Test** - Junit5, Spring Test, Mockito, SpringMockK
 
@@ -40,7 +39,7 @@
 ![img.png](docs/3dollars-architecture-20220409.png)
 
 - **Infra** - ECS Fargate (API, Batch), ALB, S3, CloudFront
-- **DB** - MariaDB(RDS), MongoDB(EC2), Redis Cluster(Elastic Cache)
+- **DB** - MariaDB(RDS), MongoDB(EC2), Redis Cluster(Elastic Cache), flyway
 - **CI/CD** - Git, GitHub Actions CI/CD
 - **Operations** - CloudWatch, Sentry, Slack, NewRelic, Locust
 
@@ -50,5 +49,5 @@
 
 ## Developers & Contacts
 
-- will.seungho@gmail.com (백엔드 개발자, [강승호](https://github.com/seungh0))
+- will.seungho@gmail.com (백엔드 개발자)
 - 3dollarinmypocket@gmail.com (가슴속 삼천원 대표 메일)
