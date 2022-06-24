@@ -22,18 +22,23 @@ private const val TRACE_ID = "X-Amzn-Trace-Id"
 class UserMetadataInterceptor : HandlerInterceptor {
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
-        val userAgent = request.getHeader(USER_AGENT_HEADER)
-        val platform = OsPlatformType.findByUserAgent(userAgent)
-
+        val osPlatformType: OsPlatformType = getOsPlatform(request)
         UserMetaSessionUtils.set(UserMetaValue.of(
-            osPlatform = platform,
-            userAgent = userAgent,
+            osPlatform = osPlatformType,
+            userAgent = request.getHeader(USER_AGENT_HEADER),
             clientIp = ClientIpUtils.getClientIp(request.remoteAddr, request.getHeader(X_FORWARDED_FOR_HEADER)),
             applicationType = ApplicationType.USER_API,
-            appVersion = extractAppVersion(platform, request),
+            appVersion = extractAppVersion(osPlatformType, request),
             traceId = request.getHeader(TRACE_ID) ?: TraceIdUtils.generate(),
         ))
         return true
+    }
+
+    private fun getOsPlatform(request: HttpServletRequest): OsPlatformType {
+        if (request.getHeader(ANDROID_VERSION_HEADER) != null) {
+            return OsPlatformType.ANDROID
+        }
+        return OsPlatformType.findByUserAgent(request.getHeader(USER_AGENT_HEADER))
     }
 
     private fun extractAppVersion(platform: OsPlatformType, request: HttpServletRequest): String? {

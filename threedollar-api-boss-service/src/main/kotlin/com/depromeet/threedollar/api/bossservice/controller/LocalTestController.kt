@@ -25,8 +25,10 @@ import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.model.BusinessNumber
 import com.depromeet.threedollar.common.model.ContactsNumber
+import com.depromeet.threedollar.common.model.UserMetaValue
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.common.type.DayOfTheWeek
+import com.depromeet.threedollar.common.utils.UserMetaSessionUtils
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo
@@ -200,9 +202,14 @@ class LocalTestController(
             ?: throw NotFoundException("해당하는 가입 신청($registrationId)은 존재하지 않습니다.")
         val bossAccount = registerNewBossAccount(registration)
         bossStoreRepository.save(registration.toBossStore(bossAccount.id))
-        registration.approve()
         bossRegistrationRepository.save(registration)
         return ApiResponse.OK
+    }
+
+    @ApiOperation("유저 계정의 디바이스 정보를 가져온다")
+    @GetMapping("/test-device")
+    fun getBossDevice(): ApiResponse<UserMetaValue> {
+        return ApiResponse.success(UserMetaSessionUtils.get())
     }
 
     private fun registerNewBossAccount(bossRegistration: BossRegistration): BossAccount {
