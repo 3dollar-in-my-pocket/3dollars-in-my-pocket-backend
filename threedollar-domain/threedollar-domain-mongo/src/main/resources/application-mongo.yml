@@ -23,10 +23,8 @@ spring.config:
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27018/threedollar?connectTimeoutMS=${spring.data.mongodb.connection-timeout}&maxPoolSize=${spring.data.mongodb.connection-pool-size}&minPoolSize=${spring.data.mongodb.connection-pool-size}
-      connection-pool-size: 10
-      connection-timeout: 5000
-
+      uri: mongodb://localhost:27018/threedollar?replicaSet=${spring.data.mongodb.replicaSet}&directConnection=true
+      replicaSet: threedollar-replication-1
 
 ---
 spring.config:
