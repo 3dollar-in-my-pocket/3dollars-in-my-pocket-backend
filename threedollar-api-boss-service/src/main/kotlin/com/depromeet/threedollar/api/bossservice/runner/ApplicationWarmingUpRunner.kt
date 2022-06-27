@@ -14,7 +14,7 @@ private const val API_CALL_COUNT = 5
 @Profile("dev", "staging", "prod")
 @Component
 class ApplicationWarmingUpRunner(
-    private val apiClient: LocalBossApiWarmupApiClient,
+    private val bossApiWarmupApiClient: LocalBossApiWarmupApiClient,
     private val kakaoAuthApiClient: KaKaoAuthApiClient,
     private val googleAuthApiClient: GoogleAuthApiClient,
 ) {
@@ -24,9 +24,10 @@ class ApplicationWarmingUpRunner(
         try {
             for (i in 0 until API_CALL_COUNT) {
                 for (place in FamousPlace.values()) {
-                    apiClient.retrieveNearBossStores(place.latitude, place.longitude, 2.0)
+                    bossApiWarmupApiClient.retrieveNearBossStores(place.latitude, place.longitude, 2.0)
                 }
-                apiClient.retrieveBossStoreCategories()
+                bossApiWarmupApiClient.retrieveBossStoreCategories()
+                bossApiWarmupApiClient.retrieveFaqs()
                 kakaoAuthApiClient.getProfileInfo("Dummy Kakao Auth Token")
                 googleAuthApiClient.getProfileInfo("Dummy Google Auth Token")
             }

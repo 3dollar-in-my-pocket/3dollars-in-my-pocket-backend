@@ -17,13 +17,11 @@ class BossAccountService(
     private val eventPublisher: ApplicationEventPublisher,
 ) {
 
-    @Transactional(readOnly = true)
     fun getBossAccountInfo(bossId: String): BossAccountInfoResponse {
         val bossAccount = BossAccountServiceHelper.findBossAccountByRegistrationId(bossAccountRepository, bossId)
         return BossAccountInfoResponse.of(bossAccount)
     }
 
-    @Transactional
     fun updateBossAccountInfo(bossId: String, request: UpdateBossAccountInfoRequest) {
         val bossAccount = BossAccountServiceHelper.findBossAccountByRegistrationId(bossAccountRepository, bossId)
         bossAccount.updateInfo(request.name, request.isSetupNotification)

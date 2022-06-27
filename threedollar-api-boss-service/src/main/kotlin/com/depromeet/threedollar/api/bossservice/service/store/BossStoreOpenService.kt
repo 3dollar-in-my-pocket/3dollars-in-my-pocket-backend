@@ -2,7 +2,6 @@ package com.depromeet.threedollar.api.bossservice.service.store
 
 import java.time.LocalDateTime
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.core.service.bossservice.store.BossStoreServiceHelper
 import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
@@ -16,7 +15,6 @@ class BossStoreOpenService(
     private val bossStoreRepository: BossStoreRepository,
 ) {
 
-    @Transactional
     fun openBossStore(bossStoreId: String, bossId: String, mapLocation: LocationValue) {
         val bossStore = BossStoreServiceHelper.findBossStoreByIdAndBossId(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
         bossStore.updateLocation(latitude = mapLocation.latitude, longitude = mapLocation.longitude)
@@ -25,7 +23,6 @@ class BossStoreOpenService(
         bossStoreOpenTimeRepository.set(bossStoreId = bossStoreId, openDateTime = LocalDateTime.now())
     }
 
-    @Transactional
     fun renewBossStoreOpenInfo(bossStoreId: String, bossId: String, mapLocation: LocationValue) {
         val bossStore = BossStoreServiceHelper.findBossStoreByIdAndBossId(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
         validateIsOpenStore(bossStoreId = bossStoreId)
@@ -48,7 +45,6 @@ class BossStoreOpenService(
         bossStoreOpenTimeRepository.set(bossStoreId = bossStoreId, openDateTime = openDateTime)
     }
 
-    @Transactional
     fun closeBossStore(bossStoreId: String, bossId: String) {
         BossStoreServiceHelper.validateExistsBossStoreByBoss(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
         bossStoreOpenTimeRepository.delete(bossStoreId = bossStoreId)

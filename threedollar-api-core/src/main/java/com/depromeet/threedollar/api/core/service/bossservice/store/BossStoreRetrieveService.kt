@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.api.core.service.bossservice.store
 
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryService
 import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryServiceHelper
 import com.depromeet.threedollar.api.core.service.bossservice.category.dto.response.BossStoreCategoryResponse
@@ -25,7 +24,6 @@ class BossStoreRetrieveService(
     private val bossStoreCategoryService: BossStoreCategoryService,
 ) {
 
-    @Transactional(readOnly = true)
     fun getAroundBossStores(
         request: GetAroundBossStoresRequest,
         mapLocation: LocationValue,
@@ -65,7 +63,6 @@ class BossStoreRetrieveService(
         return bossStore.categoriesIds.mapNotNull { categoryId -> categoriesDictionary[categoryId] }
     }
 
-    @Transactional(readOnly = true)
     fun getBossStore(
         storeId: String,
         deviceLocation: LocationValue = LocationValue.of(0.0, 0.0),
@@ -79,7 +76,6 @@ class BossStoreRetrieveService(
         )
     }
 
-    @Transactional(readOnly = true)
     fun getMyBossStore(bossId: String): BossStoreInfoResponse {
         val bossStore = BossStoreServiceHelper.findBossStoreByBossId(bossStoreRepository = bossStoreRepository, bossId = bossId)
         return BossStoreInfoResponse.of(

@@ -19,7 +19,6 @@ class BossStoreService(
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
 ) {
 
-    @Transactional
     fun updateBossStoreInfo(
         bossStoreId: String,
         request: UpdateBossStoreInfoRequest,
@@ -42,7 +41,6 @@ class BossStoreService(
         bossStoreRepository.save(bossStore)
     }
 
-    @Transactional
     fun patchBossStoreInfo(
         bossStoreId: String,
         request: PatchBossStoreInfoRequest,

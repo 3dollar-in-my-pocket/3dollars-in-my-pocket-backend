@@ -43,14 +43,12 @@ class BossRegistrationAdminService(
         }
     }
 
-    @Transactional
     fun rejectBossRegistration(registrationId: String) {
         val registration = BossRegistrationServiceHelper.findWaitingRegistrationById(bossRegistrationRepository, registrationId)
         registration.reject()
         bossRegistrationRepository.save(registration)
     }
 
-    @Transactional(readOnly = true)
     fun retrieveBossRegistrations(request: RetrieveBossRegistrationsRequest): List<BossAccountRegistrationResponse> {
         val registrations = bossRegistrationRepository.findAllWaitingRegistrationsLessThanCursorOrderByLatest(request.cursor, request.size)
         val bossStoreCategoryMap: Map<String, BossStoreCategory> = bossStoreCategoryRepository.findAll()

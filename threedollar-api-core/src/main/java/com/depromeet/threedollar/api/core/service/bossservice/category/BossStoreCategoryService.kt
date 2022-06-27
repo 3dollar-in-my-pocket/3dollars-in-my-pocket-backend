@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.api.core.service.bossservice.category
 
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.core.service.bossservice.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheModel
@@ -13,7 +12,6 @@ class BossStoreCategoryService(
     private val bossStoreCategoryCacheRepository: BossStoreCategoryCacheRepository,
 ) {
 
-    @Transactional(readOnly = true)
     fun retrieveBossStoreCategories(): List<BossStoreCategoryResponse> {
         val cachedCategories = bossStoreCategoryCacheRepository.getAll()
         if (cachedCategories != null) {
@@ -36,7 +34,6 @@ class BossStoreCategoryService(
         }
     }
 
-    @Transactional(readOnly = true)
     fun retrieveBossStoreCategoriesByIds(bossStoreCategoryIds: Collection<String>): List<BossStoreCategoryResponse> {
         val bossStoreCategories: List<BossStoreCategoryResponse> = retrieveBossStoreCategories()
         return bossStoreCategories.filter { bossStoreCategoryResponse ->

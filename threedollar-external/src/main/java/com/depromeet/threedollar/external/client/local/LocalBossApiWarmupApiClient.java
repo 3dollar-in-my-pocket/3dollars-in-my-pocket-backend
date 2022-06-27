@@ -24,4 +24,8 @@ public interface LocalBossApiWarmupApiClient {
     @GetMapping("/v1/boss/store/categories")
     void retrieveBossStoreCategories();
 
+    @Retryable(maxAttempts = 5, backoff = @Backoff(value = 1000), value = Exception.class)
+    @GetMapping("/v1/faqs")
+    void retrieveFaqs();
+
 }
