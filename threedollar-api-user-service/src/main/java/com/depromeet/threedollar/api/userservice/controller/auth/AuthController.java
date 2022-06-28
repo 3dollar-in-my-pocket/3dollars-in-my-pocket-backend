@@ -68,7 +68,7 @@ public class AuthController {
     @Auth
     @PostMapping("/v2/logout")
     public ApiResponse<String> logout() {
-        httpSession.removeAttribute(USER_ID);
+        httpSession.invalidate();
         return ApiResponse.OK;
     }
 

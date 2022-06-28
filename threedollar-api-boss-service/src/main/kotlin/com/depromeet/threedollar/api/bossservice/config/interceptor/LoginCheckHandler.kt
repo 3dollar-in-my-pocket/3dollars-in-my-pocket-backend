@@ -23,10 +23,10 @@ class LoginCheckHandler(
 
     fun checkAuthOptional(request: HttpServletRequest): Boolean {
         val authorization = request.getHeader(HttpHeaders.AUTHORIZATION) ?: return true
-        if (authorization.split(HEADER_BEARER_PREFIX).size <= 1) {
+        if (!authorization.startsWith(HEADER_BEARER_PREFIX)) {
             return true
         }
-        val sessionId = sessionRepository.findById(authorization.split(HEADER_BEARER_PREFIX)[1])
+        val sessionId: Session? = sessionRepository.findById(authorization.split(HEADER_BEARER_PREFIX)[1])
         val bossAccountId: String? = sessionId?.getAttribute(SessionConstants.BOSS_ACCOUNT_ID)
         bossAccountId?.let {
             if (bossAccountRepository.existsBossAccountById(bossAccountId)) {
@@ -44,8 +44,10 @@ class LoginCheckHandler(
             throw UnAuthorizedException("인증이 실패하였습니다 - ($HEADER_BEARER_PREFIX) 형식이 아닌 Authorization 헤더($header)입니다.")
         }
 
-        val sessionId = header.split(HEADER_BEARER_PREFIX)[1]
-        val bossAccountId: String = findSessionBySessionId(sessionId).getAttribute(SessionConstants.BOSS_ACCOUNT_ID)
+        val sessionId: String = header.split(HEADER_BEARER_PREFIX)[1]
+        val session: Session = findSessionBySessionId(sessionId)
+        val bossAccountId: String = session.getAttribute(SessionConstants.BOSS_ACCOUNT_ID)
+            ?: throw UnAuthorizedException("인증이 실패하였습니다 - 세션($sessionId)에 BOSS_ACCOUNT_ID가 존재하지 않습니다")
 
         if (bossAccountRepository.existsBossAccountById(bossAccountId)) {
             request.setAttribute(SessionConstants.BOSS_ACCOUNT_ID, bossAccountId)
@@ -54,6 +56,7 @@ class LoginCheckHandler(
 
         bossRegistrationRepository.findWaitingRegistrationById(bossAccountId)
             ?: throw UnAuthorizedException("해당하는 사장님 계정($bossAccountId) 혹은 대기중인 가입 신청($bossAccountId)은 존재하지 않습니다")
+
         throw ForbiddenException("현재 가입 승인 대기중인 사장님($bossAccountId) 입니다", ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT)
     }
 

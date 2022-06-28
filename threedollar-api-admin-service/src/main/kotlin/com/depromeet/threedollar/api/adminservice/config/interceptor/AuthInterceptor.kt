@@ -29,10 +29,13 @@ class AuthInterceptor(
 
         val header = request.getHeader(HttpHeaders.AUTHORIZATION)
         if (StringUtils.hasText(header) && header.startsWith(TOKEN_PREFIX)) {
-            val sessionId = header.split(TOKEN_PREFIX)[1]
-            val session = findSessionBySessionId(sessionId)
+            val sessionId: String = header.split(TOKEN_PREFIX)[1]
+            val session: Session = findSessionBySessionId(sessionId)
 
-            val admin = adminRepository.findAdminById(session.getAttribute(ADMIN_ID))
+            val adminId: Long = session.getAttribute(ADMIN_ID)
+                ?: throw UnAuthorizedException("인증이 실패하였습니다 - 세션($sessionId)에 ADMIN_ID가 존재하지 않습니다")
+
+            val admin = adminRepository.findAdminById(adminId)
                 ?: throw UnAuthorizedException("인증이 실패하였습니다 - 해당하는 세션($sessionId)에 해당하는 관리자가 존재하지 않습니다.")
 
             request.setAttribute(ADMIN_ID, admin.id)
