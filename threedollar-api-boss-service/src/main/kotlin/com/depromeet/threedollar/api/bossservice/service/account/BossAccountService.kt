@@ -4,6 +4,7 @@ import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import com.depromeet.threedollar.api.bossservice.service.account.dto.request.UpdateBossAccountInfoRequest
 import com.depromeet.threedollar.api.bossservice.service.account.dto.response.BossAccountInfoResponse
+import com.depromeet.threedollar.domain.mongo.config.mongo.MongoTransactional
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccount
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccountRepository
@@ -27,6 +28,7 @@ class BossAccountService(
         bossAccountRepository.save(bossAccount)
     }
 
+    @MongoTransactional
     fun signOut(bossId: String) {
         val bossAccount = BossAccountServiceHelper.findBossAccountByRegistrationId(bossAccountRepository, bossId)
         bossWithdrawalAccountRepository.save(BossWithdrawalAccount.newInstance(bossAccount))

@@ -5,6 +5,7 @@ import com.depromeet.threedollar.api.adminservice.service.bossservice.registrati
 import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.response.BossAccountRegistrationResponse
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
+import com.depromeet.threedollar.domain.mongo.config.mongo.MongoTransactional
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo
@@ -22,6 +23,7 @@ class BossRegistrationAdminService(
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
 ) {
 
+    @MongoTransactional
     fun applyBossRegistration(registrationId: String) {
         val registration = BossRegistrationServiceHelper.findWaitingRegistrationById(bossRegistrationRepository, registrationId)
         val bossAccount = registerNewBossAccount(registration)

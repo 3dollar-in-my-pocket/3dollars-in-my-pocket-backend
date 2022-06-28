@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
+import org.springframework.transaction.PlatformTransactionManager
 import com.depromeet.threedollar.domain.mongo.ThreeDollarDomainMongoRoot
 import com.mongodb.ReadPreference
 
@@ -32,6 +33,7 @@ const val MONGO_TRANSACTION_MANAGER = "mongoTransactionManager"
 class MongoConfig(
     private val mongoDatabaseFactory: MongoDatabaseFactory,
     private val mongoMappingContext: MongoMappingContext,
+    private val platformTransactionManager: PlatformTransactionManager,
 ) {
 
     @Primary
@@ -70,8 +72,14 @@ class MongoConfig(
 
     @Profile("local-docker", "dev", "staging", "prod")
     @Bean(name = [MONGO_TRANSACTION_MANAGER])
-    fun mongoTransactionManager(): MongoTransactionManager {
+    fun mongoTransactionManager(): PlatformTransactionManager {
         return MongoTransactionManager(mongoDatabaseFactory)
+    }
+
+    @Profile("local", "integration-test")
+    @Bean(name = [MONGO_TRANSACTION_MANAGER])
+    fun disableMongoTransactionManager(): PlatformTransactionManager {
+        return platformTransactionManager
     }
 
 }

@@ -6,6 +6,7 @@ import com.depromeet.threedollar.api.bossservice.service.store.dto.request.Patch
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.UpdateBossStoreInfoRequest
 import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryServiceHelper
 import com.depromeet.threedollar.api.core.service.bossservice.store.BossStoreServiceHelper
+import com.depromeet.threedollar.domain.mongo.config.mongo.MongoTransactional
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossDeletedStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossDeletedStoreRepository
@@ -66,6 +67,7 @@ class BossStoreService(
         bossStoreRepository.save(bossStore)
     }
 
+    @MongoTransactional
     @Transactional
     fun deleteBossStoreByBossId(bossId: String) {
         val bossStore: BossStore? = bossStoreRepository.findBossStoreByBossId(bossId = bossId)
