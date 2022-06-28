@@ -2,7 +2,6 @@ package com.depromeet.threedollar.api.bossservice.service.auth
 
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.bossservice.service.account.BossAccountServiceHelper
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.request.SignupRequest
 import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryServiceHelper
@@ -22,7 +21,6 @@ class SignupService(
     private val eventPublisher: ApplicationEventPublisher,
 ) {
 
-    @Transactional
     fun signUp(request: SignupRequest, socialId: String): String {
         BossAccountServiceHelper.validateNotExistsBossAccount(bossAccountRepository, socialId, request.socialType)
         validateDuplicateRegistration(socialId, request.socialType)

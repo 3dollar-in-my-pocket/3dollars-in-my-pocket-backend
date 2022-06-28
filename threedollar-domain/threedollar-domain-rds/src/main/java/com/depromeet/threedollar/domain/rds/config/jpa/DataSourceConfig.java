@@ -2,6 +2,9 @@ package com.depromeet.threedollar.domain.rds.config.jpa;
 
 import static com.depromeet.threedollar.common.type.ReplicationType.PRIMARY;
 import static com.depromeet.threedollar.common.type.ReplicationType.SECONDARY;
+import static com.depromeet.threedollar.domain.rds.config.jpa.DatabaseBeanNameConstants.PRIMARY_DATASOURCE;
+import static com.depromeet.threedollar.domain.rds.config.jpa.DatabaseBeanNameConstants.ROUTING_DATASOURCE;
+import static com.depromeet.threedollar.domain.rds.config.jpa.DatabaseBeanNameConstants.SECONDARY_DATASOURCE;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,10 +23,6 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 public class DataSourceConfig {
-
-    private static final String PRIMARY_DATASOURCE = "primaryDataSource";
-    private static final String SECONDARY_DATASOURCE = "secondaryDataSource";
-    private static final String ROUTING_DATASOURCE = "routingDataSource";
 
     @Primary
     @Bean

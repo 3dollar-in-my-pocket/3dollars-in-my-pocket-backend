@@ -21,6 +21,7 @@ import com.mongodb.ReadPreference
 private const val PRIMARY_READ_MONGO_TEMPLATE = "primaryReadMongoTemplate"
 private const val SECONDARY_PREFERRED_READ_MONGO_TEMPLATE = "secondaryPreferredReadMongoTemplate"
 private const val ROUTING_MONGO_TEMPLATE = "routingMongoTemplate"
+const val MONGO_TRANSACTION_MANAGER = "mongoTransactionManager"
 
 @EnableMongoAuditing
 @EnableMongoRepositories(
@@ -68,7 +69,7 @@ class MongoConfig(
     }
 
     @Profile("local-docker", "dev", "staging", "prod")
-    @Bean
+    @Bean(name = [MONGO_TRANSACTION_MANAGER])
     fun mongoTransactionManager(): MongoTransactionManager {
         return MongoTransactionManager(mongoDatabaseFactory)
     }

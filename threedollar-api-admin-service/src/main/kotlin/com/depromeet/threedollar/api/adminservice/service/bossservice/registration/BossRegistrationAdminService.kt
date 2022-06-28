@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.api.adminservice.service.bossservice.registration
 
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.request.RetrieveBossRegistrationsRequest
 import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.response.BossAccountRegistrationResponse
 import com.depromeet.threedollar.common.exception.model.ConflictException
@@ -23,7 +22,6 @@ class BossRegistrationAdminService(
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
 ) {
 
-    @Transactional
     fun applyBossRegistration(registrationId: String) {
         val registration = BossRegistrationServiceHelper.findWaitingRegistrationById(bossRegistrationRepository, registrationId)
         val bossAccount = registerNewBossAccount(registration)
