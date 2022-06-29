@@ -1,0 +1,36 @@
+### (IOS) 유저 계정의 디바이스 정보를 저장 및 갱신합니다
+PUT {{user-api}}/v1/device
+Content-Type: application/json
+Authorization: {{AUTHORIZATION}}
+User-Agent: 1.0.0 (com.macgongmon.-dollar-in-my-pocket; build:1; iOS 15.5.0)
+
+{
+    "pushToken": "push-token",
+    "pushPlatformType": "FCM"
+}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### (AOS) 유저 계정의 디바이스 정보를 저장 및 갱신합니다
+PUT {{user-api}}/v1/device
+Content-Type: application/json
+Authorization: {{AUTHORIZATION}}
+User-Agent: okhttp/4.9.1
+X-ANDROID-SERVICE-VERSION: 1.0.0
+
+
+{
+    "pushToken": "push-token",
+    "pushPlatformType": "FCM"
+}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
