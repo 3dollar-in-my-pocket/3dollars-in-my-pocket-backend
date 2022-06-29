@@ -9,9 +9,11 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialTy
 
 public interface UserRepositoryCustom {
 
-    boolean existsByName(String name);
+    boolean existsUserByName(String name);
 
-    boolean existsBySocialIdAndSocialType(String socialId, UserSocialType socialType);
+    boolean existsUserBySocialIdAndSocialType(String socialId, UserSocialType socialType);
+
+    boolean existsUserById(Long userId);
 
     @Nullable
     User findUserBySocialIdAndSocialType(String socialId, UserSocialType type);

@@ -11,7 +11,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import com.depromeet.threedollar.api.bossservice.config.interceptor.AuthInterceptor
-import com.depromeet.threedollar.api.bossservice.config.interceptor.UserMetadataInterceptor
+import com.depromeet.threedollar.api.bossservice.config.interceptor.UserMetaInterceptor
 import com.depromeet.threedollar.api.bossservice.config.resolver.BossIdResolver
 import com.depromeet.threedollar.api.core.config.converter.DecodeIdConverter
 import com.depromeet.threedollar.api.core.config.resolver.DeviceLocationArgumentResolver
@@ -23,13 +23,13 @@ class WebConfig(
     private val bossIdResolver: BossIdResolver,
     private val mapLocationArgumentResolver: MapLocationArgumentResolver,
     private val deviceLocationArgumentResolver: DeviceLocationArgumentResolver,
-    private val userMetadataInterceptor: UserMetadataInterceptor,
+    private val userMetaInterceptor: UserMetaInterceptor,
     private val decodeIdConverter: DecodeIdConverter,
 ) : WebMvcConfigurer {
 
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(authInterceptor)
-        registry.addInterceptor(userMetadataInterceptor)
+        registry.addInterceptor(userMetaInterceptor)
     }
 
     override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {

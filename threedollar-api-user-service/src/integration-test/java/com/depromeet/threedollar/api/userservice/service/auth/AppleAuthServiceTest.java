@@ -99,6 +99,7 @@ class AppleAuthServiceTest extends IntegrationTest {
                 .socialType(SOCIAL_TYPE)
                 .build();
 
+            // when
             authService.signUp(request);
 
             // then

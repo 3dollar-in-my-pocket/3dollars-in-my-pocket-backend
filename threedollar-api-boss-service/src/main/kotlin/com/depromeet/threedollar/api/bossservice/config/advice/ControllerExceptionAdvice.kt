@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.bossservice.controller.advice
+package com.depromeet.threedollar.api.bossservice.config.advice
 
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -26,14 +26,6 @@ import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.core.utils.HttpServletRequestUtils
 import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
-import com.depromeet.threedollar.common.exception.type.ErrorCode.INTERNAL_SERVER
-import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID
-import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_MISSING_PARAMETER
-import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_TYPE
-import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_UPLOAD_FILE_SIZE
-import com.depromeet.threedollar.common.exception.type.ErrorCode.METHOD_NOT_ALLOWED
-import com.depromeet.threedollar.common.exception.type.ErrorCode.NOT_ACCEPTABLE
-import com.depromeet.threedollar.common.exception.type.ErrorCode.UNSUPPORTED_MEDIA_TYPE
 import com.depromeet.threedollar.common.model.event.ServerExceptionOccurredEvent
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.common.utils.UserMetaSessionUtils
@@ -59,7 +51,7 @@ class ControllerExceptionAdvice(
             .map { fieldError: FieldError -> fieldError.defaultMessage }
             .collect(Collectors.joining("\n"))
         log.error("BindException: {}", errorMessage)
-        return ApiResponse.error(INVALID, errorMessage)
+        return ApiResponse.error(ErrorCode.INVALID, errorMessage)
     }
 
     /**
@@ -71,9 +63,9 @@ class ControllerExceptionAdvice(
         log.warn(e.message)
         if (e.rootCause is MissingKotlinParameterException) {
             val parameterName = (e.rootCause as MissingKotlinParameterException).parameter.name
-            return ApiResponse.error(INVALID_MISSING_PARAMETER, "필수 파라미터 ($parameterName)을 입력해주세요")
+            return ApiResponse.error(ErrorCode.INVALID_MISSING_PARAMETER, "필수 파라미터 ($parameterName)을 입력해주세요")
         }
-        return ApiResponse.error(INVALID)
+        return ApiResponse.error(ErrorCode.INVALID)
     }
 
     /**
@@ -84,7 +76,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(MissingServletRequestParameterException::class)
     protected fun handleMissingServletRequestParameterException(e: MissingServletRequestParameterException): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(INVALID_MISSING_PARAMETER, "필수 파라미터 (${e.parameterName})을 입력해주세요")
+        return ApiResponse.error(ErrorCode.INVALID_MISSING_PARAMETER, "필수 파라미터 (${e.parameterName})을 입력해주세요")
     }
 
     /**
@@ -95,7 +87,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(MissingServletRequestPartException::class)
     protected fun handleMissingServletRequestPartException(e: MissingServletRequestPartException): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(INVALID_MISSING_PARAMETER, "Multipart (${e.requestPartName})을 입력해주세요")
+        return ApiResponse.error(ErrorCode.INVALID_MISSING_PARAMETER, "Multipart (${e.requestPartName})을 입력해주세요")
     }
 
     /**
@@ -106,7 +98,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(MissingPathVariableException::class)
     private fun handleMissingPathVariableException(e: MissingPathVariableException): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(INVALID_MISSING_PARAMETER, "Path (${e.variableName})를 입력해주세요")
+        return ApiResponse.error(ErrorCode.INVALID_MISSING_PARAMETER, "Path (${e.variableName})를 입력해주세요")
     }
 
     /**
@@ -117,7 +109,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(TypeMismatchException::class)
     private fun handleTypeMismatchException(e: TypeMismatchException): ApiResponse<Nothing> {
         log.warn(e.message)
-        val errorCode = INVALID_TYPE
+        val errorCode = ErrorCode.INVALID_TYPE
         return ApiResponse.error(errorCode, "${errorCode.message} (${e.value})")
     }
 
@@ -128,7 +120,7 @@ class ControllerExceptionAdvice(
     )
     private fun handleMethodArgumentNotValidException(e: Exception): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(INVALID)
+        return ApiResponse.error(ErrorCode.INVALID)
     }
 
     /**
@@ -139,7 +131,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(HttpRequestMethodNotSupportedException::class)
     private fun handleHttpRequestMethodNotSupportedException(e: HttpRequestMethodNotSupportedException): ApiResponse<Nothing> {
         log.warn(e.message, e)
-        return ApiResponse.error(METHOD_NOT_ALLOWED)
+        return ApiResponse.error(ErrorCode.METHOD_NOT_ALLOWED)
     }
 
     /**
@@ -149,7 +141,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(HttpMediaTypeNotAcceptableException::class)
     private fun handleHttpMediaTypeNotAcceptableException(e: HttpMediaTypeNotAcceptableException): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(NOT_ACCEPTABLE)
+        return ApiResponse.error(ErrorCode.NOT_ACCEPTABLE)
     }
 
     /**
@@ -160,7 +152,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(HttpMediaTypeException::class)
     private fun handleHttpMediaTypeException(e: HttpMediaTypeException): ApiResponse<Nothing> {
         log.warn(e.message, e)
-        return ApiResponse.error(UNSUPPORTED_MEDIA_TYPE)
+        return ApiResponse.error(ErrorCode.UNSUPPORTED_MEDIA_TYPE)
     }
 
     /**
@@ -170,9 +162,8 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(MaxUploadSizeExceededException::class)
     private fun handleMaxUploadSizeExceededException(e: MaxUploadSizeExceededException): ApiResponse<Nothing> {
         log.error(e.message, e)
-        return ApiResponse.error(INVALID_UPLOAD_FILE_SIZE)
+        return ApiResponse.error(ErrorCode.INVALID_UPLOAD_FILE_SIZE)
     }
-
 
     /**
      * ThreeDollars Custom Exception
@@ -194,8 +185,8 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(Exception::class)
     private fun handleInternalServerException(exception: Exception, request: HttpServletRequest): ApiResponse<Nothing> {
         log.error(exception.message, exception)
-        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(INTERNAL_SERVER, exception, request))
-        return ApiResponse.error(INTERNAL_SERVER)
+        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(ErrorCode.INTERNAL_SERVER, exception, request))
+        return ApiResponse.error(ErrorCode.INTERNAL_SERVER)
     }
 
     private fun createUnExpectedErrorOccurredEvent(errorCode: ErrorCode, exception: Exception, request: HttpServletRequest): ServerExceptionOccurredEvent {

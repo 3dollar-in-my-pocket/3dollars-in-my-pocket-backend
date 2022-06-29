@@ -2,9 +2,9 @@ package com.depromeet.threedollar.api.bossservice.service.account
 
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.bossservice.service.account.dto.request.UpdateBossAccountInfoRequest
 import com.depromeet.threedollar.api.bossservice.service.account.dto.response.BossAccountInfoResponse
+import com.depromeet.threedollar.domain.mongo.config.mongo.MongoTransactional
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccount
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccountRepository
@@ -17,20 +17,18 @@ class BossAccountService(
     private val eventPublisher: ApplicationEventPublisher,
 ) {
 
-    @Transactional(readOnly = true)
     fun getBossAccountInfo(bossId: String): BossAccountInfoResponse {
         val bossAccount = BossAccountServiceHelper.findBossAccountByRegistrationId(bossAccountRepository, bossId)
         return BossAccountInfoResponse.of(bossAccount)
     }
 
-    @Transactional
     fun updateBossAccountInfo(bossId: String, request: UpdateBossAccountInfoRequest) {
         val bossAccount = BossAccountServiceHelper.findBossAccountByRegistrationId(bossAccountRepository, bossId)
         bossAccount.updateInfo(request.name, request.isSetupNotification)
         bossAccountRepository.save(bossAccount)
     }
 
-    @Transactional
+    @MongoTransactional
     fun signOut(bossId: String) {
         val bossAccount = BossAccountServiceHelper.findBossAccountByRegistrationId(bossAccountRepository, bossId)
         bossWithdrawalAccountRepository.save(BossWithdrawalAccount.newInstance(bossAccount))

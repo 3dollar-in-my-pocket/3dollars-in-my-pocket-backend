@@ -11,6 +11,13 @@ application {
     mainClass.set("com.depromeet.threedollar.batch.ThreeDollarBatchApplicationKt")
 }
 
+bootJar {
+    enabled = true
+}
+jar {
+    enabled = true
+}
+
 jib {
     from {
         image = "adoptopenjdk/openjdk11:alpine-jre"

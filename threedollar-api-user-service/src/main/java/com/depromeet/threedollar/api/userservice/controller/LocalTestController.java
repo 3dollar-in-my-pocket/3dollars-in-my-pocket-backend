@@ -16,6 +16,8 @@ import com.depromeet.threedollar.api.userservice.service.store.StoreServiceHelpe
 import com.depromeet.threedollar.api.userservice.service.user.UserService;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.CreateUserRequest;
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
+import com.depromeet.threedollar.common.model.UserMetaValue;
+import com.depromeet.threedollar.common.utils.UserMetaSessionUtils;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
@@ -73,6 +75,12 @@ public class LocalTestController {
     @GetMapping("/test-error")
     public ApiResponse<String> throwServerException() {
         throw new InternalServerException("[개발환경 에러 테스트용] 서버 에러가 발생하였습니다");
+    }
+
+    @ApiOperation("유저 계정의 디바이스 정보를 가져온다")
+    @GetMapping("/test-device")
+    public ApiResponse<UserMetaValue> getUserMetaValue() {
+        return ApiResponse.success(UserMetaSessionUtils.get());
     }
 
 }

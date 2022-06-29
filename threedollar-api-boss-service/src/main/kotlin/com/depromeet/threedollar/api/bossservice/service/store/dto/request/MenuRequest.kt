@@ -10,7 +10,7 @@ data class MenuRequest(
     val name: String,
 
     @field:PositiveOrZero(message = "{store.menu.price.positiveOrZero}")
-    val price: Int,
+    val price: Int = -1,
 
     @field:URL(message = "{store.imageUrl.url}")
     val imageUrl: String?,

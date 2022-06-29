@@ -9,7 +9,7 @@ client.test("200 OK", () => {
 
 
 ### 특정 카테고리의 FAQ를 조회합니다.
-GET {{boss-api}}/v1/faqs?category=STORE자
+GET {{boss-api}}/v1/faqs?category=ETC
 
 > {%
 client.test("200 OK", () => {

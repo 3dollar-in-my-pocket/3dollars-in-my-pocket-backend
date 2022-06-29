@@ -33,7 +33,7 @@ class AdminAuthController(
     @Auth
     @PostMapping("/v1/auth/logout")
     fun logout(): ApiResponse<String> {
-        httpSession.removeAttribute(ADMIN_ID)
+        httpSession.invalidate()
         return ApiResponse.OK
     }
 

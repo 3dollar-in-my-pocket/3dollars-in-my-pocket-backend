@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public enum OsPlatformType {
 
@@ -21,14 +22,14 @@ public enum OsPlatformType {
     }
 
     @NotNull
-    public static OsPlatformType findByUserAgent(String userAgent) {
+    public static OsPlatformType findByUserAgent(@Nullable String userAgent) {
         return Arrays.stream(OsPlatformType.values())
             .filter(osPlatformType -> osPlatformType.hasKeyword(userAgent))
             .findFirst()
             .orElse(OsPlatformType.UNKNOWN);
     }
 
-    private boolean hasKeyword(String userAgent) {
+    private boolean hasKeyword(@Nullable String userAgent) {
         return this.keywords.stream()
             .anyMatch(keyword -> StringUtils.containsIgnoreCase(userAgent, keyword));
     }

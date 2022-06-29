@@ -8,6 +8,8 @@ spring.config:
     - optional:classpath:/application-dummy.yml
 
 spring:
+  application:
+    name: 3dollars-in-my-pocket-batch
   batch:
     job:
       names: ${job.name:NONE}

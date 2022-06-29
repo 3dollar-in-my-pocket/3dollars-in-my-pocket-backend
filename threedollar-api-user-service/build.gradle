@@ -11,6 +11,13 @@ application {
     mainClass.set("com.depromeet.threedollar.api.ThreeDollarApiApplication")
 }
 
+bootJar {
+    enabled = true
+}
+jar {
+    enabled = true
+}
+
 ext {
     newRelicAgentDownloadUrl = "https://download.newrelic.com/newrelic/java-agent/newrelic-agent/current/newrelic-java.zip"
     newRelicExtraDirectory = "${buildDir}/newrelic"

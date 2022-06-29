@@ -35,11 +35,19 @@ public class AdminRepositoryCustomImpl implements AdminRepositoryCustom {
     }
 
     @Override
-    public boolean existsByEmail(String email) {
+    public boolean existsAdminByEmail(String email) {
         return queryFactory.selectOne()
             .from(admin)
             .where(
                 admin.email.email.eq(email)
+            ).fetchFirst() != null;
+    }
+
+    public boolean existsAdminById(Long id) {
+        return queryFactory.selectOne()
+            .from(admin)
+            .where(
+                admin.id.eq(id)
             ).fetchFirst() != null;
     }
 

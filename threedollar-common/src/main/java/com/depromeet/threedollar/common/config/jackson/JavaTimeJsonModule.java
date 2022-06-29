@@ -86,6 +86,7 @@ public class JavaTimeJsonModule {
         public LocalTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             return LocalTime.parse(p.getValueAsString(), LOCAL_TIME_FORMATTER);
         }
+
     }
 
 }

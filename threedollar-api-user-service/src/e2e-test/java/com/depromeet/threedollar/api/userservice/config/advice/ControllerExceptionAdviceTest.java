@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.userservice.controller.advice;
+package com.depromeet.threedollar.api.userservice.config.advice;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

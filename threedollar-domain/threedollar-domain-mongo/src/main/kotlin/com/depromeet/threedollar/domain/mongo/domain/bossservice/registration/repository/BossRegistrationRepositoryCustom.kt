@@ -9,6 +9,8 @@ interface BossRegistrationRepositoryCustom {
 
     fun findWaitingRegistrationById(registrationId: String): BossRegistration?
 
+    fun existsWaitingRegistrationById(registrationId: String): Boolean
+
     fun findWaitingRegistrationBySocialIdAndSocialType(socialId: String, socialType: BossAccountSocialType): BossRegistration?
 
     fun findAllWaitingRegistrationsLessThanCursorOrderByLatest(cursor: String?, size: Int): List<BossRegistration>

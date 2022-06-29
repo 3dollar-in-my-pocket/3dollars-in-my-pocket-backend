@@ -10,6 +10,13 @@ application {
     mainClass.set("com.depromeet.threedollar.admin.ThreeDollarAdminApplicationKt")
 }
 
+bootJar {
+    enabled = true
+}
+jar {
+    enabled = true
+}
+
 jib {
     from {
         image = "adoptopenjdk/openjdk11:alpine-jre"

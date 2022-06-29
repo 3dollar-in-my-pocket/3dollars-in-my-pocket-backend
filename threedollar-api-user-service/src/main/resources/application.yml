@@ -32,6 +32,8 @@ server:
     min-response-size: 2KB
 
 spring:
+  application:
+    name: 3dollars-in-my-pocket-user-api
   servlet:
     multipart:
       max-file-size: 10MB

@@ -57,7 +57,7 @@ services:
       - '6380:6379'
     restart: unless-stopped
     volumes:
-      - cache-volume:/data
+      - redis-volume:/data
     networks:
       - threedollar-network
     healthcheck:
@@ -66,29 +66,109 @@ services:
       timeout: 5s
       retries: 6
 
-  mongodb:
+  mongo1:
     image: mongo:5.0
-    container_name: 3dollars-in-my-pocket-mongodb
-    ports:
-      - '27018:27017'
-    restart: unless-stopped
+    hostname: mongo1
+    container_name: 3dollars-in-my-pocket-mongo1
     volumes:
-      - mongodb-volume:/data/db
+      - mongodb1-volume:/data/db
     networks:
       - threedollar-network
+    expose:
+      - 27017
+    ports:
+      - "27018:27017"
+    restart: unless-stopped
+    command: mongod --replSet threedollar-replication-1
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
       interval: 15s
       timeout: 5s
       retries: 6
 
+  mongo2:
+    image: mongo:5.0
+    hostname: mongo2
+    container_name: 3dollars-in-my-pocket-mongo2
+    volumes:
+      - mongodb2-volume:/data/db
+    expose:
+      - 27017
+    ports:
+      - "27019:27017"
+    networks:
+      - threedollar-network
+    restart: unless-stopped
+    command: mongod --replSet threedollar-replication-1
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
+      interval: 15s
+      timeout: 5s
+      retries: 6
+
+  mongo3:
+    image: mongo:5.0
+    hostname: mongo3
+    container_name: 3dollars-in-my-pocket-mongo3
+    volumes:
+      - mongodb3-volume:/data/db
+    expose:
+      - 27017
+    ports:
+      - "27020:27017"
+    restart: unless-stopped
+    command: mongod --replSet threedollar-replication-1
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
+      interval: 15s
+      timeout: 5s
+      retries: 6
+
+  mongoinit:
+    image: mongo:5.0
+    container_name: 3dollars-in-my-pocket-mongoinit
+    restart: "no"
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3
+    command: >
+      sleep(15)
+      mongo --host mongo1:27017 --eval 
+      '
+      db = (new Mongo("localhost:27017")).getDB("test");
+      config = {
+      "_id" : "threedollar-replication-1",
+      "members" : [
+        {
+          "_id" : 0,
+          "host" : "mongo1:27017",
+        },
+        {
+          "_id" : 1,
+          "host" : "mongo2:27017"
+        },
+      {
+          "_id" : 2,
+          "host" : "mongo3:27017"
+      }
+      ]
+      };
+      rs.initiate(config);
+      '
+
 volumes:
   mariadb-volume:
     driver: local
-  mongodb-volume:
+  mongodb1-volume:
     driver: local
-  cache-volume:
+  mongodb2-volume:
+    driver: local
+  mongodb3-volume:
+    driver: local
+  redis-volume:
     driver: local
 
 networks:
   threedollar-network:
+    driver: bridge

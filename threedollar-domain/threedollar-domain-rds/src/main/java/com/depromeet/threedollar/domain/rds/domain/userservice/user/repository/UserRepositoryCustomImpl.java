@@ -25,7 +25,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
 
     // 호환상 name이 유니크 키로 잡혀있지 않아서, lost update 방지를 위해 Locking Read 처리 중 -> 차후 마이그레이션 이후 유니크 키로 잡도록 고려.
     @Override
-    public boolean existsByName(String name) {
+    public boolean existsUserByName(String name) {
         return queryFactory.selectOne()
             .setLockMode(LockModeType.PESSIMISTIC_WRITE)
             .setHint(PERSISTENCE_LOCK_TIMEOUT, 3000)
@@ -35,12 +35,21 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
     }
 
     @Override
-    public boolean existsBySocialIdAndSocialType(String socialId, UserSocialType socialType) {
+    public boolean existsUserBySocialIdAndSocialType(String socialId, UserSocialType socialType) {
         return queryFactory.selectOne()
             .from(user)
             .where(
                 user.socialInfo.socialId.eq(socialId),
                 user.socialInfo.socialType.eq(socialType)
+            ).fetchFirst() != null;
+    }
+
+    @Override
+    public boolean existsUserById(Long userId) {
+        return queryFactory.selectOne()
+            .from(user)
+            .where(
+                user.id.eq(userId)
             ).fetchFirst() != null;
     }
 

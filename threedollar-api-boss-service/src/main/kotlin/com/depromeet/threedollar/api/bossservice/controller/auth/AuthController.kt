@@ -59,7 +59,7 @@ class AuthController(
     @ApiOperation("사장님 계정을 로그아웃을 요청합니다.")
     @PostMapping("/v1/auth/logout")
     fun logout(): ApiResponse<String> {
-        httpSession.removeAttribute(BOSS_ACCOUNT_ID)
+        httpSession.invalidate()
         return ApiResponse.OK
     }
 

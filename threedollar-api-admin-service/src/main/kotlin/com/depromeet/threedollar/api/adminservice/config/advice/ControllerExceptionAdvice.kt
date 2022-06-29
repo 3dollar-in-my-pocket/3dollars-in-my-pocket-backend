@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.adminservice.controller.advice
+package com.depromeet.threedollar.api.adminservice.config.advice
 
 import java.util.stream.Collectors
 import org.springframework.beans.TypeMismatchException
@@ -154,7 +154,6 @@ class ControllerExceptionAdvice {
         log.error(e.message, e)
         return ApiResponse.error(ErrorCode.INVALID_UPLOAD_FILE_SIZE)
     }
-
 
     /**
      * ThreeDollars Custom Exception
