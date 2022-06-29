@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.patch
+import org.springframework.test.web.servlet.put
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.userservice.SetupUserControllerTest
 import com.depromeet.threedollar.api.userservice.controller.device.dto.request.UpsertUserDeviceRequest
@@ -36,7 +36,7 @@ internal class UserDeviceControllerTest(
         )
 
         // when
-        mockMvc.patch("/v1/device") {
+        mockMvc.put("/v1/device") {
             header(HttpHeaders.AUTHORIZATION, token)
             header(HttpHeaders.USER_AGENT, "1.0.0 (com.macgongmon.-dollar-in-my-pocket; build:1; iOS 15.5.0)")
             contentType = MediaType.APPLICATION_JSON
@@ -74,7 +74,7 @@ internal class UserDeviceControllerTest(
         )
 
         // when
-        mockMvc.patch("/v1/device") {
+        mockMvc.put("/v1/device") {
             header(HttpHeaders.AUTHORIZATION, token)
             header(HttpHeaders.USER_AGENT, "okhttp/4.9.1")
             header("X-ANDROID-SERVICE-VERSION", "1.0.1")

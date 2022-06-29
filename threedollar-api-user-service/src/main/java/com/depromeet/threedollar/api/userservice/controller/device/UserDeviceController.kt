@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.userservice.controller.device
 
 import javax.validation.Valid
-import org.springframework.web.bind.annotation.PatchMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
@@ -18,7 +18,7 @@ class UserDeviceController(
 
     @ApiOperation("사장님 계정의 디바이스 정보를 저장 및 갱신합니다")
     @Auth
-    @PatchMapping("/v1/device")
+    @PutMapping("/v1/device")
     fun upsertDevice(
         @Valid @RequestBody request: UpsertUserDeviceRequest,
         @UserId userId: Long?,

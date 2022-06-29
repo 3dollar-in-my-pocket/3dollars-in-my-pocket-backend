@@ -1,5 +1,5 @@
 ### 사장님 계정의 디바이스 정보를 저장 및 갱신합니다
-PATCH {{boss-api}}/v1/device
+PUT {{boss-api}}/v1/device
 Content-Type: application/json
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 User-Agent: 1.0.0 (com.macgongmon.-dollar-in-my-pocket-manager-dev; build:7; iOS 15.5.0)
@@ -17,7 +17,7 @@ client.test("200 OK", () => {
 
 
 ### (IOS) 사장님 계정의 디바이스 정보를 저장 및 갱신합니다
-PATCH {{boss-api}}/v1/device
+PUT {{boss-api}}/v1/device
 Content-Type: application/json
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
 User-Agent: okhttp/4.9.1
