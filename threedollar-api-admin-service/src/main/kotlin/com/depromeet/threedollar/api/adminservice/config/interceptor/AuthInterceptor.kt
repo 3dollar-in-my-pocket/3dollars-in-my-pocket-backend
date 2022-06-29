@@ -35,10 +35,9 @@ class AuthInterceptor(
             val adminId: Long = session.getAttribute(ADMIN_ID)
                 ?: throw UnAuthorizedException("인증이 실패하였습니다 - 세션($sessionId)에 ADMIN_ID가 존재하지 않습니다")
 
-            val admin = adminRepository.findAdminById(adminId)
-                ?: throw UnAuthorizedException("인증이 실패하였습니다 - 해당하는 세션($sessionId)에 해당하는 관리자가 존재하지 않습니다.")
+            validateExistsAdminId(adminId)
 
-            request.setAttribute(ADMIN_ID, admin.id)
+            request.setAttribute(ADMIN_ID, adminId)
             return true
         }
         throw UnAuthorizedException("인증이 실패하였습니다 - 비거나 ($TOKEN_PREFIX) 형식이 아닌 헤더(${header})가 요청되었습니다.")
@@ -47,6 +46,12 @@ class AuthInterceptor(
     private fun findSessionBySessionId(sessionId: String): Session {
         return sessionRepository.findById(sessionId)
             ?: throw UnAuthorizedException("인증이 실패하였습니다 - 해당하는 세션($sessionId)은 존재하지 않습니다")
+    }
+
+    private fun validateExistsAdminId(adminId: Long) {
+        if (!adminRepository.existsAdminById(adminId)) {
+            throw UnAuthorizedException("인증이 실패하였습니다 - 해당하는 관리자(${adminId})가 존재하지 않습니다.")
+        }
     }
 
 }

@@ -9,7 +9,7 @@ import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminRepo
 object AdminServiceHelper {
 
     fun validateNotExistsEmail(adminRepository: AdminRepository, email: String) {
-        if (adminRepository.existsByEmail(email)) {
+        if (adminRepository.existsAdminByEmail(email)) {
             throw ConflictException("이미 관리자로 등록된 이메일($email) 입니다.", ErrorCode.CONFLICT_EMAIL)
         }
     }

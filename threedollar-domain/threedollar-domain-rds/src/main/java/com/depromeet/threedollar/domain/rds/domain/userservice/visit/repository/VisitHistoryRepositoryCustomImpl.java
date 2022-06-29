@@ -28,7 +28,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public boolean existsByStoreIdAndUserIdAndDateOfVisit(Long storeId, Long userId, LocalDate dateOfVisit) {
+    public boolean existsVisitHistoryByStoreIdAndUserIdAndDateOfVisit(Long storeId, Long userId, LocalDate dateOfVisit) {
         return queryFactory.selectOne()
             .from(visitHistory)
             .where(

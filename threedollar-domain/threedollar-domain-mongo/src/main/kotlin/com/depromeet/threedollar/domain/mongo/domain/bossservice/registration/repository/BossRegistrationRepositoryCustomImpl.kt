@@ -34,6 +34,13 @@ class BossRegistrationRepositoryCustomImpl(
         )
     }
 
+    override fun existsWaitingRegistrationById(registrationId: String): Boolean {
+        return mongoTemplate.exists(Query()
+            .addCriteria(BossRegistration::id isEqualTo registrationId)
+            .addCriteria(BossRegistration::status isEqualTo BossRegistrationStatus.WAITING), BossRegistration::class.java
+        )
+    }
+
     override fun findWaitingRegistrationBySocialIdAndSocialType(socialId: String, socialType: BossAccountSocialType): BossRegistration? {
         return mongoTemplate.findOne(Query()
             .addCriteria(where("boss.socialInfo.socialId").isEqualTo(socialId))

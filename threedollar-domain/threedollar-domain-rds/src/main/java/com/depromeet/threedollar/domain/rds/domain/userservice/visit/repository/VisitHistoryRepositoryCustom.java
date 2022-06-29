@@ -13,7 +13,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.
 
 public interface VisitHistoryRepositoryCustom {
 
-    boolean existsByStoreIdAndUserIdAndDateOfVisit(Long storeId, Long userId, LocalDate dateOfVisit);
+    boolean existsVisitHistoryByStoreIdAndUserIdAndDateOfVisit(Long storeId, Long userId, LocalDate dateOfVisit);
 
     List<VisitHistoryWithUserProjection> findAllVisitWithUserByStoreIdAfterDate(Long storeId, LocalDate startDate);
 

@@ -270,7 +270,7 @@ class StoreServiceTest extends SetupUserIntegrationTest {
         @Test
         void 가게의_결제방법을_수정한다() {
             // given
-            Set<PaymentMethodType> paymentMethodTypes = Set.of(PaymentMethodType.CARD);
+            Set<PaymentMethodType> paymentMethodTypes = Set.of(PaymentMethodType.CARD, PaymentMethodType.ACCOUNT_TRANSFER);
 
             Store store = StoreFixture.createWithDefaultMenu(userId, "storeName");
             store.addPaymentMethods(Set.of(PaymentMethodType.CARD));
@@ -335,10 +335,7 @@ class StoreServiceTest extends SetupUserIntegrationTest {
             UserMenuCategoryType type = UserMenuCategoryType.BUNGEOPPANG;
 
             Store store = StoreFixture.create(userId, "storeName");
-            store.addMenus(List.of(
-                MenuFixture.create(store, "메뉴 1", "1000원", UserMenuCategoryType.DALGONA),
-                MenuFixture.create(store, menuName, price, type))
-            );
+            store.addMenus(List.of(MenuFixture.create(store, menuName, price, type)));
             storeRepository.save(store);
 
             String newMenuName = "신규 추가된 메뉴";
@@ -346,7 +343,6 @@ class StoreServiceTest extends SetupUserIntegrationTest {
             UserMenuCategoryType newMenuCategory = UserMenuCategoryType.DALGONA;
 
             Set<MenuRequest> menuRequests = Set.of(
-                MenuRequest.of(menuName, price, type),
                 MenuRequest.of(newMenuName, newMenuPrice, newMenuCategory)
             );
 
@@ -366,9 +362,8 @@ class StoreServiceTest extends SetupUserIntegrationTest {
             // then
             List<Menu> findMenus = menuRepository.findAll();
             assertAll(
-                () -> assertThat(findMenus).hasSize(2),
-                () -> assertMenu(findMenus.get(0), store.getId(), menuName, price, type),
-                () -> assertMenu(findMenus.get(1), store.getId(), newMenuName, newMenuPrice, newMenuCategory)
+                () -> assertThat(findMenus).hasSize(1),
+                () -> assertMenu(findMenus.get(0), store.getId(), newMenuName, newMenuPrice, newMenuCategory)
             );
         }
 

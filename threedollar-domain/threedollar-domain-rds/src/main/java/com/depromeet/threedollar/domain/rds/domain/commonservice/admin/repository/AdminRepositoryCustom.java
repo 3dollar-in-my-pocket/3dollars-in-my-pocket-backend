@@ -14,7 +14,9 @@ public interface AdminRepositoryCustom {
     @Nullable
     Admin findAdminByEmail(String email);
 
-    boolean existsByEmail(String email);
+    boolean existsAdminByEmail(String email);
+
+    boolean existsAdminById(Long id);
 
     List<Admin> findAllWithPagination(long page, int size);
 
