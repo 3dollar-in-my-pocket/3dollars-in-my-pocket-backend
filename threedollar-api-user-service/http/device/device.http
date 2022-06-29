@@ -1,8 +1,8 @@
-### 사장님 계정의 디바이스 정보를 저장 및 갱신합니다
-PATCH {{boss-api}}/v1/device
+### (IOS) 유저 계정의 디바이스 정보를 저장 및 갱신합니다
+PATCH {{user-api}}/v1/device
 Content-Type: application/json
-Authorization: Bearer {{BOSS_AUTHORIZATION}}
-User-Agent: 1.0.0 (com.macgongmon.-dollar-in-my-pocket-manager-dev; build:7; iOS 15.5.0)
+Authorization: {{AUTHORIZATION}}
+User-Agent: 1.0.0 (com.macgongmon.-dollar-in-my-pocket; build:1; iOS 15.5.0)
 
 {
     "pushToken": "push-token",
@@ -16,10 +16,10 @@ client.test("200 OK", () => {
 %}
 
 
-### (IOS) 사장님 계정의 디바이스 정보를 저장 및 갱신합니다
-PATCH {{boss-api}}/v1/device
+### (AOS) 유저 계정의 디바이스 정보를 저장 및 갱신합니다
+PATCH {{user-api}}/v1/device
 Content-Type: application/json
-Authorization: Bearer {{BOSS_AUTHORIZATION}}
+Authorization: {{AUTHORIZATION}}
 User-Agent: okhttp/4.9.1
 X-ANDROID-SERVICE-VERSION: 1.0.0
 

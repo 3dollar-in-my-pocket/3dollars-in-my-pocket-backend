@@ -24,4 +24,23 @@ data class UpsertDeviceRequest(
         )
     }
 
+    companion object {
+        @JvmStatic
+        fun of(
+            accountId: String,
+            accountType: AccountType,
+            pushToken: String,
+            pushPlatformType: PushPlatformType,
+            userMetaValue: UserMetaValue,
+        ): UpsertDeviceRequest {
+            return UpsertDeviceRequest(
+                accountId = accountId,
+                accountType = accountType,
+                pushToken = pushToken,
+                pushPlatformType = pushPlatformType,
+                userMetaValue = userMetaValue
+            )
+        }
+    }
+
 }
