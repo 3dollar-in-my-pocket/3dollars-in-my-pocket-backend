@@ -31,7 +31,7 @@ internal class BossDeviceControllerTest(
     fun `사장님 계정의 IOS 디바이스 정보를 추가한다`() {
         // given
         val request = UpsertBossDeviceRequest(
-            pushPlatformType = PushPlatformType.APNS,
+            pushPlatformType = PushPlatformType.FCM,
             pushToken = "push-token"
         )
 
@@ -69,7 +69,7 @@ internal class BossDeviceControllerTest(
     fun `사장님 계정의 AOS 디바이스 정보를 추가한다`() {
         // given
         val request = UpsertBossDeviceRequest(
-            pushPlatformType = PushPlatformType.APNS,
+            pushPlatformType = PushPlatformType.FCM,
             pushToken = "push-token"
         )
 

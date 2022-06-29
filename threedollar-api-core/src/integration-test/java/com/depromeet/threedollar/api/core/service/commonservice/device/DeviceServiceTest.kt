@@ -32,7 +32,7 @@ internal class DeviceServiceTest(
         val accountId = "accountId"
         val accountType = AccountType.BOSS_ACCOUNT
         val pushToken = "pushToken"
-        val pushPlatformType = PushPlatformType.APNS
+        val pushPlatformType = PushPlatformType.FCM
 
         val request = UpsertDeviceRequest(
             accountId = accountId,
@@ -67,7 +67,7 @@ internal class DeviceServiceTest(
         val accountId = "accountId"
         val accountType = AccountType.BOSS_ACCOUNT
         val pushToken = "pushToken"
-        val pushPlatformType = PushPlatformType.APNS
+        val pushPlatformType = PushPlatformType.FCM
 
         deviceRepository.save(DeviceFixture.create(
             accountId = accountId,
@@ -111,7 +111,7 @@ internal class DeviceServiceTest(
         val accountId = "accountId"
         val accountType = AccountType.BOSS_ACCOUNT
         val pushToken = "pushToken"
-        val pushPlatformType = PushPlatformType.APNS
+        val pushPlatformType = PushPlatformType.FCM
 
         deviceRepository.save(DeviceFixture.create(
             accountId = accountId,
@@ -155,7 +155,7 @@ internal class DeviceServiceTest(
         val accountId = "accountId"
         val accountType = AccountType.BOSS_ACCOUNT
         val pushToken = "pushToken"
-        val pushPlatformType = PushPlatformType.APNS
+        val pushPlatformType = PushPlatformType.FCM
 
         val request = UpsertDeviceRequest(
             accountId = accountId,

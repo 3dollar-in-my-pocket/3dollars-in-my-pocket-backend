@@ -17,7 +17,7 @@ class Device(
         appVersion: String?,
         pushToken: String,
     ): Boolean {
-        return this.deviceInfo == DeviceInfo(
+        return this.deviceInfo == DeviceInfo.of(
             pushPlatformType = pushPlatformType,
             osPlatformType = osPlatformType,
             appVersion = appVersion,
@@ -31,7 +31,7 @@ class Device(
         appVersion: String?,
         pushToken: String,
     ) {
-        this.deviceInfo = DeviceInfo(
+        this.deviceInfo = DeviceInfo.of(
             pushPlatformType = pushPlatformType,
             osPlatformType = osPlatformType,
             appVersion = appVersion,
@@ -51,7 +51,7 @@ class Device(
             return Device(
                 accountId = accountId,
                 accountType = accountType,
-                deviceInfo = DeviceInfo(
+                deviceInfo = DeviceInfo.of(
                     pushPlatformType = pushPlatformType,
                     osPlatformType = osPlatformType,
                     appVersion = appVersion,
@@ -69,4 +69,26 @@ data class DeviceInfo(
     val osPlatformType: OsPlatformType,
     val appVersion: String?,
     val pushToken: String,
-)
+) {
+
+    init {
+        this.pushPlatformType.validateSupportedOsPlatformType(this.osPlatformType)
+    }
+
+    companion object {
+        fun of(
+            pushPlatformType: PushPlatformType,
+            osPlatformType: OsPlatformType,
+            appVersion: String?,
+            pushToken: String,
+        ): DeviceInfo {
+            return DeviceInfo(
+                pushPlatformType = pushPlatformType,
+                osPlatformType = osPlatformType,
+                appVersion = appVersion,
+                pushToken = pushToken
+            )
+        }
+    }
+
+}
