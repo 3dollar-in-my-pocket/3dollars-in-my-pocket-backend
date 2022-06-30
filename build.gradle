@@ -110,24 +110,24 @@ subprojects {
         integrationTest {
             compileClasspath += main.output + test.output
             runtimeClasspath += main.output + test.output
-            java {
-                srcDir "src/integration-test/java"
-                srcDir "src/integration-test/kotlin"
-            }
-            resources {
-                srcDir "src/integration-test/resources"
-            }
+            java.srcDirs(
+                "src/integration-test/java",
+                "src/integration-test/kotlin",
+            )
+            resources.srcDirs(
+                "src/integration-test/resources",
+            )
         }
         e2eTest {
             compileClasspath += main.output + test.output
             runtimeClasspath += main.output + test.output
-            java {
-                srcDir "src/e2e-test/java"
-                srcDir "src/e2e-test/kotlin"
-            }
-            resources {
-                srcDir "src/e2e-test/resources"
-            }
+            java.srcDirs(
+                "src/e2e-test/java",
+                "src/e2e-test/kotlin",
+            )
+            resources.srcDirs(
+                "src/e2e-test/resources",
+            )
         }
     }
 
@@ -230,8 +230,8 @@ jacoco {
 task testCoverage(type: JacocoReport, group: "verification", description: "Report Test Coverage") {
     executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
 
-    subprojects.forEach {
-        sourceSets(it.sourceSets.main as SourceSet)
+    subprojects.forEach { project ->
+        sourceSets(project.sourceSets.main as SourceSet)
     }
 
     reports {
