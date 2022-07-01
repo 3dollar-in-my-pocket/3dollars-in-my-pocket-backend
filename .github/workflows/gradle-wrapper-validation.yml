@@ -1,0 +1,27 @@
+name: "Validate Gradle Wrapper"
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+    types:
+      - opened
+      - synchronize
+      - reopened
+  push:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+  schedule:
+    - cron: '00 23 * * *' # 08:00
+    - cron: '00 11 * * *' # 20:00
+
+jobs:
+  validation:
+    name: "Gradle wrapper validation"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: gradle/wrapper-validation-action@v1.0.4
