@@ -4,19 +4,21 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Semantic Versioning ex) v0.0.1"
+        description: "Release Version"
         required: true
         type: string
+        default: 'v0.0.1'
 
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
       - name: validate semantic versioning
-        uses: actions/github-script@v3
-        if: ${{ !startsWith(github.event.inputs.version, 'v') }}
-        with:
-          script: core.setFailed('input semantic version ex) v0.0.1')
+        run: |
+          if [[ ! "${{ github.event.inputs.version }}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo 'version "${{ github.event.inputs.version }}" not in semantic versioning format ex) v0.0.1'
+            exit 1
+          fi
 
   build:
     runs-on: ubuntu-latest

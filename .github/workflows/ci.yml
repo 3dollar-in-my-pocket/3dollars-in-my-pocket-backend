@@ -18,6 +18,10 @@ on:
     - cron: '00 23 * * *' # 08:00
     - cron: '00 11 * * *' # 20:00
 
+permissions:
+  checks: write
+  pull-requests: write
+
 jobs:
   ci:
     runs-on: ubuntu-latest
