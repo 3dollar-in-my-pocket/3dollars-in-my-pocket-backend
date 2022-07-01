@@ -54,7 +54,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Test w/ coverage
-        run: ./gradlew clean bootjar ci testCoverage --warn
+        run: ./gradlew clean bootjar ci testCoverage --stacktrace
 
       - name: Sonarqube analyze
         env:
