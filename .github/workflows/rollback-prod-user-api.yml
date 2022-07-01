@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check assigned tag
-        uses: actions/github-script@v3
+        uses: actions/github-script@v6
         if: ${{GITHUB.REF_TYPE != 'tag'}}
         with:
           script: core.setFailed('You should deploy with tag (not branch !)')
