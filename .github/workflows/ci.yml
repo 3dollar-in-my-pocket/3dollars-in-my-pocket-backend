@@ -57,7 +57,7 @@ jobs:
         with:
           path: "."
           acs-report-enable: true
-          severity-cutoff: "high"
+          severity-cutoff: "critical"
 
       - name: Sonarqube analyze
         env:
