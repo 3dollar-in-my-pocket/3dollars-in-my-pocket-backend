@@ -52,6 +52,11 @@ jobs:
       - name: Test w/ coverage
         run: ./gradlew clean bootjar ci testCoverage --warn
 
+      - name: Scan current project
+        uses: anchore/scan-action@v3
+        with:
+          path: "."
+
       - name: Sonarqube analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
