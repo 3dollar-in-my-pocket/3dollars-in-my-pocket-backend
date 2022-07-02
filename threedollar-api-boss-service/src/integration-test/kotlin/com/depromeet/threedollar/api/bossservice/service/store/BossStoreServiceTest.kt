@@ -301,7 +301,7 @@ internal class BossStoreSetupBossAccountServiceTest(
     }
 
     @Nested
-    inner class DeleteBossStoreByBossExternalIdTest {
+    inner class DeleteBossStoreByBossIdTest {
 
         @Test
         fun `사장님 계정의 가게들을 삭제한다`() {

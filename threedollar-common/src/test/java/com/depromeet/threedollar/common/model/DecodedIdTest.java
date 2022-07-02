@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-class ExternalIdTest {
+class DecodedIdTest {
 
     @Test
     void 원본의_ID로_인코딩된_ID를_생성한다() {
@@ -12,11 +12,11 @@ class ExternalIdTest {
         long id = 1000L;
 
         // when
-        ExternalId externalId = ExternalId.toInternal(id);
+        DecodedId decodedId = DecodedId.toInternal(id);
 
         // then
-        assertThat(externalId.getExternalId()).isNotNull();
-        assertThat(externalId.getInternalId()).isEqualTo(id);
+        assertThat(decodedId.getExternalId()).isNotNull();
+        assertThat(decodedId.getInternalId()).isEqualTo(id);
     }
 
 }

@@ -13,26 +13,26 @@ import lombok.ToString;
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ExternalId {
+public class DecodedId {
 
     private Long internalId;
     private String externalId;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private ExternalId(String externalId, Long internalId) {
+    private DecodedId(String externalId, Long internalId) {
         this.externalId = externalId;
         this.internalId = internalId;
     }
 
-    public static ExternalId toInternal(@NotNull Long originId) {
-        return ExternalId.builder()
+    public static DecodedId toInternal(@NotNull Long originId) {
+        return DecodedId.builder()
             .internalId(originId)
             .externalId(Base32Utils.encode(originId))
             .build();
     }
 
-    public static ExternalId toExternal(@NotNull String encodingId) {
-        return ExternalId.builder()
+    public static DecodedId toExternal(@NotNull String encodingId) {
+        return DecodedId.builder()
             .internalId(Base32Utils.decode(encodingId))
             .externalId(encodingId)
             .build();

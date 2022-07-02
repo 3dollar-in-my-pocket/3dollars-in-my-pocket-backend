@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.common.config.jackson;
 
-import static com.depromeet.threedollar.common.config.jackson.ExternalIdJsonModule.decodeIdModule;
+import static com.depromeet.threedollar.common.config.jackson.DecodedIdJsonModule.decodeIdModule;
 import static com.depromeet.threedollar.common.config.jackson.JavaTimeJsonModule.javaTimeModule;
 import static com.depromeet.threedollar.common.config.jackson.StringJsonModule.stringJsonModule;
 
