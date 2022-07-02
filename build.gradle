@@ -15,7 +15,7 @@ repositories {
 }
 
 ext {
-    springCloudVersion = "2020.0.4"
+    springCloudVersion = "2021.0.3"
     swaggerVersion = "3.0.0"
     sentryVersion = "6.1.4"
     jacocoVersion = "0.8.8"
