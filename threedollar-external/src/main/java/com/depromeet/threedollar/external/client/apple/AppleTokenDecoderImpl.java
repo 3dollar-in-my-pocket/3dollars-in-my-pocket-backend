@@ -54,7 +54,7 @@ public class AppleTokenDecoderImpl implements AppleTokenDecoder {
         if (!payload.getAud().equals(appleAuthProperty.getClientId())) {
             throw new InvalidException(String.format("잘못된 애플 토큰 입니다 - clientId가 일치하지 않습니다 payload: (%s)", payload), INVALID_AUTH_TOKEN);
         }
-        LocalDateTime authDateTime = LocalDateTimeUtils.epochToLocalDateTime(payload.getAuth_time());
+        LocalDateTime authDateTime = LocalDateTimeUtils.epochToLocalDateTime(payload.getAuthTime());
         if (authDateTime.plus(EXPIRED_DURATION).isBefore(LocalDateTime.now())) {
             throw new InvalidException(String.format("발급 후 5분애플 토큰 (%s) 입니다 만료시간: (%s)", payload, authDateTime), INVALID_AUTH_TOKEN);
         }

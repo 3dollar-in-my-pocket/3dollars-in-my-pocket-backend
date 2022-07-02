@@ -1,5 +1,8 @@
 package com.depromeet.threedollar.external.client.apple.dto.model;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +11,7 @@ import lombok.ToString;
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class AppleIdTokenPayload {
 
     private String iss;
@@ -20,13 +24,13 @@ public class AppleIdTokenPayload {
 
     private String sub;
 
-    private String c_hash;
+    private String cHash;
 
-    private Long auth_time;
+    private Long authTime;
 
-    private Boolean nonce_supported;
+    private Boolean nonceSupported;
 
-    private Boolean email_verified;
+    private Boolean emailVerified;
 
     private String email;
 
