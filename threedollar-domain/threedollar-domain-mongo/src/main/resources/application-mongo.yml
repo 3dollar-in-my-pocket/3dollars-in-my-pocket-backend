@@ -10,9 +10,6 @@ spring:
       uri: mongodb://localhost:${random.int(49152,65535)}/test?connectTimeoutMS=${spring.data.mongodb.connection-timeout}&maxPoolSize=${spring.data.mongodb.connection-pool-size}&minPoolSize=${spring.data.mongodb.connection-pool-size}
       connection-pool-size: 10
       connection-timeout: 5000
-  mongodb:
-    embedded:
-      version: 3.4.5
 
 
 ---
