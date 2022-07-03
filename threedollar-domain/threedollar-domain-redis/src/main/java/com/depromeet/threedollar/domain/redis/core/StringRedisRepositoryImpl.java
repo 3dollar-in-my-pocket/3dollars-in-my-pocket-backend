@@ -5,7 +5,9 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -64,6 +66,15 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implement
     }
 
     @Override
+    public void setBulk(Map<K, V> keyValues) {
+        ValueOperations<String, String> operations = redisTemplate.opsForValue();
+        redisTemplate.executePipelined((RedisCallback<Object>) pipeline -> {
+            keyValues.forEach((key, value) -> operations.set(key.getKey(), String.valueOf(value)));
+            return null;
+        });
+    }
+
+    @Override
     public void setWithTtl(@NotNull K key, @NotNull V value, @Nullable Duration ttl) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         if (ttl == null) {
@@ -98,6 +109,14 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implement
     }
 
     @Override
+    public void decrBulk(List<K> keys) {
+        redisTemplate.executePipelined((RedisCallback<Object>) pipeline -> {
+            keys.forEach(key -> pipeline.decr(key.getKey().getBytes(StandardCharsets.UTF_8)));
+            return null;
+        });
+    }
+
+    @Override
     public void decrBy(@NotNull K key, long value) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
         operations.decrement(key.getKey(), value);
@@ -106,6 +125,16 @@ public class StringRedisRepositoryImpl<K extends StringRedisKey<V>, V> implement
     @Override
     public void del(@NotNull K key) {
         redisTemplate.delete(key.getKey());
+    }
+
+    @Override
+    public void delBulk(List<K> keys) {
+        for (List<K> partitionedKeys : PartitionUtils.partition(keys, FETCH_SIZE)) {
+            Set<String> keyStrings = partitionedKeys.stream()
+                .map(K::getKey)
+                .collect(Collectors.toSet());
+            redisTemplate.delete(keyStrings);
+        }
     }
 
 }
