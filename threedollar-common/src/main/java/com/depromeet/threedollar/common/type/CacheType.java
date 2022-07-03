@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 @Getter
 public enum CacheType {
 
-    FAQS("FAQ 목록", CacheKey.FAQS, Duration.ofHours(1), CacheRange.GLOBAL),
-    MEDALS("전체 메달 목록", CacheKey.MEDALS, Duration.ofHours(1), CacheRange.GLOBAL),
+    FAQS("FAQ 목록", CacheKey.FAQS, Duration.ofMinutes(10), CacheRange.LOCAL),
+    MEDALS("전체 메달 목록", CacheKey.MEDALS, Duration.ofMinutes(10), CacheRange.LOCAL),
     ADVERTISEMENT("활성화 중인 광고 목록", CacheKey.ADVERTISEMENTS, Duration.ofMinutes(10), CacheRange.GLOBAL),
     USER_STORES_COUNTS("유저가 등록한 가게 수", CacheKey.USER_STORES_COUNTS, Duration.ofMinutes(10), CacheRange.GLOBAL),
     USER_REVIEWS_COUNTS("유저가 작성한 리뷰 수", CacheKey.USER_REVIEWS_COUNTS, Duration.ofMinutes(10), CacheRange.GLOBAL),
     USER_MEDALS("유저가 보유중인 메달 목록", CacheKey.USER_MEDALS, Duration.ofMinutes(10), CacheRange.GLOBAL),
-    BOSS_STORE_FEEDBACK_TOTAL_COUNT("사장님 가게의 피드백 종류별 총 카운트 수", CacheKey.BOSS_STORE_FEEDBACKS_TOTAL_COUNTS, Duration.ofHours(1), CacheRange.GLOBAL),
+    BOSS_STORE_FEEDBACK_TOTAL_COUNT("사장님 가게의 피드백 종류별 총 카운트 수", CacheKey.BOSS_STORE_FEEDBACKS_TOTAL_COUNTS, Duration.ofMinutes(10), CacheRange.GLOBAL),
     ;
 
     private final String description;
