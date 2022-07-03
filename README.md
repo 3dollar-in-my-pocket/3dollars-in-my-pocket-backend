@@ -40,7 +40,7 @@
 
 - **Infra** - ECS Fargate (API, Batch), ALB, S3, CloudFront
 - **DB** - MariaDB(RDS), MongoDB(EC2), Redis Cluster(Elastic Cache), flyway
-- **CI/CD** - Git, GitHub Actions CI/CD
+- **CI/CD** - Git, GitHub Actions CI/CD, SonarQube
 - **Operations** - CloudWatch, Sentry, Slack, NewRelic, Locust
 
 ### 멀티 모듈 구조
