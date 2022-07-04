@@ -6,11 +6,12 @@ import javax.validation.constraints.Size
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.Admin
 
 data class AddAdminRequest(
-    @field:Size(min = 1, max = 50, message = "{admin.email.size}")
+    @field:Size(max = 50, message = "{admin.email.size}")
+    @field:NotBlank(message = "{admin.name.notBlank}")
     @field:Email(message = "{admin.email.email}")
     val email: String = "",
 
-    @field:Size(min = 1, max = 30, message = "{admin.name.size}")
+    @field:Size(max = 30, message = "{admin.name.size}")
     @field:NotBlank(message = "{admin.name.notBlank}")
     val name: String = "",
 ) {
