@@ -41,3 +41,5 @@ generated/
 logs
 
 application-secret.yml
+
+firebase-**.json

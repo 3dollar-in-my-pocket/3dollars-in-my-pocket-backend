@@ -1,0 +1,28 @@
+spring.profiles.default: local
+spring.config:
+  import:
+    - classpath:/application-sqs.yml
+
+server:
+  port: 5200
+  shutdown: graceful
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+    context-path: /push
+  tomcat:
+    threads:
+      max: 200
+    connection-timeout: 10s
+
+spring:
+  application:
+    name: 3dollars-in-my-pocket-push
+  mvc:
+    format:
+      date: yyyy-MM-dd
+      date-time: yyyy-MM-dd'T'HH:mm:ss
+      time: HH:mm
+    servlet:
+      load-on-startup: 1

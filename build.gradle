@@ -27,6 +27,7 @@ ext {
     commonsLang3Version = "3.12.0"
     commonsCodecVersion = "1.15"
     kotlinLoggingVersion = "2.1.23"
+    firebaseAdminVersion = "9.0.0"
 }
 
 allprojects {

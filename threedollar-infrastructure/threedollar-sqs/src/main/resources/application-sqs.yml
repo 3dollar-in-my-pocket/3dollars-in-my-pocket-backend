@@ -1,0 +1,21 @@
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    credentials:
+      instance-profile: true
+
+push:
+  sqs:
+    boss:
+      single-push: ${secret.push.sqs.boss.single-push}
+      bulk-push: ${secret.push.sqs.boss.bulk-push}
+
+spring:
+  config:
+    activate:
+      on-profile: local
+
+---

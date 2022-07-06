@@ -1,0 +1,14 @@
+dependencies {
+    implementation project(":threedollar-common")
+
+    // AWS SQS
+    api("org.springframework.cloud:spring-cloud-aws-messaging:${springCloudAwsVersion}")
+    implementation("org.springframework.cloud:spring-cloud-aws-autoconfigure:${springCloudAwsVersion}")
+}
+
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+}
