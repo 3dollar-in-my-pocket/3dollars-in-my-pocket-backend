@@ -75,7 +75,8 @@ internal class GoogleAuthServiceTest(
         assertThat(bossId).isEqualTo(registration.id)
     }
 
-    private class StubGoogleAuthApiClient : GoogleAuthApiClient {
+    private class StubGoogleAuthApiClient :
+        GoogleAuthApiClient {
         override fun getProfileInfo(accessToken: String?): GoogleProfileInfoResponse {
             return GoogleProfileInfoResponse.testInstance(SOCIAL_ID)
         }

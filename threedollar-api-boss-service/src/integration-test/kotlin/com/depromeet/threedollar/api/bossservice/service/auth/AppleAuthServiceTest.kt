@@ -74,7 +74,8 @@ internal class AppleAuthServiceTest(
         assertThat(bossId).isEqualTo(registration.id)
     }
 
-    private class StubAppleTokenDecoder : AppleTokenDecoder {
+    private class StubAppleTokenDecoder :
+        AppleTokenDecoder {
         override fun getSocialIdFromIdToken(idToken: String): String {
             return SOCIAL_ID
         }

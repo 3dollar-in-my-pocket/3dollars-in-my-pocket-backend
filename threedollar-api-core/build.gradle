@@ -1,6 +1,5 @@
 dependencies {
-    api project(":threedollar-external")
-
+    api project(":threedollar-infrastructure:threedollar-external")
     api project(":threedollar-infrastructure:threedollar-s3")
     implementation project(":threedollar-infrastructure:threedollar-monitoring")
 

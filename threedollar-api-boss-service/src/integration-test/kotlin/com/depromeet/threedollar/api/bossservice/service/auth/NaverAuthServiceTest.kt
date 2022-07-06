@@ -76,7 +76,8 @@ internal class NaverAuthServiceTest(
         assertThat(bossId).isEqualTo(registration.id)
     }
 
-    private class StubNaverAuthApiClient : NaverAuthApiClient {
+    private class StubNaverAuthApiClient :
+        NaverAuthApiClient {
         override fun getProfileInfo(accessToken: String?): NaverProfileResponse {
             return NaverProfileResponse(
                 NaverProfileInfoResponse(id = SOCIAL_ID)

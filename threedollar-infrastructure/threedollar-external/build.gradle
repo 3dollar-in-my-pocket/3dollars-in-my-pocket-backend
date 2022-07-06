@@ -3,9 +3,6 @@ dependencies {
 
     // Spring Cloud OpenFeign
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
-
-    // Spring Cloud Aws
-    implementation("org.springframework.cloud:spring-cloud-starter-aws:${springCloudAwsVersion}")
 }
 
 bootJar {

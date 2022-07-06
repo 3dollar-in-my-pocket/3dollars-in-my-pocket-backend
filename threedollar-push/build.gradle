@@ -4,8 +4,7 @@ dependencies {
     implementation project(":threedollar-infrastructure:threedollar-sqs")
     implementation project(":threedollar-infrastructure:threedollar-firebase")
     implementation project(":threedollar-infrastructure:threedollar-monitoring")
-
-    implementation project(":threedollar-external")
+    implementation project(":threedollar-infrastructure:threedollar-external")
 
     // Spring MVC
     implementation("org.springframework.boot:spring-boot-starter-web")
