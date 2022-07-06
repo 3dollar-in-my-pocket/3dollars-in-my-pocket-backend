@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.external.client.storage;
+package com.depromeet.threedollar.infrastructure.s3;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Primary;

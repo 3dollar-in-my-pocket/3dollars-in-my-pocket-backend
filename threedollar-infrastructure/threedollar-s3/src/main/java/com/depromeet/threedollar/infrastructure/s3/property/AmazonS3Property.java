@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.external.client.storage.property;
+package com.depromeet.threedollar.infrastructure.s3.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
@@ -12,13 +12,9 @@ import lombok.ToString;
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @ConstructorBinding
-@ConfigurationProperties("cloud.aws.cloudfront")
-public class AmazonCloudFrontProperty {
+@ConfigurationProperties("cloud.aws.s3")
+public class AmazonS3Property {
 
-    private final String url;
-
-    public String getFullPathFileUrl(String fileName) {
-        return this.url + fileName;
-    }
+    private final String bucket;
 
 }

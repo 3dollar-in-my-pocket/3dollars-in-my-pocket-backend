@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.external.client.storage;
+package com.depromeet.threedollar.infrastructure.s3;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -13,8 +13,8 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
-import com.depromeet.threedollar.external.client.storage.property.AmazonCloudFrontProperty;
-import com.depromeet.threedollar.external.client.storage.property.AmazonS3Property;
+import com.depromeet.threedollar.infrastructure.s3.property.AmazonCloudFrontProperty;
+import com.depromeet.threedollar.infrastructure.s3.property.AmazonS3Property;
 
 import lombok.RequiredArgsConstructor;
 

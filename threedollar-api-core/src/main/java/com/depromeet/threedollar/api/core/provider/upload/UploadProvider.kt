@@ -4,9 +4,8 @@ import java.util.concurrent.CompletableFuture
 import java.util.stream.Collectors
 import org.springframework.stereotype.Component
 import com.depromeet.threedollar.api.core.provider.upload.dto.request.UploadFileRequest
-
 import com.depromeet.threedollar.api.core.provider.upload.dto.response.UploadFileWithSequenceResponse
-import com.depromeet.threedollar.external.client.storage.FileStorageClient
+import com.depromeet.threedollar.infrastructure.s3.FileStorageClient
 
 @Component
 class UploadProvider(

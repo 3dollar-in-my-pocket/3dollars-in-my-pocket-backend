@@ -5,6 +5,7 @@ spring.config:
     - classpath:/application-redis.yml
     - classpath:/application-mongo.yml
     - classpath:/application-external.yml
+    - classpath:/application-s3.yml
 
 
 ---

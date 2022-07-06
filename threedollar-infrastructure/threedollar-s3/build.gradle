@@ -1,0 +1,13 @@
+dependencies {
+    implementation project(":threedollar-common")
+
+    // Spring Cloud AWS
+    implementation("org.springframework.cloud:spring-cloud-starter-aws:${springCloudAwsVersion}")
+}
+
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+}
