@@ -2,8 +2,7 @@ spring.profiles.default: local
 spring.config:
   import:
     - classpath:/application-sqs.yml
-    - classpath:/application-actuator.yml
-    - classpath:/application-sentry.yml
+    - classpath:/application-monitoring.yml
     - classpath:/application-external.yml
     - optional:classpath:/application-secret.yml
 

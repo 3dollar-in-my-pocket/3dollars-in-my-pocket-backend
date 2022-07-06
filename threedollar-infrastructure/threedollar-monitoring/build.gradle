@@ -1,0 +1,21 @@
+dependencies {
+    // Web MVC
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
+    // Spring Security
+    api("org.springframework.boot:spring-boot-starter-security")
+
+    // Spring actuator
+    api("org.springframework.boot:spring-boot-starter-actuator")
+
+    // Sentry
+    implementation("io.sentry:sentry-spring-boot-starter:${sentryVersion}")
+    implementation("io.sentry:sentry-logback:${sentryVersion}")
+}
+
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+}

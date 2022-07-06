@@ -18,5 +18,5 @@ include 'threedollar-common'
 include 'threedollar-infrastructure:threedollar-s3'
 include 'threedollar-infrastructure:threedollar-sqs'
 include 'threedollar-infrastructure:threedollar-firebase'
-
+include 'threedollar-infrastructure:threedollar-monitoring'
 

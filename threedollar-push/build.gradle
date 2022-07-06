@@ -3,24 +3,12 @@ dependencies {
 
     implementation project(":threedollar-infrastructure:threedollar-sqs")
     implementation project(":threedollar-infrastructure:threedollar-firebase")
+    implementation project(":threedollar-infrastructure:threedollar-monitoring")
 
     implementation project(":threedollar-external")
 
     // Spring MVC
     implementation("org.springframework.boot:spring-boot-starter-web")
-
-    // Spring Security
-    implementation("org.springframework.boot:spring-boot-starter-security")
-
-    // Spring actuator
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-
-    // Sentry
-    implementation("io.sentry:sentry-spring-boot-starter:${sentryVersion}")
-    implementation("io.sentry:sentry-logback:${sentryVersion}")
-
-    // Firebase Admin
-    implementation("com.google.firebase:firebase-admin:${firebaseAdminVersion}")
 }
 
 application {

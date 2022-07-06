@@ -2,6 +2,7 @@ dependencies {
     api project(":threedollar-external")
 
     api project(":threedollar-infrastructure:threedollar-s3")
+    implementation project(":threedollar-infrastructure:threedollar-monitoring")
 
     api project(":threedollar-domain:threedollar-domain-rds")
     api project(":threedollar-domain:threedollar-domain-mongo")
@@ -10,22 +11,12 @@ dependencies {
     // Spring MVC
     api("org.springframework.boot:spring-boot-starter-web")
 
-    // Spring Security
-    implementation("org.springframework.boot:spring-boot-starter-security")
-
     // Redis Session
     api("org.springframework.session:spring-session-data-redis")
-
-    // Spring actuator
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     // Swagger
     api("io.springfox:springfox-boot-starter:${swaggerVersion}")
     api("io.springfox:springfox-swagger-ui:${swaggerVersion}")
-
-    // Sentry
-    implementation("io.sentry:sentry-spring-boot-starter:${sentryVersion}")
-    implementation("io.sentry:sentry-logback:${sentryVersion}")
 
     // Caffeine Cache
     implementation("com.github.ben-manes.caffeine:caffeine")

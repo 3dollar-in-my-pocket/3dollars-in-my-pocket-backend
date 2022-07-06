@@ -7,9 +7,8 @@ spring.config:
     - classpath:/application-external.yml
     - classpath:/application-s3.yml
     - classpath:/application-sqs.yml
-    - classpath:/application-sentry.yml
+    - classpath:/application-monitoring.yml
     - classpath:/application-swagger.yml
-    - classpath:/application-actuator.yml
     - optional:classpath:/application-secret.yml
 
 threedollars:
