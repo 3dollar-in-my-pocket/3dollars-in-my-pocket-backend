@@ -5,7 +5,8 @@ Content-Type: application/json
 {
     "token": "cnkMARPadUBEvTli2d3CKi:APA91bEU_WMVJ-b_Wcw3yLpDENpV-HuFH2QcdMUMJjGfaRIpj_NtDl7wW-kCeoSz6BpRMW0tPNfZ7Ug8VJC3XOu3PexbnUVKoh6-j0dPA320-T6Ywd3KLi7URb624IiKrNeB8kngiqLt",
     "title": "제목",
-    "body": "내용"
+    "body": "내용",
+    "pushOptions": "PUSH"
 }
 
 
@@ -20,5 +21,6 @@ Content-Type: application/json
         "cnkMARPadUBEvTli2d3CKi:APA91bEU_WMVJ-b_Wcw3yLpDENpV-HuFH2QcdMUMJjGfaRIpj_NtDl7wW-kCeoSz6BpRMW0tPNfZ7Ug8VJC3XOu3PexbnUVKoh6-j0dPA320-T6Ywd3KLi7URb624IiKrNeB8kngiqLt"
     ],
     "title": "제목",
-    "body": "내용"
+    "body": "내용",
+    "pushOptions": "PUSH"
 }

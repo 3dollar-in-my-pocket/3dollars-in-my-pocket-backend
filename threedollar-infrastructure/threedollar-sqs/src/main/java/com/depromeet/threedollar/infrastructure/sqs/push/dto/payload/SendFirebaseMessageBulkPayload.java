@@ -4,8 +4,10 @@ import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.depromeet.threedollar.common.type.PushOptions;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AccessLevel;
@@ -30,5 +32,8 @@ public class SendFirebaseMessageBulkPayload {
 
     @NotBlank
     private String body;
+
+    @NotNull
+    private PushOptions pushOptions;
 
 }

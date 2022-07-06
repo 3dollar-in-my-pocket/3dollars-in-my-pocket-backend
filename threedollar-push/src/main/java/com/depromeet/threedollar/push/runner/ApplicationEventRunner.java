@@ -22,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 @Component
 public class ApplicationEventRunner implements CommandLineRunner, ApplicationListener<ContextClosedEvent> {
 
+    private static final ApplicationType APPLICATION_TYPE = ApplicationType.PUSH;
+
     private final ApplicationEventPublisher eventPublisher;
 
     @Value("${threedollars.application.uid}")
@@ -29,12 +31,12 @@ public class ApplicationEventRunner implements CommandLineRunner, ApplicationLis
 
     @Override
     public void run(String... args) {
-        eventPublisher.publishEvent(ApplicationStateChangedEvent.start(ApplicationType.PUSH, LocalDateTime.now(ZoneId.of("Asia/Seoul")), applicationUid));
+        eventPublisher.publishEvent(ApplicationStateChangedEvent.start(APPLICATION_TYPE, LocalDateTime.now(ZoneId.of("Asia/Seoul")), applicationUid));
     }
 
     @Override
     public void onApplicationEvent(@NotNull ContextClosedEvent event) {
-        eventPublisher.publishEvent(ApplicationStateChangedEvent.stop(ApplicationType.PUSH, LocalDateTime.now(ZoneId.of("Asia/Seoul")), applicationUid));
+        eventPublisher.publishEvent(ApplicationStateChangedEvent.stop(APPLICATION_TYPE, LocalDateTime.now(ZoneId.of("Asia/Seoul")), applicationUid));
     }
 
 }

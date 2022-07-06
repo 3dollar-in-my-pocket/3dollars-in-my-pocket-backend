@@ -1,7 +1,5 @@
 package com.depromeet.threedollar.api.adminservice.runner
 
-import java.time.LocalDateTime
-import java.time.ZoneId
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.ApplicationEventPublisher
@@ -11,6 +9,9 @@ import org.springframework.context.event.ContextClosedEvent
 import org.springframework.stereotype.Component
 import com.depromeet.threedollar.common.model.event.ApplicationStateChangedEvent
 import com.depromeet.threedollar.common.type.ApplicationType
+import com.depromeet.threedollar.common.utils.LocalDateTimeUtils
+
+private val APPLICATION_TYPE = ApplicationType.ADMIN_API
 
 @Profile("prod")
 @Component
@@ -22,11 +23,11 @@ class ApplicationEventRunner(
 ) : CommandLineRunner, ApplicationListener<ContextClosedEvent> {
 
     override fun run(vararg args: String) {
-        eventPublisher.publishEvent(ApplicationStateChangedEvent.start(ApplicationType.ADMIN_API, LocalDateTime.now(ZoneId.of("Asia/Seoul")), applicationUid))
+        eventPublisher.publishEvent(ApplicationStateChangedEvent.start(APPLICATION_TYPE, LocalDateTimeUtils.now(), applicationUid))
     }
 
     override fun onApplicationEvent(event: ContextClosedEvent) {
-        eventPublisher.publishEvent(ApplicationStateChangedEvent.stop(ApplicationType.ADMIN_API, LocalDateTime.now(ZoneId.of("Asia/Seoul")), applicationUid))
+        eventPublisher.publishEvent(ApplicationStateChangedEvent.stop(APPLICATION_TYPE, LocalDateTimeUtils.now(), applicationUid))
     }
 
 }

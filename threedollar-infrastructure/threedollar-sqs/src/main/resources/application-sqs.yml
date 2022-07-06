@@ -23,6 +23,8 @@ cloud:
 spring:
   config:
     activate:
-      on-profile: local
+      on-profile:
+        - local
+        - local-docker
 
 ---

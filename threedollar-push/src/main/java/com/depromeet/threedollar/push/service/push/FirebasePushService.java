@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.depromeet.threedollar.common.constants.PushExtraFieldConstants;
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import com.depromeet.threedollar.common.type.ApplicationType;
 import com.depromeet.threedollar.infrastructure.sqs.push.dto.payload.SendFirebaseMessageBulkPayload;
@@ -33,6 +34,7 @@ public class FirebasePushService {
                 .setBody(request.getBody())
                 .build())
             .setToken(request.getToken())
+            .putData(PushExtraFieldConstants.PUSH_OPTIONS, request.getPushOptions().name())
             .build();
     }
 
@@ -58,6 +60,7 @@ public class FirebasePushService {
                 .setBody(request.getBody())
                 .build())
             .setToken(token)
+            .putData(PushExtraFieldConstants.PUSH_OPTIONS, request.getPushOptions().name())
             .build();
     }
 

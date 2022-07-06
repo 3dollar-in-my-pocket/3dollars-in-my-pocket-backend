@@ -1,8 +1,5 @@
 package com.depromeet.threedollar.api.userservice.runner;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -14,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.depromeet.threedollar.common.model.event.ApplicationStateChangedEvent;
 import com.depromeet.threedollar.common.type.ApplicationType;
+import com.depromeet.threedollar.common.utils.LocalDateTimeUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 @Component
 public class ApplicationEventRunner implements CommandLineRunner, ApplicationListener<ContextClosedEvent> {
 
+    private static final ApplicationType APPLICATION_TYPE = ApplicationType.USER_API;
+
     private final ApplicationEventPublisher eventPublisher;
 
     @Value("${threedollars.application.uid}")
@@ -29,12 +29,12 @@ public class ApplicationEventRunner implements CommandLineRunner, ApplicationLis
 
     @Override
     public void run(String... args) {
-        eventPublisher.publishEvent(ApplicationStateChangedEvent.start(ApplicationType.USER_API, LocalDateTime.now(ZoneId.of("Asia/Seoul")), applicationUid));
+        eventPublisher.publishEvent(ApplicationStateChangedEvent.start(APPLICATION_TYPE, LocalDateTimeUtils.now(), applicationUid));
     }
 
     @Override
     public void onApplicationEvent(@NotNull ContextClosedEvent event) {
-        eventPublisher.publishEvent(ApplicationStateChangedEvent.stop(ApplicationType.USER_API, LocalDateTime.now(ZoneId.of("Asia/Seoul")), applicationUid));
+        eventPublisher.publishEvent(ApplicationStateChangedEvent.stop(APPLICATION_TYPE, LocalDateTimeUtils.now(), applicationUid));
     }
 
 }

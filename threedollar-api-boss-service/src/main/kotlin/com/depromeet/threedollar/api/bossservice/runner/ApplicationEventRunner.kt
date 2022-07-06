@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component
 import com.depromeet.threedollar.common.model.event.ApplicationStateChangedEvent
 import com.depromeet.threedollar.common.type.ApplicationType
 
+private val APPLICATION_TYPE = ApplicationType.BOSS_API
+
 @Profile("prod")
 @Component
 class ApplicationEventRunner(
@@ -22,11 +24,11 @@ class ApplicationEventRunner(
 ) : CommandLineRunner, ApplicationListener<ContextClosedEvent> {
 
     override fun run(vararg args: String) {
-        eventPublisher.publishEvent(ApplicationStateChangedEvent.start(ApplicationType.BOSS_API, LocalDateTime.now(ZoneId.of("Asia/Seoul")), applicationUid))
+        eventPublisher.publishEvent(ApplicationStateChangedEvent.start(APPLICATION_TYPE, LocalDateTime.now(ZoneId.of("Asia/Seoul")), applicationUid))
     }
 
     override fun onApplicationEvent(event: ContextClosedEvent) {
-        eventPublisher.publishEvent(ApplicationStateChangedEvent.stop(ApplicationType.BOSS_API, LocalDateTime.now(ZoneId.of("Asia/Seoul")), applicationUid))
+        eventPublisher.publishEvent(ApplicationStateChangedEvent.stop(APPLICATION_TYPE, LocalDateTime.now(ZoneId.of("Asia/Seoul")), applicationUid))
     }
 
 }

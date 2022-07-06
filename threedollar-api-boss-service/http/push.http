@@ -1,9 +1,26 @@
-### 푸시 전송
+### 단건 푸시 전송 (개발용)
 POST {{boss-api}}/test/push/message
 Content-Type: application/json
 
 {
     "token": "cnkMARPadUBEvTli2d3CKi:APA91bEU_WMVJ-b_Wcw3yLpDENpV-HuFH2QcdMUMJjGfaRIpj_NtDl7wW-kCeoSz6BpRMW0tPNfZ7Ug8VJC3XOu3PexbnUVKoh6-j0dPA320-T6Ywd3KLi7URb624IiKrNeB8kngiqLt",
-    "title": "제목",
-    "body": "내용"
+    "title": "가입 신청이 승인되었습니다",
+    "body": "가슴속3천원 개발용 푸시 테스트\n가입 신청이 승인되었습니다\n가입 신청이 승인되었습니다",
+    "pushOptions": "PUSH"
+}
+
+
+### 다건 푸시 전송 (개발용)
+POST {{boss-api}}/test/push/message/bulk
+Content-Type: application/json
+
+{
+    "tokens": [
+        "cnkMARPadUBEvTli2d3CKi:APA91bEU_WMVJ-b_Wcw3yLpDENpV-HuFH2QcdMUMJjGfaRIpj_NtDl7wW-kCeoSz6BpRMW0tPNfZ7Ug8VJC3XOu3PexbnUVKoh6-j0dPA320-T6Ywd3KLi7URb624IiKrNeB8kngiqLt",
+        "cnkMARPadUBEvTli2d3CKi:APA91bEU_WMVJ-b_Wcw3yLpDENpV-HuFH2QcdMUMJjGfaRIpj_NtDl7wW-kCeoSz6BpRMW0tPNfZ7Ug8VJC3XOu3PexbnUVKoh6-j0dPA320-T6Ywd3KLi7URb624IiKrNeB8kngiqLt",
+        "cnkMARPadUBEvTli2d3CKi:APA91bEU_WMVJ-b_Wcw3yLpDENpV-HuFH2QcdMUMJjGfaRIpj_NtDl7wW-kCeoSz6BpRMW0tPNfZ7Ug8VJC3XOu3PexbnUVKoh6-j0dPA320-T6Ywd3KLi7URb624IiKrNeB8kngiqLt"
+    ],
+    "title": "가입 신청이 승인되었습니다 (벌크)",
+    "body": "가슴속3천원 개발용 푸시 테스트\n가입 신청이 승인되었습니다\n가입 신청이 승인되었습니다",
+    "pushOptions": "PUSH"
 }

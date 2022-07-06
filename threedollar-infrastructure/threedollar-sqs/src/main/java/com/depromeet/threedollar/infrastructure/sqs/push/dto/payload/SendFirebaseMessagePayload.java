@@ -1,6 +1,9 @@
 package com.depromeet.threedollar.infrastructure.sqs.push.dto.payload;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import com.depromeet.threedollar.common.type.PushOptions;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,5 +23,8 @@ public class SendFirebaseMessagePayload {
 
     @NotBlank
     private String body;
+
+    @NotNull
+    private PushOptions pushOptions;
 
 }
