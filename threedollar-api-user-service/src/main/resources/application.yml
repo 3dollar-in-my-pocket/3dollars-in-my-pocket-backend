@@ -12,7 +12,7 @@ spring.config:
     - optional:classpath:/application-secret.yml
 
 threedollars:
-  aplication:
+  application:
     uid: ${random.uuid}
 
 server:

@@ -6,13 +6,14 @@ spring.config:
     - classpath:/application-mongo.yml
     - classpath:/application-external.yml
     - classpath:/application-s3.yml
+    - classpath:/application-sqs.yml
     - classpath:/application-sentry.yml
     - classpath:/application-swagger.yml
     - classpath:/application-actuator.yml
     - optional:classpath:/application-secret.yml
 
 threedollars:
-  aplication:
+  application:
     uid: ${random.uuid}
 
 server:

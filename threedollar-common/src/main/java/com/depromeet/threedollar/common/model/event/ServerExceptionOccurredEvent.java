@@ -48,4 +48,14 @@ public class ServerExceptionOccurredEvent {
             .build();
     }
 
+    public static ServerExceptionOccurredEvent error(ApplicationType applicationType, ErrorCode errorCode,
+                                                     Exception exception, LocalDateTime timeStamp) {
+        return ServerExceptionOccurredEvent.builder()
+            .applicationType(applicationType)
+            .errorCode(errorCode)
+            .exception(exception)
+            .timeStamp(timeStamp)
+            .build();
+    }
+
 }

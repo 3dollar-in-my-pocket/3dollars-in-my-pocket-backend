@@ -1,0 +1,50 @@
+dependencies {
+    implementation project(":threedollar-common")
+    implementation project(":threedollar-infrastructure:threedollar-sqs")
+    implementation project(":threedollar-external")
+
+    // Spring MVC
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
+    // Spring Security
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
+    // Spring actuator
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+
+    // Sentry
+    implementation("io.sentry:sentry-spring-boot-starter:${sentryVersion}")
+    implementation("io.sentry:sentry-logback:${sentryVersion}")
+
+    // Firebase Admin
+    implementation("com.google.firebase:firebase-admin:${firebaseAdminVersion}")
+}
+
+application {
+    mainClass.set("com.depromeet.threedollar.push.ThreeDollarPushApplication")
+}
+
+bootJar {
+    enabled = true
+}
+jar {
+    enabled = true
+}
+
+jib {
+    from {
+        image = "adoptopenjdk/openjdk11:alpine-jre"
+    }
+    to {
+        image = System.getProperty("image", "")
+        tags = [System.getProperty("tag", "latest")]
+    }
+    container {
+        jvmFlags = [
+            "-server",
+            "-XX:+UseG1GC",
+            "-Duser.timezone=Asia/Seoul"
+        ]
+        ports = ["5200"]
+    }
+}

@@ -13,4 +13,9 @@ include 'threedollar-domain:threedollar-domain-rds'
 
 include 'threedollar-external'
 include 'threedollar-common'
+
 include 'threedollar-infrastructure:threedollar-s3'
+include 'threedollar-infrastructure:threedollar-sqs'
+
+include 'threedollar-push'
+

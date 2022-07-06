@@ -8,5 +8,6 @@ enum class ApplicationType(
     BOSS_API("사장님 API 서버"),
     ADMIN_API("관리자 서버"),
     BATCH("배치 서버"),
+    PUSH("배치 서버"),
 
 }

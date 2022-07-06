@@ -1,0 +1,28 @@
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+push:
+  sqs:
+    boss:
+      single-push: ${secret.push.sqs.boss.single-push}
+      bulk-push: ${secret.push.sqs.boss.bulk-push}
+    common:
+      error-slack: ${secret.push.sqs.common.error-slack}
+
+---
+cloud:
+  aws:
+    credentials:
+      access-key: ${secret.cloud.aws.credentials.access-key}
+      secret-key: ${secret.cloud.aws.credentials.secret-key}
+
+spring:
+  config:
+    activate:
+      on-profile: local
+
+---

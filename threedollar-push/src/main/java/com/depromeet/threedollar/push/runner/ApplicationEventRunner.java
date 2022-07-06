@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.userservice.runner;
+package com.depromeet.threedollar.push.runner;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -29,12 +29,12 @@ public class ApplicationEventRunner implements CommandLineRunner, ApplicationLis
 
     @Override
     public void run(String... args) {
-        eventPublisher.publishEvent(ApplicationStateChangedEvent.start(ApplicationType.USER_API, LocalDateTime.now(ZoneId.of("Asia/Seoul")), applicationUid));
+        eventPublisher.publishEvent(ApplicationStateChangedEvent.start(ApplicationType.PUSH, LocalDateTime.now(ZoneId.of("Asia/Seoul")), applicationUid));
     }
 
     @Override
     public void onApplicationEvent(@NotNull ContextClosedEvent event) {
-        eventPublisher.publishEvent(ApplicationStateChangedEvent.stop(ApplicationType.USER_API, LocalDateTime.now(ZoneId.of("Asia/Seoul")), applicationUid));
+        eventPublisher.publishEvent(ApplicationStateChangedEvent.stop(ApplicationType.PUSH, LocalDateTime.now(ZoneId.of("Asia/Seoul")), applicationUid));
     }
 
 }

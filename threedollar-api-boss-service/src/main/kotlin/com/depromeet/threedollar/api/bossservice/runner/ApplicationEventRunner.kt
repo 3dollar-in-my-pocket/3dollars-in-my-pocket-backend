@@ -17,7 +17,7 @@ import com.depromeet.threedollar.common.type.ApplicationType
 class ApplicationEventRunner(
     private val eventPublisher: ApplicationEventPublisher,
 
-    @Value("\${threedollars.aplication.uid}")
+    @Value("\${threedollars.application.uid}")
     private val applicationUid: String,
 ) : CommandLineRunner, ApplicationListener<ContextClosedEvent> {
 
