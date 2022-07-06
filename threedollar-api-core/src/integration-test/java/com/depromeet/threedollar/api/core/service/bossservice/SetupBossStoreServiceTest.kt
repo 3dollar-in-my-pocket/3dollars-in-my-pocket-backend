@@ -17,9 +17,9 @@ internal abstract class SetupBossStoreServiceTest : SetupBossAccountAndUserServi
         super.setup()
         bossStoreId = bossStoreRepository.save(
             BossStoreFixture.create(
-            bossId = bossId,
-            name = "사장님의 가게 이름"
-        )).id
+                bossId = bossId,
+                name = "사장님의 가게 이름"
+            )).id
     }
 
     override fun cleanup() {

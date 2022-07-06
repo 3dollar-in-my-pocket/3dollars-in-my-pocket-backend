@@ -20,7 +20,7 @@ internal class AdminMedalServiceTest(
     private val adminMedalService: AdminMedalService,
     private val medalRepository: MedalRepository,
     private val medalAcquisitionConditionRepository: MedalAcquisitionConditionRepository,
-): IntegrationTest() {
+) : IntegrationTest() {
 
     @Nested
     inner class AddMedalTest {

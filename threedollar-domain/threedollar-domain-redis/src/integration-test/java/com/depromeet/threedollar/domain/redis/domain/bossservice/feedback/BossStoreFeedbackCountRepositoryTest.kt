@@ -13,7 +13,7 @@ private const val BOSS_STORE_ID = "boss-store-id"
 internal class BossStoreFeedbackCountRepositoryTest(
     private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository,
     private val stringRedisRepository: StringRedisRepository<BossStoreFeedbackCountKey, Int>,
-): IntegrationTest() {
+) : IntegrationTest() {
 
     @AfterEach
     fun cleanUp() {

@@ -24,13 +24,13 @@ public class SlackNotificationEventListener {
     @EventListener
     public void sendErrorNotification(ServerExceptionOccurredEvent event) {
         slackNotificationApiClient.postMonitoringMessage(PostSlackMessageRequest.of(ERROR_MESSAGE.generateMessage(
-                event.getApplicationType().getDescription(),
-                event.getErrorCode().getCode(),
-                event.getRequestUri(),
-                event.getException(),
-                event.getTimeStamp(),
-                event.getErrorCode().getMessage(),
-                event.getUserMetaValue()
+            event.getApplicationType().getDescription(),
+            event.getErrorCode().getCode(),
+            event.getRequestUri(),
+            event.getException(),
+            event.getTimeStamp(),
+            event.getErrorCode().getMessage(),
+            event.getUserMetaValue()
         )));
     }
 
@@ -38,10 +38,10 @@ public class SlackNotificationEventListener {
     @EventListener
     public void sendInfoNotification(ApplicationStateChangedEvent event) {
         slackNotificationApiClient.postMonitoringMessage(PostSlackMessageRequest.of(INFO_MESSAGE.generateMessage(
-                event.getApplicationType().getDescription(),
-                event.getApplicationUid(),
-                event.getMessage(),
-                event.getTimeStamp()
+            event.getApplicationType().getDescription(),
+            event.getApplicationUid(),
+            event.getMessage(),
+            event.getTimeStamp()
         )));
     }
 

@@ -1,5 +1,16 @@
 package com.depromeet.threedollar.api.bossservice.controller
 
+import java.time.LocalDate
+import java.time.LocalTime
+import java.util.*
+import javax.servlet.http.HttpSession
+import org.springframework.context.annotation.Profile
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.bossservice.config.interceptor.Auth
 import com.depromeet.threedollar.api.bossservice.config.resolver.BossId
 import com.depromeet.threedollar.api.bossservice.config.session.SessionConstants
@@ -27,14 +38,12 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.Bo
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationBossForm
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationStoreForm
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.*
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreAppearanceDay
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreLocation
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenu
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 import io.swagger.annotations.ApiOperation
-import org.springframework.context.annotation.Profile
-import org.springframework.web.bind.annotation.*
-import java.time.LocalDate
-import java.time.LocalTime
-import java.util.*
-import javax.servlet.http.HttpSession
 
 private val BOSS = BossAccount.of(
     bossId = "test" + UUID.randomUUID().toString(),
