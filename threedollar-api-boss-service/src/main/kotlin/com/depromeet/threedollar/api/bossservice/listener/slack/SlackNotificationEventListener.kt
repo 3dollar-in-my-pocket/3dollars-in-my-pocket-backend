@@ -8,10 +8,10 @@ import com.depromeet.threedollar.common.model.event.ApplicationStateChangedEvent
 import com.depromeet.threedollar.common.model.event.ServerExceptionOccurredEvent
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.event.bossservice.registration.NewBossAppliedRegistrationEvent
-import com.depromeet.threedollar.external.client.slack.SlackWebhookApiClient
-import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest
-import com.depromeet.threedollar.external.client.slack.type.SlackNotificationMessageType
-import com.depromeet.threedollar.external.client.slack.type.SlackNotificationMessageType.NEW_BOSS_REGISTRATION_MESSAGE
+import com.depromeet.threedollar.infrastructure.external.client.slack.SlackWebhookApiClient
+import com.depromeet.threedollar.infrastructure.external.client.slack.dto.request.PostSlackMessageRequest
+import com.depromeet.threedollar.infrastructure.external.client.slack.type.SlackNotificationMessageType
+import com.depromeet.threedollar.infrastructure.external.client.slack.type.SlackNotificationMessageType.NEW_BOSS_REGISTRATION_MESSAGE
 
 @Component
 class SlackNotificationEventListener(

@@ -22,8 +22,8 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
-import com.depromeet.threedollar.external.client.kakao.KaKaoAuthApiClient;
-import com.depromeet.threedollar.external.client.kakao.dto.response.KaKaoProfileResponse;
+import com.depromeet.threedollar.infrastructure.external.client.kakao.KaKaoAuthApiClient;
+import com.depromeet.threedollar.infrastructure.external.client.kakao.dto.response.KaKaoProfileResponse;
 
 class KaKaoAuthServiceTest extends IntegrationTest {
 

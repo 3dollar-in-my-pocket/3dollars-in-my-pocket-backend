@@ -9,8 +9,8 @@ import com.depromeet.threedollar.api.userservice.service.user.UserServiceHelper;
 import com.depromeet.threedollar.common.utils.HttpHeaderUtils;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
-import com.depromeet.threedollar.external.client.kakao.KaKaoAuthApiClient;
-import com.depromeet.threedollar.external.client.kakao.dto.response.KaKaoProfileResponse;
+import com.depromeet.threedollar.infrastructure.external.client.kakao.KaKaoAuthApiClient;
+import com.depromeet.threedollar.infrastructure.external.client.kakao.dto.response.KaKaoProfileResponse;
 
 import lombok.RequiredArgsConstructor;
 

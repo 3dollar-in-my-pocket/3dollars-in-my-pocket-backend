@@ -10,8 +10,8 @@ import com.depromeet.threedollar.api.adminservice.service.commonservice.auth.dto
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminFixture
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminRepository
-import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
-import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse
+import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAuthApiClient
+import com.depromeet.threedollar.infrastructure.external.client.google.dto.response.GoogleProfileInfoResponse
 
 private const val EMAIL = "will.seunho@gmail.com"
 

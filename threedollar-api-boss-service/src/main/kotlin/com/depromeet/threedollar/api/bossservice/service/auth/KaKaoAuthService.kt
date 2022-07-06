@@ -7,8 +7,8 @@ import com.depromeet.threedollar.common.utils.HttpHeaderUtils
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.KAKAO
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
-import com.depromeet.threedollar.external.client.kakao.KaKaoAuthApiClient
-import com.depromeet.threedollar.external.client.kakao.dto.response.KaKaoProfileResponse
+import com.depromeet.threedollar.infrastructure.external.client.kakao.KaKaoAuthApiClient
+import com.depromeet.threedollar.infrastructure.external.client.kakao.dto.response.KaKaoProfileResponse
 
 private val SOCIAL_TYPE = KAKAO
 

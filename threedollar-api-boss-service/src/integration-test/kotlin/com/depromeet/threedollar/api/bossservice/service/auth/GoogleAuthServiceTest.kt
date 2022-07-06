@@ -13,8 +13,8 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAcc
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationFixture
-import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
-import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse
+import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAuthApiClient
+import com.depromeet.threedollar.infrastructure.external.client.google.dto.response.GoogleProfileInfoResponse
 
 private const val SOCIAL_ID = "social-id"
 private val SOCIAL_TYPE = BossAccountSocialType.GOOGLE

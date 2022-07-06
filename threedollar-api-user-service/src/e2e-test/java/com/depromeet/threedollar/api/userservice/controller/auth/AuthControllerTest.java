@@ -19,11 +19,11 @@ import com.depromeet.threedollar.api.userservice.service.auth.dto.response.Login
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
-import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder;
-import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient;
-import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse;
-import com.depromeet.threedollar.external.client.kakao.KaKaoAuthApiClient;
-import com.depromeet.threedollar.external.client.kakao.dto.response.KaKaoProfileResponse;
+import com.depromeet.threedollar.infrastructure.external.client.apple.AppleTokenDecoder;
+import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAuthApiClient;
+import com.depromeet.threedollar.infrastructure.external.client.google.dto.response.GoogleProfileInfoResponse;
+import com.depromeet.threedollar.infrastructure.external.client.kakao.KaKaoAuthApiClient;
+import com.depromeet.threedollar.infrastructure.external.client.kakao.dto.response.KaKaoProfileResponse;
 
 class AuthControllerTest extends SetupUserControllerTest {
 

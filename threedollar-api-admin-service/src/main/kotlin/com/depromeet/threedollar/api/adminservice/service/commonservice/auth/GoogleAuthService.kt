@@ -6,7 +6,7 @@ import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.utils.HttpHeaderUtils
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminRepository
-import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
+import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAuthApiClient
 
 @Service
 class GoogleAuthService(

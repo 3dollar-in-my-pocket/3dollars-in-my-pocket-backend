@@ -31,8 +31,8 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageR
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository
-import com.depromeet.threedollar.external.client.slack.SlackWebhookApiClient
-import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest
+import com.depromeet.threedollar.infrastructure.external.client.slack.SlackWebhookApiClient
+import com.depromeet.threedollar.infrastructure.external.client.slack.dto.request.PostSlackMessageRequest
 
 /**
  * 유저 서비스 일일 통계 배치 잡

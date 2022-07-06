@@ -13,8 +13,8 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAcc
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationFixture
-import com.depromeet.threedollar.external.client.kakao.KaKaoAuthApiClient
-import com.depromeet.threedollar.external.client.kakao.dto.response.KaKaoProfileResponse
+import com.depromeet.threedollar.infrastructure.external.client.kakao.KaKaoAuthApiClient
+import com.depromeet.threedollar.infrastructure.external.client.kakao.dto.response.KaKaoProfileResponse
 
 private const val SOCIAL_ID = "social-id"
 private val SOCIAL_TYPE = BossAccountSocialType.KAKAO

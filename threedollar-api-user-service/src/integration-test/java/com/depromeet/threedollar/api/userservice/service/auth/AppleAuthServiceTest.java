@@ -23,7 +23,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
-import com.depromeet.threedollar.external.client.apple.AppleTokenDecoder;
+import com.depromeet.threedollar.infrastructure.external.client.apple.AppleTokenDecoder;
 
 class AppleAuthServiceTest extends IntegrationTest {
 

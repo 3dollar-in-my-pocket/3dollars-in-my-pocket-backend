@@ -9,8 +9,8 @@ import org.springframework.test.web.servlet.post
 import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminFixture
-import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient
-import com.depromeet.threedollar.external.client.google.dto.response.GoogleProfileInfoResponse
+import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAuthApiClient
+import com.depromeet.threedollar.infrastructure.external.client.google.dto.response.GoogleProfileInfoResponse
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 

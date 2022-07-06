@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 
 import com.depromeet.threedollar.common.type.FamousPlace;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType;
-import com.depromeet.threedollar.external.client.google.GoogleAuthApiClient;
-import com.depromeet.threedollar.external.client.kakao.KaKaoAuthApiClient;
-import com.depromeet.threedollar.external.client.local.LocalBossApiWarmupApiClient;
-import com.depromeet.threedollar.external.client.local.LocalUserApiWarmUpApiClient;
+import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAuthApiClient;
+import com.depromeet.threedollar.infrastructure.external.client.kakao.KaKaoAuthApiClient;
+import com.depromeet.threedollar.infrastructure.external.client.local.LocalBossApiWarmupApiClient;
+import com.depromeet.threedollar.infrastructure.external.client.local.LocalUserApiWarmUpApiClient;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

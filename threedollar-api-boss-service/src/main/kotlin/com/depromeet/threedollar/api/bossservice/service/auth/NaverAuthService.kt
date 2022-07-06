@@ -7,8 +7,8 @@ import com.depromeet.threedollar.common.utils.HttpHeaderUtils
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.NAVER
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
-import com.depromeet.threedollar.external.client.naver.NaverAuthApiClient
-import com.depromeet.threedollar.external.client.naver.dto.response.NaverProfileResponse
+import com.depromeet.threedollar.infrastructure.external.client.naver.NaverAuthApiClient
+import com.depromeet.threedollar.infrastructure.external.client.naver.dto.response.NaverProfileResponse
 
 private val SOCIAL_TYPE = NAVER
 

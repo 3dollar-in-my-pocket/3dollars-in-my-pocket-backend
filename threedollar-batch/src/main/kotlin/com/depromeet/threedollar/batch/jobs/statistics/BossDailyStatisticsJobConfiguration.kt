@@ -14,8 +14,8 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossSt
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossDeletedStoreRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
-import com.depromeet.threedollar.external.client.slack.SlackWebhookApiClient
-import com.depromeet.threedollar.external.client.slack.dto.request.PostSlackMessageRequest
+import com.depromeet.threedollar.infrastructure.external.client.slack.SlackWebhookApiClient
+import com.depromeet.threedollar.infrastructure.external.client.slack.dto.request.PostSlackMessageRequest
 
 private const val BOSS_DAILY_STATISTICS_JOB = "bossStatisticsJob"
 
