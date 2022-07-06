@@ -4,27 +4,25 @@ import java.util.Map;
 
 import org.springframework.cloud.aws.messaging.listener.SqsMessageDeletionPolicy;
 import org.springframework.cloud.aws.messaging.listener.annotation.SqsListener;
-import org.springframework.context.annotation.Profile;
 import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 import com.depromeet.threedollar.common.type.ApplicationType;
 import com.depromeet.threedollar.common.utils.JsonUtils;
-import com.depromeet.threedollar.infrastructure.sqs.push.dto.payload.SendFirebaseMessageBulkPayload;
-import com.depromeet.threedollar.infrastructure.sqs.push.dto.payload.SendFirebaseMessagePayload;
-import com.depromeet.threedollar.push.service.push.FirebasePushService;
+import com.depromeet.threedollar.infrastructure.sqs.dto.payload.SendFirebaseMessageBulkPayload;
+import com.depromeet.threedollar.infrastructure.sqs.dto.payload.SendFirebaseMessagePayload;
+import com.depromeet.threedollar.push.provider.push.PushProvider;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Profile({"local", "local-docker", "dev"})
 @RequiredArgsConstructor
 @Component
 public class PushConsumer {
 
-    private final FirebasePushService firebasePushService;
+    private final PushProvider pushProvider;
 
     @SqsListener(value = "${push.sqs.boss.single-push}", deletionPolicy = SqsMessageDeletionPolicy.ALWAYS)
     public void consumeBossPushMessage(@Payload String payload, @Headers Map<String, String> headers) {
@@ -32,7 +30,7 @@ public class PushConsumer {
         if (log.isDebugEnabled()) {
             log.debug("단건 푸시를 발송합니다 request: {} headers: {}", request, headers);
         }
-        firebasePushService.sendMessageAsync(ApplicationType.BOSS_API, request);
+        pushProvider.sendMessageAsync(ApplicationType.BOSS_API, request);
     }
 
     @SqsListener(value = "${push.sqs.boss.bulk-push}", deletionPolicy = SqsMessageDeletionPolicy.ALWAYS)
@@ -41,7 +39,7 @@ public class PushConsumer {
         if (log.isDebugEnabled()) {
             log.debug("벌크 푸시를 발송합니다 request: {} headers: {}", request, headers);
         }
-        firebasePushService.sendMessageBulkAsync(ApplicationType.BOSS_API, request);
+        pushProvider.sendMessageBulkAsync(ApplicationType.BOSS_API, request);
     }
 
 }

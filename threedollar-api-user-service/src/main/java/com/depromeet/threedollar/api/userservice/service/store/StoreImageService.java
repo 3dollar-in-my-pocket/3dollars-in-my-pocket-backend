@@ -8,16 +8,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.depromeet.threedollar.api.core.provider.upload.UploadProvider;
-import com.depromeet.threedollar.api.core.provider.upload.dto.request.ImageUploadFileRequest;
-import com.depromeet.threedollar.api.core.provider.upload.dto.request.UploadFileRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.common.type.ApplicationType;
-import com.depromeet.threedollar.common.type.FileType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImage;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
+import com.depromeet.threedollar.infrastructure.s3.common.type.FileType;
+import com.depromeet.threedollar.infrastructure.s3.provider.UploadProvider;
+import com.depromeet.threedollar.infrastructure.s3.provider.dto.request.ImageUploadFileRequest;
+import com.depromeet.threedollar.infrastructure.s3.provider.dto.request.UploadFileRequest;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

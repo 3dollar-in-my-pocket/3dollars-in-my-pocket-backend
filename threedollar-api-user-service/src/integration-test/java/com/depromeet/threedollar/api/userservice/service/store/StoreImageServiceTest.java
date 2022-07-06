@@ -15,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
 
-import com.depromeet.threedollar.api.core.provider.upload.UploadProvider;
-import com.depromeet.threedollar.api.core.provider.upload.dto.request.UploadFileRequest;
 import com.depromeet.threedollar.api.userservice.SetupStoreIntegrationTest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
@@ -24,6 +22,8 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImage;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageStatus;
+import com.depromeet.threedollar.infrastructure.s3.provider.UploadProvider;
+import com.depromeet.threedollar.infrastructure.s3.provider.dto.request.UploadFileRequest;
 
 class StoreImageServiceTest extends SetupStoreIntegrationTest {
 

@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
 import com.depromeet.threedollar.api.bossservice.controller.upload.dto.response.BossImageUploadResponse
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.provider.upload.UploadProvider
-import com.depromeet.threedollar.api.core.provider.upload.dto.request.ImageUploadFileRequest
-import com.depromeet.threedollar.api.core.provider.upload.dto.response.UploadFileWithSequenceResponse
 import com.depromeet.threedollar.common.type.ApplicationType
-import com.depromeet.threedollar.common.type.FileType
+import com.depromeet.threedollar.infrastructure.s3.common.type.FileType
+import com.depromeet.threedollar.infrastructure.s3.provider.UploadProvider
+import com.depromeet.threedollar.infrastructure.s3.provider.dto.request.ImageUploadFileRequest
+import com.depromeet.threedollar.infrastructure.s3.provider.dto.response.UploadFileWithSequenceResponse
 import io.swagger.annotations.ApiOperation
 
 @RestController

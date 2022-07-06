@@ -60,7 +60,7 @@ jobs:
         with:
           name: "firebase-boss.json"
           json: ${{ secrets.DEV_BOSS_FIREBASE_JSON }}
-          dir: "threedollar-push/src/main/resources/firebase/"
+          dir: "threedollar-push/src/main/resources/"
 
       - name: create firebase-user.json
         id: create-json-user
@@ -68,7 +68,7 @@ jobs:
         with:
           name: "firebase-user.json"
           json: ${{ secrets.DEV_USER_FIREBASE_JSON }}
-          dir: "threedollar-push/src/main/resources/firebase/"
+          dir: "threedollar-push/src/main/resources/"
 
       - name: Cache Gradle packages
         uses: actions/cache@v3

@@ -1,0 +1,13 @@
+dependencies {
+    implementation project(":threedollar-common")
+
+    // Firebase Admin
+    api("com.google.firebase:firebase-admin:${firebaseAdminVersion}")
+}
+
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+}
