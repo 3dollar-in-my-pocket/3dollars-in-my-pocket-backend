@@ -1,8 +1,9 @@
 package com.depromeet.threedollar.infrastructure.sqs.utils;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.core.env.Environment;
 
 import com.depromeet.threedollar.common.context.ApplicationContextProvider;
@@ -14,13 +15,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SqsTopicFinder {
 
-    private static final Map<TopicType, String> SQS_TOPIC_MAP = new HashMap<>() {{
-        Environment env = ApplicationContextProvider.getApplicationContext().getEnvironment();
-        put(TopicType.SINGLE_PUSH, env.getProperty("push.sqs.boss.single-push"));
-        put(TopicType.BULK_PUSH, env.getProperty("push.sqs.boss.bulk-push"));
-    }};
+    public static final Map<TopicType, String> SQS_TOPIC_MAP = new EnumMap<>(TopicType.class);
 
-    public static String getTopicName(TopicType topicType) {
+    static {
+        Environment env = ApplicationContextProvider.getApplicationContext().getEnvironment();
+        SQS_TOPIC_MAP.put(TopicType.SINGLE_PUSH, env.getProperty("push.sqs.boss.single-push"));
+        SQS_TOPIC_MAP.put(TopicType.BULK_PUSH, env.getProperty("push.sqs.boss.bulk-push"));
+    }
+
+    @NotNull
+    public static String getTopicName(@NotNull TopicType topicType) {
         return SQS_TOPIC_MAP.get(topicType);
     }
 

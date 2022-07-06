@@ -6,6 +6,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PushExtraFieldConstants {
 
-    public static String PUSH_OPTIONS = "pushOptions";
+    public static final String PUSH_OPTIONS = "pushOptions";
 
 }
