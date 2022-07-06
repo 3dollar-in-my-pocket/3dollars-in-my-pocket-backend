@@ -1,30 +1,30 @@
-name: 개발환경 - 배포 - Push
+name: 운영환경 - 배포 - Push
 
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: "Release Version"
-        required: true
-        type: string
-        default: 'v0.0.1'
 
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
+      - name: Check assigned tag
+        uses: actions/github-script@v6
+        if: ${{GITHUB.REF_TYPE != 'tag'}}
+        with:
+          script: core.setFailed('You should deploy with tag (not branch !)')
+
       - name: validate semantic versioning
         run: |
-          if [[ ! "${{ github.event.inputs.version }}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo 'version "${{ github.event.inputs.version }}" not in semantic versioning format ex) v0.0.1'
-            exit 1
+          if [[ ! "${{ github.ref_name }}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+                      echo 'version "${{ github.event.inputs.version }}" not in semantic versioning format ex) v0.0.1'
+                      exit 1
           fi
 
   deploy:
     runs-on: ubuntu-latest
     needs:
       - validate
-    environment: dev-push
+    environment: prod-push
     steps:
       - name: checkout@v3
         uses: actions/checkout@v3
@@ -32,16 +32,14 @@ jobs:
       - name: Version
         id: version
         run: |
-          VERSION=${VERSIONING#v}-${{ github.run_id }}
+          VERSION=${GITHUB_REF_NAME#v}
           echo "::set-output name=version::${VERSION}"
-        env:
-          VERSIONING: ${{ github.event.inputs.version }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
 
       - name: Login to Amazon ECR
@@ -59,7 +57,7 @@ jobs:
         uses: jsdaniell/create-json@1.1.2
         with:
           name: "firebase-boss.json"
-          json: ${{ secrets.DEV_BOSS_FIREBASE_JSON }}
+          json: ${{ secrets.PROD_BOSS_FIREBASE_JSON }}
           dir: "threedollar-push/src/main/resources/"
 
       - name: Create firebase-user.json
@@ -67,7 +65,7 @@ jobs:
         uses: jsdaniell/create-json@1.1.2
         with:
           name: "firebase-user.json"
-          json: ${{ secrets.DEV_USER_FIREBASE_JSON }}
+          json: ${{ secrets.PROD_USER_FIREBASE_JSON }}
           dir: "threedollar-push/src/main/resources/"
 
       - name: Cache Gradle packages
@@ -89,27 +87,27 @@ jobs:
           echo "🐇 Build Image >> ${DOCKER_REPOSITORY}:${IMAGE_TAG}"
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          DOCKER_REPOSITORY: 3dollar-push-dev
+          DOCKER_REPOSITORY: threedollars-in-my-pocket-push-prod
           IMAGE_TAG: ${{ steps.version.outputs.version }}
 
       - name: Download task definition
         id: download-task-definition
         run: |
-          aws ecs describe-task-definition --task-definition threedollar-push-dev --query taskDefinition > task-definition-push-dev.json
-          echo "::set-output name=task-definition::$GITHUB_WORKSPACE/task-definition-push-dev.json"
+          aws ecs describe-task-definition --task-definition threedollars-in-my-pocket-push-prod --query taskDefinition > task-definition-push.json
+          echo "::set-output name=task-definition::$GITHUB_WORKSPACE/task-definition-push.json"
 
       - name: Update Amazon ECS task definition
         id: render-web-container
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: ${{ steps.download-task-definition.outputs.task-definition }}
-          container-name: threedollar-push-dev
+          container-name: threedollar-push-prod
           image: ${{ steps.build.outputs.image }}
 
       - name: Deploy to Amazon ECS service
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.render-web-container.outputs.task-definition }}
-          cluster: threedollar-dev
-          service: threedollar-push-dev
+          cluster: threedollars-in-my-pocket-prod
+          service: threedollars-in-my-pocket-push-prod
           wait-for-service-stability: true

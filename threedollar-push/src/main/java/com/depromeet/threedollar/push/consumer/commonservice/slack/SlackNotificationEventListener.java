@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.push.consumer.slack;
+package com.depromeet.threedollar.push.consumer.commonservice.slack;
 
 import static com.depromeet.threedollar.external.client.slack.type.SlackNotificationMessageType.ERROR_MESSAGE;
 import static com.depromeet.threedollar.external.client.slack.type.SlackNotificationMessageType.INFO_MESSAGE;

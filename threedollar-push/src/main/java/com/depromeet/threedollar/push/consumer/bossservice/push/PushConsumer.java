@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.push.consumer.push;
+package com.depromeet.threedollar.push.consumer.bossservice.push;
 
 import java.util.Map;
 
