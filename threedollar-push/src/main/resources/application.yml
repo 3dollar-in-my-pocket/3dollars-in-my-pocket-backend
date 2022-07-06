@@ -3,6 +3,7 @@ spring.config:
   import:
     - classpath:/application-sqs.yml
     - classpath:/application-actuator.yml
+    - classpath:/application-sentry.yml
     - optional:classpath:/application-secret.yml
 
 threedollars:
