@@ -29,10 +29,10 @@ public class LoginCheckHandler {
         }
         Session session = findSessionBySessionId(sessionId);
         Long userId = session.getAttribute(SessionConstants.USER_ID);
-        if (isValidUserId(userId)) {
-            return userId;
+        if (!isValidUserId(userId)) {
+            throw new UnAuthorizedException(String.format("인증이 실패하였습니다 - 회원 탈퇴되거나 유효하지 않은 유저(%s) 입니다 세션: (%s)", userId, session));
         }
-        throw new UnAuthorizedException(String.format("인증이 실패하였습니다 - 회원 탈퇴되거나 유효하지 않은 유저(%s) 입니다 세션: (%s)", userId, session));
+        return userId;
     }
 
     private Session findSessionBySessionId(String sessionId) {

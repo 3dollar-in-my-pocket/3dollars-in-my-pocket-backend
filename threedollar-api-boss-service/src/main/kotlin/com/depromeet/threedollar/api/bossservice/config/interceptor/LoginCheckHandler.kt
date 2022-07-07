@@ -38,7 +38,7 @@ class LoginCheckHandler(
 
     fun checkAuthRequired(request: HttpServletRequest): Boolean {
         val header: String? = request.getHeader(HttpHeaders.AUTHORIZATION)
-        if (header == null || !header.startsWith(HEADER_BEARER_PREFIX)) {
+        if (header.isNullOrBlank() || !header.startsWith(HEADER_BEARER_PREFIX)) {
             throw UnAuthorizedException("인증이 실패하였습니다 - ($HEADER_BEARER_PREFIX) 형식이 아닌 Authorization 헤더($header)입니다.")
         }
         val sessionId: String = header.split(HEADER_BEARER_PREFIX)[1]

@@ -1,0 +1,18 @@
+### Health Check API
+GET {{push-api}}/ping
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
+### Version Check API
+GET {{push-api}}/version
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}

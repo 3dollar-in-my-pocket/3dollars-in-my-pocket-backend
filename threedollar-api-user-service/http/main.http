@@ -8,6 +8,16 @@ client.test("200 OK", () => {
 %}
 
 
+### Version Check API
+GET {{user-api}}/version
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
+
+
 ### (개발 서버용) 테스트를 위한 세션
 GET {{user-api}}/test-token
 
