@@ -6,6 +6,7 @@ spring.config:
     - classpath:/application-mongo.yml
     - classpath:/application-external.yml
     - classpath:/application-s3.yml
+    - classpath:/application-sqs.yml
 
 
 ---

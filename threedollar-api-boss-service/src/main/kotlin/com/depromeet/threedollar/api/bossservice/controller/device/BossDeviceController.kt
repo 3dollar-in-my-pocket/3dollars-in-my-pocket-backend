@@ -17,7 +17,7 @@ class BossDeviceController(
 ) {
 
     @ApiOperation("사장님 계정의 디바이스 정보를 저장 및 갱신합니다")
-    @Auth
+    @Auth(allowedWaiting = true)
     @PutMapping("/v1/device")
     fun upsertDevice(
         @Valid @RequestBody request: UpsertBossDeviceRequest,

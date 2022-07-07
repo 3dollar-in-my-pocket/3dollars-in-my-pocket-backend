@@ -1,6 +1,9 @@
-package com.depromeet.threedollar.infrastructure.external.client.slack.type
+package com.depromeet.threedollar.common.type.template
 
-enum class SlackNotificationMessageType(
+/**
+ * 슬랙 알림 메시지 템플릿
+ */
+enum class SlackMessageTemplateType(
     private val template: String,
 ) {
 
@@ -42,7 +45,8 @@ enum class SlackNotificationMessageType(
     """.trimIndent()
     ),
 
-    NEW_BOSS_REGISTRATION_MESSAGE("""
+    NEW_BOSS_REGISTRATION_MESSAGE(
+        """
     새로운 사장님이 가입 신청하였습니다. (%s)
 
     [성함]
@@ -66,8 +70,20 @@ enum class SlackNotificationMessageType(
     [가게 인증사진]
     %s
     -------------------------------------
+    """.trimIndent(),
+    ),
+
+    BOSS_REGISTRATION_APPROVED_MESSAGE("""
+    사장님 가입 신청이 승인되었습니다. (%s)
+    -------------------------------------
     """.trimIndent()
-    );
+    ),
+    BOSS_REGISTRATION_DENIED_MESSAGE("""
+    사장님 가입 신청이 반려되었습니다. (%s)
+    -------------------------------------
+    """.trimIndent()
+    )
+    ;
 
     fun generateMessage(vararg args: Any?): String {
         return String.format(template, *args)

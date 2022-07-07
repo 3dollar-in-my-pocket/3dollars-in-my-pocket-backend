@@ -5,6 +5,7 @@ import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.UnAuthorizedException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistration
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
 import org.springframework.http.HttpHeaders
 import org.springframework.session.Session
@@ -27,13 +28,53 @@ class LoginCheckHandler(
             return true
         }
         val sessionId: Session? = sessionRepository.findById(authorization.split(HEADER_BEARER_PREFIX)[1])
-        val bossAccountId: String? = sessionId?.getAttribute(SessionConstants.BOSS_ACCOUNT_ID)
-        bossAccountId?.let {
-            if (bossAccountRepository.existsBossAccountById(bossAccountId)) {
-                request.setAttribute(SessionConstants.BOSS_ACCOUNT_ID, bossAccountId)
-            }
+        val bossAccountId: String = sessionId?.getAttribute(SessionConstants.BOSS_ACCOUNT_ID) ?: return true
+        if (bossAccountRepository.existsBossAccountById(bossAccountId)) {
+            request.setAttribute(SessionConstants.BOSS_ACCOUNT_ID, bossAccountId)
         }
         return true
+    }
+
+    fun checkAuthOptionalAllowedWaiting(request: HttpServletRequest): Boolean {
+        val authorization = request.getHeader(HttpHeaders.AUTHORIZATION) ?: return true
+        if (!authorization.startsWith(HEADER_BEARER_PREFIX)) {
+            return true
+        }
+        val sessionId: Session? = sessionRepository.findById(authorization.split(HEADER_BEARER_PREFIX)[1])
+        val bossAccountId: String = sessionId?.getAttribute(SessionConstants.BOSS_ACCOUNT_ID) ?: return true
+
+        if (bossAccountRepository.existsBossAccountById(bossAccountId)) {
+            request.setAttribute(SessionConstants.BOSS_ACCOUNT_ID, bossAccountId)
+            return true
+        }
+
+        val bossRegistration: BossRegistration? = bossRegistrationRepository.findWaitingRegistrationById(bossAccountId)
+        if (bossRegistration != null) {
+            request.setAttribute(SessionConstants.BOSS_ACCOUNT_ID, bossAccountId)
+        }
+        return true
+    }
+
+    fun checkAuthRequiredAllowedWaiting(request: HttpServletRequest): Boolean {
+        val header: String? = request.getHeader(HttpHeaders.AUTHORIZATION)
+        if (header.isNullOrBlank() || !header.startsWith(HEADER_BEARER_PREFIX)) {
+            throw UnAuthorizedException("인증이 실패하였습니다 - ($HEADER_BEARER_PREFIX) 형식이 아닌 Authorization 헤더($header)입니다.")
+        }
+        val sessionId: String = header.split(HEADER_BEARER_PREFIX)[1]
+        val session: Session = findSessionBySessionId(sessionId)
+        val bossAccountId: String = session.getAttribute(SessionConstants.BOSS_ACCOUNT_ID)
+            ?: throw UnAuthorizedException("인증이 실패하였습니다 - 세션($sessionId)에 BOSS_ACCOUNT_ID가 존재하지 않습니다")
+
+        if (bossAccountRepository.existsBossAccountById(bossAccountId)) {
+            request.setAttribute(SessionConstants.BOSS_ACCOUNT_ID, bossAccountId)
+            return true
+        }
+
+        if (bossRegistrationRepository.existsWaitingRegistrationById(bossAccountId)) {
+            request.setAttribute(SessionConstants.BOSS_ACCOUNT_ID, bossAccountId)
+            return true
+        }
+        throw UnAuthorizedException("해당하는 사장님 계정($bossAccountId) 혹은 대기중인 가입 신청($bossAccountId)은 존재하지 않습니다")
     }
 
     fun checkAuthRequired(request: HttpServletRequest): Boolean {

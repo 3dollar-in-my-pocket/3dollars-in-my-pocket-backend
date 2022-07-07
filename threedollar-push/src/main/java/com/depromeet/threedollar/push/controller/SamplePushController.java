@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.push.controller;
 
 import com.depromeet.threedollar.infrastructure.sqs.common.type.TopicType;
-import com.depromeet.threedollar.infrastructure.sqs.dto.payload.SendFirebaseMessageBulkPayload;
-import com.depromeet.threedollar.infrastructure.sqs.dto.payload.SendFirebaseMessagePayload;
-import com.depromeet.threedollar.infrastructure.sqs.provider.SqsSender;
+import com.depromeet.threedollar.infrastructure.sqs.provider.MessageSendProvider;
+import com.depromeet.threedollar.infrastructure.sqs.provider.dto.request.SendBulkPushRequest;
+import com.depromeet.threedollar.infrastructure.sqs.provider.dto.request.SendSinglePushRequest;
 import com.depromeet.threedollar.push.common.dto.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
@@ -18,21 +18,21 @@ import javax.validation.Valid;
 @RestController
 public class SamplePushController {
 
-    private final SqsSender sqsSender;
+    private final MessageSendProvider messageSendProvider;
 
     @PostMapping("/test/push/message")
     public ApiResponse<String> sendMessage(
-        @Valid @RequestBody SendFirebaseMessagePayload payload
+        @Valid @RequestBody SendSinglePushRequest payload
     ) {
-        sqsSender.sendToTopic(TopicType.SINGLE_APP_PUSH, payload);
+        messageSendProvider.sendToTopic(TopicType.BOSS_SINGLE_APP_PUSH, payload);
         return ApiResponse.OK;
     }
 
     @PostMapping("/test/push/message/bulk")
     public ApiResponse<String> sendMessage(
-        @Valid @RequestBody SendFirebaseMessageBulkPayload payload
+        @Valid @RequestBody SendBulkPushRequest payload
     ) {
-        sqsSender.sendToTopic(TopicType.BULK_APP_PUSH, payload);
+        messageSendProvider.sendToTopic(TopicType.BOSS_BULK_APP_PUSH, payload);
         return ApiResponse.OK;
     }
 

@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.userservice.listener.slack;
+package com.depromeet.threedollar.push.listener;
 
 import com.depromeet.threedollar.common.model.event.ApplicationStateChangedEvent;
 import com.depromeet.threedollar.common.model.event.ServerExceptionOccurredEvent;
@@ -9,8 +9,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import static com.depromeet.threedollar.infrastructure.external.client.slack.type.SlackNotificationMessageType.ERROR_MESSAGE;
-import static com.depromeet.threedollar.infrastructure.external.client.slack.type.SlackNotificationMessageType.INFO_MESSAGE;
+import static com.depromeet.threedollar.common.type.template.SlackMessageTemplateType.ERROR_MESSAGE;
+import static com.depromeet.threedollar.common.type.template.SlackMessageTemplateType.INFO_MESSAGE;
 
 @RequiredArgsConstructor
 @Component

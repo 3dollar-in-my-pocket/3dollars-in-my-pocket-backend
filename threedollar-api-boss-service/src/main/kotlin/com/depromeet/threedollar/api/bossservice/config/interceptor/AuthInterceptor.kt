@@ -16,10 +16,20 @@ class AuthInterceptor(
             return true
         }
         val auth = handler.getMethodAnnotation(Auth::class.java) ?: return true
-        if (auth.optional) {
-            return loginCheckHandler.checkAuthOptional(request)
+        return when (auth.optional) {
+            true -> {
+                when (auth.allowedWaiting) {
+                    true -> loginCheckHandler.checkAuthOptionalAllowedWaiting(request)
+                    false -> loginCheckHandler.checkAuthOptional(request)
+                }
+            }
+            false -> {
+                when (auth.allowedWaiting) {
+                    true -> loginCheckHandler.checkAuthRequiredAllowedWaiting(request)
+                    false -> loginCheckHandler.checkAuthRequired(request)
+                }
+            }
         }
-        return loginCheckHandler.checkAuthRequired(request)
     }
 
 }

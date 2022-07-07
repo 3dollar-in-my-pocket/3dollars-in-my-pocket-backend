@@ -2,8 +2,8 @@ package com.depromeet.threedollar.push.consumer.bossservice.push;
 
 import com.depromeet.threedollar.common.type.ApplicationType;
 import com.depromeet.threedollar.common.utils.JsonUtils;
-import com.depromeet.threedollar.infrastructure.sqs.dto.payload.SendFirebaseMessageBulkPayload;
-import com.depromeet.threedollar.infrastructure.sqs.dto.payload.SendFirebaseMessagePayload;
+import com.depromeet.threedollar.infrastructure.sqs.provider.dto.request.SendBulkPushRequest;
+import com.depromeet.threedollar.infrastructure.sqs.provider.dto.request.SendSinglePushRequest;
 import com.depromeet.threedollar.push.provider.push.PushProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,13 +18,13 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class PushConsumer {
+public class BossPushConsumer {
 
     private final PushProvider pushProvider;
 
     @SqsListener(value = "${push.sqs.boss.single-push}", deletionPolicy = SqsMessageDeletionPolicy.ALWAYS)
-    public void consumeBossPushMessage(@Payload String payload, @Headers Map<String, String> headers) {
-        SendFirebaseMessagePayload request = JsonUtils.toObject(payload, SendFirebaseMessagePayload.class);
+    public void consumeBossServiceSinglePush(@Payload String payload, @Headers Map<String, String> headers) {
+        SendSinglePushRequest request = JsonUtils.toObject(payload, SendSinglePushRequest.class);
         if (log.isDebugEnabled()) {
             log.debug("단건 푸시를 발송합니다 request: {} headers: {}", request, headers);
         }
@@ -32,8 +32,8 @@ public class PushConsumer {
     }
 
     @SqsListener(value = "${push.sqs.boss.bulk-push}", deletionPolicy = SqsMessageDeletionPolicy.ALWAYS)
-    public void consumeBossPushBulkMessage(@Payload String payload, @Headers Map<String, String> headers) {
-        SendFirebaseMessageBulkPayload request = JsonUtils.toObject(payload, SendFirebaseMessageBulkPayload.class);
+    public void consumeBossServiceBulkPush(@Payload String payload, @Headers Map<String, String> headers) {
+        SendBulkPushRequest request = JsonUtils.toObject(payload, SendBulkPushRequest.class);
         if (log.isDebugEnabled()) {
             log.debug("벌크 푸시를 발송합니다 request: {} headers: {}", request, headers);
         }

@@ -6,7 +6,7 @@ Content-Type: application/json
     "token": "token",
     "bossName": "토깽이",
     "socialType": "KAKAO",
-    "businessNumber": "123-45-12341",
+    "businessNumber": "000-00-00000",
     "storeName": "가슴속 3천원",
     "storeCategoriesIds": [
         "{{BOSS_CATEGORY_ID}}"

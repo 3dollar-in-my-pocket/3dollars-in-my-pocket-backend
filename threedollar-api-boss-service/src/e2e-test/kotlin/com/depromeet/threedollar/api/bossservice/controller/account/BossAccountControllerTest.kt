@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.put
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 
 internal class BossAccountControllerTest : SetupBossAccountControllerTest() {
 
@@ -33,7 +34,7 @@ internal class BossAccountControllerTest : SetupBossAccountControllerTest() {
             }.andExpect {
                 status { isOk() }
                 jsonPath("$.data.bossId") { value(bossId) }
-                jsonPath("$.data.socialType") { value(com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.KAKAO.toString()) }
+                jsonPath("$.data.socialType") { value(BossAccountSocialType.KAKAO.toString()) }
                 jsonPath("$.data.name") { value("테스트 계정") }
                 jsonPath("$.data.isSetupNotification") { value(false) }
             }

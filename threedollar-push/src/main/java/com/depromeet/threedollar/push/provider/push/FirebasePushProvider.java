@@ -3,8 +3,8 @@ package com.depromeet.threedollar.push.provider.push;
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import com.depromeet.threedollar.common.type.ApplicationType;
 import com.depromeet.threedollar.infrastructure.firebase.FirebaseMessagingFinder;
-import com.depromeet.threedollar.infrastructure.sqs.dto.payload.SendFirebaseMessageBulkPayload;
-import com.depromeet.threedollar.infrastructure.sqs.dto.payload.SendFirebaseMessagePayload;
+import com.depromeet.threedollar.infrastructure.sqs.provider.dto.request.SendBulkPushRequest;
+import com.depromeet.threedollar.infrastructure.sqs.provider.dto.request.SendSinglePushRequest;
 import com.depromeet.threedollar.push.common.constants.PushExtraFieldConstants;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class FirebasePushProvider implements PushProvider {
 
     @Override
-    public void sendMessageAsync(@NotNull ApplicationType applicationType, @NotNull SendFirebaseMessagePayload request) {
+    public void sendMessageAsync(@NotNull ApplicationType applicationType, @NotNull SendSinglePushRequest request) {
         try {
             FirebaseMessaging messaging = FirebaseMessagingFinder.find(applicationType);
             messaging.sendAsync(toMessage(request));
@@ -28,7 +28,7 @@ public class FirebasePushProvider implements PushProvider {
         }
     }
 
-    private Message toMessage(SendFirebaseMessagePayload request) {
+    private Message toMessage(SendSinglePushRequest request) {
         return Message.builder()
             .setNotification(Notification.builder()
                 .setTitle(request.getTitle())
@@ -40,7 +40,7 @@ public class FirebasePushProvider implements PushProvider {
     }
 
     @Override
-    public void sendMessageBulkAsync(@NotNull ApplicationType applicationType, @NotNull SendFirebaseMessageBulkPayload request) {
+    public void sendMessageBulkAsync(@NotNull ApplicationType applicationType, @NotNull SendBulkPushRequest request) {
         try {
             FirebaseMessaging messaging = FirebaseMessagingFinder.find(applicationType);
             messaging.sendAllAsync(toMessages(request));
@@ -49,13 +49,13 @@ public class FirebasePushProvider implements PushProvider {
         }
     }
 
-    private List<Message> toMessages(SendFirebaseMessageBulkPayload request) {
+    private List<Message> toMessages(SendBulkPushRequest request) {
         return request.getTokens().stream()
             .map(token -> toMessage(token, request))
             .collect(Collectors.toList());
     }
 
-    private Message toMessage(String token, SendFirebaseMessageBulkPayload request) {
+    private Message toMessage(String token, SendBulkPushRequest request) {
         return Message.builder()
             .setNotification(Notification.builder()
                 .setTitle(request.getTitle())

@@ -13,6 +13,9 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossSt
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistration
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
+import com.depromeet.threedollar.domain.mongo.event.bossservice.registration.BossRegistrationApprovedEvent
+import com.depromeet.threedollar.domain.mongo.event.bossservice.registration.BossRegistrationDeniedEvent
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 
 @Service
@@ -21,6 +24,7 @@ class BossRegistrationAdminService(
     private val bossAccountRepository: BossAccountRepository,
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
+    private val eventPublisher: ApplicationEventPublisher,
 ) {
 
     @MongoTransactional
@@ -30,6 +34,8 @@ class BossRegistrationAdminService(
         bossStoreRepository.save(registration.toBossStore(bossAccount.id))
         registration.approve()
         bossRegistrationRepository.save(registration)
+
+        eventPublisher.publishEvent(BossRegistrationApprovedEvent(bossRegistrationId = registrationId))
     }
 
     private fun registerNewBossAccount(bossRegistration: BossRegistration): BossAccount {
@@ -47,6 +53,8 @@ class BossRegistrationAdminService(
         val registration = BossRegistrationServiceHelper.findWaitingRegistrationById(bossRegistrationRepository, registrationId)
         registration.reject()
         bossRegistrationRepository.save(registration)
+
+        eventPublisher.publishEvent(BossRegistrationDeniedEvent(bossRegistrationId = registrationId))
     }
 
     fun retrieveBossRegistrations(request: RetrieveBossRegistrationsRequest): List<BossAccountRegistrationResponse> {

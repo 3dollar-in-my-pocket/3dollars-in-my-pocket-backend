@@ -8,11 +8,11 @@ object DeviceFixture {
 
     fun create(
         accountId: String,
-        accountType: AccountType,
-        pushPlatformType: PushPlatformType,
-        osPlatformType: OsPlatformType,
         pushToken: String,
-        appVersion: String?,
+        accountType: AccountType,
+        pushPlatformType: PushPlatformType = PushPlatformType.FCM,
+        osPlatformType: OsPlatformType = OsPlatformType.IPHONE,
+        appVersion: String? = "1.0.0",
     ): Device {
         return Device(
             accountId = accountId,

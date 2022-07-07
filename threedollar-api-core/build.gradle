@@ -2,6 +2,7 @@ dependencies {
     api project(":threedollar-infrastructure:threedollar-external")
     api project(":threedollar-infrastructure:threedollar-s3")
     implementation project(":threedollar-infrastructure:threedollar-monitoring")
+    api project(":threedollar-infrastructure:threedollar-sqs")
 
     api project(":threedollar-domain:threedollar-domain-rds")
     api project(":threedollar-domain:threedollar-domain-mongo")
