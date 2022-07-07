@@ -1,23 +1,21 @@
 package com.depromeet.threedollar.infrastructure.external.client.apple;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_AUTH_TOKEN;
-
-import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.Base64;
-
-import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Component;
-
 import com.depromeet.threedollar.common.exception.model.InvalidException;
 import com.depromeet.threedollar.common.exception.type.ErrorCode;
 import com.depromeet.threedollar.common.utils.LocalDateTimeUtils;
 import com.depromeet.threedollar.infrastructure.external.client.apple.dto.model.AppleIdTokenPayload;
 import com.depromeet.threedollar.infrastructure.external.client.apple.dto.property.AppleAuthProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Base64;
+
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_AUTH_TOKEN;
 
 /**
  * <a href="https://developer.apple.com/documentation/sign_in_with_apple/sign_in_with_apple_rest_api/verifying_a_user">https://developer.apple.com/documentation/sign_in_with_apple/sign_in_with_apple_rest_api/verifying_a_user</a>

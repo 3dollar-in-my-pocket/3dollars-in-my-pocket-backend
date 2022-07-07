@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.batch
 
+import com.depromeet.threedollar.common.constants.PackageConstants.BASE_PACKAGE
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
-import com.depromeet.threedollar.common.constants.PackageConstants.BASE_PACKAGE
 
 @EnableBatchProcessing
 @ConfigurationPropertiesScan(basePackages = [BASE_PACKAGE])

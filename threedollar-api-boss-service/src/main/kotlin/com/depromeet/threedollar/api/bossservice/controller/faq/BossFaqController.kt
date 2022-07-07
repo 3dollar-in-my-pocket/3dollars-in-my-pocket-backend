@@ -1,8 +1,5 @@
 package com.depromeet.threedollar.api.bossservice.controller.faq
 
-import javax.validation.Valid
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.core.mapper.commonservice.faq.FaqCategoryMapper
 import com.depromeet.threedollar.api.core.mapper.commonservice.faq.dto.response.FaqCategoryResponse
@@ -11,6 +8,9 @@ import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.request.
 import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.response.FaqResponse
 import com.depromeet.threedollar.common.type.ApplicationType
 import io.swagger.annotations.ApiOperation
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 @RestController
 class BossFaqController(

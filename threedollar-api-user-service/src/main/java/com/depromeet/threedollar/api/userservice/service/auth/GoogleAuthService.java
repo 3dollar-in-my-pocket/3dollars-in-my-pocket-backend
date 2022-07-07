@@ -1,7 +1,5 @@
 package com.depromeet.threedollar.api.userservice.service.auth;
 
-import org.springframework.stereotype.Service;
-
 import com.depromeet.threedollar.api.userservice.service.auth.dto.request.LoginRequest;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.userservice.service.user.UserService;
@@ -11,8 +9,8 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserReposito
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
 import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAuthApiClient;
 import com.depromeet.threedollar.infrastructure.external.client.google.dto.response.GoogleProfileInfoResponse;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service

@@ -1,12 +1,12 @@
 package com.depromeet.threedollar.api.userservice.controller.medal
 
-import org.hamcrest.collection.IsCollectionWithSize.hasSize
-import org.junit.jupiter.api.Test
-import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.core.service.userservice.medal.dto.response.MedalResponse
 import com.depromeet.threedollar.api.userservice.ControllerTest
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
+import org.hamcrest.collection.IsCollectionWithSize.hasSize
+import org.junit.jupiter.api.Test
+import org.springframework.test.web.servlet.get
 
 internal class MedalControllerTest(
     private val medalRepository: MedalRepository,

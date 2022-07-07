@@ -1,23 +1,20 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.review.repository;
 
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewStatus;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
+import org.springframework.cache.annotation.Cacheable;
+
+import javax.persistence.LockModeType;
+import java.util.List;
+
 import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_REVIEWS_COUNTS;
 import static com.depromeet.threedollar.domain.rds.core.constants.RDBPackageConstants.PERSISTENCE_LOCK_TIMEOUT;
 import static com.depromeet.threedollar.domain.rds.core.support.QuerydslSupport.predicate;
 import static com.depromeet.threedollar.domain.rds.domain.userservice.review.QReview.review;
 import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStore.store;
-
-import java.util.List;
-
-import javax.persistence.LockModeType;
-
-import org.jetbrains.annotations.Nullable;
-import org.springframework.cache.annotation.Cacheable;
-
-import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
-import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewStatus;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {

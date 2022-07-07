@@ -1,17 +1,5 @@
 package com.depromeet.threedollar.api.userservice.controller.store;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.userservice.config.interceptor.Auth;
 import com.depromeet.threedollar.api.userservice.config.resolver.UserId;
@@ -21,9 +9,18 @@ import com.depromeet.threedollar.api.userservice.service.store.dto.response.Stor
 import com.depromeet.threedollar.common.exception.model.InvalidException;
 import com.depromeet.threedollar.common.exception.type.ErrorCode;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImage;
-
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController

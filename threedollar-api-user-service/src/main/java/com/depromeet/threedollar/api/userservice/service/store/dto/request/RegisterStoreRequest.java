@@ -1,26 +1,23 @@
 package com.depromeet.threedollar.api.userservice.service.store.dto.request;
 
-import java.util.Set;
-import java.util.stream.Collectors;
+import com.depromeet.threedollar.common.type.DayOfTheWeek;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.PaymentMethodType;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreType;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.jetbrains.annotations.Nullable;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.jetbrains.annotations.Nullable;
-
-import com.depromeet.threedollar.common.type.DayOfTheWeek;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.PaymentMethodType;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreType;
-
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @ToString
 @Getter

@@ -1,15 +1,5 @@
 package com.depromeet.threedollar.api.userservice.service.store;
 
-import java.time.LocalDate;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import org.jetbrains.annotations.Nullable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.CheckExistsStoresNearbyRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.RetrieveAroundStoresRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.RetrieveMyStoresRequest;
@@ -36,8 +26,16 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection.
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryWithUserProjection;
 import com.depromeet.threedollar.domain.redis.domain.userservice.store.AroundUserStoresCacheRepository;
 import com.depromeet.threedollar.domain.redis.domain.userservice.store.UserStoreCacheModel;
-
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service

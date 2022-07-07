@@ -1,7 +1,5 @@
 package com.depromeet.threedollar.api.userservice.service.auth;
 
-import org.springframework.stereotype.Service;
-
 import com.depromeet.threedollar.api.userservice.service.auth.dto.request.LoginRequest;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.userservice.service.user.UserService;
@@ -9,8 +7,8 @@ import com.depromeet.threedollar.api.userservice.service.user.UserServiceHelper;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
 import com.depromeet.threedollar.infrastructure.external.client.apple.AppleTokenDecoder;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service

@@ -1,17 +1,5 @@
 package com.depromeet.threedollar.api.userservice.service.medal;
 
-import static com.depromeet.threedollar.api.userservice.service.medal.support.UserMedalAssertions.assertUserMedal;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
-import java.util.List;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.depromeet.threedollar.api.userservice.SetupUserIntegrationTest;
 import com.depromeet.threedollar.api.userservice.service.medal.dto.request.ChangeRepresentativeMedalRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
@@ -22,6 +10,17 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
+import static com.depromeet.threedollar.api.userservice.service.medal.support.UserMedalAssertions.assertUserMedal;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class UserMedalServiceTest extends SetupUserIntegrationTest {
 

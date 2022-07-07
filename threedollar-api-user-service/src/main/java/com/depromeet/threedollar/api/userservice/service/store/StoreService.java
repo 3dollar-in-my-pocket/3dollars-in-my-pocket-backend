@@ -1,14 +1,5 @@
 package com.depromeet.threedollar.api.userservice.service.store;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.CONFLICT_DELETE_REQUEST_STORE;
-import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_STORES_COUNTS;
-
-import java.util.List;
-
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.DeleteStoreRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.RegisterStoreRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.UpdateStoreRequest;
@@ -18,8 +9,15 @@ import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequestRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.CONFLICT_DELETE_REQUEST_STORE;
+import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_STORES_COUNTS;
 
 @RequiredArgsConstructor
 @Service

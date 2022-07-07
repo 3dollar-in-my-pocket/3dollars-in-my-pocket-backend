@@ -1,11 +1,9 @@
 package com.depromeet.threedollar.common.utils.distance;
 
-import org.jetbrains.annotations.Nullable;
-
 import com.depromeet.threedollar.common.model.LocationValue;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.Nullable;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LocationDistanceUtils {

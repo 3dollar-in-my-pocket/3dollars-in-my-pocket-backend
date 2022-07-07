@@ -1,10 +1,5 @@
 package com.depromeet.threedollar.api.bossservice.controller.faq
 
-import org.hamcrest.Matchers.hasSize
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.bossservice.SetupControllerTest
 import com.depromeet.threedollar.api.core.mapper.commonservice.faq.dto.response.FaqCategoryResponse
 import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.response.FaqResponse
@@ -13,6 +8,11 @@ import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqFixture
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqRepository
+import org.hamcrest.Matchers.hasSize
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.springframework.test.web.servlet.get
 
 internal class BossFaqControllerTest(
     private val faqRepository: FaqRepository,

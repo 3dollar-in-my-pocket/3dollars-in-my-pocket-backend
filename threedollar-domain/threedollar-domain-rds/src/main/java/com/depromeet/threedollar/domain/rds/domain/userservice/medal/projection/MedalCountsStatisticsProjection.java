@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.medal.projection;
 
 import com.querydsl.core.annotations.QueryProjection;
-
 import lombok.Getter;
 import lombok.ToString;
 

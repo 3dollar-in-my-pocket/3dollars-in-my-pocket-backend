@@ -1,10 +1,5 @@
 package com.depromeet.threedollar.api.userservice.controller.advertisement
 
-import java.time.LocalDateTime
-import org.hamcrest.Matchers.hasSize
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
-import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.core.service.commonservice.advertisement.dto.response.AdvertisementResponse
 import com.depromeet.threedollar.api.userservice.ControllerTest
 import com.depromeet.threedollar.common.type.ApplicationType
@@ -12,6 +7,11 @@ import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.A
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPositionType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementRepository
+import org.hamcrest.Matchers.hasSize
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import org.springframework.test.web.servlet.get
+import java.time.LocalDateTime
 
 internal class AdvertisementControllerTest(
     private val advertisementRepository: AdvertisementRepository,

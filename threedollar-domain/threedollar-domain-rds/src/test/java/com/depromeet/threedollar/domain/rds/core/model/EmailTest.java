@@ -1,12 +1,11 @@
 package com.depromeet.threedollar.domain.rds.core.model;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
+import com.depromeet.threedollar.common.exception.model.InvalidException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import com.depromeet.threedollar.common.exception.model.InvalidException;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class EmailTest {
 

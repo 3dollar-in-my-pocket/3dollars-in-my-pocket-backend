@@ -1,7 +1,5 @@
 package com.depromeet.threedollar.api.adminservice.service.userservice.review
 
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.adminservice.service.userservice.review.dto.response.ReviewInfoResponse
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
@@ -9,6 +7,8 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class AdminUserReviewService(

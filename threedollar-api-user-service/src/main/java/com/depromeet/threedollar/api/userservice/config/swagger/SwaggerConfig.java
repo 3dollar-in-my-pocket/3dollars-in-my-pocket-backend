@@ -1,21 +1,13 @@
 package com.depromeet.threedollar.api.userservice.config.swagger;
 
-import static springfox.documentation.builders.RequestHandlerSelectors.withClassAnnotation;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import com.depromeet.threedollar.api.userservice.config.resolver.UserId;
+import com.depromeet.threedollar.common.model.LocationValue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.depromeet.threedollar.api.userservice.config.resolver.UserId;
-import com.depromeet.threedollar.common.model.LocationValue;
-
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -30,6 +22,12 @@ import springfox.documentation.swagger.web.DocExpansion;
 import springfox.documentation.swagger.web.UiConfiguration;
 import springfox.documentation.swagger.web.UiConfigurationBuilder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static springfox.documentation.builders.RequestHandlerSelectors.withClassAnnotation;
 
 @Import(BeanValidatorPluginsConfiguration.class)
 @EnableSwagger2

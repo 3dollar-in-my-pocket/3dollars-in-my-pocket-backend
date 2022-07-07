@@ -1,11 +1,10 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.user.repository;
 
-import java.util.List;
-
-import org.jetbrains.annotations.Nullable;
-
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public interface UserRepositoryCustom {
 

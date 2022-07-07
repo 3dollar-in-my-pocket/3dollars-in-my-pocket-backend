@@ -1,11 +1,5 @@
 package com.depromeet.threedollar.api.bossservice.service.auth
 
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 import com.depromeet.threedollar.api.bossservice.IntegrationTest
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.request.SignupRequest
 import com.depromeet.threedollar.common.exception.model.ConflictException
@@ -19,6 +13,12 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossSt
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationStatus
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationFixture
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 internal class SignupServiceTest(
     private val signupService: SignupService,

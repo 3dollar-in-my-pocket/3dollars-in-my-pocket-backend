@@ -1,14 +1,5 @@
 package com.depromeet.threedollar.api.userservice.controller.bossservice.store
 
-import java.time.LocalDateTime
-import java.time.LocalTime
-import org.hamcrest.Matchers.hasSize
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
-import org.springframework.http.HttpHeaders
-import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.core.service.bossservice.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.api.core.service.bossservice.store.dto.response.BossStoreAppearanceDayResponse
 import com.depromeet.threedollar.api.core.service.bossservice.store.dto.response.BossStoreMenuResponse
@@ -27,6 +18,15 @@ import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossSt
 import com.depromeet.threedollar.domain.redis.domain.bossservice.store.BossStoreOpenTimeRepository
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
+import org.hamcrest.Matchers.hasSize
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import org.springframework.http.HttpHeaders
+import org.springframework.test.web.servlet.get
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 internal class BossStoreControllerTest(
     private val bossStoreRepository: BossStoreRepository,

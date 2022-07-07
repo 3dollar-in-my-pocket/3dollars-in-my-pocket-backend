@@ -1,14 +1,13 @@
 package com.depromeet.threedollar.infrastructure.external.client.google;
 
+import com.depromeet.threedollar.common.exception.model.BadGatewayException;
+import com.depromeet.threedollar.infrastructure.external.client.google.dto.response.GoogleProfileInfoResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpHeaders;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
-
-import com.depromeet.threedollar.common.exception.model.BadGatewayException;
-import com.depromeet.threedollar.infrastructure.external.client.google.dto.response.GoogleProfileInfoResponse;
 
 @FeignClient(
     name = "GoogleAuthApiClient",

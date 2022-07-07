@@ -1,16 +1,15 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.store.repository.admin;
 
-import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStore.store;
-import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStoreDeleteRequest.storeDeleteRequest;
-
-import java.util.List;
-
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.QStoreWithReportedCountProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreWithReportedCountProjection;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
+import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStore.store;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStoreDeleteRequest.storeDeleteRequest;
 
 @RequiredArgsConstructor
 public class StoreAdminRepositoryCustomImpl implements StoreAdminRepositoryCustom {

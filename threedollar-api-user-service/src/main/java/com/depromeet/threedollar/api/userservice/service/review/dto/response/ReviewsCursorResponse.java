@@ -1,20 +1,18 @@
 package com.depromeet.threedollar.api.userservice.service.review.dto.response;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.jetbrains.annotations.NotNull;
-
 import com.depromeet.threedollar.domain.rds.core.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.collection.StoreDictionary;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @ToString
 @Getter

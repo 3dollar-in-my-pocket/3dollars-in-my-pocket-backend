@@ -1,12 +1,11 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.store.repository.statistics;
 
-import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStoreImage.storeImage;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
-
-import lombok.RequiredArgsConstructor;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStoreImage.storeImage;
 
 @RequiredArgsConstructor
 public class StoreImageStatisticsRepositoryCustomImpl implements StoreImageStatisticsRepositoryCustom {

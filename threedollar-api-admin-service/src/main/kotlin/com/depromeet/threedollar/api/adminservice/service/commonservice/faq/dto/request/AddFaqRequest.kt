@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.adminservice.service.commonservice.faq.dto.request
 
-import javax.validation.constraints.Size
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.Faq
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory
+import javax.validation.constraints.Size
 
 data class AddFaqRequest(
     val applicationType: ApplicationType,

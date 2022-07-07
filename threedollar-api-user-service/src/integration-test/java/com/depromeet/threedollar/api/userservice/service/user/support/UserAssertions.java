@@ -1,16 +1,15 @@
 package com.depromeet.threedollar.api.userservice.service.user.support;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
 import com.depromeet.threedollar.domain.rds.domain.TestAssertions;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialInfo;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.WithdrawalUser;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @TestAssertions
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

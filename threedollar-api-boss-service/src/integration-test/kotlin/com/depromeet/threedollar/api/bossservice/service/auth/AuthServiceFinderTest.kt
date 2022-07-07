@@ -1,15 +1,15 @@
 package com.depromeet.threedollar.api.bossservice.service.auth
 
-import java.util.stream.Stream
+import com.depromeet.threedollar.api.bossservice.IntegrationTest
+import com.depromeet.threedollar.common.exception.model.ServiceUnAvailableException
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import com.depromeet.threedollar.api.bossservice.IntegrationTest
-import com.depromeet.threedollar.common.exception.model.ServiceUnAvailableException
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
+import java.util.stream.Stream
 
 internal class AuthServiceFinderTest(
     private val authServiceFinder: AuthServiceFinder,

@@ -1,13 +1,5 @@
 package com.depromeet.threedollar.api.bossservice.controller.device
 
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
-import org.springframework.http.HttpHeaders
-import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.put
 import com.depromeet.threedollar.api.bossservice.SetupBossAccountControllerTest
 import com.depromeet.threedollar.api.bossservice.controller.device.dto.request.UpsertBossDeviceRequest
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
@@ -16,6 +8,14 @@ import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.Accoun
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.Device
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.DeviceRepository
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.PushPlatformType
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.put
 
 internal class BossDeviceControllerTest(
     private val deviceRepository: DeviceRepository,

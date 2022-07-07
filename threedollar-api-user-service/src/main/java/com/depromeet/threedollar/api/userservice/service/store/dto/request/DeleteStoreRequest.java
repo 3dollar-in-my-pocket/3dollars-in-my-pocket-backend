@@ -1,16 +1,15 @@
 package com.depromeet.threedollar.api.userservice.service.store.dto.request;
 
-import javax.validation.constraints.NotNull;
-
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.DeleteReasonType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequest;
-
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import javax.validation.constraints.NotNull;
 
 @ToString
 @Getter

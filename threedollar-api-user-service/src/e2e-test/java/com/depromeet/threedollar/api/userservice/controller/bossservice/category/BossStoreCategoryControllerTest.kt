@@ -1,9 +1,5 @@
 package com.depromeet.threedollar.api.userservice.controller.bossservice.category
 
-import org.hamcrest.collection.IsCollectionWithSize.hasSize
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Test
-import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.core.service.bossservice.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.api.userservice.ControllerTest
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryFixture
@@ -12,6 +8,10 @@ import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossSt
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheRepository
 import com.ninjasquad.springmockk.SpykBean
 import io.mockk.every
+import org.hamcrest.collection.IsCollectionWithSize.hasSize
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Test
+import org.springframework.test.web.servlet.get
 
 internal class BossStoreCategoryControllerTest(
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,

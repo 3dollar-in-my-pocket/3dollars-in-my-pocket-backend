@@ -1,22 +1,5 @@
 package com.depromeet.threedollar.api.userservice.controller.review;
 
-import static com.depromeet.threedollar.api.userservice.controller.review.support.ReviewAssertions.assertReviewDetailInfoResponse;
-import static com.depromeet.threedollar.api.userservice.controller.review.support.ReviewAssertions.assertReviewInfoResponse;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.userservice.SetupStoreControllerTest;
 import com.depromeet.threedollar.api.userservice.listener.medal.AddUserMedalEventListener;
@@ -35,6 +18,22 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreFixtur
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
 import com.depromeet.threedollar.domain.rds.event.userservice.review.ReviewChangedEvent;
 import com.depromeet.threedollar.domain.rds.event.userservice.review.ReviewCreatedEvent;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import java.util.List;
+
+import static com.depromeet.threedollar.api.userservice.controller.review.support.ReviewAssertions.assertReviewDetailInfoResponse;
+import static com.depromeet.threedollar.api.userservice.controller.review.support.ReviewAssertions.assertReviewInfoResponse;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 class ReviewControllerTest extends SetupStoreControllerTest {
 

@@ -1,11 +1,5 @@
 package com.depromeet.threedollar.api.adminservice.service.bossservice.registration
 
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 import com.depromeet.threedollar.api.adminservice.SetupAdminIntegrationTest
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
@@ -19,6 +13,12 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.Bo
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationStatus
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 internal class BossRegistrationAdminServiceTest(
     private val bossRegistrationAdminService: BossRegistrationAdminService,

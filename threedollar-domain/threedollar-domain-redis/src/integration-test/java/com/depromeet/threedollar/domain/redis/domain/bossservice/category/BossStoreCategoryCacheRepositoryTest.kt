@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.domain.redis.domain.bossservice.category
 
+import com.depromeet.threedollar.domain.redis.IntegrationTest
+import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import com.depromeet.threedollar.domain.redis.IntegrationTest
-import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
 
 internal class BossStoreCategoryCacheRepositoryTest(
     private val bossStoreCategoryCacheRepository: BossStoreCategoryCacheRepository,

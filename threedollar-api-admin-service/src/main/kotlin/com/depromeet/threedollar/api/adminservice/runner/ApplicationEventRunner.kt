@@ -1,5 +1,8 @@
 package com.depromeet.threedollar.api.adminservice.runner
 
+import com.depromeet.threedollar.common.model.event.ApplicationStateChangedEvent
+import com.depromeet.threedollar.common.type.ApplicationType
+import com.depromeet.threedollar.common.utils.LocalDateTimeUtils
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.ApplicationEventPublisher
@@ -7,9 +10,6 @@ import org.springframework.context.ApplicationListener
 import org.springframework.context.annotation.Profile
 import org.springframework.context.event.ContextClosedEvent
 import org.springframework.stereotype.Component
-import com.depromeet.threedollar.common.model.event.ApplicationStateChangedEvent
-import com.depromeet.threedollar.common.type.ApplicationType
-import com.depromeet.threedollar.common.utils.LocalDateTimeUtils
 
 private val APPLICATION_TYPE = ApplicationType.ADMIN_API
 

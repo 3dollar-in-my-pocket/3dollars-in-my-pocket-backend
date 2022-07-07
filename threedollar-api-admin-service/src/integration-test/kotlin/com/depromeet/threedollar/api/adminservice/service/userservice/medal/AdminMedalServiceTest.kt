@@ -1,10 +1,5 @@
 package com.depromeet.threedollar.api.adminservice.service.userservice.medal
 
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 import com.depromeet.threedollar.api.adminservice.IntegrationTest
 import com.depromeet.threedollar.api.adminservice.service.userservice.medal.dto.request.AddMedalRequest
 import com.depromeet.threedollar.api.adminservice.service.userservice.medal.dto.request.UpdateMedalRequest
@@ -15,6 +10,11 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquis
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 internal class AdminMedalServiceTest(
     private val adminMedalService: AdminMedalService,

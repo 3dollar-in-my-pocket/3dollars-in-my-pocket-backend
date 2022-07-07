@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.api.core.service.bossservice.category
 
-import org.springframework.stereotype.Service
 import com.depromeet.threedollar.api.core.service.bossservice.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheModel
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheRepository
+import org.springframework.stereotype.Service
 
 @Service
 class BossStoreCategoryService(

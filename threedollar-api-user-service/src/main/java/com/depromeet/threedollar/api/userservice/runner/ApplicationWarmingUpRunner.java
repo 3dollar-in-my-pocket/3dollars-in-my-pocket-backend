@@ -1,20 +1,18 @@
 package com.depromeet.threedollar.api.userservice.runner;
 
-import java.util.concurrent.TimeUnit;
-
-import org.springframework.context.annotation.Profile;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
-
 import com.depromeet.threedollar.common.type.FamousPlace;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType;
 import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAuthApiClient;
 import com.depromeet.threedollar.infrastructure.external.client.kakao.KaKaoAuthApiClient;
 import com.depromeet.threedollar.infrastructure.external.client.local.LocalBossApiWarmupApiClient;
 import com.depromeet.threedollar.infrastructure.external.client.local.LocalUserApiWarmUpApiClient;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Profile({"dev", "staging", "prod"})

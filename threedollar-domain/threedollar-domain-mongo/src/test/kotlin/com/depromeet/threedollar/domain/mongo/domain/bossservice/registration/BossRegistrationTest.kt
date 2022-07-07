@@ -1,12 +1,12 @@
 package com.depromeet.threedollar.domain.mongo.domain.bossservice.registration
 
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertAll
-import org.junit.jupiter.api.Test
 import com.depromeet.threedollar.common.model.BusinessNumber
 import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertAll
+import org.junit.jupiter.api.Test
 
 internal class BossRegistrationTest {
 

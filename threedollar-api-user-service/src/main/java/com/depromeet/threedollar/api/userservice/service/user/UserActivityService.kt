@@ -1,11 +1,11 @@
 package com.depromeet.threedollar.api.userservice.service.user
 
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.userservice.service.user.dto.response.UserWithActivityResponse
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UserActivityService(

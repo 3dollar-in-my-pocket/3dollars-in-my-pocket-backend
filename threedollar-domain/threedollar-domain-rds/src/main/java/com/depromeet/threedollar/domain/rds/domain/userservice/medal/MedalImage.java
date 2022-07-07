@@ -1,15 +1,14 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.medal;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-
-import org.jetbrains.annotations.NotNull;
-
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 @EqualsAndHashCode
 @Getter

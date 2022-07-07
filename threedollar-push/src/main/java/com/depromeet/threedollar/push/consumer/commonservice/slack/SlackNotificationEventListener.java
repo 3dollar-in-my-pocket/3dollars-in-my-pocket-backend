@@ -1,18 +1,16 @@
 package com.depromeet.threedollar.push.consumer.commonservice.slack;
 
-import static com.depromeet.threedollar.infrastructure.external.client.slack.type.SlackNotificationMessageType.ERROR_MESSAGE;
-import static com.depromeet.threedollar.infrastructure.external.client.slack.type.SlackNotificationMessageType.INFO_MESSAGE;
-
-import org.springframework.context.event.EventListener;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
-
 import com.depromeet.threedollar.common.model.event.ApplicationStateChangedEvent;
 import com.depromeet.threedollar.common.model.event.ServerExceptionOccurredEvent;
 import com.depromeet.threedollar.infrastructure.external.client.slack.SlackWebhookApiClient;
 import com.depromeet.threedollar.infrastructure.external.client.slack.dto.request.PostSlackMessageRequest;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
+
+import static com.depromeet.threedollar.infrastructure.external.client.slack.type.SlackNotificationMessageType.ERROR_MESSAGE;
+import static com.depromeet.threedollar.infrastructure.external.client.slack.type.SlackNotificationMessageType.INFO_MESSAGE;
 
 @RequiredArgsConstructor
 @Component

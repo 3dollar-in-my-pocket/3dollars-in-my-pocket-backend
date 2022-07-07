@@ -1,20 +1,5 @@
 package com.depromeet.threedollar.api.userservice.service.store;
 
-import static com.depromeet.threedollar.api.userservice.service.store.support.StoreImageAssertions.assertStoreImage;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
-import java.util.List;
-
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.mock.web.MockMultipartFile;
-
 import com.depromeet.threedollar.api.userservice.SetupStoreIntegrationTest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
@@ -24,6 +9,20 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageR
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageStatus;
 import com.depromeet.threedollar.infrastructure.s3.provider.UploadProvider;
 import com.depromeet.threedollar.infrastructure.s3.provider.dto.request.UploadFileRequest;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mock.web.MockMultipartFile;
+
+import java.util.List;
+
+import static com.depromeet.threedollar.api.userservice.service.store.support.StoreImageAssertions.assertStoreImage;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 class StoreImageServiceTest extends SetupStoreIntegrationTest {
 

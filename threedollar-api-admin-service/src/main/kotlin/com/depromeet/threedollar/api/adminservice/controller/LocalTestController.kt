@@ -1,13 +1,13 @@
 package com.depromeet.threedollar.api.adminservice.controller
 
-import javax.servlet.http.HttpSession
-import org.springframework.context.annotation.Profile
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.adminservice.config.session.SessionConstants.ADMIN_ID
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.Admin
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminRepository
+import org.springframework.context.annotation.Profile
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RestController
+import javax.servlet.http.HttpSession
 
 private const val TEST_ADMIN_EMAIL = "test.admin@test.com"
 private const val TEST_ADMIN_NAME = "테스트 관리자"

@@ -1,13 +1,13 @@
 package com.depromeet.threedollar.api.bossservice
 
-import org.junit.jupiter.api.BeforeEach
-import org.springframework.beans.factory.annotation.Autowired
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheRepository
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
+import org.junit.jupiter.api.BeforeEach
+import org.springframework.beans.factory.annotation.Autowired
 
 internal abstract class SetupBossStoreIntegrationTest : SetupBossAccountIntegrationTest() {
 

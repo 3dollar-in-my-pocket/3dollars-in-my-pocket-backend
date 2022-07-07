@@ -1,7 +1,5 @@
 package com.depromeet.threedollar.api.core.service.bossservice.category
 
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Test
 import com.depromeet.threedollar.api.core.IntegrationTest
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
@@ -9,6 +7,8 @@ import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossSt
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import io.mockk.verify
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Test
 
 internal class BossStoreCategoryServiceTest(
     private val bossStoreCategoryService: BossStoreCategoryService,

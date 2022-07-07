@@ -1,14 +1,14 @@
 package com.depromeet.threedollar.api.adminservice.controller.bossservice.feedback
 
+import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
+import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.response.BossStoreFeedbackTypeResponse
+import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
 import org.springframework.test.web.servlet.get
-import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
-import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.response.BossStoreFeedbackTypeResponse
-import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 
 internal class BossStoreFeedbackControllerTest : SetupAdminControllerTest() {
 

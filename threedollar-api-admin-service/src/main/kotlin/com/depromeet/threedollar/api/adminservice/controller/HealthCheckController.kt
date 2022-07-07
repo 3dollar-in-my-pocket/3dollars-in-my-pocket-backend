@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.api.adminservice.controller
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.common.constants.VersionConstants
 import io.swagger.annotations.ApiOperation
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class HealthCheckController {

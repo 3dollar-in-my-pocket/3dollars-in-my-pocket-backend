@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.domain.redis.domain.bossservice.feedback
 
-import java.time.Duration
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.common.utils.JsonUtils
 import com.depromeet.threedollar.domain.redis.core.StringRedisKey
+import java.time.Duration
 
 data class BossStoreFeedbackCountKey(
     val bossStoreId: String,

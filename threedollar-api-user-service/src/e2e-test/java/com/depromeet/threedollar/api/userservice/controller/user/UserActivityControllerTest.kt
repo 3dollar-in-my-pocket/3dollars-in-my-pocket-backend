@@ -1,10 +1,5 @@
 package com.depromeet.threedollar.api.userservice.controller.user
 
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.springframework.http.HttpHeaders
-import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.userservice.SetupUserControllerTest
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
@@ -15,6 +10,11 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewFixt
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.springframework.http.HttpHeaders
+import org.springframework.test.web.servlet.get
 
 internal class UserActivityControllerTest(
     private val storeRepository: StoreRepository,

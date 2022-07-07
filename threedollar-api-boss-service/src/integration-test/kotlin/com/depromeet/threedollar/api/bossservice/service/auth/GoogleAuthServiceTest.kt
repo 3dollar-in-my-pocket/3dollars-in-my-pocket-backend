@@ -1,10 +1,5 @@
 package com.depromeet.threedollar.api.bossservice.service.auth
 
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import com.depromeet.threedollar.api.bossservice.IntegrationTest
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
@@ -15,6 +10,11 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.Bo
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationFixture
 import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAuthApiClient
 import com.depromeet.threedollar.infrastructure.external.client.google.dto.response.GoogleProfileInfoResponse
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 private const val SOCIAL_ID = "social-id"
 private val SOCIAL_TYPE = BossAccountSocialType.GOOGLE

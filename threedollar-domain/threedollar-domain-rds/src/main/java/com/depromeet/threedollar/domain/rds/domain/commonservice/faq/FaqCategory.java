@@ -1,11 +1,10 @@
 package com.depromeet.threedollar.domain.rds.domain.commonservice.faq;
 
-import java.util.List;
-
 import com.depromeet.threedollar.common.model.EnumModel;
 import com.depromeet.threedollar.common.type.ApplicationType;
-
 import lombok.Getter;
+
+import java.util.List;
 
 @Getter
 public enum FaqCategory implements EnumModel {

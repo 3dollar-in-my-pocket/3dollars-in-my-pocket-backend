@@ -1,11 +1,10 @@
 package com.depromeet.threedollar.domain.rds.core.support;
 
-import java.util.function.Supplier;
-
 import com.querydsl.core.types.Predicate;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+
+import java.util.function.Supplier;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class QuerydslSupport {

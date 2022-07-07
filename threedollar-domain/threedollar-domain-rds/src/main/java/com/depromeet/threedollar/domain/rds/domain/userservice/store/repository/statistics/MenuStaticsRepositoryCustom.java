@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.store.repository.statistics;
 
-import java.util.List;
-
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.MenuStatisticsProjection;
+
+import java.util.List;
 
 public interface MenuStaticsRepositoryCustom {
 

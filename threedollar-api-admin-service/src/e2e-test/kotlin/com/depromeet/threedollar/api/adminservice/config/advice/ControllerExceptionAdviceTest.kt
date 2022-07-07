@@ -1,14 +1,5 @@
 package com.depromeet.threedollar.api.adminservice.config.advice
 
-import org.junit.jupiter.api.Test
-import org.springframework.http.converter.HttpMessageNotReadableException
-import org.springframework.mock.http.MockHttpInputMessage
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import org.springframework.web.multipart.MaxUploadSizeExceededException
 import com.depromeet.threedollar.api.adminservice.ControllerTest
 import com.depromeet.threedollar.api.adminservice.controller.HealthCheckController
 import com.depromeet.threedollar.common.exception.model.BadGatewayException
@@ -18,6 +9,15 @@ import com.depromeet.threedollar.common.exception.model.TooManyRequestsException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.ninjasquad.springmockk.SpykBean
 import io.mockk.every
+import org.junit.jupiter.api.Test
+import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.mock.http.MockHttpInputMessage
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.web.multipart.MaxUploadSizeExceededException
 
 internal class ControllerExceptionAdviceTest : ControllerTest() {
 

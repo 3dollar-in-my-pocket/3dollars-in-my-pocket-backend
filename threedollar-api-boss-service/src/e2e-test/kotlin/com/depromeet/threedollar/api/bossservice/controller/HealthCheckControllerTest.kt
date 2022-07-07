@@ -1,11 +1,11 @@
 package com.depromeet.threedollar.api.bossservice.controller
 
+import com.depromeet.threedollar.api.bossservice.SetupControllerTest
+import com.depromeet.threedollar.common.constants.VersionConstants
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import com.depromeet.threedollar.api.bossservice.SetupControllerTest
-import com.depromeet.threedollar.common.constants.VersionConstants
 
 internal class HealthCheckControllerTest : SetupControllerTest() {
 

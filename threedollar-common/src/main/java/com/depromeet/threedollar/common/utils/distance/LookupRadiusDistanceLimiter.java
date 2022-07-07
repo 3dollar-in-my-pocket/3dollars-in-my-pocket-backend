@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.common.utils.distance;
 
 import com.depromeet.threedollar.common.exception.model.InvalidException;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

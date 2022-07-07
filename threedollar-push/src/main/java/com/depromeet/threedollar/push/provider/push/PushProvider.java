@@ -1,10 +1,9 @@
 package com.depromeet.threedollar.push.provider.push;
 
-import org.jetbrains.annotations.NotNull;
-
 import com.depromeet.threedollar.common.type.ApplicationType;
 import com.depromeet.threedollar.infrastructure.sqs.dto.payload.SendFirebaseMessageBulkPayload;
 import com.depromeet.threedollar.infrastructure.sqs.dto.payload.SendFirebaseMessagePayload;
+import org.jetbrains.annotations.NotNull;
 
 public interface PushProvider {
 

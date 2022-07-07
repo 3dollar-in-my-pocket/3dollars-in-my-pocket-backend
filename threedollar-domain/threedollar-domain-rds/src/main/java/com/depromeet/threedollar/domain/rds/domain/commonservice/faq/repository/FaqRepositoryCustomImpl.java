@@ -1,18 +1,16 @@
 package com.depromeet.threedollar.domain.rds.domain.commonservice.faq.repository;
 
-import static com.depromeet.threedollar.domain.rds.core.support.QuerydslSupport.predicate;
-import static com.depromeet.threedollar.domain.rds.domain.commonservice.faq.QFaq.faq;
-
-import java.util.List;
-
-import org.jetbrains.annotations.Nullable;
-
 import com.depromeet.threedollar.common.type.ApplicationType;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.Faq;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+
+import static com.depromeet.threedollar.domain.rds.core.support.QuerydslSupport.predicate;
+import static com.depromeet.threedollar.domain.rds.domain.commonservice.faq.QFaq.faq;
 
 @RequiredArgsConstructor
 public class FaqRepositoryCustomImpl implements FaqRepositoryCustom {

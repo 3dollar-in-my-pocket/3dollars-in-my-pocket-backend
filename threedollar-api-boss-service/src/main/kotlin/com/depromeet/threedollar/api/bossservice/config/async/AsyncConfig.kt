@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.api.bossservice.config.async
 
-import java.lang.reflect.Method
-import java.util.concurrent.Executor
+import mu.KotlinLogging
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler
 import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler
 import org.springframework.context.annotation.Bean
@@ -10,7 +9,8 @@ import org.springframework.context.annotation.Profile
 import org.springframework.scheduling.annotation.AsyncConfigurerSupport
 import org.springframework.scheduling.annotation.EnableAsync
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
-import mu.KotlinLogging
+import java.lang.reflect.Method
+import java.util.concurrent.Executor
 
 private const val MAX_POOL_SIZE = 50
 

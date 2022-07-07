@@ -1,9 +1,15 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.user;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOT_FOUND_USER_MEDAL;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.depromeet.threedollar.common.exception.model.NotFoundException;
+import com.depromeet.threedollar.domain.rds.core.model.AuditingTimeEntity;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
+import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedal;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,19 +22,10 @@ import javax.persistence.Index;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import com.depromeet.threedollar.common.exception.model.NotFoundException;
-import com.depromeet.threedollar.domain.rds.core.model.AuditingTimeEntity;
-import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
-import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedal;
-
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOT_FOUND_USER_MEDAL;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

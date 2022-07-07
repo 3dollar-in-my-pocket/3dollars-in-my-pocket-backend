@@ -1,15 +1,5 @@
 package com.depromeet.threedollar.api.userservice.controller;
 
-import static com.depromeet.threedollar.api.userservice.config.session.SessionConstants.USER_ID;
-
-import javax.servlet.http.HttpSession;
-
-import org.springframework.context.annotation.Profile;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.response.LoginResponse;
 import com.depromeet.threedollar.api.userservice.service.store.StoreServiceHelper;
@@ -23,9 +13,17 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreReposi
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
-
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpSession;
+
+import static com.depromeet.threedollar.api.userservice.config.session.SessionConstants.USER_ID;
 
 @Profile({"local", "local-docker", "dev", "integration-test"})
 @RequiredArgsConstructor

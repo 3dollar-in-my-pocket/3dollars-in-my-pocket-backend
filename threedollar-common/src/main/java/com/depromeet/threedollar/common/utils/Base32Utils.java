@@ -1,15 +1,13 @@
 package com.depromeet.threedollar.common.utils;
 
-import java.util.zip.CRC32;
-import java.util.zip.Checksum;
-
-import org.apache.commons.codec.binary.Base32;
-
 import com.depromeet.threedollar.common.exception.model.InvalidException;
 import com.depromeet.threedollar.common.exception.type.ErrorCode;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.apache.commons.codec.binary.Base32;
+
+import java.util.zip.CRC32;
+import java.util.zip.Checksum;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Base32Utils {

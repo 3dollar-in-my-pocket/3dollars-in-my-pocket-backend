@@ -1,19 +1,16 @@
 package com.depromeet.threedollar.domain.rds.core.model;
 
-import java.util.regex.Pattern;
-
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-
-import org.jetbrains.annotations.NotNull;
-
 import com.depromeet.threedollar.common.exception.model.InvalidException;
 import com.depromeet.threedollar.common.exception.type.ErrorCode;
-
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import java.util.regex.Pattern;
 
 @EqualsAndHashCode
 @Getter

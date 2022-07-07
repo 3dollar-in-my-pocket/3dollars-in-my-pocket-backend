@@ -1,14 +1,5 @@
 package com.depromeet.threedollar.api.bossservice.service.store
 
-import java.time.LocalDateTime
-import java.time.LocalTime
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 import com.depromeet.threedollar.api.bossservice.SetupBossAccountIntegrationTest
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.AppearanceDayRequest
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.MenuRequest
@@ -31,6 +22,15 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheRepository
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 internal class BossStoreSetupBossAccountServiceTest(
     private val bossStoreService: BossStoreService,

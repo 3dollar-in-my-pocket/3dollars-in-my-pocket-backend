@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.userservice.config.vadlidator
 
+import org.springframework.stereotype.Component
 import java.util.regex.Pattern
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
-import org.springframework.stereotype.Component
 
 /**
  * 닉네임 규칙

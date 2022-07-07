@@ -1,12 +1,11 @@
 package com.depromeet.threedollar.domain.rds.domain.commonservice.faq.repository;
 
-import java.util.List;
-
-import org.jetbrains.annotations.Nullable;
-
 import com.depromeet.threedollar.common.type.ApplicationType;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.Faq;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public interface FaqRepositoryCustom {
 

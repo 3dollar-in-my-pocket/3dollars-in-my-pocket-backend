@@ -1,13 +1,12 @@
 package com.depromeet.threedollar.api.userservice.service.store.dto.type;
 
-import java.util.Comparator;
-
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.common.model.EnumModel;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Comparator;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)

@@ -1,12 +1,11 @@
 package com.depromeet.threedollar.api.userservice;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
+import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class SetupUserIntegrationTest extends IntegrationTest {
 

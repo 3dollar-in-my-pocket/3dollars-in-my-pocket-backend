@@ -1,6 +1,13 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.store;
 
-import java.util.Objects;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
+import com.depromeet.threedollar.domain.rds.core.model.AuditingTimeEntity;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,17 +19,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import com.depromeet.threedollar.common.type.UserMenuCategoryType;
-import com.depromeet.threedollar.domain.rds.core.model.AuditingTimeEntity;
-
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import java.util.Objects;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

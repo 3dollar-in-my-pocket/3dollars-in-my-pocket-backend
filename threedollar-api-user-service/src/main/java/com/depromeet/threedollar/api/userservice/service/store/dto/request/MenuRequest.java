@@ -1,18 +1,17 @@
 package com.depromeet.threedollar.api.userservice.service.store.dto.request;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Menu;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @EqualsAndHashCode
 @ToString

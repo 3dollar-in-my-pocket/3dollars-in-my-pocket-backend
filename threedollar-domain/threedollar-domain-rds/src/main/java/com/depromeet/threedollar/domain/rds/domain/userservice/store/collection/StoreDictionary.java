@@ -1,15 +1,13 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.store.collection;
 
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import org.jetbrains.annotations.NotNull;
-
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
-
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class StoreDictionary {

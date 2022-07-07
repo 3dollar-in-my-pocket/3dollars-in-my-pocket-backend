@@ -1,8 +1,11 @@
 package com.depromeet.threedollar.api.userservice.config.filter;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import com.depromeet.threedollar.api.core.utils.HttpServletRequestUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.util.ContentCachingRequestWrapper;
+import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -11,15 +14,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.util.ContentCachingRequestWrapper;
-import org.springframework.web.util.ContentCachingResponseWrapper;
-
-import com.depromeet.threedollar.api.core.utils.HttpServletRequestUtils;
-
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 class RequestLoggingFilter implements Filter {

@@ -1,16 +1,14 @@
 package com.depromeet.threedollar.infrastructure.sqs.utils;
 
-import java.util.EnumMap;
-import java.util.Map;
-
+import com.depromeet.threedollar.common.context.ApplicationContextProvider;
+import com.depromeet.threedollar.infrastructure.sqs.common.type.TopicType;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.env.Environment;
 
-import com.depromeet.threedollar.common.context.ApplicationContextProvider;
-import com.depromeet.threedollar.infrastructure.sqs.common.type.TopicType;
-
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import java.util.EnumMap;
+import java.util.Map;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SqsTopicFinder {

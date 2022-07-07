@@ -1,8 +1,7 @@
 package com.depromeet.threedollar.api.userservice;
 
-import org.springframework.test.web.servlet.MockMvc;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.test.web.servlet.MockMvc;
 
 public abstract class MockMvcHelper {
 

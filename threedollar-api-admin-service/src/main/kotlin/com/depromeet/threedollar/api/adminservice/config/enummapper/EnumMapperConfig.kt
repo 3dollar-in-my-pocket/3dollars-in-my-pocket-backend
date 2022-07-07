@@ -1,7 +1,5 @@
 package com.depromeet.threedollar.api.adminservice.config.enummapper
 
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.common.utils.EnumMapper
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType
@@ -11,6 +9,8 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.DeleteReaso
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.PaymentMethodType
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreType
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 
 @Configuration
 class EnumMapperConfig {

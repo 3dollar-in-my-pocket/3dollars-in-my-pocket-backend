@@ -1,16 +1,5 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.visit.repository;
 
-import static com.depromeet.threedollar.domain.rds.core.support.QuerydslSupport.predicate;
-import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QMenu.menu;
-import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStore.store;
-import static com.depromeet.threedollar.domain.rds.domain.userservice.user.QUser.user;
-import static com.depromeet.threedollar.domain.rds.domain.userservice.visit.QVisitHistory.visitHistory;
-
-import java.time.LocalDate;
-import java.util.List;
-
-import org.jetbrains.annotations.Nullable;
-
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistory;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
@@ -19,8 +8,17 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryCountProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryWithUserProjection;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import static com.depromeet.threedollar.domain.rds.core.support.QuerydslSupport.predicate;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QMenu.menu;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStore.store;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.user.QUser.user;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.visit.QVisitHistory.visitHistory;
 
 @RequiredArgsConstructor
 public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryCustom {

@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.common.model
 
-import java.time.LocalTime
 import com.depromeet.threedollar.common.exception.model.InvalidException
+import java.time.LocalTime
 
 data class TimeInterval(
     val startTime: LocalTime,

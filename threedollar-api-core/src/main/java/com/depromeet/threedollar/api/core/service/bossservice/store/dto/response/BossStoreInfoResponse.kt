@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.api.core.service.bossservice.store.dto.response
 
-import java.time.LocalDateTime
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
 import com.depromeet.threedollar.api.core.service.bossservice.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.common.model.LocationValue
@@ -12,6 +11,7 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenu
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreOpenType
+import java.time.LocalDateTime
 
 data class BossStoreInfoResponse(
     val bossStoreId: String,

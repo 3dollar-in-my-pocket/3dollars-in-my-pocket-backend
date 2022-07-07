@@ -1,11 +1,5 @@
 package com.depromeet.threedollar.api.adminservice.controller.commonservice.auth
 
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.springframework.http.HttpHeaders
-import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.post
 import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminFixture
@@ -13,6 +7,12 @@ import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAut
 import com.depromeet.threedollar.infrastructure.external.client.google.dto.response.GoogleProfileInfoResponse
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.post
 
 internal class AuthControllerTest : SetupAdminControllerTest() {
 

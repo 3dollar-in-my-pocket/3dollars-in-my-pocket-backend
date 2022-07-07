@@ -1,15 +1,14 @@
 package com.depromeet.threedollar.api.userservice;
 
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.MenuFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 public abstract class SetupStoreControllerTest extends SetupUserControllerTest {
 

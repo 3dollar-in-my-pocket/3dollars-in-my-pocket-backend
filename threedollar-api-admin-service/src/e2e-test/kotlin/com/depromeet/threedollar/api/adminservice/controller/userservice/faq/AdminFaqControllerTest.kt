@@ -1,15 +1,5 @@
 package com.depromeet.threedollar.api.adminservice.controller.userservice.faq
 
-import org.hamcrest.collection.IsCollectionWithSize.hasSize
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.springframework.http.HttpHeaders
-import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.delete
-import org.springframework.test.web.servlet.get
-import org.springframework.test.web.servlet.post
-import org.springframework.test.web.servlet.put
 import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.faq.dto.request.AddFaqRequest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.faq.dto.request.UpdateFaqRequest
@@ -20,6 +10,16 @@ import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqFixture
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqRepository
+import org.hamcrest.collection.IsCollectionWithSize.hasSize
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.delete
+import org.springframework.test.web.servlet.get
+import org.springframework.test.web.servlet.post
+import org.springframework.test.web.servlet.put
 
 internal class AdminFaqControllerTest(
     private val faqRepository: FaqRepository,

@@ -1,16 +1,15 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.review;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_RATING_RANGE;
-
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-
 import com.depromeet.threedollar.common.exception.model.InvalidException;
-
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_RATING_RANGE;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

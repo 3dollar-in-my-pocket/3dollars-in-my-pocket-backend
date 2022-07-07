@@ -1,16 +1,15 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.user;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-
-import org.jetbrains.annotations.NotNull;
-
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

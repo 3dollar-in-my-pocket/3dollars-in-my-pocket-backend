@@ -1,14 +1,13 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.store.repository.statistics;
 
-import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QMenu.menu;
-import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStore.store;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-
-import lombok.RequiredArgsConstructor;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QMenu.menu;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStore.store;
 
 @RequiredArgsConstructor
 public class StoreStatisticsRepositoryCustomImpl implements StoreStatisticsRepositoryCustom {

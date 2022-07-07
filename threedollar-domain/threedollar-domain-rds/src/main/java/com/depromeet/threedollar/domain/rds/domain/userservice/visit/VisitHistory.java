@@ -1,6 +1,12 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.visit;
 
-import java.time.LocalDate;
+import com.depromeet.threedollar.domain.rds.core.model.AuditingTimeEntity;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,16 +21,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
-import org.jetbrains.annotations.NotNull;
-
-import com.depromeet.threedollar.domain.rds.core.model.AuditingTimeEntity;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
-
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

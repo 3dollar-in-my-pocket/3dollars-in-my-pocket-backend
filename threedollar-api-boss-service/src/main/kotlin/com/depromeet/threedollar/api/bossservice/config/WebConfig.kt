@@ -1,5 +1,11 @@
 package com.depromeet.threedollar.api.bossservice.config
 
+import com.depromeet.threedollar.api.bossservice.config.interceptor.AuthInterceptor
+import com.depromeet.threedollar.api.bossservice.config.interceptor.UserMetaInterceptor
+import com.depromeet.threedollar.api.bossservice.config.resolver.BossIdResolver
+import com.depromeet.threedollar.api.core.config.converter.DecodeIdConverter
+import com.depromeet.threedollar.api.core.config.resolver.DeviceLocationArgumentResolver
+import com.depromeet.threedollar.api.core.config.resolver.MapLocationArgumentResolver
 import org.springframework.context.MessageSource
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -10,12 +16,6 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
-import com.depromeet.threedollar.api.bossservice.config.interceptor.AuthInterceptor
-import com.depromeet.threedollar.api.bossservice.config.interceptor.UserMetaInterceptor
-import com.depromeet.threedollar.api.bossservice.config.resolver.BossIdResolver
-import com.depromeet.threedollar.api.core.config.converter.DecodeIdConverter
-import com.depromeet.threedollar.api.core.config.resolver.DeviceLocationArgumentResolver
-import com.depromeet.threedollar.api.core.config.resolver.MapLocationArgumentResolver
 
 @Configuration
 class WebConfig(

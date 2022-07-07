@@ -1,12 +1,12 @@
 package com.depromeet.threedollar.domain.mongo.domain.bossservice.store
 
+import com.depromeet.threedollar.common.exception.model.InvalidException
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import com.depromeet.threedollar.common.exception.model.InvalidException
 
 internal class BossStoreLocationTest {
 

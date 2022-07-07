@@ -1,14 +1,14 @@
 package com.depromeet.threedollar.api.bossservice.config.interceptor
 
+import com.depromeet.threedollar.api.bossservice.SetupControllerTest
+import com.depromeet.threedollar.common.type.ApplicationType
+import com.depromeet.threedollar.common.type.OsPlatformType
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
-import com.depromeet.threedollar.api.bossservice.SetupControllerTest
-import com.depromeet.threedollar.common.type.ApplicationType
-import com.depromeet.threedollar.common.type.OsPlatformType
 
 internal class UserMetaInterceptorTest : SetupControllerTest() {
 

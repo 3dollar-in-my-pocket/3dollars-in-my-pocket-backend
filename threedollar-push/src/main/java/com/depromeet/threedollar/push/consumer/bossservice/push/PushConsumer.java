@@ -1,21 +1,19 @@
 package com.depromeet.threedollar.push.consumer.bossservice.push;
 
-import java.util.Map;
-
+import com.depromeet.threedollar.common.type.ApplicationType;
+import com.depromeet.threedollar.common.utils.JsonUtils;
+import com.depromeet.threedollar.infrastructure.sqs.dto.payload.SendFirebaseMessageBulkPayload;
+import com.depromeet.threedollar.infrastructure.sqs.dto.payload.SendFirebaseMessagePayload;
+import com.depromeet.threedollar.push.provider.push.PushProvider;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.aws.messaging.listener.SqsMessageDeletionPolicy;
 import org.springframework.cloud.aws.messaging.listener.annotation.SqsListener;
 import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-import com.depromeet.threedollar.common.type.ApplicationType;
-import com.depromeet.threedollar.common.utils.JsonUtils;
-import com.depromeet.threedollar.infrastructure.sqs.dto.payload.SendFirebaseMessageBulkPayload;
-import com.depromeet.threedollar.infrastructure.sqs.dto.payload.SendFirebaseMessagePayload;
-import com.depromeet.threedollar.push.provider.push.PushProvider;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor

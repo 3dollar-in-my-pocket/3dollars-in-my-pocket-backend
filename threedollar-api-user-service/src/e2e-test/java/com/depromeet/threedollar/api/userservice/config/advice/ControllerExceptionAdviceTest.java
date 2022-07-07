@@ -1,18 +1,5 @@
 package com.depromeet.threedollar.api.userservice.config.advice;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.mock.http.MockHttpInputMessage;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
-
 import com.depromeet.threedollar.api.userservice.ControllerTest;
 import com.depromeet.threedollar.api.userservice.controller.HealthCheckController;
 import com.depromeet.threedollar.common.exception.model.BadGatewayException;
@@ -20,6 +7,18 @@ import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import com.depromeet.threedollar.common.exception.model.ServiceUnAvailableException;
 import com.depromeet.threedollar.common.exception.model.TooManyRequestsException;
 import com.depromeet.threedollar.common.exception.type.ErrorCode;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.mock.http.MockHttpInputMessage;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class ControllerExceptionAdviceTest extends ControllerTest {
 

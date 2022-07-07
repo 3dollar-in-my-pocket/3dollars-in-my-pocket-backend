@@ -1,17 +1,16 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.user;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
-
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalStatus;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class UserTest {
 

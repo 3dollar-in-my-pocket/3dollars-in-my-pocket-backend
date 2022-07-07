@@ -1,12 +1,11 @@
 package com.depromeet.threedollar.common.utils.distance;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
+import com.depromeet.threedollar.common.exception.model.InvalidException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import com.depromeet.threedollar.common.exception.model.InvalidException;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class LookupRadiusDistanceLimiterTest {
 

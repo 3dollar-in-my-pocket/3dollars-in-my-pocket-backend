@@ -1,13 +1,5 @@
 package com.depromeet.threedollar.batch.jobs.statistics
 
-import java.time.LocalDate
-import org.springframework.batch.core.Job
-import org.springframework.batch.core.Step
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
-import org.springframework.batch.repeat.RepeatStatus
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
 import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_ACTIVE_MEDAL
 import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_ACTIVE_MEDALS
@@ -33,6 +25,14 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserReposito
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository
 import com.depromeet.threedollar.infrastructure.external.client.slack.SlackWebhookApiClient
 import com.depromeet.threedollar.infrastructure.external.client.slack.dto.request.PostSlackMessageRequest
+import org.springframework.batch.core.Job
+import org.springframework.batch.core.Step
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
+import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
+import org.springframework.batch.repeat.RepeatStatus
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import java.time.LocalDate
 
 /**
  * 유저 서비스 일일 통계 배치 잡

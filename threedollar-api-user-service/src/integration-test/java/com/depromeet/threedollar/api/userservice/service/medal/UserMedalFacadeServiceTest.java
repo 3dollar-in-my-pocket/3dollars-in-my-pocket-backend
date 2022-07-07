@@ -1,17 +1,5 @@
 package com.depromeet.threedollar.api.userservice.service.medal;
 
-import static com.depromeet.threedollar.api.userservice.service.medal.support.UserMedalAssertions.assertUserMedal;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
-import java.time.LocalDate;
-import java.util.List;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.depromeet.threedollar.api.userservice.SetupUserIntegrationTest;
 import com.depromeet.threedollar.api.userservice.service.medal.support.UserMedalAssertions;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
@@ -34,6 +22,17 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreReposi
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import static com.depromeet.threedollar.api.userservice.service.medal.support.UserMedalAssertions.assertUserMedal;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
 

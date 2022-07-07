@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.domain.mongo.domain.bossservice.store
 
-import org.springframework.data.mongodb.core.mapping.Document
 import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.domain.mongo.core.model.BaseDocument
+import org.springframework.data.mongodb.core.mapping.Document
 
 @Document("boss_store_v1")
 class BossStore(

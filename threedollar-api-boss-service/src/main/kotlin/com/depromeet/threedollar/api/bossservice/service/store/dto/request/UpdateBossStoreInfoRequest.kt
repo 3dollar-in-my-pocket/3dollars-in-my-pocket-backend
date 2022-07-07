@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.api.bossservice.service.store.dto.request
 
-import javax.validation.Valid
-import javax.validation.constraints.Size
-import org.hibernate.validator.constraints.URL
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreAppearanceDay
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenu
+import org.hibernate.validator.constraints.URL
+import javax.validation.Valid
+import javax.validation.constraints.Size
 
 data class UpdateBossStoreInfoRequest(
     @field:Size(max = 20, message = "{store.name.size}")

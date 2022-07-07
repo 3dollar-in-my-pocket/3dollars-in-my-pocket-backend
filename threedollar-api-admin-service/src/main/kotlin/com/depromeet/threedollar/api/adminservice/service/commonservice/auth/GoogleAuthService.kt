@@ -1,12 +1,12 @@
 package com.depromeet.threedollar.api.adminservice.service.commonservice.auth
 
-import org.springframework.stereotype.Service
 import com.depromeet.threedollar.api.adminservice.service.commonservice.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.utils.HttpHeaderUtils
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminRepository
 import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAuthApiClient
+import org.springframework.stereotype.Service
 
 @Service
 class GoogleAuthService(

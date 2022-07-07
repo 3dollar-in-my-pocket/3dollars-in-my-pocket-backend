@@ -1,7 +1,5 @@
 package com.depromeet.threedollar.api.bossservice.service.auth
 
-import org.springframework.context.ApplicationEventPublisher
-import org.springframework.stereotype.Service
 import com.depromeet.threedollar.api.bossservice.service.account.BossAccountServiceHelper
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.request.SignupRequest
 import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryServiceHelper
@@ -12,6 +10,8 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAcc
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.event.bossservice.registration.NewBossAppliedRegistrationEvent
+import org.springframework.context.ApplicationEventPublisher
+import org.springframework.stereotype.Service
 
 @Service
 class SignupService(

@@ -1,15 +1,5 @@
 package com.depromeet.threedollar.api.adminservice.controller.userservice.advertisement
 
-import java.time.LocalDateTime
-import org.hamcrest.Matchers.hasSize
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.springframework.http.HttpHeaders
-import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.delete
-import org.springframework.test.web.servlet.get
-import org.springframework.test.web.servlet.post
-import org.springframework.test.web.servlet.put
 import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.request.AddAdvertisementRequest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.request.UpdateAdvertisementRequest
@@ -20,6 +10,16 @@ import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.A
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPositionType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementRepository
+import org.hamcrest.Matchers.hasSize
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.delete
+import org.springframework.test.web.servlet.get
+import org.springframework.test.web.servlet.post
+import org.springframework.test.web.servlet.put
+import java.time.LocalDateTime
 
 internal class AdminAdvertisementControllerTest(
     private val advertisementRepository: AdvertisementRepository,

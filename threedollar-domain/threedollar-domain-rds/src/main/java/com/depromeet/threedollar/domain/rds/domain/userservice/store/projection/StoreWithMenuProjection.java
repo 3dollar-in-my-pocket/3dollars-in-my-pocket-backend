@@ -1,19 +1,17 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.store.projection;
 
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
+import com.querydsl.core.annotations.QueryProjection;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import org.jetbrains.annotations.NotNull;
-
-import com.depromeet.threedollar.common.type.UserMenuCategoryType;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
-import com.querydsl.core.annotations.QueryProjection;
-
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
 
 @ToString
 @Getter

@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.adminservice.service.commonservice.admin.dto.request
 
+import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.Admin
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Size
-import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.Admin
 
 data class AddAdminRequest(
     @field:Size(max = 50, message = "{admin.email.size}")

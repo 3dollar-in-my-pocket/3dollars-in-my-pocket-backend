@@ -1,17 +1,16 @@
 package com.depromeet.threedollar.api.userservice.config.interceptor;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.UNAUTHORIZED;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import com.depromeet.threedollar.api.userservice.SetupUserControllerTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.http.HttpHeaders;
 
-import com.depromeet.threedollar.api.userservice.SetupUserControllerTest;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.UNAUTHORIZED;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class LoginCheckInterceptorTest extends SetupUserControllerTest {
 

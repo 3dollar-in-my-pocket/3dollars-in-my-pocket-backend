@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback
 
-import java.time.LocalDate
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.mongo.TestFixture
+import java.time.LocalDate
 
 @TestFixture
 object BossStoreFeedbackFixture {

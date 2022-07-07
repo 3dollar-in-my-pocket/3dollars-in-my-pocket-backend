@@ -1,16 +1,5 @@
 package com.depromeet.threedollar.api.userservice.controller.faq;
 
-import static com.depromeet.threedollar.api.userservice.controller.faq.support.FaqAssertions.assertFaqResponse;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.core.mapper.commonservice.faq.dto.response.FaqCategoryResponse;
 import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.response.FaqResponse;
@@ -19,6 +8,16 @@ import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.Faq;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqFixture;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
+import static com.depromeet.threedollar.api.userservice.controller.faq.support.FaqAssertions.assertFaqResponse;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class FaqControllerTest extends SetupUserControllerTest {
 

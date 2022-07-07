@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.domain.redis.domain.bossservice.store
 
-import java.time.Duration
-import java.time.LocalDateTime
 import com.depromeet.threedollar.common.utils.JsonUtils
 import com.depromeet.threedollar.domain.redis.core.StringRedisKey
+import java.time.Duration
+import java.time.LocalDateTime
 
 data class BossStoreOpenTimeKey(
     private val bossStoreId: String,

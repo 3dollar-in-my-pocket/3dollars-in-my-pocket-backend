@@ -1,21 +1,5 @@
 package com.depromeet.threedollar.api.userservice.controller.user;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.CONFLICT_NICKNAME;
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.ResultActions;
-
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.userservice.SetupUserControllerTest;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.CheckAvailableNameRequest;
@@ -27,6 +11,21 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalFi
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.ResultActions;
+
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.CONFLICT_NICKNAME;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class UserControllerTest extends SetupUserControllerTest {
 

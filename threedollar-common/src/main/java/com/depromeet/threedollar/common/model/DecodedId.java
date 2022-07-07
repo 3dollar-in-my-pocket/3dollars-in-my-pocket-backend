@@ -1,14 +1,12 @@
 package com.depromeet.threedollar.common.model;
 
-import org.jetbrains.annotations.NotNull;
-
 import com.depromeet.threedollar.common.utils.Base32Utils;
-
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
 
 @ToString
 @Getter

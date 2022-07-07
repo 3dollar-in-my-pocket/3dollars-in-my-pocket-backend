@@ -1,18 +1,16 @@
 package com.depromeet.threedollar.infrastructure.s3.provider.dto.request;
 
-import javax.validation.constraints.NotNull;
-
-import org.jetbrains.annotations.Nullable;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.depromeet.threedollar.common.type.ApplicationType;
 import com.depromeet.threedollar.infrastructure.s3.common.type.FileType;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.jetbrains.annotations.Nullable;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.constraints.NotNull;
 
 @ToString
 @Getter

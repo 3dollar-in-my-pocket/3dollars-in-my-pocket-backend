@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.common.type;
 
-import java.time.Duration;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.time.Duration;
 
 @Getter
 public enum CacheType {

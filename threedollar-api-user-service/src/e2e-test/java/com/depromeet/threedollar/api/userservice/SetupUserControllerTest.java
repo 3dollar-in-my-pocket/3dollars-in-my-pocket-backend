@@ -1,12 +1,11 @@
 package com.depromeet.threedollar.api.userservice;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.depromeet.threedollar.api.userservice.controller.user.UserMockApiCaller;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.response.LoginResponse;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class SetupUserControllerTest extends ControllerTest {
 

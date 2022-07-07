@@ -1,11 +1,5 @@
 package com.depromeet.threedollar.api.userservice.service.review;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.RetrieveMyReviewsRequest;
 import com.depromeet.threedollar.api.userservice.service.review.dto.response.ReviewsCursorResponse;
 import com.depromeet.threedollar.api.userservice.service.user.UserServiceHelper;
@@ -16,8 +10,12 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreReposi
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.collection.StoreDictionary;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service

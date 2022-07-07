@@ -1,14 +1,13 @@
 package com.depromeet.threedollar.common.utils;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import com.depromeet.threedollar.common.exception.model.InternalServerException;
+import com.depromeet.threedollar.common.model.LocationValue;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
-
-import com.depromeet.threedollar.common.exception.model.InternalServerException;
-import com.depromeet.threedollar.common.model.LocationValue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class JsonUtilsTest {
 

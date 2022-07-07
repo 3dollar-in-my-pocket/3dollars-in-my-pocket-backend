@@ -1,14 +1,12 @@
 package com.depromeet.threedollar.api.userservice.service.store;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service

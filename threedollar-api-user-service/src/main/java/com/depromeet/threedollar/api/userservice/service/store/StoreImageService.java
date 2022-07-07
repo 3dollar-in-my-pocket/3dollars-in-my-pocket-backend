@@ -1,13 +1,5 @@
 package com.depromeet.threedollar.api.userservice.service.store;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.common.type.ApplicationType;
@@ -18,9 +10,15 @@ import com.depromeet.threedollar.infrastructure.s3.common.type.FileType;
 import com.depromeet.threedollar.infrastructure.s3.provider.UploadProvider;
 import com.depromeet.threedollar.infrastructure.s3.provider.dto.request.ImageUploadFileRequest;
 import com.depromeet.threedollar.infrastructure.s3.provider.dto.request.UploadFileRequest;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor

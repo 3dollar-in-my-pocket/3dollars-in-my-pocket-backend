@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.domain.redis.domain.userservice.store
 
-import java.time.LocalDateTime
 import com.depromeet.threedollar.common.type.UserMenuCategoryType
+import java.time.LocalDateTime
 
 data class UserStoreCacheModel(
     val categories: List<UserMenuCategoryType>,

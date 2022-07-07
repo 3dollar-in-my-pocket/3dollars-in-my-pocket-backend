@@ -1,13 +1,12 @@
 package com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement;
 
-import java.util.List;
-
 import com.depromeet.threedollar.common.model.EnumModel;
 import com.depromeet.threedollar.common.type.ApplicationType;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)

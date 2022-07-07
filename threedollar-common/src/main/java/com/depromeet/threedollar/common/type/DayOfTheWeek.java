@@ -1,10 +1,9 @@
 package com.depromeet.threedollar.common.type;
 
-import java.time.DayOfWeek;
-
 import com.depromeet.threedollar.common.model.EnumModel;
-
 import lombok.Getter;
+
+import java.time.DayOfWeek;
 
 @Getter
 public enum DayOfTheWeek implements EnumModel {

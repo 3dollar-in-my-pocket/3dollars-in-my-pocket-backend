@@ -1,11 +1,5 @@
 package com.depromeet.threedollar.api.bossservice.controller.store
 
-import javax.validation.Valid
-import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.bossservice.config.interceptor.Auth
 import com.depromeet.threedollar.api.bossservice.config.resolver.BossId
 import com.depromeet.threedollar.api.bossservice.service.store.BossStoreService
@@ -13,6 +7,12 @@ import com.depromeet.threedollar.api.bossservice.service.store.dto.request.Patch
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.UpdateBossStoreInfoRequest
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import io.swagger.annotations.ApiOperation
+import org.springframework.web.bind.annotation.PatchMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 @RestController
 class BossStoreController(

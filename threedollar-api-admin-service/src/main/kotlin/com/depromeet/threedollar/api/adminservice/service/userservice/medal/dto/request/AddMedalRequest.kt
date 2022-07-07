@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.api.adminservice.service.userservice.medal.dto.request
 
-import javax.validation.constraints.Min
-import javax.validation.constraints.Size
-import org.hibernate.validator.constraints.URL
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType
+import org.hibernate.validator.constraints.URL
+import javax.validation.constraints.Min
+import javax.validation.constraints.Size
 
 data class AddMedalRequest(
     @field:Size(max = 30, message = "{medal.name.size}")

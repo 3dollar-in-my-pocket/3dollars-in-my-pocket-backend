@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.adminservice
 
-import org.junit.jupiter.api.BeforeEach
-import org.springframework.beans.factory.annotation.Autowired
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminFixture
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminRepository
+import org.junit.jupiter.api.BeforeEach
+import org.springframework.beans.factory.annotation.Autowired
 
 internal abstract class SetupAdminIntegrationTest : IntegrationTest() {
 

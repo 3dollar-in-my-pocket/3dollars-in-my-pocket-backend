@@ -1,10 +1,5 @@
 package com.depromeet.threedollar.api.bossservice.service.auth
 
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import com.depromeet.threedollar.api.bossservice.IntegrationTest
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
@@ -16,6 +11,11 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.Re
 import com.depromeet.threedollar.infrastructure.external.client.naver.NaverAuthApiClient
 import com.depromeet.threedollar.infrastructure.external.client.naver.dto.response.NaverProfileInfoResponse
 import com.depromeet.threedollar.infrastructure.external.client.naver.dto.response.NaverProfileResponse
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 private const val SOCIAL_ID = "social-id"
 private val SOCIAL_TYPE = BossAccountSocialType.NAVER

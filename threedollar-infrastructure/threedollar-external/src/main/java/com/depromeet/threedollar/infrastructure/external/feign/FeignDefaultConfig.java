@@ -1,13 +1,11 @@
 package com.depromeet.threedollar.infrastructure.external.feign;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import com.depromeet.threedollar.common.exception.model.BadGatewayException;
 import com.depromeet.threedollar.common.exception.model.InvalidException;
-
 import feign.Response;
 import feign.codec.ErrorDecoder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class FeignDefaultConfig {

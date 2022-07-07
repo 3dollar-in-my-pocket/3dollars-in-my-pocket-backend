@@ -1,10 +1,5 @@
 package com.depromeet.threedollar.api.adminservice.service.userservice.advertisement
 
-import java.time.LocalDateTime
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
 import com.depromeet.threedollar.api.adminservice.IntegrationTest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.AdminAdvertisementService
 import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.request.AddAdvertisementRequest
@@ -17,6 +12,11 @@ import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.A
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPositionType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementRepository
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import java.time.LocalDateTime
 
 internal class AdminAdvertisementServiceTest(
     private val adminAdvertisementService: AdminAdvertisementService,

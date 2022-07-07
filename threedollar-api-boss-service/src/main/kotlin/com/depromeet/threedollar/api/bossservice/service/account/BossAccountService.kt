@@ -1,7 +1,5 @@
 package com.depromeet.threedollar.api.bossservice.service.account
 
-import org.springframework.context.ApplicationEventPublisher
-import org.springframework.stereotype.Service
 import com.depromeet.threedollar.api.bossservice.service.account.dto.request.UpdateBossAccountInfoRequest
 import com.depromeet.threedollar.api.bossservice.service.account.dto.response.BossAccountInfoResponse
 import com.depromeet.threedollar.domain.mongo.config.mongo.MongoTransactional
@@ -9,6 +7,8 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAcc
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccount
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccountRepository
 import com.depromeet.threedollar.domain.mongo.event.bossservice.registration.BossSignOutEvent
+import org.springframework.context.ApplicationEventPublisher
+import org.springframework.stereotype.Service
 
 @Service
 class BossAccountService(

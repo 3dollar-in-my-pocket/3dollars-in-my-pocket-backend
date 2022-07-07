@@ -1,8 +1,5 @@
 package com.depromeet.threedollar.api.userservice.service.store.support;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.TestAssertions;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.DeleteReasonType;
@@ -11,9 +8,11 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequest;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreLocation;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreType;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @TestAssertions
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

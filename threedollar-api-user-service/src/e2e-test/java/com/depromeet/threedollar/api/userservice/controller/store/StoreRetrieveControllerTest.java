@@ -1,35 +1,5 @@
 package com.depromeet.threedollar.api.userservice.controller.store;
 
-import static com.depromeet.threedollar.api.userservice.controller.review.support.ReviewAssertions.assertReviewWithWriterResponse;
-import static com.depromeet.threedollar.api.userservice.controller.store.support.StoreAssertions.assertMenuResponse;
-import static com.depromeet.threedollar.api.userservice.controller.store.support.StoreAssertions.assertStoreDetailInfoResponse;
-import static com.depromeet.threedollar.api.userservice.controller.store.support.StoreAssertions.assertStoreWithVisitsAndDistanceResponse;
-import static com.depromeet.threedollar.api.userservice.controller.store.support.StoreAssertions.assertStoreWithVisitsResponse;
-import static com.depromeet.threedollar.api.userservice.controller.store.support.StoreImageAssertions.assertStoreImageResponse;
-import static com.depromeet.threedollar.api.userservice.controller.user.support.UserAssertions.assertUserInfoResponse;
-import static com.depromeet.threedollar.api.userservice.controller.visit.support.VisitHistoryAssertions.assertVisitHistoryInfoResponse;
-import static com.depromeet.threedollar.api.userservice.controller.visit.support.VisitHistoryAssertions.assertVisitHistoryWithUserResponse;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.ArgumentMatchers.anyDouble;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.userservice.SetupUserControllerTest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.CheckExistsStoresNearbyRequest;
@@ -63,6 +33,35 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistor
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
 import com.depromeet.threedollar.domain.redis.domain.userservice.store.AroundUserStoresCacheRepository;
 import com.depromeet.threedollar.domain.redis.domain.userservice.store.UserStoreCacheModel;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
+
+import static com.depromeet.threedollar.api.userservice.controller.review.support.ReviewAssertions.assertReviewWithWriterResponse;
+import static com.depromeet.threedollar.api.userservice.controller.store.support.StoreAssertions.assertMenuResponse;
+import static com.depromeet.threedollar.api.userservice.controller.store.support.StoreAssertions.assertStoreDetailInfoResponse;
+import static com.depromeet.threedollar.api.userservice.controller.store.support.StoreAssertions.assertStoreWithVisitsAndDistanceResponse;
+import static com.depromeet.threedollar.api.userservice.controller.store.support.StoreAssertions.assertStoreWithVisitsResponse;
+import static com.depromeet.threedollar.api.userservice.controller.store.support.StoreImageAssertions.assertStoreImageResponse;
+import static com.depromeet.threedollar.api.userservice.controller.user.support.UserAssertions.assertUserInfoResponse;
+import static com.depromeet.threedollar.api.userservice.controller.visit.support.VisitHistoryAssertions.assertVisitHistoryInfoResponse;
+import static com.depromeet.threedollar.api.userservice.controller.visit.support.VisitHistoryAssertions.assertVisitHistoryWithUserResponse;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class StoreRetrieveControllerTest extends SetupUserControllerTest {
 

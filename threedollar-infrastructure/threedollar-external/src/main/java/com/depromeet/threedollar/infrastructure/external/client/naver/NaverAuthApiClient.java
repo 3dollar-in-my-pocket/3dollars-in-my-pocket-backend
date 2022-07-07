@@ -1,13 +1,12 @@
 package com.depromeet.threedollar.infrastructure.external.client.naver;
 
+import com.depromeet.threedollar.common.exception.model.BadGatewayException;
+import com.depromeet.threedollar.infrastructure.external.client.naver.dto.response.NaverProfileResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
-
-import com.depromeet.threedollar.common.exception.model.BadGatewayException;
-import com.depromeet.threedollar.infrastructure.external.client.naver.dto.response.NaverProfileResponse;
 
 @FeignClient(
     name = "NaverAuthApiClient",

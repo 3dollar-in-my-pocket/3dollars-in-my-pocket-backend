@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.domain.mongo.domain.commonservice.device
 
-import org.springframework.data.mongodb.core.mapping.Document
 import com.depromeet.threedollar.common.type.OsPlatformType
 import com.depromeet.threedollar.domain.mongo.core.model.BaseDocument
+import org.springframework.data.mongodb.core.mapping.Document
 
 @Document("device_v1")
 class Device(

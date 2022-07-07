@@ -1,14 +1,13 @@
 package com.depromeet.threedollar.api.core.common.dto;
 
-import java.time.LocalDateTime;
-
 import com.depromeet.threedollar.domain.mongo.core.model.BaseDocument;
 import com.depromeet.threedollar.domain.rds.core.model.AuditingTimeEntity;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
 
 @ToString
 @Getter

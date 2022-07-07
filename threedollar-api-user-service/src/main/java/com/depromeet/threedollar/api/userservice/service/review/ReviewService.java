@@ -1,11 +1,5 @@
 package com.depromeet.threedollar.api.userservice.service.review;
 
-import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_REVIEWS_COUNTS;
-
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.UpdateReviewRequest;
 import com.depromeet.threedollar.api.userservice.service.review.dto.response.ReviewInfoResponse;
@@ -13,8 +7,12 @@ import com.depromeet.threedollar.api.userservice.service.store.StoreServiceHelpe
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import static com.depromeet.threedollar.common.type.CacheType.CacheKey.USER_REVIEWS_COUNTS;
 
 @RequiredArgsConstructor
 @Service

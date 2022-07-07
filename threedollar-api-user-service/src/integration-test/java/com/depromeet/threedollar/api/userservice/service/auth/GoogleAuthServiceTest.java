@@ -1,16 +1,5 @@
 package com.depromeet.threedollar.api.userservice.service.auth;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.depromeet.threedollar.api.userservice.IntegrationTest;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.request.LoginRequest;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.request.SignUpRequest;
@@ -24,6 +13,16 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserReposito
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
 import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAuthApiClient;
 import com.depromeet.threedollar.infrastructure.external.client.google.dto.response.GoogleProfileInfoResponse;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class GoogleAuthServiceTest extends IntegrationTest {
 

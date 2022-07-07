@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.api.bossservice.service.auth
 
-import org.springframework.stereotype.Service
 import com.depromeet.threedollar.api.bossservice.service.account.BossAccountServiceHelper
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.common.utils.HttpHeaderUtils
@@ -9,6 +8,7 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAcc
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
 import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAuthApiClient
 import com.depromeet.threedollar.infrastructure.external.client.google.dto.response.GoogleProfileInfoResponse
+import org.springframework.stereotype.Service
 
 private val SOCIAL_TYPE = GOOGLE
 

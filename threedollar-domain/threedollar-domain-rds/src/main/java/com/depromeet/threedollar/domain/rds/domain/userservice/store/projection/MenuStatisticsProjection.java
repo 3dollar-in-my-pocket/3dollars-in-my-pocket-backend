@@ -2,7 +2,6 @@ package com.depromeet.threedollar.domain.rds.domain.userservice.store.projection
 
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.querydsl.core.annotations.QueryProjection;
-
 import lombok.Getter;
 import lombok.ToString;
 

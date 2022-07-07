@@ -1,12 +1,12 @@
 package com.depromeet.threedollar.api.bossservice.config.enummodel
 
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.common.utils.EnumMapper
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreOpenType
 import com.depromeet.threedollar.infrastructure.s3.common.type.FileType
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 
 @Configuration
 class EnumMapperConfig {

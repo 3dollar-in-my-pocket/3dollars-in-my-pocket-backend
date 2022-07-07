@@ -1,18 +1,16 @@
 package com.depromeet.threedollar.infrastructure.firebase;
 
-import java.io.IOException;
-
-import javax.annotation.PostConstruct;
-
-import org.jetbrains.annotations.NotNull;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Component;
-
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import com.depromeet.threedollar.common.type.ApplicationType;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import java.io.IOException;
 
 @Component
 public class FirebaseAppInitializer {

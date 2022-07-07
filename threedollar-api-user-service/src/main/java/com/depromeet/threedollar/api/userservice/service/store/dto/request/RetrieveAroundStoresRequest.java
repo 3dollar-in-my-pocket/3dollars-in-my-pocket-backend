@@ -1,26 +1,23 @@
 package com.depromeet.threedollar.api.userservice.service.store.dto.request;
 
-import java.util.Comparator;
-import java.util.Optional;
-
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
-
-import org.jetbrains.annotations.Nullable;
-
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.api.userservice.service.store.dto.type.UserStoreOrderType;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.common.utils.distance.LookupRadiusDistanceLimiter;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.jetbrains.annotations.Nullable;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import java.util.Comparator;
+import java.util.Optional;
 
 @ToString
 @Getter

@@ -1,14 +1,12 @@
 package com.depromeet.threedollar.infrastructure.external.client.google;
 
-import org.springframework.context.annotation.Bean;
-
 import com.depromeet.threedollar.common.exception.model.BadGatewayException;
 import com.depromeet.threedollar.common.exception.model.InvalidException;
 import com.depromeet.threedollar.common.exception.type.ErrorCode;
-
 import feign.FeignException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
+import org.springframework.context.annotation.Bean;
 
 public class GoogleFeignConfig {
 

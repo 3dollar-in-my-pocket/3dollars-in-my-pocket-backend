@@ -1,12 +1,5 @@
 package com.depromeet.threedollar.api.userservice.service.user;
 
-import org.hibernate.exception.LockAcquisitionException;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.retry.annotation.Backoff;
-import org.springframework.retry.annotation.Retryable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.CheckAvailableNameRequest;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.CreateUserRequest;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.UpdateUserInfoRequest;
@@ -16,8 +9,13 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserReposito
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.WithdrawalUser;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.WithdrawalUserRepository;
 import com.depromeet.threedollar.domain.rds.event.userservice.user.NewUserCreatedEvent;
-
 import lombok.RequiredArgsConstructor;
+import org.hibernate.exception.LockAcquisitionException;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service

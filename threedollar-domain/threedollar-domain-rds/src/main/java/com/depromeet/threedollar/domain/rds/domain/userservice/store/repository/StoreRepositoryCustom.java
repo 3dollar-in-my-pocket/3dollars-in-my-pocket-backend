@@ -1,11 +1,10 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.store.repository;
 
-import java.util.List;
-
-import org.jetbrains.annotations.Nullable;
-
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreWithMenuProjection;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public interface StoreRepositoryCustom {
 

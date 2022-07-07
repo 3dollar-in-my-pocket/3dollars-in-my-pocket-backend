@@ -1,18 +1,16 @@
 package com.depromeet.threedollar.api.userservice.service.visit.dto.request;
 
-import java.time.LocalDate;
-
-import javax.validation.constraints.NotNull;
-
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistory;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
-
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @ToString
 @Getter

@@ -1,11 +1,11 @@
 package com.depromeet.threedollar.api.adminservice
 
-import org.junit.jupiter.api.BeforeEach
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminRepository
 import com.fasterxml.jackson.core.type.TypeReference
+import org.junit.jupiter.api.BeforeEach
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 
 internal abstract class SetupAdminControllerTest : ControllerTest() {
 

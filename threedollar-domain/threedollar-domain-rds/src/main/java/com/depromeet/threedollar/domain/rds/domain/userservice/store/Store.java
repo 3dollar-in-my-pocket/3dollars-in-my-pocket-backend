@@ -1,10 +1,15 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.store;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
+import com.depromeet.threedollar.common.type.DayOfTheWeek;
+import com.depromeet.threedollar.common.type.UserMenuCategoryType;
+import com.depromeet.threedollar.common.utils.MathUtils;
+import com.depromeet.threedollar.domain.rds.core.model.AuditingTimeEntity;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,19 +23,11 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import com.depromeet.threedollar.common.type.DayOfTheWeek;
-import com.depromeet.threedollar.common.type.UserMenuCategoryType;
-import com.depromeet.threedollar.common.utils.MathUtils;
-import com.depromeet.threedollar.domain.rds.core.model.AuditingTimeEntity;
-
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

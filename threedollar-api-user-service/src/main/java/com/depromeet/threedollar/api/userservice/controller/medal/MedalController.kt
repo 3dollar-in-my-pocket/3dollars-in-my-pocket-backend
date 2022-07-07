@@ -1,11 +1,11 @@
 package com.depromeet.threedollar.api.userservice.controller.medal
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.core.service.userservice.medal.MedalService
 import com.depromeet.threedollar.api.core.service.userservice.medal.dto.response.MedalResponse
 import io.swagger.annotations.ApiOperation
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class MedalController(

@@ -1,5 +1,7 @@
 package com.depromeet.threedollar.api.bossservice.config.interceptor
 
+import com.depromeet.threedollar.api.bossservice.SetupBossAccountControllerTest
+import com.depromeet.threedollar.common.exception.type.ErrorCode
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -8,8 +10,6 @@ import org.springframework.http.HttpHeaders
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
-import com.depromeet.threedollar.api.bossservice.SetupBossAccountControllerTest
-import com.depromeet.threedollar.common.exception.type.ErrorCode
 
 internal class LoginCheckHandlerTest : SetupBossAccountControllerTest() {
 

@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.domain.redis.domain.bossservice.category
 
-import org.springframework.stereotype.Repository
 import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
+import org.springframework.stereotype.Repository
 
 @Repository
 class BossStoreCategoryCacheRepository(

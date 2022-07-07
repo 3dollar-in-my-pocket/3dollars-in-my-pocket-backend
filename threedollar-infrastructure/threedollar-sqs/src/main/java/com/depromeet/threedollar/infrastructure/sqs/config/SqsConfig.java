@@ -1,7 +1,8 @@
 package com.depromeet.threedollar.infrastructure.sqs.config;
 
-import java.util.Collections;
-
+import com.amazonaws.services.sqs.AmazonSQSAsync;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.aws.messaging.config.QueueMessageHandlerFactory;
 import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
 import org.springframework.context.annotation.Bean;
@@ -9,10 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.handler.annotation.support.PayloadMethodArgumentResolver;
 
-import com.amazonaws.services.sqs.AmazonSQSAsync;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.RequiredArgsConstructor;
+import java.util.Collections;
 
 @RequiredArgsConstructor
 @Configuration

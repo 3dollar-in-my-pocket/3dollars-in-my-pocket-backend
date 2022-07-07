@@ -1,22 +1,19 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.user.repository;
 
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
+
+import javax.persistence.LockModeType;
+import java.util.List;
+
 import static com.depromeet.threedollar.domain.rds.core.constants.RDBPackageConstants.PERSISTENCE_LOCK_TIMEOUT;
 import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.QMedal.medal;
 import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.QMedalAcquisitionCondition.medalAcquisitionCondition;
 import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.QUserMedal.userMedal;
 import static com.depromeet.threedollar.domain.rds.domain.userservice.user.QUser.user;
-
-import java.util.List;
-
-import javax.persistence.LockModeType;
-
-import org.jetbrains.annotations.Nullable;
-
-import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
-import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class UserRepositoryCustomImpl implements UserRepositoryCustom {

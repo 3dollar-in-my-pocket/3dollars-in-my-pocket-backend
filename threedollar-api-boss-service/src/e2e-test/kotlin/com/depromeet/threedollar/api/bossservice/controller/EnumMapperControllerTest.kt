@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.bossservice.controller
 
+import com.depromeet.threedollar.api.bossservice.SetupControllerTest
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
-import com.depromeet.threedollar.api.bossservice.SetupControllerTest
 
 internal class EnumMapperControllerTest : SetupControllerTest() {
 

@@ -1,8 +1,5 @@
 package com.depromeet.threedollar.api.userservice.config.enummodel;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import com.depromeet.threedollar.api.userservice.service.store.dto.type.UserStoreOrderType;
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
@@ -17,6 +14,8 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.PaymentMeth
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class EnumMapperConfig {

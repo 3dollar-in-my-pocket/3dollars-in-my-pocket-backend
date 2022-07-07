@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.response
 
-import java.time.LocalDateTime
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.Advertisement
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPositionType
+import java.time.LocalDateTime
 
 data class AdvertisementsWithPagingResponse(
     val contents: List<AdvertisementResponse>,

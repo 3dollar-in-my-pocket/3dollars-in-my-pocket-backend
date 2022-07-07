@@ -2,7 +2,6 @@ package com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection
 
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
 import com.querydsl.core.annotations.QueryProjection;
-
 import lombok.Getter;
 import lombok.ToString;
 

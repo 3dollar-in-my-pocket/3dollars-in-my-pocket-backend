@@ -1,11 +1,11 @@
 package com.depromeet.threedollar.infrastructure.s3.provider
 
-import java.util.concurrent.CompletableFuture
-import java.util.stream.Collectors
-import org.springframework.stereotype.Component
 import com.depromeet.threedollar.infrastructure.s3.infra.FileStorageClient
 import com.depromeet.threedollar.infrastructure.s3.provider.dto.request.UploadFileRequest
 import com.depromeet.threedollar.infrastructure.s3.provider.dto.response.UploadFileWithSequenceResponse
+import org.springframework.stereotype.Component
+import java.util.concurrent.CompletableFuture
+import java.util.stream.Collectors
 
 @Component
 class UploadProvider(

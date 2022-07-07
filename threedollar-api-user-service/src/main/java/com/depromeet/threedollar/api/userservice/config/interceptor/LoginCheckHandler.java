@@ -1,7 +1,9 @@
 package com.depromeet.threedollar.api.userservice.config.interceptor;
 
-import javax.servlet.http.HttpServletRequest;
-
+import com.depromeet.threedollar.api.userservice.config.session.SessionConstants;
+import com.depromeet.threedollar.common.exception.model.UnAuthorizedException;
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.session.Session;
@@ -9,11 +11,7 @@ import org.springframework.session.SessionRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import com.depromeet.threedollar.api.userservice.config.session.SessionConstants;
-import com.depromeet.threedollar.common.exception.model.UnAuthorizedException;
-import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
-
-import lombok.RequiredArgsConstructor;
+import javax.servlet.http.HttpServletRequest;
 
 @RequiredArgsConstructor
 @Component

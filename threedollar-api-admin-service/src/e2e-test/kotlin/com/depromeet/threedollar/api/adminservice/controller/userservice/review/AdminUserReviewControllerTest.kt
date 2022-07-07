@@ -1,11 +1,5 @@
 package com.depromeet.threedollar.api.adminservice.controller.userservice.review
 
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.springframework.http.HttpHeaders
-import org.springframework.test.web.servlet.delete
-import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.common.exception.type.ErrorCode
@@ -16,6 +10,12 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreReposi
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.springframework.http.HttpHeaders
+import org.springframework.test.web.servlet.delete
+import org.springframework.test.web.servlet.get
 
 internal class AdminUserReviewControllerTest(
     private val reviewRepository: ReviewRepository,

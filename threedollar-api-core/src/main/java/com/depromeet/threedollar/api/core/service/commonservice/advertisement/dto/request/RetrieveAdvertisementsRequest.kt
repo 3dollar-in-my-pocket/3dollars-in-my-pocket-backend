@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.api.core.service.commonservice.advertisement.dto.request
 
-import javax.validation.constraints.NotNull
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPositionType
+import javax.validation.constraints.NotNull
 
 data class RetrieveAdvertisementsRequest(
     @field:NotNull(message = "{advertisement.platform.notnull}")

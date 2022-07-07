@@ -1,13 +1,13 @@
 package com.depromeet.threedollar.api.userservice.controller.user
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.userservice.config.interceptor.Auth
 import com.depromeet.threedollar.api.userservice.config.resolver.UserId
 import com.depromeet.threedollar.api.userservice.service.user.UserActivityService
 import com.depromeet.threedollar.api.userservice.service.user.dto.response.UserWithActivityResponse
 import io.swagger.annotations.ApiOperation
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class UserActivityController(

@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.domain.redis.domain.bossservice.feedback
 
+import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 
 private const val BOSS_STORE_ID = "boss-store-id"
 

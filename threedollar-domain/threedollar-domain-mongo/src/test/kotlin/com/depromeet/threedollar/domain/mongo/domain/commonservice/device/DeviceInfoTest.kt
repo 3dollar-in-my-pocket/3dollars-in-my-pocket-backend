@@ -1,14 +1,14 @@
 package com.depromeet.threedollar.domain.mongo.domain.commonservice.device
 
-import java.util.stream.Stream
+import com.depromeet.threedollar.common.exception.model.ForbiddenException
+import com.depromeet.threedollar.common.type.OsPlatformType
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import com.depromeet.threedollar.common.exception.model.ForbiddenException
-import com.depromeet.threedollar.common.type.OsPlatformType
+import java.util.stream.Stream
 
 internal class DeviceInfoTest {
 

@@ -1,16 +1,16 @@
 package com.depromeet.threedollar.api.adminservice.service.userservice.store
 
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 import com.depromeet.threedollar.api.adminservice.SetupAdminIntegrationTest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 internal class AdminUserStoreServiceTest(
     private val adminUserStoreService: AdminUserStoreService,

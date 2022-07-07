@@ -1,15 +1,5 @@
 package com.depromeet.threedollar.api.userservice.controller.faq;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.core.mapper.commonservice.faq.dto.response.FaqCategoryResponse;
 import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.response.FaqResponse;
@@ -17,6 +7,15 @@ import com.depromeet.threedollar.api.userservice.MockMvcHelper;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class FaqMockApiCaller extends MockMvcHelper {
 

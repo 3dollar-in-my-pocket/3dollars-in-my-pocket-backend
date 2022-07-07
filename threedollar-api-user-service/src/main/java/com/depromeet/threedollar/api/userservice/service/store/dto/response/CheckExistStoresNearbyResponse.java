@@ -1,12 +1,11 @@
 package com.depromeet.threedollar.api.userservice.service.store.dto.response;
 
-import org.jetbrains.annotations.NotNull;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
 
 @ToString
 @Getter

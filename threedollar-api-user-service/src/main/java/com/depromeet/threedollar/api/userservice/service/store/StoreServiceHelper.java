@@ -1,15 +1,13 @@
 package com.depromeet.threedollar.api.userservice.service.store;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOT_FOUND_STORE;
-
-import org.jetbrains.annotations.NotNull;
-
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOT_FOUND_STORE;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StoreServiceHelper {

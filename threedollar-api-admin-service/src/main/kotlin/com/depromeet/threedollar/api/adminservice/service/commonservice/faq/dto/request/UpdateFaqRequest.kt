@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.adminservice.service.commonservice.faq.dto.request
 
-import javax.validation.constraints.Size
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory
+import javax.validation.constraints.Size
 
 data class UpdateFaqRequest(
     @field:Size(max = 100, message = "{faq.question.size}")

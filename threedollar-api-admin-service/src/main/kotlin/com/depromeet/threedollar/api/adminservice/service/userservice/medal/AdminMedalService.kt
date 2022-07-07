@@ -1,8 +1,5 @@
 package com.depromeet.threedollar.api.adminservice.service.userservice.medal
 
-import org.springframework.cache.annotation.CacheEvict
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.adminservice.service.userservice.medal.dto.request.AddMedalRequest
 import com.depromeet.threedollar.api.adminservice.service.userservice.medal.dto.request.UpdateMedalRequest
 import com.depromeet.threedollar.api.core.service.userservice.medal.dto.response.MedalResponse
@@ -11,6 +8,9 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.type.CacheType.CacheKey.MEDALS
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class AdminMedalService(

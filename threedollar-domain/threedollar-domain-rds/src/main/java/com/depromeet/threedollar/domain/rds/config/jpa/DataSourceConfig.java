@@ -1,16 +1,6 @@
 package com.depromeet.threedollar.domain.rds.config.jpa;
 
-import static com.depromeet.threedollar.common.type.ReplicationType.PRIMARY;
-import static com.depromeet.threedollar.common.type.ReplicationType.SECONDARY;
-import static com.depromeet.threedollar.domain.rds.config.jpa.DatabaseBeanNameConstants.PRIMARY_DATASOURCE;
-import static com.depromeet.threedollar.domain.rds.config.jpa.DatabaseBeanNameConstants.ROUTING_DATASOURCE;
-import static com.depromeet.threedollar.domain.rds.config.jpa.DatabaseBeanNameConstants.SECONDARY_DATASOURCE;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.sql.DataSource;
-
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -19,7 +9,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 
-import com.zaxxer.hikari.HikariDataSource;
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.depromeet.threedollar.common.type.ReplicationType.PRIMARY;
+import static com.depromeet.threedollar.common.type.ReplicationType.SECONDARY;
+import static com.depromeet.threedollar.domain.rds.config.jpa.DatabaseBeanNameConstants.PRIMARY_DATASOURCE;
+import static com.depromeet.threedollar.domain.rds.config.jpa.DatabaseBeanNameConstants.ROUTING_DATASOURCE;
+import static com.depromeet.threedollar.domain.rds.config.jpa.DatabaseBeanNameConstants.SECONDARY_DATASOURCE;
 
 @Configuration
 public class DataSourceConfig {

@@ -1,12 +1,12 @@
 package com.depromeet.threedollar.domain.redis.core
 
-import java.time.Duration
+import com.depromeet.threedollar.domain.redis.IntegrationTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.springframework.data.redis.core.RedisTemplate
-import com.depromeet.threedollar.domain.redis.IntegrationTest
+import java.time.Duration
 
 internal class StringRedisRepositoryTest(
     private val stringRedisRepository: StringRedisRepository<MockRedisKey, String>,

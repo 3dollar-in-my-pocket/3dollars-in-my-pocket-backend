@@ -1,15 +1,5 @@
 package com.depromeet.threedollar.common.utils;
 
-import static com.depromeet.threedollar.common.config.jackson.DecodedIdJsonModule.decodeIdModule;
-import static com.depromeet.threedollar.common.config.jackson.JavaTimeJsonModule.javaTimeModule;
-import static com.depromeet.threedollar.common.config.jackson.StringJsonModule.stringJsonModule;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
-
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -21,9 +11,17 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.module.kotlin.KotlinModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.depromeet.threedollar.common.config.jackson.DecodedIdJsonModule.decodeIdModule;
+import static com.depromeet.threedollar.common.config.jackson.JavaTimeJsonModule.javaTimeModule;
+import static com.depromeet.threedollar.common.config.jackson.StringJsonModule.stringJsonModule;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JsonUtils {

@@ -1,11 +1,11 @@
 package com.depromeet.threedollar.api.core.service.commonservice.device
 
-import org.springframework.scheduling.annotation.Async
-import org.springframework.stereotype.Service
 import com.depromeet.threedollar.api.core.service.commonservice.device.dto.request.UpsertDeviceRequest
 import com.depromeet.threedollar.common.model.UserMetaValue
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.Device
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.DeviceRepository
+import org.springframework.scheduling.annotation.Async
+import org.springframework.stereotype.Service
 
 @Service
 class DeviceService(

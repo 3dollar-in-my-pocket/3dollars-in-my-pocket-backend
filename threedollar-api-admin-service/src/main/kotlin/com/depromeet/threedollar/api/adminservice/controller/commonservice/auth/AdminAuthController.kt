@@ -1,10 +1,5 @@
 package com.depromeet.threedollar.api.adminservice.controller.commonservice.auth
 
-import javax.servlet.http.HttpSession
-import javax.validation.Valid
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.adminservice.config.interceptor.Auth
 import com.depromeet.threedollar.api.adminservice.config.session.SessionConstants.ADMIN_ID
 import com.depromeet.threedollar.api.adminservice.service.commonservice.auth.AuthService
@@ -12,6 +7,11 @@ import com.depromeet.threedollar.api.adminservice.service.commonservice.auth.dto
 import com.depromeet.threedollar.api.adminservice.service.commonservice.auth.dto.response.LoginResponse
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import io.swagger.annotations.ApiOperation
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
+import javax.servlet.http.HttpSession
+import javax.validation.Valid
 
 @RestController
 class AdminAuthController(

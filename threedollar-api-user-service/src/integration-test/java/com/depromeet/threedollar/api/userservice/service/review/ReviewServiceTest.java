@@ -1,16 +1,5 @@
 package com.depromeet.threedollar.api.userservice.service.review;
 
-import static com.depromeet.threedollar.api.userservice.service.review.support.ReviewAssertions.assertReview;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
-import java.util.List;
-
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.depromeet.threedollar.api.userservice.SetupStoreIntegrationTest;
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.UpdateReviewRequest;
@@ -19,6 +8,16 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewStatus;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
+import static com.depromeet.threedollar.api.userservice.service.review.support.ReviewAssertions.assertReview;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ReviewServiceTest extends SetupStoreIntegrationTest {
 

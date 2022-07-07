@@ -1,15 +1,14 @@
 package com.depromeet.threedollar.api.userservice.service.review.dto.request;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-
-import org.jetbrains.annotations.Nullable;
-
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.jetbrains.annotations.Nullable;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @ToString
 @Getter

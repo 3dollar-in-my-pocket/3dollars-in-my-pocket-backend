@@ -1,10 +1,5 @@
 package com.depromeet.threedollar.api.bossservice.controller.upload
 
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestPart
-import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.multipart.MultipartFile
 import com.depromeet.threedollar.api.bossservice.controller.upload.dto.response.BossImageUploadResponse
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.common.type.ApplicationType
@@ -13,6 +8,11 @@ import com.depromeet.threedollar.infrastructure.s3.provider.UploadProvider
 import com.depromeet.threedollar.infrastructure.s3.provider.dto.request.ImageUploadFileRequest
 import com.depromeet.threedollar.infrastructure.s3.provider.dto.response.UploadFileWithSequenceResponse
 import io.swagger.annotations.ApiOperation
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestPart
+import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.multipart.MultipartFile
 
 @RestController
 class BossImageUploadController(

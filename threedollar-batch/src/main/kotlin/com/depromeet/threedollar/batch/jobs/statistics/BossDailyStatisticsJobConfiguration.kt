@@ -1,13 +1,5 @@
 package com.depromeet.threedollar.batch.jobs.statistics
 
-import java.time.LocalDate
-import org.springframework.batch.core.Job
-import org.springframework.batch.core.Step
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
-import org.springframework.batch.repeat.RepeatStatus
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedbackRepository
@@ -16,6 +8,14 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossDelet
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 import com.depromeet.threedollar.infrastructure.external.client.slack.SlackWebhookApiClient
 import com.depromeet.threedollar.infrastructure.external.client.slack.dto.request.PostSlackMessageRequest
+import org.springframework.batch.core.Job
+import org.springframework.batch.core.Step
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
+import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
+import org.springframework.batch.repeat.RepeatStatus
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import java.time.LocalDate
 
 private const val BOSS_DAILY_STATISTICS_JOB = "bossStatisticsJob"
 

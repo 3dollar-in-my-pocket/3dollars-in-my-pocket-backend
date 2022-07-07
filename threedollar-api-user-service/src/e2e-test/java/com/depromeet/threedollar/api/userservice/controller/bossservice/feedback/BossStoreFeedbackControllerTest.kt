@@ -1,13 +1,5 @@
 package com.depromeet.threedollar.api.userservice.controller.bossservice.feedback
 
-import org.hamcrest.Matchers.hasSize
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
-import org.springframework.http.HttpHeaders
-import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.get
-import org.springframework.test.web.servlet.post
 import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.request.AddBossStoreFeedbackRequest
 import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.response.BossStoreFeedbackCountResponse
 import com.depromeet.threedollar.api.userservice.SetupUserControllerTest
@@ -16,6 +8,14 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossSt
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.feedback.BossStoreFeedbackCountRepository
+import org.hamcrest.Matchers.hasSize
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.get
+import org.springframework.test.web.servlet.post
 
 internal class BossStoreFeedbackControllerTest(
     private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,

@@ -1,16 +1,14 @@
 package com.depromeet.threedollar.api.userservice.config.interceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.depromeet.threedollar.api.userservice.config.session.SessionConstants;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import com.depromeet.threedollar.api.userservice.config.session.SessionConstants;
-
-import lombok.RequiredArgsConstructor;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
 @Component

@@ -1,15 +1,5 @@
 package com.depromeet.threedollar.api.userservice.controller.visit;
 
-import java.time.LocalDate;
-
-import javax.validation.Valid;
-
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.userservice.config.interceptor.Auth;
 import com.depromeet.threedollar.api.userservice.config.resolver.UserId;
@@ -18,9 +8,16 @@ import com.depromeet.threedollar.api.userservice.service.visit.dto.request.AddVi
 import com.depromeet.threedollar.api.userservice.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.response.VisitHistoriesCursorResponse;
 import com.depromeet.threedollar.domain.rds.event.userservice.visit.VisitHistoryAddedEvent;
-
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+import java.time.LocalDate;
 
 @RequiredArgsConstructor
 @RestController

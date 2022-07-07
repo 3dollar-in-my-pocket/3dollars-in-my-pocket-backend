@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.api.userservice.service.user.dto.request;
 
 import com.depromeet.threedollar.api.userservice.config.vadlidator.NickName;
-
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

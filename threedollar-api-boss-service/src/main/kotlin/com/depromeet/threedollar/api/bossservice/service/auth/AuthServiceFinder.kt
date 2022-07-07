@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.api.bossservice.service.auth
 
-import java.util.*
-import javax.annotation.PostConstruct
-import org.springframework.stereotype.Component
 import com.depromeet.threedollar.common.exception.model.ServiceUnAvailableException
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
+import org.springframework.stereotype.Component
+import java.util.*
+import javax.annotation.PostConstruct
 
 private val authServiceMap: MutableMap<BossAccountSocialType, AuthService> = EnumMap(
     BossAccountSocialType::class.java)

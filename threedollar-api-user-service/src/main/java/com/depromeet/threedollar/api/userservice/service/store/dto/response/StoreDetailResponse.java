@@ -1,14 +1,5 @@
 package com.depromeet.threedollar.api.userservice.service.store.dto.response;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.jetbrains.annotations.Nullable;
-
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.api.userservice.service.review.dto.response.ReviewWithUserResponse;
 import com.depromeet.threedollar.api.userservice.service.user.dto.response.UserInfoResponse;
@@ -27,12 +18,19 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.collection.UserDictionary;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection.VisitHistoryCounter;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryWithUserProjection;
-
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @ToString
 @Getter

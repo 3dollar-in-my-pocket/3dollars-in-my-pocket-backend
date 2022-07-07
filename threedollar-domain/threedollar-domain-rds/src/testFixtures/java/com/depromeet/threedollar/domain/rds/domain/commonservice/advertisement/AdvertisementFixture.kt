@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement
 
-import java.time.LocalDateTime
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.TestFixture
+import java.time.LocalDateTime
 
 @TestFixture
 object AdvertisementFixture {

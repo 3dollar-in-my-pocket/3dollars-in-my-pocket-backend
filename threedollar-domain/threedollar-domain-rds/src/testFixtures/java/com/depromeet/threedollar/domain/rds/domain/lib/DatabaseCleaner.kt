@@ -1,12 +1,12 @@
 package com.depromeet.threedollar.domain.rds.domain.lib
 
-import java.sql.Connection
-import javax.persistence.EntityManager
-import javax.persistence.PersistenceContext
 import org.hibernate.Session
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
+import java.sql.Connection
+import javax.persistence.EntityManager
+import javax.persistence.PersistenceContext
 
 private const val REFERENTIAL_INTEGRITY_SQL = "SET REFERENTIAL_INTEGRITY"
 private const val TRUNCATE_TABLE_SQL = "TRUNCATE TABLE"

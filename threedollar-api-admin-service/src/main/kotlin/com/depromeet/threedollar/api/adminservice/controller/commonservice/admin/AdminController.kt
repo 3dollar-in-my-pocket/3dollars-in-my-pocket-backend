@@ -1,11 +1,5 @@
 package com.depromeet.threedollar.api.adminservice.controller.commonservice.admin
 
-import javax.validation.Valid
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
 import com.depromeet.threedollar.api.adminservice.config.interceptor.Auth
 import com.depromeet.threedollar.api.adminservice.config.resolver.AdminId
 import com.depromeet.threedollar.api.adminservice.service.commonservice.admin.AdminService
@@ -16,6 +10,12 @@ import com.depromeet.threedollar.api.adminservice.service.commonservice.admin.dt
 import com.depromeet.threedollar.api.adminservice.service.commonservice.admin.dto.response.AdminListInfoWithPagingResponse
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import io.swagger.annotations.ApiOperation
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 @RestController
 class AdminController(

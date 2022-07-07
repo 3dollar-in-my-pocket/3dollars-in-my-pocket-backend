@@ -1,17 +1,15 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.medal.repository;
 
-import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.QMedal.medal;
-import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.QMedalAcquisitionCondition.medalAcquisitionCondition;
-
-import java.util.List;
-
-import org.jetbrains.annotations.Nullable;
-
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+
+import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.QMedal.medal;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.QMedalAcquisitionCondition.medalAcquisitionCondition;
 
 @RequiredArgsConstructor
 public class MedalRepositoryCustomImpl implements MedalRepositoryCustom {

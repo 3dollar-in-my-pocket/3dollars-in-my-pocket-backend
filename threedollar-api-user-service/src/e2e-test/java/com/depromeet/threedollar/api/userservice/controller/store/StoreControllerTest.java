@@ -1,21 +1,5 @@
 package com.depromeet.threedollar.api.userservice.controller.store;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
-import java.util.List;
-import java.util.Set;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.userservice.SetupUserControllerTest;
 import com.depromeet.threedollar.api.userservice.controller.store.support.StoreAssertions;
@@ -38,6 +22,21 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreReposi
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreType;
 import com.depromeet.threedollar.domain.rds.event.userservice.store.StoreCreatedEvent;
 import com.depromeet.threedollar.domain.rds.event.userservice.store.StoreDeletedEvent;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import java.util.List;
+import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 class StoreControllerTest extends SetupUserControllerTest {
 

@@ -1,12 +1,11 @@
 package com.depromeet.threedollar.common.type;
 
-import static com.depromeet.threedollar.common.type.UserMenuCategoryType.MenuCategoryTypeStatus.ACTIVE;
-
 import com.depromeet.threedollar.common.model.EnumModel;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+
+import static com.depromeet.threedollar.common.type.UserMenuCategoryType.MenuCategoryTypeStatus.ACTIVE;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)

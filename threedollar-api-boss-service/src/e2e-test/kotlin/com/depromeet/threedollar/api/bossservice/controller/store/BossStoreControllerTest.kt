@@ -1,14 +1,5 @@
 package com.depromeet.threedollar.api.bossservice.controller.store
 
-import java.time.LocalTime
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.springframework.http.HttpHeaders
-import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.patch
-import org.springframework.test.web.servlet.put
 import com.depromeet.threedollar.api.bossservice.SetupBossAccountControllerTest
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.AppearanceDayRequest
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.MenuRequest
@@ -23,6 +14,15 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenuFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.patch
+import org.springframework.test.web.servlet.put
+import java.time.LocalTime
 
 internal class BossStoreControllerTest(
     private val bossStoreRepository: BossStoreRepository,

@@ -1,17 +1,15 @@
 package com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import com.depromeet.threedollar.domain.rds.core.constants.ColumnDefinition;
-
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

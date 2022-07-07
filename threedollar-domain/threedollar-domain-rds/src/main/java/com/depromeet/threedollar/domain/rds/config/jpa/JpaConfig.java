@@ -1,10 +1,6 @@
 package com.depromeet.threedollar.domain.rds.config.jpa;
 
-import static com.depromeet.threedollar.domain.rds.config.jpa.DatabaseBeanNameConstants.TRANSACTION_MANAGER;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
+import com.depromeet.threedollar.domain.rds.ThreeDollarDomainRdsRoot;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +10,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import com.depromeet.threedollar.domain.rds.ThreeDollarDomainRdsRoot;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import static com.depromeet.threedollar.domain.rds.config.jpa.DatabaseBeanNameConstants.TRANSACTION_MANAGER;
 
 @EntityScan(basePackageClasses = {ThreeDollarDomainRdsRoot.class})
 @EnableJpaRepositories(

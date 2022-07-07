@@ -1,14 +1,13 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryCountProjection;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
-
-import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
-import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryCountProjection;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class VisitHistoriesCountCollectionTest {
 

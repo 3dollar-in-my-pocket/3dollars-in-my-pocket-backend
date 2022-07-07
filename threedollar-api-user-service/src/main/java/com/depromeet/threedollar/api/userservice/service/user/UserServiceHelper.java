@@ -1,19 +1,17 @@
 package com.depromeet.threedollar.api.userservice.service.user;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.CONFLICT_NICKNAME;
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.CONFLICT_USER;
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOT_FOUND_USER;
-
-import org.jetbrains.annotations.NotNull;
-
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.CONFLICT_NICKNAME;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.CONFLICT_USER;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOT_FOUND_USER;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserServiceHelper {

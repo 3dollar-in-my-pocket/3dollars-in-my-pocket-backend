@@ -1,13 +1,13 @@
 package com.depromeet.threedollar.domain.mongo.domain.bossservice.account.repository
 
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.findOne
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.stereotype.Repository
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 
 @Repository
 class BossAccountRepositoryCustomImpl(

@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.common.type;
 
 import com.depromeet.threedollar.common.model.EnumModel;
-
 import lombok.Getter;
 
 @Getter

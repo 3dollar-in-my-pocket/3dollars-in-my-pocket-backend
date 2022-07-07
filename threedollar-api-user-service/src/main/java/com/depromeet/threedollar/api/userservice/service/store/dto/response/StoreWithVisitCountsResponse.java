@@ -1,20 +1,18 @@
 package com.depromeet.threedollar.api.userservice.service.store.dto.response;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
-
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.response.VisitHistoryCountsResponse;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreWithMenuProjection;
-
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @ToString
 @Getter

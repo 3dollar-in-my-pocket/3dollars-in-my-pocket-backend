@@ -1,7 +1,12 @@
 package com.depromeet.threedollar.api.userservice.config;
 
-import java.util.List;
-
+import com.depromeet.threedollar.api.core.config.converter.DecodeIdConverter;
+import com.depromeet.threedollar.api.core.config.resolver.DeviceLocationArgumentResolver;
+import com.depromeet.threedollar.api.core.config.resolver.MapLocationArgumentResolver;
+import com.depromeet.threedollar.api.userservice.config.interceptor.AuthInterceptor;
+import com.depromeet.threedollar.api.userservice.config.interceptor.UserMetadataInterceptor;
+import com.depromeet.threedollar.api.userservice.config.resolver.UserIdResolver;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,14 +18,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.depromeet.threedollar.api.core.config.converter.DecodeIdConverter;
-import com.depromeet.threedollar.api.core.config.resolver.DeviceLocationArgumentResolver;
-import com.depromeet.threedollar.api.core.config.resolver.MapLocationArgumentResolver;
-import com.depromeet.threedollar.api.userservice.config.interceptor.AuthInterceptor;
-import com.depromeet.threedollar.api.userservice.config.interceptor.UserMetadataInterceptor;
-import com.depromeet.threedollar.api.userservice.config.resolver.UserIdResolver;
-
-import lombok.RequiredArgsConstructor;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Configuration

@@ -1,18 +1,16 @@
 package com.depromeet.threedollar.api.userservice.service.review.dto.response;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.api.userservice.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
-
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @ToString
 @Getter

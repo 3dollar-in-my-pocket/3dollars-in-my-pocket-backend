@@ -1,17 +1,16 @@
 package com.depromeet.threedollar.api.userservice.config.interceptor;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import com.depromeet.threedollar.api.userservice.ControllerTest;
+import com.depromeet.threedollar.common.type.ApplicationType;
+import com.depromeet.threedollar.common.type.OsPlatformType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 
-import com.depromeet.threedollar.api.userservice.ControllerTest;
-import com.depromeet.threedollar.common.type.ApplicationType;
-import com.depromeet.threedollar.common.type.OsPlatformType;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class UserMetaInterceptorTest extends ControllerTest {
 

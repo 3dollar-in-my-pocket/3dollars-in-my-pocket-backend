@@ -1,15 +1,13 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.store.repository;
 
-import static com.depromeet.threedollar.domain.rds.core.constants.RDBPackageConstants.PERSISTENCE_LOCK_TIMEOUT;
-import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStoreDeleteRequest.storeDeleteRequest;
-
-import java.util.List;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.LockModeType;
+import java.util.List;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
-
-import lombok.RequiredArgsConstructor;
+import static com.depromeet.threedollar.domain.rds.core.constants.RDBPackageConstants.PERSISTENCE_LOCK_TIMEOUT;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.store.QStoreDeleteRequest.storeDeleteRequest;
 
 @RequiredArgsConstructor
 public class StoreDeleteRequestRepositoryCustomImpl implements StoreDeleteRequestRepositoryCustom {

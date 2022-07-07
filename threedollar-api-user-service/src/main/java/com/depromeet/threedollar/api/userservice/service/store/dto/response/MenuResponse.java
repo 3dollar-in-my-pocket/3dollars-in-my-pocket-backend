@@ -1,16 +1,14 @@
 package com.depromeet.threedollar.api.userservice.service.store.dto.response;
 
-import org.jetbrains.annotations.NotNull;
-
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Menu;
-
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
 
 @ToString
 @Getter

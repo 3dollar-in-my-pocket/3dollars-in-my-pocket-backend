@@ -1,17 +1,5 @@
 package com.depromeet.threedollar.api.userservice.controller.store;
 
-import static com.depromeet.threedollar.api.userservice.controller.store.support.StoreImageAssertions.assertStoreImageResponse;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.userservice.SetupStoreControllerTest;
 import com.depromeet.threedollar.api.userservice.controller.store.support.StoreImageAssertions;
@@ -20,6 +8,17 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImage;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageStatus;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
+import static com.depromeet.threedollar.api.userservice.controller.store.support.StoreImageAssertions.assertStoreImageResponse;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class StoreImageControllerTest extends SetupStoreControllerTest {
 

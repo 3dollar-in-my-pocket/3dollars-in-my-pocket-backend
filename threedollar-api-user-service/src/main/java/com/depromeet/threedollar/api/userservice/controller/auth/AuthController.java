@@ -1,15 +1,5 @@
 package com.depromeet.threedollar.api.userservice.controller.auth;
 
-import static com.depromeet.threedollar.api.userservice.config.session.SessionConstants.USER_ID;
-
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.userservice.config.interceptor.Auth;
 import com.depromeet.threedollar.api.userservice.config.resolver.UserId;
@@ -19,9 +9,17 @@ import com.depromeet.threedollar.api.userservice.service.auth.dto.request.LoginR
 import com.depromeet.threedollar.api.userservice.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.response.LoginResponse;
 import com.depromeet.threedollar.api.userservice.service.user.UserService;
-
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
+import static com.depromeet.threedollar.api.userservice.config.session.SessionConstants.USER_ID;
 
 @RequiredArgsConstructor
 @RestController

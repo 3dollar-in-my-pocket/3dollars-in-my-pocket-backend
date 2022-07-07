@@ -1,12 +1,12 @@
 package com.depromeet.threedollar.api.bossservice.config.resolver
 
+import com.depromeet.threedollar.api.bossservice.config.session.SessionConstants.BOSS_ACCOUNT_ID
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.MethodParameter
 import org.springframework.web.bind.support.WebDataBinderFactory
 import org.springframework.web.context.request.NativeWebRequest
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
-import com.depromeet.threedollar.api.bossservice.config.session.SessionConstants.BOSS_ACCOUNT_ID
 
 @Configuration
 class BossIdResolver : HandlerMethodArgumentResolver {

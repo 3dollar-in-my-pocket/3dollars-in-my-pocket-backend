@@ -1,16 +1,16 @@
 package com.depromeet.threedollar.api.bossservice.config.interceptor
 
-import javax.servlet.http.HttpServletRequest
-import org.springframework.http.HttpHeaders
-import org.springframework.session.Session
-import org.springframework.session.SessionRepository
-import org.springframework.stereotype.Component
 import com.depromeet.threedollar.api.bossservice.config.session.SessionConstants
 import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.UnAuthorizedException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
+import org.springframework.http.HttpHeaders
+import org.springframework.session.Session
+import org.springframework.session.SessionRepository
+import org.springframework.stereotype.Component
+import javax.servlet.http.HttpServletRequest
 
 private const val HEADER_BEARER_PREFIX = "Bearer "
 

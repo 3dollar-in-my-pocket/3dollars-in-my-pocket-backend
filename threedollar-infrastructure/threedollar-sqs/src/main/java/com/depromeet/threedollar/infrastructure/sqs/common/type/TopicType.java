@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.infrastructure.sqs.common.type;
 
 import com.depromeet.threedollar.common.model.EnumModel;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

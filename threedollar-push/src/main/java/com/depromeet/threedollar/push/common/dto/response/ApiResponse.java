@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.push.common.dto.response;
 
 import com.depromeet.threedollar.common.exception.type.ErrorCode;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

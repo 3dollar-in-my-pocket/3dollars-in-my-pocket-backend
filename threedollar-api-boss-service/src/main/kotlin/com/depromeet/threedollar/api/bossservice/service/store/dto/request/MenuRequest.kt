@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.bossservice.service.store.dto.request
 
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenu
+import org.hibernate.validator.constraints.URL
 import javax.validation.constraints.PositiveOrZero
 import javax.validation.constraints.Size
-import org.hibernate.validator.constraints.URL
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenu
 
 data class MenuRequest(
     @field:Size(max = 20, message = "{store.menu.name.size}")

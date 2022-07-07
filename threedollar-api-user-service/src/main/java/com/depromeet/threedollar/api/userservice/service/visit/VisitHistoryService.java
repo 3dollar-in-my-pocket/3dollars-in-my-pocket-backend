@@ -1,13 +1,5 @@
 package com.depromeet.threedollar.api.userservice.service.visit;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.CONFLICT_VISIT_HISTORY;
-
-import java.time.LocalDate;
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.depromeet.threedollar.api.userservice.service.store.StoreServiceHelper;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
@@ -18,8 +10,14 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistory;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.CONFLICT_VISIT_HISTORY;
 
 @RequiredArgsConstructor
 @Service

@@ -1,20 +1,18 @@
 package com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.repository;
 
-import static com.depromeet.threedollar.domain.rds.core.support.QuerydslSupport.predicate;
-import static com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.QAdvertisement.advertisement;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
-import org.jetbrains.annotations.Nullable;
-
 import com.depromeet.threedollar.common.type.ApplicationType;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.Advertisement;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPositionType;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static com.depromeet.threedollar.domain.rds.core.support.QuerydslSupport.predicate;
+import static com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.QAdvertisement.advertisement;
 
 @RequiredArgsConstructor
 public class AdvertisementRepositoryCustomImpl implements AdvertisementRepositoryCustom {

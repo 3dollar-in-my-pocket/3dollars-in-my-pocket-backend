@@ -1,13 +1,13 @@
 package com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.request
 
-import java.time.LocalDateTime
-import javax.validation.constraints.Size
-import org.hibernate.validator.constraints.URL
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.Advertisement
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementDetail
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPositionType
+import org.hibernate.validator.constraints.URL
+import java.time.LocalDateTime
+import javax.validation.constraints.Size
 
 data class AddAdvertisementRequest(
     val applicationType: ApplicationType,

@@ -1,12 +1,12 @@
 package com.depromeet.threedollar.api.userservice.service.medal.dto.request;
 
-import javax.validation.constraints.NotNull;
-
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import javax.validation.constraints.NotNull;
 
 @ToString
 @Getter

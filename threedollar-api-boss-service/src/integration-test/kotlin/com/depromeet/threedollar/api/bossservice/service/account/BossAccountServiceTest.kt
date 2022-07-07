@@ -1,11 +1,5 @@
 package com.depromeet.threedollar.api.bossservice.service.account
 
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 import com.depromeet.threedollar.api.bossservice.IntegrationTest
 import com.depromeet.threedollar.api.bossservice.service.account.dto.request.UpdateBossAccountInfoRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
@@ -17,6 +11,12 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAcc
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccount
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccountRepository
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 internal class BossAccountServiceTest(
     private val bossAccountService: BossAccountService,

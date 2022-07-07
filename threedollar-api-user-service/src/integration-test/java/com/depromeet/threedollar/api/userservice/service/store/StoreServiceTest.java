@@ -1,22 +1,5 @@
 package com.depromeet.threedollar.api.userservice.service.store;
 
-import static com.depromeet.threedollar.api.userservice.service.store.support.StoreAssertions.assertMenu;
-import static com.depromeet.threedollar.api.userservice.service.store.support.StoreAssertions.assertStore;
-import static com.depromeet.threedollar.api.userservice.service.store.support.StoreAssertions.assertStoreDeleteRequest;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.depromeet.threedollar.api.userservice.SetupUserIntegrationTest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.DeleteStoreRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.MenuRequest;
@@ -44,6 +27,22 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreFixtur
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreType;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static com.depromeet.threedollar.api.userservice.service.store.support.StoreAssertions.assertMenu;
+import static com.depromeet.threedollar.api.userservice.service.store.support.StoreAssertions.assertStore;
+import static com.depromeet.threedollar.api.userservice.service.store.support.StoreAssertions.assertStoreDeleteRequest;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class StoreServiceTest extends SetupUserIntegrationTest {
 

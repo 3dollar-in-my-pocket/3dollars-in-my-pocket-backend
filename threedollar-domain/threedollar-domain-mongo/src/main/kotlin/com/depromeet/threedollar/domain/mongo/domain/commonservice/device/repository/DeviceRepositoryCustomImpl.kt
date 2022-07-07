@@ -1,12 +1,12 @@
 package com.depromeet.threedollar.domain.mongo.domain.commonservice.device.repository
 
+import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.AccountType
+import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.Device
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.findOne
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.stereotype.Repository
-import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.AccountType
-import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.Device
 
 @Repository
 class DeviceRepositoryCustomImpl(

@@ -1,18 +1,17 @@
 package com.depromeet.threedollar.api.userservice.service.store;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
-import java.util.List;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.depromeet.threedollar.api.userservice.SetupStoreIntegrationTest;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class StoreReviewRatingServiceTest extends SetupStoreIntegrationTest {
 

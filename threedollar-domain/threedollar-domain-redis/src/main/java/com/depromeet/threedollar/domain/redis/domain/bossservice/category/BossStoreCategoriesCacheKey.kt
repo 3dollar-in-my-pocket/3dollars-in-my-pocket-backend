@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.domain.redis.domain.bossservice.category
 
-import java.time.Duration
 import com.depromeet.threedollar.common.utils.JsonUtils
 import com.depromeet.threedollar.domain.redis.core.StringRedisKey
+import java.time.Duration
 
 class BossStoreCategoriesCacheKey : StringRedisKey<List<BossStoreCategoryCacheModel>> {
 

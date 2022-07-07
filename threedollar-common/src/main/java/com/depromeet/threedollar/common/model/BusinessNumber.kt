@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.common.model
 
-import java.util.regex.Pattern
 import com.depromeet.threedollar.common.exception.model.InvalidException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
+import java.util.regex.Pattern
 
 /**
  * 사업자 번호

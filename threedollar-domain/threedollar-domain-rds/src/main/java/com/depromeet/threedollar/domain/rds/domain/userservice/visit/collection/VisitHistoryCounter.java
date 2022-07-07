@@ -1,15 +1,14 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection;
 
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryCountProjection;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
-import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryCountProjection;
-
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class VisitHistoryCounter {

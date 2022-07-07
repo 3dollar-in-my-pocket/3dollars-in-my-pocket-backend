@@ -1,14 +1,5 @@
 package com.depromeet.threedollar.api.userservice.controller.medal;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.userservice.config.interceptor.Auth;
 import com.depromeet.threedollar.api.userservice.config.resolver.UserId;
@@ -16,9 +7,15 @@ import com.depromeet.threedollar.api.userservice.service.medal.UserMedalService;
 import com.depromeet.threedollar.api.userservice.service.medal.dto.request.ChangeRepresentativeMedalRequest;
 import com.depromeet.threedollar.api.userservice.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.api.userservice.service.user.dto.response.UserMedalResponse;
-
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController

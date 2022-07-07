@@ -1,13 +1,11 @@
 package com.depromeet.threedollar.infrastructure.s3.common.type;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_UPLOAD_FILE_TYPE;
-
+import com.depromeet.threedollar.common.exception.model.InvalidException;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.depromeet.threedollar.common.exception.model.InvalidException;
-
-import lombok.Getter;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_UPLOAD_FILE_TYPE;
 
 @Getter
 public enum FileContentType {

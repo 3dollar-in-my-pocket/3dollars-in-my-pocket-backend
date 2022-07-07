@@ -1,15 +1,14 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.visit.repository;
 
-import java.time.LocalDate;
-import java.util.List;
-
-import org.jetbrains.annotations.Nullable;
-
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistory;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryCountProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryWithUserProjection;
+import org.jetbrains.annotations.Nullable;
+
+import java.time.LocalDate;
+import java.util.List;
 
 public interface VisitHistoryRepositoryCustom {
 

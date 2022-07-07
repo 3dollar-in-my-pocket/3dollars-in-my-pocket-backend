@@ -1,10 +1,10 @@
 package com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.request
 
-import javax.validation.constraints.Max
-import javax.validation.constraints.Min
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPositionType
+import javax.validation.constraints.Max
+import javax.validation.constraints.Min
 
 data class RetrieveAdvertisementsRequest(
     val applicationType: ApplicationType,

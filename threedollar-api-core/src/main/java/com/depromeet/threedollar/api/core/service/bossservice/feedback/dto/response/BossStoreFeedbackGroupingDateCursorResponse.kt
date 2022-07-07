@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.response
 
-import java.time.LocalDate
 import com.depromeet.threedollar.api.core.common.dto.CursorResponse
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
+import java.time.LocalDate
 
 data class BossStoreFeedbackCursorResponse(
     val cursor: CursorResponse<LocalDate>,

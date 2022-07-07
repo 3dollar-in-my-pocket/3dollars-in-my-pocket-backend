@@ -1,15 +1,13 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.user.collection;
 
+import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import org.jetbrains.annotations.Nullable;
-
-import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
-
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserDictionary {

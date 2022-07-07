@@ -1,7 +1,8 @@
 package com.depromeet.threedollar.api.userservice.config.resolver;
 
-import java.util.Objects;
-
+import com.depromeet.threedollar.api.userservice.config.interceptor.Auth;
+import com.depromeet.threedollar.api.userservice.config.session.SessionConstants;
+import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -10,9 +11,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import com.depromeet.threedollar.api.userservice.config.interceptor.Auth;
-import com.depromeet.threedollar.api.userservice.config.session.SessionConstants;
-import com.depromeet.threedollar.common.exception.model.InternalServerException;
+import java.util.Objects;
 
 @Component
 public class UserIdResolver implements HandlerMethodArgumentResolver {

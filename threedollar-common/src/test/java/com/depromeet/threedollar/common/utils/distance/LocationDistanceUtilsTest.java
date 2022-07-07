@@ -1,12 +1,11 @@
 package com.depromeet.threedollar.common.utils.distance;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import com.depromeet.threedollar.common.model.LocationValue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import com.depromeet.threedollar.common.model.LocationValue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class LocationDistanceUtilsTest {
 

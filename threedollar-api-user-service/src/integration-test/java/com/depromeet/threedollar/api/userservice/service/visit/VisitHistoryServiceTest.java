@@ -1,16 +1,5 @@
 package com.depromeet.threedollar.api.userservice.service.visit;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
-import java.time.LocalDate;
-import java.util.List;
-
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.depromeet.threedollar.api.userservice.SetupStoreIntegrationTest;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.userservice.service.visit.support.VisitHistoryAssertions;
@@ -20,6 +9,16 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistor
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class VisitHistoryServiceTest extends SetupStoreIntegrationTest {
 

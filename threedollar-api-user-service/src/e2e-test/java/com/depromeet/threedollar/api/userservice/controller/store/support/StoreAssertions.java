@@ -1,11 +1,5 @@
 package com.depromeet.threedollar.api.userservice.controller.store.support;
 
-import static com.depromeet.threedollar.api.userservice.controller.user.support.UserAssertions.assertUserInfoResponse;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
-import java.util.List;
-
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.MenuResponse;
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoreDetailResponse;
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoreInfoResponse;
@@ -16,9 +10,14 @@ import com.depromeet.threedollar.domain.rds.domain.TestAssertions;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Menu;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+import static com.depromeet.threedollar.api.userservice.controller.user.support.UserAssertions.assertUserInfoResponse;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @TestAssertions
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

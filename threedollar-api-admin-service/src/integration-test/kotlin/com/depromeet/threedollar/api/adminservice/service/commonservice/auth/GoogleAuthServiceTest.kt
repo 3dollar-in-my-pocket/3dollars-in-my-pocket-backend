@@ -1,10 +1,5 @@
 package com.depromeet.threedollar.api.adminservice.service.commonservice.auth
 
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
 import com.depromeet.threedollar.api.adminservice.IntegrationTest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
@@ -12,6 +7,11 @@ import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminFixt
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminRepository
 import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAuthApiClient
 import com.depromeet.threedollar.infrastructure.external.client.google.dto.response.GoogleProfileInfoResponse
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
 
 private const val EMAIL = "will.seunho@gmail.com"
 

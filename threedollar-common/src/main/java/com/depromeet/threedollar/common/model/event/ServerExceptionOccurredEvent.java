@@ -1,14 +1,13 @@
 package com.depromeet.threedollar.common.model.event;
 
-import java.time.LocalDateTime;
-
 import com.depromeet.threedollar.common.exception.type.ErrorCode;
 import com.depromeet.threedollar.common.model.UserMetaValue;
 import com.depromeet.threedollar.common.type.ApplicationType;
-
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.time.LocalDateTime;
 
 @Getter
 public class ServerExceptionOccurredEvent {

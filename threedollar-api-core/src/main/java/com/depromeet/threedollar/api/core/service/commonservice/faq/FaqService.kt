@@ -1,8 +1,5 @@
 package com.depromeet.threedollar.api.core.service.commonservice.faq
 
-import org.springframework.cache.annotation.Cacheable
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.request.RetrieveFaqsRequest
 import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.response.FaqResponse
 import com.depromeet.threedollar.common.exception.model.ForbiddenException
@@ -11,6 +8,9 @@ import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.common.type.CacheType.CacheKey.FAQS
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqRepository
+import org.springframework.cache.annotation.Cacheable
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class FaqService(

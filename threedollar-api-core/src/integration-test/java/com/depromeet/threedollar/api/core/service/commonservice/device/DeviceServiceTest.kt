@@ -1,9 +1,5 @@
 package com.depromeet.threedollar.api.core.service.commonservice.device
 
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 import com.depromeet.threedollar.api.core.IntegrationTest
 import com.depromeet.threedollar.api.core.service.commonservice.device.dto.request.UpsertDeviceRequest
 import com.depromeet.threedollar.common.model.UserMetaValue
@@ -14,6 +10,10 @@ import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.Device
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.DeviceFixture
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.DeviceRepository
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.PushPlatformType
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 internal class DeviceServiceTest(
     private val deviceService: DeviceService,

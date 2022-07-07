@@ -1,21 +1,5 @@
 package com.depromeet.threedollar.api.userservice.controller.visit;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
-import java.time.LocalDate;
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.userservice.SetupStoreControllerTest;
 import com.depromeet.threedollar.api.userservice.controller.store.support.StoreAssertions;
@@ -32,6 +16,21 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistor
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
 import com.depromeet.threedollar.domain.rds.event.userservice.visit.VisitHistoryAddedEvent;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 class VisitHistoryControllerTest extends SetupStoreControllerTest {
 

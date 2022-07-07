@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.bossservice.service.store.dto.request
 
-import java.time.LocalTime
-import javax.validation.constraints.Size
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreAppearanceDay
+import java.time.LocalTime
+import javax.validation.constraints.Size
 
 data class AppearanceDayRequest(
     val dayOfTheWeek: DayOfTheWeek,

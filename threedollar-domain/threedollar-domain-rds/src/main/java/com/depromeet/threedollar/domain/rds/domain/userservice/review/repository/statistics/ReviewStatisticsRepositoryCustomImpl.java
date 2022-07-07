@@ -1,13 +1,12 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.review.repository.statistics;
 
-import static com.depromeet.threedollar.domain.rds.domain.userservice.review.QReview.review;
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewStatus;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 
-import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewStatus;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-
-import lombok.RequiredArgsConstructor;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.review.QReview.review;
 
 @RequiredArgsConstructor
 public class ReviewStatisticsRepositoryCustomImpl implements ReviewStatisticsRepositoryCustom {

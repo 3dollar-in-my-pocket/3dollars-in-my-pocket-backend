@@ -1,12 +1,12 @@
 package com.depromeet.threedollar.domain.redis.domain.bossservice.store
 
-import java.time.LocalDateTime
-import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Test
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.redis.IntegrationTest
 import com.depromeet.threedollar.domain.redis.core.StringRedisRepository
+import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Test
+import java.time.LocalDateTime
 
 private const val BOSS_STORE_ID = "boss-store-id"
 

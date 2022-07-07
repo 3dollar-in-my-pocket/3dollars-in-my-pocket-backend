@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.request
 
-import java.time.LocalDate
-import javax.validation.constraints.Size
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedback
+import java.time.LocalDate
+import javax.validation.constraints.Size
 
 data class AddBossStoreFeedbackRequest(
     @field:Size(min = 1, message = "{feedback.size.min}")

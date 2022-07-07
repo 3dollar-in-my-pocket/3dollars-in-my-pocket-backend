@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.repository
 
-import java.time.LocalDate
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedback
 import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.find
@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.query.gte
 import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.data.mongodb.core.query.lt
 import org.springframework.stereotype.Repository
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedback
+import java.time.LocalDate
 
 @Repository
 class BossStoreFeedbackRepositoryCustomImpl(

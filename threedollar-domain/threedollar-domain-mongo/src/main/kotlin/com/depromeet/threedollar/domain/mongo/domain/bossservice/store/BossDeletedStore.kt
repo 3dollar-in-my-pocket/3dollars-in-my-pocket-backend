@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.domain.mongo.domain.bossservice.store
 
-import java.time.LocalDateTime
-import org.springframework.data.mongodb.core.mapping.Document
 import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.domain.mongo.core.model.BaseDocument
+import org.springframework.data.mongodb.core.mapping.Document
+import java.time.LocalDateTime
 
 @Document("boss_deleted_store_v1")
 class BossDeletedStore(

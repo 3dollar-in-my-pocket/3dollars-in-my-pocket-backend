@@ -1,16 +1,15 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.store.projection;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class StoreWithMenuProjectionTest {
 

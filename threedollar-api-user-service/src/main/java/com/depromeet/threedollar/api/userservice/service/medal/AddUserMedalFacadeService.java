@@ -1,21 +1,19 @@
 package com.depromeet.threedollar.api.userservice.service.medal;
 
-import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType.ADD_REVIEW;
-import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType.ADD_STORE;
-import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType.DELETE_STORE;
-import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE;
-import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType.VISIT_NOT_EXISTS_STORE;
-
-import org.springframework.stereotype.Component;
-
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequestRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType.ADD_REVIEW;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType.ADD_STORE;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType.DELETE_STORE;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE;
+import static com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType.VISIT_NOT_EXISTS_STORE;
 
 @RequiredArgsConstructor
 @Component

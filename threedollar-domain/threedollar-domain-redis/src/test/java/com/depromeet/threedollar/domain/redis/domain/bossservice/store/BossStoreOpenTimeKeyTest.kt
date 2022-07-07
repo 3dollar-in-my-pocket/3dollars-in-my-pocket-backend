@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.domain.redis.domain.bossservice.store
 
-import java.time.Duration
-import java.time.LocalDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import java.time.Duration
+import java.time.LocalDateTime
 
 private const val BOSS_STORE_ID = "bossStoreId"
 

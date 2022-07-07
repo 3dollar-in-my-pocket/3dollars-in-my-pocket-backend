@@ -1,11 +1,5 @@
 package com.depromeet.threedollar.push.provider.push;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Component;
-
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import com.depromeet.threedollar.common.type.ApplicationType;
 import com.depromeet.threedollar.infrastructure.firebase.FirebaseMessagingFinder;
@@ -15,6 +9,11 @@ import com.depromeet.threedollar.push.common.constants.PushExtraFieldConstants;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class FirebasePushProvider implements PushProvider {

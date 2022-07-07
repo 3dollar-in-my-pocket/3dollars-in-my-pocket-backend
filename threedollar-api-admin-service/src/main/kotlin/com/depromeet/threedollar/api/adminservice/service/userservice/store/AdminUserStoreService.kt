@@ -1,7 +1,5 @@
 package com.depromeet.threedollar.api.adminservice.service.userservice.store
 
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.request.RetrieveLatestStoresRequest
 import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.request.RetrieveReportedStoresRequest
 import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.response.ReportedStoreInfoResponse
@@ -10,6 +8,8 @@ import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.rds.core.support.CursorPagingSupporter
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class AdminUserStoreService(

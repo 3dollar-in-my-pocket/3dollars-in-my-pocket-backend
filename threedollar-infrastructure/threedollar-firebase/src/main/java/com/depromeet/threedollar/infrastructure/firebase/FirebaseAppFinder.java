@@ -1,13 +1,11 @@
 package com.depromeet.threedollar.infrastructure.firebase;
 
-import org.jetbrains.annotations.NotNull;
-
 import com.depromeet.threedollar.common.exception.model.ServiceUnAvailableException;
 import com.depromeet.threedollar.common.type.ApplicationType;
 import com.google.firebase.FirebaseApp;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class FirebaseAppFinder {

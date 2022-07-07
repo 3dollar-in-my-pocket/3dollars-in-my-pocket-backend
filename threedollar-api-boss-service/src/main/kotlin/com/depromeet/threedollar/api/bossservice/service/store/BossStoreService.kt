@@ -1,7 +1,5 @@
 package com.depromeet.threedollar.api.bossservice.service.store
 
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.PatchBossStoreInfoRequest
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.UpdateBossStoreInfoRequest
 import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryServiceHelper
@@ -12,6 +10,8 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossDelet
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossDeletedStoreRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class BossStoreService(

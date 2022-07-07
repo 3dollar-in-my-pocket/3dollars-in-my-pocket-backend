@@ -1,13 +1,13 @@
 package com.depromeet.threedollar.api.bossservice.runner
 
-import java.util.concurrent.TimeUnit
-import org.springframework.context.annotation.Profile
-import org.springframework.scheduling.annotation.Scheduled
-import org.springframework.stereotype.Component
 import com.depromeet.threedollar.common.type.FamousPlace
 import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAuthApiClient
 import com.depromeet.threedollar.infrastructure.external.client.kakao.KaKaoAuthApiClient
 import com.depromeet.threedollar.infrastructure.external.client.local.LocalBossApiWarmupApiClient
+import org.springframework.context.annotation.Profile
+import org.springframework.scheduling.annotation.Scheduled
+import org.springframework.stereotype.Component
+import java.util.concurrent.TimeUnit
 
 private const val API_CALL_COUNT = 5
 

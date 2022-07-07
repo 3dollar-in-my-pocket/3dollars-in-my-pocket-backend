@@ -1,17 +1,15 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.medal.collection;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.jetbrains.annotations.NotNull;
-
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.Medal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedal;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
-
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class MedalObtainCollection {

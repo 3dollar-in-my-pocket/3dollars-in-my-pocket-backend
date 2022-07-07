@@ -1,17 +1,5 @@
 package com.depromeet.threedollar.api.userservice.service.user;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
-import java.util.List;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.depromeet.threedollar.api.userservice.IntegrationTest;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.CheckAvailableNameRequest;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.CreateUserRequest;
@@ -26,6 +14,17 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialTy
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.WithdrawalUser;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.WithdrawalUserFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.WithdrawalUserRepository;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class UserServiceTest extends IntegrationTest {
 
