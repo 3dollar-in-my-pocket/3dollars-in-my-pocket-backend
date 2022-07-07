@@ -29,23 +29,22 @@
 
 - **Language** - Java 11, Kotlin 1.6
 - **Framework** - Spring Framework (Spring Boot, Spring MVC, Spring Batch)
-- **Data(RDBMS)** - JPA/Hibernate, QueryDSL, MariaDB
-- **Data(NoSQL, Cache)** - MongoDB, Redis, Caffeine Cache
-- **Build Tool** - Gradle
+- **Data** - JPA/Hibernate, QueryDSL, MariaDB, MongoDB, Redis, Caffeine Cache
 - **Test** - Junit5, Spring Test, Mockito, SpringMockK
+- **Build Tool** - Gradle
 
 ### 인프라 아키텍처
 
-![img.png](docs/3dollars-architecture-20220409.png)
+![img.png](docs/3dollars-architecture-20220707.png)
 
-- **Infra** - ECS Fargate (API, Batch), ALB, S3, CloudFront
+- **Infra** - ECS Fargate, ALB, S3, CloudFront, SQS
 - **DB** - MariaDB(RDS), MongoDB(EC2), Redis Cluster(Elastic Cache), flyway
 - **CI/CD** - Git, GitHub Actions CI/CD, SonarQube
 - **Operations** - CloudWatch, Sentry, Slack, NewRelic, Locust
 
 ### 멀티 모듈 구조
 
-![img.png](docs/modules-20220608.png)
+![img.png](docs/3dollars-modules-20220707.png)
 
 ## Developers & Contacts
 
