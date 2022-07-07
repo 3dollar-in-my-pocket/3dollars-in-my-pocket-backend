@@ -26,7 +26,7 @@ public class SamplePushController {
     public ApiResponse<String> sendMessage(
         @Valid @RequestBody SendFirebaseMessagePayload payload
     ) {
-        sqsSender.sendToTopic(TopicType.SINGLE_PUSH, payload);
+        sqsSender.sendToTopic(TopicType.SINGLE_APP_PUSH, payload);
         return ApiResponse.OK;
     }
 
@@ -34,7 +34,7 @@ public class SamplePushController {
     public ApiResponse<String> sendMessage(
         @Valid @RequestBody SendFirebaseMessageBulkPayload payload
     ) {
-        sqsSender.sendToTopic(TopicType.BULK_PUSH, payload);
+        sqsSender.sendToTopic(TopicType.BULK_APP_PUSH, payload);
         return ApiResponse.OK;
     }
 

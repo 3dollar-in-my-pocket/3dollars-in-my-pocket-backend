@@ -11,6 +11,7 @@ spring:
     init:
       mode: never
 
+
 ---
 spring.config:
   activate:

@@ -10,21 +10,33 @@ push:
     boss:
       single-push: ${secret.push.sqs.boss.single-push}
       bulk-push: ${secret.push.sqs.boss.bulk-push}
-    common:
-      error-slack: ${secret.push.sqs.common.error-slack}
+
 
 ---
+spring.config:
+  activate:
+    on-profile:
+      - local
+      - local-docker
+
 cloud:
   aws:
     credentials:
       access-key: ${secret.cloud.aws.credentials.access-key}
       secret-key: ${secret.cloud.aws.credentials.secret-key}
 
-spring:
-  config:
-    activate:
-      on-profile:
-        - local
-        - local-docker
+
+---
+spring.config:
+  activate:
+    on-profile:
+      - integration-test
+
+push:
+  sqs:
+    boss:
+      single-push: test-single-push
+      bulk-push: test-bulk-push
+
 
 ---

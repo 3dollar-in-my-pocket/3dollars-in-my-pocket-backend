@@ -21,7 +21,7 @@ class PushTestController(
     fun sendMessage(
         @Valid @RequestBody payload: SendFirebaseMessagePayload,
     ): ApiResponse<String> {
-        sqsSender.sendToTopic(TopicType.SINGLE_PUSH, payload)
+        sqsSender.sendToTopic(TopicType.SINGLE_APP_PUSH, payload)
         return ApiResponse.OK
     }
 
@@ -29,7 +29,7 @@ class PushTestController(
     fun sendMessageBulk(
         @Valid @RequestBody payload: SendFirebaseMessageBulkPayload,
     ): ApiResponse<String> {
-        sqsSender.sendToTopic(TopicType.BULK_PUSH, payload)
+        sqsSender.sendToTopic(TopicType.BULK_APP_PUSH, payload)
         return ApiResponse.OK
     }
 

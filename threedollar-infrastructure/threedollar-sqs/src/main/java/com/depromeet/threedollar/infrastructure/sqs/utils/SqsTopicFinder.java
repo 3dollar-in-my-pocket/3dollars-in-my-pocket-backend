@@ -15,12 +15,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SqsTopicFinder {
 
-    public static final Map<TopicType, String> SQS_TOPIC_MAP = new EnumMap<>(TopicType.class);
+    private static final Map<TopicType, String> SQS_TOPIC_MAP = new EnumMap<>(TopicType.class);
 
     static {
         Environment env = ApplicationContextProvider.getApplicationContext().getEnvironment();
-        SQS_TOPIC_MAP.put(TopicType.SINGLE_PUSH, env.getProperty("push.sqs.boss.single-push"));
-        SQS_TOPIC_MAP.put(TopicType.BULK_PUSH, env.getProperty("push.sqs.boss.bulk-push"));
+        SQS_TOPIC_MAP.put(TopicType.SINGLE_APP_PUSH, env.getProperty("push.sqs.boss.single-push"));
+        SQS_TOPIC_MAP.put(TopicType.BULK_APP_PUSH, env.getProperty("push.sqs.boss.bulk-push"));
     }
 
     @NotNull

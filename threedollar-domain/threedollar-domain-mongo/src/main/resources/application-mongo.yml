@@ -23,6 +23,7 @@ spring:
       uri: mongodb://localhost:27018/threedollar?replicaSet=${spring.data.mongodb.replicaSet}&directConnection=true
       replicaSet: threedollar-replication-1
 
+
 ---
 spring.config:
   activate:

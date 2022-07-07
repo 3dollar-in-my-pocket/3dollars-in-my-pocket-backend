@@ -1,10 +1,10 @@
 dependencies {
-    implementation project(":threedollar-common")
-
     implementation project(":threedollar-infrastructure:threedollar-sqs")
     implementation project(":threedollar-infrastructure:threedollar-firebase")
     implementation project(":threedollar-infrastructure:threedollar-monitoring")
     implementation project(":threedollar-infrastructure:threedollar-external")
+
+    implementation project(":threedollar-common")
 
     // Spring MVC
     implementation("org.springframework.boot:spring-boot-starter-web")

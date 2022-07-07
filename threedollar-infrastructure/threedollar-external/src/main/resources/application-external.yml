@@ -35,6 +35,7 @@ external:
       webhook:
         base-url: https://hooks.slack.com/services
 
+
 ---
 spring.config:
   activate:

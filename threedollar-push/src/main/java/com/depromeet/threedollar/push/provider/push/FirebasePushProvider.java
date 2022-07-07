@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import com.depromeet.threedollar.common.type.ApplicationType;
@@ -16,14 +16,11 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
 
-@Service
+@Component
 public class FirebasePushProvider implements PushProvider {
 
     @Override
-    public void sendMessageAsync(
-        @NotNull ApplicationType applicationType,
-        @NotNull SendFirebaseMessagePayload request
-    ) {
+    public void sendMessageAsync(@NotNull ApplicationType applicationType, @NotNull SendFirebaseMessagePayload request) {
         try {
             FirebaseMessaging messaging = FirebaseMessagingFinder.find(applicationType);
             messaging.sendAsync(toMessage(request));
@@ -44,10 +41,7 @@ public class FirebasePushProvider implements PushProvider {
     }
 
     @Override
-    public void sendMessageBulkAsync(
-        @NotNull ApplicationType applicationType,
-        @NotNull SendFirebaseMessageBulkPayload request
-    ) {
+    public void sendMessageBulkAsync(@NotNull ApplicationType applicationType, @NotNull SendFirebaseMessageBulkPayload request) {
         try {
             FirebaseMessaging messaging = FirebaseMessagingFinder.find(applicationType);
             messaging.sendAllAsync(toMessages(request));

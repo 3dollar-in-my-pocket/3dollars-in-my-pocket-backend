@@ -10,8 +10,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum TopicType implements EnumModel {
 
-    SINGLE_PUSH("SINGLE_PUSH", "단건 푸시 알림"),
-    BULK_PUSH("BULK_PUSH", "다건 푸시 알림"),
+    SINGLE_APP_PUSH("SINGLE_PUSH", "단건 푸시 알림"),
+    BULK_APP_PUSH("BULK_PUSH", "다건 푸시 알림"),
     ;
 
     private final String code;

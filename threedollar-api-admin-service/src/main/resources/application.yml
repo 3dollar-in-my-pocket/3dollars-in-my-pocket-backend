@@ -59,6 +59,7 @@ spring:
       hikari:
         maximum-pool-size: 5
 
+
 ---
 spring.config:
   activate:
