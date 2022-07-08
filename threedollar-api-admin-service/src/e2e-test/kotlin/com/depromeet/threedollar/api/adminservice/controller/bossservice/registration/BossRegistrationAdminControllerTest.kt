@@ -1,12 +1,5 @@
 package com.depromeet.threedollar.api.adminservice.controller.bossservice.registration
 
-import org.hamcrest.Matchers.hasSize
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
-import org.springframework.http.HttpHeaders
-import org.springframework.test.web.servlet.get
-import org.springframework.test.web.servlet.put
 import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
 import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.response.BossAccountRegistrationResponse
 import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.response.BossAccountRegistrationStoreResponse
@@ -17,6 +10,13 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.Re
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import io.mockk.verify
+import org.hamcrest.Matchers.hasSize
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import org.springframework.http.HttpHeaders
+import org.springframework.test.web.servlet.get
+import org.springframework.test.web.servlet.put
 
 internal class BossRegistrationAdminControllerTest(
     private val bossRegistrationRepository: BossRegistrationRepository,

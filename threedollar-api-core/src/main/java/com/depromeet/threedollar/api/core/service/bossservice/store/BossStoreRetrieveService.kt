@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.api.core.service.bossservice.store
 
-import org.springframework.stereotype.Service
 import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryService
 import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryServiceHelper
 import com.depromeet.threedollar.api.core.service.bossservice.category.dto.response.BossStoreCategoryResponse
@@ -15,6 +14,7 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpen
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpenRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.feedback.BossStoreFeedbackCountRepository
+import org.springframework.stereotype.Service
 
 @Service
 class BossStoreRetrieveService(

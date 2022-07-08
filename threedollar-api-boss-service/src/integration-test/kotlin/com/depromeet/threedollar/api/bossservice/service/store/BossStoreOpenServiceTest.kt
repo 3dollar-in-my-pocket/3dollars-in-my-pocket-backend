@@ -1,12 +1,5 @@
 package com.depromeet.threedollar.api.bossservice.service.store
 
-import java.time.LocalDateTime
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 import com.depromeet.threedollar.api.bossservice.SetupBossStoreIntegrationTest
 import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
@@ -16,6 +9,13 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpenFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpenRepository
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
+import java.time.LocalDateTime
 
 internal class BossStoreOpenServiceTest(
     private val bossStoreOpenService: BossStoreOpenService,

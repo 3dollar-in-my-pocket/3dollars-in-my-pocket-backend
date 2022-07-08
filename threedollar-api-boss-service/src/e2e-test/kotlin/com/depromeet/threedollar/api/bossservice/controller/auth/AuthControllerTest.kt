@@ -1,13 +1,5 @@
 package com.depromeet.threedollar.api.bossservice.controller.auth
 
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.springframework.http.HttpHeaders
-import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.delete
-import org.springframework.test.web.servlet.post
 import com.depromeet.threedollar.api.bossservice.SetupBossAccountControllerTest
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.request.SignupRequest
@@ -23,6 +15,14 @@ import com.depromeet.threedollar.infrastructure.external.client.kakao.KaKaoAuthA
 import com.depromeet.threedollar.infrastructure.external.client.kakao.dto.response.KaKaoProfileResponse
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.delete
+import org.springframework.test.web.servlet.post
 
 internal class AuthControllerTest(
     private val bossRegistrationRepository: BossRegistrationRepository,

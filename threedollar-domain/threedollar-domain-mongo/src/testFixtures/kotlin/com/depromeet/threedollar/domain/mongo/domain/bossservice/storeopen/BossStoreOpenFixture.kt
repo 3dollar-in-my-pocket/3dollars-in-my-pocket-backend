@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen
 
-import java.time.LocalDateTime
 import com.depromeet.threedollar.domain.mongo.TestFixture
+import java.time.LocalDateTime
 
 @TestFixture
 object BossStoreOpenFixture {

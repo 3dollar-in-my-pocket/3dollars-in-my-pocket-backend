@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen
 
-import java.time.LocalDateTime
+import com.depromeet.threedollar.domain.mongo.core.model.BaseDocument
 import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
-import com.depromeet.threedollar.domain.mongo.core.model.BaseDocument
+import java.time.LocalDateTime
 
 @Document("boss_store_open_v1")
 class BossStoreOpen(

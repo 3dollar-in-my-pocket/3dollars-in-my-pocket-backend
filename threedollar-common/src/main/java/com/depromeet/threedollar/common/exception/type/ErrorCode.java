@@ -1,12 +1,11 @@
 package com.depromeet.threedollar.common.exception.type;
 
+import com.depromeet.threedollar.common.type.HttpStatusCode;
+import lombok.Getter;
+
 import static com.depromeet.threedollar.common.exception.type.ErrorAlarmOptionType.OFF;
 import static com.depromeet.threedollar.common.exception.type.ErrorAlarmOptionType.ON;
 import static com.depromeet.threedollar.common.type.HttpStatusCode.BAD_REQUEST;
-
-import com.depromeet.threedollar.common.type.HttpStatusCode;
-
-import lombok.Getter;
 
 @Getter
 public enum ErrorCode {

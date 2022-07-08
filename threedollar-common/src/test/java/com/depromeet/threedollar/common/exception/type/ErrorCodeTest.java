@@ -1,12 +1,12 @@
 package com.depromeet.threedollar.common.exception.type;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class ErrorCodeTest {
 

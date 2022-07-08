@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.repository
 
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpen
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.find
 import org.springframework.data.mongodb.core.findOne
@@ -7,7 +8,6 @@ import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.data.mongodb.core.query.where
 import org.springframework.stereotype.Repository
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpen
 
 @Repository
 class BossStoreOpenRepositoryCustomImpl(
