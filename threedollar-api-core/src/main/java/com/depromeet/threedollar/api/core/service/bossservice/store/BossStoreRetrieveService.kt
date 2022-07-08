@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.core.service.bossservice.store
 
+import org.springframework.stereotype.Service
 import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryService
 import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryServiceHelper
 import com.depromeet.threedollar.api.core.service.bossservice.category.dto.response.BossStoreCategoryResponse
@@ -11,14 +12,14 @@ import com.depromeet.threedollar.common.utils.distance.LookupRadiusDistanceLimit
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpen
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpenRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.feedback.BossStoreFeedbackCountRepository
-import com.depromeet.threedollar.domain.redis.domain.bossservice.store.BossStoreOpenTimeRepository
-import org.springframework.stereotype.Service
 
 @Service
 class BossStoreRetrieveService(
     private val bossStoreRepository: BossStoreRepository,
-    private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository,
+    private val bossStoreOpenRepository: BossStoreOpenRepository,
     private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossStoreCategoryService: BossStoreCategoryService,
@@ -43,6 +44,8 @@ class BossStoreRetrieveService(
         )
 
         val categoriesDictionary: Map<String, BossStoreCategoryResponse> = bossStoreCategoryService.retrieveBossStoreCategories().associateBy { it.categoryId }
+        val bossStoreOpensDictionary: Map<String, BossStoreOpen> = bossStoreOpenRepository.findBossOpenStoresByIds(bossStoreIds = bossStores.map { bossStore -> bossStore.id })
+            .associateBy { it.bossStoreId }
 
         return bossStores.asSequence()
             .filter { bossStore -> bossStore.isNotOwner(bossId = bossId ?: "") }
@@ -50,7 +53,7 @@ class BossStoreRetrieveService(
                 BossStoreAroundInfoResponse.of(
                     bossStore = bossStore,
                     categories = getCategories(bossStore, categoriesDictionary),
-                    openStartDateTime = bossStoreOpenTimeRepository.get(bossStore.id),
+                    bossStoreOpen = bossStoreOpensDictionary[bossStore.id],
                     deviceLocation = deviceLocation,
                     totalFeedbacksCounts = bossStoreFeedbackCountRepository.getTotalCounts(bossStore.id)
                 )
@@ -71,7 +74,7 @@ class BossStoreRetrieveService(
         return BossStoreInfoResponse.of(
             bossStore = bossStore,
             categories = bossStoreCategoryService.retrieveBossStoreCategoriesByIds(bossStore.categoriesIds),
-            openStartDateTime = bossStoreOpenTimeRepository.get(bossStore.id),
+            bossStoreOpen = bossStoreOpenRepository.findBossOpenStoreByBossStoreId(bossStore.id),
             deviceLocation = deviceLocation
         )
     }
@@ -81,7 +84,7 @@ class BossStoreRetrieveService(
         return BossStoreInfoResponse.of(
             bossStore = bossStore,
             categories = bossStoreCategoryService.retrieveBossStoreCategoriesByIds(bossStore.categoriesIds),
-            openStartDateTime = bossStoreOpenTimeRepository.get(bossStore.id)
+            bossStoreOpen = bossStoreOpenRepository.findBossOpenStoreByBossStoreId(bossStore.id),
         )
     }
 

@@ -1,5 +1,15 @@
 package com.depromeet.threedollar.api.bossservice.controller.store
 
+import java.time.LocalDateTime
+import java.time.LocalTime
+import org.hamcrest.Matchers
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.springframework.http.HttpHeaders
+import org.springframework.test.web.servlet.get
 import com.depromeet.threedollar.api.bossservice.SetupBossAccountControllerTest
 import com.depromeet.threedollar.api.core.service.bossservice.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.api.core.service.bossservice.store.dto.response.BossStoreAppearanceDayResponse
@@ -15,25 +25,16 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenuFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreOpenType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpenFixture
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpenRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheRepository
-import com.depromeet.threedollar.domain.redis.domain.bossservice.store.BossStoreOpenTimeRepository
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
-import org.hamcrest.Matchers
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.springframework.http.HttpHeaders
-import org.springframework.test.web.servlet.get
-import java.time.LocalDateTime
-import java.time.LocalTime
 
 internal class BossStoreRetrieveControllerTest(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-    private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository,
+    private val bossStoreOpenRepository: BossStoreOpenRepository,
 ) : SetupBossAccountControllerTest() {
 
     @MockkBean
@@ -50,6 +51,7 @@ internal class BossStoreRetrieveControllerTest(
         super.cleanup()
         bossStoreCategoryRepository.deleteAll()
         bossStoreRepository.deleteAll()
+        bossStoreOpenRepository.deleteAll()
     }
 
     @DisplayName("GET /boss/v1/boss/store/me")
@@ -220,7 +222,15 @@ internal class BossStoreRetrieveControllerTest(
             )
             bossStoreRepository.save(bossStore)
 
-            bossStoreOpenTimeRepository.set(bossStore.id, LocalDateTime.of(2022, 2, 1, 0, 0))
+            val startDateTime = LocalDateTime.of(2022, 2, 1, 0, 0)
+            val expiredAt = LocalDateTime.of(2999, 1, 1, 0, 0)
+
+            val bossStoreOpen = BossStoreOpenFixture.create(
+                bossStoreId = bossStore.id,
+                openStartDateTime = startDateTime,
+                expiredAt = expiredAt,
+            )
+            bossStoreOpenRepository.save(bossStoreOpen)
 
             // when & then
             mockMvc.get("/v1/boss/store/${bossStore.id}") {
@@ -281,7 +291,15 @@ internal class BossStoreRetrieveControllerTest(
             )
             bossStoreRepository.save(bossStore)
 
-            bossStoreOpenTimeRepository.set(bossStore.id, LocalDateTime.of(2022, 2, 1, 0, 0))
+            val startDateTime = LocalDateTime.of(2022, 2, 1, 0, 0)
+            val expiredAt = LocalDateTime.of(2999, 1, 1, 0, 0)
+
+            val bossStoreOpen = BossStoreOpenFixture.create(
+                bossStoreId = bossStore.id,
+                openStartDateTime = startDateTime,
+                expiredAt = expiredAt,
+            )
+            bossStoreOpenRepository.save(bossStoreOpen)
 
             // when & then
             mockMvc.get("/v1/boss/store/${bossStore.id}") {
@@ -294,32 +312,6 @@ internal class BossStoreRetrieveControllerTest(
                     status { isOk() }
 
                     jsonPath("$.data.location") { value(null) }
-
-                    jsonPath("$.data.bossStoreId") { value(bossStore.id) }
-                    jsonPath("$.data.name") { value("사장님 가게") }
-
-                    jsonPath("$.data.imageUrl") { value(bossStore.imageUrl) }
-                    jsonPath("$.data.introduction") { value(bossStore.introduction) }
-                    jsonPath("$.data.snsUrl") { value(bossStore.snsUrl) }
-                    jsonPath("$.data.contactsNumber") { value("010-1234-1234") }
-
-                    jsonPath("$.data.menus", Matchers.hasSize<BossStoreMenuResponse>(1))
-                    jsonPath("$.data.menus[0].name") { value("붕어빵") }
-                    jsonPath("$.data.menus[0].price") { value(2000) }
-                    jsonPath("$.data.menus[0].imageUrl") { value("https://menu.png") }
-
-                    jsonPath("$.data.appearanceDays", Matchers.hasSize<BossStoreAppearanceDayResponse>(1))
-                    jsonPath("$.data.appearanceDays[0].dayOfTheWeek") { value(DayOfTheWeek.FRIDAY.name) }
-                    jsonPath("$.data.appearanceDays[0].openingHours.startTime") { value("08:00") }
-                    jsonPath("$.data.appearanceDays[0].openingHours.endTime") { value("10:00") }
-                    jsonPath("$.data.appearanceDays[0].locationDescription") { value("강남역") }
-
-                    jsonPath("$.data.categories", Matchers.hasSize<BossStoreCategoryResponse>(1))
-                    jsonPath("$.data.categories[0].categoryId") { value(category.id) }
-                    jsonPath("$.data.categories[0].name") { value("한식") }
-
-                    jsonPath("$.data.openStatus.status") { value(BossStoreOpenType.OPEN.name) }
-                    jsonPath("$.data.openStatus.openStartDateTime") { value("2022-02-01T00:00:00") }
                 }
         }
 

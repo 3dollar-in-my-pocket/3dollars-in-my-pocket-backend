@@ -1,5 +1,12 @@
 package com.depromeet.threedollar.api.bossservice.service.store
 
+import java.time.LocalDateTime
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import com.depromeet.threedollar.api.bossservice.SetupBossStoreIntegrationTest
 import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
@@ -7,24 +14,19 @@ import com.depromeet.threedollar.common.model.LocationValue
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreLocation
-import com.depromeet.threedollar.domain.redis.domain.bossservice.store.BossStoreOpenTimeRepository
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
-import java.time.LocalDateTime
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpenFixture
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpenRepository
 
 internal class BossStoreOpenServiceTest(
     private val bossStoreOpenService: BossStoreOpenService,
-    private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository,
+    private val bossStoreOpenRepository: BossStoreOpenRepository,
 ) : SetupBossStoreIntegrationTest() {
 
     @AfterEach
     fun cleanUp() {
         super.cleanup()
         bossStoreRepository.deleteAll()
+        bossStoreOpenRepository.deleteAll()
     }
 
     @Nested
@@ -40,9 +42,14 @@ internal class BossStoreOpenServiceTest(
             )
 
             // then
-            val openStartDateTime = bossStoreOpenTimeRepository.get(bossStoreId)
+            val bossStoreOpens = bossStoreOpenRepository.findAll()
             assertAll({
-                assertThat(openStartDateTime).isNotNull
+                assertThat(bossStoreOpens).hasSize(1)
+                bossStoreOpens[0].also {
+                    assertThat(it.bossStoreId).isEqualTo(bossStoreId)
+                    assertThat(it.openStartDateTime).isBetween(LocalDateTime.now().minusMinutes(1), LocalDateTime.now().plusMinutes(1))
+                    assertThat(it.openStartDateTime).isBetween(LocalDateTime.now().minusMinutes(29), LocalDateTime.now().plusMinutes(30))
+                }
             })
         }
 
@@ -110,7 +117,14 @@ internal class BossStoreOpenServiceTest(
             bossStoreRepository.save(bossStore)
 
             val startDateTime = LocalDateTime.of(2022, 1, 1, 0, 0)
-            bossStoreOpenTimeRepository.set(bossStore.id, startDateTime)
+            val expiredAt = LocalDateTime.of(2999, 1, 1, 0, 0)
+
+            val bossStoreOpen = BossStoreOpenFixture.create(
+                bossStoreId = bossStore.id,
+                openStartDateTime = startDateTime,
+                expiredAt = expiredAt,
+            )
+            bossStoreOpenRepository.save(bossStoreOpen)
 
             // when
             bossStoreOpenService.renewBossStoreOpenInfo(
@@ -120,9 +134,14 @@ internal class BossStoreOpenServiceTest(
             )
 
             // then
-            val openStartDateTime = bossStoreOpenTimeRepository.get(bossStore.id)
+            val bossStoreOpens = bossStoreOpenRepository.findAll()
             assertAll({
-                assertThat(openStartDateTime).isEqualTo(startDateTime)
+                assertThat(bossStoreOpens).hasSize(1)
+                bossStoreOpens[0].also {
+                    assertThat(it.bossStoreId).isEqualTo(bossStore.id)
+                    assertThat(it.openStartDateTime).isEqualTo(startDateTime)
+                    assertThat(it.expiredAt).isBetween(LocalDateTime.now().minusMinutes(29), LocalDateTime.now().plusMinutes(30))
+                }
             })
         }
 
@@ -171,14 +190,23 @@ internal class BossStoreOpenServiceTest(
         fun `가게를 영업종료하면 오픈 정보가 레디스에서 삭제된다`() {
             // given
             val startDateTime = LocalDateTime.of(2022, 1, 1, 0, 0)
-            bossStoreOpenTimeRepository.set(bossStoreId, startDateTime)
+            val expiredAt = LocalDateTime.of(2999, 1, 1, 0, 0)
+
+            val bossStoreOpen = BossStoreOpenFixture.create(
+                bossStoreId = bossStoreId,
+                openStartDateTime = startDateTime,
+                expiredAt = expiredAt,
+            )
+            bossStoreOpenRepository.save(bossStoreOpen)
 
             // when
             bossStoreOpenService.closeBossStore(bossStoreId = bossStoreId, bossId = bossId)
 
             // then
-            val openStartDateTime = bossStoreOpenTimeRepository.get(bossStoreId)
-            assertThat(openStartDateTime).isNull()
+            val bossStoreOpens = bossStoreOpenRepository.findAll()
+            assertAll({
+                assertThat(bossStoreOpens).isEmpty()
+            })
         }
 
         @Test

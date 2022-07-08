@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.core.service.bossservice.store.dto.response
 
+import java.time.LocalDateTime
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
 import com.depromeet.threedollar.api.core.service.bossservice.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.common.model.LocationValue
@@ -11,7 +12,7 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenu
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreOpenType
-import java.time.LocalDateTime
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpen
 
 data class BossStoreInfoResponse(
     val bossStoreId: String,
@@ -32,7 +33,7 @@ data class BossStoreInfoResponse(
         fun of(
             bossStore: BossStore,
             categories: List<BossStoreCategoryResponse>,
-            openStartDateTime: LocalDateTime?,
+            bossStoreOpen: BossStoreOpen?,
             deviceLocation: LocationValue = LocationValue.of(0.0, 0.0),
         ): BossStoreInfoResponse {
             val response = BossStoreInfoResponse(
@@ -48,7 +49,7 @@ data class BossStoreInfoResponse(
                     .map { appearanceDay -> BossStoreAppearanceDayResponse.of(appearanceDay) }
                     .toSet(),
                 categories = categories.toSet(),
-                openStatus = openStartDateTime?.let { BossStoreOpenStatusResponse.open(it) }
+                openStatus = bossStoreOpen?.let { BossStoreOpenStatusResponse.open(it) }
                     ?: BossStoreOpenStatusResponse.close(),
                 distance = LocationDistanceUtils.getDistanceM(
                     LocationValue.of(bossStore.location?.latitude ?: 0.0,
@@ -78,7 +79,7 @@ data class BossStoreAroundInfoResponse(
         fun of(
             bossStore: BossStore,
             categories: List<BossStoreCategoryResponse>,
-            openStartDateTime: LocalDateTime?,
+            bossStoreOpen: BossStoreOpen?,
             totalFeedbacksCounts: Int,
             deviceLocation: LocationValue = LocationValue.of(0.0, 0.0),
         ): BossStoreAroundInfoResponse {
@@ -88,7 +89,7 @@ data class BossStoreAroundInfoResponse(
                 location = bossStore.location?.let { LocationResponse.of(it) },
                 menus = bossStore.menus.map { menu -> BossStoreMenuResponse.of(menu) },
                 categories = categories.toSet(),
-                openStatus = openStartDateTime?.let { BossStoreOpenStatusResponse.open(it) }
+                openStatus = bossStoreOpen?.let { BossStoreOpenStatusResponse.open(it) }
                     ?: BossStoreOpenStatusResponse.close(),
                 totalFeedbacksCounts = totalFeedbacksCounts,
                 distance = LocationDistanceUtils.getDistanceM(
@@ -164,10 +165,10 @@ data class BossStoreOpenStatusResponse(
 ) {
 
     companion object {
-        fun open(openStartDateTime: LocalDateTime): BossStoreOpenStatusResponse {
+        fun open(bossStoreOpen: BossStoreOpen): BossStoreOpenStatusResponse {
             return BossStoreOpenStatusResponse(
                 status = BossStoreOpenType.OPEN,
-                openStartDateTime = openStartDateTime
+                openStartDateTime = bossStoreOpen.openStartDateTime
             )
         }
 

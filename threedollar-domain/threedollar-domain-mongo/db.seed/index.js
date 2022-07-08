@@ -44,3 +44,11 @@ db.boss_store_feedback_v1.createIndex({
     "bossStoreId": 1,
     "date": 1
 });
+
+
+// boss_store_open_v1
+db.boss_store_open_v1.createIndex({
+    "expiredAt": 1
+}, {
+    expireAfterSeconds: 1800
+})

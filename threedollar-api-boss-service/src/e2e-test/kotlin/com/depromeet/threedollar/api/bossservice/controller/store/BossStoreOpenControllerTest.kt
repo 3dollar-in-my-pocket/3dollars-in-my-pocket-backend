@@ -1,5 +1,15 @@
 package com.depromeet.threedollar.api.bossservice.controller.store
 
+import java.time.LocalDateTime
+import java.time.LocalTime
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
+import org.springframework.http.HttpHeaders
+import org.springframework.test.web.servlet.delete
+import org.springframework.test.web.servlet.post
+import org.springframework.test.web.servlet.put
 import com.depromeet.threedollar.api.bossservice.SetupBossAccountControllerTest
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.common.exception.type.ErrorCode
@@ -12,22 +22,13 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenuFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
-import com.depromeet.threedollar.domain.redis.domain.bossservice.store.BossStoreOpenTimeRepository
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
-import org.springframework.http.HttpHeaders
-import org.springframework.test.web.servlet.delete
-import org.springframework.test.web.servlet.post
-import org.springframework.test.web.servlet.put
-import java.time.LocalDateTime
-import java.time.LocalTime
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpenFixture
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpenRepository
 
 internal class BossStoreOpenControllerTest(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-    private val bossStoreOpenTimeRepository: BossStoreOpenTimeRepository,
+    private val bossStoreOpenRepository: BossStoreOpenRepository,
 ) : SetupBossAccountControllerTest() {
 
     @AfterEach
@@ -35,6 +36,7 @@ internal class BossStoreOpenControllerTest(
         super.cleanup()
         bossStoreCategoryRepository.deleteAll()
         bossStoreRepository.deleteAll()
+        bossStoreOpenRepository.deleteAll()
     }
 
     @DisplayName("POST /v1/boss/store/{BOSS_STORE_ID}/open 200OK")
@@ -111,7 +113,12 @@ internal class BossStoreOpenControllerTest(
             )
             bossStoreRepository.save(bossStore)
 
-            bossStoreOpenTimeRepository.set(bossStore.id, LocalDateTime.of(2022, 2, 1, 0, 0))
+            val bossStoreOpen = BossStoreOpenFixture.create(
+                bossStoreId = bossStore.id,
+                openStartDateTime = LocalDateTime.of(2022, 1, 1, 0, 0),
+                expiredAt = LocalDateTime.of(2999, 1, 1, 0, 0),
+            )
+            bossStoreOpenRepository.save(bossStoreOpen)
 
             // when & then
             mockMvc.put("/v1/boss/store/${bossStore.id}/renew") {
@@ -234,7 +241,12 @@ internal class BossStoreOpenControllerTest(
             )
             bossStoreRepository.save(bossStore)
 
-            bossStoreOpenTimeRepository.set(bossStore.id, LocalDateTime.of(2022, 2, 1, 0, 0))
+            val bossStoreOpen = BossStoreOpenFixture.create(
+                bossStoreId = bossStore.id,
+                openStartDateTime = LocalDateTime.of(2022, 1, 1, 0, 0),
+                expiredAt = LocalDateTime.of(2999, 1, 1, 0, 0),
+            )
+            bossStoreOpenRepository.save(bossStoreOpen)
 
             // when & then
             mockMvc.delete("/v1/boss/store/${bossStore.id}/close") {
