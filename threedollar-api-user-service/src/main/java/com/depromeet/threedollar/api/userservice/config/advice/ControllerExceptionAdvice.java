@@ -37,7 +37,6 @@ import java.time.ZoneId;
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.INTERNAL_SERVER;
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID;
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_MISSING_PARAMETER;
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_TYPE;
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_UPLOAD_FILE_SIZE;
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.METHOD_NOT_ALLOWED;
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOT_ACCEPTABLE;
@@ -124,7 +123,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(TypeMismatchException.class)
     private ApiResponse<Object> handleTypeMismatchException(TypeMismatchException e) {
         log.warn(e.getMessage());
-        return ApiResponse.error(INVALID_TYPE, String.format("%s (%s)", INVALID_TYPE.getMessage(), e.getValue()));
+        return ApiResponse.error(INVALID, String.format("%s (%s)", INVALID.getMessage(), e.getValue()));
     }
 
     /**

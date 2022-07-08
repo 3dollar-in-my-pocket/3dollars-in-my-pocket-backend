@@ -42,7 +42,7 @@ class AdminAdvertisementService(
 
     private fun validateSupportedPosition(applicationType: ApplicationType, positionType: AdvertisementPositionType) {
         if (!positionType.isSupported(applicationType)) {
-            throw ForbiddenException("해당 서비스(${applicationType})에서 지원하지 않는 광고 위치(${positionType})입니다", ErrorCode.FORBIDDEN_NOT_SUPPORTED_ADVERTISEMENT_POSITION)
+            throw ForbiddenException("해당 서비스(${applicationType})에서 지원하지 않는 광고 위치(${positionType})입니다", ErrorCode.NOT_IMPLEMENTED_ADVERTISEMENT_POSITION)
         }
     }
 

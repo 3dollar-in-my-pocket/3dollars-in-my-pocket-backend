@@ -43,7 +43,7 @@ public enum FileType implements EnumModel {
 
     public void validateAvailableUploadInModule(@NotNull ApplicationType applicationType) {
         if (!this.availableModules.contains(applicationType)) {
-            throw new ForbiddenException(String.format("해당 서버 (%s) 에서 업로드할 수 없는 파일 타입 (%s) 입니다.", applicationType, this.name()), ErrorCode.FORBIDDEN_UPLOAD_FILE_IN_MODULE);
+            throw new ForbiddenException(String.format("해당 서버 (%s) 에서 업로드할 수 없는 파일 타입 (%s) 입니다.", applicationType, this.name()), ErrorCode.NOT_IMPLEMENTED_UPLOAD_FILE_IN_MODULE);
         }
     }
 

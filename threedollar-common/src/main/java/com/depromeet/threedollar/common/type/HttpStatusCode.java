@@ -15,8 +15,10 @@ public enum HttpStatusCode {
     UNSUPPORTED_MEDIA_TYPE(415),
     TOO_MANY_REQUESTS(429),
     INTERNAL_SERVER(500),
+    NOT_IMPLEMENTED(501),
     BAD_GATEWAY(502),
-    SERVICE_UNAVAILABLE(503);
+    SERVICE_UNAVAILABLE(503),
+    ;
 
     private final int status;
 

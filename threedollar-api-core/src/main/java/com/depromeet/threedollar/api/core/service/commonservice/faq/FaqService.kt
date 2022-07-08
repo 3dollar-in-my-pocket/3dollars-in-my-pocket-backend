@@ -32,7 +32,7 @@ class FaqService(
             return
         }
         if (!category.isSupported(applicationType)) {
-            throw ForbiddenException("해당 서비스(${applicationType})에서 지원하지 않는 FAQ 카테고리(${category}) 입니다", ErrorCode.FORBIDDEN_NOT_SUPPORTED_FAQ_CATEGORY)
+            throw ForbiddenException("해당 서비스(${applicationType})에서 지원하지 않는 FAQ 카테고리(${category}) 입니다", ErrorCode.NOT_IMPLEMENTED_FAQ_CATEGORY)
         }
     }
 

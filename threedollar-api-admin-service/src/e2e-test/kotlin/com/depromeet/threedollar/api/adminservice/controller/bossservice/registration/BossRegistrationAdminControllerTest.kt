@@ -1,11 +1,5 @@
 package com.depromeet.threedollar.api.adminservice.controller.bossservice.registration
 
-import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
-import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.response.BossAccountRegistrationResponse
-import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.response.BossAccountRegistrationStoreResponse
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationFixture
 import org.hamcrest.Matchers.hasSize
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
@@ -13,10 +7,23 @@ import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.put
+import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
+import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.response.BossAccountRegistrationResponse
+import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.response.BossAccountRegistrationStoreResponse
+import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.listener.bossservice.push.BossSendPushListener
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationFixture
+import com.ninjasquad.springmockk.MockkBean
+import io.mockk.every
+import io.mockk.verify
 
 internal class BossRegistrationAdminControllerTest(
     private val bossRegistrationRepository: BossRegistrationRepository,
 ) : SetupAdminControllerTest() {
+
+    @MockkBean
+    private lateinit var bossSendPushListener: BossSendPushListener
 
     @AfterEach
     fun cleanUp() {
@@ -28,6 +35,8 @@ internal class BossRegistrationAdminControllerTest(
     @Test
     fun `사장님 계정 가입 신청을 승인합니다`() {
         // given
+        every { bossSendPushListener.sendBossRegistrationApproveMessage(any()) } returns Unit
+
         val registration = RegistrationFixture.create("social-id", com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.GOOGLE)
         bossRegistrationRepository.save(registration)
 
@@ -40,12 +49,16 @@ internal class BossRegistrationAdminControllerTest(
                 status { isOk() }
                 jsonPath("$.data") { value(ApiResponse.OK.data) }
             }
+
+        verify(exactly = 1) { bossSendPushListener.sendBossRegistrationApproveMessage(any()) }
     }
 
     @DisplayName("PUT /v1/boss/account/registration/{registration.id}/reject")
     @Test
     fun `사장님 계정 가입 신청을 반려합니다`() {
         // given
+        every { bossSendPushListener.sendBossRegistrationDenyMessage(any()) } returns Unit
+
         val registration = RegistrationFixture.create("social-id", com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.GOOGLE)
         bossRegistrationRepository.save(registration)
 
@@ -58,6 +71,8 @@ internal class BossRegistrationAdminControllerTest(
                 status { isOk() }
                 jsonPath("$.data") { value(ApiResponse.OK.data) }
             }
+
+        verify(exactly = 1) { bossSendPushListener.sendBossRegistrationDenyMessage(any()) }
     }
 
     @DisplayName("GET /v1/boss/account/registrations")

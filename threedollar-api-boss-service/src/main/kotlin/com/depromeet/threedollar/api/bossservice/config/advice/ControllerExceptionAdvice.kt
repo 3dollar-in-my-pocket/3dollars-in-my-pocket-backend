@@ -109,7 +109,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(TypeMismatchException::class)
     private fun handleTypeMismatchException(e: TypeMismatchException): ApiResponse<Nothing> {
         log.warn(e.message)
-        val errorCode = ErrorCode.INVALID_TYPE
+        val errorCode = ErrorCode.INVALID
         return ApiResponse.error(errorCode, "${errorCode.message} (${e.value})")
     }
 

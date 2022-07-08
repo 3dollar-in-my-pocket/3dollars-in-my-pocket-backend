@@ -103,9 +103,9 @@ internal class BossFaqControllerTest(
             }
                 .andDo { print() }
                 .andExpect {
-                    status { isForbidden() }
-                    jsonPath("$.resultCode") { value(ErrorCode.FORBIDDEN_NOT_SUPPORTED_FAQ_CATEGORY.code) }
-                    jsonPath("$.message") { value(ErrorCode.FORBIDDEN_NOT_SUPPORTED_FAQ_CATEGORY.message) }
+                    status { isNotImplemented() }
+                    jsonPath("$.resultCode") { value(ErrorCode.NOT_IMPLEMENTED_FAQ_CATEGORY.code) }
+                    jsonPath("$.message") { value(ErrorCode.NOT_IMPLEMENTED_FAQ_CATEGORY.message) }
                 }
         }
 
