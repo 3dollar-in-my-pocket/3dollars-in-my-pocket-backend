@@ -3,9 +3,11 @@ package com.depromeet.threedollar.api.userservice.config.enummodel;
 import com.depromeet.threedollar.api.userservice.service.store.dto.type.UserStoreOrderType;
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType;
 import com.depromeet.threedollar.common.type.DayOfTheWeek;
+import com.depromeet.threedollar.common.type.PushOptionsType;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.common.utils.EnumMapper;
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreOpenType;
+import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.PushPlatformType;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPositionType;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory;
@@ -14,6 +16,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.PaymentMeth
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
+import com.depromeet.threedollar.infrastructure.s3.common.type.FileType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,6 +28,9 @@ public class EnumMapperConfig {
         EnumMapper enumMapper = new EnumMapper();
         // common
         enumMapper.put("DayOfTheWeek", DayOfTheWeek.class);
+        enumMapper.put("PushPlatformType", PushPlatformType.class);
+        enumMapper.put("PushOptions", PushOptionsType.class);
+        enumMapper.put("FileType", FileType.class);
 
         // user
         enumMapper.put("UserSocialType", UserSocialType.class);
@@ -34,7 +40,7 @@ public class EnumMapperConfig {
         enumMapper.put("StoreType", StoreType.class);
         enumMapper.put("DeleteReasonType", DeleteReasonType.class);
         enumMapper.put("StoreOrderType", UserStoreOrderType.class);
-        enumMapper.put("MenuCategoryType", UserMenuCategoryType.class);
+        enumMapper.put("UserMenuCategoryType", UserMenuCategoryType.class);
 
         // faq
         enumMapper.put("FaqCategory", FaqCategory.class);

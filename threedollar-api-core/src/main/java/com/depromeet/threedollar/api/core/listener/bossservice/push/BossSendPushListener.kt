@@ -38,7 +38,8 @@ class BossSendPushListener(
         device?.let {
             messageSendProvider.sendToTopic(TopicType.BOSS_SINGLE_APP_PUSH, SendSinglePushRequest.of(
                 token = device.deviceInfo.pushToken,
-                messageTemplateType = PushMessageTemplateType.BOSS_REGISTRATION_DENIED_MESSAGE
+                messageTemplateType = PushMessageTemplateType.BOSS_REGISTRATION_DENIED_MESSAGE,
+                customBodyMessage = event.rejectReasonType.description,
             ))
         }
     }

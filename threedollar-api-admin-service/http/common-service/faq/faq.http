@@ -69,7 +69,7 @@ client.test("200 OK", () => {
 
 
 ### [인증] 등록된 FAQ 카테고리들을 조회한다
-GET {{admin}}/v1/faq/categories
+GET {{admin}}/v1/faq/categories?applicationType=USER_API
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
 
 > {%

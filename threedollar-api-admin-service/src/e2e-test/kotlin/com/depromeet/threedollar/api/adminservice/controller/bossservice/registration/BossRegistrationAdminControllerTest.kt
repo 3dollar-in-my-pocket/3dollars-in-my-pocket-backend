@@ -1,10 +1,12 @@
 package com.depromeet.threedollar.api.adminservice.controller.bossservice.registration
 
 import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
+import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.request.RejectBossRegistrationRequest
 import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.response.BossAccountRegistrationResponse
 import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.response.BossAccountRegistrationStoreResponse
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.core.listener.bossservice.push.BossSendPushListener
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRejectReasonType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationFixture
 import com.ninjasquad.springmockk.MockkBean
@@ -15,6 +17,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.put
 
@@ -62,9 +65,15 @@ internal class BossRegistrationAdminControllerTest(
         val registration = RegistrationFixture.create("social-id", com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.GOOGLE)
         bossRegistrationRepository.save(registration)
 
+        val request = RejectBossRegistrationRequest(
+            rejectReason = BossRegistrationRejectReasonType.INVALID_BUSINESS_NUMBER,
+        )
+
         // when & then
         mockMvc.put("/v1/boss/account/registration/${registration.id}/reject") {
             header(HttpHeaders.AUTHORIZATION, "Bearer $token")
+            contentType = MediaType.APPLICATION_JSON
+            content = objectMapper.writeValueAsString(request)
         }
             .andDo { print() }
             .andExpect {

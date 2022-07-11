@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.adminservice.service.bossservice.registration
 
+import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.request.RejectBossRegistrationRequest
 import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.request.RetrieveBossRegistrationsRequest
 import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.response.BossAccountRegistrationResponse
 import com.depromeet.threedollar.common.exception.model.ConflictException
@@ -49,12 +50,12 @@ class BossRegistrationAdminService(
         }
     }
 
-    fun rejectBossRegistration(registrationId: String) {
+    fun rejectBossRegistration(registrationId: String, request: RejectBossRegistrationRequest) {
         val registration = BossRegistrationServiceHelper.findWaitingRegistrationById(bossRegistrationRepository, registrationId)
-        registration.reject()
+        registration.reject(request.rejectReason)
         bossRegistrationRepository.save(registration)
 
-        eventPublisher.publishEvent(BossRegistrationDeniedEvent(bossRegistrationId = registrationId))
+        eventPublisher.publishEvent(BossRegistrationDeniedEvent(bossRegistrationId = registrationId, rejectReasonType = request.rejectReason))
     }
 
     fun retrieveBossRegistrations(request: RetrieveBossRegistrationsRequest): List<BossAccountRegistrationResponse> {

@@ -47,3 +47,8 @@ client.global.set("BOSS_CATEGORY_ID", response.body["data"])
 
 ### [테스트용] Mock 가입신청 추가
 POST {{boss-api}}/test-registration?bossName=사장님이름10&storeName=가게이름&categoriesIds={{BOSS_CATEGORY_ID}}&certificationPhotoUrl=https://www.jungle.co.kr/image/9184139c4725921ad8526df7&contactsNumber=010-1234-1234&businessNumber=000-00-00000
+
+> {%
+client.global.set("REGISTRATION_ID", response.body["data"]["registrationId"])
+client.global.set("BOSS_AUTHORIZATION", response.body["data"]["token"])
+%}

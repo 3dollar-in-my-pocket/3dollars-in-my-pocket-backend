@@ -11,7 +11,12 @@ client.test("200 OK", () => {
 
 ### 사장님 계정 가입 신청을 반려합니다.
 PUT {{admin}}/v1/boss/account/registration/{{REGISTRATION_ID}}/reject
+Content-Type: application/json
 Authorization: Bearer {{ADMIN_AUTHORIZATION}}
+
+{
+    "rejectReason": "INVALID_BUSINESS_NUMBER"
+}
 
 > {%
 client.test("200 OK", () => {

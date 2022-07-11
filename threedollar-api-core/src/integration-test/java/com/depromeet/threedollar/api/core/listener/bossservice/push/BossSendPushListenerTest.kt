@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.core.listener.bossservice.push
 
 import com.depromeet.threedollar.api.core.IntegrationTest
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRejectReasonType
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.AccountType
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.DeviceFixture
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.DeviceRepository
@@ -74,8 +75,10 @@ internal class BossSendPushListenerTest(
             val device = DeviceFixture.create(accountType = AccountType.BOSS_ACCOUNT, accountId = registrationId, pushToken = "pushToken")
             deviceRepository.save(device)
 
+            val event = BossRegistrationDeniedEvent(bossRegistrationId = registrationId, rejectReasonType = BossRegistrationRejectReasonType.INVALID_BUSINESS_NUMBER)
+
             // when
-            bossSendPushListener.sendBossRegistrationDenyMessage(BossRegistrationDeniedEvent(bossRegistrationId = registrationId))
+            bossSendPushListener.sendBossRegistrationDenyMessage(event)
 
             // then
             verify(exactly = 1) { messageSendProvider.sendToTopic(TopicType.BOSS_SINGLE_APP_PUSH, any()) }
@@ -86,8 +89,10 @@ internal class BossSendPushListenerTest(
             // given
             val registrationId = "notRegisterDeviceAccountId"
 
+            val event = BossRegistrationDeniedEvent(bossRegistrationId = registrationId, rejectReasonType = BossRegistrationRejectReasonType.INVALID_BUSINESS_NUMBER)
+
             // when
-            bossSendPushListener.sendBossRegistrationDenyMessage(BossRegistrationDeniedEvent(bossRegistrationId = registrationId))
+            bossSendPushListener.sendBossRegistrationDenyMessage(event)
 
             // then
             verify(exactly = 0) { messageSendProvider.sendToTopic(TopicType.BOSS_SINGLE_APP_PUSH, any()) }

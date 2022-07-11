@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.adminservice.service.bossservice.registration
 
 import com.depromeet.threedollar.api.adminservice.SetupAdminIntegrationTest
+import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.request.RejectBossRegistrationRequest
 import com.depromeet.threedollar.api.core.listener.bossservice.push.BossSendPushListener
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
@@ -10,6 +11,7 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAcc
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialInfo
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRejectReasonType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationStatus
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationFixture
@@ -272,14 +274,19 @@ internal class BossRegistrationAdminServiceTest(
             )
             bossRegistrationRepository.save(registration)
 
+            val request = RejectBossRegistrationRequest(
+                rejectReason = BossRegistrationRejectReasonType.INVALID_BUSINESS_NUMBER,
+            )
+
             // when
-            bossRegistrationAdminService.rejectBossRegistration(registration.id)
+            bossRegistrationAdminService.rejectBossRegistration(registrationId = registration.id, request = request)
 
             // then
             val registrations = bossRegistrationRepository.findAll()
             assertAll({
                 assertThat(registrations).hasSize(1)
                 assertThat(registrations[0].status).isEqualTo(BossRegistrationStatus.REJECTED)
+                assertThat(registrations[0].rejectReasonType).isEqualTo(BossRegistrationRejectReasonType.INVALID_BUSINESS_NUMBER)
             })
         }
 
@@ -301,8 +308,12 @@ internal class BossRegistrationAdminServiceTest(
             )
             bossRegistrationRepository.save(registration)
 
+            val request = RejectBossRegistrationRequest(
+                rejectReason = BossRegistrationRejectReasonType.INVALID_BUSINESS_NUMBER,
+            )
+
             // when
-            bossRegistrationAdminService.rejectBossRegistration(registration.id)
+            bossRegistrationAdminService.rejectBossRegistration(registrationId = registration.id, request = request)
 
             // then
             verify(exactly = 1) { bossSendPushListener.sendBossRegistrationDenyMessage(any()) }
@@ -311,8 +322,13 @@ internal class BossRegistrationAdminServiceTest(
 
         @Test
         fun `사장님 가입 신청 거부시 해당하는 가입신청 정보가 없는경우 NotFoundException 에러가 발생한다`() {
+            // given
+            val request = RejectBossRegistrationRequest(
+                rejectReason = BossRegistrationRejectReasonType.INVALID_BUSINESS_NUMBER,
+            )
+
             // when & then
-            assertThatThrownBy { bossRegistrationAdminService.rejectBossRegistration(registrationId = "notFoundRegistrationId") }.isInstanceOf(NotFoundException::class.java)
+            assertThatThrownBy { bossRegistrationAdminService.rejectBossRegistration(registrationId = "notFoundRegistrationId", request = request) }.isInstanceOf(NotFoundException::class.java)
         }
 
     }

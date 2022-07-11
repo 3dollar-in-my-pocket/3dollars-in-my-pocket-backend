@@ -75,7 +75,7 @@ class LocalTestController(
         return ApiResponse.success(LoginResponse(httpSession.id, bossAccount.id))
     }
 
-    @ApiOperation("[개발용] 사장님 서버용 테스트 토큰을 발급 받습니다.")
+    @ApiOperation("[개발용] 사장님 가입 신청을 추가합니다")
     @PostMapping("/test-registration")
     fun addMockRegistration(
         @RequestParam bossName: String,
@@ -84,7 +84,7 @@ class LocalTestController(
         @RequestParam certificationPhotoUrl: String,
         @RequestParam contactsNumber: String,
         @RequestParam businessNumber: String,
-    ): ApiResponse<String> {
+    ): ApiResponse<MockRegistrationResponse> {
         val bossRegistration = BossRegistration.of(
             boss = RegistrationBossForm.of(
                 socialId = UUID.randomUUID().toString(),
@@ -100,8 +100,18 @@ class LocalTestController(
             )
         )
         bossRegistrationRepository.save(bossRegistration)
-        return ApiResponse.OK
+
+        httpSession.setAttribute(SessionConstants.BOSS_ACCOUNT_ID, bossRegistration.id)
+        return ApiResponse.success(MockRegistrationResponse(
+            token = httpSession.id,
+            registrationId = bossRegistration.id
+        ))
     }
+
+    data class MockRegistrationResponse(
+        val token: String,
+        val registrationId: String,
+    )
 
     @ApiOperation("[개발 서버용] 가게 목 데이터를 추가합니다.")
     @Auth

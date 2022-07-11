@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.infrastructure.sqs.provider.dto.request
 
-import com.depromeet.threedollar.common.type.PushOptions
+import com.depromeet.threedollar.common.type.PushOptionsType
 import javax.validation.Valid
 import javax.validation.constraints.Size
 
@@ -9,5 +9,5 @@ data class SendBulkPushRequest(
     val tokens: Set<String>,
     val title: String,
     val body: String,
-    val pushOptions: PushOptions,
+    val pushOptions: PushOptionsType,
 )

@@ -14,6 +14,7 @@ class BossRegistration(
     val boss: RegistrationBossForm,
     val store: RegistrationStoreForm,
     var status: BossRegistrationStatus,
+    var rejectReasonType: BossRegistrationRejectReasonType? = null,
 ) : BaseDocument() {
 
     fun toBossAccount(): BossAccount {
@@ -28,8 +29,9 @@ class BossRegistration(
         this.status = BossRegistrationStatus.APPROVED
     }
 
-    fun reject() {
+    fun reject(rejectReasonType: BossRegistrationRejectReasonType) {
         this.status = BossRegistrationStatus.REJECTED
+        this.rejectReasonType = rejectReasonType
     }
 
     companion object {

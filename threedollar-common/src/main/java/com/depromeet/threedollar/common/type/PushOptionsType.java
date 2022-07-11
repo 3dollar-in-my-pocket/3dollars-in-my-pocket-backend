@@ -4,7 +4,7 @@ import com.depromeet.threedollar.common.model.EnumModel;
 import lombok.Getter;
 
 @Getter
-public enum PushOptions implements EnumModel {
+public enum PushOptionsType implements EnumModel {
 
     PUSH("푸시 알림"),
     BACKGROUND("백그라운드 푸시"),
@@ -12,7 +12,7 @@ public enum PushOptions implements EnumModel {
 
     private final String description;
 
-    PushOptions(String description) {
+    PushOptionsType(String description) {
         this.description = description;
     }
 
