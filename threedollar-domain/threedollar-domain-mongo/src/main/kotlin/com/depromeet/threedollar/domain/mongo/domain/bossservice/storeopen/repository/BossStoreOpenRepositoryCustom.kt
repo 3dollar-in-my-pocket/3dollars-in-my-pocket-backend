@@ -10,4 +10,6 @@ interface BossStoreOpenRepositoryCustom {
 
     fun findBossOpenStoresByIds(bossStoreIds: List<String>): List<BossStoreOpen>
 
+    fun findAllLessThanCursorLimit(cursor: String?, limit: Int): List<BossStoreOpen>
+
 }

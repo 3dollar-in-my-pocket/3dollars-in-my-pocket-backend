@@ -1,14 +1,13 @@
-package com.depromee.threedollar.domain.mongo
+package com.depromeet.threedollar.domain.mongo
 
 import com.depromeet.threedollar.common.constants.PackageConstants.BASE_PACKAGE
-import com.depromeet.threedollar.domain.mongo.ThreeDollarDomainMongoRoot
 import org.junit.jupiter.api.Test
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 
 @ConfigurationPropertiesScan(basePackages = [BASE_PACKAGE])
 @SpringBootApplication(scanBasePackages = [BASE_PACKAGE])
-internal class ThreeDollarDomainMongoRootTest : ThreeDollarDomainMongoRoot() {
+internal class ThreeDollarDomainMongoRootTest {
 
     @Test
     fun contextsLoad() {

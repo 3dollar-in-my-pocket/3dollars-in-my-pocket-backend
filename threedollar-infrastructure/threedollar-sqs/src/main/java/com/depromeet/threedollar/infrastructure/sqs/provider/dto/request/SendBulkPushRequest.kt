@@ -10,4 +10,17 @@ data class SendBulkPushRequest(
     val title: String,
     val body: String,
     val pushOptions: PushOptionsType,
-)
+) {
+
+    companion object {
+        fun backgroundPush(tokens: Set<String>): SendBulkPushRequest {
+            return SendBulkPushRequest(
+                tokens = tokens,
+                title = "",
+                body = "",
+                pushOptions = PushOptionsType.BACKGROUND,
+            )
+        }
+    }
+
+}

@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.findOne
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.isEqualTo
+import org.springframework.data.mongodb.core.query.where
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -17,6 +18,12 @@ class DeviceRepositoryCustomImpl(
         return mongoTemplate.findOne(Query()
             .addCriteria(Device::accountId isEqualTo accountId)
             .addCriteria(Device::accountType isEqualTo accountType)
+        )
+    }
+
+    override fun findAllDevicesByAccountIdsAndType(accountIds: List<String>, accountType: AccountType): List<Device> {
+        return mongoTemplate.find(Query()
+            .addCriteria(where(Device::accountId).`in`(accountIds)), Device::class.java
         )
     }
 

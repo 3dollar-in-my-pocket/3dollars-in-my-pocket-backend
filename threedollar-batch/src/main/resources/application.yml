@@ -4,6 +4,7 @@ spring.config:
     - classpath:/application-rds.yml
     - classpath:/application-mongo.yml
     - classpath:/application-external.yml
+    - classpath:/application-sqs.yml
     - optional:classpath:/application-secret.yml
     - optional:classpath:/application-dummy.yml
 

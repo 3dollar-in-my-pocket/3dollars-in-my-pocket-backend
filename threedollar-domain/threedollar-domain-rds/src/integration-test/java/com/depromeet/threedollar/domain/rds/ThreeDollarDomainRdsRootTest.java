@@ -8,7 +8,7 @@ import static com.depromeet.threedollar.common.constants.PackageConstants.BASE_P
 
 @ConfigurationPropertiesScan(basePackages = BASE_PACKAGE)
 @SpringBootApplication(scanBasePackages = BASE_PACKAGE)
-class ThreeDollarDomainRdsRootTest extends ThreeDollarDomainRdsRoot {
+class ThreeDollarDomainRdsRootTest {
 
     @Test
     void contextLoads() {

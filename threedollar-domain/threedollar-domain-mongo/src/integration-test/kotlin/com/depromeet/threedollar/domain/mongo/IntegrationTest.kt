@@ -1,8 +1,8 @@
-package com.depromeet.threedollar.domain.redis
+package com.depromeet.threedollar.domain.mongo
 
-import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest
 import org.springframework.test.context.TestConstructor
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@SpringBootTest
+@DataMongoTest
 internal abstract class IntegrationTest
