@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.batch.jobs.migration
 
+import com.depromeet.threedollar.batch.config.JobExceptionListener
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
@@ -9,6 +10,7 @@ import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
+import org.springframework.batch.core.listener.JobListenerFactoryBean
 import org.springframework.batch.item.ItemProcessor
 import org.springframework.batch.item.database.JpaCursorItemReader
 import org.springframework.batch.item.database.JpaItemWriter
@@ -35,6 +37,7 @@ class GiveDefaultMedalsToAllUserJobConfiguration(
     fun giveDefaultMedalsToUsersJob(): Job {
         return jobBuilderFactory.get(JOB_NAME)
             .incrementer(UniqueRunIdIncrementer())
+            .listener(JobListenerFactoryBean.getListener(JobExceptionListener()))
             .start(giveDefaultMedalsToUsersJobStep())
             .build()
     }

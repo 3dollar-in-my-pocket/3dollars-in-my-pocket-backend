@@ -82,6 +82,11 @@ enum class SlackMessageTemplateType(
     사장님 가입 신청이 반려되었습니다. (%s)
     -------------------------------------
     """.trimIndent()
+    ),
+    BATCH_FAILED_MESSAGE("""
+    (%s) 배치 잡이 정상 처리되지 못했습니다. status: (%s)
+    -------------------------------------
+    """.trimIndent()
     )
     ;
 

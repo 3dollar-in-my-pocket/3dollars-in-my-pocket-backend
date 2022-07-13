@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.batch.jobs.statistics
 
+import com.depromeet.threedollar.batch.config.JobExceptionListener
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedbackRepository
@@ -12,6 +13,7 @@ import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
+import org.springframework.batch.core.listener.JobListenerFactoryBean
 import org.springframework.batch.repeat.RepeatStatus
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -38,6 +40,7 @@ class BossDailyStatisticsJobConfiguration(
     fun bossDailyStatisticsJob(): Job {
         return jobBuilderFactory[BOSS_DAILY_STATISTICS_JOB]
             .incrementer(UniqueRunIdIncrementer())
+            .listener(JobListenerFactoryBean.getListener(JobExceptionListener()))
             .start(bossStatisticsStep())
             .next(bossAccountStatisticsStep())
             .next(bossRegistrationStatisticsStep())

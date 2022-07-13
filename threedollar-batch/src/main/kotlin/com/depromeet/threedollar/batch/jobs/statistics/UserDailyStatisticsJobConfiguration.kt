@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.batch.jobs.statistics
 
+import com.depromeet.threedollar.batch.config.JobExceptionListener
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
 import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_ACTIVE_MEDAL
 import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_ACTIVE_MEDALS
@@ -29,6 +30,7 @@ import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
+import org.springframework.batch.core.listener.JobListenerFactoryBean
 import org.springframework.batch.repeat.RepeatStatus
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -61,6 +63,7 @@ class DailyStatisticsJobConfiguration(
     fun dailyStaticsJob(): Job {
         return jobBuilderFactory[DAILY_STATISTICS_JOB]
             .incrementer(UniqueRunIdIncrementer())
+            .listener(JobListenerFactoryBean.getListener(JobExceptionListener()))
             .start(notificationStatisticsInfoStep())
             .next(notificationUsersStatisticsStep())
             .next(notificationStoresStatisticsStep())

@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.batch.jobs.push
 
+import com.depromeet.threedollar.batch.config.JobExceptionListener
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
@@ -14,6 +15,7 @@ import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
+import org.springframework.batch.core.listener.JobListenerFactoryBean
 import org.springframework.batch.repeat.RepeatStatus
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -40,6 +42,7 @@ class BossOpenPushJobConfiguration(
     fun bossOpenStoreBackgroundPushJob(): Job {
         return jobBuilderFactory[BOSS_OPEN_STORE_BACKGROUND_PUSH_JOB]
             .incrementer(UniqueRunIdIncrementer())
+            .listener(JobListenerFactoryBean.getListener(JobExceptionListener()))
             .start(bossOpenStoreBackgroundStep())
             .build()
     }
