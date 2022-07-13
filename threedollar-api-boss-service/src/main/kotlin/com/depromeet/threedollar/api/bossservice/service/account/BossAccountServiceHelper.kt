@@ -15,7 +15,7 @@ object BossAccountServiceHelper {
         bossId: String,
     ): BossAccount {
         return bossAccountRepository.findBossAccountById(bossId)
-            ?: throw NotFoundException("해당하는 사장님 계정($bossId)은 존재하지 않습니다", ErrorCode.NOT_FOUND_BOSS_ACCOUNT)
+            ?: throw NotFoundException("해당하는 사장님 계정($bossId)은 존재하지 않습니다", ErrorCode.E404_NOT_EXISTS_BOSS_ACCOUNT)
     }
 
     fun validateNotExistsBossAccount(
@@ -24,7 +24,7 @@ object BossAccountServiceHelper {
         socialType: BossAccountSocialType,
     ) {
         if (bossAccountRepository.existsBossAccountBySocialInfo(socialId, socialType)) {
-            throw ConflictException("이미 가입한 사장님 계정(${socialId} - $socialType 입니다.", ErrorCode.CONFLICT_BOSS_ACCOUNT)
+            throw ConflictException("이미 가입한 사장님 계정(${socialId} - $socialType 입니다.", ErrorCode.E409_DUPLICATE_BOSS_ACCOUNT)
         }
     }
 
@@ -39,7 +39,7 @@ object BossAccountServiceHelper {
             return bossAccount.id
         }
         val bossRegistration = bossRegistrationRepository.findWaitingRegistrationBySocialIdAndSocialType(socialId, socialType)
-            ?: throw NotFoundException("존재하지 않는 사장님 계정(${socialId} - $socialType 입니다.", ErrorCode.NOT_FOUND_BOSS_ACCOUNT)
+            ?: throw NotFoundException("존재하지 않는 사장님 계정(${socialId} - $socialType 입니다.", ErrorCode.E404_NOT_EXISTS_BOSS_ACCOUNT)
         return bossRegistration.id
     }
 

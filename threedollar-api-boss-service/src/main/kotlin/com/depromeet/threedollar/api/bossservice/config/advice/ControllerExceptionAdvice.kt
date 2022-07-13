@@ -51,7 +51,7 @@ class ControllerExceptionAdvice(
             .map { fieldError: FieldError -> fieldError.defaultMessage }
             .collect(Collectors.joining("\n"))
         log.error("BindException: {}", errorMessage)
-        return ApiResponse.error(ErrorCode.INVALID, errorMessage)
+        return ApiResponse.error(ErrorCode.E400_INVALID, errorMessage)
     }
 
     /**
@@ -63,9 +63,9 @@ class ControllerExceptionAdvice(
         log.warn(e.message)
         if (e.rootCause is MissingKotlinParameterException) {
             val parameterName = (e.rootCause as MissingKotlinParameterException).parameter.name
-            return ApiResponse.error(ErrorCode.INVALID_MISSING_PARAMETER, "필수 파라미터 ($parameterName)을 입력해주세요")
+            return ApiResponse.error(ErrorCode.E400_MISSING_PARAMETER, "필수 파라미터 ($parameterName)을 입력해주세요")
         }
-        return ApiResponse.error(ErrorCode.INVALID)
+        return ApiResponse.error(ErrorCode.E400_INVALID)
     }
 
     /**
@@ -76,7 +76,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(MissingServletRequestParameterException::class)
     protected fun handleMissingServletRequestParameterException(e: MissingServletRequestParameterException): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(ErrorCode.INVALID_MISSING_PARAMETER, "필수 파라미터 (${e.parameterName})을 입력해주세요")
+        return ApiResponse.error(ErrorCode.E400_MISSING_PARAMETER, "필수 파라미터 (${e.parameterName})을 입력해주세요")
     }
 
     /**
@@ -87,7 +87,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(MissingServletRequestPartException::class)
     protected fun handleMissingServletRequestPartException(e: MissingServletRequestPartException): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(ErrorCode.INVALID_MISSING_PARAMETER, "Multipart (${e.requestPartName})을 입력해주세요")
+        return ApiResponse.error(ErrorCode.E400_MISSING_PARAMETER, "Multipart (${e.requestPartName})을 입력해주세요")
     }
 
     /**
@@ -98,7 +98,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(MissingPathVariableException::class)
     private fun handleMissingPathVariableException(e: MissingPathVariableException): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(ErrorCode.INVALID_MISSING_PARAMETER, "Path (${e.variableName})를 입력해주세요")
+        return ApiResponse.error(ErrorCode.E400_MISSING_PARAMETER, "Path (${e.variableName})를 입력해주세요")
     }
 
     /**
@@ -109,7 +109,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(TypeMismatchException::class)
     private fun handleTypeMismatchException(e: TypeMismatchException): ApiResponse<Nothing> {
         log.warn(e.message)
-        val errorCode = ErrorCode.INVALID
+        val errorCode = ErrorCode.E400_INVALID
         return ApiResponse.error(errorCode, "${errorCode.message} (${e.value})")
     }
 
@@ -120,7 +120,7 @@ class ControllerExceptionAdvice(
     )
     private fun handleMethodArgumentNotValidException(e: Exception): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(ErrorCode.INVALID)
+        return ApiResponse.error(ErrorCode.E400_INVALID)
     }
 
     /**
@@ -131,7 +131,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(HttpRequestMethodNotSupportedException::class)
     private fun handleHttpRequestMethodNotSupportedException(e: HttpRequestMethodNotSupportedException): ApiResponse<Nothing> {
         log.warn(e.message, e)
-        return ApiResponse.error(ErrorCode.METHOD_NOT_ALLOWED)
+        return ApiResponse.error(ErrorCode.E405_METHOD_NOT_ALLOWED)
     }
 
     /**
@@ -141,7 +141,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(HttpMediaTypeNotAcceptableException::class)
     private fun handleHttpMediaTypeNotAcceptableException(e: HttpMediaTypeNotAcceptableException): ApiResponse<Nothing> {
         log.warn(e.message)
-        return ApiResponse.error(ErrorCode.NOT_ACCEPTABLE)
+        return ApiResponse.error(ErrorCode.E406_NOT_ACCEPTABLE)
     }
 
     /**
@@ -152,7 +152,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(HttpMediaTypeException::class)
     private fun handleHttpMediaTypeException(e: HttpMediaTypeException): ApiResponse<Nothing> {
         log.warn(e.message, e)
-        return ApiResponse.error(ErrorCode.UNSUPPORTED_MEDIA_TYPE)
+        return ApiResponse.error(ErrorCode.E415_UNSUPPORTED_MEDIA_TYPE)
     }
 
     /**
@@ -162,7 +162,7 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(MaxUploadSizeExceededException::class)
     private fun handleMaxUploadSizeExceededException(e: MaxUploadSizeExceededException): ApiResponse<Nothing> {
         log.error(e.message, e)
-        return ApiResponse.error(ErrorCode.INVALID_UPLOAD_FILE_SIZE)
+        return ApiResponse.error(ErrorCode.E400_INVALID_FILE_SIZE_TOO_LARGE)
     }
 
     /**
@@ -185,8 +185,8 @@ class ControllerExceptionAdvice(
     @ExceptionHandler(Exception::class)
     private fun handleInternalServerException(exception: Exception, request: HttpServletRequest): ApiResponse<Nothing> {
         log.error(exception.message, exception)
-        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(ErrorCode.INTERNAL_SERVER, exception, request))
-        return ApiResponse.error(ErrorCode.INTERNAL_SERVER)
+        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(ErrorCode.E500_INTERNAL_SERVER, exception, request))
+        return ApiResponse.error(ErrorCode.E500_INTERNAL_SERVER)
     }
 
     private fun createUnExpectedErrorOccurredEvent(errorCode: ErrorCode, exception: Exception, request: HttpServletRequest): ServerExceptionOccurredEvent {

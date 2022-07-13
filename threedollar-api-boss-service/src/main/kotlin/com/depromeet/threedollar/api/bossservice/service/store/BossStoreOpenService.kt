@@ -40,7 +40,7 @@ class BossStoreOpenService(
     fun renewBossStoreOpenInfo(bossStoreId: String, bossId: String, mapLocation: LocationValue) {
         val bossStore = BossStoreServiceHelper.findBossStoreByIdAndBossId(bossStoreRepository, bossStoreId = bossStoreId, bossId = bossId)
         val bossStoreOpen = bossStoreOpenRepository.findBossOpenStoreByBossStoreId(bossStoreId = bossStoreId)
-            ?: throw ForbiddenException("현재 오픈중인 가게(${bossStoreId})가 아닙니다.", ErrorCode.FORBIDDEN_NOT_OPEN_STORE)
+            ?: throw ForbiddenException("현재 오픈중인 가게(${bossStoreId})가 아닙니다.", ErrorCode.E403_FORBIDDEN_NOT_OPENING_STORE)
 
         if (bossStore.hasChangedLocation(latitude = mapLocation.latitude, longitude = mapLocation.longitude)) {
             bossStore.updateLocation(latitude = mapLocation.latitude, longitude = mapLocation.longitude)

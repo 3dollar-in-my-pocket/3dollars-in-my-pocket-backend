@@ -9,12 +9,12 @@ object BossStoreServiceHelper {
 
     fun findBossStoreById(bossStoreRepository: BossStoreRepository, bossStoreId: String): BossStore {
         return bossStoreRepository.findBossStoreById(bossStoreId)
-            ?: throw NotFoundException("해당하는 사장님 가게 (${bossStoreId})는 존재하지 않습니다", ErrorCode.NOT_FOUND_STORE)
+            ?: throw NotFoundException("해당하는 사장님 가게 (${bossStoreId})는 존재하지 않습니다", ErrorCode.E404_NOT_EXISTS_STORE)
     }
 
     fun validateExistsBossStore(bossStoreRepository: BossStoreRepository, bossStoreId: String) {
         if (!bossStoreRepository.existsBossStoreById(bossStoreId = bossStoreId)) {
-            throw NotFoundException("해당하는 사장님 가게(${bossStoreId})는 존재하지 않습니다", ErrorCode.NOT_FOUND_STORE)
+            throw NotFoundException("해당하는 사장님 가게(${bossStoreId})는 존재하지 않습니다", ErrorCode.E404_NOT_EXISTS_STORE)
         }
     }
 
@@ -24,7 +24,7 @@ object BossStoreServiceHelper {
         bossId: String,
     ): BossStore {
         return bossStoreRepository.findBossStoreByIdAndBossId(bossStoreId = bossStoreId, bossId = bossId)
-            ?: throw NotFoundException("해당하는 사장님 가게(${bossStoreId})는 존재하지 않습니다", ErrorCode.NOT_FOUND_STORE)
+            ?: throw NotFoundException("해당하는 사장님 가게(${bossStoreId})는 존재하지 않습니다", ErrorCode.E404_NOT_EXISTS_STORE)
     }
 
     fun findBossStoreByBossId(
@@ -32,7 +32,7 @@ object BossStoreServiceHelper {
         bossId: String,
     ): BossStore {
         return bossStoreRepository.findBossStoreByBossId(bossId)
-            ?: throw NotFoundException("사장님(${bossId})이 운영중인 사장님 가게가 존재하지 않습니다", ErrorCode.NOT_FOUND_STORE)
+            ?: throw NotFoundException("사장님(${bossId})이 운영중인 사장님 가게가 존재하지 않습니다", ErrorCode.E404_NOT_EXISTS_STORE)
     }
 
     fun validateExistsBossStoreByBoss(
@@ -41,7 +41,7 @@ object BossStoreServiceHelper {
         bossId: String,
     ) {
         if (!bossStoreRepository.existsBossStoreByIdAndBossId(bossStoreId = bossStoreId, bossId = bossId)) {
-            throw NotFoundException("사장님($bossStoreId)이 운영중인 사장님 가게($bossStoreId)는 존재하지 않습니다", ErrorCode.NOT_FOUND_STORE)
+            throw NotFoundException("사장님($bossStoreId)이 운영중인 사장님 가게($bossStoreId)는 존재하지 않습니다", ErrorCode.E404_NOT_EXISTS_STORE)
         }
     }
 

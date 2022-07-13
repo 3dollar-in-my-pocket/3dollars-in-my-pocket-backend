@@ -19,8 +19,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.CONFLICT_NICKNAME;
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E409_DUPLICATE_NICKNAME;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E400_INVALID;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -142,8 +142,8 @@ class UserControllerTest extends SetupUserControllerTest {
             checkAvailableNickNameApi(request)
                 .andDo(print())
                 .andExpect(status().isConflict())
-                .andExpect(jsonPath("$.resultCode").value(CONFLICT_NICKNAME.getCode()))
-                .andExpect(jsonPath("$.message").value(CONFLICT_NICKNAME.getMessage()))
+                .andExpect(jsonPath("$.resultCode").value(E409_DUPLICATE_NICKNAME.getCode()))
+                .andExpect(jsonPath("$.message").value(E409_DUPLICATE_NICKNAME.getMessage()))
                 .andExpect(jsonPath("$.data").isEmpty());
         }
 
@@ -161,7 +161,7 @@ class UserControllerTest extends SetupUserControllerTest {
             checkAvailableNickNameApi(request)
                 .andDo(print())
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.resultCode").value(INVALID.getCode()))
+                .andExpect(jsonPath("$.resultCode").value(E400_INVALID.getCode()))
                 .andExpect(jsonPath("$.data").isEmpty());
         }
 

@@ -31,8 +31,8 @@ class ControllerExceptionAdviceTest extends ControllerTest {
         mockMvc.perform(post("/ping"))
             .andDo(print())
             .andExpect(status().isMethodNotAllowed())
-            .andExpect(jsonPath("$.resultCode").value(ErrorCode.METHOD_NOT_ALLOWED.getCode()))
-            .andExpect(jsonPath("$.message").value(ErrorCode.METHOD_NOT_ALLOWED.getMessage()));
+            .andExpect(jsonPath("$.resultCode").value(ErrorCode.E405_METHOD_NOT_ALLOWED.getCode()))
+            .andExpect(jsonPath("$.message").value(ErrorCode.E405_METHOD_NOT_ALLOWED.getMessage()));
     }
 
     @Test
@@ -44,8 +44,8 @@ class ControllerExceptionAdviceTest extends ControllerTest {
         mockMvc.perform(get("/ping"))
             .andDo(print())
             .andExpect(status().isTooManyRequests())
-            .andExpect(jsonPath("$.resultCode").value(ErrorCode.TOO_MANY_REQUESTS.getCode()))
-            .andExpect(jsonPath("$.message").value(ErrorCode.TOO_MANY_REQUESTS.getMessage()));
+            .andExpect(jsonPath("$.resultCode").value(ErrorCode.E429_TOO_MANY_REQUESTS.getCode()))
+            .andExpect(jsonPath("$.message").value(ErrorCode.E429_TOO_MANY_REQUESTS.getMessage()));
     }
 
     @Test
@@ -57,8 +57,8 @@ class ControllerExceptionAdviceTest extends ControllerTest {
         mockMvc.perform(get("/ping"))
             .andDo(print())
             .andExpect(status().isInternalServerError())
-            .andExpect(jsonPath("$.resultCode").value(ErrorCode.INTERNAL_SERVER.getCode()))
-            .andExpect(jsonPath("$.message").value(ErrorCode.INTERNAL_SERVER.getMessage()));
+            .andExpect(jsonPath("$.resultCode").value(ErrorCode.E500_INTERNAL_SERVER.getCode()))
+            .andExpect(jsonPath("$.message").value(ErrorCode.E500_INTERNAL_SERVER.getMessage()));
     }
 
     @Test
@@ -70,8 +70,8 @@ class ControllerExceptionAdviceTest extends ControllerTest {
         mockMvc.perform(get("/ping"))
             .andDo(print())
             .andExpect(status().isBadGateway())
-            .andExpect(jsonPath("$.resultCode").value(ErrorCode.BAD_GATEWAY.getCode()))
-            .andExpect(jsonPath("$.message").value(ErrorCode.BAD_GATEWAY.getMessage()));
+            .andExpect(jsonPath("$.resultCode").value(ErrorCode.E502_BAD_GATEWAY.getCode()))
+            .andExpect(jsonPath("$.message").value(ErrorCode.E502_BAD_GATEWAY.getMessage()));
     }
 
     @Test
@@ -83,8 +83,8 @@ class ControllerExceptionAdviceTest extends ControllerTest {
         mockMvc.perform(get("/ping"))
             .andDo(print())
             .andExpect(status().isServiceUnavailable())
-            .andExpect(jsonPath("$.resultCode").value(ErrorCode.SERVICE_UNAVAILABLE.getCode()))
-            .andExpect(jsonPath("$.message").value(ErrorCode.SERVICE_UNAVAILABLE.getMessage()));
+            .andExpect(jsonPath("$.resultCode").value(ErrorCode.E503_SERVICE_UNAVAILABLE.getCode()))
+            .andExpect(jsonPath("$.message").value(ErrorCode.E503_SERVICE_UNAVAILABLE.getMessage()));
     }
 
     @Test
@@ -96,8 +96,8 @@ class ControllerExceptionAdviceTest extends ControllerTest {
         mockMvc.perform(get("/ping"))
             .andDo(print())
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$.resultCode").value(ErrorCode.INVALID.getCode()))
-            .andExpect(jsonPath("$.message").value(ErrorCode.INVALID.getMessage()));
+            .andExpect(jsonPath("$.resultCode").value(ErrorCode.E400_INVALID.getCode()))
+            .andExpect(jsonPath("$.message").value(ErrorCode.E400_INVALID.getMessage()));
     }
 
     @Test
@@ -109,8 +109,8 @@ class ControllerExceptionAdviceTest extends ControllerTest {
         mockMvc.perform(get("/ping"))
             .andDo(print())
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$.resultCode").value(ErrorCode.INVALID_UPLOAD_FILE_SIZE.getCode()))
-            .andExpect(jsonPath("$.message").value(ErrorCode.INVALID_UPLOAD_FILE_SIZE.getMessage()));
+            .andExpect(jsonPath("$.resultCode").value(ErrorCode.E400_INVALID_FILE_SIZE_TOO_LARGE.getCode()))
+            .andExpect(jsonPath("$.message").value(ErrorCode.E400_INVALID_FILE_SIZE_TOO_LARGE.getMessage()));
     }
 
     @Test
@@ -122,8 +122,8 @@ class ControllerExceptionAdviceTest extends ControllerTest {
         mockMvc.perform(get("/ping"))
             .andDo(print())
             .andExpect(status().isInternalServerError())
-            .andExpect(jsonPath("$.resultCode").value(ErrorCode.INTERNAL_SERVER.getCode()))
-            .andExpect(jsonPath("$.message").value(ErrorCode.INTERNAL_SERVER.getMessage()));
+            .andExpect(jsonPath("$.resultCode").value(ErrorCode.E500_INTERNAL_SERVER.getCode()))
+            .andExpect(jsonPath("$.message").value(ErrorCode.E500_INTERNAL_SERVER.getMessage()));
     }
 
 }

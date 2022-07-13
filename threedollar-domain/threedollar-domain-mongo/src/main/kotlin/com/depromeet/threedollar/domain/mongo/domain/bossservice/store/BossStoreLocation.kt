@@ -19,10 +19,10 @@ data class BossStoreLocation(
 
     init {
         if (latitude < SOUTH_KOREA_MIN_LATITUDE || latitude > SOUTH_KOREA_MAX_LATITUDE) {
-            throw InvalidException("허용되지 않는 위도 ($latitude) 가 입력되었습니다.", ErrorCode.INVALID_MISSING_LATITUDE)
+            throw InvalidException("허용되지 않는 위도 ($latitude) 가 입력되었습니다.", ErrorCode.E400_MISSING_LATITUDE_PARAMETER)
         }
         if (longitude < SOUTH_KOREA_MIN_LONGITUDE || longitude > SOUTH_KOREA_MAX_LONGITUDE) {
-            throw InvalidException("허용되지 않는 경도 ($longitude) 가 입력되었습니다.", ErrorCode.INVALID_MISSING_LONGITUDE)
+            throw InvalidException("허용되지 않는 경도 ($longitude) 가 입력되었습니다.", ErrorCode.E400_MISSING_LONGITUDE_PARAMETER)
         }
     }
 

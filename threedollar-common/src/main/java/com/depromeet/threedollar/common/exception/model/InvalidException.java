@@ -9,7 +9,7 @@ public class InvalidException extends ThreeDollarsBaseException {
     }
 
     public InvalidException(String message) {
-        super(message, ErrorCode.INVALID);
+        super(message, ErrorCode.E400_INVALID);
     }
 
 }

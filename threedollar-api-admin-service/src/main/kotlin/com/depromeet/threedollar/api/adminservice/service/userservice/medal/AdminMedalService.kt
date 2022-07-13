@@ -40,7 +40,7 @@ class AdminMedalService(
 
     private fun findMedalById(medalId: Long): Medal {
         return medalRepository.findMedalById(medalId)
-            ?: throw NotFoundException("해당하는 메달($medalId)은 존재하지 않습니다", ErrorCode.NOT_FOUND_MEDAL)
+            ?: throw NotFoundException("해당하는 메달($medalId)은 존재하지 않습니다", ErrorCode.E404_NOT_EXISTS_MEDAL)
     }
 
 }

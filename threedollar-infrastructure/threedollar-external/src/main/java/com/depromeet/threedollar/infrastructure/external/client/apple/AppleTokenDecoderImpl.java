@@ -15,7 +15,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Base64;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_AUTH_TOKEN;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E400_INVALID_AUTH_TOKEN;
 
 /**
  * <a href="https://developer.apple.com/documentation/sign_in_with_apple/sign_in_with_apple_rest_api/verifying_a_user">https://developer.apple.com/documentation/sign_in_with_apple/sign_in_with_apple_rest_api/verifying_a_user</a>
@@ -41,20 +41,20 @@ public class AppleTokenDecoderImpl implements AppleTokenDecoder {
             validateToken(appleIdTokenPayload);
             return appleIdTokenPayload.getSub();
         } catch (IOException | IllegalArgumentException e) {
-            throw new InvalidException(String.format("잘못된 토큰 (%s) 입니다", idToken), ErrorCode.INVALID_AUTH_TOKEN);
+            throw new InvalidException(String.format("잘못된 토큰 (%s) 입니다", idToken), ErrorCode.E400_INVALID_AUTH_TOKEN);
         }
     }
 
     private void validateToken(@NotNull AppleIdTokenPayload payload) {
         if (!payload.getIss().equals(appleAuthProperty.getIssuer())) {
-            throw new InvalidException(String.format("잘못된 애플 토큰 입니다 - issuer가 일치하지 않습니다 payload: (%s)", payload), INVALID_AUTH_TOKEN);
+            throw new InvalidException(String.format("잘못된 애플 토큰 입니다 - issuer가 일치하지 않습니다 payload: (%s)", payload), E400_INVALID_AUTH_TOKEN);
         }
         if (!payload.getAud().equals(appleAuthProperty.getClientId())) {
-            throw new InvalidException(String.format("잘못된 애플 토큰 입니다 - clientId가 일치하지 않습니다 payload: (%s)", payload), INVALID_AUTH_TOKEN);
+            throw new InvalidException(String.format("잘못된 애플 토큰 입니다 - clientId가 일치하지 않습니다 payload: (%s)", payload), E400_INVALID_AUTH_TOKEN);
         }
         LocalDateTime authDateTime = LocalDateTimeUtils.epochToLocalDateTime(payload.getAuthTime());
         if (authDateTime.plus(EXPIRED_DURATION).isBefore(LocalDateTime.now())) {
-            throw new InvalidException(String.format("발급 후 5분애플 토큰 (%s) 입니다 만료시간: (%s)", payload, authDateTime), INVALID_AUTH_TOKEN);
+            throw new InvalidException(String.format("발급 후 5분애플 토큰 (%s) 입니다 만료시간: (%s)", payload, authDateTime), E400_INVALID_AUTH_TOKEN);
         }
     }
 

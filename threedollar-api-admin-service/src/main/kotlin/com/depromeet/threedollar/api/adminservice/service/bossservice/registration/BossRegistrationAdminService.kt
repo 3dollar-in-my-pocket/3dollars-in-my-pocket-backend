@@ -46,7 +46,7 @@ class BossRegistrationAdminService(
 
     private fun validateDuplicateRegistration(socialInfo: BossAccountSocialInfo) {
         if (bossAccountRepository.existsBossAccountBySocialInfo(socialId = socialInfo.socialId, socialType = socialInfo.socialType)) {
-            throw ConflictException("이미 가입한 사장님(${socialInfo.socialId} - ${socialInfo.socialType})입니다", ErrorCode.CONFLICT_BOSS_ACCOUNT)
+            throw ConflictException("이미 가입한 사장님(${socialInfo.socialId} - ${socialInfo.socialType})입니다", ErrorCode.E409_DUPLICATE_BOSS_ACCOUNT)
         }
     }
 

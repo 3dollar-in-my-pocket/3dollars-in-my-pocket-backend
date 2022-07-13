@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.INTERNAL_SERVER_UPDATE_STORE_OPTIMISTIC_LOCK_FAILED;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E500_INTERNAL_SERVER_UPDATE_STORE_CONCURRENCY;
 
 @RequiredArgsConstructor
 @RestController
@@ -56,7 +56,7 @@ public class StoreController {
         try {
             return ApiResponse.success(storeService.updateStore(storeId, request));
         } catch (ObjectOptimisticLockingFailureException e) {
-            throw new InternalServerException(String.format("가게 (%s)를 수정하는 도중 잠금 충돌이 발생하였습니다. message: (%s)", storeId, e), INTERNAL_SERVER_UPDATE_STORE_OPTIMISTIC_LOCK_FAILED);
+            throw new InternalServerException(String.format("가게 (%s)를 수정하는 도중 잠금 충돌이 발생하였습니다. message: (%s)", storeId, e), E500_INTERNAL_SERVER_UPDATE_STORE_CONCURRENCY);
         }
     }
 

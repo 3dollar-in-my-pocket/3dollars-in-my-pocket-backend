@@ -9,7 +9,7 @@ object BossRegistrationServiceHelper {
 
     fun findWaitingRegistrationById(bossRegistrationRepository: BossRegistrationRepository, registrationId: String): BossRegistration {
         return bossRegistrationRepository.findWaitingRegistrationById(registrationId)
-            ?: throw NotFoundException("해당하는 가입 신청 (${registrationId})은 존재하지 않습니다", ErrorCode.NOT_FOUND_SIGNUP_REGISTRATION)
+            ?: throw NotFoundException("해당하는 가입 신청 (${registrationId})은 존재하지 않습니다", ErrorCode.E404_NOT_EXISTS_SIGNUP_REGISTRATION)
     }
 
 }

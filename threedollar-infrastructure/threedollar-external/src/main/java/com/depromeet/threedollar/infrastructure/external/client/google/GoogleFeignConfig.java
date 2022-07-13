@@ -24,7 +24,7 @@ public class GoogleFeignConfig {
         public Exception decode(String methodKey, Response response) {
             FeignException exception = FeignException.errorStatus(methodKey, response);
             if (isClientError(exception.status())) {
-                return new InvalidException(String.format("Google API 호출 중 클라이언트 에러(%s)가 발생하였습니다. message: (%s)", exception.status(), exception.getMessage()), ErrorCode.INVALID_AUTH_TOKEN);
+                return new InvalidException(String.format("Google API 호출 중 클라이언트 에러(%s)가 발생하였습니다. message: (%s)", exception.status(), exception.getMessage()), ErrorCode.E400_INVALID_AUTH_TOKEN);
             }
             throw new BadGatewayException(String.format("슬랙 API 호출중 에러(%s)가 발생하였습니다. message: (%s) ", response.status(), exception.getMessage()));
         }

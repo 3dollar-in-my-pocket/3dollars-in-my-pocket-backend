@@ -106,8 +106,8 @@ internal class AuthControllerTest(
                 }
                 .andExpect {
                     status { isConflict() }
-                    jsonPath("$.resultCode") { ErrorCode.CONFLICT_BOSS_ACCOUNT.code }
-                    jsonPath("$.resultCode") { ErrorCode.CONFLICT_BOSS_ACCOUNT.message }
+                    jsonPath("$.resultCode") { ErrorCode.E409_DUPLICATE_BOSS_ACCOUNT.code }
+                    jsonPath("$.resultCode") { ErrorCode.E409_DUPLICATE_BOSS_ACCOUNT.message }
                 }
         }
 
@@ -140,8 +140,8 @@ internal class AuthControllerTest(
                 }
                 .andExpect {
                     status { isForbidden() }
-                    jsonPath("$.resultCode") { ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT.code }
-                    jsonPath("$.resultCode") { ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT.message }
+                    jsonPath("$.resultCode") { ErrorCode.E403_FORBIDDEN_WAITING_STATUS_TO_APPROVE_BOSS_ACCOUNT.code }
+                    jsonPath("$.resultCode") { ErrorCode.E403_FORBIDDEN_WAITING_STATUS_TO_APPROVE_BOSS_ACCOUNT.message }
                 }
         }
 
@@ -204,8 +204,8 @@ internal class AuthControllerTest(
                 }
                 .andExpect {
                     status { isConflict() }
-                    jsonPath("$.resultCode") { ErrorCode.CONFLICT_BOSS_ACCOUNT.code }
-                    jsonPath("$.resultCode") { ErrorCode.CONFLICT_BOSS_ACCOUNT.message }
+                    jsonPath("$.resultCode") { ErrorCode.E409_DUPLICATE_BOSS_ACCOUNT.code }
+                    jsonPath("$.resultCode") { ErrorCode.E409_DUPLICATE_BOSS_ACCOUNT.message }
                 }
         }
 
@@ -238,8 +238,8 @@ internal class AuthControllerTest(
                 }
                 .andExpect {
                     status { isForbidden() }
-                    jsonPath("$.resultCode") { ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT.code }
-                    jsonPath("$.resultCode") { ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT.message }
+                    jsonPath("$.resultCode") { ErrorCode.E403_FORBIDDEN_WAITING_STATUS_TO_APPROVE_BOSS_ACCOUNT.code }
+                    jsonPath("$.resultCode") { ErrorCode.E403_FORBIDDEN_WAITING_STATUS_TO_APPROVE_BOSS_ACCOUNT.message }
                 }
         }
 
@@ -302,8 +302,8 @@ internal class AuthControllerTest(
                 }
                 .andExpect {
                     status { isConflict() }
-                    jsonPath("$.resultCode") { ErrorCode.CONFLICT_BOSS_ACCOUNT.code }
-                    jsonPath("$.resultCode") { ErrorCode.CONFLICT_BOSS_ACCOUNT.message }
+                    jsonPath("$.resultCode") { ErrorCode.E409_DUPLICATE_BOSS_ACCOUNT.code }
+                    jsonPath("$.resultCode") { ErrorCode.E409_DUPLICATE_BOSS_ACCOUNT.message }
                 }
         }
 
@@ -336,8 +336,8 @@ internal class AuthControllerTest(
                 }
                 .andExpect {
                     status { isForbidden() }
-                    jsonPath("$.resultCode") { ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT.code }
-                    jsonPath("$.resultCode") { ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT.message }
+                    jsonPath("$.resultCode") { ErrorCode.E403_FORBIDDEN_WAITING_STATUS_TO_APPROVE_BOSS_ACCOUNT.code }
+                    jsonPath("$.resultCode") { ErrorCode.E403_FORBIDDEN_WAITING_STATUS_TO_APPROVE_BOSS_ACCOUNT.message }
                 }
         }
 
@@ -365,8 +365,8 @@ internal class AuthControllerTest(
                 }
                 .andExpect {
                     status { isServiceUnavailable() }
-                    jsonPath("$.resultCode") { value(ErrorCode.SERVICE_UNAVAILABLE.code) }
-                    jsonPath("$.message") { value(ErrorCode.SERVICE_UNAVAILABLE.message) }
+                    jsonPath("$.resultCode") { value(ErrorCode.E503_SERVICE_UNAVAILABLE.code) }
+                    jsonPath("$.message") { value(ErrorCode.E503_SERVICE_UNAVAILABLE.message) }
                 }
         }
 
@@ -541,8 +541,8 @@ internal class AuthControllerTest(
                 }
                 .andExpect {
                     status { isServiceUnavailable() }
-                    jsonPath("$.resultCode") { value(ErrorCode.SERVICE_UNAVAILABLE.code) }
-                    jsonPath("$.message") { value(ErrorCode.SERVICE_UNAVAILABLE.message) }
+                    jsonPath("$.resultCode") { value(ErrorCode.E503_SERVICE_UNAVAILABLE.code) }
+                    jsonPath("$.message") { value(ErrorCode.E503_SERVICE_UNAVAILABLE.message) }
                 }
         }
 
@@ -576,8 +576,8 @@ internal class AuthControllerTest(
                 }
                 .andExpect {
                     status { isUnauthorized() }
-                    jsonPath("$.resultCode") { value(ErrorCode.UNAUTHORIZED.code) }
-                    jsonPath("$.message") { value(ErrorCode.UNAUTHORIZED.message) }
+                    jsonPath("$.resultCode") { value(ErrorCode.E401_UNAUTHORIZED.code) }
+                    jsonPath("$.message") { value(ErrorCode.E401_UNAUTHORIZED.message) }
                 }
         }
 

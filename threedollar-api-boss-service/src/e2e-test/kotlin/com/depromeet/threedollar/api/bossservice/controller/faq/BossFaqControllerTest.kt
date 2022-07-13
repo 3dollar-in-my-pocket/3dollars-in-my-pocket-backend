@@ -104,8 +104,8 @@ internal class BossFaqControllerTest(
                 .andDo { print() }
                 .andExpect {
                     status { isNotImplemented() }
-                    jsonPath("$.resultCode") { value(ErrorCode.NOT_IMPLEMENTED_FAQ_CATEGORY.code) }
-                    jsonPath("$.message") { value(ErrorCode.NOT_IMPLEMENTED_FAQ_CATEGORY.message) }
+                    jsonPath("$.resultCode") { value(ErrorCode.E501_NOT_SUPPORTED_FAQ_CATEGORY.code) }
+                    jsonPath("$.message") { value(ErrorCode.E501_NOT_SUPPORTED_FAQ_CATEGORY.message) }
                 }
         }
 

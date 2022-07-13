@@ -25,7 +25,7 @@ import javax.persistence.UniqueConstraint;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOT_FOUND_USER_MEDAL;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E404_NOT_EXISTS_USER_MEDAL;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -98,7 +98,7 @@ public class User extends AuditingTimeEntity {
         return this.userMedals.stream()
             .filter(userMedal -> userMedal.hasSameMedalId(medalId))
             .findFirst()
-            .orElseThrow(() -> new NotFoundException(String.format("해당 유저(%s)는 해당하는 유저 메달(%s)을 보유하고 있지 않습니다", this.id, medalId), NOT_FOUND_USER_MEDAL));
+            .orElseThrow(() -> new NotFoundException(String.format("해당 유저(%s)는 해당하는 유저 메달(%s)을 보유하고 있지 않습니다", this.id, medalId), E404_NOT_EXISTS_USER_MEDAL));
     }
 
     @NotNull

@@ -42,7 +42,7 @@ class AdminAdvertisementService(
 
     private fun validateSupportedPosition(applicationType: ApplicationType, positionType: AdvertisementPositionType) {
         if (!positionType.isSupported(applicationType)) {
-            throw ForbiddenException("해당 서비스(${applicationType})에서 지원하지 않는 광고 위치(${positionType})입니다", ErrorCode.NOT_IMPLEMENTED_ADVERTISEMENT_POSITION)
+            throw ForbiddenException("해당 서비스(${applicationType})에서 지원하지 않는 광고 위치(${positionType})입니다", ErrorCode.E501_NOT_SUPPORTED_ADVERTISEMENT_POSITION)
         }
     }
 
@@ -64,7 +64,7 @@ class AdminAdvertisementService(
 
     fun findAdvertisementById(advertisementId: Long): Advertisement {
         return advertisementRepository.findAdvertisementById(advertisementId)
-            ?: throw NotFoundException("해당하는 광고(${advertisementId})는 존재하지 않습니다.", ErrorCode.NOT_FOUND_ADVERTISEMENT)
+            ?: throw NotFoundException("해당하는 광고(${advertisementId})는 존재하지 않습니다.", ErrorCode.E404_NOT_EXISTS_ADVERTISEMENT)
     }
 
 }

@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_EMPTY_UPLOAD_FILE_NAME;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E400_MISSING_UPLOAD_FILE_NAME;
 import static com.depromeet.threedollar.common.type.ApplicationType.ADMIN_API;
 import static com.depromeet.threedollar.common.type.ApplicationType.BOSS_API;
 import static com.depromeet.threedollar.common.type.ApplicationType.USER_API;
@@ -43,7 +43,7 @@ public enum FileType implements EnumModel {
 
     public void validateAvailableUploadInModule(@NotNull ApplicationType applicationType) {
         if (!this.availableModules.contains(applicationType)) {
-            throw new ForbiddenException(String.format("해당 서버 (%s) 에서 업로드할 수 없는 파일 타입 (%s) 입니다.", applicationType, this.name()), ErrorCode.NOT_IMPLEMENTED_UPLOAD_FILE_IN_MODULE);
+            throw new ForbiddenException(String.format("해당 서버 (%s) 에서 업로드할 수 없는 파일 타입 (%s) 입니다.", applicationType, this.name()), ErrorCode.E501_NOT_SUPPORTED_UPLOAD_FILE);
         }
     }
 
@@ -57,7 +57,7 @@ public enum FileType implements EnumModel {
     @NotNull
     public String createUniqueFileNameWithExtension(@Nullable String originalFileName) {
         if (originalFileName == null) {
-            throw new InvalidException("파일의 이름이 null 이어서는 안됩니다", INVALID_EMPTY_UPLOAD_FILE_NAME);
+            throw new InvalidException("파일의 이름이 null 이어서는 안됩니다", E400_MISSING_UPLOAD_FILE_NAME);
         }
         String extension = FileUtils.getFileExtension(originalFileName);
         return getFileNameWithDirectory(UuidUtils.generate() + extension);

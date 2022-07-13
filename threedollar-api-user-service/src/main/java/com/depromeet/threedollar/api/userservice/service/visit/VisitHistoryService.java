@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.CONFLICT_VISIT_HISTORY;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E409_DUPLICATE_VISIT_HISTORY;
 
 @RequiredArgsConstructor
 @Service
@@ -35,7 +35,7 @@ public class VisitHistoryService {
 
     private void validateNotVisitedToday(Long storeId, Long userId, LocalDate date) {
         if (visitHistoryRepository.existsVisitHistoryByStoreIdAndUserIdAndDateOfVisit(storeId, userId, date)) {
-            throw new ConflictException(String.format("유저(%s)는 해당 날짜(%s)에 유저 가게(%s)를 이미 방문 인증하였습니다", userId, date, storeId), CONFLICT_VISIT_HISTORY);
+            throw new ConflictException(String.format("유저(%s)는 해당 날짜(%s)에 유저 가게(%s)를 이미 방문 인증하였습니다", userId, date, storeId), E409_DUPLICATE_VISIT_HISTORY);
         }
     }
 

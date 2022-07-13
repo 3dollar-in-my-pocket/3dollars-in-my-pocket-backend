@@ -32,13 +32,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.INTERNAL_SERVER;
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID;
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_MISSING_PARAMETER;
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_UPLOAD_FILE_SIZE;
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.METHOD_NOT_ALLOWED;
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.NOT_ACCEPTABLE;
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.UNSUPPORTED_MEDIA_TYPE;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E500_INTERNAL_SERVER;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E400_INVALID;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E400_MISSING_PARAMETER;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E400_INVALID_FILE_SIZE_TOO_LARGE;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E405_METHOD_NOT_ALLOWED;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E406_NOT_ACCEPTABLE;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E415_UNSUPPORTED_MEDIA_TYPE;
 import static java.util.stream.Collectors.joining;
 
 @Slf4j
@@ -59,7 +59,7 @@ public class ControllerExceptionAdvice {
             .map(DefaultMessageSourceResolvable::getDefaultMessage)
             .collect(joining("\n"));
         log.error("BindException: {}", errorMessage);
-        return ApiResponse.error(INVALID, errorMessage);
+        return ApiResponse.error(E400_INVALID, errorMessage);
     }
 
     /**
@@ -72,12 +72,12 @@ public class ControllerExceptionAdvice {
         if (e.getRootCause() instanceof MissingKotlinParameterException) {
             Throwable throwable = e.getRootCause();
             if (throwable == null) {
-                return ApiResponse.error(INVALID);
+                return ApiResponse.error(E400_INVALID);
             }
             String parameterName = ((MissingKotlinParameterException) throwable).getParameter().getName();
-            return ApiResponse.error(INVALID, String.format("필수 파라미터 (%s)를 입력해주세요", parameterName));
+            return ApiResponse.error(E400_INVALID, String.format("필수 파라미터 (%s)를 입력해주세요", parameterName));
         }
-        return ApiResponse.error(INVALID);
+        return ApiResponse.error(E400_INVALID);
     }
 
     /**
@@ -88,7 +88,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     private ApiResponse<Object> handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
         log.warn(e.getMessage());
-        return ApiResponse.error(INVALID_MISSING_PARAMETER, String.format("필수 파라미터 (%s)를 입력해주세요", e.getParameterName()));
+        return ApiResponse.error(E400_MISSING_PARAMETER, String.format("필수 파라미터 (%s)를 입력해주세요", e.getParameterName()));
     }
 
     /**
@@ -99,7 +99,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(MissingServletRequestPartException.class)
     private ApiResponse<Object> handleMissingServletRequestParameterException(MissingServletRequestPartException e) {
         log.warn(e.getMessage());
-        return ApiResponse.error(INVALID_MISSING_PARAMETER, String.format("Multipart (%s)를 입력해주세요", e.getRequestPartName()));
+        return ApiResponse.error(E400_MISSING_PARAMETER, String.format("Multipart (%s)를 입력해주세요", e.getRequestPartName()));
     }
 
     /**
@@ -110,7 +110,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(MissingPathVariableException.class)
     private ApiResponse<Object> handleMissingPathVariableException(MissingPathVariableException e) {
         log.warn(e.getMessage());
-        return ApiResponse.error(INVALID_MISSING_PARAMETER, String.format("Path (%s)를 입력해주세요", e.getVariableName()));
+        return ApiResponse.error(E400_MISSING_PARAMETER, String.format("Path (%s)를 입력해주세요", e.getVariableName()));
     }
 
     /**
@@ -121,7 +121,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(TypeMismatchException.class)
     private ApiResponse<Object> handleTypeMismatchException(TypeMismatchException e) {
         log.warn(e.getMessage());
-        return ApiResponse.error(INVALID, String.format("%s (%s)", INVALID.getMessage(), e.getValue()));
+        return ApiResponse.error(E400_INVALID, String.format("%s (%s)", E400_INVALID.getMessage(), e.getValue()));
     }
 
     /**
@@ -134,7 +134,7 @@ public class ControllerExceptionAdvice {
     })
     private ApiResponse<Object> handleInvalidFormatException(Exception e) {
         log.warn(e.getMessage());
-        return ApiResponse.error(INVALID);
+        return ApiResponse.error(E400_INVALID);
     }
 
     /**
@@ -145,7 +145,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     private ApiResponse<Object> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         log.warn(e.getMessage());
-        return ApiResponse.error(METHOD_NOT_ALLOWED);
+        return ApiResponse.error(E405_METHOD_NOT_ALLOWED);
     }
 
     /**
@@ -155,7 +155,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
     private ApiResponse<Object> handleHttpMediaTypeNotAcceptableException(HttpMediaTypeNotAcceptableException e) {
         log.warn(e.getMessage());
-        return ApiResponse.error(NOT_ACCEPTABLE);
+        return ApiResponse.error(E406_NOT_ACCEPTABLE);
     }
 
     /**
@@ -166,7 +166,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(HttpMediaTypeException.class)
     private ApiResponse<Object> handleHttpMediaTypeException(HttpMediaTypeException e) {
         log.warn(e.getMessage(), e);
-        return ApiResponse.error(UNSUPPORTED_MEDIA_TYPE);
+        return ApiResponse.error(E415_UNSUPPORTED_MEDIA_TYPE);
     }
 
     /**
@@ -176,7 +176,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     private ApiResponse<Object> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException e) {
         log.error(e.getMessage(), e);
-        return ApiResponse.error(INVALID_UPLOAD_FILE_SIZE);
+        return ApiResponse.error(E400_INVALID_FILE_SIZE_TOO_LARGE);
     }
 
     /**
@@ -199,8 +199,8 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(Exception.class)
     private ApiResponse<Object> handleException(Exception exception, HttpServletRequest request) {
         log.error(exception.getMessage(), exception);
-        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(INTERNAL_SERVER, exception));
-        return ApiResponse.error(INTERNAL_SERVER);
+        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(E500_INTERNAL_SERVER, exception));
+        return ApiResponse.error(E500_INTERNAL_SERVER);
     }
 
     private ServerExceptionOccurredEvent createUnExpectedErrorOccurredEvent(ErrorCode errorCode, Exception exception) {

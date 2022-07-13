@@ -23,7 +23,7 @@ public class Base32Utils {
     public static Long decode(String encodingValue) {
         String base32 = encodingValue.substring(1);
         if (checksum(base32) != encodingValue.charAt(0)) {
-            throw new InvalidException(String.format("encodingKey: (%s) 체크섬이 일치하지 않습니다", encodingValue), ErrorCode.INVALID_ENCODING_ID);
+            throw new InvalidException(String.format("encodingKey: (%s) 체크섬이 일치하지 않습니다", encodingValue), ErrorCode.E400_INVALID_ENCODING_ID);
         }
         return Long.valueOf(new String(BASE_32.decode(base32)).split(PADDING)[1]);
     }

@@ -24,11 +24,11 @@ data class BusinessNumber(
     companion object {
         fun of(number: String): BusinessNumber {
             if (!BUSINESS_NUMBER_REGEX.matcher(number).matches()) {
-                throw InvalidException("잘못된 사업자 번호 (${number}) 입니다. 사업자 번호 형식은 [000-00-00000] 입니다", ErrorCode.INVALID_BUSINESS_NUMBER_FORMAT)
+                throw InvalidException("잘못된 사업자 번호 (${number}) 입니다. 사업자 번호 형식은 [000-00-00000] 입니다", ErrorCode.E400_INVALID_BUSINESS_NUMBER_FORMAT)
             }
             val separatedNumber = number.split(SEPARATOR)
             if (!BusinessNumberChecksumValidator.isValid(separatedNumber[0] + separatedNumber[1] + separatedNumber[2])) {
-                throw InvalidException("잘못된 사업자 번호 (${number}) 입니다. 사업자 번호 체크섬이 깨집니다", ErrorCode.INVALID_BUSINESS_NUMBER_FORMAT)
+                throw InvalidException("잘못된 사업자 번호 (${number}) 입니다. 사업자 번호 체크섬이 깨집니다", ErrorCode.E400_INVALID_BUSINESS_NUMBER_FORMAT)
             }
             return BusinessNumber(
                 first = separatedNumber[0],

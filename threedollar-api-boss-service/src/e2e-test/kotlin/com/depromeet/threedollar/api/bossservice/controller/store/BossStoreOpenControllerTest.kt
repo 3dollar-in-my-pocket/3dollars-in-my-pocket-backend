@@ -168,8 +168,8 @@ internal class BossStoreOpenControllerTest(
                 print()
             }.andExpect {
                 status { isForbidden() }
-                jsonPath("$.resultCode") { value(ErrorCode.FORBIDDEN_NOT_OPEN_STORE.code) }
-                jsonPath("$.message") { value(ErrorCode.FORBIDDEN_NOT_OPEN_STORE.message) }
+                jsonPath("$.resultCode") { value(ErrorCode.E403_FORBIDDEN_NOT_OPENING_STORE.code) }
+                jsonPath("$.message") { value(ErrorCode.E403_FORBIDDEN_NOT_OPENING_STORE.message) }
             }
         }
 

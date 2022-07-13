@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_UPLOAD_FILE_TYPE;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E400_INVALID_UPLOAD_FILE_EXTENSION;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FileUtils {
@@ -22,11 +22,11 @@ public class FileUtils {
         try {
             String extension = fileName.substring(fileName.lastIndexOf("."));
             if (extension.length() < 2) {
-                throw new InvalidException(String.format("잘못된 확장자 형식의 파일 (%s) 입니다", fileName), INVALID_UPLOAD_FILE_TYPE);
+                throw new InvalidException(String.format("잘못된 확장자 형식의 파일 (%s) 입니다", fileName), E400_INVALID_UPLOAD_FILE_EXTENSION);
             }
             return extension;
         } catch (StringIndexOutOfBoundsException e) {
-            throw new InvalidException(String.format("잘못된 확장자 형식의 파일 (%s) 입니다", fileName), INVALID_UPLOAD_FILE_TYPE);
+            throw new InvalidException(String.format("잘못된 확장자 형식의 파일 (%s) 입니다", fileName), E400_INVALID_UPLOAD_FILE_EXTENSION);
         }
     }
 

@@ -30,8 +30,8 @@ internal class ControllerExceptionAdviceTest : ControllerTest() {
         mockMvc.perform(post("/ping"))
             .andDo(print())
             .andExpect(status().isMethodNotAllowed)
-            .andExpect(jsonPath("$.resultCode").value(ErrorCode.METHOD_NOT_ALLOWED.code))
-            .andExpect(jsonPath("$.message").value(ErrorCode.METHOD_NOT_ALLOWED.message))
+            .andExpect(jsonPath("$.resultCode").value(ErrorCode.E405_METHOD_NOT_ALLOWED.code))
+            .andExpect(jsonPath("$.message").value(ErrorCode.E405_METHOD_NOT_ALLOWED.message))
     }
 
     @Test
@@ -43,8 +43,8 @@ internal class ControllerExceptionAdviceTest : ControllerTest() {
         mockMvc.perform(get("/ping"))
             .andDo(print())
             .andExpect(status().isTooManyRequests)
-            .andExpect(jsonPath("$.resultCode").value(ErrorCode.TOO_MANY_REQUESTS.code))
-            .andExpect(jsonPath("$.message").value(ErrorCode.TOO_MANY_REQUESTS.message))
+            .andExpect(jsonPath("$.resultCode").value(ErrorCode.E429_TOO_MANY_REQUESTS.code))
+            .andExpect(jsonPath("$.message").value(ErrorCode.E429_TOO_MANY_REQUESTS.message))
     }
 
     @Test
@@ -56,8 +56,8 @@ internal class ControllerExceptionAdviceTest : ControllerTest() {
         mockMvc.perform(get("/ping"))
             .andDo(print())
             .andExpect(status().isInternalServerError)
-            .andExpect(jsonPath("$.resultCode").value(ErrorCode.INTERNAL_SERVER.code))
-            .andExpect(jsonPath("$.message").value(ErrorCode.INTERNAL_SERVER.message))
+            .andExpect(jsonPath("$.resultCode").value(ErrorCode.E500_INTERNAL_SERVER.code))
+            .andExpect(jsonPath("$.message").value(ErrorCode.E500_INTERNAL_SERVER.message))
     }
 
     @Test
@@ -69,8 +69,8 @@ internal class ControllerExceptionAdviceTest : ControllerTest() {
         mockMvc.perform(get("/ping"))
             .andDo(print())
             .andExpect(status().isBadGateway)
-            .andExpect(jsonPath("$.resultCode").value(ErrorCode.BAD_GATEWAY.code))
-            .andExpect(jsonPath("$.message").value(ErrorCode.BAD_GATEWAY.message))
+            .andExpect(jsonPath("$.resultCode").value(ErrorCode.E502_BAD_GATEWAY.code))
+            .andExpect(jsonPath("$.message").value(ErrorCode.E502_BAD_GATEWAY.message))
     }
 
     @Test
@@ -82,8 +82,8 @@ internal class ControllerExceptionAdviceTest : ControllerTest() {
         mockMvc.perform(get("/ping"))
             .andDo(print())
             .andExpect(status().isServiceUnavailable)
-            .andExpect(jsonPath("$.resultCode").value(ErrorCode.SERVICE_UNAVAILABLE.code))
-            .andExpect(jsonPath("$.message").value(ErrorCode.SERVICE_UNAVAILABLE.message))
+            .andExpect(jsonPath("$.resultCode").value(ErrorCode.E503_SERVICE_UNAVAILABLE.code))
+            .andExpect(jsonPath("$.message").value(ErrorCode.E503_SERVICE_UNAVAILABLE.message))
     }
 
     @Test
@@ -95,8 +95,8 @@ internal class ControllerExceptionAdviceTest : ControllerTest() {
         mockMvc.perform(get("/ping"))
             .andDo(print())
             .andExpect(status().isBadRequest)
-            .andExpect(jsonPath("$.resultCode").value(ErrorCode.INVALID.code))
-            .andExpect(jsonPath("$.message").value(ErrorCode.INVALID.message))
+            .andExpect(jsonPath("$.resultCode").value(ErrorCode.E400_INVALID.code))
+            .andExpect(jsonPath("$.message").value(ErrorCode.E400_INVALID.message))
     }
 
     @Test
@@ -108,8 +108,8 @@ internal class ControllerExceptionAdviceTest : ControllerTest() {
         mockMvc.perform(get("/ping"))
             .andDo(print())
             .andExpect(status().isBadRequest)
-            .andExpect(jsonPath("$.resultCode").value(ErrorCode.INVALID_UPLOAD_FILE_SIZE.code))
-            .andExpect(jsonPath("$.message").value(ErrorCode.INVALID_UPLOAD_FILE_SIZE.message))
+            .andExpect(jsonPath("$.resultCode").value(ErrorCode.E400_INVALID_FILE_SIZE_TOO_LARGE.code))
+            .andExpect(jsonPath("$.message").value(ErrorCode.E400_INVALID_FILE_SIZE_TOO_LARGE.message))
     }
 
 }

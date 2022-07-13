@@ -42,8 +42,8 @@ internal class LoginCheckHandlerTest : SetupBossAccountControllerTest() {
             .header(HttpHeaders.AUTHORIZATION, token)
         )
             .andDo(MockMvcResultHandlers.print())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.resultCode").value(ErrorCode.UNAUTHORIZED.code))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.message").value(ErrorCode.UNAUTHORIZED.message))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.resultCode").value(ErrorCode.E401_UNAUTHORIZED.code))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.message").value(ErrorCode.E401_UNAUTHORIZED.message))
             .andExpect(MockMvcResultMatchers.jsonPath("$.data").isEmpty)
     }
 

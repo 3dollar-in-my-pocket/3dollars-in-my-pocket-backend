@@ -39,7 +39,7 @@ class FaqAdminService(
 
     private fun validateSupportedFaqCategory(applicationType: ApplicationType, category: FaqCategory) {
         if (!category.isSupported(applicationType)) {
-            throw ForbiddenException("해당 서비스(${applicationType})에서 지원하지 않는 FAQ 카테고리(${category}) 입니다", ErrorCode.NOT_IMPLEMENTED_FAQ_CATEGORY)
+            throw ForbiddenException("해당 서비스(${applicationType})에서 지원하지 않는 FAQ 카테고리(${category}) 입니다", ErrorCode.E501_NOT_SUPPORTED_FAQ_CATEGORY)
         }
     }
 
@@ -58,7 +58,7 @@ class FaqAdminService(
 
     private fun findFaqById(faqId: Long): Faq {
         return faqRepository.findFaqById(faqId)
-            ?: throw NotFoundException("해당하는 Faq($faqId)는 존재하지 않습니다.", ErrorCode.NOT_FOUND_FAQ)
+            ?: throw NotFoundException("해당하는 Faq($faqId)는 존재하지 않습니다.", ErrorCode.E404_NOT_EXISTS_FAQ)
     }
 
 }

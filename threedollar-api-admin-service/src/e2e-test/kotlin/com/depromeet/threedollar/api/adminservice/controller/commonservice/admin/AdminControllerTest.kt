@@ -44,8 +44,8 @@ internal class AdminControllerTest : SetupAdminControllerTest() {
                 print()
             }.andExpect {
                 status { isUnauthorized() }
-                jsonPath("$.resultCode") { value(ErrorCode.UNAUTHORIZED.code) }
-                jsonPath("$.message") { value(ErrorCode.UNAUTHORIZED.message) }
+                jsonPath("$.resultCode") { value(ErrorCode.E401_UNAUTHORIZED.code) }
+                jsonPath("$.message") { value(ErrorCode.E401_UNAUTHORIZED.message) }
             }
         }
 
@@ -58,8 +58,8 @@ internal class AdminControllerTest : SetupAdminControllerTest() {
                 }
                 .andExpect {
                     status { isUnauthorized() }
-                    jsonPath("$.resultCode") { value(ErrorCode.UNAUTHORIZED.code) }
-                    jsonPath("$.message") { value(ErrorCode.UNAUTHORIZED.message) }
+                    jsonPath("$.resultCode") { value(ErrorCode.E401_UNAUTHORIZED.code) }
+                    jsonPath("$.message") { value(ErrorCode.E401_UNAUTHORIZED.message) }
                 }
         }
 

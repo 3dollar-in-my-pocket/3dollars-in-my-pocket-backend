@@ -27,7 +27,7 @@ public class NaverFeignConfig {
                 case 401:
                 case 403:
                 case 404:
-                    throw new InvalidException(String.format("네이버 Auth API 호출 중 잘못된 토큰이 입력되었습니다. status: (%s) message: (%s)", response.status(), response.body()), ErrorCode.INVALID_AUTH_TOKEN);
+                    throw new InvalidException(String.format("네이버 Auth API 호출 중 잘못된 토큰이 입력되었습니다. status: (%s) message: (%s)", response.status(), response.body()), ErrorCode.E400_INVALID_AUTH_TOKEN);
                 default:
                     throw new BadGatewayException(String.format("네이버 API 호출중 에러(%s)가 발생하였습니다. message: (%s) ", response.status(), exception.getMessage()));
             }

@@ -35,7 +35,7 @@ class SignupService(
 
     private fun validateDuplicateRegistration(socialId: String, socialType: BossAccountSocialType) {
         if (bossRegistrationRepository.existsWaitingRegistrationBySocialIdAndSocialType(socialId, socialType)) {
-            throw ForbiddenException("가입 승인 대기중인 사장님 게정(${socialId} - (${socialType}) 입니다.", ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT)
+            throw ForbiddenException("가입 승인 대기중인 사장님 게정(${socialId} - (${socialType}) 입니다.", ErrorCode.E403_FORBIDDEN_WAITING_STATUS_TO_APPROVE_BOSS_ACCOUNT)
         }
     }
 

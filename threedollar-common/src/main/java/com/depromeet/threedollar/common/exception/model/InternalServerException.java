@@ -5,7 +5,7 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode;
 public class InternalServerException extends ThreeDollarsBaseException {
 
     public InternalServerException(String message) {
-        super(message, ErrorCode.INTERNAL_SERVER);
+        super(message, ErrorCode.E500_INTERNAL_SERVER);
     }
 
     public InternalServerException(String message, ErrorCode errorCode) {

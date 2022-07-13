@@ -17,7 +17,7 @@ class GoogleAuthService(
     override fun login(request: LoginRequest): Long {
         val googleProfileInfo = googleAuthApiClient.getProfileInfo(HttpHeaderUtils.withBearerToken(request.token))
         val admin = adminRepository.findAdminByEmail(googleProfileInfo.email)
-            ?: throw NotFoundException("해당하는 관리자(${googleProfileInfo.email})은 존재하지 않습니다", ErrorCode.NOT_FOUND_ADMIN)
+            ?: throw NotFoundException("해당하는 관리자(${googleProfileInfo.email})은 존재하지 않습니다", ErrorCode.E404_NOT_EXISTS_ADMIN)
         return admin.id
     }
 

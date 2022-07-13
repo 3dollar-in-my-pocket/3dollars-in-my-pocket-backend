@@ -15,7 +15,7 @@ enum class PushPlatformType(
 
     fun validateSupportedOsPlatformType(osPlatformType: OsPlatformType) {
         if (!this.supportedOsPlatformTypes.contains(osPlatformType)) {
-            throw ForbiddenException("해당하는 OS($osPlatformType)에서 지원하지 않는 푸시 플랫폼(${this.name}) 입니다", ErrorCode.FORBIDDEN)
+            throw ForbiddenException("해당하는 OS($osPlatformType)에서 지원하지 않는 푸시 플랫폼(${this.name}) 입니다", ErrorCode.E403_FORBIDDEN)
         }
     }
 

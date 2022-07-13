@@ -9,7 +9,7 @@ public class ConflictException extends ThreeDollarsBaseException {
     }
 
     public ConflictException(String message) {
-        super(message, ErrorCode.CONFLICT);
+        super(message, ErrorCode.E409_DUPLICATE);
     }
 
 }

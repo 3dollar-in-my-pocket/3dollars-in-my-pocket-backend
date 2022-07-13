@@ -6,7 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.http.HttpHeaders;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.UNAUTHORIZED;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E401_UNAUTHORIZED;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -38,8 +38,8 @@ class LoginCheckInterceptorTest extends SetupUserControllerTest {
                 .header(HttpHeaders.AUTHORIZATION, "")
             )
             .andDo(print())
-            .andExpect(jsonPath("$.resultCode").value(UNAUTHORIZED.getCode()))
-            .andExpect(jsonPath("$.message").value(UNAUTHORIZED.getMessage()))
+            .andExpect(jsonPath("$.resultCode").value(E401_UNAUTHORIZED.getCode()))
+            .andExpect(jsonPath("$.message").value(E401_UNAUTHORIZED.getMessage()))
             .andExpect(jsonPath("$.data").isEmpty());
     }
 

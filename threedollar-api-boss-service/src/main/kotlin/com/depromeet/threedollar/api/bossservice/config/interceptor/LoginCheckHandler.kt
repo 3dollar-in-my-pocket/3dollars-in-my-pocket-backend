@@ -93,7 +93,7 @@ class LoginCheckHandler(
         }
 
         if (bossRegistrationRepository.existsWaitingRegistrationById(bossAccountId)) {
-            throw ForbiddenException("현재 가입 승인 대기중인 사장님($bossAccountId) 입니다", ErrorCode.FORBIDDEN_WAITING_APPROVE_BOSS_ACCOUNT)
+            throw ForbiddenException("현재 가입 승인 대기중인 사장님($bossAccountId) 입니다", ErrorCode.E403_FORBIDDEN_WAITING_STATUS_TO_APPROVE_BOSS_ACCOUNT)
         }
         throw UnAuthorizedException("해당하는 사장님 계정($bossAccountId) 혹은 대기중인 가입 신청($bossAccountId)은 존재하지 않습니다")
     }

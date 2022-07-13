@@ -2,8 +2,8 @@ package com.depromeet.threedollar.api.core.config.resolver
 
 import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.common.exception.model.InvalidException
-import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_MISSING_LATITUDE
-import com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_MISSING_LONGITUDE
+import com.depromeet.threedollar.common.exception.type.ErrorCode.E400_MISSING_LATITUDE_PARAMETER
+import com.depromeet.threedollar.common.exception.type.ErrorCode.E400_MISSING_LONGITUDE_PARAMETER
 import com.depromeet.threedollar.common.model.LocationValue
 import org.springframework.core.MethodParameter
 import org.springframework.stereotype.Component
@@ -36,8 +36,8 @@ class DeviceLocationArgumentResolver : HandlerMethodArgumentResolver {
             ?: throw InternalServerException("예상치 못한 에러가 발생하였습니다. 컨트롤러(${parameter.declaringClass.simpleName}-${parameter.method?.name})에 @DeviceLocation 어노테이션을 추가해주세요")
 
         if (annotation.required) {
-            latitude ?: throw InvalidException("${LATITUDE}를 입력해주세요", INVALID_MISSING_LATITUDE)
-            longitude ?: throw InvalidException("${LONGITUDE}를 입력해주세요", INVALID_MISSING_LONGITUDE)
+            latitude ?: throw InvalidException("${LATITUDE}를 입력해주세요", E400_MISSING_LATITUDE_PARAMETER)
+            longitude ?: throw InvalidException("${LONGITUDE}를 입력해주세요", E400_MISSING_LONGITUDE_PARAMETER)
         }
 
         return LocationValue.of(latitude ?: 0.0, longitude ?: 0.0)

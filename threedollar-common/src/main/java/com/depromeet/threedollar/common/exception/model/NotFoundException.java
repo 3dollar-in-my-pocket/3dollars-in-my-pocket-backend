@@ -9,7 +9,7 @@ public class NotFoundException extends ThreeDollarsBaseException {
     }
 
     public NotFoundException(String message) {
-        super(message, ErrorCode.NOT_FOUND);
+        super(message, ErrorCode.E404_NOT_EXISTS);
     }
 
 }

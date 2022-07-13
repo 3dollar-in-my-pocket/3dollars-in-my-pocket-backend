@@ -5,7 +5,7 @@ import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.INVALID_UPLOAD_FILE_TYPE;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E400_INVALID_UPLOAD_FILE_EXTENSION;
 
 @Getter
 public enum FileContentType {
@@ -29,7 +29,7 @@ public enum FileContentType {
         if (contentType != null && contentType.contains(SEPARATOR) && prefix.equals(getContentTypePrefix(contentType))) {
             return;
         }
-        throw new InvalidException(String.format("허용되지 않은 ContentType (%s) 입니다", contentType), INVALID_UPLOAD_FILE_TYPE);
+        throw new InvalidException(String.format("허용되지 않은 ContentType (%s) 입니다", contentType), E400_INVALID_UPLOAD_FILE_EXTENSION);
     }
 
 }

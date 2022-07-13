@@ -329,8 +329,8 @@ internal class BossStoreRetrieveControllerTest(
                 }
                 .andExpect {
                     status { isNotFound() }
-                    jsonPath("$.resultCode") { value(ErrorCode.NOT_FOUND_STORE.code) }
-                    jsonPath("$.message") { value(ErrorCode.NOT_FOUND_STORE.message) }
+                    jsonPath("$.resultCode") { value(ErrorCode.E404_NOT_EXISTS_STORE.code) }
+                    jsonPath("$.message") { value(ErrorCode.E404_NOT_EXISTS_STORE.message) }
                 }
         }
 

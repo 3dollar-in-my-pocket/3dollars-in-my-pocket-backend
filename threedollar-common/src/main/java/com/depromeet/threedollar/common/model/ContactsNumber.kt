@@ -23,7 +23,7 @@ data class ContactsNumber(
     companion object {
         fun of(number: String): ContactsNumber {
             if (!CONTACTS_NUMBER_REGEX.matcher(number).matches()) {
-                throw InvalidException("잘못된 전화번호 (${number}) 형식 입니다. 올바른 연락처 형식은 01X-0000-0000 입니다.", ErrorCode.INVALID_CONTACTS_NUMBER_FORMAT)
+                throw InvalidException("잘못된 전화번호 (${number}) 형식 입니다. 올바른 연락처 형식은 01X-0000-0000 입니다.", ErrorCode.E400_INVALID_CONTACTS_NUMBER_FORMAT)
             }
             val separatedNumber = number.split(SEPARATOR)
             return ContactsNumber(
