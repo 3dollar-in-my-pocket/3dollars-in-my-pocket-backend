@@ -12,6 +12,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreReposi
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType
+import com.depromeet.threedollar.infrastructure.external.client.slack.SlackWebhookApiClient
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
@@ -35,19 +36,23 @@ private const val CHUNK_SIZE = 4
 class GiveMedalsToUserByUserActivity(
     private val jobBuilderFactory: JobBuilderFactory,
     private val stepBuilderFactory: StepBuilderFactory,
+
     private val entityManagerFactory: EntityManagerFactory,
+
     private val medalRepository: MedalRepository,
     private val storeRepository: StoreRepository,
     private val storeDeleteRequestRepository: StoreDeleteRequestRepository,
     private val visitHistoryRepository: VisitHistoryRepository,
     private val reviewRepository: ReviewRepository,
+
+    private val slackWebhookApiClient: SlackWebhookApiClient,
 ) {
 
     @Bean(name = [JOB_NAME])
     fun giveMedalsToUserByUserActivityJob(): Job {
         return jobBuilderFactory[JOB_NAME]
             .incrementer(UniqueRunIdIncrementer())
-            .listener(JobListenerFactoryBean.getListener(JobExceptionListener()))
+            .listener(JobListenerFactoryBean.getListener(JobExceptionListener(slackWebhookApiClient)))
             .start(giveMedalsToUserByUserActivityStep())
             .build()
     }

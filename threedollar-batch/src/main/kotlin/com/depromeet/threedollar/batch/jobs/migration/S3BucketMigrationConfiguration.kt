@@ -3,6 +3,7 @@ package com.depromeet.threedollar.batch.jobs.migration
 import com.depromeet.threedollar.batch.config.JobExceptionListener
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageRepository
+import com.depromeet.threedollar.infrastructure.external.client.slack.SlackWebhookApiClient
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
@@ -23,14 +24,17 @@ private const val JOB_NAME = "migrationS3BucketJob"
 class S3BucketMigrationConfiguration(
     private val jobBuilderFactory: JobBuilderFactory,
     private val stepBuilderFactory: StepBuilderFactory,
+
     private val storeImageRepository: StoreImageRepository,
+
+    private val slackWebhookApiClient: SlackWebhookApiClient,
 ) {
 
     @Bean(name = [JOB_NAME])
     fun migrationS3BucketJob(): Job {
         return jobBuilderFactory.get(JOB_NAME)
             .incrementer(UniqueRunIdIncrementer())
-            .listener(JobListenerFactoryBean.getListener(JobExceptionListener()))
+            .listener(JobListenerFactoryBean.getListener(JobExceptionListener(slackWebhookApiClient)))
             .start(migrationS3BucketStep("beforePrefix", "afterPrefix"))
             .build()
     }

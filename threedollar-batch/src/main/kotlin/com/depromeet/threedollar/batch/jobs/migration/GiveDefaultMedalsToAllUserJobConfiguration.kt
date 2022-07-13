@@ -6,6 +6,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquis
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.collection.MedalObtainCollection
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User
+import com.depromeet.threedollar.infrastructure.external.client.slack.SlackWebhookApiClient
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
@@ -31,13 +32,14 @@ class GiveDefaultMedalsToAllUserJobConfiguration(
     private val stepBuilderFactory: StepBuilderFactory,
     private val entityManagerFactory: EntityManagerFactory,
     private val medalRepository: MedalRepository,
+    private val slackWebhookApiClient: SlackWebhookApiClient,
 ) {
 
     @Bean(name = [JOB_NAME])
     fun giveDefaultMedalsToUsersJob(): Job {
         return jobBuilderFactory.get(JOB_NAME)
             .incrementer(UniqueRunIdIncrementer())
-            .listener(JobListenerFactoryBean.getListener(JobExceptionListener()))
+            .listener(JobListenerFactoryBean.getListener(JobExceptionListener(slackWebhookApiClient)))
             .start(giveDefaultMedalsToUsersJobStep())
             .build()
     }

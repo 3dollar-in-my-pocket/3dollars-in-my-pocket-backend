@@ -9,9 +9,9 @@ import org.springframework.batch.core.JobExecutionListener
 import org.springframework.stereotype.Component
 
 @Component
-class JobExceptionListener : JobExecutionListener {
-
-    private lateinit var slackWebhookApiClient: SlackWebhookApiClient
+class JobExceptionListener(
+    private val slackWebhookApiClient: SlackWebhookApiClient,
+) : JobExecutionListener {
 
     override fun beforeJob(jobExecution: JobExecution) {
 

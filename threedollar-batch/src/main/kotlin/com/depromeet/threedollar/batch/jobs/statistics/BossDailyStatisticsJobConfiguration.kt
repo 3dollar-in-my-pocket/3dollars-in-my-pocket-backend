@@ -2,6 +2,7 @@ package com.depromeet.threedollar.batch.jobs.statistics
 
 import com.depromeet.threedollar.batch.config.JobExceptionListener
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
+import com.depromeet.threedollar.batch.jobs.statistics.templates.BossDailyStatisticsMessageFormat
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedbackRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
@@ -19,7 +20,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.time.LocalDate
 
-private const val BOSS_DAILY_STATISTICS_JOB = "bossStatisticsJob"
+private const val JOB_NAME = "bossStatisticsJob"
 
 /**
  * 사장님 서비스 일일 통계 배치 잡
@@ -36,11 +37,11 @@ class BossDailyStatisticsJobConfiguration(
     private val bossDeletedStoreRepository: BossDeletedStoreRepository,
 ) {
 
-    @Bean(name = [BOSS_DAILY_STATISTICS_JOB])
+    @Bean(name = [JOB_NAME])
     fun bossDailyStatisticsJob(): Job {
-        return jobBuilderFactory[BOSS_DAILY_STATISTICS_JOB]
+        return jobBuilderFactory[JOB_NAME]
             .incrementer(UniqueRunIdIncrementer())
-            .listener(JobListenerFactoryBean.getListener(JobExceptionListener()))
+            .listener(JobListenerFactoryBean.getListener(JobExceptionListener(slackNotificationApiClient)))
             .start(bossStatisticsStep())
             .next(bossAccountStatisticsStep())
             .next(bossRegistrationStatisticsStep())
@@ -50,9 +51,9 @@ class BossDailyStatisticsJobConfiguration(
             .build()
     }
 
-    @Bean(name = [BOSS_DAILY_STATISTICS_JOB + "_step"])
+    @Bean(name = [JOB_NAME + "_step"])
     fun bossStatisticsStep(): Step {
-        return stepBuilderFactory[BOSS_DAILY_STATISTICS_JOB + "_step"]
+        return stepBuilderFactory[JOB_NAME + "_step"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 slackNotificationApiClient.postStatisticsMessage(
@@ -63,9 +64,9 @@ class BossDailyStatisticsJobConfiguration(
             .build()
     }
 
-    @Bean(name = [BOSS_DAILY_STATISTICS_JOB + "_bossAccountStep"])
+    @Bean(name = [JOB_NAME + "_bossAccountStep"])
     fun bossAccountStatisticsStep(): Step {
-        return stepBuilderFactory[BOSS_DAILY_STATISTICS_JOB + "_bossAccountStep"]
+        return stepBuilderFactory[JOB_NAME + "_bossAccountStep"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
@@ -80,9 +81,9 @@ class BossDailyStatisticsJobConfiguration(
             .build()
     }
 
-    @Bean(name = [BOSS_DAILY_STATISTICS_JOB + "_bossRegistrationStep"])
+    @Bean(name = [JOB_NAME + "_bossRegistrationStep"])
     fun bossRegistrationStatisticsStep(): Step {
-        return stepBuilderFactory[BOSS_DAILY_STATISTICS_JOB + "_bossRegistrationStep"]
+        return stepBuilderFactory[JOB_NAME + "_bossRegistrationStep"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
@@ -97,9 +98,9 @@ class BossDailyStatisticsJobConfiguration(
             .build()
     }
 
-    @Bean(name = [BOSS_DAILY_STATISTICS_JOB + "_bossStoreStep"])
+    @Bean(name = [JOB_NAME + "_bossStoreStep"])
     fun bossStoresStatisticsStep(): Step {
-        return stepBuilderFactory[BOSS_DAILY_STATISTICS_JOB + "_bossStoreStep"]
+        return stepBuilderFactory[JOB_NAME + "_bossStoreStep"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
@@ -114,9 +115,9 @@ class BossDailyStatisticsJobConfiguration(
             .build()
     }
 
-    @Bean(name = [BOSS_DAILY_STATISTICS_JOB + "_deletedBossStoreLocationStep"])
+    @Bean(name = [JOB_NAME + "_deletedBossStoreLocationStep"])
     fun deleteBossStoreStatisticsStep(): Step {
-        return stepBuilderFactory[BOSS_DAILY_STATISTICS_JOB + "_deletedBossStoreLocationStep"]
+        return stepBuilderFactory[JOB_NAME + "_deletedBossStoreLocationStep"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
@@ -131,9 +132,9 @@ class BossDailyStatisticsJobConfiguration(
             .build()
     }
 
-    @Bean(name = [BOSS_DAILY_STATISTICS_JOB + "_bossStoreFeedbackStep"])
+    @Bean(name = [JOB_NAME + "_bossStoreFeedbackStep"])
     fun bossStoreFeedbacksStatisticsStep(): Step {
-        return stepBuilderFactory[BOSS_DAILY_STATISTICS_JOB + "_bossStoreFeedbackStep"]
+        return stepBuilderFactory[JOB_NAME + "_bossStoreFeedbackStep"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(

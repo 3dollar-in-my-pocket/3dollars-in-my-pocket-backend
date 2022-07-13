@@ -7,6 +7,7 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpenRepository
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.AccountType
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.DeviceRepository
+import com.depromeet.threedollar.infrastructure.external.client.slack.SlackWebhookApiClient
 import com.depromeet.threedollar.infrastructure.sqs.common.type.TopicType
 import com.depromeet.threedollar.infrastructure.sqs.provider.MessageSendProvider
 import com.depromeet.threedollar.infrastructure.sqs.provider.dto.request.SendBulkPushRequest
@@ -22,7 +23,7 @@ import org.springframework.context.annotation.Configuration
 
 private val log = KotlinLogging.logger {}
 
-private const val BOSS_OPEN_STORE_BACKGROUND_PUSH_JOB = "bossOpenStoreBackgroundPushJob"
+private const val JOB_NAME = "bossOpenStoreBackgroundPushJob"
 private const val CHUNK_SIZE = 100
 
 /**
@@ -36,20 +37,21 @@ class BossOpenPushJobConfiguration(
     private val messageSendProvider: MessageSendProvider,
     private val bossStoreRepository: BossStoreRepository,
     private val deviceRepository: DeviceRepository,
+    private val slackWebhookApiClient: SlackWebhookApiClient,
 ) {
 
-    @Bean(name = [BOSS_OPEN_STORE_BACKGROUND_PUSH_JOB])
+    @Bean(name = [JOB_NAME])
     fun bossOpenStoreBackgroundPushJob(): Job {
-        return jobBuilderFactory[BOSS_OPEN_STORE_BACKGROUND_PUSH_JOB]
+        return jobBuilderFactory[JOB_NAME]
             .incrementer(UniqueRunIdIncrementer())
-            .listener(JobListenerFactoryBean.getListener(JobExceptionListener()))
+            .listener(JobListenerFactoryBean.getListener(JobExceptionListener(slackWebhookApiClient)))
             .start(bossOpenStoreBackgroundStep())
             .build()
     }
 
-    @Bean(name = [BOSS_OPEN_STORE_BACKGROUND_PUSH_JOB + "_step"])
+    @Bean(name = [JOB_NAME + "_step"])
     fun bossOpenStoreBackgroundStep(): Step {
-        return stepBuilderFactory[BOSS_OPEN_STORE_BACKGROUND_PUSH_JOB + "_step"]
+        return stepBuilderFactory[JOB_NAME + "_step"]
             .tasklet { _, _ ->
                 var totalCounts = 0L
                 var cursor: String? = null

@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.batch.jobs.statistics
+package com.depromeet.threedollar.batch.jobs.statistics.templates
 
 enum class UserDailyStatisticsMessageFormat(
     val messageFormat: String,

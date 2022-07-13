@@ -2,20 +2,21 @@ package com.depromeet.threedollar.batch.jobs.statistics
 
 import com.depromeet.threedollar.batch.config.JobExceptionListener
 import com.depromeet.threedollar.batch.config.UniqueRunIdIncrementer
-import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_ACTIVE_MEDAL
-import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_ACTIVE_MEDALS
-import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_DELETED_STORE
-import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_DELETE_STORE_REQUEST
-import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_MEDAL
-import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_MEDALS
-import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_MENU
-import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_MENUS
-import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_REVIEW
-import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_STORE
-import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_STORE_IMAGE
-import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_USER
-import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.COUNTS_VISIT_HISTORY
-import com.depromeet.threedollar.batch.jobs.statistics.UserDailyStatisticsMessageFormat.DAILY_STATISTICS_INFO
+import com.depromeet.threedollar.batch.jobs.statistics.templates.UserDailyStatisticsMessageFormat
+import com.depromeet.threedollar.batch.jobs.statistics.templates.UserDailyStatisticsMessageFormat.COUNTS_ACTIVE_MEDAL
+import com.depromeet.threedollar.batch.jobs.statistics.templates.UserDailyStatisticsMessageFormat.COUNTS_ACTIVE_MEDALS
+import com.depromeet.threedollar.batch.jobs.statistics.templates.UserDailyStatisticsMessageFormat.COUNTS_DELETED_STORE
+import com.depromeet.threedollar.batch.jobs.statistics.templates.UserDailyStatisticsMessageFormat.COUNTS_DELETE_STORE_REQUEST
+import com.depromeet.threedollar.batch.jobs.statistics.templates.UserDailyStatisticsMessageFormat.COUNTS_MEDAL
+import com.depromeet.threedollar.batch.jobs.statistics.templates.UserDailyStatisticsMessageFormat.COUNTS_MEDALS
+import com.depromeet.threedollar.batch.jobs.statistics.templates.UserDailyStatisticsMessageFormat.COUNTS_MENU
+import com.depromeet.threedollar.batch.jobs.statistics.templates.UserDailyStatisticsMessageFormat.COUNTS_MENUS
+import com.depromeet.threedollar.batch.jobs.statistics.templates.UserDailyStatisticsMessageFormat.COUNTS_REVIEW
+import com.depromeet.threedollar.batch.jobs.statistics.templates.UserDailyStatisticsMessageFormat.COUNTS_STORE
+import com.depromeet.threedollar.batch.jobs.statistics.templates.UserDailyStatisticsMessageFormat.COUNTS_STORE_IMAGE
+import com.depromeet.threedollar.batch.jobs.statistics.templates.UserDailyStatisticsMessageFormat.COUNTS_USER
+import com.depromeet.threedollar.batch.jobs.statistics.templates.UserDailyStatisticsMessageFormat.COUNTS_VISIT_HISTORY
+import com.depromeet.threedollar.batch.jobs.statistics.templates.UserDailyStatisticsMessageFormat.DAILY_STATISTICS_INFO
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.MenuRepository
@@ -40,7 +41,7 @@ import java.time.LocalDate
  * 유저 서비스 일일 통계 배치 잡
  */
 
-private const val DAILY_STATISTICS_JOB = "dailyStaticsJob"
+private const val JOB_NAME = "dailyStaticsJob"
 
 @Configuration
 class DailyStatisticsJobConfiguration(
@@ -59,11 +60,11 @@ class DailyStatisticsJobConfiguration(
     private val slackNotificationApiClient: SlackWebhookApiClient,
 ) {
 
-    @Bean
+    @Bean(name = [JOB_NAME])
     fun dailyStaticsJob(): Job {
-        return jobBuilderFactory[DAILY_STATISTICS_JOB]
+        return jobBuilderFactory[JOB_NAME]
             .incrementer(UniqueRunIdIncrementer())
-            .listener(JobListenerFactoryBean.getListener(JobExceptionListener()))
+            .listener(JobListenerFactoryBean.getListener(JobExceptionListener(slackNotificationApiClient)))
             .start(notificationStatisticsInfoStep())
             .next(notificationUsersStatisticsStep())
             .next(notificationStoresStatisticsStep())
@@ -78,9 +79,9 @@ class DailyStatisticsJobConfiguration(
             .build()
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_step"])
     fun notificationStatisticsInfoStep(): Step {
-        return stepBuilderFactory[DAILY_STATISTICS_JOB + "_step"]
+        return stepBuilderFactory[JOB_NAME + "_step"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 slackNotificationApiClient.postStatisticsMessage(
@@ -91,9 +92,9 @@ class DailyStatisticsJobConfiguration(
             .build()
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_user_step"])
     fun notificationUsersStatisticsStep(): Step {
-        return stepBuilderFactory[DAILY_STATISTICS_JOB + "_user_step"]
+        return stepBuilderFactory[JOB_NAME + "_user_step"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
@@ -108,9 +109,9 @@ class DailyStatisticsJobConfiguration(
             .build()
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_store_step"])
     fun notificationStoresStatisticsStep(): Step {
-        return stepBuilderFactory[DAILY_STATISTICS_JOB + "_store_step"]
+        return stepBuilderFactory[JOB_NAME + "_store_step"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
@@ -125,9 +126,9 @@ class DailyStatisticsJobConfiguration(
             .build()
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_store_menu_step"])
     fun notificationMenusStatisticsStep(): Step {
-        return stepBuilderFactory[DAILY_STATISTICS_JOB + "_store_menu_step"]
+        return stepBuilderFactory[JOB_NAME + "_store_menu_step"]
             .tasklet { _, _ ->
                 val result = menuRepository.countMenus()
                 val message = result.asSequence()
@@ -144,9 +145,9 @@ class DailyStatisticsJobConfiguration(
             .build()
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_storeImage_step"])
     fun notificationStoreImageStatisticsStep(): Step {
-        return stepBuilderFactory[DAILY_STATISTICS_JOB + "_storeImage_step"]
+        return stepBuilderFactory[JOB_NAME + "_storeImage_step"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
@@ -161,9 +162,9 @@ class DailyStatisticsJobConfiguration(
             .build()
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_deletedStore_step"])
     fun notificationDeletedStoresStatisticsStep(): Step {
-        return stepBuilderFactory[DAILY_STATISTICS_JOB + "_deletedStore_step"]
+        return stepBuilderFactory[JOB_NAME + "_deletedStore_step"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
@@ -178,9 +179,9 @@ class DailyStatisticsJobConfiguration(
             .build()
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_storeDeleteRequest_step"])
     fun notificationStoreDeleteRequestsStatisticsStep(): Step {
-        return stepBuilderFactory[DAILY_STATISTICS_JOB + "_storeDeleteRequest_step"]
+        return stepBuilderFactory[JOB_NAME + "_storeDeleteRequest_step"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
@@ -195,9 +196,9 @@ class DailyStatisticsJobConfiguration(
             .build()
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_review_step"])
     fun notificationReviewsStatisticsStep(): Step {
-        return stepBuilderFactory[DAILY_STATISTICS_JOB + "_review_step"]
+        return stepBuilderFactory[JOB_NAME + "_review_step"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
@@ -212,9 +213,9 @@ class DailyStatisticsJobConfiguration(
             .build()
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_visitHistory_step"])
     fun notificationVisitHistoriesStatisticsStep(): Step {
-        return stepBuilderFactory[DAILY_STATISTICS_JOB + "_visitHistory_step"]
+        return stepBuilderFactory[JOB_NAME + "_visitHistory_step"]
             .tasklet { _, _ ->
                 val yesterday = LocalDate.now().minusDays(1)
                 sendStatisticsNotification(
@@ -229,9 +230,9 @@ class DailyStatisticsJobConfiguration(
             .build()
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_userMedal_step"])
     fun notificationUserMedalsStatisticsStep(): Step {
-        return stepBuilderFactory[DAILY_STATISTICS_JOB + "_userMedal_step"]
+        return stepBuilderFactory[JOB_NAME + "_userMedal_step"]
             .tasklet { _, _ ->
                 val result = medalRepository.countsUserMedalGroupByMedalType()
                 val message = result.asSequence()
@@ -247,9 +248,9 @@ class DailyStatisticsJobConfiguration(
             .build()
     }
 
-    @Bean
+    @Bean(name = [JOB_NAME + "_active_userMedal_step"])
     fun notificationActiveUserMedalsStatisticsStep(): Step {
-        return stepBuilderFactory[DAILY_STATISTICS_JOB + "_active_userMedal_step"]
+        return stepBuilderFactory[JOB_NAME + "_active_userMedal_step"]
             .tasklet { _, _ ->
                 val result = medalRepository.countActiveMedalsGroupByMedalType()
                 val message = result.asSequence()
