@@ -17,7 +17,7 @@ internal class BossStoreCategoryServiceTest(
     @AfterEach
     fun cleanUp() {
         bossStoreCategoryRepository.deleteAll()
-        bossStoreCategoryCacheRepository.clean()
+        bossStoreCategoryCacheRepository.cleanCache()
     }
 
     @Test

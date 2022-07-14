@@ -20,12 +20,9 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenuFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheRepository
-import com.ninjasquad.springmockk.MockkBean
-import io.mockk.every
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -37,21 +34,15 @@ internal class BossStoreSetupBossAccountServiceTest(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossDeletedStoreRepository: BossDeletedStoreRepository,
+    private val bossStoreCategoryCacheRepository: BossStoreCategoryCacheRepository,
 ) : SetupBossAccountIntegrationTest() {
-
-    @MockkBean
-    private lateinit var bossStoreCategoryCacheRepository: BossStoreCategoryCacheRepository
-
-    @BeforeEach
-    fun disableCacheCategories() {
-        every { bossStoreCategoryCacheRepository.getCache() } returns null
-    }
 
     @AfterEach
     fun cleanUp() {
         super.cleanup()
         bossStoreRepository.deleteAll()
         bossDeletedStoreRepository.deleteAll()
+        bossStoreCategoryCacheRepository.cleanCache()
     }
 
     @Nested

@@ -16,7 +16,7 @@ class BossStoreCategoryCacheRepositoryImpl(
         bossStoreCategoryRepository.set(BossStoreCategoriesCacheKey.of(), categories)
     }
 
-    override fun clean() {
+    override fun cleanCache() {
         bossStoreCategoryRepository.del(BossStoreCategoriesCacheKey.of())
     }
 

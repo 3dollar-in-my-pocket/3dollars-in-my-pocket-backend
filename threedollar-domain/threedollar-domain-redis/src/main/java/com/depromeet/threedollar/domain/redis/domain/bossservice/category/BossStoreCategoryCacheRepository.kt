@@ -6,6 +6,6 @@ interface BossStoreCategoryCacheRepository {
 
     fun setCache(categories: List<BossStoreCategoryCacheModel>)
 
-    fun clean()
+    fun cleanCache()
 
 }
