@@ -22,7 +22,7 @@ internal abstract class SetupBossStoreIntegrationTest : SetupBossAccountIntegrat
 
     @BeforeEach
     fun disableCacheCategories() {
-        every { bossStoreCategoryCacheRepository.getAll() } returns null
+        every { bossStoreCategoryCacheRepository.getCache() } returns null
     }
 
     @BeforeEach

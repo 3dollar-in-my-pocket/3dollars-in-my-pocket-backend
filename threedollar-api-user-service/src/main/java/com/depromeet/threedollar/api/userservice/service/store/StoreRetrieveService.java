@@ -73,7 +73,7 @@ public class StoreRetrieveService {
     }
 
     private List<StoreInfoResponse> findAroundStores(double mapLatitude, double mapLongitude, double distance) {
-        List<UserStoreCacheModel> aroundStoresInCache = aroundUserStoresCacheRepository.get(mapLatitude, mapLongitude, distance);
+        List<UserStoreCacheModel> aroundStoresInCache = aroundUserStoresCacheRepository.getCache(mapLatitude, mapLongitude, distance);
         if (aroundStoresInCache != null) {
             return aroundStoresInCache.stream()
                 .map(StoreInfoResponse::of)
@@ -100,7 +100,7 @@ public class StoreRetrieveService {
                 store.getCreatedAt(),
                 store.getUpdatedAt())
             ).collect(Collectors.toList());
-        aroundUserStoresCacheRepository.set(mapLatitude, mapLongitude, distance, cachedAroundStores);
+        aroundUserStoresCacheRepository.setCache(mapLatitude, mapLongitude, distance, cachedAroundStores);
     }
 
     @Transactional(readOnly = true)

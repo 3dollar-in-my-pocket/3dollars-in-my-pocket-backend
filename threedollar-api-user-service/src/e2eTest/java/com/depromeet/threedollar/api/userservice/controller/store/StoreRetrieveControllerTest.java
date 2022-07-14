@@ -93,8 +93,8 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
         @BeforeEach
         void disableCached() {
-            when(aroundUserStoresCacheRepository.get(anyDouble(), anyDouble(), anyDouble())).thenReturn(null);
-            doNothing().when(aroundUserStoresCacheRepository).set(anyDouble(), anyDouble(), anyDouble(), anyList());
+            when(aroundUserStoresCacheRepository.getCache(anyDouble(), anyDouble(), anyDouble())).thenReturn(null);
+            doNothing().when(aroundUserStoresCacheRepository).setCache(anyDouble(), anyDouble(), anyDouble(), anyList());
         }
 
         @Test
@@ -341,7 +341,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             double longitude = 126.0;
             double distance = 1000;
 
-            when(aroundUserStoresCacheRepository.get(anyDouble(), anyDouble(), anyDouble())).thenReturn(null);
+            when(aroundUserStoresCacheRepository.getCache(anyDouble(), anyDouble(), anyDouble())).thenReturn(null);
 
             Store store = StoreFixture.createWithDefaultMenu(user.getId(), "붕어빵 가게 1", latitude, longitude);
             storeRepository.save(store);
@@ -354,7 +354,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             storeRetrieveMockApiCaller.retrieveAroundStores(request, LocationValue.of(latitude, longitude), LocationValue.of(latitude, longitude), 200);
 
             // then
-            verify(aroundUserStoresCacheRepository, times(1)).set(anyDouble(), anyDouble(), anyDouble(), anyList());
+            verify(aroundUserStoresCacheRepository, times(1)).setCache(anyDouble(), anyDouble(), anyDouble(), anyList());
         }
 
         @Test
@@ -375,7 +375,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 LocalDateTime.of(2022, 1, 2, 0, 0)
             );
 
-            when(aroundUserStoresCacheRepository.get(anyDouble(), anyDouble(), anyDouble())).thenReturn(List.of(cachedStore));
+            when(aroundUserStoresCacheRepository.getCache(anyDouble(), anyDouble(), anyDouble())).thenReturn(List.of(cachedStore));
 
             RetrieveAroundStoresRequest request = RetrieveAroundStoresRequest.testBuilder()
                 .distance(distance)
@@ -419,7 +419,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
                 LocalDateTime.of(2022, 1, 2, 0, 0)
             );
 
-            when(aroundUserStoresCacheRepository.get(anyDouble(), anyDouble(), anyDouble())).thenReturn(List.of(noMatchedStore, matchedStore));
+            when(aroundUserStoresCacheRepository.getCache(anyDouble(), anyDouble(), anyDouble())).thenReturn(List.of(noMatchedStore, matchedStore));
 
             RetrieveAroundStoresRequest request = RetrieveAroundStoresRequest.testBuilder()
                 .distance(distance)

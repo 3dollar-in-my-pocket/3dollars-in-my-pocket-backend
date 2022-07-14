@@ -2,8 +2,8 @@ package com.depromeet.threedollar.domain.redis.domain.userservice.store
 
 interface AroundUserStoresCacheRepository {
 
-    fun get(mapLatitude: Double, mapLongitude: Double, distance: Double): List<UserStoreCacheModel>?
+    fun getCache(mapLatitude: Double, mapLongitude: Double, distance: Double): List<UserStoreCacheModel>?
 
-    fun set(mapLatitude: Double, mapLongitude: Double, distance: Double, value: List<UserStoreCacheModel>)
+    fun setCache(mapLatitude: Double, mapLongitude: Double, distance: Double, value: List<UserStoreCacheModel>)
 
 }

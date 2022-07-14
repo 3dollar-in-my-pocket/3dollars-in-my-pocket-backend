@@ -44,7 +44,7 @@ internal class BossStoreSetupBossAccountServiceTest(
 
     @BeforeEach
     fun disableCacheCategories() {
-        every { bossStoreCategoryCacheRepository.getAll() } returns null
+        every { bossStoreCategoryCacheRepository.getCache() } returns null
     }
 
     @AfterEach

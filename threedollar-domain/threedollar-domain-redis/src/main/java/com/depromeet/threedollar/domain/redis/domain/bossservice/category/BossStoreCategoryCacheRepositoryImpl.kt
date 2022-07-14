@@ -8,12 +8,16 @@ class BossStoreCategoryCacheRepositoryImpl(
     private val bossStoreCategoryRepository: StringRedisRepository<BossStoreCategoriesCacheKey, List<BossStoreCategoryCacheModel>>,
 ) : BossStoreCategoryCacheRepository {
 
-    override fun getAll(): List<BossStoreCategoryCacheModel>? {
+    override fun getCache(): List<BossStoreCategoryCacheModel>? {
         return bossStoreCategoryRepository.get(BossStoreCategoriesCacheKey.of())
     }
 
-    override fun set(categories: List<BossStoreCategoryCacheModel>) {
+    override fun setCache(categories: List<BossStoreCategoryCacheModel>) {
         bossStoreCategoryRepository.set(BossStoreCategoriesCacheKey.of(), categories)
+    }
+
+    override fun clean() {
+        bossStoreCategoryRepository.del(BossStoreCategoriesCacheKey.of())
     }
 
 }

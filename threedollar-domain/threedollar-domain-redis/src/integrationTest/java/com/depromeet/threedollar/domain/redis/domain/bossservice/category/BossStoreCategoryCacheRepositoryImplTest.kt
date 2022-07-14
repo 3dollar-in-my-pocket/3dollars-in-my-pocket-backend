@@ -19,7 +19,7 @@ internal class BossStoreCategoryCacheRepositoryImplTest(
     @Test
     fun `사장님 가게 카테고리 목록이 캐시에 없는 경우 null을 반환한다`() {
         // when
-        val categories = bossStoreCategoryCacheRepository.getAll()
+        val categories = bossStoreCategoryCacheRepository.getCache()
 
         // then
         assertThat(categories).isNull()
@@ -33,7 +33,7 @@ internal class BossStoreCategoryCacheRepositoryImplTest(
         stringRedisRepository.set(BossStoreCategoriesCacheKey(), listOf(category1, category2))
 
         // when
-        val categories = bossStoreCategoryCacheRepository.getAll()
+        val categories = bossStoreCategoryCacheRepository.getCache()
 
         assertThat(categories).isNotNull
         assertThat(categories).hasSize(2)
@@ -47,7 +47,7 @@ internal class BossStoreCategoryCacheRepositoryImplTest(
         val category = BossStoreCategoryCacheModel(categoryId = "categoryId1", name = "한식")
 
         // when
-        bossStoreCategoryCacheRepository.set(listOf(category))
+        bossStoreCategoryCacheRepository.setCache(listOf(category))
 
         // then
         val result = stringRedisRepository.get(BossStoreCategoriesCacheKey())

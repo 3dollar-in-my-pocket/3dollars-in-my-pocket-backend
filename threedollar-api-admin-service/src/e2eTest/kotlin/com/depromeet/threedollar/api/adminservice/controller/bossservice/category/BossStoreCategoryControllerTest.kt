@@ -6,7 +6,7 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossSt
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheModel
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheRepository
-import com.ninjasquad.springmockk.SpykBean
+import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import org.hamcrest.collection.IsCollectionWithSize
 import org.junit.jupiter.api.AfterEach
@@ -18,7 +18,7 @@ internal class BossStoreCategoryControllerTest(
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
 ) : SetupAdminControllerTest() {
 
-    @SpykBean
+    @MockkBean
     private lateinit var bossStoreCategoryCacheRepository: BossStoreCategoryCacheRepository
 
     @AfterEach
@@ -29,8 +29,8 @@ internal class BossStoreCategoryControllerTest(
     @Test
     fun `카테고리 목록이 캐시에 없는 경우, MongoDB에서 가져온 데이터를 반환한다`() {
         // given
-        every { bossStoreCategoryCacheRepository.set(any()) } returns Unit
-        every { bossStoreCategoryCacheRepository.getAll() } returns null
+        every { bossStoreCategoryCacheRepository.setCache(any()) } returns Unit
+        every { bossStoreCategoryCacheRepository.getCache() } returns null
 
         val category1 = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1)
         val category2 = BossStoreCategoryFixture.create(title = "중식", sequencePriority = 2)
@@ -56,8 +56,8 @@ internal class BossStoreCategoryControllerTest(
     @Test
     fun `카테고리 목록이 캐시에 있을 경우, 캐시에서 가져온 데이터로 반환한다 - EMPTY List`() {
         // given
-        every { bossStoreCategoryCacheRepository.set(any()) } returns Unit
-        every { bossStoreCategoryCacheRepository.getAll() } returns listOf()
+        every { bossStoreCategoryCacheRepository.setCache(any()) } returns Unit
+        every { bossStoreCategoryCacheRepository.getCache() } returns listOf()
 
         val category1 = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1)
         val category2 = BossStoreCategoryFixture.create(title = "중식", sequencePriority = 2)
@@ -80,8 +80,8 @@ internal class BossStoreCategoryControllerTest(
         val category1 = BossStoreCategoryCacheModel.of(categoryId = "categoryId1", name = "한식")
         val category2 = BossStoreCategoryCacheModel.of(categoryId = "categoryId1", name = "한식")
 
-        every { bossStoreCategoryCacheRepository.set(any()) } returns Unit
-        every { bossStoreCategoryCacheRepository.getAll() } returns listOf(category1, category2)
+        every { bossStoreCategoryCacheRepository.setCache(any()) } returns Unit
+        every { bossStoreCategoryCacheRepository.getCache() } returns listOf(category1, category2)
 
         // when & then
         mockMvc.get("/v1/boss/store/categories") {

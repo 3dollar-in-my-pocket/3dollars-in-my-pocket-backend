@@ -4,44 +4,34 @@ import com.depromeet.threedollar.api.core.IntegrationTest
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheRepository
-import com.ninjasquad.springmockk.MockkBean
-import io.mockk.every
-import io.mockk.verify
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
 internal class BossStoreCategoryServiceTest(
     private val bossStoreCategoryService: BossStoreCategoryService,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
+    private val bossStoreCategoryCacheRepository: BossStoreCategoryCacheRepository,
 ) : IntegrationTest() {
-
-    @MockkBean
-    private lateinit var bossStoreCategoryCacheRepository: BossStoreCategoryCacheRepository
 
     @AfterEach
     fun cleanUp() {
         bossStoreCategoryRepository.deleteAll()
+        bossStoreCategoryCacheRepository.clean()
     }
 
     @Test
     fun `카테고리 목록이 캐시에 없는 경우, MongoDB에서 가져온 데이터를 Redis에 저장한다`() {
-        // given
-        every { bossStoreCategoryCacheRepository.set(any()) } returns Unit
-        every { bossStoreCategoryCacheRepository.getAll() } returns null
-
         // when
         bossStoreCategoryService.retrieveBossStoreCategories()
 
-        // then
-        verify(exactly = 1) { bossStoreCategoryCacheRepository.set(any()) }
+        val bossStoreCategories = bossStoreCategoryCacheRepository.getCache()
+        assertThat(bossStoreCategories).isNotNull
     }
 
     @Test
     fun `카테고리 ids에 해당하는 카테고리 목록을 조회할때, 카테고리 목록이 캐시에 없는 경우, MongoDB에서 가져온 데이터를 Redis에 저장한다`() {
         // given
-        every { bossStoreCategoryCacheRepository.set(any()) } returns Unit
-        every { bossStoreCategoryCacheRepository.getAll() } returns null
-
         val category = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1)
         bossStoreCategoryRepository.save(category)
 
@@ -49,7 +39,8 @@ internal class BossStoreCategoryServiceTest(
         bossStoreCategoryService.retrieveBossStoreCategoriesByIds(listOf(category.id))
 
         // then
-        verify(exactly = 1) { bossStoreCategoryCacheRepository.set(any()) }
+        val bossStoreCategories = bossStoreCategoryCacheRepository.getCache()
+        assertThat(bossStoreCategories).isNotNull
     }
 
 }
