@@ -111,36 +111,23 @@ subprojects {
         integrationTest {
             compileClasspath += main.output + test.output
             runtimeClasspath += main.output + test.output
-            java.srcDirs(
-                "src/integration-test/java",
-                "src/integration-test/kotlin",
-            )
-            resources.srcDirs(
-                "src/integration-test/resources",
-            )
+            java {
+                srcDirs file("src/integrationTest/java"), file("src/integrationTest/kotlin")
+            }
+            resources {
+                file("src/integrationTest/resources")
+            }
         }
+
         e2eTest {
             compileClasspath += main.output + test.output
             runtimeClasspath += main.output + test.output
-            java.srcDirs(
-                "src/e2e-test/java",
-                "src/e2e-test/kotlin",
-            )
-            resources.srcDirs(
-                "src/e2e-test/resources",
-            )
-        }
-    }
-
-    idea {
-        module {
-            testSourceDirs += sourceSets.integrationTest.java.srcDirs
-            testSourceDirs += sourceSets.integrationTest.kotlin.srcDirs
-            testResourceDirs += sourceSets.integrationTest.resources.srcDirs
-
-            testSourceDirs += sourceSets.e2eTest.java.srcDirs
-            testSourceDirs += sourceSets.e2eTest.kotlin.srcDirs
-            testResourceDirs += sourceSets.e2eTest.resources.srcDirs
+            java {
+                srcDirs file("src/e2eTest/java"), file("src/e2eTest/kotlin")
+            }
+            resources {
+                file("src/e2eTest/resources")
+            }
         }
     }
 
@@ -159,11 +146,31 @@ subprojects {
         e2eTestAnnotationProcessor.extendsFrom testAnnotationProcessor
     }
 
+    idea {
+        module {
+            testSourceDirs += sourceSets.integrationTest.java.srcDirs
+            testResourceDirs += sourceSets.integrationTest.resources.srcDirs
+
+            testSourceDirs += sourceSets.e2eTest.java.srcDirs
+            testResourceDirs += sourceSets.e2eTest.resources.srcDirs
+        }
+    }
+
     tasks.withType(Test) {
         testLogging {
             showStandardStreams = true
             exceptionFormat = 'full'
         }
+    }
+
+    task copyTestReport(type: Copy, description: "Copy Test Reports") {
+        def testReportsDir = new File("${project.rootDir.absolutePath}/build/test-results")
+        if (!testReportsDir.exists()) {
+            testReportsDir.mkdirs()
+        }
+        from "${buildDir}/test-results"
+        include "**/*.xml"
+        into testReportsDir
     }
 
     task unitTest(type: Test, group: "verification", description: "Execute Unit Tests") {
@@ -182,6 +189,13 @@ subprojects {
         }
     }
 
+    integrationTest {
+        testLogging {
+            showStandardStreams = true
+            exceptionFormat = 'full'
+        }
+    }
+
     task e2eTest(type: Test, group: "verification", description: "Execute E2E Tests") {
         testClassesDirs = sourceSets.e2eTest.output.classesDirs
         classpath = sourceSets.e2eTest.runtimeClasspath
@@ -191,14 +205,11 @@ subprojects {
         }
     }
 
-    task copyTestReport(type: Copy, description: "Copy Test Reports") {
-        def testReportsDir = new File("${project.rootDir.absolutePath}/build/test-results")
-        if (!testReportsDir.exists()) {
-            testReportsDir.mkdirs()
+    e2eTest {
+        testLogging {
+            showStandardStreams = true
+            exceptionFormat = 'full'
         }
-        from "${buildDir}/test-results"
-        include "**/*.xml"
-        into testReportsDir
     }
 
     task ci(type: Test, group: "verification", description: "CI") {
@@ -211,6 +222,13 @@ subprojects {
     test {
         dependsOn unitTest
         dependsOn integrationTest
+    }
+
+    tasks.withType(Test) {
+        testLogging {
+            showStandardStreams = true
+            exceptionFormat = 'full'
+        }
     }
 }
 
