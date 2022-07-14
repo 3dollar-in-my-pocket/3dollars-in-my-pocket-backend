@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.infrastructure.firebase;
+package com.depromeet.threedollar.infrastructure.firebase.provider;
 
 import com.depromeet.threedollar.common.type.ApplicationType;
 import com.google.firebase.messaging.FirebaseMessaging;

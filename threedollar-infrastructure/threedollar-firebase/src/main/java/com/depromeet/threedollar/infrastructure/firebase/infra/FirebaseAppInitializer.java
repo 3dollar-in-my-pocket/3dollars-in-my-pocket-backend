@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.infrastructure.firebase;
+package com.depromeet.threedollar.infrastructure.firebase.infra;
 
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import com.depromeet.threedollar.common.type.ApplicationType;

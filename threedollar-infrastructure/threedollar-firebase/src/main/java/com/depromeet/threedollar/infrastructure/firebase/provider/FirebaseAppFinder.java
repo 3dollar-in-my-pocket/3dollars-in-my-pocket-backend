@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.infrastructure.firebase;
+package com.depromeet.threedollar.infrastructure.firebase.provider;
 
 import com.depromeet.threedollar.common.exception.model.ServiceUnAvailableException;
 import com.depromeet.threedollar.common.type.ApplicationType;

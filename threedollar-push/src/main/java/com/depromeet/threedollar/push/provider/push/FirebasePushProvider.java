@@ -2,7 +2,7 @@ package com.depromeet.threedollar.push.provider.push;
 
 import com.depromeet.threedollar.common.exception.model.InternalServerException;
 import com.depromeet.threedollar.common.type.ApplicationType;
-import com.depromeet.threedollar.infrastructure.firebase.FirebaseMessagingFinder;
+import com.depromeet.threedollar.infrastructure.firebase.provider.FirebaseMessagingFinder;
 import com.depromeet.threedollar.infrastructure.sqs.provider.dto.request.SendBulkPushRequest;
 import com.depromeet.threedollar.infrastructure.sqs.provider.dto.request.SendSinglePushRequest;
 import com.depromeet.threedollar.push.common.constants.PushExtraFieldConstants;
