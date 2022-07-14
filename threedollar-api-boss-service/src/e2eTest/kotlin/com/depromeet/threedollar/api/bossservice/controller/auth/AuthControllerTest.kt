@@ -7,6 +7,7 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationStatus
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationFixture
 import com.depromeet.threedollar.infrastructure.external.client.apple.AppleTokenDecoder
 import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAuthApiClient
@@ -16,6 +17,7 @@ import com.depromeet.threedollar.infrastructure.external.client.kakao.dto.respon
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -37,21 +39,25 @@ internal class AuthControllerTest(
     @MockkBean
     private lateinit var appleTokenDecoder: AppleTokenDecoder
 
+    @BeforeEach
+    fun mockAuthApiClient() {
+        every { kaKaoAuthApiClient.getProfileInfo(any()) } returns KaKaoProfileResponse.testInstance(KAKAO_SOCIAL_ID)
+        every { appleTokenDecoder.getSocialIdFromIdToken(any()) } returns APPLE_SOCIAL_ID
+        every { googleAuthApiClient.getProfileInfo(any()) } returns GoogleProfileInfoResponse.testInstance(GOOGLE_SOCIAL_ID)
+    }
+
     @AfterEach
     fun cleanUp() {
         super.cleanup()
         bossRegistrationRepository.deleteAll()
     }
 
-    @DisplayName("POST /api/v2/signup")
     @Nested
-    inner class SignupApiTest {
+    inner class KaKaoApiTest {
 
         @Test
         fun 카카오_회원가입_요청이_성공하면_토큰이_반환된다() {
             // given
-            every { kaKaoAuthApiClient.getProfileInfo(any()) } returns KaKaoProfileResponse.testInstance("kakao-socialId")
-
             val request = SignupRequest(
                 token = "token",
                 socialType = BossAccountSocialType.KAKAO,
@@ -80,10 +86,8 @@ internal class AuthControllerTest(
         @Test
         fun 카카오_회원가입시_이미_존재하는_사장님_계정인경우_409_에러가_발생한다() {
             // given
-            val boss = BossAccountFixture.create("google-social-id", BossAccountSocialType.KAKAO, "카카오 계정")
+            val boss = BossAccountFixture.create(KAKAO_SOCIAL_ID, BossAccountSocialType.KAKAO, "카카오 계정")
             bossAccountRepository.save(boss)
-
-            every { kaKaoAuthApiClient.getProfileInfo(any()) } returns KaKaoProfileResponse.testInstance(boss.socialInfo.socialId)
 
             val request = SignupRequest(
                 token = "token",
@@ -114,10 +118,8 @@ internal class AuthControllerTest(
         @Test
         fun 카카오_회원가입시_가입_승인_대기중인경우_403_에러가_발생한다() {
             // given
-            val registration = RegistrationFixture.create("google-social-id", BossAccountSocialType.KAKAO)
+            val registration = RegistrationFixture.create(KAKAO_SOCIAL_ID, BossAccountSocialType.KAKAO, status = BossRegistrationStatus.WAITING)
             bossRegistrationRepository.save(registration)
-
-            every { kaKaoAuthApiClient.getProfileInfo(any()) } returns KaKaoProfileResponse.testInstance(registration.boss.socialInfo.socialId)
 
             val request = SignupRequest(
                 token = "token",
@@ -146,10 +148,59 @@ internal class AuthControllerTest(
         }
 
         @Test
+        fun 카카오_로그인_요청이_성공하면_토큰이_반환된다() {
+            // given
+            val boss = BossAccountFixture.create(KAKAO_SOCIAL_ID, BossAccountSocialType.KAKAO, "카카오 계정")
+            bossAccountRepository.save(boss)
+
+            val request = LoginRequest(token = "token", socialType = BossAccountSocialType.KAKAO)
+
+            // when & then
+            mockMvc.post("/v1/auth/login") {
+                contentType = MediaType.APPLICATION_JSON
+                content = objectMapper.writeValueAsString(request)
+            }
+                .andDo {
+                    print()
+                }
+                .andExpect {
+                    status { isOk() }
+                    jsonPath("$.data.bossId") { value(boss.id) }
+                    jsonPath("$.data.token") { isNotEmpty() }
+                }
+        }
+
+        @Test
+        fun 카카오_로그인시_가입승인_대기중인경우_토큰이_반환된다() {
+            // given
+            val registration = RegistrationFixture.create(KAKAO_SOCIAL_ID, BossAccountSocialType.KAKAO)
+            bossRegistrationRepository.save(registration)
+
+            val request = LoginRequest(token = "token", socialType = BossAccountSocialType.KAKAO)
+
+            // when & then
+            mockMvc.post("/v1/auth/login") {
+                contentType = MediaType.APPLICATION_JSON
+                content = objectMapper.writeValueAsString(request)
+            }
+                .andDo {
+                    print()
+                }
+                .andExpect {
+                    status { isOk() }
+                    jsonPath("$.data.bossId") { value(registration.id) }
+                    jsonPath("$.data.token") { isNotEmpty() }
+                }
+        }
+
+    }
+
+    @Nested
+    inner class AppleAuthApiTest {
+
+        @Test
         fun 애플_회원가입_요청이_성공하면_토큰이_반환된다() {
             // given
-            every { appleTokenDecoder.getSocialIdFromIdToken(any()) } returns "apple-social-id"
-
             val request = SignupRequest(
                 token = "token",
                 socialType = BossAccountSocialType.APPLE,
@@ -178,10 +229,8 @@ internal class AuthControllerTest(
         @Test
         fun 애플_회원가입시_이미_존재하는_사장님_계정인경우_409_에러가_발생한다() {
             // given
-            val boss = BossAccountFixture.create("apple-social-id", BossAccountSocialType.APPLE, "애플 계정")
+            val boss = BossAccountFixture.create(APPLE_SOCIAL_ID, BossAccountSocialType.APPLE, "애플 계정")
             bossAccountRepository.save(boss)
-
-            every { appleTokenDecoder.getSocialIdFromIdToken(any()) } returns boss.socialInfo.socialId
 
             val request = SignupRequest(
                 token = "token",
@@ -212,10 +261,8 @@ internal class AuthControllerTest(
         @Test
         fun 애플_회원가입시_가입_승인_대기중인경우_403_에러가_발생한다() {
             // given
-            val registration = RegistrationFixture.create("apple-social-id", BossAccountSocialType.APPLE)
+            val registration = RegistrationFixture.create(APPLE_SOCIAL_ID, BossAccountSocialType.APPLE)
             bossRegistrationRepository.save(registration)
-
-            every { appleTokenDecoder.getSocialIdFromIdToken(any()) } returns registration.boss.socialInfo.socialId
 
             val request = SignupRequest(
                 token = "token",
@@ -243,11 +290,61 @@ internal class AuthControllerTest(
                 }
         }
 
+
+        @Test
+        fun 애플_로그인_요청이_성공하면_토큰이_반환된다() {
+            // given
+            val boss = BossAccountFixture.create(APPLE_SOCIAL_ID, BossAccountSocialType.APPLE, "애플 계정")
+            bossAccountRepository.save(boss)
+
+            val request = LoginRequest(token = "token", socialType = BossAccountSocialType.APPLE)
+
+            // when & then
+            mockMvc.post("/v1/auth/login") {
+                contentType = MediaType.APPLICATION_JSON
+                content = objectMapper.writeValueAsString(request)
+            }
+                .andDo {
+                    print()
+                }
+                .andExpect {
+                    status { isOk() }
+                    jsonPath("$.data.bossId") { value(boss.id) }
+                    jsonPath("$.data.token") { isNotEmpty() }
+                }
+        }
+
+        @Test
+        fun 애플_로그인시_가입승인_대기중인경우_토큰이_반환된다() {
+            // given
+            val registration = RegistrationFixture.create(APPLE_SOCIAL_ID, BossAccountSocialType.APPLE)
+            bossRegistrationRepository.save(registration)
+
+            val request = LoginRequest(token = "token", socialType = BossAccountSocialType.APPLE)
+
+            // when & then
+            mockMvc.post("/v1/auth/login") {
+                contentType = MediaType.APPLICATION_JSON
+                content = objectMapper.writeValueAsString(request)
+            }
+                .andDo {
+                    print()
+                }
+                .andExpect {
+                    status { isOk() }
+                    jsonPath("$.data.bossId") { value(registration.id) }
+                    jsonPath("$.data.token") { isNotEmpty() }
+                }
+        }
+
+    }
+
+    @Nested
+    inner class GoogleAuthApiTest {
+
         @Test
         fun 구글_회원가입_요청이_성공하면_토큰이_반환된다() {
             // given
-            every { googleAuthApiClient.getProfileInfo(any()) } returns GoogleProfileInfoResponse.testInstance("google-social-id")
-
             val request = SignupRequest(
                 token = "token",
                 socialType = BossAccountSocialType.GOOGLE,
@@ -276,10 +373,8 @@ internal class AuthControllerTest(
         @Test
         fun 구글_회원가입시_이미_존재하는_사장님_계정인경우_409_에러가_발생한다() {
             // given
-            val boss = BossAccountFixture.create("google-social-id", BossAccountSocialType.GOOGLE, "구글 계정")
+            val boss = BossAccountFixture.create(GOOGLE_SOCIAL_ID, BossAccountSocialType.GOOGLE, "구글 계정")
             bossAccountRepository.save(boss)
-
-            every { googleAuthApiClient.getProfileInfo(any()) } returns GoogleProfileInfoResponse.testInstance(boss.socialInfo.socialId)
 
             val request = SignupRequest(
                 token = "token",
@@ -310,10 +405,8 @@ internal class AuthControllerTest(
         @Test
         fun 구글_회원가입시_가입_승인_대기중인경우_403_에러가_발생한다() {
             // given
-            val registration = RegistrationFixture.create("google-social-id", BossAccountSocialType.GOOGLE)
+            val registration = RegistrationFixture.create(GOOGLE_SOCIAL_ID, BossAccountSocialType.GOOGLE)
             bossRegistrationRepository.save(registration)
-
-            every { googleAuthApiClient.getProfileInfo(any()) } returns GoogleProfileInfoResponse.testInstance(registration.boss.socialInfo.socialId)
 
             val request = SignupRequest(
                 token = "token",
@@ -342,6 +435,57 @@ internal class AuthControllerTest(
         }
 
         @Test
+        fun 구글_로그인_요청이_성공하면_토큰이_반환된다() {
+            // given
+            val boss = BossAccountFixture.create(GOOGLE_SOCIAL_ID, BossAccountSocialType.GOOGLE, "구글 계정")
+            bossAccountRepository.save(boss)
+
+            val request = LoginRequest(token = "token", socialType = BossAccountSocialType.GOOGLE)
+
+            // when & then
+            mockMvc.post("/v1/auth/login") {
+                contentType = MediaType.APPLICATION_JSON
+                content = objectMapper.writeValueAsString(request)
+            }
+                .andDo {
+                    print()
+                }
+                .andExpect {
+                    status { isOk() }
+                    jsonPath("$.data.bossId") { value(boss.id) }
+                    jsonPath("$.data.token") { isNotEmpty() }
+                }
+        }
+
+        @Test
+        fun 구글_로그인시_가입승인_대기중인경우_토큰이_반환된다() {
+            // given
+            val registration = RegistrationFixture.create(GOOGLE_SOCIAL_ID, BossAccountSocialType.GOOGLE)
+            bossRegistrationRepository.save(registration)
+
+            val request = LoginRequest(token = "token", socialType = BossAccountSocialType.GOOGLE)
+
+            // when & then
+            mockMvc.post("/v1/auth/login") {
+                contentType = MediaType.APPLICATION_JSON
+                content = objectMapper.writeValueAsString(request)
+            }
+                .andDo {
+                    print()
+                }
+                .andExpect {
+                    status { isOk() }
+                    jsonPath("$.data.bossId") { value(registration.id) }
+                    jsonPath("$.data.token") { isNotEmpty() }
+                }
+        }
+
+    }
+
+    @Nested
+    inner class NaverAuthApiTest {
+
+        @Test
         fun 네이버_회원가입_요청시_ServiceUnavailable_에러가_발생한다() {
             // given
             val request = SignupRequest(
@@ -367,162 +511,6 @@ internal class AuthControllerTest(
                     status { isServiceUnavailable() }
                     jsonPath("$.resultCode") { value(ErrorCode.E503_SERVICE_UNAVAILABLE.code) }
                     jsonPath("$.message") { value(ErrorCode.E503_SERVICE_UNAVAILABLE.message) }
-                }
-        }
-
-    }
-
-    @DisplayName("POST /api/v2/login")
-    @Nested
-    inner class LoginApiTest {
-
-        @Test
-        fun 카카오_로그인_요청이_성공하면_토큰이_반환된다() {
-            // given
-            val boss = BossAccountFixture.create("google-social-id", BossAccountSocialType.KAKAO, "카카오 계정")
-            bossAccountRepository.save(boss)
-
-            every { kaKaoAuthApiClient.getProfileInfo(any()) } returns KaKaoProfileResponse.testInstance(boss.socialInfo.socialId)
-
-            val request = LoginRequest(token = "token", socialType = BossAccountSocialType.KAKAO)
-
-            // when & then
-            mockMvc.post("/v1/auth/login") {
-                contentType = MediaType.APPLICATION_JSON
-                content = objectMapper.writeValueAsString(request)
-            }
-                .andDo {
-                    print()
-                }
-                .andExpect {
-                    status { isOk() }
-                    jsonPath("$.data.bossId") { value(boss.id) }
-                    jsonPath("$.data.token") { isNotEmpty() }
-                }
-        }
-
-        @Test
-        fun 카카오_로그인시_가입승인_대기중인경우_토큰이_반환된다() {
-            // given
-            val registration = RegistrationFixture.create("google-social-id", BossAccountSocialType.KAKAO)
-            bossRegistrationRepository.save(registration)
-
-            every { kaKaoAuthApiClient.getProfileInfo(any()) } returns KaKaoProfileResponse.testInstance(registration.boss.socialInfo.socialId)
-
-            val request = LoginRequest(token = "token", socialType = BossAccountSocialType.KAKAO)
-
-            // when & then
-            mockMvc.post("/v1/auth/login") {
-                contentType = MediaType.APPLICATION_JSON
-                content = objectMapper.writeValueAsString(request)
-            }
-                .andDo {
-                    print()
-                }
-                .andExpect {
-                    status { isOk() }
-                    jsonPath("$.data.bossId") { value(registration.id) }
-                    jsonPath("$.data.token") { isNotEmpty() }
-                }
-        }
-
-        @Test
-        fun 애플_로그인_요청이_성공하면_토큰이_반환된다() {
-            // given
-            val boss = BossAccountFixture.create("google-social-id", BossAccountSocialType.APPLE, "애플 계정")
-            bossAccountRepository.save(boss)
-
-            every { appleTokenDecoder.getSocialIdFromIdToken(any()) } returns boss.socialInfo.socialId
-
-            val request = LoginRequest(token = "token", socialType = BossAccountSocialType.APPLE)
-
-            // when & then
-            mockMvc.post("/v1/auth/login") {
-                contentType = MediaType.APPLICATION_JSON
-                content = objectMapper.writeValueAsString(request)
-            }
-                .andDo {
-                    print()
-                }
-                .andExpect {
-                    status { isOk() }
-                    jsonPath("$.data.bossId") { value(boss.id) }
-                    jsonPath("$.data.token") { isNotEmpty() }
-                }
-        }
-
-        @Test
-        fun 애플_로그인시_가입승인_대기중인경우_토큰이_반환된다() {
-            // given
-            val registration = RegistrationFixture.create("google-social-id", BossAccountSocialType.APPLE)
-            bossRegistrationRepository.save(registration)
-
-            every { appleTokenDecoder.getSocialIdFromIdToken(any()) } returns registration.boss.socialInfo.socialId
-
-            val request = LoginRequest(token = "token", socialType = BossAccountSocialType.APPLE)
-
-            // when & then
-            mockMvc.post("/v1/auth/login") {
-                contentType = MediaType.APPLICATION_JSON
-                content = objectMapper.writeValueAsString(request)
-            }
-                .andDo {
-                    print()
-                }
-                .andExpect {
-                    status { isOk() }
-                    jsonPath("$.data.bossId") { value(registration.id) }
-                    jsonPath("$.data.token") { isNotEmpty() }
-                }
-        }
-
-        @Test
-        fun 구글_로그인_요청이_성공하면_토큰이_반환된다() {
-            // given
-            val boss = BossAccountFixture.create("google-social-id", BossAccountSocialType.GOOGLE, "구글 계정")
-            bossAccountRepository.save(boss)
-
-            every { googleAuthApiClient.getProfileInfo(any()) } returns GoogleProfileInfoResponse.testInstance(boss.socialInfo.socialId)
-
-            val request = LoginRequest(token = "token", socialType = BossAccountSocialType.GOOGLE)
-
-            // when & then
-            mockMvc.post("/v1/auth/login") {
-                contentType = MediaType.APPLICATION_JSON
-                content = objectMapper.writeValueAsString(request)
-            }
-                .andDo {
-                    print()
-                }
-                .andExpect {
-                    status { isOk() }
-                    jsonPath("$.data.bossId") { value(boss.id) }
-                    jsonPath("$.data.token") { isNotEmpty() }
-                }
-        }
-
-        @Test
-        fun 구글_로그인시_가입승인_대기중인경우_토큰이_반환된다() {
-            // given
-            val registration = RegistrationFixture.create("google-social-id", BossAccountSocialType.GOOGLE)
-            bossRegistrationRepository.save(registration)
-
-            every { googleAuthApiClient.getProfileInfo(any()) } returns GoogleProfileInfoResponse.testInstance(registration.boss.socialInfo.socialId)
-
-            val request = LoginRequest(token = "token", socialType = BossAccountSocialType.GOOGLE)
-
-            // when & then
-            mockMvc.post("/v1/auth/login") {
-                contentType = MediaType.APPLICATION_JSON
-                content = objectMapper.writeValueAsString(request)
-            }
-                .andDo {
-                    print()
-                }
-                .andExpect {
-                    status { isOk() }
-                    jsonPath("$.data.bossId") { value(registration.id) }
-                    jsonPath("$.data.token") { isNotEmpty() }
                 }
         }
 
@@ -601,6 +589,12 @@ internal class AuthControllerTest(
                 }
         }
 
+    }
+
+    companion object {
+        private const val KAKAO_SOCIAL_ID = "kakao-social-id"
+        private const val GOOGLE_SOCIAL_ID = "google-social-id"
+        private const val APPLE_SOCIAL_ID = "apple-social-id"
     }
 
 }

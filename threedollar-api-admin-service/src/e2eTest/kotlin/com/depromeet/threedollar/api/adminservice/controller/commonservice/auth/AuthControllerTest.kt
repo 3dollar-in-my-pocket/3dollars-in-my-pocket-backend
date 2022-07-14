@@ -19,9 +19,8 @@ internal class AuthControllerTest : SetupAdminControllerTest() {
     @MockkBean
     private lateinit var googleAuthApiClient: GoogleAuthApiClient
 
-    @DisplayName("POST /api/v2/login")
     @Nested
-    inner class LoginApiTest {
+    inner class GoogleAuthApiTest {
 
         @Test
         fun 구글_로그인_요청이_성공하면_토큰이_반환된다() {

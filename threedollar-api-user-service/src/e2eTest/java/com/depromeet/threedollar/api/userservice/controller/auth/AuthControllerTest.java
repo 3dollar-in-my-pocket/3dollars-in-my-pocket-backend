@@ -26,33 +26,41 @@ import static org.mockito.Mockito.when;
 
 class AuthControllerTest extends SetupUserControllerTest {
 
+    private static final String KAKAO_SOCIAL_ID = "kakao-social-id";
+    private static final String GOOGLE_SOCIAL_ID = "google-social-id";
+    private static final String APPLE_SOCIAL_ID = "apple-social-id";
+
     private AuthMockApiCaller authMockApiCaller;
 
     @MockBean
     private KaKaoAuthApiClient kaKaoAuthApiClient;
 
     @MockBean
-    private GoogleAuthApiClient googleAuthApiClient;
+    private AppleTokenDecoder appleTokenDecoder;
 
     @MockBean
-    private AppleTokenDecoder appleTokenDecoder;
+    private GoogleAuthApiClient googleAuthApiClient;
 
     @BeforeEach
     void setUp() {
         authMockApiCaller = new AuthMockApiCaller(mockMvc, objectMapper);
     }
 
-    @DisplayName("POST /api/v2/signup")
+    @BeforeEach
+    void mockAuthApiClient() {
+        when(kaKaoAuthApiClient.getProfileInfo(anyString())).thenReturn(KaKaoProfileResponse.testInstance(KAKAO_SOCIAL_ID));
+        when(appleTokenDecoder.getSocialIdFromIdToken(anyString())).thenReturn(APPLE_SOCIAL_ID);
+        when(googleAuthApiClient.getProfileInfo(anyString())).thenReturn(GoogleProfileInfoResponse.testInstance(GOOGLE_SOCIAL_ID));
+    }
+
     @Nested
-    class SignUpApiTest {
+    class KaKaoAuthApiTest {
 
         @Test
         void 카카오_회원가입_요청이_성공하면_인증_토큰이_반환된다() throws Exception {
             // given
-            when(kaKaoAuthApiClient.getProfileInfo(anyString())).thenReturn(KaKaoProfileResponse.testInstance("kakao-social-id"));
-
             SignUpRequest request = SignUpRequest.testBuilder()
-                .token("social-access-token")
+                .token("kakao-token")
                 .name("가슴속 삼천원")
                 .socialType(UserSocialType.KAKAO)
                 .build();
@@ -69,12 +77,37 @@ class AuthControllerTest extends SetupUserControllerTest {
         }
 
         @Test
+        void 카카오_로그인_요청이_성공하면_인증_토큰이_반환된다() throws Exception {
+            // given
+            User user = UserFixture.create(KAKAO_SOCIAL_ID, UserSocialType.KAKAO, "카카오 계정");
+            userRepository.save(user);
+
+            LoginRequest request = LoginRequest.testBuilder()
+                .token("kakao-token")
+                .socialType(UserSocialType.KAKAO)
+                .build();
+
+            // when
+            ApiResponse<LoginResponse> response = authMockApiCaller.login(request, 200);
+
+            // then
+            assertAll(
+                () -> assertThat(response.getResultCode()).isEmpty(),
+                () -> assertThat(response.getMessage()).isEmpty(),
+                () -> assertThat(response.getData().getToken()).isNotBlank()
+            );
+        }
+
+    }
+
+    @Nested
+    class AppleAuthApiTest {
+
+        @Test
         void 애플_회원가입_요청이_성공하면_인증_토큰이_반환된다() throws Exception {
             // given
-            when(appleTokenDecoder.getSocialIdFromIdToken(anyString())).thenReturn("apple-social-id");
-
             SignUpRequest request = SignUpRequest.testBuilder()
-                .token("social-access-token")
+                .token("apple-token")
                 .name("가슴속 삼천원")
                 .socialType(UserSocialType.APPLE)
                 .build();
@@ -91,12 +124,37 @@ class AuthControllerTest extends SetupUserControllerTest {
         }
 
         @Test
+        void 애플_로그인_요청이_성공하면_인증_토큰이_반환된다() throws Exception {
+            // given
+            User user = UserFixture.create(APPLE_SOCIAL_ID, UserSocialType.APPLE, "애플 계정");
+            userRepository.save(user);
+
+            LoginRequest request = LoginRequest.testBuilder()
+                .token("apple-token")
+                .socialType(UserSocialType.APPLE)
+                .build();
+
+            // when
+            ApiResponse<LoginResponse> response = authMockApiCaller.login(request, 200);
+
+            // then
+            assertAll(
+                () -> assertThat(response.getResultCode()).isEmpty(),
+                () -> assertThat(response.getMessage()).isEmpty(),
+                () -> assertThat(response.getData().getToken()).isNotBlank()
+            );
+        }
+
+    }
+
+    @Nested
+    class GoogleAuthApiTest {
+
+        @Test
         void 구글_회원가입_요청이_성공하면_인증_토큰이_반환된다() throws Exception {
             // given
-            when(googleAuthApiClient.getProfileInfo(anyString())).thenReturn(GoogleProfileInfoResponse.testInstance("google-social-id"));
-
             SignUpRequest request = SignUpRequest.testBuilder()
-                .token("social-access-token")
+                .token("google-token")
                 .name("가슴속 삼천원")
                 .socialType(UserSocialType.GOOGLE)
                 .build();
@@ -112,67 +170,11 @@ class AuthControllerTest extends SetupUserControllerTest {
             );
         }
 
-    }
-
-    @DisplayName("POST /api/v2/login")
-    @Nested
-    class LoginApiTest {
-
-        @Test
-        void 카카오_로그인_요청이_성공하면_인증_토큰이_반환된다() throws Exception {
-            // given
-            User user = UserFixture.create("kakao-social-id", UserSocialType.KAKAO, "카카오 계정");
-            userRepository.save(user);
-
-            when(kaKaoAuthApiClient.getProfileInfo(anyString())).thenReturn(KaKaoProfileResponse.testInstance(user.getSocialId()));
-
-            LoginRequest request = LoginRequest.testBuilder()
-                .token("kakao-access-token")
-                .socialType(UserSocialType.KAKAO)
-                .build();
-
-            // when
-            ApiResponse<LoginResponse> response = authMockApiCaller.login(request, 200);
-
-            // then
-            assertAll(
-                () -> assertThat(response.getResultCode()).isEmpty(),
-                () -> assertThat(response.getMessage()).isEmpty(),
-                () -> assertThat(response.getData().getToken()).isNotBlank()
-            );
-        }
-
-        @Test
-        void 애플_로그인_요청이_성공하면_인증_토큰이_반환된다() throws Exception {
-            // given
-            User user = UserFixture.create("apple-social-id", UserSocialType.APPLE, "애플 계정");
-            userRepository.save(user);
-
-            when(appleTokenDecoder.getSocialIdFromIdToken(anyString())).thenReturn(user.getSocialId());
-
-            LoginRequest request = LoginRequest.testBuilder()
-                .token("apple-access-token")
-                .socialType(UserSocialType.APPLE)
-                .build();
-
-            // when
-            ApiResponse<LoginResponse> response = authMockApiCaller.login(request, 200);
-
-            // then
-            assertAll(
-                () -> assertThat(response.getResultCode()).isEmpty(),
-                () -> assertThat(response.getMessage()).isEmpty(),
-                () -> assertThat(response.getData().getToken()).isNotBlank()
-            );
-        }
-
         @Test
         void 구글_로그인_요청이_성공하면_인증_토큰이_반환된다() throws Exception {
             // given
-            User user = UserFixture.create("google-social-id", UserSocialType.GOOGLE, "구글 계정");
+            User user = UserFixture.create(GOOGLE_SOCIAL_ID, UserSocialType.GOOGLE, "구글 계정");
             userRepository.save(user);
-
-            when(googleAuthApiClient.getProfileInfo(anyString())).thenReturn(GoogleProfileInfoResponse.testInstance(user.getSocialId()));
 
             LoginRequest request = LoginRequest.testBuilder()
                 .token("google-access-token")
