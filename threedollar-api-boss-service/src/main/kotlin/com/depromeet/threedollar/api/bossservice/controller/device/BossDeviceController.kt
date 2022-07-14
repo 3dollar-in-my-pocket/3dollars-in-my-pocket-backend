@@ -5,7 +5,9 @@ import com.depromeet.threedollar.api.bossservice.config.resolver.BossId
 import com.depromeet.threedollar.api.bossservice.controller.device.dto.request.UpsertBossDeviceRequest
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.core.service.commonservice.device.DeviceService
+import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.AccountType
 import io.swagger.annotations.ApiOperation
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -23,7 +25,17 @@ class BossDeviceController(
         @Valid @RequestBody request: UpsertBossDeviceRequest,
         @BossId bossId: String,
     ): ApiResponse<String> {
-        deviceService.upsertDeviceAsync(request = request.toUpsertDeviceRequest(accountId = bossId))
+        deviceService.upsertDevice(request = request.toUpsertDeviceRequest(accountId = bossId))
+        return ApiResponse.OK
+    }
+
+    @ApiOperation("사장님 계정의 디바이스 정보를 삭제합니다")
+    @Auth(allowedWaiting = true)
+    @DeleteMapping("/v1/device")
+    fun deviceDevice(
+        @BossId bossId: String,
+    ): ApiResponse<String> {
+        deviceService.deleteDevice(accountId = bossId, accountType = AccountType.BOSS_ACCOUNT)
         return ApiResponse.OK
     }
 

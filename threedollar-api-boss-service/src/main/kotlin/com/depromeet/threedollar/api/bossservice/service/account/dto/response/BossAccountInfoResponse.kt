@@ -13,13 +13,13 @@ data class BossAccountInfoResponse(
 ) : AuditingTimeResponse() {
 
     companion object {
-        fun of(bossAccount: BossAccount): BossAccountInfoResponse {
+        fun of(bossAccount: BossAccount, isSetupNotification: Boolean): BossAccountInfoResponse {
             val response = BossAccountInfoResponse(
                 bossId = bossAccount.id,
                 socialType = bossAccount.socialInfo.socialType,
                 name = bossAccount.name,
                 businessNumber = bossAccount.businessNumber.getNumberWithSeparator(),
-                isSetupNotification = bossAccount.isSetupNotification
+                isSetupNotification = isSetupNotification
             )
             response.setAuditingTimeByDocument(bossAccount)
             return response

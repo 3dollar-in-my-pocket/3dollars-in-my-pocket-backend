@@ -79,6 +79,7 @@ public enum ErrorCode {
     E404_NOT_EXISTS_SIGNUP_REGISTRATION(NOT_FOUND, OFF, "NF010", "해당하는 가입 신청은 존재하지 않습니다"),
     E404_NOT_EXISTS_ADMIN(NOT_FOUND, OFF, "NF011", "해당하는 관리자는 존재하지 않습니다"),
     E404_NOT_EXISTS_ADVERTISEMENT(NOT_FOUND, OFF, "NF012", "해당하는 광고는 존재하지 않습니다"),
+    E404_NOT_EXISTS_ACCOUNT_DEVICE(NOT_FOUND, OFF, "NF013", "해당 계정에 등록된 디바이스가 존재하지 않습니다"),
 
 
     /**

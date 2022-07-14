@@ -37,17 +37,15 @@ internal class BossAccountServiceTest(
         fun `사장님의 계정 정보를 수정한다`() {
             // given
             val name = "새로운 이름"
-            val isSetupNotification = true
 
             val bossAccount = BossAccountFixture.create(
                 socialId = "social-id",
                 socialType = BossAccountSocialType.GOOGLE,
                 name = "사장님 이름",
-                isSetupNotification = false
             )
             bossAccountRepository.save(bossAccount)
 
-            val request = UpdateBossAccountInfoRequest(name, isSetupNotification)
+            val request = UpdateBossAccountInfoRequest(name)
 
             // when
             bossAccountService.updateBossAccountInfo(bossAccount.id, request)
@@ -59,7 +57,6 @@ internal class BossAccountServiceTest(
                 assertBossAccount(
                     bossAccount = bossAccounts[0],
                     name = name,
-                    isSetupNotification = isSetupNotification,
                     bossAccountId = bossAccount.id,
                     socialInfo = bossAccount.socialInfo,
                     businessNumber = bossAccount.businessNumber
@@ -71,7 +68,7 @@ internal class BossAccountServiceTest(
         fun `사장님의 계정 정보를 수정할때 존재하지 않는 사장님이면 NotFoundException이 발생한다`() {
             // given
             val name = "새로운 이름"
-            val request = UpdateBossAccountInfoRequest(name = name, isSetupNotification = false)
+            val request = UpdateBossAccountInfoRequest(name = name)
 
             // when & then
             assertThatThrownBy {
@@ -110,7 +107,6 @@ internal class BossAccountServiceTest(
             val socialId = "auth-social-id"
             val socialType = BossAccountSocialType.APPLE
             val name = "강승호"
-            val isSetupNotification = false
             val businessNumber = BusinessNumber.of("000-00-00000")
 
             val bossAccount = BossAccountFixture.create(
@@ -118,7 +114,6 @@ internal class BossAccountServiceTest(
                 socialType = socialType,
                 name = name,
                 businessNumber = businessNumber,
-                isSetupNotification = isSetupNotification
             )
             bossAccountRepository.save(bossAccount)
 
@@ -133,7 +128,6 @@ internal class BossAccountServiceTest(
                     withdrawalAccount = withdrawalAccounts[0],
                     name = name,
                     socialInfo = BossAccountSocialInfo.of(socialId, socialType),
-                    isSetupNotification = isSetupNotification,
                     businessNumber = businessNumber,
                 )
                 withdrawalAccounts[0]?.let {
@@ -145,19 +139,17 @@ internal class BossAccountServiceTest(
 
     }
 
-    private fun assertBossAccount(bossAccount: BossAccount, name: String, isSetupNotification: Boolean, bossAccountId: String, socialInfo: BossAccountSocialInfo, businessNumber: BusinessNumber) {
+    private fun assertBossAccount(bossAccount: BossAccount, name: String, bossAccountId: String, socialInfo: BossAccountSocialInfo, businessNumber: BusinessNumber) {
         assertThat(bossAccount.name).isEqualTo(name)
-        assertThat(bossAccount.isSetupNotification).isEqualTo(isSetupNotification)
         assertThat(bossAccount.id).isEqualTo(bossAccountId)
         assertThat(bossAccount.socialInfo).isEqualTo(socialInfo)
         assertThat(bossAccount.businessNumber).isEqualTo(businessNumber)
     }
 
 
-    private fun assertWithdrawalAccount(withdrawalAccount: BossWithdrawalAccount, name: String, socialInfo: BossAccountSocialInfo, isSetupNotification: Boolean, businessNumber: BusinessNumber) {
+    private fun assertWithdrawalAccount(withdrawalAccount: BossWithdrawalAccount, name: String, socialInfo: BossAccountSocialInfo, businessNumber: BusinessNumber) {
         assertThat(withdrawalAccount.name).isEqualTo(name)
         assertThat(withdrawalAccount.socialInfo).isEqualTo(socialInfo)
-        assertThat(withdrawalAccount.isSetupNotification).isEqualTo(isSetupNotification)
         assertThat(withdrawalAccount.businessNumber).isEqualTo(businessNumber)
     }
 

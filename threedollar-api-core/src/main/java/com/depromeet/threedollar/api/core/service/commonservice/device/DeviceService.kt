@@ -1,19 +1,22 @@
 package com.depromeet.threedollar.api.core.service.commonservice.device
 
 import com.depromeet.threedollar.api.core.service.commonservice.device.dto.request.UpsertDeviceRequest
+import com.depromeet.threedollar.common.exception.model.NotFoundException
+import com.depromeet.threedollar.common.exception.type.ErrorCode.E404_NOT_EXISTS_ACCOUNT_DEVICE
 import com.depromeet.threedollar.common.model.UserMetaValue
+import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.AccountType
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.Device
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.DeviceRepository
-import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class DeviceService(
     private val deviceRepository: DeviceRepository,
 ) {
 
-    @Async
-    fun upsertDeviceAsync(request: UpsertDeviceRequest) {
+    @Transactional
+    fun upsertDevice(request: UpsertDeviceRequest) {
         val device: Device? = deviceRepository.findDeviceByAccountIdAndType(accountId = request.accountId, accountType = request.accountType)
         if (device == null) {
             deviceRepository.save(request.toDocument())
@@ -33,6 +36,12 @@ class DeviceService(
         deviceRepository.save(device)
     }
 
+    @Transactional
+    fun deleteDevice(accountId: String, accountType: AccountType) {
+        val device = findDeviceByAccountIdAndType(accountId = accountId, accountType = accountType)
+        deviceRepository.delete(device)
+    }
+
     private fun hasSameDeviceInfo(device: Device, request: UpsertDeviceRequest, userMetaValue: UserMetaValue): Boolean {
         return device.hasSameDeviceInfo(
             pushPlatformType = request.pushPlatformType,
@@ -40,6 +49,11 @@ class DeviceService(
             appVersion = userMetaValue.appVersion,
             pushToken = request.pushToken
         )
+    }
+
+    private fun findDeviceByAccountIdAndType(accountId: String, accountType: AccountType): Device {
+        return deviceRepository.findDeviceByAccountIdAndType(accountId = accountId, accountType = accountType)
+            ?: throw NotFoundException("해당하는 계정(${accountType} - ${accountId})에는 디바이스가 존재하지 않습니다", E404_NOT_EXISTS_ACCOUNT_DEVICE)
     }
 
 }

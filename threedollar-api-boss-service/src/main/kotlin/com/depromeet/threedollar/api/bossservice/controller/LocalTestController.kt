@@ -51,7 +51,6 @@ private val BOSS = BossAccount.of(
     socialId = "test-social-id",
     socialType = BossAccountSocialType.KAKAO,
     businessNumber = BusinessNumber.of("000-00-00000"),
-    isSetupNotification = false
 )
 
 @Profile("local", "local-docker", "integration-test", "dev")

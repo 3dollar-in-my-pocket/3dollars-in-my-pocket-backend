@@ -17,12 +17,10 @@ class BossAccount(
     var name: String,
     val socialInfo: BossAccountSocialInfo,
     val businessNumber: BusinessNumber,
-    var isSetupNotification: Boolean,
 ) : BaseDocument() {
 
-    fun updateInfo(name: String, isSetupNotification: Boolean) {
+    fun updateInfo(name: String) {
         this.name = name
-        this.isSetupNotification = isSetupNotification
     }
 
     companion object {
@@ -32,13 +30,11 @@ class BossAccount(
             socialId: String,
             socialType: BossAccountSocialType,
             businessNumber: BusinessNumber,
-            isSetupNotification: Boolean = false,
         ): BossAccount {
             val bossAccount = BossAccount(
                 name = name,
                 socialInfo = BossAccountSocialInfo.of(socialId, socialType),
                 businessNumber = businessNumber,
-                isSetupNotification = isSetupNotification
             )
             bossAccount.id = bossId
             bossAccount.createdAt = LocalDateTime.now(ZoneOffset.UTC)

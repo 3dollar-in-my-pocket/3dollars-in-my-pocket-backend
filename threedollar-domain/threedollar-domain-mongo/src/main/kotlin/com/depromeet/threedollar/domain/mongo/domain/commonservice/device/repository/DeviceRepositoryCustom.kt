@@ -7,6 +7,8 @@ interface DeviceRepositoryCustom {
 
     fun findDeviceByAccountIdAndType(accountId: String, accountType: AccountType): Device?
 
+    fun existsDeviceByAccountIdAndType(accountId: String, accountType: AccountType): Boolean
+
     fun findAllDevicesByAccountIdsAndType(accountIds: List<String>, accountType: AccountType): List<Device>
 
 }

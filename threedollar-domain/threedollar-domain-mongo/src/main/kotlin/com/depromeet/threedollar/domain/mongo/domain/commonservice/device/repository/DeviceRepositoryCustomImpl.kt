@@ -21,6 +21,13 @@ class DeviceRepositoryCustomImpl(
         )
     }
 
+    override fun existsDeviceByAccountIdAndType(accountId: String, accountType: AccountType): Boolean {
+        return mongoTemplate.exists(Query()
+            .addCriteria(Device::accountId isEqualTo accountId)
+            .addCriteria(Device::accountType isEqualTo accountType), Device::class.java
+        )
+    }
+
     override fun findAllDevicesByAccountIdsAndType(accountIds: List<String>, accountType: AccountType): List<Device> {
         return mongoTemplate.find(Query()
             .addCriteria(where(Device::accountId).`in`(accountIds)), Device::class.java

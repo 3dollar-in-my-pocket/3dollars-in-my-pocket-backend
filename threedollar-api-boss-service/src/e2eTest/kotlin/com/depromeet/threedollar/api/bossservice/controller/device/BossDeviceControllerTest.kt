@@ -6,6 +6,7 @@ import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.common.type.OsPlatformType
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.AccountType
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.Device
+import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.DeviceFixture
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.DeviceRepository
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.PushPlatformType
 import org.assertj.core.api.Assertions.assertThat
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.put
 
 internal class BossDeviceControllerTest(
@@ -101,6 +103,31 @@ internal class BossDeviceControllerTest(
                 osPlatformType = OsPlatformType.ANDROID
             )
         })
+    }
+
+    @DisplayName("DELETE /boss/v1/device")
+    @Test
+    fun `사장님 계정의 디바이스를 삭제한다`() {
+        // given
+        deviceRepository.save(DeviceFixture.create(
+            accountType = AccountType.BOSS_ACCOUNT,
+            accountId = bossId,
+            pushToken = "pushToken"
+        ))
+
+        // when
+        mockMvc.delete("/v1/device") {
+            header(HttpHeaders.AUTHORIZATION, "Bearer $token")
+        }
+            .andDo { print() }
+            .andExpect {
+                status { isOk() }
+                jsonPath("$.data") { value(ApiResponse.OK.data) }
+            }
+
+        // then
+        val devices = deviceRepository.findAll()
+        assertThat(devices).isEmpty()
     }
 
     private fun assertDevice(

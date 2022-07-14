@@ -34,3 +34,16 @@ client.test("200 OK", () => {
     client.assert(response.status === 200, "응답 실패");
 });
 %}
+
+
+### 유저 계정의 디바이스 정보를 삭제합니다
+DELETE {{user-api}}/v1/device
+Authorization: {{AUTHORIZATION}}
+User-Agent: 1.0.0 (com.macgongmon.-dollar-in-my-pocket; build:1; iOS 15.5.0)
+
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}

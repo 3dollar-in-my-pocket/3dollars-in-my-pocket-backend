@@ -11,7 +11,6 @@ object BossAccountFixture {
         socialType: BossAccountSocialType,
         name: String = "사장님 성함",
         businessNumber: BusinessNumber = BusinessNumber.of("000-00-00000"),
-        isSetupNotification: Boolean = false,
     ): BossAccount {
         return BossAccount(
             name = name,
@@ -20,7 +19,6 @@ object BossAccountFixture {
                 socialType
             ),
             businessNumber = businessNumber,
-            isSetupNotification = isSetupNotification
         )
     }
 

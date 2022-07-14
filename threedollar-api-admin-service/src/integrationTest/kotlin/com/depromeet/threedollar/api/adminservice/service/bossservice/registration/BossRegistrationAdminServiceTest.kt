@@ -82,7 +82,6 @@ internal class BossRegistrationAdminServiceTest(
                     assertThat(it.socialInfo).isEqualTo(BossAccountSocialInfo.of(socialId, socialType))
                     assertThat(it.name).isEqualTo(bossName)
                     assertThat(it.businessNumber).isEqualTo(BusinessNumber.of(businessNumber))
-                    assertThat(it.isSetupNotification).isFalse()
                 }
             })
         }
