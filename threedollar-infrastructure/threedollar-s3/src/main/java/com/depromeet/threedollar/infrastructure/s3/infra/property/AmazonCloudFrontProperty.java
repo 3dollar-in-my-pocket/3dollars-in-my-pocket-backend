@@ -17,7 +17,10 @@ public class AmazonCloudFrontProperty {
     private final String url;
 
     public String getFullPathFileUrl(String fileName) {
-        return this.url + fileName;
+        if (this.url.endsWith("/")) {
+            return this.url + fileName;
+        }
+        return this.url + "/" + fileName;
     }
 
 }

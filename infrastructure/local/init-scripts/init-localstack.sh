@@ -11,4 +11,10 @@ aws sqs create-queue --endpoint-url=http://${HOST}:${PORT} --queue-name=threedol
 aws sqs create-queue --endpoint-url=http://${HOST}:${PORT} --queue-name=threedollars-boss-bulk-push-sqs
 
 echo "Listing SQS"
-aws sqs list-queues --endpoint-url=http://${HOST}:${PORT}
+echo $(aws sqs list-queues --endpoint-url=http://${HOST}:${PORT})
+
+echo "Creating S3"
+awslocal s3 mb s3://threedollars-local-bucket
+
+echo "Listing S3 Buckets"
+echo $(awslocal s3 ls)

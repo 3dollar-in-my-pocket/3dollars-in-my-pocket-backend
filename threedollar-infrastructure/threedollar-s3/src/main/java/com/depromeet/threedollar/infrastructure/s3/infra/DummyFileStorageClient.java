@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Primary
-@Profile({"local", "local-docker", "integration-test"})
+@Profile({"local", "integration-test"})
 @Component
 public class DummyFileStorageClient implements FileStorageClient {
 

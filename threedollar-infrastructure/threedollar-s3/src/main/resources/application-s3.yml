@@ -10,7 +10,6 @@ spring.config:
   activate:
     on-profile:
       - local
-      - local-docker
       - integration-test
 
 cloud:
@@ -19,6 +18,24 @@ cloud:
       bucket: dummy-s3-bucket
     cloudfront:
       url: dummy-cloudfront
+
+
+---
+spring.config:
+  activate:
+    on-profile:
+      - local-docker
+
+cloud:
+  aws:
+    s3:
+      bucket: threedollars-local-bucket
+      url: http://localhost:4566
+    cloudfront:
+      url: ${cloud.aws.s3.url}/${cloud.aws.s3.bucket}
+    credentials:
+      access-key: threedollars
+      secret-key: threedollars
 
 
 ---

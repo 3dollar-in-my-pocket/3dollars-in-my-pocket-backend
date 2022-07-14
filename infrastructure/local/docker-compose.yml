@@ -161,7 +161,7 @@ services:
     image: localstack/localstack
     container_name: 3dollars-in-my-pocket-sqs-localstack
     environment:
-      - SERVICES=sqs
+      - SERVICES=sqs,s3
       - DEFAULT_REGION=ap-northeast-2
       - DATA_DIR=/tmp/localstack/data
     ports:
