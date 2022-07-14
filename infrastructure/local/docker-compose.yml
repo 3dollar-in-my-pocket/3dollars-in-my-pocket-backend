@@ -71,6 +71,7 @@ services:
     hostname: mongo1
     container_name: 3dollars-in-my-pocket-mongo1
     volumes:
+      - ./init-scripts/mongo:/docker-entrypoint-initdb.d
       - mongodb1-volume:/data/db
     networks:
       - threedollar-network
@@ -124,42 +125,9 @@ services:
       timeout: 5s
       retries: 6
 
-  mongoinit:
-    image: mongo:5.0
-    container_name: 3dollars-in-my-pocket-mongoinit
-    restart: "no"
-    depends_on:
-      - mongo1
-      - mongo2
-      - mongo3
-    command: >
-      sleep(15)
-      mongo --host mongo1:27017 --eval
-      '
-      db = (new Mongo("localhost:27017")).getDB("test");
-      config = {
-      "_id" : "threedollar-replication-1",
-      "members" : [
-        {
-          "_id" : 0,
-          "host" : "mongo1:27017",
-        },
-        {
-          "_id" : 1,
-          "host" : "mongo2:27017"
-        },
-      {
-          "_id" : 2,
-          "host" : "mongo3:27017"
-      }
-      ]
-      };
-      rs.initiate(config);
-      '
-
   sqs:
     image: localstack/localstack
-    container_name: 3dollars-in-my-pocket-sqs-localstack
+    container_name: 3dollars-in-my-pocket-localstack
     environment:
       - SERVICES=sqs,s3
       - DEFAULT_REGION=ap-northeast-2
@@ -169,9 +137,8 @@ services:
     networks:
       - threedollar-network
     volumes:
-      - ./init-scripts:/docker-entrypoint-initaws.d
+      - ./init-scripts/localstack:/docker-entrypoint-initaws.d
       - /var/run/docker.sock:/var/run/docker.sock
-
 
 volumes:
   mariadb-volume:
