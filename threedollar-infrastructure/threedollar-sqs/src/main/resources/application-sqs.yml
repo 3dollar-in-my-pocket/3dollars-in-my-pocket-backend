@@ -16,27 +16,36 @@ push:
 spring.config:
   activate:
     on-profile:
-      - local
       - local-docker
+
+push:
+  sqs:
+    boss:
+      single-push: threedollars-boss-single-push-sqs
+      bulk-push: threedollars-boss-bulk-push-sqs
+
 
 cloud:
   aws:
     credentials:
-      access-key: ${secret.cloud.aws.credentials.access-key}
-      secret-key: ${secret.cloud.aws.credentials.secret-key}
+      access-key: threedollars
+      secret-key: threedollars
+    end-point:
+      uri: http://localhost:4566
 
 
 ---
 spring.config:
   activate:
     on-profile:
+      - local
       - integration-test
 
 push:
   sqs:
     boss:
-      single-push: test-single-push
-      bulk-push: test-bulk-push
+      single-push: local-boss-single-push
+      bulk-push: local-boss-bulk-push
 
 
 ---

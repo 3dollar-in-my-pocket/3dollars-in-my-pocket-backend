@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="ThreeDollarBossApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+  <configuration default="false" name="ThreeDollarBossApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" value="local-docker" />
     <module name="threedollar.threedollar-api-boss-service.main" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.depromeet.threedollar.api.bossservice.ThreeDollarBossApiApplication" />

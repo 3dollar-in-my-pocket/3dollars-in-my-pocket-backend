@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Primary
-@Profile("integration-test")
+@Profile({"local", "integration-test"})
 @Component
 public class DummyMessageSendProvider implements MessageSendProvider {
 

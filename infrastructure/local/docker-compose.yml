@@ -134,7 +134,7 @@ services:
       - mongo3
     command: >
       sleep(15)
-      mongo --host mongo1:27017 --eval 
+      mongo --host mongo1:27017 --eval
       '
       db = (new Mongo("localhost:27017")).getDB("test");
       config = {
@@ -156,6 +156,22 @@ services:
       };
       rs.initiate(config);
       '
+
+  sqs:
+    image: localstack/localstack
+    container_name: 3dollars-in-my-pocket-sqs-localstack
+    environment:
+      - SERVICES=sqs
+      - DEFAULT_REGION=ap-northeast-2
+      - DATA_DIR=/tmp/localstack/data
+    ports:
+      - '4566:4566'
+    networks:
+      - threedollar-network
+    volumes:
+      - ./init-scripts:/docker-entrypoint-initaws.d
+      - /var/run/docker.sock:/var/run/docker.sock
+
 
 volumes:
   mariadb-volume:
