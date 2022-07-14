@@ -64,6 +64,7 @@ public class StoreImageService {
     public void deleteStoreImage(Long imageId) {
         StoreImage storeImage = StoreImageServiceHelper.findStoreImageById(storeImageRepository, imageId);
         storeImage.delete();
+        storeImageRepository.save(storeImage);
     }
 
     @Transactional(readOnly = true)

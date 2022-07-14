@@ -7,13 +7,16 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImage;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageStatus;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
+import com.depromeet.threedollar.infrastructure.s3.infra.FileStorageClient;
 import com.depromeet.threedollar.infrastructure.s3.provider.UploadProvider;
-import com.depromeet.threedollar.infrastructure.s3.provider.dto.request.UploadFileRequest;
+import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,21 +24,23 @@ import static com.depromeet.threedollar.api.userservice.service.store.support.St
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 class StoreImageServiceTest extends SetupStoreIntegrationTest {
 
     private static final String IMAGE_URL = "https://image-storage.png";
 
     @Autowired
-    private StoreImageService storeImageService;
+    private StoreRepository storeRepository;
 
     @Autowired
     private StoreImageRepository storeImageRepository;
 
-    @MockBean
-    private UploadProvider uploadProvider;
+    private StoreImageService storeImageService;
+
+    @BeforeEach
+    void setUp() {
+        storeImageService = new StoreImageService(storeRepository, storeImageRepository, new UploadProvider(new StubFileStorageClient()));
+    }
 
     @Nested
     class UploadStoreImageTest {
@@ -43,14 +48,12 @@ class StoreImageServiceTest extends SetupStoreIntegrationTest {
         @Test
         void 가게_이미지_파일을_업로드하고_업로드된_외부_스토리지의_URL을_반환받는다() {
             // given
-            when(uploadProvider.uploadFile(any(UploadFileRequest.class))).thenReturn(IMAGE_URL);
-
             AddStoreImageRequest request = AddStoreImageRequest.testBuilder()
                 .storeId(store.getId())
                 .build();
 
             // when
-            List<StoreImage> storeImages = storeImageService.uploadStoreImages(request, List.of(new MockMultipartFile("name", new byte[]{})), userId);
+            List<StoreImage> storeImages = storeImageService.uploadStoreImages(request, List.of(new MockMultipartFile("name.jpeg", "originName.jpeg", "image/jpeg", new byte[]{})), userId);
 
             // then
             assertAll(
@@ -140,6 +143,18 @@ class StoreImageServiceTest extends SetupStoreIntegrationTest {
             assertThatThrownBy(() -> storeImageService.deleteStoreImage(storeImage.getId())).isInstanceOf(NotFoundException.class);
         }
 
+    }
+
+    private static class StubFileStorageClient implements FileStorageClient {
+
+        @Override
+        public void uploadFile(@NotNull MultipartFile file, @NotNull String fileName) {
+        }
+
+        @Override
+        public String getFileUrl(@NotNull String fileName) {
+            return IMAGE_URL;
+        }
     }
 
 }
