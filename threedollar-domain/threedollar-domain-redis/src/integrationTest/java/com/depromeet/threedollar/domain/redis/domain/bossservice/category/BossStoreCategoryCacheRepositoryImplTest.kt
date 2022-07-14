@@ -6,7 +6,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
-internal class BossStoreCategoryCacheRepositoryTest(
+internal class BossStoreCategoryCacheRepositoryImplTest(
     private val bossStoreCategoryCacheRepository: BossStoreCategoryCacheRepository,
     private val stringRedisRepository: StringRedisRepository<BossStoreCategoriesCacheKey, List<BossStoreCategoryCacheModel>>,
 ) : IntegrationTest() {

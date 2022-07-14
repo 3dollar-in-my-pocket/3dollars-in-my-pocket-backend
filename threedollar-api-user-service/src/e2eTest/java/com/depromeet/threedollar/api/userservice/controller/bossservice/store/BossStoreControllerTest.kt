@@ -16,12 +16,8 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpenFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpenRepository
-import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheRepository
-import com.ninjasquad.springmockk.MockkBean
-import io.mockk.every
 import org.hamcrest.Matchers.hasSize
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpHeaders
@@ -34,15 +30,6 @@ internal class BossStoreControllerTest(
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossStoreOpenRepository: BossStoreOpenRepository,
 ) : SetupUserControllerTest() {
-
-    @MockkBean
-    private lateinit var bossStoreCategoryCacheRepository: BossStoreCategoryCacheRepository
-
-    @BeforeEach
-    fun disableCacheCategories() {
-        every { bossStoreCategoryCacheRepository.set(any()) } returns Unit
-        every { bossStoreCategoryCacheRepository.getAll() } returns null
-    }
 
     @AfterEach
     fun cleanUp() {
