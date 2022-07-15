@@ -65,7 +65,7 @@ jobs:
       - name: Build & Push User API Image
         id: build
         run: |
-          ./gradlew clean ci :threedollar-api-user-service:jib -Dimage=${DOCKER_REGISTRY}/${DOCKER_REPOSITORY} -Dtag=${IMAGE_TAG}
+          ./gradlew clean ci :threedollar-api-user-service:jib -Dimage=${DOCKER_REGISTRY}/${DOCKER_REPOSITORY} -Dtag=${IMAGE_TAG} --warn
 
           echo "::set-output name=image::${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}:${IMAGE_TAG}"
           echo "🐇 Build Image >> ${DOCKER_REPOSITORY}:${IMAGE_TAG}"

@@ -63,7 +63,7 @@ jobs:
 
       - name: Build & Push Batch Image
         run: |
-          ./gradlew clean ci :threedollar-batch:jib -Dimage=${DOCKER_REGISTRY}/${DOCKER_REPOSITORY} -Dtag=${IMAGE_TAG}
+          ./gradlew clean ci :threedollar-batch:jib -Dimage=${DOCKER_REGISTRY}/${DOCKER_REPOSITORY} -Dtag=${IMAGE_TAG} --warn
 
           echo "🐇 Build Image >> ${DOCKER_REPOSITORY}:${IMAGE_TAG}"
         env:
