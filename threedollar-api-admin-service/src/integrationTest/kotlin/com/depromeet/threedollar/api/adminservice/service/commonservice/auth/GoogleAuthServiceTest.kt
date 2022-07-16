@@ -9,7 +9,6 @@ import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAut
 import com.depromeet.threedollar.infrastructure.external.client.google.dto.response.GoogleProfileInfoResponse
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
@@ -19,12 +18,10 @@ internal class GoogleAuthServiceTest(
     private val adminRepository: AdminRepository,
 ) : IntegrationTest() {
 
-    private lateinit var authService: AuthService
-
-    @BeforeEach
-    fun setUp() {
-        authService = GoogleAuthService(adminRepository, StubGoogleAuthApiClient())
-    }
+    private val authService: AuthService = GoogleAuthService(
+        adminRepository = adminRepository,
+        googleAuthApiClient = StubGoogleAuthApiClient()
+    )
 
     @Nested
     inner class GoogleLoginTest {

@@ -18,11 +18,8 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpenFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpenRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheRepository
-import com.ninjasquad.springmockk.MockkBean
-import io.mockk.every
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -35,16 +32,8 @@ internal class BossStoreRetrieveControllerTest(
     private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossStoreOpenRepository: BossStoreOpenRepository,
+    private val bossStoreCategoryCacheRepository: BossStoreCategoryCacheRepository,
 ) : SetupBossAccountControllerTest() {
-
-    @MockkBean
-    private lateinit var bossStoreCategoryCacheRepository: BossStoreCategoryCacheRepository
-
-    @BeforeEach
-    fun disableCacheCategories() {
-        every { bossStoreCategoryCacheRepository.setCache(any()) } returns Unit
-        every { bossStoreCategoryCacheRepository.getCache() } returns null
-    }
 
     @AfterEach
     fun cleanUp() {
@@ -52,6 +41,7 @@ internal class BossStoreRetrieveControllerTest(
         bossStoreCategoryRepository.deleteAll()
         bossStoreRepository.deleteAll()
         bossStoreOpenRepository.deleteAll()
+        bossStoreCategoryCacheRepository.cleanCache()
     }
 
     @DisplayName("GET /boss/v1/boss/store/me")
@@ -123,7 +113,7 @@ internal class BossStoreRetrieveControllerTest(
         }
 
         @Test
-        fun `사장님 자신이 운영중인 가게를 조회합니다 위치정보가_없는경우_location이_null로_반환된다`() {
+        fun `사장님 자신이 운영중인 가게를 조회합니다 위치정보가 없는경우 location이 null로_반환된다`() {
             // given
             val category = BossStoreCategoryFixture.create("한식", 1)
             bossStoreCategoryRepository.save(category)

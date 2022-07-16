@@ -2,7 +2,6 @@ package com.depromeet.threedollar.api.adminservice.service.bossservice.registrat
 
 import com.depromeet.threedollar.api.adminservice.SetupAdminIntegrationTest
 import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.request.RejectBossRegistrationRequest
-import com.depromeet.threedollar.api.core.listener.bossservice.push.BossSendPushListener
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.model.BusinessNumber
@@ -16,13 +15,9 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.Bo
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationStatus
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
-import com.ninjasquad.springmockk.MockkBean
-import io.mockk.every
-import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -34,21 +29,12 @@ internal class BossRegistrationAdminServiceTest(
     private val bossStoreRepository: BossStoreRepository,
 ) : SetupAdminIntegrationTest() {
 
-    @MockkBean
-    private lateinit var bossSendPushListener: BossSendPushListener
-
     @AfterEach
     fun cleanUp() {
         super.cleanup()
         bossRegistrationRepository.deleteAll()
         bossAccountRepository.deleteAll()
         bossStoreRepository.deleteAll()
-    }
-
-    @BeforeEach
-    fun mockPushService() {
-        every { bossSendPushListener.sendBossRegistrationApproveMessage(any()) } returns Unit
-        every { bossSendPushListener.sendBossRegistrationDenyMessage(any()) } returns Unit
     }
 
     @Nested
@@ -152,32 +138,6 @@ internal class BossRegistrationAdminServiceTest(
                     assertThat(it.categoriesIds).isEqualTo(categoriesIds)
                 }
             })
-        }
-
-        @Test
-        fun `가입이 승인될때, 해당 계정에 푸시 이벤트가 발송된다`() {
-            // given
-            val storeName = "행잉"
-            val contactsNumber = "010-1234-1234"
-            val categoriesIds = setOf("한식id", "중식id")
-            val certificationImageUrl = "https://certification.png"
-
-            val registration = RegistrationFixture.create(
-                socialId = "social-id",
-                socialType = BossAccountSocialType.NAVER,
-                storeName = storeName,
-                categoriesIds = categoriesIds,
-                contactsNumber = contactsNumber,
-                certificationPhotoUrl = certificationImageUrl,
-            )
-            bossRegistrationRepository.save(registration)
-
-            // when
-            bossRegistrationAdminService.applyBossRegistration(registration.id)
-
-            // then
-            verify(exactly = 1) { bossSendPushListener.sendBossRegistrationApproveMessage(any()) }
-            verify(exactly = 0) { bossSendPushListener.sendBossRegistrationDenyMessage(any()) }
         }
 
         @Test
@@ -287,36 +247,6 @@ internal class BossRegistrationAdminServiceTest(
                 assertThat(registrations[0].status).isEqualTo(BossRegistrationStatus.REJECTED)
                 assertThat(registrations[0].rejectReasonType).isEqualTo(BossRegistrationRejectReasonType.INVALID_BUSINESS_NUMBER)
             })
-        }
-
-        @Test
-        fun `가입이 반려될때, 해당 계정의 디바이스 정보가 있는 경우 푸시 알림이 전송된다`() {
-            // given
-            val storeName = "행잉"
-            val contactsNumber = "010-1234-1234"
-            val categoriesIds = setOf("한식id", "중식id")
-            val certificationImageUrl = "https://certification.png"
-
-            val registration = RegistrationFixture.create(
-                socialId = "social-id",
-                socialType = BossAccountSocialType.NAVER,
-                storeName = storeName,
-                categoriesIds = categoriesIds,
-                contactsNumber = contactsNumber,
-                certificationPhotoUrl = certificationImageUrl,
-            )
-            bossRegistrationRepository.save(registration)
-
-            val request = RejectBossRegistrationRequest(
-                rejectReason = BossRegistrationRejectReasonType.INVALID_BUSINESS_NUMBER,
-            )
-
-            // when
-            bossRegistrationAdminService.rejectBossRegistration(registrationId = registration.id, request = request)
-
-            // then
-            verify(exactly = 1) { bossSendPushListener.sendBossRegistrationDenyMessage(any()) }
-            verify(exactly = 0) { bossSendPushListener.sendBossRegistrationApproveMessage(any()) }
         }
 
         @Test

@@ -7,7 +7,6 @@ import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationStatus
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationFixture
 import com.depromeet.threedollar.infrastructure.external.client.apple.AppleTokenDecoder
 import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAuthApiClient
@@ -80,70 +79,6 @@ internal class AuthControllerTest(
                 .andExpect {
                     status { isOk() }
                     jsonPath("$.data.token") { isNotEmpty() }
-                }
-        }
-
-        @Test
-        fun 카카오_회원가입시_이미_존재하는_사장님_계정인경우_409_에러가_발생한다() {
-            // given
-            val boss = BossAccountFixture.create(KAKAO_SOCIAL_ID, BossAccountSocialType.KAKAO, "카카오 계정")
-            bossAccountRepository.save(boss)
-
-            val request = SignupRequest(
-                token = "token",
-                socialType = BossAccountSocialType.KAKAO,
-                bossName = "bossName",
-                businessNumber = "000-00-00000",
-                storeName = "가게 이름",
-                storeCategoriesIds = setOf(),
-                contactsNumber = "010-1234-1234",
-                certificationPhotoUrl = "https://photo.png"
-            )
-
-            // when & then
-            mockMvc.post("/v1/auth/signup") {
-                contentType = MediaType.APPLICATION_JSON
-                content = objectMapper.writeValueAsString(request)
-            }
-                .andDo {
-                    print()
-                }
-                .andExpect {
-                    status { isConflict() }
-                    jsonPath("$.resultCode") { ErrorCode.E409_DUPLICATE_BOSS_ACCOUNT.code }
-                    jsonPath("$.resultCode") { ErrorCode.E409_DUPLICATE_BOSS_ACCOUNT.message }
-                }
-        }
-
-        @Test
-        fun 카카오_회원가입시_가입_승인_대기중인경우_403_에러가_발생한다() {
-            // given
-            val registration = RegistrationFixture.create(KAKAO_SOCIAL_ID, BossAccountSocialType.KAKAO, status = BossRegistrationStatus.WAITING)
-            bossRegistrationRepository.save(registration)
-
-            val request = SignupRequest(
-                token = "token",
-                socialType = BossAccountSocialType.KAKAO,
-                bossName = "bossName",
-                businessNumber = "000-00-00000",
-                storeName = "가게 이름",
-                storeCategoriesIds = setOf(),
-                contactsNumber = "010-1234-1234",
-                certificationPhotoUrl = "https://photo.png"
-            )
-
-            // when & then
-            mockMvc.post("/v1/auth/signup") {
-                contentType = MediaType.APPLICATION_JSON
-                content = objectMapper.writeValueAsString(request)
-            }
-                .andDo {
-                    print()
-                }
-                .andExpect {
-                    status { isForbidden() }
-                    jsonPath("$.resultCode") { ErrorCode.E403_FORBIDDEN_WAITING_STATUS_TO_APPROVE_BOSS_ACCOUNT.code }
-                    jsonPath("$.resultCode") { ErrorCode.E403_FORBIDDEN_WAITING_STATUS_TO_APPROVE_BOSS_ACCOUNT.message }
                 }
         }
 
@@ -227,71 +162,6 @@ internal class AuthControllerTest(
         }
 
         @Test
-        fun 애플_회원가입시_이미_존재하는_사장님_계정인경우_409_에러가_발생한다() {
-            // given
-            val boss = BossAccountFixture.create(APPLE_SOCIAL_ID, BossAccountSocialType.APPLE, "애플 계정")
-            bossAccountRepository.save(boss)
-
-            val request = SignupRequest(
-                token = "token",
-                socialType = BossAccountSocialType.APPLE,
-                bossName = "bossName",
-                businessNumber = "000-00-00000",
-                storeName = "가게 이름",
-                storeCategoriesIds = setOf(),
-                contactsNumber = "010-1234-1234",
-                certificationPhotoUrl = "https://photo.png"
-            )
-
-            // when & then
-            mockMvc.post("/v1/auth/signup") {
-                contentType = MediaType.APPLICATION_JSON
-                content = objectMapper.writeValueAsString(request)
-            }
-                .andDo {
-                    print()
-                }
-                .andExpect {
-                    status { isConflict() }
-                    jsonPath("$.resultCode") { ErrorCode.E409_DUPLICATE_BOSS_ACCOUNT.code }
-                    jsonPath("$.resultCode") { ErrorCode.E409_DUPLICATE_BOSS_ACCOUNT.message }
-                }
-        }
-
-        @Test
-        fun 애플_회원가입시_가입_승인_대기중인경우_403_에러가_발생한다() {
-            // given
-            val registration = RegistrationFixture.create(APPLE_SOCIAL_ID, BossAccountSocialType.APPLE)
-            bossRegistrationRepository.save(registration)
-
-            val request = SignupRequest(
-                token = "token",
-                socialType = BossAccountSocialType.APPLE,
-                bossName = "bossName",
-                businessNumber = "000-00-00000",
-                storeName = "가게 이름",
-                storeCategoriesIds = setOf(),
-                contactsNumber = "010-1234-1234",
-                certificationPhotoUrl = "https://photo.png"
-            )
-
-            // when & then
-            mockMvc.post("/v1/auth/signup") {
-                contentType = MediaType.APPLICATION_JSON
-                content = objectMapper.writeValueAsString(request)
-            }
-                .andDo {
-                    print()
-                }
-                .andExpect {
-                    status { isForbidden() }
-                    jsonPath("$.resultCode") { ErrorCode.E403_FORBIDDEN_WAITING_STATUS_TO_APPROVE_BOSS_ACCOUNT.code }
-                    jsonPath("$.resultCode") { ErrorCode.E403_FORBIDDEN_WAITING_STATUS_TO_APPROVE_BOSS_ACCOUNT.message }
-                }
-        }
-
-
-        @Test
         fun 애플_로그인_요청이_성공하면_토큰이_반환된다() {
             // given
             val boss = BossAccountFixture.create(APPLE_SOCIAL_ID, BossAccountSocialType.APPLE, "애플 계정")
@@ -367,70 +237,6 @@ internal class AuthControllerTest(
                 .andExpect {
                     status { isOk() }
                     jsonPath("$.data.token") { isNotEmpty() }
-                }
-        }
-
-        @Test
-        fun 구글_회원가입시_이미_존재하는_사장님_계정인경우_409_에러가_발생한다() {
-            // given
-            val boss = BossAccountFixture.create(GOOGLE_SOCIAL_ID, BossAccountSocialType.GOOGLE, "구글 계정")
-            bossAccountRepository.save(boss)
-
-            val request = SignupRequest(
-                token = "token",
-                socialType = BossAccountSocialType.GOOGLE,
-                bossName = "bossName",
-                businessNumber = "000-00-00000",
-                storeName = "가게 이름",
-                storeCategoriesIds = setOf(),
-                contactsNumber = "010-1234-1234",
-                certificationPhotoUrl = "https://photo.png"
-            )
-
-            // when & then
-            mockMvc.post("/v1/auth/signup") {
-                contentType = MediaType.APPLICATION_JSON
-                content = objectMapper.writeValueAsString(request)
-            }
-                .andDo {
-                    print()
-                }
-                .andExpect {
-                    status { isConflict() }
-                    jsonPath("$.resultCode") { ErrorCode.E409_DUPLICATE_BOSS_ACCOUNT.code }
-                    jsonPath("$.resultCode") { ErrorCode.E409_DUPLICATE_BOSS_ACCOUNT.message }
-                }
-        }
-
-        @Test
-        fun 구글_회원가입시_가입_승인_대기중인경우_403_에러가_발생한다() {
-            // given
-            val registration = RegistrationFixture.create(GOOGLE_SOCIAL_ID, BossAccountSocialType.GOOGLE)
-            bossRegistrationRepository.save(registration)
-
-            val request = SignupRequest(
-                token = "token",
-                socialType = BossAccountSocialType.GOOGLE,
-                bossName = "bossName",
-                businessNumber = "000-00-00000",
-                storeName = "가게 이름",
-                storeCategoriesIds = setOf(),
-                contactsNumber = "010-1234-1234",
-                certificationPhotoUrl = "https://photo.png"
-            )
-
-            // when & then
-            mockMvc.post("/v1/auth/signup") {
-                contentType = MediaType.APPLICATION_JSON
-                content = objectMapper.writeValueAsString(request)
-            }
-                .andDo {
-                    print()
-                }
-                .andExpect {
-                    status { isForbidden() }
-                    jsonPath("$.resultCode") { ErrorCode.E403_FORBIDDEN_WAITING_STATUS_TO_APPROVE_BOSS_ACCOUNT.code }
-                    jsonPath("$.resultCode") { ErrorCode.E403_FORBIDDEN_WAITING_STATUS_TO_APPROVE_BOSS_ACCOUNT.message }
                 }
         }
 

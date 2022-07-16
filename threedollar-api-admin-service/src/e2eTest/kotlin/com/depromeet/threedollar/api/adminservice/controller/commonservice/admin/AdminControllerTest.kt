@@ -4,7 +4,6 @@ import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.admin.dto.request.AddAdminRequest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.admin.dto.request.UpdateMyAdminInfoRequest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.admin.dto.response.AdminInfoResponse
-import com.depromeet.threedollar.common.exception.type.ErrorCode
 import org.hamcrest.Matchers.hasSize
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -33,34 +32,6 @@ internal class AdminControllerTest : SetupAdminControllerTest() {
                 jsonPath("$.data.email") { value("test.admin@test.com") }
                 jsonPath("$.data.name") { value("테스트 관리자") }
             }
-        }
-
-        @Test
-        fun 잘못된_토큰인경우_401_에러가_발생한다() {
-            // when & then
-            mockMvc.get("/v1/account/admin/me") {
-                header(HttpHeaders.AUTHORIZATION, "Wrong Token")
-            }.andDo {
-                print()
-            }.andExpect {
-                status { isUnauthorized() }
-                jsonPath("$.resultCode") { value(ErrorCode.E401_UNAUTHORIZED.code) }
-                jsonPath("$.message") { value(ErrorCode.E401_UNAUTHORIZED.message) }
-            }
-        }
-
-        @Test
-        fun 토큰을_넘기지_않은경우_401_에러가_발생한다() {
-            // when & then
-            mockMvc.get("/v1/account/admin/me")
-                .andDo {
-                    print()
-                }
-                .andExpect {
-                    status { isUnauthorized() }
-                    jsonPath("$.resultCode") { value(ErrorCode.E401_UNAUTHORIZED.code) }
-                    jsonPath("$.message") { value(ErrorCode.E401_UNAUTHORIZED.message) }
-                }
         }
 
     }

@@ -2,7 +2,6 @@ package com.depromeet.threedollar.api.bossservice.controller.store
 
 import com.depromeet.threedollar.api.bossservice.SetupBossAccountControllerTest
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryFixture
@@ -88,7 +87,7 @@ internal class BossStoreOpenControllerTest(
     inner class PatchBossStoreApiTest {
 
         @Test
-        fun `이미 가게를 영업중일때 영업 정보를 갱신합니다`() {
+        fun `가게의 영업 정보를 갱신합니다`() {
             // given
             val category = BossStoreCategoryFixture.create("한식", 1)
             bossStoreCategoryRepository.save(category)
@@ -133,87 +132,11 @@ internal class BossStoreOpenControllerTest(
             }
         }
 
-        @Test
-        fun `오픈 중이지 않은 가게인 경우 Forbidden Exception이 발생한다`() {
-            // given
-            val category = BossStoreCategoryFixture.create("한식", 1)
-            bossStoreCategoryRepository.save(category)
-
-            val bossStore = BossStoreFixture.create(
-                bossId = bossId,
-                name = "사장님 가게",
-                location = BossStoreLocation.of(latitude = 38.0, longitude = 128.0),
-                imageUrl = "https://image.png",
-                introduction = "introduction",
-                snsUrl = "https://sns.com",
-                contactsNumber = ContactsNumber.of("010-1234-1234"),
-                menus = listOf(BossStoreMenuFixture.create("붕어빵", 2000, "https://menu.png")),
-                appearanceDays = setOf(
-                    BossStoreAppearanceDayFixture.create(
-                        dayOfTheWeek = DayOfTheWeek.FRIDAY,
-                        startTime = LocalTime.of(8, 0),
-                        endTime = LocalTime.of(10, 0),
-                        locationDescription = "강남역")
-                ),
-                categoriesIds = setOf(category.id)
-            )
-            bossStoreRepository.save(bossStore)
-
-            // when & then
-            mockMvc.put("/v1/boss/store/${bossStore.id}/renew") {
-                param("mapLatitude", "34.0")
-                param("mapLongitude", "128.2")
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
-            }.andDo {
-                print()
-            }.andExpect {
-                status { isForbidden() }
-                jsonPath("$.resultCode") { value(ErrorCode.E403_FORBIDDEN_NOT_OPENING_STORE.code) }
-                jsonPath("$.message") { value(ErrorCode.E403_FORBIDDEN_NOT_OPENING_STORE.message) }
-            }
-        }
-
     }
 
     @DisplayName("DELETE /v1/boss/store/{BOSS_STORE_ID}/close 200OK")
     @Nested
     inner class CloseBossStoreApiTest {
-
-        @Test
-        fun `가게를 강제로 영업을 종료합니다`() {
-            // given
-            val category = BossStoreCategoryFixture.create("한식", 1)
-            bossStoreCategoryRepository.save(category)
-
-            val bossStore = BossStoreFixture.create(
-                bossId = bossId,
-                name = "사장님 가게",
-                imageUrl = "https://image.png",
-                introduction = "introduction",
-                snsUrl = "https://sns.com",
-                contactsNumber = ContactsNumber.of("010-1234-1234"),
-                menus = listOf(BossStoreMenuFixture.create("붕어빵", 2000, "https://menu.png")),
-                appearanceDays = setOf(
-                    BossStoreAppearanceDayFixture.create(
-                        dayOfTheWeek = DayOfTheWeek.FRIDAY,
-                        startTime = LocalTime.of(8, 0),
-                        endTime = LocalTime.of(10, 0),
-                        locationDescription = "강남역")
-                ),
-                categoriesIds = setOf(category.id)
-            )
-            bossStoreRepository.save(bossStore)
-
-            // when & then
-            mockMvc.delete("/v1/boss/store/${bossStore.id}/close") {
-                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
-            }.andDo {
-                print()
-            }.andExpect {
-                status { isOk() }
-                jsonPath("$.data") { value(ApiResponse.OK.data) }
-            }
-        }
 
         @Test
         fun `가게를 영업중일때 가게를 강제 영업 종료합니다`() {

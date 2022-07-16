@@ -9,8 +9,6 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalFixtur
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalRepository;
-import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserFixture;
-import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -19,8 +17,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.E409_DUPLICATE_NICKNAME;
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.E400_INVALID;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -83,7 +79,7 @@ class UserControllerTest extends SetupUserControllerTest {
     class UpdateUserAccountInfoApiTest {
 
         @Test
-        void 나의_회원정보_수정_요청시_회원정보가_정상적으로_수정된다() throws Exception {
+        void 나의_회원정보를_수정한다() throws Exception {
             // given
             String name = "디프만";
             UpdateUserInfoRequest request = UpdateUserInfoRequest.testBuilder()
@@ -113,7 +109,7 @@ class UserControllerTest extends SetupUserControllerTest {
     class CheckAvailableNicknameApiTest {
 
         @Test
-        void 사용가능한_닉네임_확인_요청시_사용가능한_닉네임이면_200_OK() throws Exception {
+        void 사용가능한_닉네임인지_확인한다() throws Exception {
             // given
             String name = "붕어빵";
 
@@ -126,43 +122,6 @@ class UserControllerTest extends SetupUserControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data").value(ApiResponse.OK.getData()));
-        }
-
-        @Test
-        void 사용가능한_닉네임_확인_요청시_중복된_이름인경우_409_에러() throws Exception {
-            // given
-            String name = "디프만";
-            userRepository.save(UserFixture.create("social-social-id", UserSocialType.APPLE, name));
-
-            CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
-                .name(name)
-                .build();
-
-            // when & then
-            checkAvailableNickNameApi(request)
-                .andDo(print())
-                .andExpect(status().isConflict())
-                .andExpect(jsonPath("$.resultCode").value(E409_DUPLICATE_NICKNAME.getCode()))
-                .andExpect(jsonPath("$.message").value(E409_DUPLICATE_NICKNAME.getMessage()))
-                .andExpect(jsonPath("$.data").isEmpty());
-        }
-
-        @Test
-        void 사용가능한_닉네임_확인_요청시_허용되지_않은_닉네임인경우_400_에러() throws Exception {
-            // given
-            String name = "-a-";
-            userRepository.save(UserFixture.create("social-social-id", UserSocialType.APPLE, name));
-
-            CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
-                .name(name)
-                .build();
-
-            // when & then
-            checkAvailableNickNameApi(request)
-                .andDo(print())
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.resultCode").value(E400_INVALID.getCode()))
-                .andExpect(jsonPath("$.data").isEmpty());
         }
 
         private ResultActions checkAvailableNickNameApi(CheckAvailableNameRequest request) throws Exception {

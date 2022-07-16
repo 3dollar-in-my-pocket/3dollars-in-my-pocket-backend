@@ -17,7 +17,7 @@ import java.util.concurrent.Executor;
 public class AsyncConfig extends AsyncConfigurerSupport {
 
     private static final int MAX_POOL_SIZE = 50;
-    private static final String THREAD_NAME_PREFIX = "Thread-";
+    private static final String THREAD_NAME_PREFIX = "User-Thread-";
 
     @Primary
     @Bean

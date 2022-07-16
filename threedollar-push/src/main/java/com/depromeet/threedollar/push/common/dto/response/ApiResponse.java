@@ -25,12 +25,12 @@ public class ApiResponse<T> {
         return new ApiResponse<>("", "", data);
     }
 
-    public static <T> ApiResponse<T> error(ErrorCode errorCode) {
-        return new ApiResponse<>(errorCode.getCode(), errorCode.getMessage(), null);
-    }
-
     public static <T> ApiResponse<T> error(ErrorCode errorCode, String message) {
         return new ApiResponse<>(errorCode.getCode(), message, null);
+    }
+
+    public static <T> ApiResponse<T> error(ErrorCode errorCode) {
+        return new ApiResponse<>(errorCode.getCode(), errorCode.getMessage(), null);
     }
 
 }

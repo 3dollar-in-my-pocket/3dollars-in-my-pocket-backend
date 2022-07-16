@@ -12,7 +12,6 @@ import com.depromeet.threedollar.infrastructure.external.client.apple.AppleToken
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 private const val SOCIAL_ID = "social-id"
@@ -23,12 +22,11 @@ internal class AppleAuthServiceTest(
     private val bossRegistrationRepository: BossRegistrationRepository,
 ) : IntegrationTest() {
 
-    private lateinit var authService: AuthService
-
-    @BeforeEach
-    fun setUp() {
-        authService = AppleAuthService(bossAccountRepository, bossRegistrationRepository, StubAppleTokenDecoder())
-    }
+    private val authService: AuthService = AppleAuthService(
+        bossAccountRepository = bossAccountRepository,
+        bossRegistrationRepository = bossRegistrationRepository,
+        appleTokenDecoder = StubAppleTokenDecoder()
+    )
 
     @AfterEach
     fun cleanUp() {

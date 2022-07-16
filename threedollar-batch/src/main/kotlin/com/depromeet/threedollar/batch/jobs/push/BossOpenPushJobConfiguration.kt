@@ -21,8 +21,6 @@ import org.springframework.batch.repeat.RepeatStatus
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-private val log = KotlinLogging.logger {}
-
 private const val JOB_NAME = "bossOpenStoreBackgroundPushJob"
 private const val CHUNK_SIZE = 100
 
@@ -39,6 +37,8 @@ class BossOpenPushJobConfiguration(
     private val deviceRepository: DeviceRepository,
     private val slackWebhookApiClient: SlackWebhookApiClient,
 ) {
+
+    private val log = KotlinLogging.logger {}
 
     @Bean(name = [JOB_NAME])
     fun bossOpenStoreBackgroundPushJob(): Job {

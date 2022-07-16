@@ -25,10 +25,10 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException
 import org.springframework.web.multipart.support.MissingServletRequestPartException
 import java.util.stream.Collectors
 
-private val log = KotlinLogging.logger {}
-
 @RestControllerAdvice
 class ControllerExceptionAdvice {
+
+    private val log = KotlinLogging.logger {}
 
     /**
      * 400 BadRequest

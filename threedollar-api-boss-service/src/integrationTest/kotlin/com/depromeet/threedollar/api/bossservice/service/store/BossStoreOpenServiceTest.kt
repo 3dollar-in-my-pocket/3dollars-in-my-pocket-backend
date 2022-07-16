@@ -146,7 +146,7 @@ internal class BossStoreOpenServiceTest(
         }
 
         @Test
-        fun `가게 오픈 정보 갱신시, 기존의 오픈 정보가 없는경우 Forbidden Exception이 발생한다`() {
+        fun `가게 오픈 정보 갱신시, Forbidden Exception이 발생한다`() {
             // when & then
             assertThatThrownBy {
                 bossStoreOpenService.renewBossStoreOpenInfo(

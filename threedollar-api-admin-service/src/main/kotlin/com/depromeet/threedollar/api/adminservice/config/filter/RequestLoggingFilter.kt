@@ -13,9 +13,9 @@ import javax.servlet.ServletResponse
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-private val log = KotlinLogging.logger {}
-
 class RequestLoggingFilter : Filter {
+
+    private val log = KotlinLogging.logger {}
 
     override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
         if (ServletFileUpload.isMultipartContent(request as HttpServletRequest)) {

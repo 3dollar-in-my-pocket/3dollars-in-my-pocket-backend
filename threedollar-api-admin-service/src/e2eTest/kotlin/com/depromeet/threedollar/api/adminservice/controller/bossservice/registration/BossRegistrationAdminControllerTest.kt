@@ -6,6 +6,7 @@ import com.depromeet.threedollar.api.adminservice.service.bossservice.registrati
 import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.response.BossAccountRegistrationStoreResponse
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.api.core.listener.bossservice.push.BossSendPushListener
+import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.GOOGLE
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRejectReasonType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationFixture
@@ -36,14 +37,14 @@ internal class BossRegistrationAdminControllerTest(
 
     @DisplayName("PUT /v1/boss/account/registration/{registration.id}/reject")
     @Test
-    fun `사장님 계정 가입 신청을 승인합니다`() {
+    fun `사장님 계정 가입 신청을 승인하고 푸시 알림을 전송합니다`() {
         // given
         every { bossSendPushListener.sendBossRegistrationApproveMessage(any()) } returns Unit
 
-        val registration = RegistrationFixture.create("social-id", com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.GOOGLE)
+        val registration = RegistrationFixture.create("social-id", GOOGLE)
         bossRegistrationRepository.save(registration)
 
-        // when & then
+        // when
         mockMvc.put("/v1/boss/account/registration/${registration.id}/apply") {
             header(HttpHeaders.AUTHORIZATION, "Bearer $token")
         }
@@ -53,23 +54,24 @@ internal class BossRegistrationAdminControllerTest(
                 jsonPath("$.data") { value(ApiResponse.OK.data) }
             }
 
+        // then
         verify(exactly = 1) { bossSendPushListener.sendBossRegistrationApproveMessage(any()) }
     }
 
     @DisplayName("PUT /v1/boss/account/registration/{registration.id}/reject")
     @Test
-    fun `사장님 계정 가입 신청을 반려합니다`() {
+    fun `사장님 계정 가입 신청을 반려하고 푸시 알림을 전송합니다`() {
         // given
         every { bossSendPushListener.sendBossRegistrationDenyMessage(any()) } returns Unit
 
-        val registration = RegistrationFixture.create("social-id", com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.GOOGLE)
+        val registration = RegistrationFixture.create("social-id", GOOGLE)
         bossRegistrationRepository.save(registration)
 
         val request = RejectBossRegistrationRequest(
             rejectReason = BossRegistrationRejectReasonType.INVALID_BUSINESS_NUMBER,
         )
 
-        // when & then
+        // when
         mockMvc.put("/v1/boss/account/registration/${registration.id}/reject") {
             header(HttpHeaders.AUTHORIZATION, "Bearer $token")
             contentType = MediaType.APPLICATION_JSON
@@ -81,6 +83,7 @@ internal class BossRegistrationAdminControllerTest(
                 jsonPath("$.data") { value(ApiResponse.OK.data) }
             }
 
+        // then
         verify(exactly = 1) { bossSendPushListener.sendBossRegistrationDenyMessage(any()) }
     }
 
@@ -88,7 +91,7 @@ internal class BossRegistrationAdminControllerTest(
     @Test
     fun `사장님 계정의 가입 신청 목록을 조회합니다`() {
         // given
-        val registration = RegistrationFixture.create("social-id", com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.GOOGLE)
+        val registration = RegistrationFixture.create("social-id", GOOGLE)
         bossRegistrationRepository.save(registration)
 
         // when & then

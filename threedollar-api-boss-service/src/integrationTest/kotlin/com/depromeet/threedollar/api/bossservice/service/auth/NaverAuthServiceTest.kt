@@ -14,7 +14,6 @@ import com.depromeet.threedollar.infrastructure.external.client.naver.dto.respon
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 private const val SOCIAL_ID = "social-id"
@@ -25,12 +24,7 @@ internal class NaverAuthServiceTest(
     private val bossRegistrationRepository: BossRegistrationRepository,
 ) : IntegrationTest() {
 
-    private lateinit var authService: AuthService
-
-    @BeforeEach
-    fun setUp() {
-        authService = NaverAuthService(bossAccountRepository, bossRegistrationRepository, StubNaverAuthApiClient())
-    }
+    private val authService: AuthService = NaverAuthService(bossAccountRepository, bossRegistrationRepository, StubNaverAuthApiClient())
 
     @AfterEach
     fun cleanUp() {

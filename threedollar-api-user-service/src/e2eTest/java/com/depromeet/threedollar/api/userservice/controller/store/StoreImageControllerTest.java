@@ -2,7 +2,6 @@ package com.depromeet.threedollar.api.userservice.controller.store;
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.userservice.SetupStoreControllerTest;
-import com.depromeet.threedollar.api.userservice.controller.store.support.StoreImageAssertions;
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImage;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageFixture;
@@ -54,23 +53,6 @@ class StoreImageControllerTest extends SetupStoreControllerTest {
                 () -> assertThat(response.getData()).hasSize(2),
                 () -> assertStoreImageResponse(response.getData().get(0), storeImage1.getId(), imageUrl1),
                 () -> assertStoreImageResponse(response.getData().get(1), storeImage2.getId(), imageUrl2)
-            );
-        }
-
-        @Test
-        void 가게에_등록된_이미지_목록을_조회한다() throws Exception {
-            // given
-            String imageUrl = "https://store-good-image.png";
-            StoreImage storeImage = StoreImageFixture.create(store.getId(), user.getId(), imageUrl);
-            storeImageRepository.save(storeImage);
-
-            // when
-            ApiResponse<List<StoreImageResponse>> response = storeImageMockApiCaller.getStoreImages(storeId, token, 200);
-
-            // then
-            assertAll(
-                () -> assertThat(response.getData()).hasSize(1),
-                () -> StoreImageAssertions.assertStoreImageResponse(response.getData().get(0), storeImage.getId(), imageUrl)
             );
         }
 

@@ -13,7 +13,6 @@ import com.depromeet.threedollar.infrastructure.external.client.google.dto.respo
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 private const val SOCIAL_ID = "social-id"
@@ -24,12 +23,11 @@ internal class GoogleAuthServiceTest(
     private val bossRegistrationRepository: BossRegistrationRepository,
 ) : IntegrationTest() {
 
-    private lateinit var authService: AuthService
-
-    @BeforeEach
-    fun setUp() {
-        authService = GoogleAuthService(bossAccountRepository, bossRegistrationRepository, StubGoogleAuthApiClient())
-    }
+    private val authService: AuthService = GoogleAuthService(
+        bossAccountRepository = bossAccountRepository,
+        bossRegistrationRepository = bossRegistrationRepository,
+        googleAuthApiClient = StubGoogleAuthApiClient()
+    )
 
     @AfterEach
     fun cleanUp() {

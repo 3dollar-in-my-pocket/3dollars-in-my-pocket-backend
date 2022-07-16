@@ -33,12 +33,12 @@ import java.time.ZoneId
 import java.util.stream.Collectors
 import javax.servlet.http.HttpServletRequest
 
-private val log = KotlinLogging.logger {}
-
 @RestControllerAdvice
 class ControllerExceptionAdvice(
     private val eventPublisher: ApplicationEventPublisher,
 ) {
+
+    private val log = KotlinLogging.logger {}
 
     /**
      * 400 BadRequest
