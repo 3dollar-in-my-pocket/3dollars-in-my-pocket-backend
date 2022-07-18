@@ -30,7 +30,8 @@ class DeviceRepositoryCustomImpl(
 
     override fun findAllDevicesByAccountIdsAndType(accountIds: List<String>, accountType: AccountType): List<Device> {
         return mongoTemplate.find(Query()
-            .addCriteria(where(Device::accountId).`in`(accountIds)), Device::class.java
+            .addCriteria(where(Device::accountId).`in`(accountIds))
+            .addCriteria(where(Device::accountType).isEqualTo(accountType)), Device::class.java
         )
     }
 
