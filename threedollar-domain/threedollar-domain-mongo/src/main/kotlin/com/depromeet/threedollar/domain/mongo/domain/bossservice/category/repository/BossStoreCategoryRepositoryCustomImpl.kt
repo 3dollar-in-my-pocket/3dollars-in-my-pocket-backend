@@ -21,8 +21,7 @@ class BossStoreCategoryRepositoryCustomImpl(
 
     override fun findCategoryById(categoryId: String): BossStoreCategory? {
         return mongoTemplate.findOne(Query()
-            .addCriteria(BossStoreCategory::id isEqualTo categoryId),
-            BossStoreCategory::class.java
+            .addCriteria(BossStoreCategory::id isEqualTo categoryId), BossStoreCategory::class.java
         )
     }
 
