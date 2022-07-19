@@ -78,7 +78,7 @@ class FaqControllerTest extends SetupUserControllerTest {
             ApiResponse<List<FaqCategoryResponse>> response = faqMockApiCaller.retrieveFaqCategories(200);
 
             // then
-            assertThat(response.getData()).hasSize(FaqCategory.values().length);
+            assertThat(response.getData()).hasSize(6);
         }
 
     }

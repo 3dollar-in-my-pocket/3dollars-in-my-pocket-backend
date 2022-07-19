@@ -14,7 +14,9 @@ public enum FaqCategory implements EnumModel {
     WITHDRAWAL(List.of(ApplicationType.USER_API), "회원탈퇴", 3),
     BOARD(List.of(ApplicationType.USER_API), "게시글 수정 및 삭제", 4),
     CATEGORY(List.of(ApplicationType.USER_API), "카테고리", 5),
-    ETC(List.of(ApplicationType.USER_API, ApplicationType.BOSS_API), "기타", 6),
+    SIGNUP(List.of(ApplicationType.BOSS_API), "가입", 6),
+    MONTHLY_FEE(List.of(ApplicationType.BOSS_API), "월 이용료", 7),
+    ETC(List.of(ApplicationType.USER_API, ApplicationType.BOSS_API), "기타", 8),
     ;
 
     private final List<ApplicationType> supportedApplicationTypes;
