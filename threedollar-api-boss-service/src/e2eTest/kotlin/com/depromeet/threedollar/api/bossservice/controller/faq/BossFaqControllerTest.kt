@@ -92,6 +92,9 @@ internal class BossFaqControllerTest(
                     jsonPath("$.data[0].question") { value(faq1.question) }
                     jsonPath("$.data[0].answer") { value(faq1.answer) }
                     jsonPath("$.data[0].category") { value(faq1.category.name) }
+                    jsonPath("$.data[0].categoryInfo.category") { value(faq1.category.name) }
+                    jsonPath("$.data[0].categoryInfo.description") { value(faq1.category.description) }
+                    jsonPath("$.data[0].categoryInfo.displayOrder") { value(faq1.category.displayOrder) }
                 }
         }
 

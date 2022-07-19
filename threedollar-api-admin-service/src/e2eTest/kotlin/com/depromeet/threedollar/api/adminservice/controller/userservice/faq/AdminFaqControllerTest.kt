@@ -143,14 +143,18 @@ internal class AdminFaqControllerTest(
                     jsonPath("$.data[0].faqId") { value(faq1.id) }
                     jsonPath("$.data[0].question") { value(faq1.question) }
                     jsonPath("$.data[0].answer") { value(faq1.answer) }
-                    jsonPath("$.data[0].category") { value(faq1.category.name) }
                     jsonPath("$.data[0].applicationType") { value(faq1.applicationType.name) }
+                    jsonPath("$.data[0].category.category") { value(faq1.category.name) }
+                    jsonPath("$.data[0].category.description") { value(faq1.category.description) }
+                    jsonPath("$.data[0].category.displayOrder") { value(faq1.category.displayOrder) }
 
                     jsonPath("$.data[1].faqId") { value(faq2.id) }
                     jsonPath("$.data[1].question") { value(faq2.question) }
                     jsonPath("$.data[1].answer") { value(faq2.answer) }
-                    jsonPath("$.data[1].category") { value(faq2.category.name) }
                     jsonPath("$.data[1].applicationType") { value(faq2.applicationType.name) }
+                    jsonPath("$.data[1].category.category") { value(faq2.category.name) }
+                    jsonPath("$.data[1].category.description") { value(faq2.category.description) }
+                    jsonPath("$.data[1].category.displayOrder") { value(faq2.category.displayOrder) }
                 }
         }
 

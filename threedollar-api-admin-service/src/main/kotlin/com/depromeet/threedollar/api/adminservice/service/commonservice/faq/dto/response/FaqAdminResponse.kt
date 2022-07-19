@@ -1,16 +1,16 @@
 package com.depromeet.threedollar.api.adminservice.service.commonservice.faq.dto.response
 
 import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
+import com.depromeet.threedollar.api.core.mapper.commonservice.faq.dto.response.FaqCategoryResponse
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.Faq
-import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory
 
 data class FaqAdminResponse(
     val faqId: Long,
     val applicationType: ApplicationType,
     val question: String,
     val answer: String,
-    val category: FaqCategory,
+    val category: FaqCategoryResponse,
 ) : AuditingTimeResponse() {
 
     companion object {
@@ -20,7 +20,7 @@ data class FaqAdminResponse(
                 applicationType = faq.applicationType,
                 question = faq.question,
                 answer = faq.answer,
-                category = faq.category
+                category = FaqCategoryResponse.of(faq.category),
             )
             response.setAuditingTimeByEntity(faq)
             return response
