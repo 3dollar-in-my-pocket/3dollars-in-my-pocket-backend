@@ -1,8 +1,9 @@
-## Setup Disk Memory DB with docker-compose
+## Setup local-docker 환경
 
 ### 1. 로컬 환경 구성 with docker-compose
 
 ```bash
+sh setup-local-docker.sh
 docker-compose up -d
 ```
 
