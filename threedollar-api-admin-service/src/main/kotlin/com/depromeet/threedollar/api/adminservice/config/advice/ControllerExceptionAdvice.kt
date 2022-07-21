@@ -5,6 +5,7 @@ import com.depromeet.threedollar.common.exception.model.ThreeDollarsBaseExceptio
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException
 import mu.KotlinLogging
 import org.springframework.beans.TypeMismatchException
 import org.springframework.http.HttpStatus
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.multipart.MaxUploadSizeExceededException
 import org.springframework.web.multipart.support.MissingServletRequestPartException
 import java.util.stream.Collectors
+import javax.servlet.http.HttpServletRequest
 
 @RestControllerAdvice
 class ControllerExceptionAdvice {
@@ -156,6 +158,16 @@ class ControllerExceptionAdvice {
     }
 
     /**
+     * CircuitBreakerException
+     */
+    @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    @ExceptionHandler(CallNotPermittedException::class)
+    private fun handleCircuitBreakerException(exception: CallNotPermittedException): ApiResponse<Nothing> {
+        log.error(exception.message, exception)
+        return ApiResponse.error(ErrorCode.E502_BAD_GATEWAY)
+    }
+
+    /**
      * ThreeDollars Custom Exception
      */
     @ExceptionHandler(ThreeDollarsBaseException::class)
@@ -163,6 +175,16 @@ class ControllerExceptionAdvice {
         log.error(exception.message, exception)
         return ResponseEntity.status(exception.status)
             .body(ApiResponse.error(exception.errorCode))
+    }
+
+    /**
+     * 500 Internal Server
+     */
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception::class)
+    private fun handleInternalServerException(exception: Exception, request: HttpServletRequest): ApiResponse<Nothing> {
+        log.error(exception.message, exception)
+        return ApiResponse.error(ErrorCode.E500_INTERNAL_SERVER)
     }
 
 }

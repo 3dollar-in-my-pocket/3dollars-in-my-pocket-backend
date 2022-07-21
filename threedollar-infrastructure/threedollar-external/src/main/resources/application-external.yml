@@ -35,6 +35,22 @@ external:
       webhook:
         base-url: https://hooks.slack.com/services
 
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slow-call-duration-threshold: 5000 # 느린 호출 기준 (3초)
+      registerHealthIndicator: true # actuator
+      slidingWindowSize: 10
+      minimumNumberOfCalls: 5 # 주기마다, 실패 비율이나 느린 호출 비율을 계산할 때 필요한 최소 호출 수
+      permittedNumberOfCallsInHalfOpenState: 5 # 서킷이 Half Open인 경우 허용할 요청 횟수
+      automaticTransitionFromOpenToHalfOpenEnabled: true # 호출이 없어도 모니터링 스레드에 의해 자동으로 서킷이 열리는지 여부
+      waitDurationInOpenState: 10s # 서킷이 열리고 Half Open 까지의 시간
+      failureRateThreshold: 80 # 80% 실패 임계치 (서킷이 열린다)
+      eventConsumerBufferSize: 10
+  instances:
+    default:
+      baseConfig: default
+
 
 ---
 spring.config:

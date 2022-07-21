@@ -28,6 +28,7 @@ ext {
     commonsCodecVersion = "1.15"
     kotlinLoggingVersion = "2.1.23"
     firebaseAdminVersion = "9.0.0"
+    resilience4jVersion = "1.7.0"
 }
 
 allprojects {
@@ -83,6 +84,10 @@ subprojects {
 
         // Spring Retry
         implementation("org.springframework.retry:spring-retry:${springRetryVersion}")
+
+        // Resilience4J
+        implementation("io.github.resilience4j:resilience4j-spring-boot2:${resilience4jVersion}")
+        implementation("io.github.resilience4j:resilience4j-core:${resilience4jVersion}")
 
         // Test
         testImplementation("org.springframework.boot:spring-boot-starter-test")

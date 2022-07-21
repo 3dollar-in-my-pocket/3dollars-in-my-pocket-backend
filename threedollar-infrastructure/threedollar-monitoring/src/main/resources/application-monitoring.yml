@@ -11,6 +11,10 @@ management:
       exposure:
         include:
           - health
+          - flyway
+          - metrics
+          - circuitbreakers
+          - circuitbreakerevents
   endpoint:
     health:
       show-details: always

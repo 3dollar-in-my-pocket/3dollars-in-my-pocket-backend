@@ -9,6 +9,7 @@ import com.depromeet.threedollar.common.type.ApplicationType;
 import com.depromeet.threedollar.common.utils.UserMetaSessionUtils;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException;
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
@@ -34,13 +35,14 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.E500_INTERNAL_SERVER;
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.E400_INVALID;
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.E400_MISSING_PARAMETER;
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.E400_INVALID_FILE_SIZE_TOO_LARGE;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E400_MISSING_PARAMETER;
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.E405_METHOD_NOT_ALLOWED;
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.E406_NOT_ACCEPTABLE;
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.E415_UNSUPPORTED_MEDIA_TYPE;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E500_INTERNAL_SERVER;
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E502_BAD_GATEWAY;
 import static java.util.stream.Collectors.joining;
 
 @Slf4j
@@ -179,6 +181,17 @@ public class ControllerExceptionAdvice {
     private ApiResponse<Object> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException e) {
         log.error(e.getMessage(), e);
         return ApiResponse.error(E400_INVALID_FILE_SIZE_TOO_LARGE);
+    }
+
+    /**
+     * CircuitBreakerException
+     */
+    @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    @ExceptionHandler(CallNotPermittedException.class)
+    private ApiResponse<Object> handleCircuitBreakerException(CallNotPermittedException exception, HttpServletRequest request) {
+        log.error(exception.getMessage(), exception);
+        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(E502_BAD_GATEWAY, exception, request));
+        return ApiResponse.error(E502_BAD_GATEWAY);
     }
 
     /**

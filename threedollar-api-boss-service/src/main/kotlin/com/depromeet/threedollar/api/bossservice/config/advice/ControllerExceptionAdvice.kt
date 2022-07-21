@@ -9,6 +9,7 @@ import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.common.utils.UserMetaSessionUtils
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException
 import mu.KotlinLogging
 import org.springframework.beans.TypeMismatchException
 import org.springframework.context.ApplicationEventPublisher
@@ -163,6 +164,17 @@ class ControllerExceptionAdvice(
     private fun handleMaxUploadSizeExceededException(e: MaxUploadSizeExceededException): ApiResponse<Nothing> {
         log.error(e.message, e)
         return ApiResponse.error(ErrorCode.E400_INVALID_FILE_SIZE_TOO_LARGE)
+    }
+
+    /**
+     * CircuitBreakerException
+     */
+    @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    @ExceptionHandler(CallNotPermittedException::class)
+    private fun handleCircuitBreakerException(exception: CallNotPermittedException, request: HttpServletRequest): ApiResponse<Nothing> {
+        log.error(exception.message, exception)
+        eventPublisher.publishEvent(createUnExpectedErrorOccurredEvent(ErrorCode.E502_BAD_GATEWAY, exception, request))
+        return ApiResponse.error(ErrorCode.E502_BAD_GATEWAY)
     }
 
     /**
