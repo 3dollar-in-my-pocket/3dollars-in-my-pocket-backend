@@ -116,5 +116,5 @@ jobs:
         with:
           task-definition: ${{ steps.render-nginx-container.outputs.task-definition }}
           cluster: threedollars-in-my-pocket-prod
-          service: threedollars-in-my-pocket-user-api-prod
+          service: threedollars-in-my-pocket-user-api-prod-v2
           wait-for-service-stability: true
