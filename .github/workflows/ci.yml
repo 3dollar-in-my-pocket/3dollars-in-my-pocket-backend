@@ -1,4 +1,4 @@
-name: CI & SonarQube Analysis
+name: "CI & SonarQube Analysis"
 
 on:
   pull_request:
