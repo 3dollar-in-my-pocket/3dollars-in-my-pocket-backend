@@ -62,6 +62,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Build & Push Nginx
+        id: build-nginx
+        run: |
+          docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG -f ./threedollar-api-user-service/nginx/Dockerfile ./threedollar-api-user-service/nginx
+          docker tag $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
+          docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG
+          docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
+
+          echo "::set-output name=image::${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}:${IMAGE_TAG}"
+        env:
+          DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          DOCKER_REPOSITORY: threedollars-in-my-pocket-user-nginx-prod
+          IMAGE_TAG: ${{ steps.version.outputs.version }}
+
       - name: Build & Push User API Image
         id: build
         run: |
@@ -88,10 +102,18 @@ jobs:
           container-name: threedollar-api-prod
           image: ${{ steps.build.outputs.image }}
 
+      - name: Update Amazon ECS task definition
+        id: render-web-container-2
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-web-container.outputs.task-definition }}
+          container-name: threedollar-api-nginx-prod
+          image: ${{ steps.build-nginx.outputs.image }}
+
       - name: Deploy to Amazon ECS service
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          task-definition: ${{ steps.render-web-container.outputs.task-definition }}
+          task-definition: ${{ steps.render-web-container-2.outputs.task-definition }}
           cluster: threedollars-in-my-pocket-prod
           service: threedollars-in-my-pocket-user-api-prod
           wait-for-service-stability: true
