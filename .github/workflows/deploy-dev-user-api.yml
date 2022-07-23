@@ -118,5 +118,5 @@ jobs:
         with:
           task-definition: ${{ steps.render-nginx-container.outputs.task-definition }}
           cluster: threedollar-dev
-          service: threedollar-user-api-dev
+          service: threedollar-user-api-dev-v2
           wait-for-service-stability: true
