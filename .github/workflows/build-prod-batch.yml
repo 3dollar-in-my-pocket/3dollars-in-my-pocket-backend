@@ -1,4 +1,4 @@
-name: 운영환경 - 빌드 - Batch
+name: "운영환경 - 빌드 - Batch"
 
 on:
   workflow_dispatch:
@@ -61,11 +61,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Build & Push Batch Image
+      - name: Build Batch Image
         run: |
           ./gradlew clean ci :threedollar-batch:jib -Dimage=${DOCKER_REGISTRY}/${DOCKER_REPOSITORY} -Dtag=${IMAGE_TAG} --warn
 
-          echo "🐇 Build Image >> ${DOCKER_REPOSITORY}:${IMAGE_TAG}"
+          echo "🐇 Build Batch Image >> ${DOCKER_REPOSITORY}:${IMAGE_TAG}"
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           DOCKER_REPOSITORY: threedollars-in-my-pocket-batch-prod

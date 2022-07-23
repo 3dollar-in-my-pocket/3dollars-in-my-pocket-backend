@@ -1,4 +1,4 @@
-name: 운영환경 - 빌드 - Admin API
+name: "운영환경 - 빌드 - Admin API"
 
 on:
   workflow_dispatch:
@@ -61,11 +61,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Build & Push Admin API Image
+      - name: Build Admin API Image
         run: |
           ./gradlew clean ci :threedollar-api-admin-service:jib -Dimage=${DOCKER_REGISTRY}/${DOCKER_REPOSITORY} -Dtag=${IMAGE_TAG} --warn
 
-          echo "🐇 Build Image >> ${DOCKER_REPOSITORY}:${IMAGE_TAG}"
+          echo "🐇 Build Admin API Image >> ${DOCKER_REPOSITORY}:${IMAGE_TAG}"
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           DOCKER_REPOSITORY: threedollars-in-my-pocket-admin-prod

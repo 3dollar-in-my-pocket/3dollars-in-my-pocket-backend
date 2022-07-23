@@ -20,7 +20,7 @@ on:
 
 jobs:
   validation:
-    name: "Gradle wrapper validation"
+    name: Gradle wrapper validation
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

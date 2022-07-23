@@ -1,4 +1,4 @@
-name: 개발환경 - 배포 - Boss API
+name: "개발환경 - 배포 - Boss API"
 
 on:
   workflow_dispatch:
@@ -64,7 +64,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Build & Push Boss Service Nginx
+      - name: Build Boss Nginx Image
         id: build-nginx
         run: |
           docker build -t $DOCKER_REGISTRY/$DOCKER_REPOSITORY:$IMAGE_TAG -f ./threedollar-api-boss-service/nginx/Dockerfile ./threedollar-api-boss-service/nginx
@@ -73,18 +73,19 @@ jobs:
           docker push $DOCKER_REGISTRY/$DOCKER_REPOSITORY:latest
 
           echo "::set-output name=image::${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}:${IMAGE_TAG}"
+          echo "🐇 Build Boss Nginx Image >> ${DOCKER_REPOSITORY}:${IMAGE_TAG}"
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           DOCKER_REPOSITORY: 3dollar-boss-nginx-dev
           IMAGE_TAG: ${{ steps.version.outputs.version }}
 
-      - name: Build & Push Boss Service Jar
-        id: build
+      - name: Build Boss API Image
+        id: build-api
         run: |
           ./gradlew clean ci :threedollar-api-boss-service:jib -Dimage=${DOCKER_REGISTRY}/${DOCKER_REPOSITORY} -Dtag=${IMAGE_TAG} --warn
 
           echo "::set-output name=image::${DOCKER_REGISTRY}/${DOCKER_REPOSITORY}:${IMAGE_TAG}"
-          echo "🐇 Build Image >> ${DOCKER_REPOSITORY}:${IMAGE_TAG}"
+          echo "🐇 Build Boss API Image >> ${DOCKER_REPOSITORY}:${IMAGE_TAG}"
         env:
           DOCKER_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           DOCKER_REPOSITORY: 3dollar-boss-api-dev
@@ -97,25 +98,25 @@ jobs:
           echo "::set-output name=task-definition::$GITHUB_WORKSPACE/task-definition-boss-dev.json"
 
       - name: Update Amazon ECS task definition
-        id: render-web-container
+        id: render-api-container
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: ${{ steps.download-task-definition.outputs.task-definition }}
           container-name: threedollar-boss-api-dev
-          image: ${{ steps.build.outputs.image }}
+          image: ${{ steps.build-api.outputs.image }}
 
       - name: Update Amazon ECS task definition
-        id: render-web-container-2
+        id: render-nginx-container
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: ${{ steps.render-web-container.outputs.task-definition }}
+          task-definition: ${{ steps.render-api-container.outputs.task-definition }}
           container-name: threedollar-boss-nginx-dev
           image: ${{ steps.build-nginx.outputs.image }}
 
       - name: Deploy to Amazon ECS service
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          task-definition: ${{ steps.render-web-container-2.outputs.task-definition }}
+          task-definition: ${{ steps.render-nginx-container.outputs.task-definition }}
           cluster: threedollar-dev
           service: threedollar-boss-api-dev
           wait-for-service-stability: true
