@@ -51,6 +51,8 @@ jib {
         jvmFlags = [
             "-server",
             "-XX:+UseG1GC",
+            "-Xms512M",
+            "-Xmx512M",
             "-javaagent:" + newRelicJavaAgentDirectory,
             "-Duser.timezone=Asia/Seoul"
         ]

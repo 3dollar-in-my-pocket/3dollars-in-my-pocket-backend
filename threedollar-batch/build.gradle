@@ -31,6 +31,8 @@ jib {
         jvmFlags = [
             "-server",
             "-XX:+UseG1GC",
+            "-Xms256M",
+            "-Xmx256M",
             "-Duser.timezone=Asia/Seoul"
         ]
     }
