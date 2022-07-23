@@ -17,7 +17,7 @@ private val NICKNAME_REGEX = Pattern.compile("^[ㄱ-ㅎ가-힣a-zA-Z\\d][ㄱ-ㅎ
 class NickNameValidator : ConstraintValidator<NickName, String> {
 
     override fun isValid(nickName: String?, context: ConstraintValidatorContext): Boolean {
-        if (nickName == null) {
+        if (nickName.isNullOrBlank()) {
             return false
         }
         return NICKNAME_REGEX.matcher(nickName).matches()

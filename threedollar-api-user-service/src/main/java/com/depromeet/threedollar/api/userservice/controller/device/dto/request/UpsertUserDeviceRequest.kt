@@ -4,10 +4,12 @@ import com.depromeet.threedollar.api.core.service.commonservice.device.dto.reque
 import com.depromeet.threedollar.common.utils.UserMetaSessionUtils
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.AccountType
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.PushPlatformType
+import javax.validation.constraints.NotBlank
 
 private val ACCOUNT_TYPE = AccountType.USER_ACCOUNT
 
 data class UpsertUserDeviceRequest(
+    @field:NotBlank(message = "{device.pushToken.notBlank}")
     val pushToken: String,
     val pushPlatformType: PushPlatformType,
 ) {
