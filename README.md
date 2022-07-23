@@ -35,9 +35,9 @@
 
 ### 인프라 아키텍처
 
-![img.png](docs/3dollars-architecture-20220707.png)
+![img.png](docs/3dollars-architecture-20220723.png)
 
-- **Infra** - ECS Fargate, ALB, S3, CloudFront, SQS
+- **Infra** - ECS Fargate, ALB, Nginx, S3, CloudFront, SQS
 - **DB** - MariaDB(RDS), MongoDB(EC2), Redis Cluster(Elastic Cache), flyway
 - **CI/CD** - Git, GitHub Actions CI/CD, SonarQube
 - **Operations** - CloudWatch, Sentry, Slack, NewRelic, Locust
