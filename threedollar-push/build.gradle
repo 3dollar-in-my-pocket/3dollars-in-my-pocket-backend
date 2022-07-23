@@ -33,6 +33,8 @@ jib {
         jvmFlags = [
             "-server",
             "-XX:+UseG1GC",
+            "-Xms128M",
+            "-Xmx128M",
             "-Duser.timezone=Asia/Seoul"
         ]
         ports = ["5200"]

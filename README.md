@@ -46,6 +46,10 @@
 
 ![img.png](docs/3dollars-modules-20220707.png)
 
+
+### 더 많은 내용은...
+- [Resume 링크](https://will-portfolio.notion.site/Resume-4361d1ea1c3c4a0fad0905a6842c6b44)의 **[Side Projects -> 가슴속 3천원]** 내용을 참고 부탁드립니다.
+
 ## Developers & Contacts
 
 - will.seungho@gmail.com (백엔드 개발자)
