@@ -707,6 +707,39 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             );
         }
 
+        @DisplayName("v3.0.6 버그 수정")
+        @Test
+        void 가게_상세_조회시_한달간의_방문기록_정보가_회원탈퇴한_유저의_경우() throws Exception {
+            // given
+            long notFoundUserId = -1L;
+
+            LocalDate startDate = LocalDate.of(2021, 10, 19);
+
+            Store store = StoreFixture.createWithDefaultMenu(user.getId(), "가게 이름");
+            storeRepository.save(store);
+
+            VisitHistory visitHistory = VisitHistoryFixture.create(store, notFoundUserId, VisitType.EXISTS, LocalDate.of(2021, 10, 19));
+            visitHistoryRepository.save(visitHistory);
+
+            RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testBuilder()
+                .storeId(store.getId())
+                .startDate(startDate)
+                .build();
+
+            // when
+            ApiResponse<StoreDetailResponse> response = storeRetrieveMockApiCaller.retrieveStoreDetailInfo(request, LocationValue.of(34.0, 126.0), token, 200);
+
+            // then
+            assertAll(
+                () -> assertThat(response.getData().getVisitHistories()).hasSize(1),
+                () -> assertThat(response.getData().getVisitHistories().get(0).getVisitHistoryId()).isEqualTo(visitHistory.getId()),
+                () -> assertThat(response.getData().getVisitHistories().get(0).getType()).isEqualTo(visitHistory.getType()),
+                () -> assertThat(response.getData().getVisitHistories().get(0).getUser().getUserId()).isNull(),
+                () -> assertThat(response.getData().getVisitHistories().get(0).getUser().getName()).isEqualTo("사라진 제보자"),
+                () -> assertThat(response.getData().getVisitHistories().get(0).getUser().getSocialType()).isNull()
+            );
+        }
+
         @DisplayName("앱 호환을 위해 기본적으로 startDate를 넘기지 않으면 지난 7일간의 방문 기록을 조회한다")
         @Test
         void 가게_상세_조회시_기본적으로_일주일간_방문_인증_기록들을_조회한다() throws Exception {
