@@ -40,7 +40,9 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
     public List<VisitHistoryWithUserProjection> findAllVisitWithUserByStoreIdAfterDate(Long storeId, LocalDate startDate) {
         return queryFactory.select(new QVisitHistoryWithUserProjection(
                 visitHistory,
-                user
+                user.id,
+                user.name,
+                user.socialInfo.socialType
             ))
             .from(visitHistory)
             .leftJoin(user).on(visitHistory.userId.eq(user.id))

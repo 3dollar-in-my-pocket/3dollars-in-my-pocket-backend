@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection;
 
-import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistory;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
@@ -33,16 +32,16 @@ public class VisitHistoryWithUserProjection {
     private final UserSocialType socialType;
 
     @QueryProjection
-    public VisitHistoryWithUserProjection(VisitHistory visitHistory, User user) {
+    public VisitHistoryWithUserProjection(VisitHistory visitHistory, Long userId, String userName, UserSocialType socialType) {
         this.visitHistoryId = visitHistory.getId();
         this.storeId = visitHistory.getStore().getId();
         this.type = visitHistory.getType();
         this.dateOfVisit = visitHistory.getDateOfVisit();
         this.visitCreatedAt = visitHistory.getCreatedAt();
         this.visitUpdatedAt = visitHistory.getUpdatedAt();
-        this.userId = user.getId();
-        this.userName = user.getName();
-        this.socialType = user.getSocialType();
+        this.userId = userId;
+        this.userName = userName;
+        this.socialType = socialType;
     }
 
 }
