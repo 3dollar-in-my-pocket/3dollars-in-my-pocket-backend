@@ -19,7 +19,7 @@ data class SendSinglePushRequest(
             return SendSinglePushRequest(
                 token = token,
                 title = messageTemplateType.title,
-                body = customBodyMessage ?: messageTemplateType.body,
+                body = customBodyMessage ?: messageTemplateType.defaultBody,
                 pushOptions = messageTemplateType.pushOptions,
             )
         }
