@@ -4,7 +4,6 @@ import com.depromeet.threedollar.common.type.FamousPlace;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType;
 import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAuthApiClient;
 import com.depromeet.threedollar.infrastructure.external.client.kakao.KaKaoAuthApiClient;
-import com.depromeet.threedollar.infrastructure.external.client.local.LocalBossApiWarmupApiClient;
 import com.depromeet.threedollar.infrastructure.external.client.local.LocalUserApiWarmUpApiClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +22,6 @@ public class ApplicationWarmingUpRunner {
     private static final int API_CALL_COUNT = 5;
 
     private final LocalUserApiWarmUpApiClient userApiWarmUpApiClient;
-    private final LocalBossApiWarmupApiClient bossApiWarmupApiClient;
     private final KaKaoAuthApiClient kaKaoAuthApiClient;
     private final GoogleAuthApiClient googleAuthApiClient;
 
@@ -33,7 +31,7 @@ public class ApplicationWarmingUpRunner {
             for (int i = 0; i < API_CALL_COUNT; i++) {
                 for (FamousPlace place : FamousPlace.values()) {
                     userApiWarmUpApiClient.retrieveNearUserStores(place.getLatitude(), place.getLongitude(), place.getLatitude(), place.getLongitude(), 2000);
-                    bossApiWarmupApiClient.retrieveNearBossStores(place.getLatitude(), place.getLongitude(), 2.0);
+                    userApiWarmUpApiClient.retrieveNearBossStores(place.getLatitude(), place.getLongitude(), 2.0);
                 }
                 userApiWarmUpApiClient.getMedals();
                 userApiWarmUpApiClient.getStoreMenuCategories();
@@ -44,7 +42,7 @@ public class ApplicationWarmingUpRunner {
                 kaKaoAuthApiClient.getProfileInfo("Dummy Kakao Auth Token");
                 googleAuthApiClient.getProfileInfo("Dummy Google Auth Token");
 
-                bossApiWarmupApiClient.retrieveBossStoreCategories();
+                userApiWarmUpApiClient.retrieveBossStoreCategories();
             }
         } catch (Exception ignored) {
         }
