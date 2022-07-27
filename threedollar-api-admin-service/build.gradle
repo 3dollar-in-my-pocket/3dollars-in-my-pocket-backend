@@ -17,6 +17,24 @@ jar {
     enabled = true
 }
 
+ext {
+    newRelicAgentDownloadUrl = "https://download.newrelic.com/newrelic/java-agent/newrelic-agent/current/newrelic-java.zip"
+    newRelicExtraDirectory = "${buildDir}/newrelic"
+    newRelicHostDirectory = "/usr/app/newrelic"
+    newRelicJavaAgentDirectory = "${newRelicHostDirectory}/newrelic/newrelic.jar"
+}
+
+task downloadNewRelicAgent(type: Download) {
+    src "${newRelicAgentDownloadUrl}"
+    dest "${buildDir}/newrelic.zip"
+}
+
+task extractNewRelicAgent(type: Copy, description: "Extract Newrelic agent") {
+    dependsOn downloadNewRelicAgent
+    from zipTree(downloadNewRelicAgent.dest)
+    into "${newRelicExtraDirectory}/${newRelicHostDirectory}"
+}
+
 jib {
     from {
         image = "adoptopenjdk/openjdk11:alpine-jre"
@@ -25,14 +43,22 @@ jib {
         image = System.getProperty("image", "")
         tags = [System.getProperty("tag", "latest")]
     }
+    extraDirectories.paths = [
+        "${newRelicExtraDirectory}"
+    ]
     container {
         jvmFlags = [
             "-server",
             "-XX:+UseG1GC",
             "-Xms128M",
             "-Xmx128M",
+            "-javaagent:" + newRelicJavaAgentDirectory,
             "-Duser.timezone=Asia/Seoul"
         ]
         ports = ["5100"]
     }
+}
+
+tasks.jib {
+    dependsOn extractNewRelicAgent
 }
