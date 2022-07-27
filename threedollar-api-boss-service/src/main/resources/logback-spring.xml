@@ -3,7 +3,7 @@
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
 
-    <springProfile name="local,local-docker,integration-test,staging">
+    <springProfile name="local,local-docker,integration-test">
         <logger name="com.depromeet.threedollar" level="DEBUG"/>
         <logger name="org.springframework.web" level="INFO"/>
         <logger name="org.springframework.cache" level="TRACE"/>
@@ -19,7 +19,7 @@
     </springProfile>
 
     <springProfile name="dev">
-        <logger name="com.depromeet.threedollar" level="DEBUG"/>
+        <logger name="com.depromeet.threedollar" level="INFO"/>
         <logger name="org.springframework.web" level="INFO"/>
         <logger name="com.amazonaws.util.EC2MetadataUtils" level="ERROR"/>
         <logger name="com.amazonaws.internal.InstanceMetadataServiceResourceFetcher" level="ERROR"/>
@@ -97,8 +97,8 @@
         </root>
     </springProfile>
 
-    <springProfile name="prod">
-        <logger name="com.depromeet.threedollar" level="DEBUG"/>
+    <springProfile name="prod,staging">
+        <logger name="com.depromeet.threedollar" level="INFO"/>
         <logger name="org.springframework.web" level="INFO"/>
         <logger name="com.amazonaws.util.EC2MetadataUtils" level="ERROR"/>
         <logger name="com.amazonaws.internal.InstanceMetadataServiceResourceFetcher" level="ERROR"/>
