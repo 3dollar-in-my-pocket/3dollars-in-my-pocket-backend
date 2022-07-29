@@ -8,10 +8,12 @@ object BossStoreCategoryFixture {
     fun create(
         title: String,
         sequencePriority: Int = 0,
+        imageUrl: String = "http://default-category-image.png",
     ): BossStoreCategory {
         return BossStoreCategory(
             name = title,
-            sequencePriority = sequencePriority
+            sequencePriority = sequencePriority,
+            imageUrl = imageUrl,
         )
     }
 

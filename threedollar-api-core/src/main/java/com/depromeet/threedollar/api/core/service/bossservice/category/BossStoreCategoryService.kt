@@ -25,6 +25,7 @@ class BossStoreCategoryService(
             BossStoreCategoryCacheModel.of(
                 categoryId = originCategory.id,
                 name = originCategory.name,
+                imageUrl = originCategory.imageUrl,
             )
         }
         bossStoreCategoryCacheRepository.setCache(bossStoreCacheModel)

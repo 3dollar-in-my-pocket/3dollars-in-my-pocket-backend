@@ -42,7 +42,7 @@ internal class BossStoreControllerTest(
     @Test
     fun `특정 사장님 가게를 조회할때, Redis에 영업 정보가 있으면 영업중인 가게로 표기된다`() {
         // given
-        val category = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1)
+        val category = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1, imageUrl = "https://icon1.png")
         bossStoreCategoryRepository.save(category)
 
         val bossStore = BossStoreFixture.create(

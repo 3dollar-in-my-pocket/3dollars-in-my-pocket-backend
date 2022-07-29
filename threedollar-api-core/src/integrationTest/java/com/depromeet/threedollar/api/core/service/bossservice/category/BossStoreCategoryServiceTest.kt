@@ -32,7 +32,7 @@ internal class BossStoreCategoryServiceTest(
     @Test
     fun `카테고리 ids에 해당하는 카테고리 목록을 조회할때, 카테고리 목록이 캐시에 없는 경우, MongoDB에서 가져온 데이터를 Redis에 저장한다`() {
         // given
-        val category = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1)
+        val category = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1, imageUrl = "https://icon.png")
         bossStoreCategoryRepository.save(category)
 
         // when

@@ -26,8 +26,8 @@ internal class BossStoreCategoryControllerTest(
     @Test
     fun `카테고리 목록이 캐시에 없는 경우, MongoDB에서 가져온 데이터를 반환한다`() {
         // given
-        val category1 = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1)
-        val category2 = BossStoreCategoryFixture.create(title = "중식", sequencePriority = 2)
+        val category1 = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1, imageUrl = "https://category-icon-1.png")
+        val category2 = BossStoreCategoryFixture.create(title = "중식", sequencePriority = 2, imageUrl = "https://category-icon-2.png")
         bossStoreCategoryRepository.saveAll(listOf(category1, category2))
 
         // when & then
@@ -52,8 +52,8 @@ internal class BossStoreCategoryControllerTest(
         // given
         bossStoreCategoryCacheRepository.setCache(emptyList())
 
-        val category1 = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1)
-        val category2 = BossStoreCategoryFixture.create(title = "중식", sequencePriority = 2)
+        val category1 = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1, imageUrl = "https://icon1.png")
+        val category2 = BossStoreCategoryFixture.create(title = "중식", sequencePriority = 2, imageUrl = "https://icon2.png")
         bossStoreCategoryRepository.saveAll(listOf(category1, category2))
 
         // when & then
@@ -70,8 +70,8 @@ internal class BossStoreCategoryControllerTest(
     @Test
     fun `카테고리 목록이 캐시에 있을 경우, 캐시에서 가져온 데이터로 반환한다 - NOT EMPTY LIST`() {
         // given
-        val category1 = BossStoreCategoryCacheModel.of(categoryId = "categoryId1", name = "한식")
-        val category2 = BossStoreCategoryCacheModel.of(categoryId = "categoryId1", name = "한식")
+        val category1 = BossStoreCategoryCacheModel.of(categoryId = "categoryId1", name = "한식", imageUrl = "https://icon10.png")
+        val category2 = BossStoreCategoryCacheModel.of(categoryId = "categoryId1", name = "한식", imageUrl = "https://icon11.png")
         bossStoreCategoryCacheRepository.setCache(listOf(category1, category2))
 
         // when & then

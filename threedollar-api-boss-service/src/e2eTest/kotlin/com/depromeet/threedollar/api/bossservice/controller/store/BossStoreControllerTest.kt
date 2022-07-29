@@ -107,7 +107,7 @@ internal class BossStoreControllerTest(
         @Test
         fun `사장님의 가게를 수정합니다 - PATCH`() {
             // given
-            val category = BossStoreCategoryFixture.create("중식", 1)
+            val category = BossStoreCategoryFixture.create(title = "중식", sequencePriority = 1, imageUrl = "https://icon.png")
             bossStoreCategoryRepository.save(category)
 
             val bossStore = BossStoreFixture.create(

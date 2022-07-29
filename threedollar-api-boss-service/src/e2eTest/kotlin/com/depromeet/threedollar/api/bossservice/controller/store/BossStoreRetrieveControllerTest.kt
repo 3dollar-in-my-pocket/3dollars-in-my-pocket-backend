@@ -51,7 +51,7 @@ internal class BossStoreRetrieveControllerTest(
         @Test
         fun `사장님 자신이 운영중인 가게를 조회합니다 오픈 정보가 레디스에 없으면 영업중이지 않은 가게로 표시된다`() {
             // given
-            val category = BossStoreCategoryFixture.create("한식", 1)
+            val category = BossStoreCategoryFixture.create(title="한식", sequencePriority = 1, imageUrl = "https://icon1.png")
             bossStoreCategoryRepository.save(category)
 
             val bossStore = BossStoreFixture.create(
@@ -115,7 +115,7 @@ internal class BossStoreRetrieveControllerTest(
         @Test
         fun `사장님 자신이 운영중인 가게를 조회합니다 위치정보가 없는경우 location이 null로_반환된다`() {
             // given
-            val category = BossStoreCategoryFixture.create("한식", 1)
+            val category = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1, imageUrl = "https://icon1.png")
             bossStoreCategoryRepository.save(category)
 
             val bossStore = BossStoreFixture.create(
@@ -195,7 +195,7 @@ internal class BossStoreRetrieveControllerTest(
         @Test
         fun `특정 가게를 조회합니다 오픈 정보가 레디스에 저장되어 있으면 영업중인 가게로 표시된다`() {
             // given
-            val category = BossStoreCategoryFixture.create("한식", 1)
+            val category = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1, imageUrl = "https://icon1.png")
             bossStoreCategoryRepository.save(category)
 
             val bossStore = BossStoreFixture.create(
@@ -265,7 +265,7 @@ internal class BossStoreRetrieveControllerTest(
         @Test
         fun `특정 가게를 조회합니다 위치정보가 없는경우 위치정보가 null로 반환된다`() {
             // given
-            val category = BossStoreCategoryFixture.create("한식", 1)
+            val category = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1, imageUrl = "https://icon1.png")
             bossStoreCategoryRepository.save(category)
 
             val bossStore = BossStoreFixture.create(
