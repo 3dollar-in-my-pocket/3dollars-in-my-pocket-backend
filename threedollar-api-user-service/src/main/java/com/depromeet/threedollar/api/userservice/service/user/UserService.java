@@ -9,6 +9,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserReposito
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.WithdrawalUser;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.WithdrawalUserRepository;
 import com.depromeet.threedollar.domain.rds.event.userservice.user.NewUserCreatedEvent;
+import com.depromeet.threedollar.domain.rds.event.userservice.user.UserSignOutedEvent;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.exception.LockAcquisitionException;
 import org.springframework.context.ApplicationEventPublisher;
@@ -31,7 +32,7 @@ public class UserService {
         UserServiceHelper.validateNotExistsUser(userRepository, request.getSocialId(), request.getSocialType());
         UserServiceHelper.validateNotExistsUserName(userRepository, request.getName());
         User user = userRepository.save(request.toEntity());
-        eventPublisher.publishEvent(NewUserCreatedEvent.of(user.getId()));
+        eventPublisher.publishEvent(NewUserCreatedEvent.of(user));
         return user.getId();
     }
 
@@ -59,6 +60,8 @@ public class UserService {
         User user = UserServiceHelper.findUserById(userRepository, userId);
         withdrawalUserRepository.save(WithdrawalUser.newInstance(user));
         userRepository.delete(user);
+
+        eventPublisher.publishEvent(UserSignOutedEvent.of(user));
     }
 
 }

@@ -8,17 +8,17 @@ import lombok.ToString;
 
 @ToString
 @Getter
-public class NewUserCreatedEvent {
+public class UserSignOutedEvent {
 
     private final Long userId;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private NewUserCreatedEvent(Long userId) {
+    private UserSignOutedEvent(Long userId) {
         this.userId = userId;
     }
 
-    public static NewUserCreatedEvent of(User user) {
-        return NewUserCreatedEvent.builder()
+    public static UserSignOutedEvent of(User user) {
+        return UserSignOutedEvent.builder()
             .userId(user.getId())
             .build();
     }

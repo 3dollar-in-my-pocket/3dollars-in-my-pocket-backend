@@ -3,7 +3,9 @@ package com.depromeet.threedollar.domain.rds.event.userservice.review;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
+@ToString
 @Getter
 public class ReviewChangedEvent {
 

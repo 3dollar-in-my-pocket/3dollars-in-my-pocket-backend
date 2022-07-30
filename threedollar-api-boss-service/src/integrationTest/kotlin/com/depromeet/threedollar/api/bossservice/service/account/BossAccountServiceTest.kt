@@ -11,6 +11,9 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAcc
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccount
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccountRepository
+import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.AccountType
+import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.DeviceFixture
+import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.DeviceRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.AfterEach
@@ -22,6 +25,7 @@ internal class BossAccountServiceTest(
     private val bossAccountService: BossAccountService,
     private val bossAccountRepository: BossAccountRepository,
     private val bossWithdrawalAccountRepository: BossWithdrawalAccountRepository,
+    private val deviceRepository: DeviceRepository,
 ) : IntegrationTest() {
 
     @AfterEach
@@ -135,6 +139,32 @@ internal class BossAccountServiceTest(
                     assertThat(it.backupInfo.bossCreatedAt).isEqualToIgnoringNanos(bossAccount.createdAt)
                 }
             })
+        }
+
+        @Test
+        fun `사장님 회원탈퇴시, 디바이스도 같이 삭제한다`() {
+            // given
+            val bossAccount = BossAccountFixture.create(
+                socialId = "auth-social-id",
+                socialType = BossAccountSocialType.APPLE,
+                name = "강승호",
+                businessNumber = BusinessNumber.of("000-00-00000"),
+            )
+            bossAccountRepository.save(bossAccount)
+
+            val device = DeviceFixture.create(
+                accountId = bossAccount.id,
+                accountType = AccountType.BOSS_ACCOUNT,
+                pushToken = "pushToken"
+            )
+            deviceRepository.save(device)
+
+            // when
+            bossAccountService.signOut(bossAccount.id)
+
+            // then
+            val devices = deviceRepository.findAll()
+            assertThat(devices).isEmpty()
         }
 
     }

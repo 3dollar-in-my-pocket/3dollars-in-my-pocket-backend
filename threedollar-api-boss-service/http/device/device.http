@@ -2,7 +2,7 @@
 PUT {{boss-api}}/v1/device
 Content-Type: application/json
 Authorization: Bearer {{BOSS_AUTHORIZATION}}
-User-Agent: 1.0.0 (com.macgongmon.-dollar-in-my-pocket-manager-dev; build:7; iOS 15.5.0)
+User-Agent: 2.3.0 (com.macgongmon.-dollar-in-my-pocket-manager-dev; build:7; iOS 15.5.0)
 
 {
     "pushToken": "cnkMARPadUBEvTli2d3CKi:APA91bEU_WMVJ-b_Wcw3yLpDENpV-HuFH2QcdMUMJjGfaRIpj_NtDl7wW-kCeoSz6BpRMW0tPNfZ7Ug8VJC3XOu3PexbnUVKoh6-j0dPA320-T6Ywd3KLi7URb624IiKrNeB8kngiqLt",

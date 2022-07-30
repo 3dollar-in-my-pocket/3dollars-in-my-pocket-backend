@@ -6,10 +6,12 @@ import com.depromeet.threedollar.domain.mongo.TestFixture
 @TestFixture
 object DeviceFixture {
 
+    @JvmOverloads
+    @JvmStatic
     fun create(
         accountId: String,
-        pushToken: String,
         accountType: AccountType,
+        pushToken: String,
         pushPlatformType: PushPlatformType = PushPlatformType.FCM,
         osPlatformType: OsPlatformType = OsPlatformType.IPHONE,
         appVersion: String? = "1.0.0",

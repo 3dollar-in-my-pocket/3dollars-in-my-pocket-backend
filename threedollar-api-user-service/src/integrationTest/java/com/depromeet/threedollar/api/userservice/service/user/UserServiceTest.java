@@ -7,6 +7,10 @@ import com.depromeet.threedollar.api.userservice.service.user.dto.request.Update
 import com.depromeet.threedollar.api.userservice.service.user.support.UserAssertions;
 import com.depromeet.threedollar.common.exception.model.ConflictException;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
+import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.AccountType;
+import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.Device;
+import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.DeviceFixture;
+import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.DeviceRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
@@ -36,6 +40,9 @@ class UserServiceTest extends IntegrationTest {
 
     @Autowired
     private WithdrawalUserRepository withdrawalUserRepository;
+
+    @Autowired
+    private DeviceRepository deviceRepository;
 
     @Nested
     class AddUserTest {
@@ -262,6 +269,23 @@ class UserServiceTest extends IntegrationTest {
                 () -> UserAssertions.assertWithdrawalUser(withdrawalUsers.get(0), withdrawalUser.getUserId(), withdrawalUser.getName(), withdrawalUser.getSocialInfo()),
                 () -> UserAssertions.assertWithdrawalUser(withdrawalUsers.get(1), user.getId(), user.getName(), user.getSocialInfo())
             );
+        }
+
+        @Test
+        void 회원탈퇴시_연결된_디바이스도_삭제된다() {
+            // given
+            User user = UserFixture.create("social-id-google", UserSocialType.GOOGLE, "닉네임");
+            userRepository.save(user);
+
+            Device device = DeviceFixture.create(String.valueOf(user.getId()), AccountType.USER_ACCOUNT, "pushToken");
+            deviceRepository.save(device);
+
+            // when
+            userService.signOut(user.getId());
+
+            // then
+            List<Device> devices = deviceRepository.findAll();
+            assertThat(devices).isEmpty();
         }
 
     }
