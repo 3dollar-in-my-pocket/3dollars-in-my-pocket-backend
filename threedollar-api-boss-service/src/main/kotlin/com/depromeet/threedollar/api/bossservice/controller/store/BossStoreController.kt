@@ -5,7 +5,7 @@ import com.depromeet.threedollar.api.bossservice.config.resolver.BossId
 import com.depromeet.threedollar.api.bossservice.service.store.BossStoreService
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.PatchBossStoreInfoRequest
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.UpdateBossStoreInfoRequest
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable

@@ -4,10 +4,10 @@ import com.depromeet.threedollar.api.bossservice.config.interceptor.Auth
 import com.depromeet.threedollar.api.bossservice.config.resolver.BossId
 import com.depromeet.threedollar.api.bossservice.config.session.SessionConstants
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.response.LoginResponse
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryServiceHelper
-import com.depromeet.threedollar.api.core.service.bossservice.feedback.BossStoreFeedbackService
-import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.request.AddBossStoreFeedbackRequest
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
+import com.depromeet.threedollar.api.core.service.service.bossservice.category.BossStoreCategoryServiceHelper
+import com.depromeet.threedollar.api.core.service.service.bossservice.feedback.BossStoreFeedbackService
+import com.depromeet.threedollar.api.core.service.service.bossservice.feedback.dto.request.AddBossStoreFeedbackRequest
 import com.depromeet.threedollar.common.exception.model.ConflictException
 import com.depromeet.threedollar.common.exception.model.InternalServerException
 import com.depromeet.threedollar.common.exception.model.NotFoundException

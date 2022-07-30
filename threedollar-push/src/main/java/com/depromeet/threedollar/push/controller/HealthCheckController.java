@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.push.controller;
 
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse;
 import com.depromeet.threedollar.common.constants.VersionConstants;
-import com.depromeet.threedollar.push.common.dto.response.ApiResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.adminservice.service.commonservice.faq.dto.response
 
-import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
-import com.depromeet.threedollar.api.core.mapper.commonservice.faq.dto.response.FaqCategoryResponse
+import com.depromeet.threedollar.api.core.service.common.dto.response.AuditingTimeResponse
+import com.depromeet.threedollar.api.core.service.mapper.commonservice.faq.dto.response.FaqCategoryResponse
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.Faq
 

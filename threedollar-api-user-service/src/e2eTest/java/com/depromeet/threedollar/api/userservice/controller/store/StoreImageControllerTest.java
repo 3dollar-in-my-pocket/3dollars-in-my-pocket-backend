@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.userservice.controller.store;
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse;
 import com.depromeet.threedollar.api.userservice.SetupStoreControllerTest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoreImageResponse;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImage;

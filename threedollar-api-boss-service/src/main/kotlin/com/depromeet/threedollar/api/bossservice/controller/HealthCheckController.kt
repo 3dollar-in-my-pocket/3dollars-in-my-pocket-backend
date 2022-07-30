@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.bossservice.controller
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import com.depromeet.threedollar.common.constants.VersionConstants
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.GetMapping

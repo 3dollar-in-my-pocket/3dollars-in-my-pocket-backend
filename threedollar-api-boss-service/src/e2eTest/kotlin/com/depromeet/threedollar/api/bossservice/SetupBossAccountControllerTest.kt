@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.bossservice
 
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.response.LoginResponse
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountRepository
 import com.fasterxml.jackson.core.type.TypeReference
 import org.junit.jupiter.api.BeforeEach

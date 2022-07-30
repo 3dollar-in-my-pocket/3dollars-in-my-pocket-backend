@@ -4,8 +4,8 @@ import com.depromeet.threedollar.api.adminservice.config.interceptor.Auth
 import com.depromeet.threedollar.api.adminservice.service.userservice.medal.AdminMedalService
 import com.depromeet.threedollar.api.adminservice.service.userservice.medal.dto.request.AddMedalRequest
 import com.depromeet.threedollar.api.adminservice.service.userservice.medal.dto.request.UpdateMedalRequest
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.service.userservice.medal.dto.response.MedalResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
+import com.depromeet.threedollar.api.core.service.service.userservice.medal.dto.response.MedalResponse
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable

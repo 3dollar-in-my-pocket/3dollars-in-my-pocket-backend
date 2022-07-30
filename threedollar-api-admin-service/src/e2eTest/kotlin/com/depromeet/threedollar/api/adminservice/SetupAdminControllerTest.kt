@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.adminservice
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminRepository
 import com.fasterxml.jackson.core.type.TypeReference
 import org.junit.jupiter.api.BeforeEach

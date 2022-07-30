@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.bossservice.controller.push
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import com.depromeet.threedollar.infrastructure.sqs.common.type.TopicType
 import com.depromeet.threedollar.infrastructure.sqs.provider.MessageSendProvider
 import com.depromeet.threedollar.infrastructure.sqs.provider.dto.request.SendBulkPushRequest

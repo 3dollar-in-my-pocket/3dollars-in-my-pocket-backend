@@ -5,7 +5,7 @@ import com.depromeet.threedollar.api.adminservice.config.session.SessionConstant
 import com.depromeet.threedollar.api.adminservice.service.commonservice.auth.AuthService
 import com.depromeet.threedollar.api.adminservice.service.commonservice.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.auth.dto.response.LoginResponse
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody

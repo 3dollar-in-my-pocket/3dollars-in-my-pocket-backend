@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.bossservice.controller.device
 
 import com.depromeet.threedollar.api.bossservice.SetupBossAccountControllerTest
 import com.depromeet.threedollar.api.bossservice.controller.device.dto.request.UpsertBossDeviceRequest
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import com.depromeet.threedollar.common.type.OsPlatformType
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.AccountType
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.Device

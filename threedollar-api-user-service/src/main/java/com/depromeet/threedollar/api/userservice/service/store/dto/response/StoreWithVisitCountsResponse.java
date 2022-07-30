@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.userservice.service.store.dto.response;
 
-import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
+import com.depromeet.threedollar.api.core.service.common.dto.response.AuditingTimeResponse;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.response.VisitHistoryCountsResponse;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreWithMenuProjection;

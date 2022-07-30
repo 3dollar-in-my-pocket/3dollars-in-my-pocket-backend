@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.userservice.controller.advertisement
 
-import com.depromeet.threedollar.api.core.service.commonservice.advertisement.dto.response.AdvertisementResponse
+import com.depromeet.threedollar.api.core.service.service.commonservice.advertisement.dto.response.AdvertisementResponse
 import com.depromeet.threedollar.api.userservice.ControllerTest
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementFixture

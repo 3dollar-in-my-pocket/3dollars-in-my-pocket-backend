@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.adminservice.controller
 
 import com.depromeet.threedollar.api.adminservice.config.session.SessionConstants.ADMIN_ID
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.Admin
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.AdminRepository
 import org.springframework.context.annotation.Profile

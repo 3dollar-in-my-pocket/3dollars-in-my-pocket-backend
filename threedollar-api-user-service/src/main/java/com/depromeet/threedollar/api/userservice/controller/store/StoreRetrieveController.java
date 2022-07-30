@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.api.userservice.controller.store;
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.api.core.config.resolver.DeviceLocation;
-import com.depromeet.threedollar.api.core.config.resolver.MapLocation;
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse;
+import com.depromeet.threedollar.api.core.service.config.resolver.DeviceLocation;
+import com.depromeet.threedollar.api.core.service.config.resolver.MapLocation;
 import com.depromeet.threedollar.api.userservice.config.interceptor.Auth;
 import com.depromeet.threedollar.api.userservice.config.resolver.UserId;
 import com.depromeet.threedollar.api.userservice.service.store.StoreRetrieveService;

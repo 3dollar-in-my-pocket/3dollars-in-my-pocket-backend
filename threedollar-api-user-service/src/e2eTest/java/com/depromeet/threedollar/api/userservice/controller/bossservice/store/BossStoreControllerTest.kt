@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.api.userservice.controller.bossservice.store
 
-import com.depromeet.threedollar.api.core.service.bossservice.category.dto.response.BossStoreCategoryResponse
-import com.depromeet.threedollar.api.core.service.bossservice.store.dto.response.BossStoreAppearanceDayResponse
-import com.depromeet.threedollar.api.core.service.bossservice.store.dto.response.BossStoreMenuResponse
+import com.depromeet.threedollar.api.core.service.service.bossservice.category.dto.response.BossStoreCategoryResponse
+import com.depromeet.threedollar.api.core.service.service.bossservice.store.dto.response.BossStoreAppearanceDayResponse
+import com.depromeet.threedollar.api.core.service.service.bossservice.store.dto.response.BossStoreMenuResponse
 import com.depromeet.threedollar.api.userservice.SetupUserControllerTest
 import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.common.type.DayOfTheWeek

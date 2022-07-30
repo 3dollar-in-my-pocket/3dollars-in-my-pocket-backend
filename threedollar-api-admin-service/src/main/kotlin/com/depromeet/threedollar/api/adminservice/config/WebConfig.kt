@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.adminservice.config
 
 import com.depromeet.threedollar.api.adminservice.config.interceptor.AuthInterceptor
 import com.depromeet.threedollar.api.adminservice.config.resolver.AccountIdResolver
-import com.depromeet.threedollar.api.core.config.converter.DecodeIdConverter
+import com.depromeet.threedollar.api.core.common.config.converter.DecodeIdConverter
 import org.springframework.context.MessageSource
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

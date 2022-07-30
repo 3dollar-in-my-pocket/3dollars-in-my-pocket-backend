@@ -1,0 +1,27 @@
+dependencies {
+    api project(":threedollar-domain")
+
+    api project(":threedollar-infrastructure:threedollar-external")
+    api project(":threedollar-infrastructure:threedollar-s3")
+    api project(":threedollar-infrastructure:threedollar-sqs")
+
+    api project(":threedollar-api-core:threedollar-api-core-common")
+
+    // Redis Session
+    api("org.springframework.session:spring-session-data-redis")
+
+    // Caffeine Cache
+    implementation("com.github.ben-manes.caffeine:caffeine")
+
+    // TestFixtures
+    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-mongo")))
+    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-redis")))
+    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-rds")))
+}
+
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+}

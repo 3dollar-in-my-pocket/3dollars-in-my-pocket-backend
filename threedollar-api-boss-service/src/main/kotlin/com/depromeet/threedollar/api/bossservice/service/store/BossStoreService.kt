@@ -2,8 +2,8 @@ package com.depromeet.threedollar.api.bossservice.service.store
 
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.PatchBossStoreInfoRequest
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.UpdateBossStoreInfoRequest
-import com.depromeet.threedollar.api.core.service.bossservice.category.BossStoreCategoryServiceHelper
-import com.depromeet.threedollar.api.core.service.bossservice.store.BossStoreServiceHelper
+import com.depromeet.threedollar.api.core.service.service.bossservice.category.BossStoreCategoryServiceHelper
+import com.depromeet.threedollar.api.core.service.service.bossservice.store.BossStoreServiceHelper
 import com.depromeet.threedollar.domain.mongo.config.mongo.MongoTransactional
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossDeletedStore

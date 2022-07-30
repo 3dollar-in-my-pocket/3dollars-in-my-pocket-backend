@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.userservice.service.store.dto.response;
 
-import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse;
+import com.depromeet.threedollar.api.core.service.common.dto.response.AuditingTimeResponse;
 import com.depromeet.threedollar.api.userservice.service.review.dto.response.ReviewWithUserResponse;
 import com.depromeet.threedollar.api.userservice.service.user.dto.response.UserInfoResponse;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.response.VisitHistoryCountsResponse;

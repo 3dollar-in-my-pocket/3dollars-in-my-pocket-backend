@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.bossservice.controller
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import com.depromeet.threedollar.common.model.EnumValue
 import com.depromeet.threedollar.common.utils.EnumMapper
 import io.swagger.annotations.ApiOperation

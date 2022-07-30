@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.adminservice.service.userservice.medal
 
 import com.depromeet.threedollar.api.adminservice.service.userservice.medal.dto.request.AddMedalRequest
 import com.depromeet.threedollar.api.adminservice.service.userservice.medal.dto.request.UpdateMedalRequest
-import com.depromeet.threedollar.api.core.service.userservice.medal.dto.response.MedalResponse
+import com.depromeet.threedollar.api.core.service.service.userservice.medal.dto.response.MedalResponse
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.type.CacheType.CacheKey.MEDALS

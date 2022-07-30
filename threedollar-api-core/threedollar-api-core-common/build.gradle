@@ -1,0 +1,19 @@
+dependencies {
+    implementation project(":threedollar-infrastructure:threedollar-monitoring")
+
+    api project(":threedollar-common")
+
+    // Spring MVC
+    api("org.springframework.boot:spring-boot-starter-web")
+
+    // Swagger
+    api("io.springfox:springfox-boot-starter:${swaggerVersion}")
+    api("io.springfox:springfox-swagger-ui:${swaggerVersion}")
+}
+
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+}

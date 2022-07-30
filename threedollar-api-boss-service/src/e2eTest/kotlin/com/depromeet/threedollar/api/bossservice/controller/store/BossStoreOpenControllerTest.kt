@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.bossservice.controller.store
 
 import com.depromeet.threedollar.api.bossservice.SetupBossAccountControllerTest
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryFixture

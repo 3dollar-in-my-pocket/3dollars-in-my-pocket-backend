@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.api.adminservice.controller.bossservice.feedback
 
 import com.depromeet.threedollar.api.adminservice.config.interceptor.Auth
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.response.BossStoreFeedbackTypeResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
+import com.depromeet.threedollar.api.core.service.service.bossservice.feedback.dto.response.BossStoreFeedbackTypeResponse
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.GetMapping

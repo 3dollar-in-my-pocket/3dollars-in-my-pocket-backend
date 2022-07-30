@@ -1,3 +1,9 @@
+dependencies {
+    api project(":threedollar-domain:threedollar-domain-rds")
+    api project(":threedollar-domain:threedollar-domain-mongo")
+    api project(":threedollar-domain:threedollar-domain-redis")
+}
+
 bootJar {
     enabled = false
 }

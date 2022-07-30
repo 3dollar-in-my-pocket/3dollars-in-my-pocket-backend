@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.userservice.controller.store;
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
-import com.depromeet.threedollar.api.core.mapper.userservice.menu.MenuCategoryResponse;
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse;
+import com.depromeet.threedollar.api.core.service.mapper.userservice.menu.dto.response.MenuCategoryResponse;
 import com.depromeet.threedollar.api.userservice.ControllerTest;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.fasterxml.jackson.core.type.TypeReference;

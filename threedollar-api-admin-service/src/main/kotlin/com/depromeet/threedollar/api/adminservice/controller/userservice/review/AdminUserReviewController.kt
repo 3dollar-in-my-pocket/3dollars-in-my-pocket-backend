@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.adminservice.controller.userservice.review
 import com.depromeet.threedollar.api.adminservice.config.interceptor.Auth
 import com.depromeet.threedollar.api.adminservice.service.userservice.review.AdminUserReviewService
 import com.depromeet.threedollar.api.adminservice.service.userservice.review.dto.response.ReviewInfoResponse
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping

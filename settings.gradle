@@ -3,16 +3,17 @@ rootProject.name = 'threedollar'
 include 'threedollar-api-admin-service'
 include 'threedollar-api-user-service'
 include 'threedollar-api-boss-service'
-include 'threedollar-api-core'
-
 include 'threedollar-push'
 include 'threedollar-batch'
+
+include 'threedollar-api-core'
+include 'threedollar-api-core:threedollar-api-core-common'
+include 'threedollar-api-core:threedollar-api-core-service'
+include 'threedollar-api-core:threedollar-api-core-listener'
 
 include 'threedollar-domain:threedollar-domain-mongo'
 include 'threedollar-domain:threedollar-domain-redis'
 include 'threedollar-domain:threedollar-domain-rds'
-
-include 'threedollar-common'
 
 include 'threedollar-infrastructure:threedollar-s3'
 include 'threedollar-infrastructure:threedollar-sqs'
@@ -20,3 +21,4 @@ include 'threedollar-infrastructure:threedollar-firebase'
 include 'threedollar-infrastructure:threedollar-monitoring'
 include 'threedollar-infrastructure:threedollar-external'
 
+include 'threedollar-common'

@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.adminservice.controller.commonservice.upload
 
 import com.depromeet.threedollar.api.adminservice.config.interceptor.Auth
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.infrastructure.s3.common.type.FileType
 import com.depromeet.threedollar.infrastructure.s3.provider.UploadProvider

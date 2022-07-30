@@ -1,5 +1,5 @@
 dependencies {
-    implementation project(":threedollar-common")
+    api project(":threedollar-common")
 
     // Spring Cloud OpenFeign
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")

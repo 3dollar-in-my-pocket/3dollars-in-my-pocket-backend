@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.bossservice.service.store
 
-import com.depromeet.threedollar.api.core.service.bossservice.store.BossStoreServiceHelper
+import com.depromeet.threedollar.api.core.service.service.bossservice.store.BossStoreServiceHelper
 import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.model.LocationValue

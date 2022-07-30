@@ -3,8 +3,8 @@ package com.depromeet.threedollar.api.adminservice.controller.userservice.medal
 import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
 import com.depromeet.threedollar.api.adminservice.service.userservice.medal.dto.request.AddMedalRequest
 import com.depromeet.threedollar.api.adminservice.service.userservice.medal.dto.request.UpdateMedalRequest
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.service.userservice.medal.dto.response.MedalResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
+import com.depromeet.threedollar.api.core.service.service.userservice.medal.dto.response.MedalResponse
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalAcquisitionConditionType
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalRepository

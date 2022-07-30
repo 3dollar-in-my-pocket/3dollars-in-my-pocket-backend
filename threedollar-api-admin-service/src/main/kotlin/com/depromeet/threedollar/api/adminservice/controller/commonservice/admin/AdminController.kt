@@ -8,7 +8,7 @@ import com.depromeet.threedollar.api.adminservice.service.commonservice.admin.dt
 import com.depromeet.threedollar.api.adminservice.service.commonservice.admin.dto.request.UpdateMyAdminInfoRequest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.admin.dto.response.AdminInfoResponse
 import com.depromeet.threedollar.api.adminservice.service.commonservice.admin.dto.response.AdminListInfoWithPagingResponse
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping

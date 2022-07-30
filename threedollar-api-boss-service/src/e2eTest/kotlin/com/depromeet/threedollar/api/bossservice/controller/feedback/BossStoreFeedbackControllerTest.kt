@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.bossservice.controller.feedback
 
 import com.depromeet.threedollar.api.bossservice.SetupBossAccountControllerTest
-import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.response.BossStoreFeedbackCountResponse
-import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.response.BossStoreFeedbackGroupingDateResponse
-import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.response.BossStoreFeedbackTypeResponse
+import com.depromeet.threedollar.api.core.service.service.bossservice.feedback.dto.response.BossStoreFeedbackCountResponse
+import com.depromeet.threedollar.api.core.service.service.bossservice.feedback.dto.response.BossStoreFeedbackGroupingDateResponse
+import com.depromeet.threedollar.api.core.service.service.bossservice.feedback.dto.response.BossStoreFeedbackTypeResponse
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedbackFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedbackRepository

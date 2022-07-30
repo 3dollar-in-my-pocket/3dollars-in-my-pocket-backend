@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.userservice.controller.bossservice.category
 
-import com.depromeet.threedollar.api.core.service.bossservice.category.dto.response.BossStoreCategoryResponse
+import com.depromeet.threedollar.api.core.service.service.bossservice.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.api.userservice.ControllerTest
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository

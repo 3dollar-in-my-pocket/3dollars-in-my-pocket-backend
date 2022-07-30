@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.userservice.controller.faq.support;
 
-import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.response.FaqResponse;
+import com.depromeet.threedollar.api.core.service.service.commonservice.faq.dto.response.FaqResponse;
 import com.depromeet.threedollar.domain.rds.domain.TestAssertions;
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory;
 import lombok.AccessLevel;

@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.userservice.controller.advertisement
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.service.commonservice.advertisement.AdvertisementService
-import com.depromeet.threedollar.api.core.service.commonservice.advertisement.dto.request.RetrieveAdvertisementsRequest
-import com.depromeet.threedollar.api.core.service.commonservice.advertisement.dto.response.AdvertisementResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
+import com.depromeet.threedollar.api.core.service.service.commonservice.advertisement.AdvertisementService
+import com.depromeet.threedollar.api.core.service.service.commonservice.advertisement.dto.request.RetrieveAdvertisementsRequest
+import com.depromeet.threedollar.api.core.service.service.commonservice.advertisement.dto.response.AdvertisementResponse
 import com.depromeet.threedollar.common.type.ApplicationType
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.GetMapping

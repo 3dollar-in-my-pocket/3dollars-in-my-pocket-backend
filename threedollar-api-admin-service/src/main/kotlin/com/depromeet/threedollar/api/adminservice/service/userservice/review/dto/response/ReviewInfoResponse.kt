@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.adminservice.service.userservice.review.dto.response
 
 import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.response.StoreInfoResponse
-import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
+import com.depromeet.threedollar.api.core.service.common.dto.response.AuditingTimeResponse
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User

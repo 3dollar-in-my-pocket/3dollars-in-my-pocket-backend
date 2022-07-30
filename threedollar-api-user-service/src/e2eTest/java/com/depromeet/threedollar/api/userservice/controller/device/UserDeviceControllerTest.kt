@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.userservice.controller.device
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import com.depromeet.threedollar.api.userservice.SetupUserControllerTest
 import com.depromeet.threedollar.api.userservice.controller.device.dto.request.UpsertUserDeviceRequest
 import com.depromeet.threedollar.common.type.OsPlatformType

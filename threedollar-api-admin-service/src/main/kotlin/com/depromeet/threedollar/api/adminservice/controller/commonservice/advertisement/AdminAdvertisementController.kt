@@ -6,7 +6,7 @@ import com.depromeet.threedollar.api.adminservice.service.commonservice.advertis
 import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.request.RetrieveAdvertisementsRequest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.request.UpdateAdvertisementRequest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.response.AdvertisementsWithPagingResponse
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping

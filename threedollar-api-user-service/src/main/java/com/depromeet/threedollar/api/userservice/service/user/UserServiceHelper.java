@@ -9,9 +9,9 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
+import static com.depromeet.threedollar.common.exception.type.ErrorCode.E404_NOT_EXISTS_USER;
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.E409_DUPLICATE_NICKNAME;
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.E409_DUPLICATE_USER;
-import static com.depromeet.threedollar.common.exception.type.ErrorCode.E404_NOT_EXISTS_USER;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserServiceHelper {

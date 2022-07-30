@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.bossservice.controller.category
 
 import com.depromeet.threedollar.api.bossservice.SetupControllerTest
-import com.depromeet.threedollar.api.core.service.bossservice.category.dto.response.BossStoreCategoryResponse
+import com.depromeet.threedollar.api.core.service.service.bossservice.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossStoreCategoryCacheModel

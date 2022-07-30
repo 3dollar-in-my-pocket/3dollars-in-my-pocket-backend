@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.adminservice.controller.userservice.review
 
 import com.depromeet.threedollar.api.adminservice.SetupUserStoreControllerTest
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository

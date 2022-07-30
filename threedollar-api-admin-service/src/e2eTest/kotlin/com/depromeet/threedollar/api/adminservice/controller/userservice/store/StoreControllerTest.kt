@@ -4,7 +4,7 @@ import com.depromeet.threedollar.api.adminservice.SetupUserControllerTest
 import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.response.ReportedStoreInfoResponse
 import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.response.StoreInfoResponse
 import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.response.StoreInfosWithCursorResponse
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.DeleteReasonType
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreDeleteRequest
@@ -42,19 +42,19 @@ internal class StoreControllerTest(
             storeDeleteRequestRepository.saveAll(
                 listOf(
                     // store1: 4개의 삭제 요청
-                    StoreDeleteRequest.of(store1, user.id, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store1, user.id, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store1, user.id, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store1, user.id, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store1, 1000L, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store1, 1001L, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store1, 1002L, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store1, 1003L, DeleteReasonType.OVERLAPSTORE),
 
                     // store2: 3개의 삭제 요청
-                    StoreDeleteRequest.of(store2, user.id, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store2, user.id, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store2, user.id, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store2, 1000L, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store2, 1001L, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store2, 1002L, DeleteReasonType.OVERLAPSTORE),
 
                     // store4: 2개의 삭제 요청
-                    StoreDeleteRequest.of(store4, user.id, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store4, user.id, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store4, 1000L, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store4, 1001L, DeleteReasonType.OVERLAPSTORE),
                 )
             )
 
@@ -94,19 +94,19 @@ internal class StoreControllerTest(
             storeDeleteRequestRepository.saveAll(
                 listOf(
                     // store1: 4개의 삭제 요청
-                    StoreDeleteRequest.of(store1, user.id, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store1, user.id, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store1, user.id, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store1, user.id, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store1, 1000L, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store1, 1001L, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store1, 1002L, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store1, 1003L, DeleteReasonType.OVERLAPSTORE),
 
                     // store2: 3개의 삭제 요청
-                    StoreDeleteRequest.of(store2, user.id, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store2, user.id, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store2, user.id, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store2, 1000L, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store2, 1001L, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store2, 1002L, DeleteReasonType.OVERLAPSTORE),
 
                     // store4: 2개의 삭제 요청
-                    StoreDeleteRequest.of(store4, user.id, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store4, user.id, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store4, 1000L, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store4, 1001L, DeleteReasonType.OVERLAPSTORE),
                 )
             )
 

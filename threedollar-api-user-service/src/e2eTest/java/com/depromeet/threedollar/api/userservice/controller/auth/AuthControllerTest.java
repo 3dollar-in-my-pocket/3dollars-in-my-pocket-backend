@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.api.userservice.controller.auth;
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse;
+import com.depromeet.threedollar.api.core.listener.listener.commonservice.device.DeviceEventListener;
 import com.depromeet.threedollar.api.userservice.SetupUserControllerTest;
-import com.depromeet.threedollar.api.core.listener.commonservice.device.DeviceEventListener;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.request.LoginRequest;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.response.LoginResponse;

@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.userservice.controller.user;
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse;
 import com.depromeet.threedollar.api.userservice.SetupUserControllerTest;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.CheckAvailableNameRequest;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.UpdateUserInfoRequest;

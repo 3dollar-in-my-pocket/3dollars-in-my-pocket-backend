@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.userservice.controller.visit;
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse;
 import com.depromeet.threedollar.api.userservice.SetupStoreControllerTest;
 import com.depromeet.threedollar.api.userservice.controller.store.support.StoreAssertions;
 import com.depromeet.threedollar.api.userservice.controller.visit.support.VisitHistoryAssertions;

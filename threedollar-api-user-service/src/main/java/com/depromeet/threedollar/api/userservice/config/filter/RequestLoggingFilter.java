@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.userservice.config.filter;
 
-import com.depromeet.threedollar.api.core.utils.HttpServletRequestUtils;
+import com.depromeet.threedollar.api.core.common.utils.HttpServletRequestUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.http.HttpStatus;

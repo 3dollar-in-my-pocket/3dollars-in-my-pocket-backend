@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.adminservice.config.filter
 
-import com.depromeet.threedollar.api.core.utils.HttpServletRequestUtils
+import com.depromeet.threedollar.api.core.common.utils.HttpServletRequestUtils
 import mu.KotlinLogging
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload
 import org.springframework.web.util.ContentCachingRequestWrapper

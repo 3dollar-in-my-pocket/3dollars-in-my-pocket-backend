@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.bossservice.controller.upload
 
 import com.depromeet.threedollar.api.bossservice.controller.upload.dto.response.BossImageUploadResponse
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.infrastructure.s3.common.type.FileType
 import com.depromeet.threedollar.infrastructure.s3.provider.UploadProvider

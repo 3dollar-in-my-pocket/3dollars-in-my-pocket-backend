@@ -1,5 +1,5 @@
 dependencies {
-    implementation project(":threedollar-common")
+    api project(":threedollar-common")
 
     // AWS SQS
     api("org.springframework.cloud:spring-cloud-aws-messaging:${springCloudAwsVersion}")

@@ -6,7 +6,7 @@ import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.
 import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.request.RetrieveReportedStoresRequest
 import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.response.ReportedStoreInfoResponse
 import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.response.StoreInfosWithCursorResponse
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping

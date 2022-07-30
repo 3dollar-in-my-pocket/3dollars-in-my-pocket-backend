@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.adminservice.service.userservice.review
 
 import com.depromeet.threedollar.api.adminservice.service.userservice.review.dto.response.ReviewInfoResponse
-import com.depromeet.threedollar.api.core.service.userservice.store.StoreRatingService
+import com.depromeet.threedollar.api.core.service.service.userservice.store.StoreRatingService
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review

@@ -1,9 +1,9 @@
 package com.depromeet.threedollar.api.bossservice.controller.store
 
 import com.depromeet.threedollar.api.bossservice.SetupBossAccountControllerTest
-import com.depromeet.threedollar.api.core.service.bossservice.category.dto.response.BossStoreCategoryResponse
-import com.depromeet.threedollar.api.core.service.bossservice.store.dto.response.BossStoreAppearanceDayResponse
-import com.depromeet.threedollar.api.core.service.bossservice.store.dto.response.BossStoreMenuResponse
+import com.depromeet.threedollar.api.core.service.service.bossservice.category.dto.response.BossStoreCategoryResponse
+import com.depromeet.threedollar.api.core.service.service.bossservice.store.dto.response.BossStoreAppearanceDayResponse
+import com.depromeet.threedollar.api.core.service.service.bossservice.store.dto.response.BossStoreMenuResponse
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.common.type.DayOfTheWeek
@@ -51,7 +51,7 @@ internal class BossStoreRetrieveControllerTest(
         @Test
         fun `사장님 자신이 운영중인 가게를 조회합니다 오픈 정보가 레디스에 없으면 영업중이지 않은 가게로 표시된다`() {
             // given
-            val category = BossStoreCategoryFixture.create(title="한식", sequencePriority = 1, imageUrl = "https://icon1.png")
+            val category = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1, imageUrl = "https://icon1.png")
             bossStoreCategoryRepository.save(category)
 
             val bossStore = BossStoreFixture.create(

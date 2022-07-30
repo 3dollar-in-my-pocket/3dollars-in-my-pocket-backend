@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.adminservice.service.commonservice.faq
 import com.depromeet.threedollar.api.adminservice.service.commonservice.faq.dto.request.AddFaqRequest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.faq.dto.request.UpdateFaqRequest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.faq.dto.response.FaqAdminResponse
-import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.response.FaqResponse
+import com.depromeet.threedollar.api.core.service.service.commonservice.faq.dto.response.FaqResponse
 import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode

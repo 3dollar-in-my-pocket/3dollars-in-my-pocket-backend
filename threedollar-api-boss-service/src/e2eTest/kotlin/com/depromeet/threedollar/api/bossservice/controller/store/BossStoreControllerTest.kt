@@ -5,7 +5,7 @@ import com.depromeet.threedollar.api.bossservice.service.store.dto.request.Appea
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.MenuRequest
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.PatchBossStoreInfoRequest
 import com.depromeet.threedollar.api.bossservice.service.store.dto.request.UpdateBossStoreInfoRequest
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import com.depromeet.threedollar.common.model.ContactsNumber
 import com.depromeet.threedollar.common.type.DayOfTheWeek
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryFixture

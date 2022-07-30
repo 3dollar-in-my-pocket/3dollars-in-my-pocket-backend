@@ -1,5 +1,5 @@
 dependencies {
-    implementation project(":threedollar-common")
+    api project(":threedollar-common")
 
     // Redis
     api("org.springframework.boot:spring-boot-starter-data-redis")

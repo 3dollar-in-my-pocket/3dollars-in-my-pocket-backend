@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.userservice.service.visit;
 
-import com.depromeet.threedollar.api.core.service.userservice.store.StoreServiceHelper;
+import com.depromeet.threedollar.api.core.service.service.userservice.store.StoreServiceHelper;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.response.VisitHistoriesCursorResponse;

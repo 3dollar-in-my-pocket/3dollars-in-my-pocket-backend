@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.adminservice.service.commonservice.admin.dto.response
 
-import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
+import com.depromeet.threedollar.api.core.service.common.dto.response.AuditingTimeResponse
 import com.depromeet.threedollar.domain.rds.domain.commonservice.admin.Admin
 
 data class AdminInfoResponse(

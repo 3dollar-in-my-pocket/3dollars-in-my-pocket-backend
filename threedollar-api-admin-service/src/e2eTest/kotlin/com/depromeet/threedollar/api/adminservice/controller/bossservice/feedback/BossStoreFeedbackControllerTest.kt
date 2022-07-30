@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.adminservice.controller.bossservice.feedback
 
 import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
-import com.depromeet.threedollar.api.core.service.bossservice.feedback.dto.response.BossStoreFeedbackTypeResponse
+import com.depromeet.threedollar.api.core.service.service.bossservice.feedback.dto.response.BossStoreFeedbackTypeResponse
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.AfterEach

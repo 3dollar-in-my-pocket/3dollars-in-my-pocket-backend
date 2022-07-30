@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.userservice.controller.device.dto.request
 
-import com.depromeet.threedollar.api.core.service.commonservice.device.dto.request.UpsertDeviceRequest
+import com.depromeet.threedollar.api.core.service.service.commonservice.device.dto.request.UpsertDeviceRequest
 import com.depromeet.threedollar.common.utils.UserMetaSessionUtils
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.AccountType
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.PushPlatformType

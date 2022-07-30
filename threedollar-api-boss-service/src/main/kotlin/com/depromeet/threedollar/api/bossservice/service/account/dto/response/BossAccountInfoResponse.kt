@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.bossservice.service.account.dto.response
 
-import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
+import com.depromeet.threedollar.api.core.service.common.dto.response.AuditingTimeResponse
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccount
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 

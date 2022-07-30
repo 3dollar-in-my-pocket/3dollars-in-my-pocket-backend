@@ -1,35 +1,11 @@
 dependencies {
-    api project(":threedollar-infrastructure:threedollar-external")
-    api project(":threedollar-infrastructure:threedollar-s3")
-    implementation project(":threedollar-infrastructure:threedollar-monitoring")
-    api project(":threedollar-infrastructure:threedollar-sqs")
-
-    api project(":threedollar-domain:threedollar-domain-rds")
-    api project(":threedollar-domain:threedollar-domain-mongo")
-    api project(":threedollar-domain:threedollar-domain-redis")
-
-    // Spring MVC
-    api("org.springframework.boot:spring-boot-starter-web")
-
-    // Redis Session
-    api("org.springframework.session:spring-session-data-redis")
-
-    // Swagger
-    api("io.springfox:springfox-boot-starter:${swaggerVersion}")
-    api("io.springfox:springfox-swagger-ui:${swaggerVersion}")
-
-    // Caffeine Cache
-    implementation("com.github.ben-manes.caffeine:caffeine")
-
-    // TestFixtures
-    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-mongo")))
-    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-redis")))
-    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-rds")))
+    api project(":threedollar-api-core:threedollar-api-core-service")
+    api project(":threedollar-api-core:threedollar-api-core-listener")
 }
 
 bootJar {
     enabled = false
 }
 jar {
-    enabled = true
+    enabled = false
 }

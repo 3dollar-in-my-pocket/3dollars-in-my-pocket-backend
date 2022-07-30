@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.adminservice.service.commonservice.advertisement.dto.response
 
-import com.depromeet.threedollar.api.core.common.dto.AuditingTimeResponse
+import com.depromeet.threedollar.api.core.service.common.dto.response.AuditingTimeResponse
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.Advertisement
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPlatformType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.advertisement.AdvertisementPositionType

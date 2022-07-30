@@ -5,10 +5,10 @@ import com.depromeet.threedollar.api.adminservice.service.commonservice.faq.FaqA
 import com.depromeet.threedollar.api.adminservice.service.commonservice.faq.dto.request.AddFaqRequest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.faq.dto.request.UpdateFaqRequest
 import com.depromeet.threedollar.api.adminservice.service.commonservice.faq.dto.response.FaqAdminResponse
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.mapper.commonservice.faq.FaqCategoryMapper
-import com.depromeet.threedollar.api.core.mapper.commonservice.faq.dto.response.FaqCategoryResponse
-import com.depromeet.threedollar.api.core.service.commonservice.faq.dto.response.FaqResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
+import com.depromeet.threedollar.api.core.service.mapper.commonservice.faq.FaqCategoryMapper
+import com.depromeet.threedollar.api.core.service.mapper.commonservice.faq.dto.response.FaqCategoryResponse
+import com.depromeet.threedollar.api.core.service.service.commonservice.faq.dto.response.FaqResponse
 import com.depromeet.threedollar.common.type.ApplicationType
 import com.depromeet.threedollar.domain.rds.domain.commonservice.faq.FaqCategory
 import io.swagger.annotations.ApiOperation

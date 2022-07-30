@@ -3,9 +3,9 @@ package com.depromeet.threedollar.api.bossservice.config
 import com.depromeet.threedollar.api.bossservice.config.interceptor.AuthInterceptor
 import com.depromeet.threedollar.api.bossservice.config.interceptor.UserMetaInterceptor
 import com.depromeet.threedollar.api.bossservice.config.resolver.BossIdResolver
-import com.depromeet.threedollar.api.core.config.converter.DecodeIdConverter
-import com.depromeet.threedollar.api.core.config.resolver.DeviceLocationArgumentResolver
-import com.depromeet.threedollar.api.core.config.resolver.MapLocationArgumentResolver
+import com.depromeet.threedollar.api.core.common.config.converter.DecodeIdConverter
+import com.depromeet.threedollar.api.core.service.config.resolver.DeviceLocationArgumentResolver
+import com.depromeet.threedollar.api.core.service.config.resolver.MapLocationArgumentResolver
 import org.springframework.context.MessageSource
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

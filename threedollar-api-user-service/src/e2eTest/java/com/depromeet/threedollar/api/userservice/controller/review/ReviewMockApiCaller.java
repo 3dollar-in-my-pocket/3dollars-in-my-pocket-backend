@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.userservice.controller.review;
 
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse;
 import com.depromeet.threedollar.api.userservice.MockMvcHelper;
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.RetrieveMyReviewsRequest;

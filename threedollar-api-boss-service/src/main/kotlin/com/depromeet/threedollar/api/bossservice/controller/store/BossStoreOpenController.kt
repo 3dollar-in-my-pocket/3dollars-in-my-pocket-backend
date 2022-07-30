@@ -3,8 +3,8 @@ package com.depromeet.threedollar.api.bossservice.controller.store
 import com.depromeet.threedollar.api.bossservice.config.interceptor.Auth
 import com.depromeet.threedollar.api.bossservice.config.resolver.BossId
 import com.depromeet.threedollar.api.bossservice.service.store.BossStoreOpenService
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.config.resolver.MapLocation
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
+import com.depromeet.threedollar.api.core.service.config.resolver.MapLocation
 import com.depromeet.threedollar.common.model.LocationValue
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.DeleteMapping

@@ -1,0 +1,23 @@
+dependencies {
+    implementation project(":threedollar-api-core:threedollar-api-core-service")
+
+    implementation project(":threedollar-domain:threedollar-domain-rds")
+    implementation project(":threedollar-domain:threedollar-domain-mongo")
+    implementation project(":threedollar-domain:threedollar-domain-redis")
+
+    implementation project(":threedollar-infrastructure:threedollar-external")
+    implementation project(":threedollar-infrastructure:threedollar-s3")
+    implementation project(":threedollar-infrastructure:threedollar-sqs")
+
+    // TestFixtures
+    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-mongo")))
+    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-redis")))
+    testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-rds")))
+}
+
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+}

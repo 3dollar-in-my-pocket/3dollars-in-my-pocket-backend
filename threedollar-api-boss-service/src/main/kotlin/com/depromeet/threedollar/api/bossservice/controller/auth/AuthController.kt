@@ -10,7 +10,7 @@ import com.depromeet.threedollar.api.bossservice.service.auth.SignupService
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.request.LoginRequest
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.request.SignupRequest
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.response.LoginResponse
-import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import com.depromeet.threedollar.domain.mongo.event.bossservice.account.BossLogOutedEvent
 import io.swagger.annotations.ApiOperation
 import org.springframework.context.ApplicationEventPublisher
