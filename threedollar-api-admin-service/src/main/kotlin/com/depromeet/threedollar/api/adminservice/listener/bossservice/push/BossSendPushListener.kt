@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.core.listener.bossservice.push
+package com.depromeet.threedollar.api.adminservice.listener.bossservice.push
 
 import com.depromeet.threedollar.common.type.template.PushMessageTemplateType
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.AccountType

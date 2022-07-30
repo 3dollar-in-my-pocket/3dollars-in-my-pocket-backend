@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.userservice.controller;
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.response.LoginResponse;
-import com.depromeet.threedollar.api.userservice.service.store.StoreServiceHelper;
+import com.depromeet.threedollar.api.core.service.userservice.store.StoreServiceHelper;
 import com.depromeet.threedollar.api.userservice.service.user.UserService;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.CreateUserRequest;
 import com.depromeet.threedollar.common.exception.model.InternalServerException;

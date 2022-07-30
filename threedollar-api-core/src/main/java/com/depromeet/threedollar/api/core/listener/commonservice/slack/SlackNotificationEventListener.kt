@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
 
 @Component
-class CommonSlackNotificationEventListener(
+class SlackNotificationEventListener(
     private val slackNotificationApiClient: SlackWebhookApiClient,
 ) {
 
@@ -38,7 +38,7 @@ class CommonSlackNotificationEventListener(
         slackNotificationApiClient.postMonitoringMessage(
             PostSlackMessageRequest.of(
                 SlackMessageTemplateType.INFO_MESSAGE.generateMessage(
-                    event.applicationType.description,
+                    event.applicationName,
                     event.applicationUid,
                     event.message,
                     event.timeStamp

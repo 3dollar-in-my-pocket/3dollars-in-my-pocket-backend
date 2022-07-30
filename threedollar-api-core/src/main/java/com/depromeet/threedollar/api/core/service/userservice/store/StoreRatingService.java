@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.userservice.service.store;
+package com.depromeet.threedollar.api.core.service.userservice.store;
 
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;

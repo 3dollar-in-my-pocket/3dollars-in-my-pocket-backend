@@ -1,6 +1,6 @@
-package com.depromeet.threedollar.api.userservice.service.store;
+package com.depromeet.threedollar.api.core.service.userservice.store;
 
-import com.depromeet.threedollar.api.userservice.SetupStoreIntegrationTest;
+import com.depromeet.threedollar.api.core.SetupStoreIntegrationTest;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
@@ -13,7 +13,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class StoreReviewRatingServiceTest extends SetupStoreIntegrationTest {
+class StoreRatingServiceTest extends SetupStoreIntegrationTest {
 
     @Autowired
     private StoreRatingService storeRatingService;

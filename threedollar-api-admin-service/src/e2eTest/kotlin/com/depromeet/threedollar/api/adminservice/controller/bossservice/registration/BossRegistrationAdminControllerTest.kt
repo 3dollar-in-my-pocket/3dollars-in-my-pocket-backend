@@ -5,7 +5,7 @@ import com.depromeet.threedollar.api.adminservice.service.bossservice.registrati
 import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.response.BossAccountRegistrationResponse
 import com.depromeet.threedollar.api.adminservice.service.bossservice.registration.dto.response.BossAccountRegistrationStoreResponse
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
-import com.depromeet.threedollar.api.core.listener.bossservice.push.BossSendPushListener
+import com.depromeet.threedollar.api.adminservice.listener.bossservice.push.BossSendPushListener
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType.GOOGLE
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRejectReasonType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository

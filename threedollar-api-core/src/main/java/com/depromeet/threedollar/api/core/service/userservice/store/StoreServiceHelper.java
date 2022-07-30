@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.api.userservice.service.store;
+package com.depromeet.threedollar.api.core.service.userservice.store;
 
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
@@ -28,7 +28,7 @@ public class StoreServiceHelper {
     }
 
     @NotNull
-    static Store findStoreByIdFetchJoinMenu(StoreRepository storeRepository, Long storeId) {
+    public static Store findStoreByIdFetchJoinMenu(StoreRepository storeRepository, Long storeId) {
         Store store = storeRepository.findStoreByIdFetchJoinMenu(storeId);
         if (store == null) {
             throw new NotFoundException(String.format("해당하는 유저 가게(%s)는 존재하지 않습니다", storeId), E404_NOT_EXISTS_STORE);

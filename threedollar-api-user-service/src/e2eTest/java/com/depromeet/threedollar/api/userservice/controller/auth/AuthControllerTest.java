@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.userservice.controller.auth;
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.userservice.SetupUserControllerTest;
-import com.depromeet.threedollar.api.userservice.listener.device.DeviceEventListener;
+import com.depromeet.threedollar.api.core.listener.commonservice.device.DeviceEventListener;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.request.LoginRequest;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.response.LoginResponse;
@@ -226,7 +226,7 @@ class AuthControllerTest extends SetupUserControllerTest {
             authMockApiCaller.signOut(token, 200);
 
             // then
-            verify(deviceEventListener, times(1)).deleteDevice(any(UserSignOutedEvent.class));
+            verify(deviceEventListener, times(1)).deleteUserDevice(any(UserSignOutedEvent.class));
         }
 
     }
@@ -254,7 +254,7 @@ class AuthControllerTest extends SetupUserControllerTest {
             authMockApiCaller.logout(token, 200);
 
             // then
-            verify(deviceEventListener, times(1)).deleteDevice(any(UserLogOutedEvent.class));
+            verify(deviceEventListener, times(1)).deleteUserDevice(any(UserLogOutedEvent.class));
         }
 
     }

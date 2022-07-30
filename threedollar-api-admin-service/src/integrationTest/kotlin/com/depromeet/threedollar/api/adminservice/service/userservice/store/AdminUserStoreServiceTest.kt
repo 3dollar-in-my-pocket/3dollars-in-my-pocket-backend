@@ -1,10 +1,9 @@
 package com.depromeet.threedollar.api.adminservice.service.userservice.store
 
-import com.depromeet.threedollar.api.adminservice.SetupAdminIntegrationTest
+import com.depromeet.threedollar.api.adminservice.SetupUserStoreIntegrationTest
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreFixture
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
@@ -14,24 +13,13 @@ import org.junit.jupiter.api.assertAll
 
 internal class AdminUserStoreServiceTest(
     private val adminUserStoreService: AdminUserStoreService,
-    private val storeRepository: StoreRepository,
-) : SetupAdminIntegrationTest() {
+) : SetupUserStoreIntegrationTest() {
 
     @Nested
     inner class DeleteUserStoreByAdminTest {
 
         @Test
         fun `관리자가 특정 가게를 강제로 삭제한다`() {
-            // given
-            val store = StoreFixture.createWithDefaultMenu(
-                userId = 10000L,
-                storeName = "가게 이름",
-                latitude = 36.0,
-                longitude = 126.0,
-                rating = 1.0
-            )
-            storeRepository.save(store)
-
             // when
             adminUserStoreService.deleteStoreByForce(storeId = store.id)
 

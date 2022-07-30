@@ -1,5 +1,6 @@
 package com.depromeet.threedollar.api.userservice.service.store;
 
+import com.depromeet.threedollar.api.core.service.userservice.store.StoreServiceHelper;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.CheckExistsStoresNearbyRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.RetrieveAroundStoresRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.RetrieveMyStoresRequest;

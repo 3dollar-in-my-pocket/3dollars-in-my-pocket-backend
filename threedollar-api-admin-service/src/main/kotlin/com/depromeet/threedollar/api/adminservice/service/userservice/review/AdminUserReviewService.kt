@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.api.adminservice.service.userservice.review
 
 import com.depromeet.threedollar.api.adminservice.service.userservice.review.dto.response.ReviewInfoResponse
+import com.depromeet.threedollar.api.core.service.userservice.store.StoreRatingService
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review
@@ -15,17 +16,19 @@ class AdminUserReviewService(
     private val reviewRepository: ReviewRepository,
     private val storeRepository: StoreRepository,
     private val userRepository: UserRepository,
+    private val storeRatingService: StoreRatingService,
 ) {
 
     @Transactional
     fun deleteReviewByForce(reviewId: Long) {
-        val review = findReviewById(reviewRepository, reviewId)
+        val review = findReviewById(reviewId)
         review.deleteByAdmin()
+        storeRatingService.renewStoreAverageRating(review.storeId)
     }
 
     @Transactional(readOnly = true)
     fun getReviewInfo(reviewId: Long): ReviewInfoResponse {
-        val review: Review = findReviewById(reviewRepository, reviewId)
+        val review: Review = findReviewById(reviewId)
         return ReviewInfoResponse.of(
             review = review,
             store = storeRepository.findStoreById(review.storeId),
@@ -33,9 +36,9 @@ class AdminUserReviewService(
         )
     }
 
-}
+    private fun findReviewById(reviewId: Long): Review {
+        return reviewRepository.findReviewById(reviewId)
+            ?: throw NotFoundException("해당하는 리뷰($reviewId)는 존재하지 않습니다", ErrorCode.E404_NOT_EXISTS_REVIEW)
+    }
 
-private fun findReviewById(reviewRepository: ReviewRepository, reviewId: Long): Review {
-    return reviewRepository.findReviewById(reviewId)
-        ?: throw NotFoundException("해당하는 리뷰($reviewId)는 존재하지 않습니다", ErrorCode.E404_NOT_EXISTS_REVIEW)
 }

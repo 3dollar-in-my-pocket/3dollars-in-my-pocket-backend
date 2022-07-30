@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.userservice.service.review;
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.AddReviewRequest;
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.UpdateReviewRequest;
 import com.depromeet.threedollar.api.userservice.service.review.dto.response.ReviewInfoResponse;
-import com.depromeet.threedollar.api.userservice.service.store.StoreServiceHelper;
+import com.depromeet.threedollar.api.core.service.userservice.store.StoreServiceHelper;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
