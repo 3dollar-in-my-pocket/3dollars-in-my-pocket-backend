@@ -1,14 +1,12 @@
 package com.depromeet.threedollar.api.adminservice.controller.userservice.review
 
-import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
+import com.depromeet.threedollar.api.adminservice.SetupUserStoreControllerTest
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreFixture
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserFixture
-import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -19,9 +17,7 @@ import org.springframework.test.web.servlet.get
 
 internal class AdminUserReviewControllerTest(
     private val reviewRepository: ReviewRepository,
-    private val storeRepository: StoreRepository,
-    private val userRepository: UserRepository,
-) : SetupAdminControllerTest() {
+) : SetupUserStoreControllerTest() {
 
     @DisplayName("DELETE /admin/v1/user/review/{REVIEW_ID}")
     @Nested
@@ -31,8 +27,8 @@ internal class AdminUserReviewControllerTest(
         fun `관리자가 특정 리뷰를 삭제한다`() {
             // given
             val review = ReviewFixture.create(
-                storeId = 10000L,
-                userId = 1L,
+                storeId = store.id,
+                userId = user.id,
                 rating = 1,
                 contents = "욕설"
             )

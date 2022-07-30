@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.adminservice.controller.userservice.store
 
-import com.depromeet.threedollar.api.adminservice.SetupAdminControllerTest
+import com.depromeet.threedollar.api.adminservice.SetupUserControllerTest
 import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.response.ReportedStoreInfoResponse
 import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.response.StoreInfoResponse
 import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.response.StoreInfosWithCursorResponse
@@ -24,7 +24,7 @@ import org.springframework.test.web.servlet.get
 internal class StoreControllerTest(
     private val storeRepository: StoreRepository,
     private val storeDeleteRequestRepository: StoreDeleteRequestRepository,
-) : SetupAdminControllerTest() {
+) : SetupUserControllerTest() {
 
     @DisplayName("GET /admin/v1/user/stores/reported")
     @Nested
@@ -33,28 +33,28 @@ internal class StoreControllerTest(
         @Test
         fun N개이상_삭제_요청된_가게들을_삭제요청이_많은것부터_조회한다_첫페이지() {
             // given
-            val store1 = StoreFixture.createWithDefaultMenu(100L, "가게1")
-            val store2 = StoreFixture.createWithDefaultMenu(101L, "가게2")
-            val store3 = StoreFixture.createWithDefaultMenu(102L, "가게3")
-            val store4 = StoreFixture.createWithDefaultMenu(103L, "가게4")
+            val store1 = StoreFixture.createWithDefaultMenu(user.id, "가게1")
+            val store2 = StoreFixture.createWithDefaultMenu(user.id, "가게2")
+            val store3 = StoreFixture.createWithDefaultMenu(user.id, "가게3")
+            val store4 = StoreFixture.createWithDefaultMenu(user.id, "가게4")
 
             storeRepository.saveAll(listOf(store1, store2, store3, store4))
             storeDeleteRequestRepository.saveAll(
                 listOf(
                     // store1: 4개의 삭제 요청
-                    StoreDeleteRequest.of(store1, 100L, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store1, 101L, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store1, 102L, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store1, 103L, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store1, user.id, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store1, user.id, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store1, user.id, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store1, user.id, DeleteReasonType.OVERLAPSTORE),
 
                     // store2: 3개의 삭제 요청
-                    StoreDeleteRequest.of(store2, 100L, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store2, 101L, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store2, 102L, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store2, user.id, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store2, user.id, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store2, user.id, DeleteReasonType.OVERLAPSTORE),
 
                     // store4: 2개의 삭제 요청
-                    StoreDeleteRequest.of(store4, 100L, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store4, 101L, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store4, user.id, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store4, user.id, DeleteReasonType.OVERLAPSTORE),
                 )
             )
 
@@ -85,28 +85,28 @@ internal class StoreControllerTest(
         @Test
         fun N개이상_삭제_요청된_가게들을_삭제요청이_많은것부터_조회한다_두번째_페이지() {
             // given
-            val store1 = StoreFixture.createWithDefaultMenu(100L, "가게1")
-            val store2 = StoreFixture.createWithDefaultMenu(101L, "가게2")
-            val store3 = StoreFixture.createWithDefaultMenu(102L, "가게3")
-            val store4 = StoreFixture.createWithDefaultMenu(103L, "가게4")
+            val store1 = StoreFixture.createWithDefaultMenu(user.id, "가게1")
+            val store2 = StoreFixture.createWithDefaultMenu(user.id, "가게2")
+            val store3 = StoreFixture.createWithDefaultMenu(user.id, "가게3")
+            val store4 = StoreFixture.createWithDefaultMenu(user.id, "가게4")
 
             storeRepository.saveAll(listOf(store1, store2, store3, store4))
             storeDeleteRequestRepository.saveAll(
                 listOf(
                     // store1: 4개의 삭제 요청
-                    StoreDeleteRequest.of(store1, 100L, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store1, 101L, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store1, 102L, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store1, 103L, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store1, user.id, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store1, user.id, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store1, user.id, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store1, user.id, DeleteReasonType.OVERLAPSTORE),
 
                     // store2: 3개의 삭제 요청
-                    StoreDeleteRequest.of(store2, 100L, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store2, 101L, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store2, 102L, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store2, user.id, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store2, user.id, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store2, user.id, DeleteReasonType.OVERLAPSTORE),
 
                     // store4: 2개의 삭제 요청
-                    StoreDeleteRequest.of(store4, 100L, DeleteReasonType.OVERLAPSTORE),
-                    StoreDeleteRequest.of(store4, 101L, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store4, user.id, DeleteReasonType.OVERLAPSTORE),
+                    StoreDeleteRequest.of(store4, user.id, DeleteReasonType.OVERLAPSTORE),
                 )
             )
 
@@ -179,10 +179,10 @@ internal class StoreControllerTest(
         @Test
         fun 최신순으로_스크롤_페이지네이션으로_가게를_조회한다_첫스크롤() {
             // given
-            val store1 = StoreFixture.createWithDefaultMenu(100L, "가게1")
-            val store2 = StoreFixture.createWithDefaultMenu(101L, "가게2")
-            val store3 = StoreFixture.createWithDefaultMenu(102L, "가게3")
-            val store4 = StoreFixture.createWithDefaultMenu(103L, "가게3")
+            val store1 = StoreFixture.createWithDefaultMenu(user.id, "가게1")
+            val store2 = StoreFixture.createWithDefaultMenu(user.id, "가게2")
+            val store3 = StoreFixture.createWithDefaultMenu(user.id, "가게3")
+            val store4 = StoreFixture.createWithDefaultMenu(user.id, "가게3")
             storeRepository.saveAll(listOf(store1, store2, store3, store4))
 
             val size = 2
@@ -209,10 +209,10 @@ internal class StoreControllerTest(
         @Test
         fun 최신순으로_스크롤_페이지네이션으로_가게를_조회한다_마지막_스크롤() {
             // given
-            val store1 = StoreFixture.createWithDefaultMenu(100L, "가게1")
-            val store2 = StoreFixture.createWithDefaultMenu(101L, "가게2")
-            val store3 = StoreFixture.createWithDefaultMenu(102L, "가게3")
-            val store4 = StoreFixture.createWithDefaultMenu(103L, "가게3")
+            val store1 = StoreFixture.createWithDefaultMenu(user.id, "가게1")
+            val store2 = StoreFixture.createWithDefaultMenu(user.id, "가게2")
+            val store3 = StoreFixture.createWithDefaultMenu(user.id, "가게3")
+            val store4 = StoreFixture.createWithDefaultMenu(user.id, "가게3")
             storeRepository.saveAll(listOf(store1, store2, store3, store4))
 
             val size = 2
@@ -245,7 +245,7 @@ internal class StoreControllerTest(
     fun `특정 가게를 삭제한다`() {
         // given
         val store = StoreFixture.create(
-            userId = 10000L,
+            userId = user.id,
             storeName = "가게 이름",
             latitude = 36.0,
             longitude = 126.0,
