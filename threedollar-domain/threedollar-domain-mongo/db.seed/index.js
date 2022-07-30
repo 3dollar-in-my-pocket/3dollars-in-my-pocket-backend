@@ -71,9 +71,3 @@ db.device_v1.createIndex({
 }, {
     unique: true
 });
-
-db.device_v1.createIndex({
-    "deviceInfo.pushToken": 1
-}, {
-    unique: true
-});
