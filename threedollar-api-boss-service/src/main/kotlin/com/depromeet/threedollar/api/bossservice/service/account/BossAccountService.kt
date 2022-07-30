@@ -8,7 +8,7 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWit
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossWithdrawalAccountRepository
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.AccountType
 import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.DeviceRepository
-import com.depromeet.threedollar.domain.mongo.event.bossservice.registration.BossSignOutEvent
+import com.depromeet.threedollar.domain.mongo.event.bossservice.account.BossSignOutEvent
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 

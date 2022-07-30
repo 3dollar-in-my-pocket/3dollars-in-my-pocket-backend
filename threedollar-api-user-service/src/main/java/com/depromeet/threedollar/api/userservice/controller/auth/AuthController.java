@@ -9,8 +9,10 @@ import com.depromeet.threedollar.api.userservice.service.auth.dto.request.LoginR
 import com.depromeet.threedollar.api.userservice.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.response.LoginResponse;
 import com.depromeet.threedollar.api.userservice.service.user.UserService;
+import com.depromeet.threedollar.domain.rds.event.userservice.user.UserLogOutedEvent;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +30,7 @@ public class AuthController {
     private final HttpSession httpSession;
     private final UserService userService;
     private final AuthServiceFinder authServiceFinder;
+    private final ApplicationEventPublisher eventPublisher;
 
     @ApiOperation("회원가입을 요청합니다")
     @PostMapping("/v2/signup")
@@ -65,7 +68,10 @@ public class AuthController {
     @ApiOperation("[인증] 로그아웃을 요청합니다.")
     @Auth
     @PostMapping("/v2/logout")
-    public ApiResponse<String> logout() {
+    public ApiResponse<String> logout(
+        @UserId Long userId
+    ) {
+        eventPublisher.publishEvent(UserLogOutedEvent.of(userId));
         httpSession.invalidate();
         return ApiResponse.OK;
     }

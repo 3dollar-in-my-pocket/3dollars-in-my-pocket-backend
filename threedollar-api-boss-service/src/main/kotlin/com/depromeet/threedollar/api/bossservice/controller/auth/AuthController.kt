@@ -11,7 +11,9 @@ import com.depromeet.threedollar.api.bossservice.service.auth.dto.request.LoginR
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.request.SignupRequest
 import com.depromeet.threedollar.api.bossservice.service.auth.dto.response.LoginResponse
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse
+import com.depromeet.threedollar.domain.mongo.event.bossservice.account.BossLogOutedEvent
 import io.swagger.annotations.ApiOperation
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -25,6 +27,7 @@ class AuthController(
     private val authServiceFinder: AuthServiceFinder,
     private val bossAccountService: BossAccountService,
     private val signupService: SignupService,
+    private val eventPublisher: ApplicationEventPublisher,
 ) {
 
     @ApiOperation("사장님 계정의 회원가입을 요청합니다. (차후 승인이 필요합니다)", notes = "https://github.com/3dollar-in-my-pocket/3dollars-in-my-pocket-backend/issues/118")
@@ -59,8 +62,9 @@ class AuthController(
     @ApiOperation("사장님 계정을 로그아웃을 요청합니다.")
     @Auth(allowedWaiting = true)
     @PostMapping("/v1/auth/logout")
-    fun logout(): ApiResponse<String> {
+    fun logout(@BossId bossId: String): ApiResponse<String> {
         httpSession.invalidate()
+        eventPublisher.publishEvent(BossLogOutedEvent.of(bossId = bossId))
         return ApiResponse.OK
     }
 

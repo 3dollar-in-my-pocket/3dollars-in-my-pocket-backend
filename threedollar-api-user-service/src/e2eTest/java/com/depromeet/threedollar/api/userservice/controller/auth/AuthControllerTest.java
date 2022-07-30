@@ -2,12 +2,15 @@ package com.depromeet.threedollar.api.userservice.controller.auth;
 
 import com.depromeet.threedollar.api.core.common.dto.ApiResponse;
 import com.depromeet.threedollar.api.userservice.SetupUserControllerTest;
+import com.depromeet.threedollar.api.userservice.listener.device.DeviceEventListener;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.request.LoginRequest;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.request.SignUpRequest;
 import com.depromeet.threedollar.api.userservice.service.auth.dto.response.LoginResponse;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserFixture;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType;
+import com.depromeet.threedollar.domain.rds.event.userservice.user.UserLogOutedEvent;
+import com.depromeet.threedollar.domain.rds.event.userservice.user.UserSignOutedEvent;
 import com.depromeet.threedollar.infrastructure.external.client.apple.AppleTokenDecoder;
 import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAuthApiClient;
 import com.depromeet.threedollar.infrastructure.external.client.google.dto.response.GoogleProfileInfoResponse;
@@ -21,7 +24,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class AuthControllerTest extends SetupUserControllerTest {
@@ -40,6 +46,9 @@ class AuthControllerTest extends SetupUserControllerTest {
 
     @MockBean
     private GoogleAuthApiClient googleAuthApiClient;
+
+    @MockBean
+    private DeviceEventListener deviceEventListener;
 
     @BeforeEach
     void setUp() {
@@ -211,6 +220,15 @@ class AuthControllerTest extends SetupUserControllerTest {
             );
         }
 
+        @Test
+        void 로그아웃시_디바이스_삭제_이벤트가_발송된다() throws Exception {
+            // when
+            authMockApiCaller.signOut(token, 200);
+
+            // then
+            verify(deviceEventListener, times(1)).deleteDevice(any(UserSignOutedEvent.class));
+        }
+
     }
 
     @DisplayName("DELETE /api/v2/logout")
@@ -228,6 +246,15 @@ class AuthControllerTest extends SetupUserControllerTest {
                 () -> assertThat(response.getMessage()).isEmpty(),
                 () -> assertThat(response.getData()).isEqualTo(ApiResponse.OK.getData())
             );
+        }
+
+        @Test
+        void 로그아웃시_디바이스_삭제_이벤트가_발송된다() throws Exception {
+            // when
+            authMockApiCaller.logout(token, 200);
+
+            // then
+            verify(deviceEventListener, times(1)).deleteDevice(any(UserLogOutedEvent.class));
         }
 
     }

@@ -32,7 +32,7 @@ public class UserService {
         UserServiceHelper.validateNotExistsUser(userRepository, request.getSocialId(), request.getSocialType());
         UserServiceHelper.validateNotExistsUserName(userRepository, request.getName());
         User user = userRepository.save(request.toEntity());
-        eventPublisher.publishEvent(NewUserCreatedEvent.of(user));
+        eventPublisher.publishEvent(NewUserCreatedEvent.of(user.getId()));
         return user.getId();
     }
 
@@ -61,7 +61,7 @@ public class UserService {
         withdrawalUserRepository.save(WithdrawalUser.newInstance(user));
         userRepository.delete(user);
 
-        eventPublisher.publishEvent(UserSignOutedEvent.of(user));
+        eventPublisher.publishEvent(UserSignOutedEvent.of(userId));
     }
 
 }

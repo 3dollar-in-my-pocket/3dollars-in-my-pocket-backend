@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.mongo.event.bossservice.registration
+package com.depromeet.threedollar.domain.mongo.event.bossservice.account
 
 data class BossSignOutEvent(
     val bossId: String,

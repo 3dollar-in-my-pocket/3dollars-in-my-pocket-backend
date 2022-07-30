@@ -110,7 +110,7 @@ internal class UserDeviceControllerTest(
     fun `유저 계정의 디바이스를 삭제한다`() {
         // given
         deviceRepository.save(DeviceFixture.create(
-            accountType = AccountType.BOSS_ACCOUNT,
+            accountType = AccountType.USER_ACCOUNT,
             accountId = user.id.toString(),
             pushToken = "pushToken"
         ))

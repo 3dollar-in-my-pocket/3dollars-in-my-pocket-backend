@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.domain.rds.event.userservice.user;
 
-import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,9 +16,9 @@ public class NewUserCreatedEvent {
         this.userId = userId;
     }
 
-    public static NewUserCreatedEvent of(User user) {
+    public static NewUserCreatedEvent of(Long userId) {
         return NewUserCreatedEvent.builder()
-            .userId(user.getId())
+            .userId(userId)
             .build();
     }
 

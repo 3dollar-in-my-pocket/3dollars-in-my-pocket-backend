@@ -35,7 +35,7 @@ class UserDeviceController(
     fun deviceDevice(
         @UserId userId: Long?,
     ): ApiResponse<String> {
-        deviceService.deleteDevice(accountId = userId?.toString() ?: "-1", accountType = AccountType.BOSS_ACCOUNT)
+        deviceService.deleteDevice(accountId = userId?.toString() ?: "-1", accountType = AccountType.USER_ACCOUNT)
         return ApiResponse.OK
     }
 

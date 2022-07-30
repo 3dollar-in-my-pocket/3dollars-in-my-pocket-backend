@@ -7,17 +7,17 @@ import lombok.ToString;
 
 @ToString
 @Getter
-public class UserSignOutedEvent {
+public class UserLogOutedEvent {
 
     private final Long userId;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private UserSignOutedEvent(Long userId) {
+    private UserLogOutedEvent(Long userId) {
         this.userId = userId;
     }
 
-    public static UserSignOutedEvent of(Long userId) {
-        return UserSignOutedEvent.builder()
+    public static UserLogOutedEvent of(Long userId) {
+        return UserLogOutedEvent.builder()
             .userId(userId)
             .build();
     }

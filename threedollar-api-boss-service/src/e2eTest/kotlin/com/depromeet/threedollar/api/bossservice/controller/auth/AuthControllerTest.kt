@@ -8,6 +8,9 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAcc
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAccountSocialType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.BossRegistrationRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.registration.RegistrationFixture
+import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.AccountType
+import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.DeviceFixture
+import com.depromeet.threedollar.domain.mongo.domain.commonservice.device.DeviceRepository
 import com.depromeet.threedollar.infrastructure.external.client.apple.AppleTokenDecoder
 import com.depromeet.threedollar.infrastructure.external.client.google.GoogleAuthApiClient
 import com.depromeet.threedollar.infrastructure.external.client.google.dto.response.GoogleProfileInfoResponse
@@ -15,6 +18,7 @@ import com.depromeet.threedollar.infrastructure.external.client.kakao.KaKaoAuthA
 import com.depromeet.threedollar.infrastructure.external.client.kakao.dto.response.KaKaoProfileResponse
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -27,6 +31,7 @@ import org.springframework.test.web.servlet.post
 
 internal class AuthControllerTest(
     private val bossRegistrationRepository: BossRegistrationRepository,
+    private val deviceRepository: DeviceRepository,
 ) : SetupBossAccountControllerTest() {
 
     @MockkBean
@@ -375,6 +380,26 @@ internal class AuthControllerTest(
                 }
         }
 
+        @Test
+        fun `로그아웃시 디바이스도 삭제된다`() {
+            // given
+            val device = DeviceFixture.create(
+                accountId = bossId,
+                accountType = AccountType.BOSS_ACCOUNT,
+                pushToken = "pushToken"
+            )
+            deviceRepository.save(device)
+
+            // when
+            mockMvc.post("/v1/auth/logout") {
+                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
+            }
+
+            // then
+            val devices = deviceRepository.findAll()
+            assertThat(devices).isEmpty()
+        }
+
     }
 
     @DisplayName("DELETE /api/v2/signout")
@@ -393,6 +418,26 @@ internal class AuthControllerTest(
                 .andExpect {
                     status { isOk() }
                 }
+        }
+
+        @Test
+        fun `회원 탈퇴시 디바이스도 삭제된다`() {
+            // given
+            val device = DeviceFixture.create(
+                accountId = bossId,
+                accountType = AccountType.BOSS_ACCOUNT,
+                pushToken = "pushToken"
+            )
+            deviceRepository.save(device)
+
+            // when
+            mockMvc.delete("/v1/auth/signout") {
+                header(HttpHeaders.AUTHORIZATION, "Bearer $token")
+            }
+
+            // then
+            val devices = deviceRepository.findAll()
+            assertThat(devices).isEmpty()
         }
 
     }
