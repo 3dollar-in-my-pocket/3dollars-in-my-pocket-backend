@@ -1,3 +1,3 @@
 # threedollar-api-admin-service
 
-관리자 API 서버 모듈
+> 가슴속 3천원 어드민 API 서버
