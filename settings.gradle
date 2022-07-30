@@ -6,7 +6,6 @@ include 'threedollar-api-boss-service'
 include 'threedollar-push'
 include 'threedollar-batch'
 
-include 'threedollar-api-core'
 include 'threedollar-api-core:threedollar-api-core-common'
 include 'threedollar-api-core:threedollar-api-core-service'
 include 'threedollar-api-core:threedollar-api-core-listener'

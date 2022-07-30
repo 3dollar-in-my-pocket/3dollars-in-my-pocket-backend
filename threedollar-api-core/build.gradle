@@ -1,8 +1,3 @@
-dependencies {
-    api project(":threedollar-api-core:threedollar-api-core-service")
-    api project(":threedollar-api-core:threedollar-api-core-listener")
-}
-
 bootJar {
     enabled = false
 }

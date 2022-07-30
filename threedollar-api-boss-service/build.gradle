@@ -1,5 +1,6 @@
 dependencies {
-    implementation project(":threedollar-api-core")
+    implementation project(":threedollar-api-core:threedollar-api-core-service")
+    implementation project(":threedollar-api-core:threedollar-api-core-listener")
 
     // TestFixtures
     testImplementation(testFixtures(project(":threedollar-domain:threedollar-domain-mongo")))
@@ -8,7 +9,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("com.depromeet.threedollar.boss.api.ThreeDollarBossApiApplicationKt")
+    mainClass.set("com.depromeet.threedollar.api.bossservice.ThreeDollarApiBossApplicationKt")
 }
 
 bootJar {

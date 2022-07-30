@@ -1,11 +1,3 @@
-dependencies {
-    api project(":threedollar-infrastructure:threedollar-external")
-    api project(":threedollar-infrastructure:threedollar-firebase")
-    api project(":threedollar-infrastructure:threedollar-monitoring")
-    api project(":threedollar-infrastructure:threedollar-s3")
-    api project(":threedollar-infrastructure:threedollar-sqs")
-}
-
 bootJar {
     enabled = false
 }

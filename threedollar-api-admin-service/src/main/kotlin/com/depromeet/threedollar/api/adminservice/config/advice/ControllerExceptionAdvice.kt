@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.multipart.MaxUploadSizeExceededException
 import org.springframework.web.multipart.support.MissingServletRequestPartException
 import java.util.stream.Collectors
-import javax.servlet.http.HttpServletRequest
 
 @RestControllerAdvice
 class ControllerExceptionAdvice {
@@ -182,7 +181,7 @@ class ControllerExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception::class)
-    private fun handleInternalServerException(exception: Exception, request: HttpServletRequest): ApiResponse<Nothing> {
+    private fun handleInternalServerException(exception: Exception): ApiResponse<Nothing> {
         log.error(exception.message, exception)
         return ApiResponse.error(ErrorCode.E500_INTERNAL_SERVER)
     }
