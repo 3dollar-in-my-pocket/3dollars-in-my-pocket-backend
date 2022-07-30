@@ -68,4 +68,12 @@ db.boss_store_v1.createIndex({
 db.device_v1.createIndex({
     "accountId": 1,
     "accountType": 1
-})
+}, {
+    unique: true
+});
+
+db.device_v1.createIndex({
+    "deviceInfo.pushToken": 1
+}, {
+    unique: true
+});
