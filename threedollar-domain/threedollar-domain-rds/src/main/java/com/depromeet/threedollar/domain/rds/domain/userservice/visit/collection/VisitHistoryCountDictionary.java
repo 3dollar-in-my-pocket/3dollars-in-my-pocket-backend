@@ -11,12 +11,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class VisitHistoryCounter {
+public final class VisitHistoryCountDictionary {
 
     private final Map<Long, Long> existCounter = new HashMap<>();
     private final Map<Long, Long> notExistCounter = new HashMap<>();
 
-    private VisitHistoryCounter(List<VisitHistoryCountProjection> visitHistoryWithCounts) {
+    private VisitHistoryCountDictionary(List<VisitHistoryCountProjection> visitHistoryWithCounts) {
         this.existCounter.putAll(visitHistoryWithCounts.stream()
             .filter(visit -> VisitType.EXISTS.equals(visit.getVisitType()))
             .collect(Collectors.toMap(VisitHistoryCountProjection::getStoreId, VisitHistoryCountProjection::getCounts)));
@@ -25,8 +25,8 @@ public final class VisitHistoryCounter {
             .collect(Collectors.toMap(VisitHistoryCountProjection::getStoreId, VisitHistoryCountProjection::getCounts)));
     }
 
-    public static VisitHistoryCounter of(List<VisitHistoryCountProjection> visitHistoryWithCounts) {
-        return new VisitHistoryCounter(visitHistoryWithCounts);
+    public static VisitHistoryCountDictionary of(List<VisitHistoryCountProjection> visitHistoryWithCounts) {
+        return new VisitHistoryCountDictionary(visitHistoryWithCounts);
     }
 
     public long getStoreExistsVisitsCount(Long storeId) {

@@ -7,7 +7,6 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewFixt
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserFixture
-import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -53,11 +52,7 @@ internal class AdminUserReviewControllerTest(
         @Test
         fun `관리자가 특정 리뷰를 조회한다`() {
             // given
-            val user = UserFixture.create(
-                socialId = "social-id",
-                socialType = UserSocialType.GOOGLE,
-                name = "닉네임"
-            )
+            val user = UserFixture.create()
             userRepository.save(user)
 
             val store = StoreFixture.create(

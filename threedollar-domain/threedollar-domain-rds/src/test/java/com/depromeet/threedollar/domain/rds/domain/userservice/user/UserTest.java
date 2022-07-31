@@ -24,7 +24,7 @@ class UserTest {
         MedalAcquisitionConditionType conditionType = MedalAcquisitionConditionType.ADD_REVIEW;
         int count = 5;
 
-        User user = UserFixture.create("social-id", UserSocialType.KAKAO, "닉네임");
+        User user = UserFixture.create();
         Medal medal = MedalFixture.create(medalName, description, activationIconUrl, disabledIconUrl, conditionType, count);
 
         // when
@@ -49,7 +49,7 @@ class UserTest {
     @Test
     void 유저가_메달을_획득하면_비활성화_상태로_추가된다() {
         // given
-        User user = UserFixture.create("social-id", UserSocialType.KAKAO, "닉네임");
+        User user = UserFixture.create();
         Medal medalA = MedalFixture.create("메달 A");
 
         // when
@@ -65,7 +65,7 @@ class UserTest {
     @Test
     void 유저가_장착한_메달을_조회할때_장착한_메달이_없는경우_null_을_반환한다() {
         // given
-        User user = UserFixture.create("social-id", UserSocialType.KAKAO, "닉네임");
+        User user = UserFixture.create();
         Medal medalA = MedalFixture.create("메달 A");
         user.addMedals(List.of(medalA));
 

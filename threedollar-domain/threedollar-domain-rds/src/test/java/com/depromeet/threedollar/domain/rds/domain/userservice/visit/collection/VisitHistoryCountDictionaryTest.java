@@ -9,7 +9,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class VisitHistoriesCountCollectionTest {
+class VisitHistoryCountDictionaryTest {
 
     @Test
     void 가게별로_방문_성공_및_실패_카운트를_반환한다() {
@@ -24,7 +24,7 @@ class VisitHistoriesCountCollectionTest {
         VisitHistoryCountProjection storeTwoNotExistsCounts = new VisitHistoryCountProjection(storeTwoId, VisitType.NOT_EXISTS, 0);
 
         // when
-        VisitHistoryCounter counter = VisitHistoryCounter.of(
+        VisitHistoryCountDictionary counter = VisitHistoryCountDictionary.of(
             List.of(storeOneExistsCounts, storeOneNotExistsCounts, storeTwoExistsCounts, storeTwoNotExistsCounts));
 
         // then

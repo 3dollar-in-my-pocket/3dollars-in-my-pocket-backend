@@ -5,7 +5,7 @@ import com.depromeet.threedollar.api.userservice.service.visit.dto.response.Visi
 import com.depromeet.threedollar.common.model.LocationValue;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.common.utils.distance.LocationDistanceUtils;
-import com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection.VisitHistoryCounter;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection.VisitHistoryCountDictionary;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -53,7 +53,7 @@ public class StoreWithVisitsAndDistanceResponse extends AuditingTimeResponse {
         this.isDeleted = isDeleted;
     }
 
-    public static StoreWithVisitsAndDistanceResponse of(@NotNull StoreInfoResponse store, LocationValue deviceLocation, VisitHistoryCounter visitsCounter) {
+    public static StoreWithVisitsAndDistanceResponse of(@NotNull StoreInfoResponse store, LocationValue deviceLocation, VisitHistoryCountDictionary visitsCounter) {
         StoreWithVisitsAndDistanceResponse response = StoreWithVisitsAndDistanceResponse.builder()
             .store(store)
             .distance(LocationDistanceUtils.getDistanceM(deviceLocation, LocationValue.of(store.getLatitude(), store.getLongitude())))

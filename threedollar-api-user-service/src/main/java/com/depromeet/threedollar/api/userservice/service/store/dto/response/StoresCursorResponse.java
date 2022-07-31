@@ -2,7 +2,7 @@ package com.depromeet.threedollar.api.userservice.service.store.dto.response;
 
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.collection.StoreWithMenuProjectionPagingCursor;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreWithMenuProjection;
-import com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection.VisitHistoryCounter;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection.VisitHistoryCountDictionary;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,7 +31,7 @@ public class StoresCursorResponse {
         this.hasNext = LAST_CURSOR != nextCursor;
     }
 
-    public static StoresCursorResponse of(StoreWithMenuProjectionPagingCursor storesPagingCursor, VisitHistoryCounter visitHistoriesCounts, long totalElements) {
+    public static StoresCursorResponse of(StoreWithMenuProjectionPagingCursor storesPagingCursor, VisitHistoryCountDictionary visitHistoriesCounts, long totalElements) {
         List<StoreWithVisitCountsResponse> storesWithVisitCounts = combineStoreWithVisitsResponse(storesPagingCursor.getCurrentCursorItems(), visitHistoriesCounts);
         if (storesPagingCursor.hasNext()) {
             return new StoresCursorResponse(storesWithVisitCounts, totalElements, storesPagingCursor.getNextCursor().getId());
@@ -39,7 +39,7 @@ public class StoresCursorResponse {
         return new StoresCursorResponse(storesWithVisitCounts, totalElements, LAST_CURSOR);
     }
 
-    private static List<StoreWithVisitCountsResponse> combineStoreWithVisitsResponse(List<StoreWithMenuProjection> stores, VisitHistoryCounter collection) {
+    private static List<StoreWithVisitCountsResponse> combineStoreWithVisitsResponse(List<StoreWithMenuProjection> stores, VisitHistoryCountDictionary collection) {
         return stores.stream()
             .map(store -> StoreWithVisitCountsResponse.of(store, collection.getStoreExistsVisitsCount(store.getId()), collection.getStoreNotExistsVisitsCount(store.getId())))
             .collect(Collectors.toList());

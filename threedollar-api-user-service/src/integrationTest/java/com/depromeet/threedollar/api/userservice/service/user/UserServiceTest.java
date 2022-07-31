@@ -227,7 +227,7 @@ class UserServiceTest extends IntegrationTest {
         @Test
         void 회원탈퇴시_연결된_디바이스도_삭제된다() {
             // given
-            User user = UserFixture.create("social-id-google", UserSocialType.GOOGLE, "닉네임");
+            User user = UserFixture.create();
             userRepository.save(user);
 
             Device device = DeviceFixture.create(String.valueOf(user.getId()), AccountType.USER_ACCOUNT, "pushToken");

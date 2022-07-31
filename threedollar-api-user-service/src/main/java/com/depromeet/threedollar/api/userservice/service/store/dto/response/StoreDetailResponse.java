@@ -16,7 +16,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreImageProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.collection.UserDictionary;
-import com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection.VisitHistoryCounter;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection.VisitHistoryCountDictionary;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryWithUserProjection;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -89,7 +89,7 @@ public class StoreDetailResponse extends AuditingTimeResponse {
     }
 
     public static StoreDetailResponse of(Store store, LocationValue deviceLocation, List<StoreImageProjection> storeImages, UserDictionary userDictionary,
-                                         List<Review> reviews, VisitHistoryCounter visitHistoriesCollection, List<VisitHistoryWithUserProjection> visitHistories) {
+                                         List<Review> reviews, VisitHistoryCountDictionary visitHistoriesCollection, List<VisitHistoryWithUserProjection> visitHistories) {
         StoreDetailResponse response = StoreDetailResponse.builder()
             .store(store)
             .distance(LocationDistanceUtils.getDistanceM(LocationValue.of(store.getLatitude(), store.getLongitude()), deviceLocation))

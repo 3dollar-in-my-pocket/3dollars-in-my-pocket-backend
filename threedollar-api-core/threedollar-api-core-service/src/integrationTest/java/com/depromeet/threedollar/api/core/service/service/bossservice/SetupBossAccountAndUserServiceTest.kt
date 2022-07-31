@@ -9,7 +9,6 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.medal.MedalReposi
 import com.depromeet.threedollar.domain.rds.domain.userservice.medal.UserMedalRepository
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository
-import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserSocialType
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -36,7 +35,7 @@ internal abstract class SetupBossAccountAndUserServiceTest : IntegrationTest() {
 
     @BeforeEach
     fun setup() {
-        userId = userRepository.save(UserFixture.create("social-id", UserSocialType.KAKAO, "디프만")).id
+        userId = userRepository.save(UserFixture.create()).id
         bossId = bossAccountRepository.save(BossAccountFixture.create(
             socialId = "social-id-test",
             socialType = BossAccountSocialType.KAKAO,
