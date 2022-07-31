@@ -20,6 +20,22 @@ class UploadProvider(
     }
 
     fun uploadFiles(requests: List<UploadFileRequest>): List<UploadFileWithSequenceResponse> {
+        if (requests.isEmpty()) {
+            return emptyList()
+        }
+
+        if (requests.size == 1) {
+            val fileUrl = uploadFile(requests[0])
+            return listOf(UploadFileWithSequenceResponse(
+                sequence = 0,
+                fileUrl = fileUrl
+            ))
+        }
+
+        return uploadBulk(requests)
+    }
+
+    private fun uploadBulk(requests: List<UploadFileRequest>): List<UploadFileWithSequenceResponse> {
         val uploadFutures = requests.mapIndexed { index, request ->
             CompletableFuture.supplyAsync {
                 request.validateAvailableUploadFile()
