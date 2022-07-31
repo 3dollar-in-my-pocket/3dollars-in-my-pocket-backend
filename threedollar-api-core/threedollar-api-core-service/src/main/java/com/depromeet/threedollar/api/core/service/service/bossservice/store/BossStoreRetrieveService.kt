@@ -31,9 +31,7 @@ class BossStoreRetrieveService(
         deviceLocation: LocationValue = LocationValue.of(0.0, 0.0),
         bossId: String? = null,
     ): List<BossStoreAroundInfoResponse> {
-        request.categoryId?.let {
-            BossStoreCategoryServiceHelper.validateExistsCategory(bossStoreCategoryRepository, it)
-        }
+        validateExistCategory(request.categoryId)
 
         val bossStores: List<BossStore> = bossStoreRepository.findAllNearBossStoresFilterByCategoryId(
             latitude = mapLocation.latitude,
@@ -43,9 +41,11 @@ class BossStoreRetrieveService(
             categoryId = request.categoryId
         )
 
+        val bossStoreIds = bossStores.map { bossStore -> bossStore.id }
         val categoriesDictionary: Map<String, BossStoreCategoryResponse> = bossStoreCategoryService.retrieveBossStoreCategories().associateBy { it.categoryId }
-        val bossStoreOpensDictionary: Map<String, BossStoreOpen> = bossStoreOpenRepository.findBossOpenStoresByIds(bossStoreIds = bossStores.map { bossStore -> bossStore.id })
+        val bossStoreOpensDictionary: Map<String, BossStoreOpen> = bossStoreOpenRepository.findBossOpenStoresByIds(bossStoreIds = bossStoreIds)
             .associateBy { it.bossStoreId }
+        val feedbackTotalCountsMap = bossStoreFeedbackCountRepository.getTotalCountsMap(bossStoreIds)
 
         return bossStores.asSequence()
             .filter { bossStore -> bossStore.isNotOwner(bossId = bossId ?: "") }
@@ -55,11 +55,17 @@ class BossStoreRetrieveService(
                     categories = getCategories(bossStore, categoriesDictionary),
                     bossStoreOpen = bossStoreOpensDictionary[bossStore.id],
                     deviceLocation = deviceLocation,
-                    totalFeedbacksCounts = bossStoreFeedbackCountRepository.getTotalCounts(bossStore.id)
+                    totalFeedbacksCounts = feedbackTotalCountsMap[bossStore.id]
                 )
             }
             .sortedWith(request.orderType.sorted)
             .toList()
+    }
+
+    private fun validateExistCategory(categoryId: String?) {
+        if (categoryId != null) {
+            BossStoreCategoryServiceHelper.validateExistsCategory(bossStoreCategoryRepository, categoryId)
+        }
     }
 
     private fun getCategories(bossStore: BossStore, categoriesDictionary: Map<String, BossStoreCategoryResponse>): List<BossStoreCategoryResponse> {

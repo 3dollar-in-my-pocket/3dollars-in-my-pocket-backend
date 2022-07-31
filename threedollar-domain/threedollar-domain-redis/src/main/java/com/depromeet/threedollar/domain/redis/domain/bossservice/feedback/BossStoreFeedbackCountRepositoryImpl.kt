@@ -24,6 +24,14 @@ class BossStoreFeedbackCountRepositoryImpl(
             .sum()
     }
 
+    override fun getTotalCountsMap(bossStoreIds: List<String>): Map<String, Int> {
+        val totalCountsDictionary: MutableMap<String, Int> = mutableMapOf()
+        bossStoreIds.forEach { bossStoreId ->
+            totalCountsDictionary[bossStoreId] = getTotalCounts(bossStoreId)
+        }
+        return totalCountsDictionary
+    }
+
     override fun increase(bossStoreId: String, feedbackType: BossStoreFeedbackType) {
         val key = BossStoreFeedbackCountKey.of(
             bossStoreId = bossStoreId,

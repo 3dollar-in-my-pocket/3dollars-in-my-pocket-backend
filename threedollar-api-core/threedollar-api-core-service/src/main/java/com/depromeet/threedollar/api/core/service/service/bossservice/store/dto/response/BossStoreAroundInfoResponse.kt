@@ -7,18 +7,14 @@ import com.depromeet.threedollar.common.utils.distance.LocationDistanceUtils
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpen
 
-data class BossStoreInfoResponse(
+data class BossStoreAroundInfoResponse(
     val bossStoreId: String,
     val name: String,
     val location: LocationResponse?,
-    val imageUrl: String?,
-    val introduction: String?,
-    val contactsNumber: String?,
-    val snsUrl: String?,
     val menus: List<BossStoreMenuResponse>,
-    val appearanceDays: Set<BossStoreAppearanceDayResponse>,
     val categories: Set<BossStoreCategoryResponse>,
     val openStatus: BossStoreOpenStatusResponse,
+    val totalFeedbacksCounts: Int,
     val distance: Int,
 ) : AuditingTimeResponse() {
 
@@ -27,23 +23,18 @@ data class BossStoreInfoResponse(
             bossStore: BossStore,
             categories: List<BossStoreCategoryResponse>,
             bossStoreOpen: BossStoreOpen?,
+            totalFeedbacksCounts: Int?,
             deviceLocation: LocationValue = LocationValue.of(0.0, 0.0),
-        ): BossStoreInfoResponse {
-            val response = BossStoreInfoResponse(
+        ): BossStoreAroundInfoResponse {
+            val response = BossStoreAroundInfoResponse(
                 bossStoreId = bossStore.id,
                 name = bossStore.name,
                 location = bossStore.location?.let { LocationResponse.of(it) },
-                imageUrl = bossStore.imageUrl,
-                introduction = bossStore.introduction,
-                contactsNumber = bossStore.contactsNumber?.getNumberWithSeparator(),
-                snsUrl = bossStore.snsUrl,
                 menus = bossStore.menus.map { menu -> BossStoreMenuResponse.of(menu) },
-                appearanceDays = bossStore.appearanceDays.asSequence()
-                    .map { appearanceDay -> BossStoreAppearanceDayResponse.of(appearanceDay) }
-                    .toSet(),
                 categories = categories.toSet(),
                 openStatus = bossStoreOpen?.let { BossStoreOpenStatusResponse.open(it) }
                     ?: BossStoreOpenStatusResponse.close(),
+                totalFeedbacksCounts = totalFeedbacksCounts ?: 0,
                 distance = LocationDistanceUtils.getDistanceM(
                     LocationValue.of(bossStore.location?.latitude ?: 0.0,
                         bossStore.location?.longitude ?: 0.0

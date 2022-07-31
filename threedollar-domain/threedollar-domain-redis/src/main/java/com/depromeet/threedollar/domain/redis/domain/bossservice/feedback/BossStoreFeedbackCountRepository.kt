@@ -6,6 +6,8 @@ interface BossStoreFeedbackCountRepository {
 
     fun getTotalCounts(bossStoreId: String): Int
 
+    fun getTotalCountsMap(bossStoreIds: List<String>): Map<String, Int>
+
     fun increase(bossStoreId: String, feedbackType: BossStoreFeedbackType)
 
     fun increaseBulk(bossStoreId: String, feedbackTypes: Set<BossStoreFeedbackType>)
