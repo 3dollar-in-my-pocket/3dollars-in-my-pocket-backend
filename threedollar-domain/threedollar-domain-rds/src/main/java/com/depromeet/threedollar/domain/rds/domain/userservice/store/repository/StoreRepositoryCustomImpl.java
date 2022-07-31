@@ -93,7 +93,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
                 predicate(lastStoreId != null, () -> store.id.lt(lastStoreId))
             )
             .orderBy(store.id.desc())
-            .limit(size + 1)
+            .limit(size + 1L)
             .fetch();
 
         return StoreCursorPaging.of(findAllByIds(storeIds), size);
@@ -114,7 +114,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
                 predicate(lastStoreId != null, () -> store.id.lt(lastStoreId))
             )
             .orderBy(store.id.desc())
-            .limit(size + 1)
+            .limit(size + 1L)
             .fetch();
 
         List<StoreWithMenuProjection> stores = queryFactory

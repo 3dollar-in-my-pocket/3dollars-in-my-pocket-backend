@@ -64,7 +64,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
                 predicate(lastHistoryId != null, () -> visitHistory.id.lt(lastHistoryId))
             )
             .orderBy(visitHistory.id.desc())
-            .limit(size + 1)
+            .limit(size + 1L)
             .fetch();
 
         List<VisitHistory> visitHistories = queryFactory.selectFrom(visitHistory).distinct()

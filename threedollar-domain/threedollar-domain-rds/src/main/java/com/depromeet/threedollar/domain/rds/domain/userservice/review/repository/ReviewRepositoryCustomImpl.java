@@ -87,7 +87,7 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
                 predicate(lastStoreId != null, () -> review.id.lt(lastStoreId))
             )
             .orderBy(review.id.desc())
-            .limit(size + 1)
+            .limit(size + 1L)
             .fetch();
 
         return ReviewCursorPaging.of(reviews, size);
