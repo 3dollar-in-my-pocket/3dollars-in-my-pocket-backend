@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.api.userservice.service.visit.dto.response;
 
-import com.depromeet.threedollar.domain.rds.core.support.CursorPagingSupporter;
-import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistory;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection.VisitHistoryCursorPaging;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,7 +27,7 @@ public class VisitHistoriesCursorResponse {
         this.hasNext = LAST_CURSOR != nextCursor;
     }
 
-    public static VisitHistoriesCursorResponse of(CursorPagingSupporter<VisitHistory> visitHistoriesCursor) {
+    public static VisitHistoriesCursorResponse of(VisitHistoryCursorPaging visitHistoriesCursor) {
         List<VisitHistoryWithStoreResponse> visitHistories = convertToResponse(visitHistoriesCursor);
         if (visitHistoriesCursor.hasNext()) {
             return new VisitHistoriesCursorResponse(visitHistories, visitHistoriesCursor.getNextCursor().getId());
@@ -36,7 +35,7 @@ public class VisitHistoriesCursorResponse {
         return new VisitHistoriesCursorResponse(visitHistories, LAST_CURSOR);
     }
 
-    private static List<VisitHistoryWithStoreResponse> convertToResponse(CursorPagingSupporter<VisitHistory> visitHistoriesCursor) {
+    private static List<VisitHistoryWithStoreResponse> convertToResponse(VisitHistoryCursorPaging visitHistoriesCursor) {
         return visitHistoriesCursor.getCurrentCursorItems().stream()
             .map(VisitHistoryWithStoreResponse::of)
             .collect(Collectors.toList());

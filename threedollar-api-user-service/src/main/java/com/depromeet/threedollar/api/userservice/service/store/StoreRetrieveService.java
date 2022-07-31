@@ -18,7 +18,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepo
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.collection.StoreWithMenuProjectionPagingCursor;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.collection.StoreWithMenuCursorPaging;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreImageProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreWithMenuProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
@@ -131,10 +131,9 @@ public class StoreRetrieveService {
 
     @Transactional(readOnly = true)
     public StoresCursorResponse retrieveMyReportedStoreHistories(RetrieveMyStoresRequest request, Long userId) {
-        List<StoreWithMenuProjection> storesWithNextCursor = storeRepository.findAllByUserIdUsingCursor(userId, request.getCursor(), request.getSize() + 1);
-        StoreWithMenuProjectionPagingCursor storesPagingCursor = StoreWithMenuProjectionPagingCursor.of(storesWithNextCursor, request.getSize());
-        VisitHistoryCountDictionary visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(storesPagingCursor.getStoreIds());
-        return StoresCursorResponse.of(storesPagingCursor, visitHistoriesCounter, storeRepository.countByUserId(userId));
+        StoreWithMenuCursorPaging storeWithMenuCursorPaging = storeRepository.findAllByUserIdUsingCursor(userId, request.getCursor(), request.getSize());
+        VisitHistoryCountDictionary visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(storeWithMenuCursorPaging.getStoreIds());
+        return StoresCursorResponse.of(storeWithMenuCursorPaging, visitHistoriesCounter, storeRepository.countByUserId(userId));
     }
 
     private VisitHistoryCountDictionary findVisitHistoriesCountByStoreIdsInDuration(List<Long> storeIds) {

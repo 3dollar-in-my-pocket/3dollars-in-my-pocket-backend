@@ -1,6 +1,7 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.review.repository;
 
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.collection.ReviewCursorPaging;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -19,6 +20,6 @@ public interface ReviewRepositoryCustom {
 
     long countByUserId(Long userId);
 
-    List<Review> findAllByUserIdUsingCursor(Long userId, @Nullable Long lastStoreId, int size);
+    ReviewCursorPaging findAllByUserIdUsingCursor(Long userId, @Nullable Long lastStoreId, int size);
 
 }

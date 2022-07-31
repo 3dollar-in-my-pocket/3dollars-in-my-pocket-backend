@@ -7,16 +7,16 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ReviewPagingCursor {
+public class ReviewCursorPaging {
 
     private final CursorPagingSupporter<Review> reviewCursor;
 
-    private ReviewPagingCursor(List<Review> reviewsWithNextCursor, int size) {
+    private ReviewCursorPaging(List<Review> reviewsWithNextCursor, int size) {
         this.reviewCursor = CursorPagingSupporter.of(reviewsWithNextCursor, size);
     }
 
-    public static ReviewPagingCursor of(List<Review> reviewsWithNextCursor, int size) {
-        return new ReviewPagingCursor(reviewsWithNextCursor, size);
+    public static ReviewCursorPaging of(List<Review> reviewsWithNextCursor, int size) {
+        return new ReviewCursorPaging(reviewsWithNextCursor, size);
     }
 
     public boolean hasNext() {

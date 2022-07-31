@@ -2,6 +2,7 @@ package com.depromeet.threedollar.domain.rds.domain.userservice.review.repositor
 
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewStatus;
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.collection.ReviewCursorPaging;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.Nullable;
@@ -78,16 +79,18 @@ public class ReviewRepositoryCustomImpl implements ReviewRepositoryCustom {
     }
 
     @Override
-    public List<Review> findAllByUserIdUsingCursor(Long userId, @Nullable Long lastStoreId, int size) {
-        return queryFactory.selectFrom(review)
+    public ReviewCursorPaging findAllByUserIdUsingCursor(Long userId, @Nullable Long lastStoreId, int size) {
+        List<Review> reviews = queryFactory.selectFrom(review)
             .where(
                 review.userId.eq(userId),
                 review.status.eq(ReviewStatus.POSTED),
                 predicate(lastStoreId != null, () -> review.id.lt(lastStoreId))
             )
             .orderBy(review.id.desc())
-            .limit(size)
+            .limit(size + 1)
             .fetch();
+
+        return ReviewCursorPaging.of(reviews, size);
     }
 
 }

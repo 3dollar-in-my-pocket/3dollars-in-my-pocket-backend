@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.userservice.service.store.dto.response;
 
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.collection.StoreWithMenuProjectionPagingCursor;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.collection.StoreWithMenuCursorPaging;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreWithMenuProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection.VisitHistoryCountDictionary;
 import lombok.AccessLevel;
@@ -31,10 +31,10 @@ public class StoresCursorResponse {
         this.hasNext = LAST_CURSOR != nextCursor;
     }
 
-    public static StoresCursorResponse of(StoreWithMenuProjectionPagingCursor storesPagingCursor, VisitHistoryCountDictionary visitHistoriesCounts, long totalElements) {
-        List<StoreWithVisitCountsResponse> storesWithVisitCounts = combineStoreWithVisitsResponse(storesPagingCursor.getCurrentCursorItems(), visitHistoriesCounts);
-        if (storesPagingCursor.hasNext()) {
-            return new StoresCursorResponse(storesWithVisitCounts, totalElements, storesPagingCursor.getNextCursor().getId());
+    public static StoresCursorResponse of(StoreWithMenuCursorPaging storeWithMenuCursorPaging, VisitHistoryCountDictionary visitHistoriesCounts, long totalElements) {
+        List<StoreWithVisitCountsResponse> storesWithVisitCounts = combineStoreWithVisitsResponse(storeWithMenuCursorPaging.getCurrentCursorItems(), visitHistoriesCounts);
+        if (storeWithMenuCursorPaging.hasNext()) {
+            return new StoresCursorResponse(storesWithVisitCounts, totalElements, storeWithMenuCursorPaging.getNextCursor().getId());
         }
         return new StoresCursorResponse(storesWithVisitCounts, totalElements, LAST_CURSOR);
     }

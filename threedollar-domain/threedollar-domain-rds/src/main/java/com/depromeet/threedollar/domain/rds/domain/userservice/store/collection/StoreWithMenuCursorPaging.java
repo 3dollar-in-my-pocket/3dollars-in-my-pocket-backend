@@ -7,16 +7,16 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class StoreWithMenuProjectionPagingCursor {
+public class StoreWithMenuCursorPaging {
 
     private final CursorPagingSupporter<StoreWithMenuProjection> storesCursor;
 
-    private StoreWithMenuProjectionPagingCursor(List<StoreWithMenuProjection> storesWithNextCursor, int size) {
+    private StoreWithMenuCursorPaging(List<StoreWithMenuProjection> storesWithNextCursor, int size) {
         this.storesCursor = CursorPagingSupporter.of(storesWithNextCursor, size);
     }
 
-    public static StoreWithMenuProjectionPagingCursor of(List<StoreWithMenuProjection> storeWithNextCursor, int size) {
-        return new StoreWithMenuProjectionPagingCursor(storeWithNextCursor, size);
+    public static StoreWithMenuCursorPaging of(List<StoreWithMenuProjection> storeWithNextCursor, int size) {
+        return new StoreWithMenuCursorPaging(storeWithNextCursor, size);
     }
 
     public boolean hasNext() {

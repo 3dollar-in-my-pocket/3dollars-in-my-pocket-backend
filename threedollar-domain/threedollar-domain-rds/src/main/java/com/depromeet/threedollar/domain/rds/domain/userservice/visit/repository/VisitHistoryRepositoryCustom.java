@@ -1,8 +1,8 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.visit.repository;
 
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
-import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistory;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection.VisitHistoryCursorPaging;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryCountProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryWithUserProjection;
 import org.jetbrains.annotations.Nullable;
@@ -16,7 +16,7 @@ public interface VisitHistoryRepositoryCustom {
 
     List<VisitHistoryWithUserProjection> findAllVisitWithUserByStoreIdAfterDate(Long storeId, LocalDate startDate);
 
-    List<VisitHistory> findAllByUserIdUsingCursor(Long userId, @Nullable Long lastHistoryId, int size);
+    VisitHistoryCursorPaging findAllByUserIdUsingCursor(Long userId, @Nullable Long lastHistoryId, int size);
 
     List<VisitHistoryCountProjection> countGroupingByStoreId(List<Long> storeIds, LocalDate startDate);
 

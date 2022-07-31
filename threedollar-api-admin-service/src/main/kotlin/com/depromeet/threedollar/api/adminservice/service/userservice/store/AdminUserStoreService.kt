@@ -6,7 +6,6 @@ import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.
 import com.depromeet.threedollar.api.adminservice.service.userservice.store.dto.response.StoreInfosWithCursorResponse
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.exception.type.ErrorCode
-import com.depromeet.threedollar.domain.rds.core.support.CursorPagingSupporter
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -28,8 +27,7 @@ class AdminUserStoreService(
 
     @Transactional(readOnly = true)
     fun retrieveLatestStores(request: RetrieveLatestStoresRequest): StoreInfosWithCursorResponse {
-        val storesWithNextCursor = storeRepository.findAllUsingCursor(request.cursor, request.size + 1)
-        val storesCursor = CursorPagingSupporter.of(storesWithNextCursor, request.size)
+        val storesCursor = storeRepository.findAllUsingCursor(request.cursor, request.size)
         return StoreInfosWithCursorResponse.of(storesCursor)
     }
 

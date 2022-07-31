@@ -3,6 +3,8 @@ package com.depromeet.threedollar.domain.rds.domain.userservice.store.repository
 import com.depromeet.threedollar.domain.rds.core.support.OrderByNull;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreStatus;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.collection.StoreCursorPaging;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.collection.StoreWithMenuCursorPaging;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.QStoreWithMenuProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.QStoreWithMenuProjection_MenuProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreWithMenuProjection;
@@ -83,7 +85,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
     }
 
     @Override
-    public List<Store> findAllUsingCursor(@Nullable Long lastStoreId, int size) {
+    public StoreCursorPaging findAllUsingCursor(@Nullable Long lastStoreId, int size) {
         List<Long> storeIds = queryFactory.select(store.id).distinct()
             .from(store)
             .innerJoin(menu).on(menu.store.id.eq(store.id))
@@ -91,10 +93,10 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
                 predicate(lastStoreId != null, () -> store.id.lt(lastStoreId))
             )
             .orderBy(store.id.desc())
-            .limit(size)
+            .limit(size + 1)
             .fetch();
 
-        return findAllByIds(storeIds);
+        return StoreCursorPaging.of(findAllByIds(storeIds), size);
     }
 
     /**
@@ -103,7 +105,7 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
      * 이 문제를 해결하기 위해서 StoreId 리스트 조회 후 페치조인하는 방식으로 조회.
      */
     @Override
-    public List<StoreWithMenuProjection> findAllByUserIdUsingCursor(Long userId, @Nullable Long lastStoreId, int size) {
+    public StoreWithMenuCursorPaging findAllByUserIdUsingCursor(Long userId, @Nullable Long lastStoreId, int size) {
         List<Long> storeIds = queryFactory.select(store.id).distinct()
             .from(store)
             .innerJoin(menu).on(menu.store.id.eq(store.id))
@@ -112,10 +114,10 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
                 predicate(lastStoreId != null, () -> store.id.lt(lastStoreId))
             )
             .orderBy(store.id.desc())
-            .limit(size)
+            .limit(size + 1)
             .fetch();
 
-        return queryFactory
+        List<StoreWithMenuProjection> stores = queryFactory
             .from(store)
             .innerJoin(menu).on(menu.store.id.eq(store.id))
             .where(
@@ -123,6 +125,8 @@ public class StoreRepositoryCustomImpl implements StoreRepositoryCustom {
             )
             .orderBy(store.id.desc())
             .transform(groupBy(store.id).list(getStoreProjection()));
+
+        return StoreWithMenuCursorPaging.of(stores, size);
     }
 
     /**

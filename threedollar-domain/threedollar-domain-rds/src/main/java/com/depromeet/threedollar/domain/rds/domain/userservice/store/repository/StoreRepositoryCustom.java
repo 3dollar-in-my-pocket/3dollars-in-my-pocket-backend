@@ -1,6 +1,8 @@
 package com.depromeet.threedollar.domain.rds.domain.userservice.store.repository;
 
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.collection.StoreCursorPaging;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.collection.StoreWithMenuCursorPaging;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreWithMenuProjection;
 import org.jetbrains.annotations.Nullable;
 
@@ -18,9 +20,9 @@ public interface StoreRepositoryCustom {
 
     long countByUserId(Long userId);
 
-    List<Store> findAllUsingCursor(@Nullable Long lastStoreId, int size);
+    StoreCursorPaging findAllUsingCursor(@Nullable Long lastStoreId, int size);
 
-    List<StoreWithMenuProjection> findAllByUserIdUsingCursor(Long userId, @Nullable Long lastStoreId, int size);
+    StoreWithMenuCursorPaging findAllByUserIdUsingCursor(Long userId, @Nullable Long lastStoreId, int size);
 
     List<StoreWithMenuProjection> findStoresByLocationLessThanDistance(double latitude, double longitude, double distance);
 

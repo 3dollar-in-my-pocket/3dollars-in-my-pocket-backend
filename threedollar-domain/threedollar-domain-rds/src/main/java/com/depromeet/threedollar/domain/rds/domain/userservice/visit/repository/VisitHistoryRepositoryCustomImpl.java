@@ -3,6 +3,7 @@ package com.depromeet.threedollar.domain.rds.domain.userservice.visit.repository
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistory;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection.VisitHistoryCursorPaging;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.QVisitHistoryCountProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.QVisitHistoryWithUserProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryCountProjection;
@@ -55,7 +56,7 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
     }
 
     @Override
-    public List<VisitHistory> findAllByUserIdUsingCursor(Long userId, @Nullable Long lastHistoryId, int size) {
+    public VisitHistoryCursorPaging findAllByUserIdUsingCursor(Long userId, @Nullable Long lastHistoryId, int size) {
         List<Long> visitHistoriesIds = queryFactory.select(visitHistory.id)
             .from(visitHistory)
             .where(
@@ -63,10 +64,10 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
                 predicate(lastHistoryId != null, () -> visitHistory.id.lt(lastHistoryId))
             )
             .orderBy(visitHistory.id.desc())
-            .limit(size)
+            .limit(size + 1)
             .fetch();
 
-        return queryFactory.selectFrom(visitHistory).distinct()
+        List<VisitHistory> visitHistories = queryFactory.selectFrom(visitHistory).distinct()
             .innerJoin(visitHistory.store, store).fetchJoin()
             .innerJoin(store.menus, menu).fetchJoin()
             .where(
@@ -74,6 +75,8 @@ public class VisitHistoryRepositoryCustomImpl implements VisitHistoryRepositoryC
             )
             .orderBy(visitHistory.id.desc())
             .fetch();
+
+        return VisitHistoryCursorPaging.of(visitHistories, size);
     }
 
     @Override
