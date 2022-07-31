@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.userservice.controller.bossservice.store
 import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import com.depromeet.threedollar.api.core.service.config.resolver.DeviceLocation
 import com.depromeet.threedollar.api.core.service.config.resolver.MapLocation
-import com.depromeet.threedollar.api.core.service.service.bossservice.store.BossStoreRetrieveFacadeService
+import com.depromeet.threedollar.api.core.service.service.bossservice.feedback.BossStoreFeedbackService
 import com.depromeet.threedollar.api.core.service.service.bossservice.store.BossStoreRetrieveService
 import com.depromeet.threedollar.api.core.service.service.bossservice.store.dto.request.GetAroundBossStoresRequest
 import com.depromeet.threedollar.api.core.service.service.bossservice.store.dto.response.BossStoreAroundInfoResponse
@@ -20,7 +20,7 @@ import javax.validation.Valid
 @RestController
 class BossStoreController(
     private val bossStoreRetrieveService: BossStoreRetrieveService,
-    private val bossStoreRetrieveFacadeService: BossStoreRetrieveFacadeService,
+    private val bossStoreFeedbackService: BossStoreFeedbackService,
 ) {
 
     @ApiOperation("주변의 사장님 가게 목록을 조회합니다")
@@ -54,9 +54,9 @@ class BossStoreController(
         @PathVariable bossStoreId: String,
         @DeviceLocation(required = false) deviceLocation: LocationValue,
     ): ApiResponse<BossStoreWithFeedbacksResponse> {
-        return ApiResponse.success(bossStoreRetrieveFacadeService.retrieveBossStoreWithFeedback(
-            bossStoreId = bossStoreId,
-            deviceLocation = deviceLocation
+        return ApiResponse.success(BossStoreWithFeedbacksResponse.of(
+            store = bossStoreRetrieveService.getBossStore(storeId = bossStoreId, deviceLocation = deviceLocation),
+            feedbacks = bossStoreFeedbackService.getBossStoreFeedbacksCounts(bossStoreId = bossStoreId)
         ))
     }
 
