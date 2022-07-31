@@ -30,3 +30,13 @@ client.test("200 OK", () => {
 });
 %}
 
+
+### 특정 사장님 가게의 정보와 피드백 정보를 조회합니다
+GET {{user-api}}/v1/boss/store/{{BOSS_STORE_ID}}/detail?latitude=38.0&longitude=127.1
+Authorization: {{AUTHORIZATION}}
+
+> {%
+client.test("200 OK", () => {
+    client.assert(response.status === 200, "응답 실패");
+});
+%}
