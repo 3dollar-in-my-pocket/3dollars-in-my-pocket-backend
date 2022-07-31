@@ -10,6 +10,7 @@ import com.depromeet.threedollar.api.userservice.service.store.dto.response.Stor
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoreInfoResponse;
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoreWithVisitsAndDistanceResponse;
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoresCursorResponse;
+import com.depromeet.threedollar.api.userservice.service.user.UserServiceHelper;
 import com.depromeet.threedollar.common.model.LocationValue;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
@@ -110,7 +111,7 @@ public class StoreRetrieveService {
         List<Review> reviews = reviewRepository.findAllByStoreId(request.getStoreId());
         List<StoreImageProjection> storeImages = storeImageRepository.findAllByStoreId(request.getStoreId());
         List<VisitHistoryWithUserProjection> visitHistories = visitHistoryRepository.findAllVisitWithUserByStoreIdAfterDate(request.getStoreId(), request.getStartDate());
-        UserDictionary userDictionary = UserDictionary.of(userRepository.findAllByUserId(collectUserIds(reviews, visitHistories, store)));
+        UserDictionary userDictionary = UserServiceHelper.findUserDictionary(userRepository, collectUserIds(reviews, visitHistories, store));
         VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(List.of(store.getId()));
         return StoreDetailResponse.of(store, deviceLocation, storeImages, userDictionary, reviews, visitHistoriesCounter, visitHistories);
     }

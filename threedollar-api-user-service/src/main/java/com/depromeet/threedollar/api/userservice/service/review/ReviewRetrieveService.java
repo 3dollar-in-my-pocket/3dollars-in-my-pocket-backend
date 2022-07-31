@@ -31,7 +31,7 @@ public class ReviewRetrieveService {
     public ReviewsCursorResponse retrieveMyReviewHistories(RetrieveMyReviewsRequest request, Long userId) {
         User user = UserServiceHelper.findUserById(userRepository, userId);
         ReviewPagingCursor reviewsPagingCursor = getReviewsPagingCursor(userId, request.getCursor(), request.getSize());
-        StoreDictionary storeDictionary = StoreServiceHelper.getStoreDictionary(storeRepository, reviewsPagingCursor.getStoreIds());
+        StoreDictionary storeDictionary = StoreServiceHelper.findStoreDictionary(storeRepository, reviewsPagingCursor.getStoreIds());
         return ReviewsCursorResponse.of(reviewsPagingCursor, storeDictionary, user);
     }
 

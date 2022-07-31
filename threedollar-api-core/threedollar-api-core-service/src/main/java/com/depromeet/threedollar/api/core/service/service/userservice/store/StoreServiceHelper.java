@@ -39,7 +39,8 @@ public class StoreServiceHelper {
         return store;
     }
 
-    public static StoreDictionary getStoreDictionary(StoreRepository storeRepository, List<Long> storeIds) {
+    @NotNull
+    public static StoreDictionary findStoreDictionary(StoreRepository storeRepository, List<Long> storeIds) {
         return StoreDictionary.of(storeRepository.findAllByIds(storeIds));
     }
 
