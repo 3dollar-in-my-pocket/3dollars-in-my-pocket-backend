@@ -1,21 +1,23 @@
 package com.depromeet.threedollar.api.userservice.service.review;
 
+import com.depromeet.threedollar.api.core.service.service.userservice.store.StoreServiceHelper;
 import com.depromeet.threedollar.api.userservice.service.review.dto.request.RetrieveMyReviewsRequest;
 import com.depromeet.threedollar.api.userservice.service.review.dto.response.ReviewsCursorResponse;
 import com.depromeet.threedollar.api.userservice.service.user.UserServiceHelper;
-import com.depromeet.threedollar.domain.rds.core.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.support.ReviewPagingCursor;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.collection.StoreDictionary;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -28,17 +30,14 @@ public class ReviewRetrieveService {
     @Transactional(readOnly = true)
     public ReviewsCursorResponse retrieveMyReviewHistories(RetrieveMyReviewsRequest request, Long userId) {
         User user = UserServiceHelper.findUserById(userRepository, userId);
-        List<Review> reviewsWithNextCursor = reviewRepository.findAllByUserIdUsingCursor(userId, request.getCursor(), request.getSize() + 1);
-        CursorPagingSupporter<Review> reviewsCursor = CursorPagingSupporter.of(reviewsWithNextCursor, request.getSize());
-        StoreDictionary storeDictionary = findStoresByReviews(reviewsCursor.getCurrentCursorItems());
-        return ReviewsCursorResponse.of(reviewsCursor, storeDictionary, user);
+        ReviewPagingCursor reviewsPagingCursor = getReviewsPagingCursor(userId, request.getCursor(), request.getSize());
+        StoreDictionary storeDictionary = StoreServiceHelper.getStoreDictionary(storeRepository, reviewsPagingCursor.getStoreIds());
+        return ReviewsCursorResponse.of(reviewsPagingCursor, storeDictionary, user);
     }
 
-    private StoreDictionary findStoresByReviews(List<Review> reviews) {
-        List<Long> storeIds = reviews.stream()
-            .map(Review::getStoreId)
-            .collect(Collectors.toList());
-        return StoreDictionary.of(storeRepository.findAllByIds(storeIds));
+    private ReviewPagingCursor getReviewsPagingCursor(@NotNull Long userId, @Nullable Long cursor, int size) {
+        List<Review> reviewsWithNextCursor = reviewRepository.findAllByUserIdUsingCursor(userId, cursor, size + 1);
+        return ReviewPagingCursor.of(reviewsWithNextCursor, size);
     }
 
 }

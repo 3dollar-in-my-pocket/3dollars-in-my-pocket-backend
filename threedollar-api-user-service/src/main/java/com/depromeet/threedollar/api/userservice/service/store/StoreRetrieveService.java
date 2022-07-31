@@ -12,7 +12,6 @@ import com.depromeet.threedollar.api.userservice.service.store.dto.response.Stor
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoresCursorResponse;
 import com.depromeet.threedollar.common.model.LocationValue;
 import com.depromeet.threedollar.common.type.UserMenuCategoryType;
-import com.depromeet.threedollar.domain.rds.core.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
@@ -20,6 +19,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageR
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreImageProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreWithMenuProjection;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.support.StoreWithMenuProjectionPagingCursor;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.collection.UserDictionary;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository;
@@ -131,12 +131,9 @@ public class StoreRetrieveService {
     @Transactional(readOnly = true)
     public StoresCursorResponse retrieveMyReportedStoreHistories(RetrieveMyStoresRequest request, Long userId) {
         List<StoreWithMenuProjection> storesWithNextCursor = storeRepository.findAllByUserIdUsingCursor(userId, request.getCursor(), request.getSize() + 1);
-        CursorPagingSupporter<StoreWithMenuProjection> storesCursor = CursorPagingSupporter.of(storesWithNextCursor, request.getSize());
-        VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(storesCursor.getCurrentCursorItems().stream()
-            .map(StoreWithMenuProjection::getId)
-            .collect(Collectors.toList())
-        );
-        return StoresCursorResponse.of(storesCursor, visitHistoriesCounter, storeRepository.countByUserId(userId));
+        StoreWithMenuProjectionPagingCursor storesPagingCursor = StoreWithMenuProjectionPagingCursor.of(storesWithNextCursor, request.getSize());
+        VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(storesPagingCursor.getStoreIds());
+        return StoresCursorResponse.of(storesPagingCursor, visitHistoriesCounter, storeRepository.countByUserId(userId));
     }
 
     private VisitHistoryCounter findVisitHistoriesCountByStoreIdsInDuration(List<Long> storeIds) {

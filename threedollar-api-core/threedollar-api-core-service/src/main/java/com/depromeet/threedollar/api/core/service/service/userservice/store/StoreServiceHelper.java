@@ -3,9 +3,12 @@ package com.depromeet.threedollar.api.core.service.service.userservice.store;
 import com.depromeet.threedollar.common.exception.model.NotFoundException;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.collection.StoreDictionary;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 import static com.depromeet.threedollar.common.exception.type.ErrorCode.E404_NOT_EXISTS_STORE;
 
@@ -34,6 +37,10 @@ public class StoreServiceHelper {
             throw new NotFoundException(String.format("해당하는 유저 가게(%s)는 존재하지 않습니다", storeId), E404_NOT_EXISTS_STORE);
         }
         return store;
+    }
+
+    public static StoreDictionary getStoreDictionary(StoreRepository storeRepository, List<Long> storeIds) {
+        return StoreDictionary.of(storeRepository.findAllByIds(storeIds));
     }
 
 }

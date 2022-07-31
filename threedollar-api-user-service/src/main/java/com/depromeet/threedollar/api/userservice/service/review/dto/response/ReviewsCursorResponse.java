@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.userservice.service.review.dto.response;
 
-import com.depromeet.threedollar.domain.rds.core.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.support.ReviewPagingCursor;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.collection.StoreDictionary;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import lombok.AccessLevel;
@@ -31,10 +31,10 @@ public class ReviewsCursorResponse {
         this.hasNext = LAST_CURSOR != nextCursor;
     }
 
-    public static ReviewsCursorResponse of(@NotNull CursorPagingSupporter<Review> reviewsCursor, @NotNull StoreDictionary storeDictionary, @NotNull User user) {
-        List<ReviewDetailResponse> reviews = combineReviewDetailResponse(reviewsCursor.getCurrentCursorItems(), storeDictionary, user);
-        if (reviewsCursor.hasNext()) {
-            return new ReviewsCursorResponse(reviews, reviewsCursor.getNextCursor().getId());
+    public static ReviewsCursorResponse of(@NotNull ReviewPagingCursor reviewsPagingCursor, @NotNull StoreDictionary storeDictionary, @NotNull User user) {
+        List<ReviewDetailResponse> reviews = combineReviewDetailResponse(reviewsPagingCursor.getCurrentCursorItems(), storeDictionary, user);
+        if (reviewsPagingCursor.hasNext()) {
+            return new ReviewsCursorResponse(reviews, reviewsPagingCursor.getNextCursor().getId());
         }
         return new ReviewsCursorResponse(reviews, LAST_CURSOR);
     }
