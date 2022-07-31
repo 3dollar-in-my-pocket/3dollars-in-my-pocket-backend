@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.userservice.service.store.dto.response;
 
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.collection.StoreWithMenuProjectionPagingCursor;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreWithMenuProjection;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.support.StoreWithMenuProjectionPagingCursor;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection.VisitHistoryCounter;
 import lombok.AccessLevel;
 import lombok.Getter;

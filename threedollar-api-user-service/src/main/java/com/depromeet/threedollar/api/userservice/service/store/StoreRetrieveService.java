@@ -18,9 +18,9 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepo
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.Store;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreImageRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
+import com.depromeet.threedollar.domain.rds.domain.userservice.store.collection.StoreWithMenuProjectionPagingCursor;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreImageProjection;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.StoreWithMenuProjection;
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.support.StoreWithMenuProjectionPagingCursor;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.collection.UserDictionary;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository;

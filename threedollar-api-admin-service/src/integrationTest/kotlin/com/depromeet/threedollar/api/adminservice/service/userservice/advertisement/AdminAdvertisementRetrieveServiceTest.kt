@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
-internal class AdminAdvertisementServiceTest(
+internal class AdminAdvertisementRetrieveServiceTest(
     private val adminAdvertisementService: AdminAdvertisementService,
     private val advertisementRepository: AdvertisementRepository,
 ) : IntegrationTest() {

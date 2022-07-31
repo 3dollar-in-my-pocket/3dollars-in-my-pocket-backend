@@ -1,6 +1,5 @@
 package com.depromeet.threedollar.api.userservice.service.user;
 
-import com.depromeet.threedollar.api.userservice.service.user.dto.request.CheckAvailableNameRequest;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.CreateUserRequest;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.UpdateUserInfoRequest;
 import com.depromeet.threedollar.api.userservice.service.user.dto.response.UserInfoResponse;
@@ -34,17 +33,6 @@ public class UserService {
         User user = userRepository.save(request.toEntity());
         eventPublisher.publishEvent(NewUserCreatedEvent.of(user.getId()));
         return user.getId();
-    }
-
-    @Transactional(readOnly = true)
-    public UserInfoResponse getUserInfo(Long userId) {
-        User user = UserServiceHelper.findUserById(userRepository, userId);
-        return UserInfoResponse.of(user);
-    }
-
-    @Transactional(readOnly = true)
-    public void checkIsAvailableName(CheckAvailableNameRequest request) {
-        UserServiceHelper.validateNotExistsUserName(userRepository, request.getName());
     }
 
     @Transactional

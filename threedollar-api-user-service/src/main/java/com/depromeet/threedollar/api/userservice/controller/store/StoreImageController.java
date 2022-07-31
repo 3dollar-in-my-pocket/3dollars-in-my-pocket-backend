@@ -3,6 +3,7 @@ package com.depromeet.threedollar.api.userservice.controller.store;
 import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse;
 import com.depromeet.threedollar.api.userservice.config.interceptor.Auth;
 import com.depromeet.threedollar.api.userservice.config.resolver.UserId;
+import com.depromeet.threedollar.api.userservice.service.store.StoreImageRetrieveService;
 import com.depromeet.threedollar.api.userservice.service.store.StoreImageService;
 import com.depromeet.threedollar.api.userservice.service.store.dto.request.AddStoreImageRequest;
 import com.depromeet.threedollar.api.userservice.service.store.dto.response.StoreImageResponse;
@@ -27,6 +28,8 @@ import java.util.List;
 public class StoreImageController {
 
     private final StoreImageService storeImageService;
+    private final StoreImageRetrieveService storeImageRetrieveService;
+
 
     @ApiOperation("[인증] 가게에 등록된 이미지 목록을 조회합니다")
     @Auth
@@ -34,7 +37,7 @@ public class StoreImageController {
     public ApiResponse<List<StoreImageResponse>> getStoreImages(
         @PathVariable Long storeId
     ) {
-        return ApiResponse.success(storeImageService.getStoreImages(storeId));
+        return ApiResponse.success(storeImageRetrieveService.getStoreImages(storeId));
     }
 
     @ApiOperation("[인증] 가게에 신규 이미지들을 등록합니다")

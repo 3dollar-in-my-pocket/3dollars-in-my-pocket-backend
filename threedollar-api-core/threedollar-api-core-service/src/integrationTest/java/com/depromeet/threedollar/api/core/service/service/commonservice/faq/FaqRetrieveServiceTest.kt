@@ -9,8 +9,8 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 
-internal class FaqServiceTest(
-    private val faqService: FaqService,
+internal class FaqRetrieveServiceTest(
+    private val faqRetrieveService: FaqRetrieveService,
 ) : IntegrationTest() {
 
     @Test
@@ -22,7 +22,7 @@ internal class FaqServiceTest(
 
         // when & then
         assertThatThrownBy {
-            faqService.retrieveFaqsByCategory(applicationType = applicationType, request = request)
+            faqRetrieveService.retrieveFaqsByCategory(applicationType = applicationType, request = request)
         }.isInstanceOf(ForbiddenException::class.java)
     }
 
@@ -34,7 +34,7 @@ internal class FaqServiceTest(
         val request = RetrieveFaqsRequest(category = FaqCategory.REVIEW_MENU)
 
         // when & then
-        assertDoesNotThrow { faqService.retrieveFaqsByCategory(applicationType = applicationType, request = request) }
+        assertDoesNotThrow { faqRetrieveService.retrieveFaqsByCategory(applicationType = applicationType, request = request) }
     }
 
 }

@@ -3,6 +3,7 @@ package com.depromeet.threedollar.api.userservice.controller.visit;
 import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse;
 import com.depromeet.threedollar.api.userservice.config.interceptor.Auth;
 import com.depromeet.threedollar.api.userservice.config.resolver.UserId;
+import com.depromeet.threedollar.api.userservice.service.visit.VisitHistoryRetrieveService;
 import com.depromeet.threedollar.api.userservice.service.visit.VisitHistoryService;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.request.AddVisitHistoryRequest;
 import com.depromeet.threedollar.api.userservice.service.visit.dto.request.RetrieveMyVisitHistoriesRequest;
@@ -24,6 +25,7 @@ import java.time.LocalDate;
 public class VisitHistoryController {
 
     private final VisitHistoryService visitHistoryService;
+    private final VisitHistoryRetrieveService visitHistoryRetrieveService;
     private final ApplicationEventPublisher eventPublisher;
 
     @ApiOperation("[인증] 특정 가게에 방문 인증을 추가합니다")
@@ -45,7 +47,7 @@ public class VisitHistoryController {
         @Valid RetrieveMyVisitHistoriesRequest request,
         @UserId Long userId
     ) {
-        return ApiResponse.success(visitHistoryService.retrieveMyVisitHistories(request, userId));
+        return ApiResponse.success(visitHistoryRetrieveService.retrieveMyVisitHistories(request, userId));
     }
 
 }

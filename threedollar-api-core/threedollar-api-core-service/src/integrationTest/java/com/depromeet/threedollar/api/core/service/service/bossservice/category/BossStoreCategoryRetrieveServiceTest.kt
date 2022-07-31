@@ -8,8 +8,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
-internal class BossStoreCategoryServiceTest(
-    private val bossStoreCategoryService: BossStoreCategoryService,
+internal class BossStoreCategoryRetrieveServiceTest(
+    private val bossStoreCategoryRetrieveService: BossStoreCategoryRetrieveService,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossStoreCategoryCacheRepository: BossStoreCategoryCacheRepository,
 ) : IntegrationTest() {
@@ -23,7 +23,7 @@ internal class BossStoreCategoryServiceTest(
     @Test
     fun `카테고리 목록이 캐시에 없는 경우, MongoDB에서 가져온 데이터를 Redis에 저장한다`() {
         // when
-        bossStoreCategoryService.retrieveBossStoreCategories()
+        bossStoreCategoryRetrieveService.retrieveBossStoreCategories()
 
         val bossStoreCategories = bossStoreCategoryCacheRepository.getCache()
         assertThat(bossStoreCategories).isNotNull
@@ -36,7 +36,7 @@ internal class BossStoreCategoryServiceTest(
         bossStoreCategoryRepository.save(category)
 
         // when
-        bossStoreCategoryService.retrieveBossStoreCategoriesByIds(listOf(category.id))
+        bossStoreCategoryRetrieveService.retrieveBossStoreCategoriesByIds(listOf(category.id))
 
         // then
         val bossStoreCategories = bossStoreCategoryCacheRepository.getCache()

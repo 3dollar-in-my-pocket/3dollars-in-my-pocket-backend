@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.userservice.controller.advertisement
 
 import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
-import com.depromeet.threedollar.api.core.service.service.commonservice.advertisement.AdvertisementService
+import com.depromeet.threedollar.api.core.service.service.commonservice.advertisement.AdvertisementRetrieveService
 import com.depromeet.threedollar.api.core.service.service.commonservice.advertisement.dto.request.RetrieveAdvertisementsRequest
 import com.depromeet.threedollar.api.core.service.service.commonservice.advertisement.dto.response.AdvertisementResponse
 import com.depromeet.threedollar.common.type.ApplicationType
@@ -12,7 +12,7 @@ import javax.validation.Valid
 
 @RestController
 class AdvertisementController(
-    private val advertisementService: AdvertisementService,
+    private val advertisementRetrieveService: AdvertisementRetrieveService,
 ) {
 
     @Deprecated(message = "v2.2.3 부터 Deprecated GET /v1/advertisements 로 대체")
@@ -21,7 +21,7 @@ class AdvertisementController(
     fun getAdvertisementsV1(
         @Valid request: RetrieveAdvertisementsRequest,
     ): ApiResponse<List<AdvertisementResponse>> {
-        return ApiResponse.success(advertisementService.getAdvertisements(applicationType = ApplicationType.USER_API, request = request))
+        return ApiResponse.success(advertisementRetrieveService.getAdvertisements(applicationType = ApplicationType.USER_API, request = request))
     }
 
     @ApiOperation("활성화중인 광고 목록을 조회합니다")
@@ -29,7 +29,7 @@ class AdvertisementController(
     fun getActivatedAdvertisements(
         @Valid request: RetrieveAdvertisementsRequest,
     ): ApiResponse<List<AdvertisementResponse>> {
-        return ApiResponse.success(advertisementService.getAdvertisements(applicationType = ApplicationType.USER_API, request = request))
+        return ApiResponse.success(advertisementRetrieveService.getAdvertisements(applicationType = ApplicationType.USER_API, request = request))
     }
 
 }

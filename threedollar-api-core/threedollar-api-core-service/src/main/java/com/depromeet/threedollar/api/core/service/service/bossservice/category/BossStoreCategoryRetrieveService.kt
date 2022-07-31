@@ -7,7 +7,7 @@ import com.depromeet.threedollar.domain.redis.domain.bossservice.category.BossSt
 import org.springframework.stereotype.Service
 
 @Service
-class BossStoreCategoryService(
+class BossStoreCategoryRetrieveService(
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossStoreCategoryCacheRepository: BossStoreCategoryCacheRepository,
 ) {

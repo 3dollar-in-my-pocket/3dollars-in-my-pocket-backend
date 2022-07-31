@@ -25,9 +25,6 @@ import java.util.stream.Collectors;
 @Service
 public class StoreImageService {
 
-    private static final FileType FILE_TYPE = FileType.STORE_IMAGE;
-    private static final ApplicationType APPLICATION_TYPE = ApplicationType.USER_API;
-
     private final StoreRepository storeRepository;
     private final StoreImageRepository storeImageRepository;
 
@@ -37,7 +34,7 @@ public class StoreImageService {
         StoreServiceHelper.validateExistsStore(storeRepository, request.getStoreId());
 
         List<UploadFileRequest> uploadFileRequests = imageFiles.stream()
-            .map(imageFile -> ImageUploadFileRequest.of(imageFile, FILE_TYPE, APPLICATION_TYPE))
+            .map(imageFile -> ImageUploadFileRequest.of(imageFile, FileType.STORE_IMAGE, ApplicationType.USER_API))
             .collect(Collectors.toList());
 
         return uploadProvider.uploadFiles(uploadFileRequests).stream()
@@ -57,14 +54,6 @@ public class StoreImageService {
         StoreImage storeImage = StoreImageServiceHelper.findStoreImageById(storeImageRepository, imageId);
         storeImage.delete();
         storeImageRepository.save(storeImage);
-    }
-
-    @Transactional(readOnly = true)
-    public List<StoreImageResponse> getStoreImages(Long storeId) {
-        StoreServiceHelper.validateExistsStore(storeRepository, storeId);
-        return storeImageRepository.findAllByStoreId(storeId).stream()
-            .map(StoreImageResponse::of)
-            .collect(Collectors.toList());
     }
 
 }

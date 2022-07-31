@@ -2,6 +2,7 @@ package com.depromeet.threedollar.api.bossservice.controller.account
 
 import com.depromeet.threedollar.api.bossservice.config.interceptor.Auth
 import com.depromeet.threedollar.api.bossservice.config.resolver.BossId
+import com.depromeet.threedollar.api.bossservice.service.account.BossAccountRetrieveService
 import com.depromeet.threedollar.api.bossservice.service.account.BossAccountService
 import com.depromeet.threedollar.api.bossservice.service.account.dto.request.UpdateBossAccountInfoRequest
 import com.depromeet.threedollar.api.bossservice.service.account.dto.response.BossAccountInfoResponse
@@ -16,6 +17,7 @@ import javax.validation.Valid
 @RestController
 class BossAccountController(
     private val bossAccountService: BossAccountService,
+    private val bossAccountRetrieveService: BossAccountRetrieveService,
 ) {
 
     @ApiOperation("[인증] 사장님 자신의 계정 정보를 조회합니다")
@@ -24,7 +26,7 @@ class BossAccountController(
     fun getMyAccountInfo(
         @BossId bossId: String,
     ): ApiResponse<BossAccountInfoResponse> {
-        return ApiResponse.success(bossAccountService.getBossAccountInfo(bossId))
+        return ApiResponse.success(bossAccountRetrieveService.getBossAccountInfo(bossId))
     }
 
     @ApiOperation("[인증] 사장님 자신의 계정 정보를 수정합니다")

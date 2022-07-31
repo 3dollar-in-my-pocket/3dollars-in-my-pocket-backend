@@ -1,4 +1,4 @@
-package com.depromeet.threedollar.domain.rds.domain.userservice.review.support;
+package com.depromeet.threedollar.domain.rds.domain.userservice.review.collection;
 
 import com.depromeet.threedollar.domain.rds.core.support.CursorPagingSupporter;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;

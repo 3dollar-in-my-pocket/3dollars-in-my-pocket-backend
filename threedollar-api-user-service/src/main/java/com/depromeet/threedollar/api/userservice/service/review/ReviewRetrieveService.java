@@ -6,7 +6,7 @@ import com.depromeet.threedollar.api.userservice.service.review.dto.response.Rev
 import com.depromeet.threedollar.api.userservice.service.user.UserServiceHelper;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository;
-import com.depromeet.threedollar.domain.rds.domain.userservice.review.support.ReviewPagingCursor;
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.collection.ReviewPagingCursor;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.collection.StoreDictionary;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;

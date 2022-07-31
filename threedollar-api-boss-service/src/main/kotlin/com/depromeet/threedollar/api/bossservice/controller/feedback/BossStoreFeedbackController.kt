@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.bossservice.controller.feedback
 
 import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
-import com.depromeet.threedollar.api.core.service.service.bossservice.feedback.BossStoreFeedbackService
+import com.depromeet.threedollar.api.core.service.service.bossservice.feedback.BossStoreFeedbackRetrieveService
 import com.depromeet.threedollar.api.core.service.service.bossservice.feedback.dto.request.GetBossStoreFeedbacksCountsBetweenDateRequest
 import com.depromeet.threedollar.api.core.service.service.bossservice.feedback.dto.response.BossStoreFeedbackCountWithRatioResponse
 import com.depromeet.threedollar.api.core.service.service.bossservice.feedback.dto.response.BossStoreFeedbackCursorResponse
@@ -16,7 +16,7 @@ import java.time.LocalDate
 
 @RestController
 class BossStoreFeedbackController(
-    private val bossStoreFeedbackService: BossStoreFeedbackService,
+    private val bossStoreFeedbackRetrieveService: BossStoreFeedbackRetrieveService,
 ) {
 
     @ApiOperation("전체 기간동안의 특정 사장님 가게의 피드백 갯수를 조회합니다.")
@@ -24,7 +24,7 @@ class BossStoreFeedbackController(
     fun getBossStoreFeedbacksCounts(
         @PathVariable bossStoreId: String,
     ): ApiResponse<List<BossStoreFeedbackCountWithRatioResponse>> {
-        return ApiResponse.success(bossStoreFeedbackService.getBossStoreFeedbacksCounts(bossStoreId))
+        return ApiResponse.success(bossStoreFeedbackRetrieveService.getBossStoreFeedbacksCounts(bossStoreId))
     }
 
     @ApiOperation("특정 기간내의 특정 사장님 가게의 피드백 갯수를 조회합니다. (스크롤 페이지네이션)", notes = "https://github.com/3dollar-in-my-pocket/3dollars-in-my-pocket-backend/issues/122")
@@ -35,7 +35,7 @@ class BossStoreFeedbackController(
         @RequestParam endDate: LocalDate,
     ): ApiResponse<BossStoreFeedbackCursorResponse> {
         val request = GetBossStoreFeedbacksCountsBetweenDateRequest(startDate = startDate, endDate = endDate)
-        return ApiResponse.success(bossStoreFeedbackService.getBossStoreFeedbacksCountsBetweenDate(bossStoreId, request))
+        return ApiResponse.success(bossStoreFeedbackRetrieveService.getBossStoreFeedbacksCountsBetweenDate(bossStoreId, request))
     }
 
     @ApiOperation("사장님 가게 피드백의 타입 목록을 조회합니다")

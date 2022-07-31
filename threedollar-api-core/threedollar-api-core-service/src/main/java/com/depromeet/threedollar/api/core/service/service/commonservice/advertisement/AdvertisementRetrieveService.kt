@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @Service
-class AdvertisementService(
+class AdvertisementRetrieveService(
     private val advertisementRepository: AdvertisementRepository,
 ) {
 

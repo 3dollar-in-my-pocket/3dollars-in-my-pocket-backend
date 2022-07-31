@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.userservice.controller.bossservice.store
 
-import com.depromeet.threedollar.api.core.service.service.bossservice.category.BossStoreCategoryService
+import com.depromeet.threedollar.api.core.service.service.bossservice.category.BossStoreCategoryRetrieveService
 import com.depromeet.threedollar.api.core.service.service.bossservice.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.api.core.service.service.bossservice.store.dto.response.BossStoreAppearanceDayResponse
 import com.depromeet.threedollar.api.core.service.service.bossservice.store.dto.response.BossStoreMenuResponse
@@ -41,7 +41,7 @@ internal class BossStoreControllerTest(
 ) : SetupUserControllerTest() {
 
     @MockkBean
-    private lateinit var bossStoreCategoryService: BossStoreCategoryService
+    private lateinit var bossStoreCategoryRetrieveService: BossStoreCategoryRetrieveService
 
     @AfterEach
     fun cleanUp() {
@@ -53,7 +53,7 @@ internal class BossStoreControllerTest(
 
     @BeforeEach
     fun mockingCacheCategory() {
-        every { bossStoreCategoryService.retrieveBossStoreCategoriesByIds(any()) } returns listOf()
+        every { bossStoreCategoryRetrieveService.retrieveBossStoreCategoriesByIds(any()) } returns listOf()
     }
 
     @DisplayName("GET /boss/v1/boss/store/{BOSS_STORE_ID}")

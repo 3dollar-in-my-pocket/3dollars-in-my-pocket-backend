@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
-internal class AdminMedalServiceTest(
+internal class AdminMedalRetrieveServiceTest(
     private val adminMedalService: AdminMedalService,
     private val medalRepository: MedalRepository,
     private val medalAcquisitionConditionRepository: MedalAcquisitionConditionRepository,

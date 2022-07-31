@@ -3,7 +3,7 @@ package com.depromeet.threedollar.api.bossservice.controller.faq
 import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import com.depromeet.threedollar.api.core.service.mapper.commonservice.faq.FaqCategoryMapper
 import com.depromeet.threedollar.api.core.service.mapper.commonservice.faq.dto.response.FaqCategoryResponse
-import com.depromeet.threedollar.api.core.service.service.commonservice.faq.FaqService
+import com.depromeet.threedollar.api.core.service.service.commonservice.faq.FaqRetrieveService
 import com.depromeet.threedollar.api.core.service.service.commonservice.faq.dto.request.RetrieveFaqsRequest
 import com.depromeet.threedollar.api.core.service.service.commonservice.faq.dto.response.FaqResponse
 import com.depromeet.threedollar.common.type.ApplicationType
@@ -14,7 +14,7 @@ import javax.validation.Valid
 
 @RestController
 class BossFaqController(
-    private val faqService: FaqService,
+    private val faqRetrieveService: FaqRetrieveService,
 ) {
 
     @ApiOperation("FAQ 목록을 조회합니다")
@@ -22,7 +22,7 @@ class BossFaqController(
     fun retrieveFaqsByCategory(
         @Valid request: RetrieveFaqsRequest,
     ): ApiResponse<List<FaqResponse>> {
-        val faqs = faqService.retrieveFaqsByCategory(applicationType = ApplicationType.BOSS_API, request = request)
+        val faqs = faqRetrieveService.retrieveFaqsByCategory(applicationType = ApplicationType.BOSS_API, request = request)
         return ApiResponse.success(faqs)
     }
 

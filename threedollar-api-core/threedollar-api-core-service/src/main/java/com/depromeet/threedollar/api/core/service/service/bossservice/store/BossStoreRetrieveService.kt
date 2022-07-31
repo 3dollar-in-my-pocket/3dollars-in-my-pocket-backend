@@ -1,6 +1,6 @@
 package com.depromeet.threedollar.api.core.service.service.bossservice.store
 
-import com.depromeet.threedollar.api.core.service.service.bossservice.category.BossStoreCategoryService
+import com.depromeet.threedollar.api.core.service.service.bossservice.category.BossStoreCategoryRetrieveService
 import com.depromeet.threedollar.api.core.service.service.bossservice.category.BossStoreCategoryServiceHelper
 import com.depromeet.threedollar.api.core.service.service.bossservice.category.dto.response.BossStoreCategoryResponse
 import com.depromeet.threedollar.api.core.service.service.bossservice.store.dto.request.GetAroundBossStoresRequest
@@ -22,7 +22,7 @@ class BossStoreRetrieveService(
     private val bossStoreOpenRepository: BossStoreOpenRepository,
     private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
-    private val bossStoreCategoryService: BossStoreCategoryService,
+    private val bossStoreCategoryRetrieveService: BossStoreCategoryRetrieveService,
 ) {
 
     fun getAroundBossStores(
@@ -42,20 +42,24 @@ class BossStoreRetrieveService(
         )
 
         val bossStoreIds = bossStores.map { bossStore -> bossStore.id }
-        val categoriesDictionary: Map<String, BossStoreCategoryResponse> = bossStoreCategoryService.retrieveBossStoreCategories().associateBy { it.categoryId }
+
+        val categoriesDictionary: Map<String, BossStoreCategoryResponse> = bossStoreCategoryRetrieveService.retrieveBossStoreCategories()
+            .associateBy { it.categoryId }
+
         val bossStoreOpensDictionary: Map<String, BossStoreOpen> = bossStoreOpenRepository.findBossOpenStoresByIds(bossStoreIds = bossStoreIds)
             .associateBy { it.bossStoreId }
-        val feedbackTotalCountsMap = bossStoreFeedbackCountRepository.getTotalCountsMap(bossStoreIds)
+
+        val feedbackTotalCountsDictionary: Map<String, Int> = bossStoreFeedbackCountRepository.getTotalCountsMap(bossStoreIds = bossStoreIds)
 
         return bossStores.asSequence()
             .filter { bossStore -> bossStore.isNotOwner(bossId = bossId ?: "") }
             .map { bossStore ->
                 BossStoreAroundInfoResponse.of(
                     bossStore = bossStore,
-                    categories = getCategories(bossStore, categoriesDictionary),
+                    categories = getCategories(bossStore = bossStore, categoriesDictionary = categoriesDictionary),
                     bossStoreOpen = bossStoreOpensDictionary[bossStore.id],
                     deviceLocation = deviceLocation,
-                    totalFeedbacksCounts = feedbackTotalCountsMap[bossStore.id]
+                    totalFeedbacksCounts = feedbackTotalCountsDictionary[bossStore.id]
                 )
             }
             .sortedWith(request.orderType.sorted)
@@ -64,7 +68,7 @@ class BossStoreRetrieveService(
 
     private fun validateExistCategory(categoryId: String?) {
         if (categoryId != null) {
-            BossStoreCategoryServiceHelper.validateExistsCategory(bossStoreCategoryRepository, categoryId)
+            BossStoreCategoryServiceHelper.validateExistsCategory(bossStoreCategoryRepository, categoryId = categoryId)
         }
     }
 
@@ -76,11 +80,11 @@ class BossStoreRetrieveService(
         storeId: String,
         deviceLocation: LocationValue = LocationValue.of(0.0, 0.0),
     ): BossStoreInfoResponse {
-        val bossStore = BossStoreServiceHelper.findBossStoreById(bossStoreRepository, storeId)
+        val bossStore = BossStoreServiceHelper.findBossStoreById(bossStoreRepository, bossStoreId = storeId)
         return BossStoreInfoResponse.of(
             bossStore = bossStore,
-            categories = bossStoreCategoryService.retrieveBossStoreCategoriesByIds(bossStore.categoriesIds),
-            bossStoreOpen = bossStoreOpenRepository.findBossOpenStoreByBossStoreId(bossStore.id),
+            categories = bossStoreCategoryRetrieveService.retrieveBossStoreCategoriesByIds(bossStoreCategoryIds = bossStore.categoriesIds),
+            bossStoreOpen = bossStoreOpenRepository.findBossOpenStoreByBossStoreId(bossStoreId = bossStore.id),
             deviceLocation = deviceLocation
         )
     }
@@ -89,8 +93,8 @@ class BossStoreRetrieveService(
         val bossStore = BossStoreServiceHelper.findBossStoreByBossId(bossStoreRepository = bossStoreRepository, bossId = bossId)
         return BossStoreInfoResponse.of(
             bossStore = bossStore,
-            categories = bossStoreCategoryService.retrieveBossStoreCategoriesByIds(bossStore.categoriesIds),
-            bossStoreOpen = bossStoreOpenRepository.findBossOpenStoreByBossStoreId(bossStore.id),
+            categories = bossStoreCategoryRetrieveService.retrieveBossStoreCategoriesByIds(bossStoreCategoryIds = bossStore.categoriesIds),
+            bossStoreOpen = bossStoreOpenRepository.findBossOpenStoreByBossStoreId(bossStoreId = bossStore.id),
         )
     }
 

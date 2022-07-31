@@ -1,7 +1,7 @@
 package com.depromeet.threedollar.api.userservice.service.review.dto.response;
 
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.Review;
-import com.depromeet.threedollar.domain.rds.domain.userservice.review.support.ReviewPagingCursor;
+import com.depromeet.threedollar.domain.rds.domain.userservice.review.collection.ReviewPagingCursor;
 import com.depromeet.threedollar.domain.rds.domain.userservice.store.collection.StoreDictionary;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.User;
 import lombok.AccessLevel;

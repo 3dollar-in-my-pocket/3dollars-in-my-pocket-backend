@@ -1,7 +1,6 @@
 package com.depromeet.threedollar.api.userservice.service.user;
 
 import com.depromeet.threedollar.api.userservice.IntegrationTest;
-import com.depromeet.threedollar.api.userservice.service.user.dto.request.CheckAvailableNameRequest;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.CreateUserRequest;
 import com.depromeet.threedollar.api.userservice.service.user.dto.request.UpdateUserInfoRequest;
 import com.depromeet.threedollar.api.userservice.service.user.support.UserAssertions;
@@ -28,7 +27,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class UserServiceTest extends IntegrationTest {
 
@@ -103,51 +101,6 @@ class UserServiceTest extends IntegrationTest {
 
             // when & then
             assertThatThrownBy(() -> userService.registerUser(request)).isInstanceOf(ConflictException.class);
-        }
-
-    }
-
-    @Nested
-    class GetUserAccountInfoTest {
-
-        @Test
-        void 유저_정보_조회시_존재하지_않는_유저인경우_NOTFOUNDEXCEPTION이_발생합니다() {
-            // given
-            Long notFoundUserId = -1L;
-
-            // when & then
-            assertThatThrownBy(() -> userService.getUserInfo(notFoundUserId)).isInstanceOf(NotFoundException.class);
-        }
-
-    }
-
-    @Nested
-    class CheckDuplicateNicknameTest {
-
-        @Test
-        void 닉네임_사용가능_확인시_중복된_닉네임인경우_CONFLICT_에러가_발생합니다() {
-            // given
-            String name = "토끼";
-            User user = UserFixture.create("social-id", UserSocialType.KAKAO, name);
-            userRepository.save(user);
-
-            CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
-                .name(name)
-                .build();
-
-            // when & then
-            assertThatThrownBy(() -> userService.checkIsAvailableName(request)).isInstanceOf(ConflictException.class);
-        }
-
-        @Test
-        void 닉네임_사용가능_확인시_중복되지_않는_닉네임인경우_통과합니다() {
-            // given
-            CheckAvailableNameRequest request = CheckAvailableNameRequest.testBuilder()
-                .name("토끼")
-                .build();
-
-            // when & then
-            assertDoesNotThrow(() -> userService.checkIsAvailableName(request));
         }
 
     }
