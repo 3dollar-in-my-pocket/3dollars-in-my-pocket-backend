@@ -10,8 +10,8 @@ object StoreFixture {
     @JvmOverloads
     @JvmStatic
     fun create(
-        userId: Long,
-        storeName: String,
+        userId: Long = 100000L,
+        storeName: String = "가게 이름",
         latitude: Double = 36.0,
         longitude: Double = 126.0,
         rating: Double = 0.0,
@@ -32,7 +32,7 @@ object StoreFixture {
     @JvmStatic
     fun createWithDefaultMenu(
         userId: Long,
-        storeName: String,
+        storeName: String = "가게명",
         latitude: Double = 34.0,
         longitude: Double = 126.0,
         rating: Double = 0.0,
@@ -56,7 +56,7 @@ object StoreFixture {
     @JvmStatic
     fun createDefault(
         userId: Long,
-        storeName: String,
+        storeName: String = "가게명",
         status: StoreStatus = StoreStatus.ACTIVE,
     ): Store {
         return create(
@@ -73,7 +73,7 @@ object StoreFixture {
     @JvmStatic
     fun createDefaultWithMenu(
         userId: Long,
-        storeName: String,
+        storeName: String = "가게명",
         status: StoreStatus = StoreStatus.ACTIVE,
     ): Store {
         val store = createDefault(

@@ -33,10 +33,10 @@ internal class StoreControllerTest(
         @Test
         fun N개이상_삭제_요청된_가게들을_삭제요청이_많은것부터_조회한다_첫페이지() {
             // given
-            val store1 = StoreFixture.createWithDefaultMenu(user.id, "가게1")
-            val store2 = StoreFixture.createWithDefaultMenu(user.id, "가게2")
-            val store3 = StoreFixture.createWithDefaultMenu(user.id, "가게3")
-            val store4 = StoreFixture.createWithDefaultMenu(user.id, "가게4")
+            val store1 = StoreFixture.createWithDefaultMenu(userId = user.id)
+            val store2 = StoreFixture.createWithDefaultMenu(userId = user.id)
+            val store3 = StoreFixture.createWithDefaultMenu(userId = user.id)
+            val store4 = StoreFixture.createWithDefaultMenu(userId = user.id)
 
             storeRepository.saveAll(listOf(store1, store2, store3, store4))
             storeDeleteRequestRepository.saveAll(
@@ -85,10 +85,10 @@ internal class StoreControllerTest(
         @Test
         fun N개이상_삭제_요청된_가게들을_삭제요청이_많은것부터_조회한다_두번째_페이지() {
             // given
-            val store1 = StoreFixture.createWithDefaultMenu(user.id, "가게1")
-            val store2 = StoreFixture.createWithDefaultMenu(user.id, "가게2")
-            val store3 = StoreFixture.createWithDefaultMenu(user.id, "가게3")
-            val store4 = StoreFixture.createWithDefaultMenu(user.id, "가게4")
+            val store1 = StoreFixture.createWithDefaultMenu(userId = user.id)
+            val store2 = StoreFixture.createWithDefaultMenu(userId = user.id)
+            val store3 = StoreFixture.createWithDefaultMenu(userId = user.id)
+            val store4 = StoreFixture.createWithDefaultMenu(userId = user.id)
 
             storeRepository.saveAll(listOf(store1, store2, store3, store4))
             storeDeleteRequestRepository.saveAll(
@@ -244,13 +244,7 @@ internal class StoreControllerTest(
     @Test
     fun `특정 가게를 삭제한다`() {
         // given
-        val store = StoreFixture.create(
-            userId = user.id,
-            storeName = "가게 이름",
-            latitude = 36.0,
-            longitude = 126.0,
-            rating = 1.0
-        )
+        val store = StoreFixture.create(userId = user.id)
         storeRepository.save(store)
 
         // when & then

@@ -230,7 +230,7 @@ class UserServiceTest extends IntegrationTest {
             User user = UserFixture.create();
             userRepository.save(user);
 
-            Device device = DeviceFixture.create(String.valueOf(user.getId()), AccountType.USER_ACCOUNT, "pushToken");
+            Device device = DeviceFixture.create(String.valueOf(user.getId()), AccountType.USER_ACCOUNT);
             deviceRepository.save(device);
 
             // when

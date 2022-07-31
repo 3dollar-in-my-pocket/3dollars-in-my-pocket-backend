@@ -57,9 +57,8 @@ internal class DeviceRepositoryTest(
             // given
             val accountType = AccountType.BOSS_ACCOUNT
             val accountId = "accountId"
-            val pushToken = "pushToken"
 
-            val device = DeviceFixture.create(accountId = accountId, accountType = accountType, pushToken = pushToken)
+            val device = DeviceFixture.create(accountId = accountId, accountType = accountType)
             deviceRepository.save(device)
 
             // when
@@ -88,8 +87,8 @@ internal class DeviceRepositoryTest(
             // given
             val accountType = AccountType.BOSS_ACCOUNT
 
-            val device1 = DeviceFixture.create(accountId = "accountId1", accountType = accountType, pushToken = "pushToken1")
-            val device2 = DeviceFixture.create(accountId = "accountId2", accountType = accountType, pushToken = "pushToken2")
+            val device1 = DeviceFixture.create(accountId = "accountId1", accountType = accountType)
+            val device2 = DeviceFixture.create(accountId = "accountId2", accountType = accountType)
             deviceRepository.saveAll(listOf(device1, device2))
 
             // when

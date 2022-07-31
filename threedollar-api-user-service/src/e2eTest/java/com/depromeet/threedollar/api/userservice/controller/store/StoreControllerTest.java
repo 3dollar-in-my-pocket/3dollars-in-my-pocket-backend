@@ -156,7 +156,7 @@ class StoreControllerTest extends SetupUserControllerTest {
         @Test
         void 가게_삭제_요청시_실제로_삭제되지_않으면_False를_반환한다() throws Exception {
             // given
-            Store store = StoreFixture.create(user.getId(), "가삼 붕어빵");
+            Store store = StoreFixture.create();
             storeRepository.save(store);
 
             DeleteStoreRequest request = DeleteStoreRequest.testBuilder()
@@ -173,7 +173,7 @@ class StoreControllerTest extends SetupUserControllerTest {
         @Test
         void 가게_삭제_요청시_실제로_삭제되면_True를_반환한다() throws Exception {
             // given
-            Store store = StoreFixture.create(user.getId(), "가삼 붕어빵");
+            Store store = StoreFixture.create();
             storeRepository.save(store);
 
             storeDeleteRequestRepository.saveAll(List.of(
@@ -195,7 +195,7 @@ class StoreControllerTest extends SetupUserControllerTest {
         @Test
         void 가게_삭제_요청시_획득할_수_있는_메달_체크_이벤트가_발생됩니다() throws Exception {
             // given
-            Store store = StoreFixture.create(user.getId(), "가슴속 3천원 붕어빵");
+            Store store = StoreFixture.create();
             storeRepository.save(store);
 
             DeleteStoreRequest request = DeleteStoreRequest.testBuilder()

@@ -9,9 +9,9 @@ object FaqFixture {
     @JvmOverloads
     @JvmStatic
     fun create(
-        question: String,
-        answer: String,
-        category: FaqCategory,
+        question: String = "FAQ 질문",
+        answer: String = "FAQ 답변",
+        category: FaqCategory = FaqCategory.CATEGORY,
         applicationType: ApplicationType = ApplicationType.USER_API,
     ): Faq {
         return Faq.builder()

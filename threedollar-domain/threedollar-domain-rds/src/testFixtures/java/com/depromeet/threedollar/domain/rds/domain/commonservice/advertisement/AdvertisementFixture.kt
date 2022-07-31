@@ -12,14 +12,14 @@ object AdvertisementFixture {
         applicationType: ApplicationType,
         positionType: AdvertisementPositionType,
         platformType: AdvertisementPlatformType,
-        title: String?,
-        subTitle: String?,
-        imageUrl: String,
-        linkUrl: String?,
-        bgColor: String?,
-        fontColor: String?,
         startDateTime: LocalDateTime,
         endDateTime: LocalDateTime,
+        title: String? = "붕어빵 팔아요!",
+        subTitle: String? = "붕어빵 팔아요 부제",
+        imageUrl: String = "https://image-a.png",
+        linkUrl: String? = "https://link-a.com",
+        bgColor: String? = "#000000",
+        fontColor: String? = "#ffffff",
     ): Advertisement {
         return Advertisement.builder()
             .applicationType(applicationType)

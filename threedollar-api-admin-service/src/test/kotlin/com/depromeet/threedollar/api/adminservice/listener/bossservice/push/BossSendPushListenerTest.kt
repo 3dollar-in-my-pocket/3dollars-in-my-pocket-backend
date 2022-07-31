@@ -38,7 +38,6 @@ internal class BossSendPushListenerTest {
             every { deviceRepository.findDeviceByAccountIdAndType(any(), any()) } returns DeviceFixture.create(
                 accountId = "accountId",
                 accountType = AccountType.BOSS_ACCOUNT,
-                pushToken = "pushToken"
             )
 
             // when

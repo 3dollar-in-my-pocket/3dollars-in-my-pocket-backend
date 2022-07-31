@@ -26,12 +26,6 @@ internal class AdvertisementControllerTest(
             applicationType = ApplicationType.USER_API,
             positionType = AdvertisementPositionType.SPLASH,
             platformType = platform,
-            title = "가슴속 3천원 팀원 이야기",
-            subTitle = "월 100명에서 IOS 차트 1위가 된\n가슴속 3천원 팀의 솔직 담백 토크",
-            imageUrl = "https://pop-up-image.png",
-            linkUrl = "https://my-link.com",
-            bgColor = "#ffffff",
-            fontColor = "#000000",
             startDateTime = LocalDateTime.of(2021, 1, 1, 0, 0),
             endDateTime = LocalDateTime.now().plusDays(1),
         )

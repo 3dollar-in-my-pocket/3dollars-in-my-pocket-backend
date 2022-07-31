@@ -58,7 +58,7 @@ class StoreWithMenuProjectionTest {
         @Test
         void 가게에_아무런_메뉴도_없을경우_빈_리스트을_반환한다() {
             // given
-            Store store = StoreFixture.create(100L, "가게");
+            Store store = StoreFixture.create();
 
             // when
             List<UserMenuCategoryType> categories = store.getMenuCategoriesSortedByCounts();

@@ -114,7 +114,7 @@ class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
             Medal medal = MedalFixture.create("붕어빵 챌린지", MedalAcquisitionConditionType.DELETE_STORE, 1);
             medalRepository.save(medal);
 
-            Store store = StoreFixture.createWithDefaultMenu(userId, "가게");
+            Store store = StoreFixture.createWithDefaultMenu(userId);
             storeRepository.save(store);
 
             storeDeleteRequestRepository.save(StoreDeleteRequestFixture.create(store, userId, DeleteReasonType.OVERLAPSTORE));
@@ -137,7 +137,7 @@ class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
             Medal medal = MedalFixture.create("붕어빵 챌린지", MedalAcquisitionConditionType.DELETE_STORE, 1);
             medalRepository.save(medal);
 
-            Store store = StoreFixture.createWithDefaultMenu(userId, "가게");
+            Store store = StoreFixture.createWithDefaultMenu(userId);
             storeRepository.save(store);
 
             // when
@@ -161,12 +161,12 @@ class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
             Medal medal = MedalFixture.create("붕어빵 챌린지", MedalAcquisitionConditionType.ADD_REVIEW, 2);
             medalRepository.save(medal);
 
-            Store store = StoreFixture.createWithDefaultMenu(userId, "가게");
+            Store store = StoreFixture.createWithDefaultMenu(userId);
             storeRepository.save(store);
 
             reviewRepository.saveAll(List.of(
-                ReviewFixture.create(store.getId(), userId, "댓글 A", 5),
-                ReviewFixture.create(store.getId(), userId, "댓글 B", 4)
+                ReviewFixture.create(store.getId(), userId),
+                ReviewFixture.create(store.getId(), userId)
             ));
 
             // when
@@ -187,7 +187,7 @@ class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
             Medal medal = MedalFixture.create("붕어빵 챌린지", MedalAcquisitionConditionType.ADD_REVIEW, 2);
             medalRepository.save(medal);
 
-            Store store = StoreFixture.createWithDefaultMenu(userId, "가게");
+            Store store = StoreFixture.createWithDefaultMenu(userId);
             storeRepository.save(store);
 
             reviewRepository.save(ReviewFixture.create(store.getId(), userId, "댓글 A", 5));
@@ -213,7 +213,7 @@ class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
             Medal medal = MedalFixture.create("붕어빵 챌린지", MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE, 2);
             medalRepository.save(medal);
 
-            Store store = StoreFixture.create(userId, "가게");
+            Store store = StoreFixture.create();
             store.addMenus(List.of(MenuFixture.create(store, "팥 붕어빵 2개", "천원", UserMenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
@@ -240,7 +240,7 @@ class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
             Medal medal = MedalFixture.create("붕어빵 챌린지", MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE, 2);
             medalRepository.save(medal);
 
-            Store store = StoreFixture.create(userId, "가게");
+            Store store = StoreFixture.create();
             store.addMenus(List.of(MenuFixture.create(store, "팥 붕어빵 2개", "천원", UserMenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
@@ -261,7 +261,7 @@ class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
             Medal medal = MedalFixture.create("붕어빵 챌린지", MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE, 2);
             medalRepository.save(medal);
 
-            Store store = StoreFixture.create(userId, "가게");
+            Store store = StoreFixture.create();
             store.addMenus(List.of(MenuFixture.create(store, "팥 붕어빵 2개", "천원", UserMenuCategoryType.BUNGEOPPANG)));
             storeRepository.save(store);
 
@@ -288,7 +288,7 @@ class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
             Medal medal = MedalFixture.create("붕어빵 챌린지", MedalAcquisitionConditionType.VISIT_NOT_EXISTS_STORE, 2);
             medalRepository.save(medal);
 
-            Store store = StoreFixture.createWithDefaultMenu(userId, "가게");
+            Store store = StoreFixture.createWithDefaultMenu(userId);
             storeRepository.save(store);
 
             visitHistoryRepository.saveAll(List.of(
@@ -314,7 +314,7 @@ class UserMedalFacadeServiceTest extends SetupUserIntegrationTest {
             Medal medal = MedalFixture.create("붕어빵 챌린지", MedalAcquisitionConditionType.VISIT_NOT_EXISTS_STORE, 2);
             medalRepository.save(medal);
 
-            Store store = StoreFixture.createWithDefaultMenu(userId, "가게");
+            Store store = StoreFixture.createWithDefaultMenu(userId);
             storeRepository.save(store);
 
             visitHistoryRepository.saveAll(List.of(

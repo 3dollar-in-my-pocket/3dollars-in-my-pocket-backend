@@ -7,11 +7,11 @@ import com.depromeet.threedollar.domain.mongo.TestFixture
 object BossStoreFixture {
 
     fun create(
-        bossId: String,
-        name: String,
+        bossId: String = "boss-id",
+        name: String = "사장님 푸드트럭 이름",
         location: BossStoreLocation? = null,
         imageUrl: String = "https://image.png",
-        introduction: String = "introduction",
+        introduction: String = "푸드트럭에 대한 소개",
         contactsNumber: ContactsNumber? = null,
         snsUrl: String? = null,
         menus: List<BossStoreMenu> = listOf(),

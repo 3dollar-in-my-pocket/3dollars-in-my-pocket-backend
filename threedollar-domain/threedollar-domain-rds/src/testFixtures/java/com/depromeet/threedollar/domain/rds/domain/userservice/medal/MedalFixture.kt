@@ -8,15 +8,15 @@ object MedalFixture {
     @JvmOverloads
     @JvmStatic
     fun create(
-        name: String,
+        name: String = "메달 이름",
         conditionType: MedalAcquisitionConditionType = MedalAcquisitionConditionType.ADD_STORE,
         conditionCount: Int = 3,
     ): Medal {
         return Medal.builder()
             .name(name)
-            .introduction("메달 설명")
-            .activationIconUrl("iconUrl")
-            .disableIconUrl("disableUrl")
+            .introduction("메달에 대한 설명")
+            .activationIconUrl("https://activation.png")
+            .disableIconUrl("https://disable.png")
             .conditionType(conditionType)
             .conditionCount(conditionCount)
             .build()

@@ -19,7 +19,7 @@ class MedalAcquisitionConditionTest {
         int countCanObtainMedal = 2;
         MedalAcquisitionConditionType conditionType = MedalAcquisitionConditionType.ADD_STORE;
         Medal medal = MedalFixture.create("메달 A");
-        MedalAcquisitionCondition medalAcquisitionCondition = MedalAcquisitionConditionFixture.create(medal, conditionType, countCanObtainMedal, "메달 인증 소개");
+        MedalAcquisitionCondition medalAcquisitionCondition = MedalAcquisitionConditionFixture.create(medal, conditionType, countCanObtainMedal);
 
         // when
         boolean result = medalAcquisitionCondition.canObtain(conditionType, count);
@@ -33,7 +33,7 @@ class MedalAcquisitionConditionTest {
         // given
         int count = 1;
         Medal medal = MedalFixture.create("우리동네 보안관");
-        MedalAcquisitionCondition medalAcquisitionCondition = MedalAcquisitionConditionFixture.create(medal, MedalAcquisitionConditionType.ADD_STORE, count, "메달 인증 소개");
+        MedalAcquisitionCondition medalAcquisitionCondition = MedalAcquisitionConditionFixture.create(medal, MedalAcquisitionConditionType.ADD_STORE, count);
 
         // when
         boolean result = medalAcquisitionCondition.canObtain(MedalAcquisitionConditionType.VISIT_BUNGEOPPANG_STORE, count);

@@ -7,8 +7,8 @@ object AdminFixture {
 
     @JvmStatic
     fun create(
-        email: String,
-        name: String,
+        email: String = "admin@gmail.com",
+        name: String = "관리자 이름",
     ): Admin {
         return Admin.builder()
             .email(email)

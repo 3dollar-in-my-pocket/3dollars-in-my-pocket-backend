@@ -11,8 +11,8 @@ class BossStoreAppearanceDayFixture {
     companion object {
         fun create(
             dayOfTheWeek: DayOfTheWeek,
-            startTime: LocalTime,
-            endTime: LocalTime,
+            startTime: LocalTime = LocalTime.of(8, 0),
+            endTime: LocalTime = LocalTime.of(19, 0),
             locationDescription: String = "",
         ): BossStoreAppearanceDay {
             return BossStoreAppearanceDay(

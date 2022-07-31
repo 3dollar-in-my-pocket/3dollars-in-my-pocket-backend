@@ -42,11 +42,7 @@ internal class BossAccountServiceTest(
             // given
             val name = "새로운 이름"
 
-            val bossAccount = BossAccountFixture.create(
-                socialId = "social-id",
-                socialType = BossAccountSocialType.GOOGLE,
-                name = "사장님 이름",
-            )
+            val bossAccount = BossAccountFixture.create()
             bossAccountRepository.save(bossAccount)
 
             val request = UpdateBossAccountInfoRequest(name)
@@ -91,10 +87,7 @@ internal class BossAccountServiceTest(
         @Test
         fun `회원탈퇴시 BossAccount 계정 정보가 삭제된다`() {
             // given
-            val bossAccount = BossAccountFixture.create(
-                socialId = "socialId",
-                socialType = BossAccountSocialType.APPLE
-            )
+            val bossAccount = BossAccountFixture.create()
             bossAccountRepository.save(bossAccount)
 
             // when
@@ -144,18 +137,12 @@ internal class BossAccountServiceTest(
         @Test
         fun `사장님 회원탈퇴시, 디바이스도 같이 삭제한다`() {
             // given
-            val bossAccount = BossAccountFixture.create(
-                socialId = "auth-social-id",
-                socialType = BossAccountSocialType.APPLE,
-                name = "강승호",
-                businessNumber = BusinessNumber.of("000-00-00000"),
-            )
+            val bossAccount = BossAccountFixture.create()
             bossAccountRepository.save(bossAccount)
 
             val device = DeviceFixture.create(
                 accountId = bossAccount.id,
                 accountType = AccountType.BOSS_ACCOUNT,
-                pushToken = "pushToken"
             )
             deviceRepository.save(device)
 

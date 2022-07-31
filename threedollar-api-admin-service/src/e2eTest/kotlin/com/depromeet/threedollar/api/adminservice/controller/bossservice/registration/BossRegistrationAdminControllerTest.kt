@@ -41,7 +41,7 @@ internal class BossRegistrationAdminControllerTest(
         // given
         every { bossSendPushListener.sendBossRegistrationApproveMessage(any()) } returns Unit
 
-        val registration = RegistrationFixture.create("social-id", GOOGLE)
+        val registration = RegistrationFixture.create()
         bossRegistrationRepository.save(registration)
 
         // when
@@ -64,7 +64,7 @@ internal class BossRegistrationAdminControllerTest(
         // given
         every { bossSendPushListener.sendBossRegistrationDenyMessage(any()) } returns Unit
 
-        val registration = RegistrationFixture.create("social-id", GOOGLE)
+        val registration = RegistrationFixture.create()
         bossRegistrationRepository.save(registration)
 
         val request = RejectBossRegistrationRequest(

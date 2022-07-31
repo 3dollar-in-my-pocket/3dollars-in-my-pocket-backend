@@ -9,7 +9,7 @@ object StoreDeleteRequestFixture {
     fun create(
         store: Store,
         userId: Long,
-        reasonType: DeleteReasonType,
+        reasonType: DeleteReasonType = DeleteReasonType.NOSTORE,
     ): StoreDeleteRequest {
         return StoreDeleteRequest.builder()
             .store(store)

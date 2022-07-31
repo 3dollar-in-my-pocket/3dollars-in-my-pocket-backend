@@ -7,8 +7,8 @@ import com.depromeet.threedollar.domain.mongo.TestFixture
 object BossAccountFixture {
 
     fun create(
-        socialId: String,
-        socialType: BossAccountSocialType,
+        socialId: String = "social-id",
+        socialType: BossAccountSocialType = BossAccountSocialType.GOOGLE,
         name: String = "사장님 성함",
         businessNumber: BusinessNumber = BusinessNumber.of("000-00-00000"),
     ): BossAccount {

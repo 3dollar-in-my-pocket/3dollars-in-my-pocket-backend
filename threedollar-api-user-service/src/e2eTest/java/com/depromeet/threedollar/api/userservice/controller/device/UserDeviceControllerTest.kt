@@ -112,7 +112,6 @@ internal class UserDeviceControllerTest(
         deviceRepository.save(DeviceFixture.create(
             accountType = AccountType.USER_ACCOUNT,
             accountId = user.id.toString(),
-            pushToken = "pushToken"
         ))
 
         // when

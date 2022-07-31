@@ -11,7 +11,7 @@ object DeviceFixture {
     fun create(
         accountId: String,
         accountType: AccountType,
-        pushToken: String,
+        pushToken: String = "device-push-token",
         pushPlatformType: PushPlatformType = PushPlatformType.FCM,
         osPlatformType: OsPlatformType = OsPlatformType.IPHONE,
         appVersion: String? = "1.0.0",

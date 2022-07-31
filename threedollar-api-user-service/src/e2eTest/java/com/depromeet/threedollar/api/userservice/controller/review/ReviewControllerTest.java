@@ -115,7 +115,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 내가_작성한_리뷰를_수정합니다() throws Exception {
             // given
-            Review review = ReviewFixture.create(store.getId(), user.getId(), "너무 맛있어요", 5);
+            Review review = ReviewFixture.create(store.getId(), user.getId());
             reviewRepository.save(review);
 
             UpdateReviewRequest request = UpdateReviewRequest.testBuilder()
@@ -133,7 +133,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 리뷰를_수정하면_가게의_평균_리뷰점수가_갱신된다() throws Exception {
             // given
-            Review review = ReviewFixture.create(store.getId(), user.getId(), "맛 없어요", 2);
+            Review review = ReviewFixture.create(store.getId(), user.getId());
             reviewRepository.save(review);
 
             UpdateReviewRequest request = UpdateReviewRequest.testBuilder()
@@ -157,7 +157,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 내가_작성한_리뷰를_삭제합니다() throws Exception {
             // given
-            Review review = ReviewFixture.create(store.getId(), user.getId(), "너무 맛있어요", 5);
+            Review review = ReviewFixture.create(store.getId(), user.getId());
             reviewRepository.save(review);
 
             // when
@@ -170,7 +170,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 내가_작성한_리뷰를_삭제하면_가게의_평균_점수가_갱신됩니다() throws Exception {
             // given
-            Review review = ReviewFixture.create(store.getId(), user.getId(), "너무 맛있어요", 5);
+            Review review = ReviewFixture.create(store.getId(), user.getId());
             reviewRepository.save(review);
 
             // when
@@ -245,10 +245,10 @@ class ReviewControllerTest extends SetupStoreControllerTest {
         @Test
         void 내가_작성한_리뷰_목록을_조회할때_내가_작성한_총_리뷰_갯수도_함께_반환됩니다() throws Exception {
             // given
-            Review review1 = ReviewFixture.create(store.getId(), user.getId(), "최고에요", 5);
-            Review review2 = ReviewFixture.create(store.getId(), user.getId(), "맛있어요", 4);
-            Review review3 = ReviewFixture.create(store.getId(), user.getId(), "그냥 그래요", 3);
-            Review review4 = ReviewFixture.create(store.getId(), user.getId(), "좀 그래요", 2);
+            Review review1 = ReviewFixture.create(store.getId(), user.getId());
+            Review review2 = ReviewFixture.create(store.getId(), user.getId());
+            Review review3 = ReviewFixture.create(store.getId(), user.getId());
+            Review review4 = ReviewFixture.create(store.getId(), user.getId());
             reviewRepository.saveAll(List.of(review1, review2, review3, review4));
 
             RetrieveMyReviewsRequest request = RetrieveMyReviewsRequest.testBuilder()
@@ -263,10 +263,7 @@ class ReviewControllerTest extends SetupStoreControllerTest {
             assertAll(
                 () -> assertThat(response.getData().getNextCursor()).isEqualTo(review2.getId()),
                 () -> assertThat(response.getData().isHasNext()).isTrue(),
-                () -> assertThat(response.getData().getContents()).hasSize(2),
-
-                () -> assertReviewDetailInfoResponse(response.getData().getContents().get(0), review3, store, user),
-                () -> assertReviewDetailInfoResponse(response.getData().getContents().get(1), review2, store, user)
+                () -> assertThat(response.getData().getContents()).hasSize(2)
             );
         }
 

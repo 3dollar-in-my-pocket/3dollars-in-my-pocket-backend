@@ -7,11 +7,13 @@ import java.time.LocalDate
 @TestFixture
 object BossStoreFeedbackFixture {
 
+    @JvmOverloads
+    @JvmStatic
     fun create(
         storeId: String,
-        userId: Long,
-        feedbackType: BossStoreFeedbackType,
-        date: LocalDate,
+        userId: Long = 300000L,
+        feedbackType: BossStoreFeedbackType = BossStoreFeedbackType.BOSS_IS_KIND,
+        date: LocalDate = LocalDate.of(2022, 1, 1),
     ): BossStoreFeedback {
         return BossStoreFeedback(
             bossStoreId = storeId,

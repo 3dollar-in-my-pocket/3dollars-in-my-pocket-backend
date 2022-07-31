@@ -118,7 +118,6 @@ internal class DeviceServiceTest(
             accountType = accountType,
             pushPlatformType = pushPlatformType,
             osPlatformType = userMetaValue.osPlatform,
-            pushToken = "anotherPushToken",
             appVersion = userMetaValue.appVersion,
         ))
 
@@ -198,15 +197,13 @@ internal class DeviceServiceTest(
         // given
         val accountId = "accountId"
         val accountType = AccountType.BOSS_ACCOUNT
-        val pushToken = "pushToken"
         val pushPlatformType = PushPlatformType.FCM
 
-        deviceRepository.save(Device.of(
+        deviceRepository.save(DeviceFixture.create(
             accountId = accountId,
             accountType = accountType,
             pushPlatformType = pushPlatformType,
             osPlatformType = userMetaValue.osPlatform,
-            pushToken = pushToken,
             appVersion = userMetaValue.appVersion,
         ))
 

@@ -75,18 +75,7 @@ internal class BossRegistrationAdminServiceTest(
         @Test
         fun `신규 가입신청을 승인하면 세션 유지를 위해서 가입신청 ID가 사장님 계정의 ID가 된다`() {
             // given
-            val socialId = "social-id"
-            val socialType = BossAccountSocialType.NAVER
-            val bossName = "가삼"
-            val businessNumber = "000-00-00000"
-
-            val registration = RegistrationFixture.create(
-                socialId = socialId,
-                socialType = socialType,
-                bossName = bossName,
-                businessNumber = businessNumber,
-                status = BossRegistrationStatus.WAITING
-            )
+            val registration = RegistrationFixture.create(status = BossRegistrationStatus.WAITING)
             bossRegistrationRepository.save(registration)
 
             // when
@@ -143,11 +132,7 @@ internal class BossRegistrationAdminServiceTest(
         @Test
         fun `이미 승인된 가입 신청인 경우 다시 승인할 수 없다`() {
             // given
-            val registration = RegistrationFixture.create(
-                socialId = "socialId",
-                socialType = BossAccountSocialType.NAVER,
-                status = BossRegistrationStatus.APPROVED
-            )
+            val registration = RegistrationFixture.create(status = BossRegistrationStatus.APPROVED)
             bossRegistrationRepository.save(registration)
 
             // when & then
@@ -157,11 +142,7 @@ internal class BossRegistrationAdminServiceTest(
         @Test
         fun `가입 거부된 가입 신청인 경우 다시 승인할 수 없다`() {
             // given
-            val registration = RegistrationFixture.create(
-                socialId = "socialId",
-                socialType = BossAccountSocialType.NAVER,
-                status = BossRegistrationStatus.REJECTED
-            )
+            val registration = RegistrationFixture.create(status = BossRegistrationStatus.REJECTED)
             bossRegistrationRepository.save(registration)
 
             // when & then
@@ -200,11 +181,7 @@ internal class BossRegistrationAdminServiceTest(
         @Test
         fun `사장님 가입 신청이 승인되면 해당 가입 신청은 APPROVE 상태로 변경된다`() {
             // given
-            val registration = RegistrationFixture.create(
-                socialId = "social-id",
-                socialType = BossAccountSocialType.NAVER,
-                status = BossRegistrationStatus.WAITING
-            )
+            val registration = RegistrationFixture.create(status = BossRegistrationStatus.WAITING)
             bossRegistrationRepository.save(registration)
 
             // when
@@ -226,11 +203,7 @@ internal class BossRegistrationAdminServiceTest(
         @Test
         fun `사장님 가입 신청이 거부되면 해당 가입 신청은 APPROVE 상태로 변경된다`() {
             // given
-            val registration = RegistrationFixture.create(
-                socialId = "social-id",
-                socialType = BossAccountSocialType.NAVER,
-                status = BossRegistrationStatus.WAITING
-            )
+            val registration = RegistrationFixture.create(status = BossRegistrationStatus.WAITING)
             bossRegistrationRepository.save(registration)
 
             val request = RejectBossRegistrationRequest(

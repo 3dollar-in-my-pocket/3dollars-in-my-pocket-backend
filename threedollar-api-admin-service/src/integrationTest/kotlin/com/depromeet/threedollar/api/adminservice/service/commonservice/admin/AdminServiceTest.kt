@@ -109,7 +109,6 @@ internal class AdminServiceTest(
 
             val admin = AdminFixture.create(
                 email = email,
-                name = "토끼"
             )
             adminRepository.save(admin)
 

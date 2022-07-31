@@ -24,7 +24,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.store.projection.
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserRepository;
 import com.depromeet.threedollar.domain.rds.domain.userservice.user.collection.UserDictionary;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistoryRepository;
-import com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection.VisitHistoryCounter;
+import com.depromeet.threedollar.domain.rds.domain.userservice.visit.collection.VisitHistoryCountDictionary;
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.projection.VisitHistoryWithUserProjection;
 import com.depromeet.threedollar.domain.redis.domain.userservice.store.AroundUserStoresCacheRepository;
 import com.depromeet.threedollar.domain.redis.domain.userservice.store.UserStoreCacheModel;
@@ -54,7 +54,7 @@ public class StoreRetrieveService {
     @Transactional(readOnly = true)
     public List<StoreWithVisitsAndDistanceResponse> retrieveAroundStores(RetrieveAroundStoresRequest request, LocationValue deviceLocation, LocationValue mapLocation) {
         List<StoreInfoResponse> aroundStoresFilerByCategory = findAroundStoresFilerByCategory(mapLocation.getLatitude(), mapLocation.getLongitude(), request.getDistance(), request.getCategory());
-        VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(aroundStoresFilerByCategory.stream()
+        VisitHistoryCountDictionary visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(aroundStoresFilerByCategory.stream()
             .map(StoreInfoResponse::getStoreId)
             .collect(Collectors.toList()));
         return aroundStoresFilerByCategory.stream()
@@ -112,7 +112,7 @@ public class StoreRetrieveService {
         List<StoreImageProjection> storeImages = storeImageRepository.findAllByStoreId(request.getStoreId());
         List<VisitHistoryWithUserProjection> visitHistories = visitHistoryRepository.findAllVisitWithUserByStoreIdAfterDate(request.getStoreId(), request.getStartDate());
         UserDictionary userDictionary = UserServiceHelper.findUserDictionary(userRepository, collectUserIds(reviews, visitHistories, store));
-        VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(List.of(store.getId()));
+        VisitHistoryCountDictionary visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(List.of(store.getId()));
         return StoreDetailResponse.of(store, deviceLocation, storeImages, userDictionary, reviews, visitHistoriesCounter, visitHistories);
     }
 
@@ -133,13 +133,13 @@ public class StoreRetrieveService {
     public StoresCursorResponse retrieveMyReportedStoreHistories(RetrieveMyStoresRequest request, Long userId) {
         List<StoreWithMenuProjection> storesWithNextCursor = storeRepository.findAllByUserIdUsingCursor(userId, request.getCursor(), request.getSize() + 1);
         StoreWithMenuProjectionPagingCursor storesPagingCursor = StoreWithMenuProjectionPagingCursor.of(storesWithNextCursor, request.getSize());
-        VisitHistoryCounter visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(storesPagingCursor.getStoreIds());
+        VisitHistoryCountDictionary visitHistoriesCounter = findVisitHistoriesCountByStoreIdsInDuration(storesPagingCursor.getStoreIds());
         return StoresCursorResponse.of(storesPagingCursor, visitHistoriesCounter, storeRepository.countByUserId(userId));
     }
 
-    private VisitHistoryCounter findVisitHistoriesCountByStoreIdsInDuration(List<Long> storeIds) {
+    private VisitHistoryCountDictionary findVisitHistoriesCountByStoreIdsInDuration(List<Long> storeIds) {
         LocalDate monthAgo = LocalDate.now().minusMonths(1);
-        return VisitHistoryCounter.of(visitHistoryRepository.countGroupingByStoreId(storeIds, monthAgo));
+        return VisitHistoryCountDictionary.of(visitHistoryRepository.countGroupingByStoreId(storeIds, monthAgo));
     }
 
     @Transactional(readOnly = true)

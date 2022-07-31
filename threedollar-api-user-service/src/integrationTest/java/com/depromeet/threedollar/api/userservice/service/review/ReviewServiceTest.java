@@ -115,8 +115,8 @@ class ReviewServiceTest extends SetupStoreIntegrationTest {
         @Test
         void 내가_작성하지_않은_리뷰를_수정하는_경우_NOT_FOUND_에러가_발생한다() {
             // given
-            long creatorId = 10000L;
-            Review review = ReviewFixture.create(store.getId(), creatorId, "너무 맛있어요", 3);
+            long creatorId = -1L;
+            Review review = ReviewFixture.create(store.getId(), creatorId);
             reviewRepository.save(review);
 
             UpdateReviewRequest request = UpdateReviewRequest.testBuilder()
@@ -136,7 +136,7 @@ class ReviewServiceTest extends SetupStoreIntegrationTest {
         @Test
         void 내가_작성한_리뷰를_삭제하면_DELETED로_표기되고_삭제처리된다() {
             // given
-            Review review = ReviewFixture.create(store.getId(), userId, "너무 맛있어요", 3);
+            Review review = ReviewFixture.create(store.getId(), userId);
             reviewRepository.save(review);
 
             // when
@@ -163,7 +163,7 @@ class ReviewServiceTest extends SetupStoreIntegrationTest {
         void 내가_작성하지_않은_리뷰를_삭제하려하면_NOT_FOUND에러가_발생한다() {
             // given
             Long notFoundUserId = -1L;
-            Review review = ReviewFixture.create(store.getId(), userId, "너무 맛있어요", 3);
+            Review review = ReviewFixture.create(store.getId(), userId);
             reviewRepository.save(review);
 
             // when & then

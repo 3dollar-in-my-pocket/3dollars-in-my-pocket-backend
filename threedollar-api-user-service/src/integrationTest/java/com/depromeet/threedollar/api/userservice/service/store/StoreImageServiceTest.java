@@ -136,7 +136,7 @@ class StoreImageServiceTest extends SetupStoreIntegrationTest {
         @Test
         void 가게_이미지_삭제_요청시_해당하는_가게_이미지가_이미_삭제된경우_NOT_FOUND_STORE_EXCEPTION() {
             // given
-            StoreImage storeImage = StoreImageFixture.create(store.getId(), userId, "https://profile.png", StoreImageStatus.INACTIVE);
+            StoreImage storeImage = StoreImageFixture.createDeleted(storeId);
             storeImageRepository.save(storeImage);
 
             // when & then

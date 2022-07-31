@@ -70,12 +70,6 @@ internal class AdminAdvertisementControllerTest(
                 applicationType = ApplicationType.USER_API,
                 positionType = AdvertisementPositionType.MAIN_PAGE_CARD,
                 platformType = AdvertisementPlatformType.ALL,
-                title = "붕어빵 팔아요!",
-                subTitle = "붕어빵 팔아요 부제",
-                imageUrl = "https://image-a.png",
-                linkUrl = "https://link-a.com",
-                bgColor = "#000000",
-                fontColor = "#ffffff",
                 startDateTime = LocalDateTime.of(2022, 5, 3, 0, 0),
                 endDateTime = LocalDateTime.of(2022, 5, 5, 0, 0)
             )
@@ -119,12 +113,6 @@ internal class AdminAdvertisementControllerTest(
                 applicationType = ApplicationType.USER_API,
                 positionType = AdvertisementPositionType.MAIN_PAGE_CARD,
                 platformType = AdvertisementPlatformType.ALL,
-                title = "붕어빵 팔아요!",
-                subTitle = "붕어빵 팔아요 부제",
-                imageUrl = "https://image-a.png",
-                linkUrl = "https://link-a.com",
-                bgColor = "#000000",
-                fontColor = "#ffffff",
                 startDateTime = LocalDateTime.of(2022, 5, 3, 0, 0),
                 endDateTime = LocalDateTime.of(2022, 5, 5, 0, 0)
             )

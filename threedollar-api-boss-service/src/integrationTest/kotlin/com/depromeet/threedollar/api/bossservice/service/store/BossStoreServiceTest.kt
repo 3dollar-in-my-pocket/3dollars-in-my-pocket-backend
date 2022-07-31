@@ -263,7 +263,7 @@ internal class BossStoreSetupBossAccountServiceTest(
                 bossId = bossId,
                 name = "사장님 가게",
                 menus = listOf(BossStoreMenuFixture.create(name = "슈붕", price = 1000, imageUrl = "https://menu-image.png")),
-                appearanceDays = setOf(BossStoreAppearanceDayFixture.create(dayOfTheWeek = DayOfTheWeek.FRIDAY, startTime = LocalTime.of(8, 0), endTime = LocalTime.of(10, 0))),
+                appearanceDays = setOf(BossStoreAppearanceDayFixture.create(dayOfTheWeek = DayOfTheWeek.FRIDAY)),
                 categoriesIds = setOf("카테고리 1")
             )
             bossStoreRepository.save(bossStore)

@@ -67,7 +67,7 @@ internal class AdminFaqControllerTest(
         @Test
         fun FAQ_를_수정한다() {
             // given
-            val faq = faqRepository.save(FaqFixture.create("question", "answer", FaqCategory.BOARD))
+            val faq = faqRepository.save(FaqFixture.create())
 
             val request = UpdateFaqRequest("카테고리 질문", "카테고리 답변", FaqCategory.CATEGORY)
 
@@ -99,7 +99,7 @@ internal class AdminFaqControllerTest(
         @Test
         fun FAQ_를_삭제한다() {
             // given
-            val faq = faqRepository.save(FaqFixture.create("question", "answer", FaqCategory.BOARD))
+            val faq = faqRepository.save(FaqFixture.create())
 
             // when & then
             mockMvc.delete("/v1/faq/${faq.id}") {

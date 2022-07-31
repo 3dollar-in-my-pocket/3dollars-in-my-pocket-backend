@@ -6,9 +6,9 @@ import com.depromeet.threedollar.domain.mongo.TestFixture
 object BossStoreMenuFixture {
 
     fun create(
-        name: String,
-        price: Int,
-        imageUrl: String?,
+        name: String = "푸드트럭 메뉴 이름",
+        price: Int = 3000,
+        imageUrl: String = "https://store-menu.png",
     ): BossStoreMenu {
         return BossStoreMenu(
             name = name,

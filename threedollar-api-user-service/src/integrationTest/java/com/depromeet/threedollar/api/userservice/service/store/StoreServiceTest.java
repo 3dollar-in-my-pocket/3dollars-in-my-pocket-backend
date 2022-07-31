@@ -271,7 +271,7 @@ class StoreServiceTest extends SetupUserIntegrationTest {
             // given
             Set<PaymentMethodType> paymentMethodTypes = Set.of(PaymentMethodType.CARD, PaymentMethodType.ACCOUNT_TRANSFER);
 
-            Store store = StoreFixture.createWithDefaultMenu(userId, "storeName");
+            Store store = StoreFixture.createWithDefaultMenu(userId);
             store.addPaymentMethods(Set.of(PaymentMethodType.CARD));
             storeRepository.save(store);
 
@@ -301,7 +301,7 @@ class StoreServiceTest extends SetupUserIntegrationTest {
             // given
             Set<DayOfTheWeek> appearanceDays = Set.of(DayOfTheWeek.SATURDAY, DayOfTheWeek.FRIDAY);
 
-            Store store = StoreFixture.createWithDefaultMenu(userId, "storeName");
+            Store store = StoreFixture.createWithDefaultMenu(userId);
             store.addAppearanceDays(Set.of(DayOfTheWeek.TUESDAY, DayOfTheWeek.WEDNESDAY));
             storeRepository.save(store);
 
@@ -333,7 +333,7 @@ class StoreServiceTest extends SetupUserIntegrationTest {
             String price = "2개에 천원";
             UserMenuCategoryType type = UserMenuCategoryType.BUNGEOPPANG;
 
-            Store store = StoreFixture.create(userId, "storeName");
+            Store store = StoreFixture.create(userId);
             store.addMenus(List.of(MenuFixture.create(store, menuName, price, type)));
             storeRepository.save(store);
 
@@ -373,7 +373,7 @@ class StoreServiceTest extends SetupUserIntegrationTest {
             String price = "2개에 천원";
             UserMenuCategoryType type = UserMenuCategoryType.BUNGEOPPANG;
 
-            Store store = StoreFixture.createWithDefaultMenu(userId, "storeName");
+            Store store = StoreFixture.createWithDefaultMenu(userId);
             storeRepository.save(store);
 
             Set<MenuRequest> menus = new HashSet<>(List.of(
@@ -424,7 +424,7 @@ class StoreServiceTest extends SetupUserIntegrationTest {
         @Test
         void 내가_등록하지_않은_가게도_수정할수_있고_제보자는_최초_제보자로_유지된다() {
             // given
-            Store store = StoreFixture.createWithDefaultMenu(userId, "storeName");
+            Store store = StoreFixture.createWithDefaultMenu(userId);
             storeRepository.save(store);
 
             double latitude = 34.0;

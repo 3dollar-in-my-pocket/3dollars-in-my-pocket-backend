@@ -72,8 +72,8 @@ internal class UserActivityControllerTest(
             // given
             storeRepository.saveAll(
                 listOf(
-                    StoreFixture.createWithDefaultMenu(user.id, "제보한 가게 1"),
-                    StoreFixture.createWithDefaultMenu(user.id, "제보한 가게 2")
+                    StoreFixture.createWithDefaultMenu(userId = user.id),
+                    StoreFixture.createWithDefaultMenu(userId = user.id)
                 )
             )
 
@@ -91,14 +91,14 @@ internal class UserActivityControllerTest(
         @Test
         fun `유저가 작성한 리뷰 개수도 조회한다`() {
             // given
-            val store = StoreFixture.create(user.id, "가게")
+            val store = StoreFixture.create(userId = user.id)
             storeRepository.save(store)
 
             reviewRepository.saveAll(
                 listOf(
-                    ReviewFixture.create(store.id, user.id, "리뷰 1", 4),
-                    ReviewFixture.create(store.id, user.id, "리뷰 2", 3),
-                    ReviewFixture.create(store.id, user.id, "리뷰 3", 2)
+                    ReviewFixture.create(storeId = store.id, userId = user.id),
+                    ReviewFixture.create(storeId = store.id, userId = user.id),
+                    ReviewFixture.create(storeId = store.id, userId = user.id),
                 )
             )
 
@@ -199,8 +199,8 @@ internal class UserActivityControllerTest(
             // given
             storeRepository.saveAll(
                 listOf(
-                    StoreFixture.createWithDefaultMenu(user.id, "제보한 가게 1"),
-                    StoreFixture.createWithDefaultMenu(user.id, "제보한 가게 2")
+                    StoreFixture.createWithDefaultMenu(userId = user.id),
+                    StoreFixture.createWithDefaultMenu(userId = user.id)
                 )
             )
 
@@ -218,14 +218,14 @@ internal class UserActivityControllerTest(
         @Test
         fun `유저가 작성한 리뷰 개수도 조회한다`() {
             // given
-            val store = StoreFixture.create(user.id, "가게")
+            val store = StoreFixture.create(userId = user.id)
             storeRepository.save(store)
 
             reviewRepository.saveAll(
                 listOf(
-                    ReviewFixture.create(store.id, user.id, "리뷰 1", 4),
-                    ReviewFixture.create(store.id, user.id, "리뷰 2", 3),
-                    ReviewFixture.create(store.id, user.id, "리뷰 3", 2)
+                    ReviewFixture.create(storeId = store.id, userId = user.id),
+                    ReviewFixture.create(storeId = store.id, userId = user.id),
+                    ReviewFixture.create(storeId = store.id, userId = user.id),
                 )
             )
 

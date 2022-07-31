@@ -7,8 +7,8 @@ import com.depromeet.threedollar.domain.mongo.domain.bossservice.account.BossAcc
 object RegistrationFixture {
 
     fun create(
-        socialId: String,
-        socialType: BossAccountSocialType,
+        socialId: String = "social-id",
+        socialType: BossAccountSocialType = BossAccountSocialType.GOOGLE,
         bossName: String = "will",
         businessNumber: String = "000-00-00000",
         storeName: String = "가슴속 3천원",

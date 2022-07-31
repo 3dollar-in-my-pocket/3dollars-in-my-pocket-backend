@@ -85,10 +85,7 @@ internal class FaqAdminServiceTest(
             val answer = "가슴속 삼천원입니다"
             val category = FaqCategory.ETC
 
-            val faq = FaqFixture.create(
-                question = "기존의 질문",
-                answer = "기존의 답변",
-                category = FaqCategory.CATEGORY)
+            val faq = FaqFixture.create()
             faqRepository.save(faq)
 
             val request = UpdateFaqRequest(
@@ -113,9 +110,8 @@ internal class FaqAdminServiceTest(
             // given
             val faq = FaqFixture.create(
                 applicationType = ApplicationType.BOSS_API,
-                question = "기존의 질문",
-                answer = "기존의 답변",
-                category = FaqCategory.ETC)
+                category = FaqCategory.ETC
+            )
             faqRepository.save(faq)
 
             val request = UpdateFaqRequest(question = "질문", answer = "답변", category = FaqCategory.REVIEW_MENU)
@@ -153,7 +149,7 @@ internal class FaqAdminServiceTest(
         @Test
         fun 특정_FAQ_를_삭제하면_해당_데이터가_삭제된다() {
             // given
-            val faq = faqRepository.save(FaqFixture.create(question = "질문", answer = "답변", category = FaqCategory.CATEGORY))
+            val faq = faqRepository.save(FaqFixture.create())
 
             // when
             faqAdminService.deleteFaq(faq.id)

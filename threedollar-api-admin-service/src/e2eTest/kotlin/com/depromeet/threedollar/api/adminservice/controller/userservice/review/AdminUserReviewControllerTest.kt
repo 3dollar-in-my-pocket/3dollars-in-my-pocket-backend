@@ -5,8 +5,6 @@ import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
 import com.depromeet.threedollar.common.exception.type.ErrorCode
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewFixture
 import com.depromeet.threedollar.domain.rds.domain.userservice.review.ReviewRepository
-import com.depromeet.threedollar.domain.rds.domain.userservice.store.StoreFixture
-import com.depromeet.threedollar.domain.rds.domain.userservice.user.UserFixture
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -25,12 +23,7 @@ internal class AdminUserReviewControllerTest(
         @Test
         fun `관리자가 특정 리뷰를 삭제한다`() {
             // given
-            val review = ReviewFixture.create(
-                storeId = store.id,
-                userId = user.id,
-                rating = 1,
-                contents = "욕설"
-            )
+            val review = ReviewFixture.create(storeId = store.id)
             reviewRepository.save(review)
 
             mockMvc.delete("/v1/user/review/${review.id}") {
@@ -52,15 +45,6 @@ internal class AdminUserReviewControllerTest(
         @Test
         fun `관리자가 특정 리뷰를 조회한다`() {
             // given
-            val user = UserFixture.create()
-            userRepository.save(user)
-
-            val store = StoreFixture.create(
-                userId = user.id,
-                storeName = "가게 이름",
-            )
-            storeRepository.save(store)
-
             val review = ReviewFixture.create(
                 storeId = store.id,
                 userId = user.id,
@@ -95,8 +79,6 @@ internal class AdminUserReviewControllerTest(
             val review = ReviewFixture.create(
                 storeId = -1L,
                 userId = -1L,
-                rating = 3,
-                contents = "맛있어요"
             )
             reviewRepository.save(review)
 

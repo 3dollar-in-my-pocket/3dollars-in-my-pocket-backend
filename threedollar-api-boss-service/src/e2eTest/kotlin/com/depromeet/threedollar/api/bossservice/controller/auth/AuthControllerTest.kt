@@ -386,7 +386,6 @@ internal class AuthControllerTest(
             val device = DeviceFixture.create(
                 accountId = bossId,
                 accountType = AccountType.BOSS_ACCOUNT,
-                pushToken = "pushToken"
             )
             deviceRepository.save(device)
 
@@ -426,7 +425,6 @@ internal class AuthControllerTest(
             val device = DeviceFixture.create(
                 accountId = bossId,
                 accountType = AccountType.BOSS_ACCOUNT,
-                pushToken = "pushToken"
             )
             deviceRepository.save(device)
 

@@ -17,8 +17,8 @@ internal abstract class SetupUserStoreControllerTest : SetupUserControllerTest()
 
     @BeforeEach
     fun setUpStore() {
-        store = StoreFixture.create(user.id, "디프만 붕어빵")
-        store.addMenus(listOf(MenuFixture.create(store, "메뉴", "가격", UserMenuCategoryType.BUNGEOPPANG)))
+        store = StoreFixture.create(userId = user.id, storeName = "가슴속 3천원 붕어빵")
+        store.addMenus(listOf(MenuFixture.create(store = store, name = "팥 붕어빵", price = "3개에 천원", category = UserMenuCategoryType.BUNGEOPPANG)))
         storeRepository.save(store)
     }
 

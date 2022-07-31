@@ -34,10 +34,7 @@ internal class BossStoreFeedbackControllerTest(
     @Test
     fun `전체 기간동안의 특정 사장님의 가게의 피드백 갯수와 총 개수 중 해당 피드백의 비율을 조회합니다`() {
         // given
-        val bossStore = BossStoreFixture.create(
-            bossId = "bossId",
-            name = "가슴속 3천원"
-        )
+        val bossStore = BossStoreFixture.create()
         bossStoreRepository.save(bossStore)
 
         bossStoreFeedbackCountRepository.increase(bossStore.id, BossStoreFeedbackType.BOSS_IS_KIND)
@@ -96,15 +93,11 @@ internal class BossStoreFeedbackControllerTest(
             val feedbackType = BossStoreFeedbackType.BOSS_IS_KIND
             val date = LocalDate.of(2022, 1, 1)
 
-            val bossStore = BossStoreFixture.create(
-                bossId = "bossId",
-                name = "가슴속 3천원"
-            )
+            val bossStore = BossStoreFixture.create()
             bossStoreRepository.save(bossStore)
 
             val feedback = BossStoreFeedbackFixture.create(
                 storeId = bossStore.id,
-                userId = 1000000L,
                 feedbackType = feedbackType,
                 date = date
             )

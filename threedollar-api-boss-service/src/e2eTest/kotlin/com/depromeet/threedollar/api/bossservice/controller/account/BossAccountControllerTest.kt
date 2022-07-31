@@ -48,7 +48,7 @@ internal class BossAccountControllerTest(
         @Test
         fun `사장님이 자신의 계정 정보를 조회시 디바이스가 있으면 알림 설정이 되어있다고 표시된다`() {
             // given
-            deviceRepository.save(DeviceFixture.create(accountId = bossId, accountType = AccountType.BOSS_ACCOUNT, pushToken = "pushToken"))
+            deviceRepository.save(DeviceFixture.create(accountId = bossId, accountType = AccountType.BOSS_ACCOUNT))
 
             // when & then
             mockMvc.get("/v1/boss/account/me") {

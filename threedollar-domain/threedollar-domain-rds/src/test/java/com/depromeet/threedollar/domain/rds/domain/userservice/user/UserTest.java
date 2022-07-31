@@ -18,14 +18,14 @@ class UserTest {
     void 유저가_메달을_획득한다() {
         // given
         String medalName = "리뷰왕";
-        String description = "리뷰 5번 작성시 획득하는 메달";
+        String introdution = "리뷰 5번 작성시 획득하는 메달";
         String activationIconUrl = "https://active-icon.png";
         String disabledIconUrl = "https://disable-icon.png";
         MedalAcquisitionConditionType conditionType = MedalAcquisitionConditionType.ADD_REVIEW;
         int count = 5;
 
         User user = UserFixture.create();
-        Medal medal = MedalFixture.create(medalName, description, activationIconUrl, disabledIconUrl, conditionType, count);
+        Medal medal = MedalFixture.create(medalName, introdution, activationIconUrl, disabledIconUrl, conditionType, count);
 
         // when
         user.addMedals(List.of(medal));
@@ -33,16 +33,17 @@ class UserTest {
         // then
         assertAll(
             () -> assertThat(user.getUserMedals()).hasSize(1),
-            () -> assertUserMedal(user.getUserMedals().get(0), medalName, activationIconUrl, conditionType, count)
+            () -> assertUserMedal(user.getUserMedals().get(0), medalName, activationIconUrl, conditionType, count, introdution)
         );
     }
 
-    private void assertUserMedal(UserMedal userMedal, String name, String iconUrl, MedalAcquisitionConditionType conditionType, int count) {
+    private void assertUserMedal(UserMedal userMedal, String name, String iconUrl, MedalAcquisitionConditionType conditionType, int count, String introduction) {
         assertAll(
             () -> assertThat(userMedal.getMedal().getName()).isEqualTo(name),
             () -> assertThat(userMedal.getMedal().getActivationIconUrl()).isEqualTo(iconUrl),
             () -> assertThat(userMedal.getMedal().getAcquisitionCondition().getConditionType()).isEqualTo(conditionType),
-            () -> assertThat(userMedal.getMedal().getAcquisitionCondition().getCount()).isEqualTo(count)
+            () -> assertThat(userMedal.getMedal().getAcquisitionCondition().getCount()).isEqualTo(count),
+            () -> assertThat(userMedal.getMedal().getIntroduction()).isEqualTo(introduction)
         );
     }
 

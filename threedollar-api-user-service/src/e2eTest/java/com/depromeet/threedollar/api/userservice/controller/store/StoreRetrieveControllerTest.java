@@ -470,7 +470,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 가게_상세_정보_조회시_메뉴_정보도_함께_조회된다() throws Exception {
             // given
-            Store store = StoreFixture.create(user.getId(), "가게 이름");
+            Store store = StoreFixture.create();
             Menu menu1 = MenuFixture.create(store, "메뉴1", "가격1", UserMenuCategoryType.BUNGEOPPANG);
             Menu menu2 = MenuFixture.create(store, "메뉴2", "가격2", UserMenuCategoryType.GUKWAPPANG);
             store.addMenus(List.of(menu1, menu2));
@@ -496,7 +496,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 가게_상세_정보_조회시_제보자_정보도_함께_반환된다() throws Exception {
             // given
-            Store store = StoreFixture.createWithDefaultMenu(user.getId(), "가게 이름");
+            Store store = StoreFixture.createWithDefaultMenu(user.getId());
             storeRepository.save(store);
 
             RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testBuilder()
@@ -515,7 +515,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 가게_상세_정보_조회시_영업일_정보도_함께_반환된다() throws Exception {
             // given
             Set<DayOfTheWeek> dayOfTheWeeks = Set.of(DayOfTheWeek.SATURDAY, DayOfTheWeek.FRIDAY, DayOfTheWeek.THURSDAY);
-            Store store = StoreFixture.createWithDefaultMenu(user.getId(), "가게 이름");
+            Store store = StoreFixture.createWithDefaultMenu(user.getId());
             store.addAppearanceDays(dayOfTheWeeks);
             storeRepository.save(store);
 
@@ -538,7 +538,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 가게_상세_정보_조회시_결제_방법_정보도_함께_반환된다() throws Exception {
             // given
             Set<PaymentMethodType> paymentMethodTypes = Set.of(PaymentMethodType.CASH, PaymentMethodType.CARD);
-            Store store = StoreFixture.createWithDefaultMenu(user.getId(), "가게 이름");
+            Store store = StoreFixture.createWithDefaultMenu(user.getId());
             store.addPaymentMethods(paymentMethodTypes);
             storeRepository.save(store);
 
@@ -562,7 +562,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // given
             long notFoundUserId = -1L;
 
-            Store store = StoreFixture.createWithDefaultMenu(notFoundUserId, "가게 이름");
+            Store store = StoreFixture.createWithDefaultMenu(notFoundUserId);
             storeRepository.save(store);
 
             RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testBuilder()
@@ -583,7 +583,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // given
             String imageUrl = "https://image.url";
 
-            Store store = StoreFixture.createWithDefaultMenu(user.getId(), "가게 이름");
+            Store store = StoreFixture.createWithDefaultMenu(user.getId());
             storeRepository.save(store);
 
             StoreImage storeImage = StoreImageFixture.create(store.getId(), user.getId(), imageUrl);
@@ -607,11 +607,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         @Test
         void 가게_상세_정보_조회시_삭제된_이미지는_조회되지_않는다() throws Exception {
             // given
-            Store store = StoreFixture.createWithDefaultMenu(user.getId(), "가게 이름");
+            Store store = StoreFixture.createWithDefaultMenu(user.getId());
             storeRepository.save(store);
 
-            StoreImage storeImage = StoreImageFixture.create(store.getId(), user.getId(), "https://store-image.com");
-            storeImage.delete();
+            StoreImage storeImage = StoreImageFixture.createDeleted(store.getId());
             storeImageRepository.save(storeImage);
 
             RetrieveStoreDetailRequest request = RetrieveStoreDetailRequest.testBuilder()
@@ -631,7 +630,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // given
             long notFoundUserId = -1L;
 
-            Store store = StoreFixture.createWithDefaultMenu(user.getId(), "가게 이름");
+            Store store = StoreFixture.createWithDefaultMenu(user.getId());
             storeRepository.save(store);
 
             Review review1 = ReviewFixture.create(store.getId(), user.getId(), "댓글 1", 5);
@@ -663,7 +662,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 가게_상세_조회시_한달간의_방문_목록_카운트를_반환한다() throws Exception {
             // given
             LocalDate today = LocalDate.now();
-            Store store = StoreFixture.createWithDefaultMenu(user.getId(), "가게 이름");
+            Store store = StoreFixture.createWithDefaultMenu(user.getId());
             storeRepository.save(store);
 
             visitHistoryRepository.save(VisitHistoryFixture.create(store, user.getId(), VisitType.EXISTS, today.minusMonths(1)));
@@ -685,7 +684,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             // given
             LocalDate startDate = LocalDate.of(2021, 10, 19);
 
-            Store store = StoreFixture.createWithDefaultMenu(user.getId(), "가게 이름");
+            Store store = StoreFixture.createWithDefaultMenu(user.getId());
             storeRepository.save(store);
 
             VisitHistory visitHistoryBeforeStartDate = VisitHistoryFixture.create(store, user.getId(), VisitType.EXISTS, LocalDate.of(2021, 10, 18));
@@ -715,7 +714,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
 
             LocalDate startDate = LocalDate.of(2021, 10, 19);
 
-            Store store = StoreFixture.createWithDefaultMenu(user.getId(), "가게 이름");
+            Store store = StoreFixture.createWithDefaultMenu(user.getId());
             storeRepository.save(store);
 
             VisitHistory visitHistory = VisitHistoryFixture.create(store, notFoundUserId, VisitType.EXISTS, LocalDate.of(2021, 10, 19));
@@ -745,7 +744,7 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
         void 가게_상세_조회시_기본적으로_일주일간_방문_인증_기록들을_조회한다() throws Exception {
             // given
             LocalDate today = LocalDate.now();
-            Store store = StoreFixture.createWithDefaultMenu(user.getId(), "가게 이름");
+            Store store = StoreFixture.createWithDefaultMenu(user.getId());
             storeRepository.save(store);
 
             VisitHistory beforeLastWeekHistory = VisitHistoryFixture.create(store, user.getId(), VisitType.NOT_EXISTS, today.minusWeeks(1).minusDays(1));

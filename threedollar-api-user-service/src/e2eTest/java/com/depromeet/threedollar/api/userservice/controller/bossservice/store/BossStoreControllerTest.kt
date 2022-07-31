@@ -58,7 +58,7 @@ internal class BossStoreControllerTest(
 
     @DisplayName("GET /boss/v1/boss/store/{BOSS_STORE_ID}")
     @Test
-    fun `특정 사장님 가게를 조회할때, Redis에 영업 정보가 있으면 영업중인 가게로 표기된다`() {
+    fun `특정 사장님 가게를 조회한다`() {
         // given
         val category = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1, imageUrl = "https://icon1.png")
         bossStoreCategoryRepository.save(category)
@@ -122,9 +122,50 @@ internal class BossStoreControllerTest(
             }
     }
 
+    @DisplayName("GET /boss/v1/boss/store/{BOSS_STORE_ID}")
+    @Test
+    fun `특정 사장님 가게를 조회할때, Redis에 영업 정보가 있으면 영업중인 가게로 표기된다`() {
+        // given
+        val category = BossStoreCategoryFixture.create()
+        bossStoreCategoryRepository.save(category)
+
+        val bossStore = BossStoreFixture.create(
+            bossId = "anotherBossId",
+            name = "사장님 가게",
+            location = BossStoreLocation.of(latitude = 38.0, longitude = 128.0),
+            imageUrl = "https://image.png",
+            introduction = "introduction",
+            snsUrl = "https://sns.com",
+            contactsNumber = ContactsNumber.of("010-1234-1234"),
+            menus = listOf(BossStoreMenuFixture.create("붕어빵", 2000, "https://menu.png")),
+            appearanceDays = setOf(BossStoreAppearanceDayFixture.create(DayOfTheWeek.FRIDAY)),
+            categoriesIds = setOf(category.id)
+        )
+        bossStoreRepository.save(bossStore)
+
+        val bossStoreOpen = BossStoreOpenFixture.create(
+            bossStoreId = bossStore.id,
+            openStartDateTime = LocalDateTime.of(2022, 3, 1, 0, 0),
+            expiredAt = LocalDateTime.of(2999, 1, 1, 0, 0),
+        )
+        bossStoreOpenRepository.save(bossStoreOpen)
+
+        // when & then
+        mockMvc.get("/v1/boss/store/${bossStore.id}") {
+            header(HttpHeaders.AUTHORIZATION, token)
+        }
+            .andDo {
+                print()
+            }.andExpect {
+                status { isOk() }
+                jsonPath("$.data.openStatus.status") { value(BossStoreOpenType.OPEN.name) }
+                jsonPath("$.data.openStatus.openStartDateTime") { value("2022-03-01T00:00:00") }
+            }
+    }
+
     @DisplayName("GET /boss/v1/boss/store/{BOSS_STORE_ID}/detail")
     @Test
-    fun `특정 사장님 가게 정보와 피드백 통계 정보를 함께 조회한다                                  `() {
+    fun `특정 사장님 가게 정보와 피드백 통계 정보를 함께 조회한다`() {
         // given
         val category = BossStoreCategoryFixture.create(title = "한식", sequencePriority = 1, imageUrl = "https://icon1.png")
         bossStoreCategoryRepository.save(category)
@@ -138,7 +179,7 @@ internal class BossStoreControllerTest(
             snsUrl = "https://sns.com",
             contactsNumber = ContactsNumber.of("010-1234-1234"),
             menus = listOf(BossStoreMenuFixture.create("붕어빵", 2000, "https://menu.png")),
-            appearanceDays = setOf(BossStoreAppearanceDayFixture.create(DayOfTheWeek.FRIDAY, LocalTime.of(8, 0), LocalTime.of(10, 0), "강남역")),
+            appearanceDays = setOf(BossStoreAppearanceDayFixture.create(DayOfTheWeek.FRIDAY)),
             categoriesIds = setOf(category.id)
         )
         bossStoreRepository.save(bossStore)
@@ -152,7 +193,6 @@ internal class BossStoreControllerTest(
 
         val feedback = BossStoreFeedbackFixture.create(
             storeId = bossStore.id,
-            userId = 100000L,
             feedbackType = BossStoreFeedbackType.GOT_A_BONUS,
             date = LocalDate.of(2022, 7, 31),
         )

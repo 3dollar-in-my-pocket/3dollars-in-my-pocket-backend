@@ -112,7 +112,6 @@ internal class BossDeviceControllerTest(
         deviceRepository.save(DeviceFixture.create(
             accountType = AccountType.BOSS_ACCOUNT,
             accountId = bossId,
-            pushToken = "pushToken"
         ))
 
         // when

@@ -31,7 +31,6 @@ internal class GoogleAuthServiceTest(
             // given
             val admin = AdminFixture.create(
                 email = EMAIL,
-                name = "강승호"
             )
             adminRepository.save(admin)
 
