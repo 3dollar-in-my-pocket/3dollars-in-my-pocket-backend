@@ -1,14 +1,12 @@
 package com.depromeet.threedollar.api.bossservice.controller.feedback
 
-import com.depromeet.threedollar.api.bossservice.SetupBossAccountControllerTest
+import com.depromeet.threedollar.api.bossservice.SetupBossStoreControllerTest
 import com.depromeet.threedollar.api.core.service.service.bossservice.feedback.dto.response.BossStoreFeedbackCountResponse
 import com.depromeet.threedollar.api.core.service.service.bossservice.feedback.dto.response.BossStoreFeedbackGroupingDateResponse
 import com.depromeet.threedollar.api.core.service.service.bossservice.feedback.dto.response.BossStoreFeedbackTypeResponse
 import com.depromeet.threedollar.common.type.BossStoreFeedbackType
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedbackFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.feedback.BossStoreFeedbackRepository
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreFixture
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 import com.depromeet.threedollar.domain.redis.domain.bossservice.feedback.BossStoreFeedbackCountRepository
 import org.hamcrest.Matchers.hasSize
 import org.junit.jupiter.api.AfterEach
@@ -21,8 +19,7 @@ import java.time.LocalDate
 internal class BossStoreFeedbackControllerTest(
     private val bossStoreFeedbackRepository: BossStoreFeedbackRepository,
     private val bossStoreFeedbackCountRepository: BossStoreFeedbackCountRepository,
-    private val bossStoreRepository: BossStoreRepository,
-) : SetupBossAccountControllerTest() {
+) : SetupBossStoreControllerTest() {
 
     @AfterEach
     fun cleanUp() {
@@ -34,9 +31,6 @@ internal class BossStoreFeedbackControllerTest(
     @Test
     fun `전체 기간동안의 특정 사장님의 가게의 피드백 갯수와 총 개수 중 해당 피드백의 비율을 조회합니다`() {
         // given
-        val bossStore = BossStoreFixture.create()
-        bossStoreRepository.save(bossStore)
-
         bossStoreFeedbackCountRepository.increase(bossStore.id, BossStoreFeedbackType.BOSS_IS_KIND)
         bossStoreFeedbackCountRepository.increase(bossStore.id, BossStoreFeedbackType.BOSS_IS_KIND)
         bossStoreFeedbackCountRepository.increase(bossStore.id, BossStoreFeedbackType.FOOD_IS_DELICIOUS)
@@ -93,9 +87,6 @@ internal class BossStoreFeedbackControllerTest(
             val feedbackType = BossStoreFeedbackType.BOSS_IS_KIND
             val date = LocalDate.of(2022, 1, 1)
 
-            val bossStore = BossStoreFixture.create()
-            bossStoreRepository.save(bossStore)
-
             val feedback = BossStoreFeedbackFixture.create(
                 storeId = bossStore.id,
                 feedbackType = feedbackType,
@@ -126,12 +117,6 @@ internal class BossStoreFeedbackControllerTest(
             val feedbackType = BossStoreFeedbackType.BOSS_IS_KIND
             val date = LocalDate.of(2022, 1, 1)
             val nextDate = LocalDate.of(2021, 12, 31)
-
-            val bossStore = BossStoreFixture.create(
-                bossId = "bossId",
-                name = "가슴속 3천원"
-            )
-            bossStoreRepository.save(bossStore)
 
             val feedback = BossStoreFeedbackFixture.create(
                 storeId = bossStore.id,
@@ -167,12 +152,6 @@ internal class BossStoreFeedbackControllerTest(
         fun `해당 기간 이전의 피드백이 더 있는 경우 cursor가 다음 피드백의 날짜를 가리킨다`() {
             // given
             val userId = 100000L
-
-            val bossStore = BossStoreFixture.create(
-                bossId = "bossId",
-                name = "가슴속 3천원"
-            )
-            bossStoreRepository.save(bossStore)
 
             val feedback1 = BossStoreFeedbackFixture.create(
                 storeId = bossStore.id,

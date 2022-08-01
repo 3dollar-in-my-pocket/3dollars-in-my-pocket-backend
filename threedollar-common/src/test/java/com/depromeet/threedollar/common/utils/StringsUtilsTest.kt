@@ -58,7 +58,7 @@ internal class StringsUtilsTest {
         val value = "NOT NULL"
 
         // when
-        val sut = StringsUtils.defaultIfNull(value = value, defaultValue = "기본값")
+        val sut = StringsUtils.defaultIfBlank(value = value, defaultValue = "기본값")
 
         // then
         assertThat(sut).isEqualTo(value)

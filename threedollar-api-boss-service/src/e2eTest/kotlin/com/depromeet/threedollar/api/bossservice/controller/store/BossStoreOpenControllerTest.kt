@@ -1,16 +1,8 @@
 package com.depromeet.threedollar.api.bossservice.controller.store
 
-import com.depromeet.threedollar.api.bossservice.SetupBossAccountControllerTest
+import com.depromeet.threedollar.api.bossservice.SetupBossStoreControllerTest
 import com.depromeet.threedollar.api.core.common.dto.response.ApiResponse
-import com.depromeet.threedollar.common.model.ContactsNumber
-import com.depromeet.threedollar.common.type.DayOfTheWeek
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.category.BossStoreCategoryRepository
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreAppearanceDayFixture
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreFixture
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreLocation
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreMenuFixture
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreRepository
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpenFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpenRepository
 import org.junit.jupiter.api.AfterEach
@@ -22,13 +14,11 @@ import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.put
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 internal class BossStoreOpenControllerTest(
-    private val bossStoreRepository: BossStoreRepository,
     private val bossStoreCategoryRepository: BossStoreCategoryRepository,
     private val bossStoreOpenRepository: BossStoreOpenRepository,
-) : SetupBossAccountControllerTest() {
+) : SetupBossStoreControllerTest() {
 
     @AfterEach
     fun cleanUp() {
@@ -44,23 +34,6 @@ internal class BossStoreOpenControllerTest(
 
         @Test
         fun `가게의 영업 정보를 시작합니다`() {
-            // given
-            val category = BossStoreCategoryFixture.create()
-            bossStoreCategoryRepository.save(category)
-
-            val bossStore = BossStoreFixture.create(
-                bossId = bossId,
-                name = "사장님 가게",
-                imageUrl = "https://image.png",
-                introduction = "introduction",
-                snsUrl = "https://sns.com",
-                contactsNumber = ContactsNumber.of("010-1234-1234"),
-                menus = listOf(BossStoreMenuFixture.create()),
-                appearanceDays = setOf(BossStoreAppearanceDayFixture.create(dayOfTheWeek = DayOfTheWeek.SATURDAY)),
-                categoriesIds = setOf(category.id)
-            )
-            bossStoreRepository.save(bossStore)
-
             // when & then
             mockMvc.post("/v1/boss/store/${bossStore.id}/open") {
                 param("mapLatitude", "34.0")
@@ -83,29 +56,6 @@ internal class BossStoreOpenControllerTest(
         @Test
         fun `가게의 영업 정보를 갱신합니다`() {
             // given
-            val category = BossStoreCategoryFixture.create()
-            bossStoreCategoryRepository.save(category)
-
-            val bossStore = BossStoreFixture.create(
-                bossId = bossId,
-                name = "사장님 가게",
-                location = BossStoreLocation.of(latitude = 38.0, longitude = 128.0),
-                imageUrl = "https://image.png",
-                introduction = "introduction",
-                snsUrl = "https://sns.com",
-                contactsNumber = ContactsNumber.of("010-1234-1234"),
-                menus = listOf(BossStoreMenuFixture.create()),
-                appearanceDays = setOf(
-                    BossStoreAppearanceDayFixture.create(
-                        dayOfTheWeek = DayOfTheWeek.FRIDAY,
-                        startTime = LocalTime.of(8, 0),
-                        endTime = LocalTime.of(10, 0),
-                        locationDescription = "강남역")
-                ),
-                categoriesIds = setOf(category.id)
-            )
-            bossStoreRepository.save(bossStore)
-
             val bossStoreOpen = BossStoreOpenFixture.create(
                 bossStoreId = bossStore.id,
                 openStartDateTime = LocalDateTime.of(2022, 1, 1, 0, 0),
@@ -135,23 +85,6 @@ internal class BossStoreOpenControllerTest(
         @Test
         fun `가게를 영업중일때 가게를 강제 영업 종료합니다`() {
             // given
-            val category = BossStoreCategoryFixture.create()
-            bossStoreCategoryRepository.save(category)
-
-            val bossStore = BossStoreFixture.create(
-                bossId = bossId,
-                name = "사장님 가게",
-                location = BossStoreLocation.of(latitude = 38.0, longitude = 128.0),
-                imageUrl = "https://image.png",
-                introduction = "introduction",
-                snsUrl = "https://sns.com",
-                contactsNumber = ContactsNumber.of("010-1234-1234"),
-                menus = listOf(BossStoreMenuFixture.create()),
-                appearanceDays = setOf(BossStoreAppearanceDayFixture.create(dayOfTheWeek = DayOfTheWeek.WEDNESDAY)),
-                categoriesIds = setOf(category.id)
-            )
-            bossStoreRepository.save(bossStore)
-
             val bossStoreOpen = BossStoreOpenFixture.create(
                 bossStoreId = bossStore.id,
                 openStartDateTime = LocalDateTime.of(2022, 1, 1, 0, 0),

@@ -13,7 +13,7 @@ internal class BossStoreCategoryCacheRepositoryImplTest(
 
     @AfterEach
     fun cleanUp() {
-        stringRedisRepository.del(BossStoreCategoriesCacheKey())
+        stringRedisRepository.del(BossStoreCategoriesCacheKeyFixture.create())
     }
 
     @Test
@@ -30,7 +30,7 @@ internal class BossStoreCategoryCacheRepositoryImplTest(
         // given
         val category1 = BossStoreCategoryCacheModel(categoryId = "categoryId1", name = "한식", imageUrl = "https://icon1.png")
         val category2 = BossStoreCategoryCacheModel(categoryId = "categoryId2", name = "중식", imageUrl = "https://icon2.png")
-        stringRedisRepository.set(BossStoreCategoriesCacheKey(), listOf(category1, category2))
+        stringRedisRepository.set(BossStoreCategoriesCacheKeyFixture.create(), listOf(category1, category2))
 
         // when
         val categories = bossStoreCategoryCacheRepository.getCache()
@@ -50,7 +50,7 @@ internal class BossStoreCategoryCacheRepositoryImplTest(
         bossStoreCategoryCacheRepository.setCache(listOf(category))
 
         // then
-        val result = stringRedisRepository.get(BossStoreCategoriesCacheKey())
+        val result = stringRedisRepository.get(BossStoreCategoriesCacheKeyFixture.create())
         assertThat(result).isNotNull
         assertThat(result).hasSize(1)
         assertCacheModel(model = result!![0], categoryId = category.categoryId, name = category.name)

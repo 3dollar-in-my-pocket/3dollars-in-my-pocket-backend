@@ -5,8 +5,6 @@ import com.depromeet.threedollar.common.exception.model.ForbiddenException
 import com.depromeet.threedollar.common.exception.model.NotFoundException
 import com.depromeet.threedollar.common.model.LocationValue
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStore
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreFixture
-import com.depromeet.threedollar.domain.mongo.domain.bossservice.store.BossStoreLocation
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpenFixture
 import com.depromeet.threedollar.domain.mongo.domain.bossservice.storeopen.BossStoreOpenRepository
 import org.assertj.core.api.Assertions.assertThat
@@ -48,7 +46,41 @@ internal class BossStoreOpenServiceTest(
                 bossStoreOpens[0].also {
                     assertThat(it.bossStoreId).isEqualTo(bossStoreId)
                     assertThat(it.openStartDateTime).isBetween(LocalDateTime.now().minusMinutes(1), LocalDateTime.now().plusMinutes(1))
-                    assertThat(it.openStartDateTime).isBetween(LocalDateTime.now().minusMinutes(29), LocalDateTime.now().plusMinutes(30))
+                    assertThat(it.expiredAt).isBetween(LocalDateTime.now().minusMinutes(29), LocalDateTime.now().plusMinutes(30))
+                }
+            })
+        }
+
+        @Test
+        fun `기존의 오픈 정보가 있는경우, 오픈 만료 시간이 연장된다`() {
+            // given
+            val latitude = 38.0
+            val longitude = 127.0
+
+            val startDateTime = LocalDateTime.of(2022, 1, 1, 0, 0)
+            val expiredAt = LocalDateTime.of(2999, 1, 1, 0, 0)
+
+            val bossStoreOpen = BossStoreOpenFixture.create(
+                bossStoreId = bossStore.id,
+                openStartDateTime = startDateTime,
+                expiredAt = expiredAt,
+            )
+            bossStoreOpenRepository.save(bossStoreOpen)
+
+            // when
+            bossStoreOpenService.openBossStore(
+                bossStoreId = bossStoreId,
+                bossId = bossId,
+                mapLocation = LocationValue.of(latitude, longitude)
+            )
+
+            // then
+            val bossStoreOpens = bossStoreOpenRepository.findAll()
+            assertAll({
+                assertThat(bossStoreOpens).hasSize(1)
+                bossStoreOpens[0].also {
+                    assertThat(it.bossStoreId).isEqualTo(bossStoreId)
+                    assertThat(it.expiredAt).isBetween(LocalDateTime.now().minusMinutes(29), LocalDateTime.now().plusMinutes(30))
                 }
             })
         }
@@ -101,20 +133,13 @@ internal class BossStoreOpenServiceTest(
     }
 
     @Nested
-    inner class PatchBossStoreTest {
+    inner class RenewBossStoreOpenInfoStoreTest {
 
         @Test
         fun `가게 오픈 갱신시 오픈 정보가 있고, 영업 가능 거리 범위 안에 있는 경우, 영업 정보가 갱신된다`() {
             // given
             val latitude = 38.0
             val longitude = 126.0
-
-            val bossStore = BossStoreFixture.create(
-                bossId = bossId,
-                name = "사장님 가게",
-                location = BossStoreLocation.of(latitude = latitude, longitude = longitude)
-            )
-            bossStoreRepository.save(bossStore)
 
             val startDateTime = LocalDateTime.of(2022, 1, 1, 0, 0)
             val expiredAt = LocalDateTime.of(2999, 1, 1, 0, 0)
@@ -142,6 +167,35 @@ internal class BossStoreOpenServiceTest(
                     assertThat(it.openStartDateTime).isEqualTo(startDateTime)
                     assertThat(it.expiredAt).isBetween(LocalDateTime.now().minusMinutes(29), LocalDateTime.now().plusMinutes(30))
                 }
+            })
+        }
+
+        @Test
+        fun `가게 오픈 갱신시 위치가 변경된 경우 가게의 위치 정보가 변경된다`() {
+            // given
+            val latitude = 38.0
+            val longitude = 126.0
+
+            val bossStoreOpen = BossStoreOpenFixture.create(
+                bossStoreId = bossStore.id,
+                openStartDateTime = LocalDateTime.of(2022, 1, 1, 0, 0),
+                expiredAt = LocalDateTime.of(2999, 1, 1, 0, 0),
+            )
+            bossStoreOpenRepository.save(bossStoreOpen)
+
+            // when
+            bossStoreOpenService.renewBossStoreOpenInfo(
+                bossStoreId = bossStore.id,
+                bossId = bossId,
+                mapLocation = LocationValue.of(latitude, longitude)
+            )
+
+            // then
+            val bossStores = bossStoreRepository.findAll()
+            assertAll({
+                assertThat(bossStores).hasSize(1)
+                assertThat(bossStores[0].location?.latitude).isEqualTo(latitude)
+                assertThat(bossStores[0].location?.longitude).isEqualTo(longitude)
             })
         }
 
@@ -199,6 +253,18 @@ internal class BossStoreOpenServiceTest(
             )
             bossStoreOpenRepository.save(bossStoreOpen)
 
+            // when
+            bossStoreOpenService.closeBossStore(bossStoreId = bossStoreId, bossId = bossId)
+
+            // then
+            val bossStoreOpens = bossStoreOpenRepository.findAll()
+            assertAll({
+                assertThat(bossStoreOpens).isEmpty()
+            })
+        }
+
+        @Test
+        fun `가게를 영업종료할때, 오픈 정보가 없는 경우 오픈 정보가 삭제된 상태로 유지된다`() {
             // when
             bossStoreOpenService.closeBossStore(bossStoreId = bossStoreId, bossId = bossId)
 

@@ -33,6 +33,7 @@ import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitHistor
 import com.depromeet.threedollar.domain.rds.domain.userservice.visit.VisitType;
 import com.depromeet.threedollar.domain.redis.domain.userservice.store.AroundUserStoresCacheRepository;
 import com.depromeet.threedollar.domain.redis.domain.userservice.store.UserStoreCacheModel;
+import com.depromeet.threedollar.domain.redis.domain.userservice.store.UserStoreCacheModelFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -41,7 +42,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -364,15 +364,10 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             double longitude = 126.0;
             double distance = 1000;
 
-            UserStoreCacheModel cachedStore = UserStoreCacheModel.of(
-                List.of(UserMenuCategoryType.SUNDAE, UserMenuCategoryType.WAFFLE),
+            UserStoreCacheModel cachedStore = UserStoreCacheModelFixture.create(
                 100L,
                 latitude,
-                longitude,
-                "가게 이름",
-                3.4,
-                LocalDateTime.of(2022, 1, 1, 0, 0),
-                LocalDateTime.of(2022, 1, 2, 0, 0)
+                longitude
             );
 
             when(aroundUserStoresCacheRepository.getCache(anyDouble(), anyDouble(), anyDouble())).thenReturn(List.of(cachedStore));
@@ -398,25 +393,17 @@ class StoreRetrieveControllerTest extends SetupUserControllerTest {
             double longitude = 127.0;
             double distance = 1000;
 
-            UserStoreCacheModel noMatchedStore = UserStoreCacheModel.of(
-                List.of(UserMenuCategoryType.SUNDAE, UserMenuCategoryType.WAFFLE),
+            UserStoreCacheModel noMatchedStore = UserStoreCacheModelFixture.create(
                 100L,
                 latitude,
                 longitude,
-                "가게 이름",
-                3.4,
-                LocalDateTime.of(2022, 1, 1, 0, 0),
-                LocalDateTime.of(2022, 1, 2, 0, 0)
+                List.of(UserMenuCategoryType.SUNDAE, UserMenuCategoryType.WAFFLE)
             );
-            UserStoreCacheModel matchedStore = UserStoreCacheModel.of(
-                List.of(UserMenuCategoryType.SUNDAE, UserMenuCategoryType.BUNGEOPPANG),
+            UserStoreCacheModel matchedStore = UserStoreCacheModelFixture.create(
                 100L,
                 latitude,
                 longitude,
-                "가게 이름",
-                3.4,
-                LocalDateTime.of(2022, 1, 1, 0, 0),
-                LocalDateTime.of(2022, 1, 2, 0, 0)
+                List.of(UserMenuCategoryType.SUNDAE, UserMenuCategoryType.BUNGEOPPANG)
             );
 
             when(aroundUserStoresCacheRepository.getCache(anyDouble(), anyDouble(), anyDouble())).thenReturn(List.of(noMatchedStore, matchedStore));

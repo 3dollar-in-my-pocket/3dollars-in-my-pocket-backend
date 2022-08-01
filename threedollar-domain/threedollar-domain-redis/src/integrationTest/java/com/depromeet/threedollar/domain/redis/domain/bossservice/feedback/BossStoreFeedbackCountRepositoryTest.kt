@@ -18,16 +18,16 @@ internal class BossStoreFeedbackCountRepositoryTest(
     @AfterEach
     fun cleanUp() {
         for (feedbackType in BossStoreFeedbackType.values()) {
-            stringRedisRepository.del(BossStoreFeedbackCountKey(BOSS_STORE_ID, feedbackType))
+            stringRedisRepository.del(BossStoreFeedbackCountKeyFixture.create(BOSS_STORE_ID, feedbackType))
         }
     }
 
     @Test
     fun `가게의 모든 피드백의 총 개수를 조회한다`() {
         // given
-        stringRedisRepository.set(BossStoreFeedbackCountKey(BOSS_STORE_ID, BossStoreFeedbackType.BOSS_IS_KIND), 1)
-        stringRedisRepository.set(BossStoreFeedbackCountKey(BOSS_STORE_ID, BossStoreFeedbackType.GOOD_TO_EAT_IN_ONE_BITE), 2)
-        stringRedisRepository.set(BossStoreFeedbackCountKey(BOSS_STORE_ID, BossStoreFeedbackType.FOOD_IS_DELICIOUS), 3)
+        stringRedisRepository.set(BossStoreFeedbackCountKeyFixture.create(BOSS_STORE_ID, BossStoreFeedbackType.BOSS_IS_KIND), 1)
+        stringRedisRepository.set(BossStoreFeedbackCountKeyFixture.create(BOSS_STORE_ID, BossStoreFeedbackType.GOOD_TO_EAT_IN_ONE_BITE), 2)
+        stringRedisRepository.set(BossStoreFeedbackCountKeyFixture.create(BOSS_STORE_ID, BossStoreFeedbackType.FOOD_IS_DELICIOUS), 3)
 
         // when
         val totalCounts = bossStoreFeedbackCountRepository.getTotalCounts(BOSS_STORE_ID)
@@ -51,8 +51,8 @@ internal class BossStoreFeedbackCountRepositoryTest(
         val count = 3
         val feedbackType = BossStoreFeedbackType.BOSS_IS_KIND
 
-        stringRedisRepository.set(BossStoreFeedbackCountKey(BOSS_STORE_ID, feedbackType), 3)
-        stringRedisRepository.set(BossStoreFeedbackCountKey(BOSS_STORE_ID, BossStoreFeedbackType.GOT_A_BONUS), 2)
+        stringRedisRepository.set(BossStoreFeedbackCountKeyFixture.create(BOSS_STORE_ID, feedbackType), 3)
+        stringRedisRepository.set(BossStoreFeedbackCountKeyFixture.create(BOSS_STORE_ID, BossStoreFeedbackType.GOT_A_BONUS), 2)
 
         // when
         val feedbackCount = bossStoreFeedbackCountRepository.getCount(BOSS_STORE_ID, feedbackType)
@@ -74,7 +74,7 @@ internal class BossStoreFeedbackCountRepositoryTest(
     fun `가게의 특정 피드백의 카운트 수를 1 증가시킨다`() {
         // given
         val feedbackType = BossStoreFeedbackType.BOSS_IS_KIND
-        val key = BossStoreFeedbackCountKey(BOSS_STORE_ID, feedbackType)
+        val key = BossStoreFeedbackCountKeyFixture.create(BOSS_STORE_ID, feedbackType)
         stringRedisRepository.set(key, 3)
 
         // when
@@ -89,7 +89,7 @@ internal class BossStoreFeedbackCountRepositoryTest(
     fun `가게의 특정 피드백의 카운트 수를 1 증가 시킬때, 기존에 카운트 수가 없는경우 1이 된다`() {
         // given
         val feedbackType = BossStoreFeedbackType.FOOD_IS_DELICIOUS
-        val key = BossStoreFeedbackCountKey(BOSS_STORE_ID, feedbackType)
+        val key = BossStoreFeedbackCountKeyFixture.create(BOSS_STORE_ID, feedbackType)
 
         // when
         bossStoreFeedbackCountRepository.increase(BOSS_STORE_ID, feedbackType)
@@ -102,25 +102,25 @@ internal class BossStoreFeedbackCountRepositoryTest(
     @Test
     fun `가게의 여러 피드백을 bulk로 1 증가시킨다`() {
         // given
-        stringRedisRepository.set(BossStoreFeedbackCountKey(BOSS_STORE_ID, BossStoreFeedbackType.BOSS_IS_KIND), 3)
+        stringRedisRepository.set(BossStoreFeedbackCountKeyFixture.create(BOSS_STORE_ID, BossStoreFeedbackType.BOSS_IS_KIND), 3)
 
         // when
         bossStoreFeedbackCountRepository.increaseBulk(BOSS_STORE_ID, setOf(BossStoreFeedbackType.BOSS_IS_KIND, BossStoreFeedbackType.GOT_A_BONUS))
 
         // then
-        val bossisKindCount = stringRedisRepository.get(BossStoreFeedbackCountKey(BOSS_STORE_ID, BossStoreFeedbackType.BOSS_IS_KIND))
+        val bossisKindCount = stringRedisRepository.get(BossStoreFeedbackCountKeyFixture.create(BOSS_STORE_ID, BossStoreFeedbackType.BOSS_IS_KIND))
         assertThat(bossisKindCount).isEqualTo(4)
 
-        val platingCount = stringRedisRepository.get(BossStoreFeedbackCountKey(BOSS_STORE_ID, BossStoreFeedbackType.GOT_A_BONUS))
+        val platingCount = stringRedisRepository.get(BossStoreFeedbackCountKeyFixture.create(BOSS_STORE_ID, BossStoreFeedbackType.GOT_A_BONUS))
         assertThat(platingCount).isEqualTo(1)
     }
 
     @Test
     fun `가게의 피드백 별로 카운트 수를 조회한다`() {
         // given
-        stringRedisRepository.set(BossStoreFeedbackCountKey(BOSS_STORE_ID, BossStoreFeedbackType.BOSS_IS_KIND), 3)
-        stringRedisRepository.set(BossStoreFeedbackCountKey(BOSS_STORE_ID, BossStoreFeedbackType.GOT_A_BONUS), 2)
-        stringRedisRepository.set(BossStoreFeedbackCountKey(BOSS_STORE_ID, BossStoreFeedbackType.FOOD_IS_DELICIOUS), 1)
+        stringRedisRepository.set(BossStoreFeedbackCountKeyFixture.create(BOSS_STORE_ID, BossStoreFeedbackType.BOSS_IS_KIND), 3)
+        stringRedisRepository.set(BossStoreFeedbackCountKeyFixture.create(BOSS_STORE_ID, BossStoreFeedbackType.GOT_A_BONUS), 2)
+        stringRedisRepository.set(BossStoreFeedbackCountKeyFixture.create(BOSS_STORE_ID, BossStoreFeedbackType.FOOD_IS_DELICIOUS), 1)
 
         // when
         val counts: Map<BossStoreFeedbackType, Int> = bossStoreFeedbackCountRepository.getAllCountsGroupByFeedbackType(BOSS_STORE_ID)
